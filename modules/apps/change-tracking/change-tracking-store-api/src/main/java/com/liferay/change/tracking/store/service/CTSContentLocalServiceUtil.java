@@ -359,3 +359,4 @@ public class CTSContentLocalServiceUtil {
 			CTSContentLocalServiceUtil.class, CTSContentLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1854887871

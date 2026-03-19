@@ -214,3 +214,4 @@ public interface ChangesetCollectionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1190247653

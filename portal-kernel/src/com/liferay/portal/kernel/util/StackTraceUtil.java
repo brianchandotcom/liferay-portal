@@ -19,6 +19,7 @@ public class StackTraceUtil {
 		String stackTrace = null;
 
 		try (UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
 			PrintWriter printWriter = new UnsyncPrintWriter(
 				unsyncStringWriter)) {
 

@@ -52,8 +52,8 @@ public class CommerceOrganizationPortletPreferencesUpgradeProcess
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					String name = resultSet.getString(1);
-					String smallValue = resultSet.getString(2);
+					String name = resultSet.getString("name");
+					String smallValue = resultSet.getString("smallValue");
 
 					if (name.equals("rootOrganizationId")) {
 						updatePreparedStatement.setString(

@@ -131,3 +131,4 @@ public class AddressServiceUtil {
 	private static volatile AddressService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1772352601

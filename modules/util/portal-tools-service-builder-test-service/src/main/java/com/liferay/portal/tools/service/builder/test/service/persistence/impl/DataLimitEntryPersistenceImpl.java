@@ -651,3 +651,4 @@ public class DataLimitEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1955925837

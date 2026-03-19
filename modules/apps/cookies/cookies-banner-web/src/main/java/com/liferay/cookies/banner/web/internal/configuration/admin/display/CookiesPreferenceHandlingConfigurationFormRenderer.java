@@ -64,6 +64,22 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 			"explicitConsentMode",
 			ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
 		).put(
+			"floatingIcon",
+			ParamUtil.getString(httpServletRequest, "floatingIcon", "cookie")
+		).put(
+			"floatingIconEnabled",
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled(
+						_portal.getCompanyId(httpServletRequest),
+						"LPD-75027")) {
+
+					return ParamUtil.getBoolean(
+						httpServletRequest, "floatingIconEnabled");
+				}
+
+				return true;
+			}
+		).put(
 			"modifiedDate",
 			() -> {
 				long modifiedDate = ParamUtil.getLong(

@@ -41,3 +41,4 @@ public abstract class CPAttachmentFileEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1271408935

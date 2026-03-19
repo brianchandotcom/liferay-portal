@@ -1140,3 +1140,4 @@ public interface ListTypeEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:590001605

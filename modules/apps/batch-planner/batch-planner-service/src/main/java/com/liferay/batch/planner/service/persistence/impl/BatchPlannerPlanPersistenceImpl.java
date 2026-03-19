@@ -6733,3 +6733,4 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1060439589

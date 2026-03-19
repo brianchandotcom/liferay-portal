@@ -910,3 +910,4 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-540156627

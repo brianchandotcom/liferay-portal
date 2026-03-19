@@ -204,3 +204,4 @@ public class MemberRequestCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1056552084

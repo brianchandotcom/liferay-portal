@@ -924,3 +924,4 @@ public interface CPInstanceModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1915941581

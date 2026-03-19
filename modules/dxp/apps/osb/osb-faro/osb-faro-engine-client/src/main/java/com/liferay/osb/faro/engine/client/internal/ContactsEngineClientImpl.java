@@ -396,7 +396,9 @@ public class ContactsEngineClientImpl
 		post(
 			faroProject, Collections.emptyMap(), "/projects",
 			Collections.emptyMap(),
-			new AsahProject(projectId, faroProject.getLastAnniversaryDate()),
+			new AsahProject(
+				projectId, faroProject.getLastAnniversaryDate(),
+				faroProject.getSubscription()),
 			Void.class);
 
 		return projectId;

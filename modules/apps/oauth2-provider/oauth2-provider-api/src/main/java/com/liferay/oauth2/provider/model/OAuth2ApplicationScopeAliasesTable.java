@@ -52,3 +52,4 @@ public class OAuth2ApplicationScopeAliasesTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:362530960

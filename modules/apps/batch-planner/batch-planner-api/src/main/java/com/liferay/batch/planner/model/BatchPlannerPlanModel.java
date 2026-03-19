@@ -365,3 +365,4 @@ public interface BatchPlannerPlanModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-179047133

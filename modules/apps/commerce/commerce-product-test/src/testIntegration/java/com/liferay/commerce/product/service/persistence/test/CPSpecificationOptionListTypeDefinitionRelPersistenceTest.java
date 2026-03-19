@@ -640,3 +640,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1866321537

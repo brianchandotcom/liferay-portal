@@ -276,3 +276,4 @@ public interface CPDefinitionGroupedEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-638585069

@@ -57,6 +57,7 @@ public class ObjectEntryAssetEntryTitleUpgradeProcess extends UpgradeProcess {
 						"ObjectDefinition.titleObjectFieldId = ",
 						"ObjectField.objectFieldId where ",
 						"ObjectField.localized = [$TRUE$]")));
+
 			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 			while (resultSet1.next()) {
@@ -96,6 +97,7 @@ public class ObjectEntryAssetEntryTitleUpgradeProcess extends UpgradeProcess {
 									dbTableName, ".",
 									resultSet1.getString(
 										"pkObjectFieldDBColumnName"))));
+
 					ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 
 					while (resultSet2.next()) {

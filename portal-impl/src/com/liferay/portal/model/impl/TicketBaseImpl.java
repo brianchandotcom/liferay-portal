@@ -38,3 +38,4 @@ public abstract class TicketBaseImpl extends TicketModelImpl implements Ticket {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1335196903

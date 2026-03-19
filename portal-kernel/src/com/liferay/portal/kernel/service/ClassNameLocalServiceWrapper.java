@@ -404,3 +404,4 @@ public class ClassNameLocalServiceWrapper
 	private ClassNameLocalService _classNameLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1022052558

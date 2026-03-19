@@ -125,6 +125,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 				verifiableGroupedModel.getTableName())) {
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
 						StringBundler.concat(
@@ -135,6 +136,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 								getRelatedPrimaryKeyColumnName(),
 							" from ", verifiableGroupedModel.getTableName(),
 							" where groupId is null"));
+
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				try (PreparedStatement preparedStatement2 =

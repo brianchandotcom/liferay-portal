@@ -57,3 +57,4 @@ public class SocialRequestTable extends BaseTable<SocialRequestTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-667291851

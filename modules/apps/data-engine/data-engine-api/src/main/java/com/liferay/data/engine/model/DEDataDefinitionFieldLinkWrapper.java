@@ -478,3 +478,4 @@ public class DEDataDefinitionFieldLinkWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1018504147

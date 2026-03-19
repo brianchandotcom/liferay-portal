@@ -3633,3 +3633,4 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:677210344

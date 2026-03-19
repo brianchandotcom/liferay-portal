@@ -16,6 +16,7 @@ public class LogUtil {
 	public static void log(String message) {
 		try (QuietByteArrayOutputStream quietByteArrayOutputStream =
 				new QuietByteArrayOutputStream();
+
 			PrintStream printStream = new PrintStream(
 				quietByteArrayOutputStream) {
 

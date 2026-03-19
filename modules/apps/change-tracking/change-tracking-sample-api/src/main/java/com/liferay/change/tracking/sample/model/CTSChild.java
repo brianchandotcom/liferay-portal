@@ -50,3 +50,4 @@ public interface CTSChild extends CTSChildModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-472051526

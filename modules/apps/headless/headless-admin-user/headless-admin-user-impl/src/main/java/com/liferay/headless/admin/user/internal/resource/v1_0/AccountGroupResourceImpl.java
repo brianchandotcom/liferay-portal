@@ -201,8 +201,10 @@ public class AccountGroupResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<com.liferay.account.model.AccountGroup>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -215,8 +217,10 @@ public class AccountGroupResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return com.liferay.account.model.AccountGroup.class.getName();
+			public Class<com.liferay.account.model.AccountGroup>
+				getModelClass() {
+
+				return com.liferay.account.model.AccountGroup.class;
 			}
 
 			@Override

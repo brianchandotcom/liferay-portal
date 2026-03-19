@@ -920,3 +920,4 @@ public class KBTemplateUtil {
 	private static volatile KBTemplatePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-586922944

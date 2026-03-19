@@ -15,3 +15,4 @@ public class PortalWorkflowUADConstants {
 		{"userId"};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-289031933

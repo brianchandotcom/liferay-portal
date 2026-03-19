@@ -5,7 +5,6 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
-import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.rest.dto.v1_0.Task;
 import com.liferay.ai.hub.rest.internal.resource.v1_0.util.WorkflowContextUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
@@ -61,15 +60,6 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 			_workflowDefinitionManager.getLatestWorkflowDefinition(
 				contextCompany.getCompanyId(), task.getType());
 
-		long groupId = workflowDefinition.getGroupId();
-
-		if (workflowDefinition.isSystem()) {
-			AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
-				contextUser.getUserId());
-
-			groupId = accountEntry.getAccountEntryGroupId();
-		}
-
 		Map<String, Serializable> workflowContext =
 			WorkflowContextUtil.toWorkflowContext(
 				task.getContext(), contextHttpServletRequest,
@@ -78,13 +68,16 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		workflowContext.put("outBoundEventName", task.getType());
 		workflowContext.put(
 			"userToken",
-			contextHttpServletRequest.getHeader("Liferay-AI-Hub-On-Behalf-Of"));
+			contextHttpServletRequest.getHeader(
+				"Liferay-AI-Hub-Cell-On-Behalf-Of"));
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.startWorkflowInstance(
-				contextCompany.getCompanyId(), groupId, contextUser.getUserId(),
-				task.getType(), workflowDefinition.getVersion(), null,
-				workflowContext);
+				contextCompany.getCompanyId(),
+				AccountEntryUtil.getUserAccountEntryGroupId(
+					contextUser.getUserId()),
+				contextUser.getUserId(), task.getType(),
+				workflowDefinition.getVersion(), null, workflowContext);
 
 		return new Task() {
 			{

@@ -1822,3 +1822,4 @@ public class GroupServiceHttp {
 		new Class[] {long.class, java.util.Map.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:732045991

@@ -2414,3 +2414,4 @@ public class ObjectLayoutBoxPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:478777616

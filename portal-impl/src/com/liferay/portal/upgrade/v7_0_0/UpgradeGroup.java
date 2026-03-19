@@ -103,6 +103,7 @@ public class UpgradeGroup extends UpgradeProcess {
 						"User_ on Group_.companyId = User_.companyId where ",
 						"User_.defaultuser = [$TRUE$] and site = [$TRUE$] and ",
 						"friendlyURL != '/global'")));
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(

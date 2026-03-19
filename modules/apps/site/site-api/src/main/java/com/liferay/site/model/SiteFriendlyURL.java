@@ -48,3 +48,4 @@ public interface SiteFriendlyURL extends PersistedModel, SiteFriendlyURLModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-672187734

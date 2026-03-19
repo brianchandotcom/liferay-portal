@@ -5,8 +5,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import javax.sql.DataSource;

@@ -1471,3 +1471,4 @@ public class OAuth2ApplicationUtil {
 	private static volatile OAuth2ApplicationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1343389572

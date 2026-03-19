@@ -59,3 +59,4 @@ public class RedirectNotFoundEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1146051568

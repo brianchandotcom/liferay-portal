@@ -813,3 +813,4 @@ public class SocialActivityCounterLocalServiceWrapper
 		_socialActivityCounterLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1833444269

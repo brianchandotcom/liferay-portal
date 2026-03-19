@@ -68,3 +68,4 @@ public class SocialActivityCounterFinderBaseImpl
 		SocialActivityCounterFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-373512466

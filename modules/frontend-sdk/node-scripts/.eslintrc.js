@@ -12,7 +12,18 @@ config.ignorePatterns = [
 
 	// Ignore files with top level await (not supported until eslint v8)
 
-	'bundle/sass/runSass.mjs',
+	'util/sass/util/runSass.mjs',
+
+	// Ignore Jest plugin files
+
+	'util/jest/getJestConfig.js',
+	'util/jest/globalSetup.js',
+	'util/jest/resolver.js',
+	'util/jest/setup.js',
+	'util/jest/setupAfterEnv.js',
+	'util/jest/transformSass.js',
+	'util/jest/mocks/Headers.js',
+	'util/jest/mocks/Liferay.js',
 ];
 
 config.rules = {

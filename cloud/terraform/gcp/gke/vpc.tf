@@ -10,11 +10,27 @@ resource "google_compute_firewall" "allow_health_checks" {
 }
 resource "google_compute_firewall" "allow_internal" {
 	allow {
-		ports=["0-65535",]
+		ports=[
+			"53",
+			"80",
+			"443",
+			"8080",
+			"8443",
+			"9080",
+			"9443",
+			"10250",
+			"10255",
+			"10256",
+		]
 		protocol="tcp"
 	}
 	allow {
-		ports=["0-65535",]
+		ports=[
+			"53",
+			"4789",
+			"7800",
+			"8472",
+		]
 		protocol="udp"
 	}
 	allow {
@@ -27,6 +43,7 @@ resource "google_compute_firewall" "allow_internal" {
 }
 resource "google_compute_global_address" "private_ip_alloc" {
 	address_type="INTERNAL"
+	depends_on=[time_sleep.wait_for_apis]
 	name="${var.deployment_name}-psa-range"
 	network=google_compute_network.vpc.id
 	prefix_length=16
@@ -35,6 +52,7 @@ resource "google_compute_global_address" "private_ip_alloc" {
 }
 resource "google_compute_network" "vpc" {
 	auto_create_subnetworks=false
+	depends_on=[time_sleep.wait_for_apis]
 	name="${var.deployment_name}-vpc"
 	project=var.project_id
 	routing_mode="GLOBAL"

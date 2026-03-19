@@ -104,3 +104,4 @@ public class ObjectEntryVersionServiceUtil {
 			ObjectEntryVersionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1815645229

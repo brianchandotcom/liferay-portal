@@ -2954,6 +2954,38 @@ public class ObjectDefinitionLocalServiceImpl
 				}
 			}
 			else if (objectField.isSystem()) {
+				ObjectField existingObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectField.getExternalReferenceCode(),
+						objectDefinition.getObjectDefinitionId());
+
+				if (existingObjectField == null) {
+					continue;
+				}
+
+				_objectFieldLocalService.updateObjectField(
+					existingObjectField.getExternalReferenceCode(),
+					existingObjectField.getObjectFieldId(),
+					existingObjectField.getUserId(),
+					existingObjectField.getListTypeDefinitionId(),
+					existingObjectField.getObjectDefinitionId(),
+					existingObjectField.getBusinessType(),
+					existingObjectField.getDBColumnName(),
+					existingObjectField.getDBTableName(),
+					existingObjectField.getDBType(),
+					existingObjectField.isIndexed(),
+					objectField.isIndexedAsKeyword(),
+					objectField.getIndexedLanguageId(),
+					objectField.getLabelMap(),
+					existingObjectField.isLocalized(),
+					existingObjectField.getName(),
+					existingObjectField.getReadOnly(),
+					existingObjectField.getReadOnlyConditionExpression(),
+					existingObjectField.isRequired(),
+					existingObjectField.isState(),
+					existingObjectField.isSystem(),
+					objectField.getObjectFieldSettings());
+
 				continue;
 			}
 

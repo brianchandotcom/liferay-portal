@@ -165,6 +165,7 @@ public class FileSyncConfigurationListener implements ConfigurationListener {
 					}
 
 					try (OutputStream outputStream = new FileOutputStream(file);
+
 						Writer writer = new OutputStreamWriter(
 							outputStream, _encoding)) {
 

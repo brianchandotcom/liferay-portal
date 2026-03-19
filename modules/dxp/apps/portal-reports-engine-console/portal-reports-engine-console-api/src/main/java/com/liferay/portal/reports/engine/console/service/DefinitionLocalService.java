@@ -361,3 +361,4 @@ public interface DefinitionLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:351262627

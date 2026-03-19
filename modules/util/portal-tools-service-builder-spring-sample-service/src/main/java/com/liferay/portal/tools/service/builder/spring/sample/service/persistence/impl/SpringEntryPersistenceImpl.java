@@ -2331,3 +2331,4 @@ public class SpringEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1167242124

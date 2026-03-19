@@ -54,3 +54,4 @@ public interface CPDefinitionInventory
 	public java.math.BigDecimal[] getAllowedOrderQuantitiesArray();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1014358700

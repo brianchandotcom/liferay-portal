@@ -137,3 +137,4 @@ public class CommerceWishListItemModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-80430243

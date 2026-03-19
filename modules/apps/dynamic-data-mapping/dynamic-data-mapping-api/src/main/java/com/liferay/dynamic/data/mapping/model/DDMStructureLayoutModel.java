@@ -527,3 +527,4 @@ public interface DDMStructureLayoutModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1244511781

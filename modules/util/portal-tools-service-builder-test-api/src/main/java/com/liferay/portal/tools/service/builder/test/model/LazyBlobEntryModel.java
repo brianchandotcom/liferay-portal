@@ -125,3 +125,4 @@ public interface LazyBlobEntryModel extends BaseModel<LazyBlobEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1188720790

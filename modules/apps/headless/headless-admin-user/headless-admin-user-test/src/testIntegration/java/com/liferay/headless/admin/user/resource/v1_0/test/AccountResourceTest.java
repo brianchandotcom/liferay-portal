@@ -340,6 +340,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		super.testGetAccount();
 
 		_testGetAccountWithNestedFields();
+		_testGetAccountWithoutLogo();
 	}
 
 	@Override
@@ -1557,8 +1558,6 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		Account getAccount = accountResource.getAccount(postAccount.getId());
 
-		Assert.assertNotNull(getAccount.getCreator());
-
 		Assert.assertTrue(
 			ArrayUtil.exists(
 				getAccount.getAccountGroupBriefs(),
@@ -1610,6 +1609,22 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				taxonomyCategoryBrief -> Objects.equals(
 					taxonomyCategoryBrief.getTaxonomyCategoryId(),
 					assetCategory.getCategoryId())));
+	}
+
+	private void _testGetAccountWithoutLogo() throws Exception {
+		Account postAccount = testGetAccount_addAccount();
+
+		Account getAccount = accountResource.getAccount(postAccount.getId());
+
+		assertEquals(postAccount, getAccount);
+		assertValid(getAccount);
+
+		Assert.assertEquals(0, GetterUtil.getLong(getAccount.getLogoId()));
+
+		String logoURL = getAccount.getLogoURL();
+
+		Assert.assertTrue(logoURL.contains("account_logo"));
+		Assert.assertFalse(logoURL.contains("organization_logo"));
 	}
 
 	private void _testPatchAccountByExternalReferenceCodeWithMoreExternalReferenceCodes()

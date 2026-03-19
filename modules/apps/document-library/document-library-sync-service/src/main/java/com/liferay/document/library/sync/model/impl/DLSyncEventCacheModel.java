@@ -145,3 +145,4 @@ public class DLSyncEventCacheModel
 	public long typePK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-75047478

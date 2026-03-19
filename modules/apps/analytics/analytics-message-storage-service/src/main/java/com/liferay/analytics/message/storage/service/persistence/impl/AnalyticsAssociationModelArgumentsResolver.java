@@ -118,3 +118,4 @@ public class AnalyticsAssociationModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-180273983

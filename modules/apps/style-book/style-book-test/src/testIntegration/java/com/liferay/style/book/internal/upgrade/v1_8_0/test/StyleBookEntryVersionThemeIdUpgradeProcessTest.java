@@ -97,6 +97,7 @@ public class StyleBookEntryVersionThemeIdUpgradeProcessTest {
 		}
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select uuid_, themeId from StyleBookEntryVersion where " +
 					"styleBookEntryId = ? or styleBookEntryId = ?")) {

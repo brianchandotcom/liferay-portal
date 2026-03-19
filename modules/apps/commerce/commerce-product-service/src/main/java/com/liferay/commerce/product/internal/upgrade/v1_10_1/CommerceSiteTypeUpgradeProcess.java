@@ -40,6 +40,7 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select siteGroupId from CommerceChannel")) {
 

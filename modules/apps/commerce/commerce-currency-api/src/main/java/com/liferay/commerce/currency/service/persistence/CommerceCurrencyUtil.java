@@ -1502,3 +1502,4 @@ public class CommerceCurrencyUtil {
 	private static volatile CommerceCurrencyPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1535678453

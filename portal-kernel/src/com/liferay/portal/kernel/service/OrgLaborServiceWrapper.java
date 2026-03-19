@@ -96,3 +96,4 @@ public class OrgLaborServiceWrapper
 	private OrgLaborService _orgLaborService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2113407026

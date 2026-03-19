@@ -1,0 +1,61 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.OSDetector
+
+ext.getMVNCommand = {
+	String command ->
+
+	if (OSDetector.windows) {
+		return ["cmd.exe", "/c", "mvn ${command}"]
+	}
+
+	return ["/bin/sh", "-c", "mvn ${command}"]
+}
+
+ext.mvnSourceDir = new File(buildDir, "${gitHubRepository}-${gitHash}")
+
+String mvnSourceURL = "https://github.com/${gitHubOwner}/${gitHubRepository}/archive/${gitHash}.zip"
+
+task downloadSource(type: Copy)
+task jarMVN(type: Exec)
+
+downloadSource {
+	doNotTrackState("")
+
+	from {
+		zipTree(FileUtil.get(project, mvnSourceURL))
+	}
+
+	into buildDir
+}
+
+jar {
+	dependsOn jarMVN
+	setActions([])
+}
+
+jarMVN {
+	commandLine getMVNCommand("package")
+	dependsOn downloadSource
+
+	doLast {
+		copy {
+			from new File(mvnSourceDir, mvnTargetDir)
+			include project.mvnJARInclude
+			into base.distsDirectory
+
+			rename {
+				jar.archiveFileName.get()
+			}
+		}
+	}
+
+	workingDir = mvnSourceDir
+}
+
+jarSources {
+	mustRunAfter downloadSource
+}
+
+processResources {
+	mustRunAfter downloadSource
+}

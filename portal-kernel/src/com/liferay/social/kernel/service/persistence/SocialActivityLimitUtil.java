@@ -920,3 +920,4 @@ public class SocialActivityLimitUtil {
 	private static volatile SocialActivityLimitPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2108058992

@@ -649,3 +649,4 @@ public interface CommercePaymentMethodGroupRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1786100742

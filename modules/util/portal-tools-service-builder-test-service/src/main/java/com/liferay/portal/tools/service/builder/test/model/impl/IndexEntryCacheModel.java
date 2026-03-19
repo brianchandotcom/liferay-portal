@@ -184,3 +184,4 @@ public class IndexEntryCacheModel
 	public String portletId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1051324344

@@ -1255,3 +1255,4 @@ public class CalendarUtil {
 	private static volatile CalendarPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1496754475

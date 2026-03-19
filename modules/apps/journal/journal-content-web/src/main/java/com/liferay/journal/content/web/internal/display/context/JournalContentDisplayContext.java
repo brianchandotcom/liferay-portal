@@ -610,32 +610,22 @@ public class JournalContentDisplayContext {
 		PortletPreferences portletPreferences =
 			_portletRequest.getPreferences();
 
-		long assetEntryId = GetterUtil.getLong(
-			portletPreferences.getValue("assetEntryId", StringPool.BLANK));
-
-		if (assetEntryId > 0) {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
-				assetEntryId);
-
-			if (assetEntry != null) {
-				return JournalArticleLocalServiceUtil.fetchLatestArticle(
-					assetEntry.getClassPK());
-			}
-		}
-
 		String articleExternalReferenceCode = portletPreferences.getValue(
 			"articleExternalReferenceCode", null);
-		String groupExternalReferenceCode = GetterUtil.getString(
-			portletPreferences.getValue("groupExternalReferenceCode", null));
 
-		if ((articleExternalReferenceCode == null) ||
-			(groupExternalReferenceCode == null)) {
-
+		if (articleExternalReferenceCode == null) {
 			return null;
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-			groupExternalReferenceCode, _themeDisplay.getCompanyId());
+		Group group = _themeDisplay.getScopeGroup();
+
+		String groupExternalReferenceCode = GetterUtil.getString(
+			portletPreferences.getValue("groupExternalReferenceCode", null));
+
+		if (Validator.isNotNull(groupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				groupExternalReferenceCode, _themeDisplay.getCompanyId());
+		}
 
 		if (group == null) {
 			return null;

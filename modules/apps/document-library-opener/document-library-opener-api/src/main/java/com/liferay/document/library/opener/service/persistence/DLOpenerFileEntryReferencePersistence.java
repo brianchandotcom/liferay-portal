@@ -257,3 +257,4 @@ public interface DLOpenerFileEntryReferencePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:640681769

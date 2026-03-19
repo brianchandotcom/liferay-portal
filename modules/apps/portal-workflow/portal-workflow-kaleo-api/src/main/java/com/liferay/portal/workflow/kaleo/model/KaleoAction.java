@@ -50,3 +50,4 @@ public interface KaleoAction extends KaleoActionModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1243174351

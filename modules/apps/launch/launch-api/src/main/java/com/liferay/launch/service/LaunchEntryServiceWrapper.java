@@ -48,3 +48,4 @@ public class LaunchEntryServiceWrapper
 	private LaunchEntryService _launchEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-862104102

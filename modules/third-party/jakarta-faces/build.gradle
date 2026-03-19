@@ -1,5 +1,34 @@
+ext {
+	jakartaFacesModule = true
+}
+
 apply from: "../../build-jakarta-transformer.gradle"
 
 dependencies {
-	compileOnly group: "com.liferay", name: "javax.faces", transitive: false, version: "2.2.20.LIFERAY-PATCHED-1"
+	// TODO 2.3.21.LIFERAY-PATCHED-2 needs to be in modules/third-party
+	compileOnly group: "com.liferay", name: "jakarta.faces", transitive: false, version: "2.3.21.LIFERAY-PATCHED-2"
+}
+
+// TODO SF this very ugly block
+
+jar {
+	doLast {
+		File jarFile = archiveFile.get().asFile
+		File tempDir = file("$buildDir/tmp/jarExtract")
+
+		copy {
+			from zipTree(jarFile)
+			into tempDir
+
+			includeEmptyDirs = false
+
+			eachFile {
+				if (it.path.contains("javax.faces")) {
+					it.path = it.path.replace("javax.faces", "jakarta.faces")
+				}
+			}
+		}
+
+		ant.jar(destfile: jarFile, basedir: tempDir, manifest: file("$tempDir/META-INF/MANIFEST.MF"))
+	}
 }

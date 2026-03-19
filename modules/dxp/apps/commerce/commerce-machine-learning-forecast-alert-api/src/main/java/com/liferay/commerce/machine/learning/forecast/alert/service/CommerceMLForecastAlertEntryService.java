@@ -88,3 +88,4 @@ public interface CommerceMLForecastAlertEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1761148507

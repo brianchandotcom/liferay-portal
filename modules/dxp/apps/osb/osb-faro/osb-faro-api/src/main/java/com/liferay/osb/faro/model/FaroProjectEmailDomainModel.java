@@ -144,3 +144,4 @@ public interface FaroProjectEmailDomainModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-120713359

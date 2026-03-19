@@ -39,3 +39,4 @@ public abstract class DLFileEntryMetadataBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1314221175

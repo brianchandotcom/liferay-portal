@@ -329,3 +329,4 @@ public class AnnouncementsEntryCacheModel
 	public boolean alert;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2029930975

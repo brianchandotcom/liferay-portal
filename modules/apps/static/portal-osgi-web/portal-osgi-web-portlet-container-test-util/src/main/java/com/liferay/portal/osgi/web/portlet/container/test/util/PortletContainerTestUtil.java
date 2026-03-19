@@ -5,10 +5,10 @@
 
 package com.liferay.portal.osgi.web.portlet.container.test.util;
 
+import com.liferay.petra.io.WriterOutputStream;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.WriterOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;

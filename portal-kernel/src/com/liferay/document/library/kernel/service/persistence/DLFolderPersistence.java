@@ -3979,3 +3979,4 @@ public interface DLFolderPersistence
 				dlFileEntryTypes);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:831668500

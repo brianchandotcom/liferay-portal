@@ -61,3 +61,4 @@ public interface BookmarksFolder
 	public boolean isRoot();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1067422799

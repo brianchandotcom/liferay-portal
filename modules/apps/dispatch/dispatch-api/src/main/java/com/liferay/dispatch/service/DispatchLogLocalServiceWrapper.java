@@ -410,3 +410,4 @@ public class DispatchLogLocalServiceWrapper
 	private DispatchLogLocalService _dispatchLogLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-9061983

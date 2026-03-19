@@ -38,3 +38,4 @@ public class RenameFinderColumnEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:278037133

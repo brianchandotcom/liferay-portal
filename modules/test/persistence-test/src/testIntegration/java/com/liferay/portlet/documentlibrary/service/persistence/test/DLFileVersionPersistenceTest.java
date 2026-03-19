@@ -822,3 +822,4 @@ public class DLFileVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:490148269

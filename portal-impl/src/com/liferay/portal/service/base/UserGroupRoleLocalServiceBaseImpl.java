@@ -546,3 +546,4 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 		UserGroupRoleLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1237577890

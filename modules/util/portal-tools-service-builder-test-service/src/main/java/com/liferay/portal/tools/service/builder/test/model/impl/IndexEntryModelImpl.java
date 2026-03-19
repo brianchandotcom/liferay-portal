@@ -856,3 +856,4 @@ public class IndexEntryModelImpl
 	private IndexEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1651733026

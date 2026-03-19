@@ -407,3 +407,4 @@ public class PLOEntryLocalServiceWrapper
 	private PLOEntryLocalService _ploEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:688676206

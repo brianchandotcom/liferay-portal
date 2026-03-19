@@ -422,3 +422,4 @@ public class ObjectFolderItemLocalServiceUtil {
 			ObjectFolderItemLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-576280919

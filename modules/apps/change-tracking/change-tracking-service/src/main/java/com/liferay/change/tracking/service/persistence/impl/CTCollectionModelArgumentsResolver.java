@@ -132,3 +132,4 @@ public class CTCollectionModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1279944380

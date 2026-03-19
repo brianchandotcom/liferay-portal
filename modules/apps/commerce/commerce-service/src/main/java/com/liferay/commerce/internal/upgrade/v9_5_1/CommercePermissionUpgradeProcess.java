@@ -39,12 +39,12 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 
 	private void _updateSalesAgentPermission() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			StringBundler.concat(
-				"select companyId, resourcePermissionId, roleId from ",
-				"ResourcePermission where name = 'com.liferay.commerce.order' ",
-				"and scope = 1"));
+				StringBundler.concat(
+					"select companyId, resourcePermissionId, roleId from ",
+					"ResourcePermission where name = 'com.liferay.commerce.",
+					"order' and scope = 1"));
 
-			 ResultSet resultSet = preparedStatement.executeQuery()) {
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				Role role = _roleLocalService.fetchRole(

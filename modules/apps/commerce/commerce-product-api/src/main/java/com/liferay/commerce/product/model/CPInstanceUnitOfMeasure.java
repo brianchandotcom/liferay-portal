@@ -55,3 +55,4 @@ public interface CPInstanceUnitOfMeasure
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1907932046

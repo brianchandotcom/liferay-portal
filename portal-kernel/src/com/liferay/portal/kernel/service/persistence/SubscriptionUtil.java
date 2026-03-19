@@ -1202,3 +1202,4 @@ public class SubscriptionUtil {
 	private static volatile SubscriptionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1468050050

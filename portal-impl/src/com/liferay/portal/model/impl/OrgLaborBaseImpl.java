@@ -39,3 +39,4 @@ public abstract class OrgLaborBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:401612953

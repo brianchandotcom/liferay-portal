@@ -1531,3 +1531,4 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1909714084

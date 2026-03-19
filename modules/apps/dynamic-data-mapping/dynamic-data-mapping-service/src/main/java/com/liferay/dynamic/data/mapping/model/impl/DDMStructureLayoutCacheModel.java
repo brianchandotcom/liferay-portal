@@ -332,3 +332,4 @@ public class DDMStructureLayoutCacheModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:783875987

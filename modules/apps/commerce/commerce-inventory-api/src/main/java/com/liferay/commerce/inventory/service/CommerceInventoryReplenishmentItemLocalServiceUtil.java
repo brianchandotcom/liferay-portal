@@ -490,3 +490,4 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 				CommerceInventoryReplenishmentItemLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-797543877

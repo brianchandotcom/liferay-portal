@@ -50,3 +50,4 @@ public interface SamlSpSession extends PersistedModel, SamlSpSessionModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1052650416

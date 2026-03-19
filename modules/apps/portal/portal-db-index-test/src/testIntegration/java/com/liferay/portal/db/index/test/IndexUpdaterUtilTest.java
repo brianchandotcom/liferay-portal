@@ -7,7 +7,6 @@ package com.liferay.portal.db.index.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -17,6 +16,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DuplicateUniqueFinderRowsCleaner;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -236,14 +236,15 @@ public class IndexUpdaterUtilTest {
 			}
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"select count(*) from TestTable")) {
+						"select count(*) as count from TestTable")) {
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					Assert.assertTrue(resultSet.next());
 
-					Assert.assertEquals(1, resultSet.getInt(1));
+					Assert.assertEquals(1, resultSet.getInt("count"));
 				}
 
 				List<IndexMetadata> indexMetadatas = _db.getIndexMetadatas(

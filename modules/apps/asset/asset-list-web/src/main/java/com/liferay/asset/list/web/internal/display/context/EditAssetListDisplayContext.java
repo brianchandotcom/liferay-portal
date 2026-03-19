@@ -214,8 +214,11 @@ public class EditAssetListDisplayContext {
 			long[] classTypeIds = GetterUtil.getLongValues(
 				StringUtil.split(
 					unicodeProperties.getProperty(
-						"classTypeIds" + clazz.getSimpleName(), null)),
-				_getDefaultClassTypeIds(classTypeReader));
+						"classTypeIds" + clazz.getSimpleName(), null)));
+
+			if (classTypeIds.length == 0) {
+				classTypeIds = _getDefaultClassTypeIds(classTypeReader);
+			}
 
 			for (long classTypeId : classTypeIds) {
 				dropdownItemList.add(
@@ -1294,7 +1297,7 @@ public class EditAssetListDisplayContext {
 				unicodeProperties.getProperty("classTypeIds" + className, null),
 				0L));
 
-		if (classTypeIds != null) {
+		if (ArrayUtil.isNotEmpty(classTypeIds)) {
 			return classTypeIds;
 		}
 

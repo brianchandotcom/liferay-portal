@@ -61,3 +61,4 @@ public interface CPConfigurationList
 	public long getTemplateCPConfigurationEntryId();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2141309340

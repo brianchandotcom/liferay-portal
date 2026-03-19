@@ -142,8 +142,8 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<AssetVocabulary> getExportImportDescriptor() {
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -156,8 +156,8 @@ public class TaxonomyVocabularyResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return AssetVocabulary.class.getName();
+			public Class<AssetVocabulary> getModelClass() {
+				return AssetVocabulary.class;
 			}
 
 			@Override

@@ -41,3 +41,4 @@ public class UserGroupRoleFinderUtil {
 	private static UserGroupRoleFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-824245440

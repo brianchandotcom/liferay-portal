@@ -1,0 +1,27 @@
+-   tabpanel "Tabs":
+    -   blockquote:
+        -   paragraph: Tabs organize similar content together into individual sections in the same page.
+    -   heading "DEFAULT TABS" [level=3]
+    -   tablist:
+        -   tab "Option 1"
+        -   tab "Option 2" [selected]
+        -   tab "Option 3" [disabled]
+        -   tab "Option 4"
+    -   tabpanel "Option 2":
+        -   paragraph: Tab Content 2
+    -   heading "BASIC TABS" [level=3]
+    -   tablist:
+        -   tab "Option 1"
+        -   tab "Option 2" [selected]
+        -   tab "Option 3" [disabled]
+        -   tab "Option 4"
+    -   tabpanel "Option 2":
+        -   paragraph: Tab Content 2
+    -   heading "JUSTIFIED TABS" [level=3]
+    -   tablist:
+        -   tab "Option 1"
+        -   tab "Option 2" [selected]
+        -   tab "Option 3" [disabled]
+        -   tab "Option 4"
+    -   tabpanel "Option 2":
+        -   paragraph: Tab Content 2

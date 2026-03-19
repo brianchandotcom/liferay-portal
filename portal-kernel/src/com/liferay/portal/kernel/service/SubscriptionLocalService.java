@@ -456,3 +456,4 @@ public interface SubscriptionLocalService
 	public Subscription updateSubscription(Subscription subscription);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1827749673

@@ -495,3 +495,4 @@ public abstract class AnalyticsAssociationLocalServiceBaseImpl
 		AnalyticsAssociationLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1710124909

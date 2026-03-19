@@ -55,3 +55,4 @@ public interface ExportImportReportEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1149346747

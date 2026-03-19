@@ -227,3 +227,4 @@ public class AnnouncementsEntryServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2123714202

@@ -650,3 +650,4 @@ public class ContactsLayoutTemplateUtil {
 	private static volatile ContactsLayoutTemplatePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1733568016

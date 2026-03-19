@@ -94,3 +94,4 @@ public class DDMTemplateTable extends BaseTable<DDMTemplateTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1073998791

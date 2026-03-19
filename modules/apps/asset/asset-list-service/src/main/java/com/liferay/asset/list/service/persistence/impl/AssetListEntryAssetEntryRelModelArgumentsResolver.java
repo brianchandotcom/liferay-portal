@@ -142,3 +142,4 @@ public class AssetListEntryAssetEntryRelModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1597206290

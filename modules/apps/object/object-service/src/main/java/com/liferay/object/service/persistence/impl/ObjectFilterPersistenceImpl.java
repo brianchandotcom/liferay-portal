@@ -2386,3 +2386,4 @@ public class ObjectFilterPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1593053

@@ -762,3 +762,4 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 		LayoutPageTemplateEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1393275048

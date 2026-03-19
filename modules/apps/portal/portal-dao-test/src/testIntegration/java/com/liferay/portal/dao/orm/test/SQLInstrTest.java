@@ -60,6 +60,7 @@ public class SQLInstrTest {
 		sql = SQLTransformer.transform(sql);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 
@@ -81,6 +82,7 @@ public class SQLInstrTest {
 		sql = SQLTransformer.transform(sql);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 

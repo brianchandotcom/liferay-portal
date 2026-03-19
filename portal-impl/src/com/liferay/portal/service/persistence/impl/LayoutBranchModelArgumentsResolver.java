@@ -112,3 +112,4 @@ public class LayoutBranchModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1773106230

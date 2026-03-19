@@ -113,6 +113,7 @@ public class UpgradeRatings extends UpgradeProcess {
 
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(selectSQL);
+
 				ResultSet resultSet = preparedStatement1.executeQuery();
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(

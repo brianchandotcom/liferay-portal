@@ -399,3 +399,4 @@ public class AssetTagGroupRelLocalServiceUtil {
 	private static volatile AssetTagGroupRelLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2046644749

@@ -38,6 +38,7 @@ import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -506,6 +507,10 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		try {
+			if (Objects.equals(scope, WorkflowDefinitionConstants.SCOPE_AI)) {
+				liberal = true;
+			}
+
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCompanyId(companyId);

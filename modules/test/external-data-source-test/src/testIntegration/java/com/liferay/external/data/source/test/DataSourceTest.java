@@ -42,8 +42,10 @@ public class DataSourceTest {
 	@Test
 	public void testUpdate() throws Exception {
 		try (Connection connection = _dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from TestEntity");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(
@@ -57,6 +59,7 @@ public class DataSourceTest {
 		}
 
 		try (Connection connection = _dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"delete from TestEntity")) {
 
@@ -72,8 +75,10 @@ public class DataSourceTest {
 		TestEntityLocalServiceUtil.addTestEntity(testEntity);
 
 		try (Connection connection = _dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from TestEntity");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());

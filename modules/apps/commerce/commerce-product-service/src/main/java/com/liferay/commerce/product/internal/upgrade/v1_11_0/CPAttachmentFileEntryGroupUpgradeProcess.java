@@ -33,6 +33,7 @@ public class CPAttachmentFileEntryGroupUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select classNameId, classPK from CPAttachmentFileEntry")) {
 
@@ -82,6 +83,7 @@ public class CPAttachmentFileEntryGroupUpgradeProcess extends UpgradeProcess {
 
 	private long _getCPDefinitionClassNameId() throws Exception {
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select classNameId from ClassName_ where value = " +
 					"'com.liferay.commerce.product.model.CPDefinition'")) {
@@ -98,6 +100,7 @@ public class CPAttachmentFileEntryGroupUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select groupId from CPDefinition where cpDefinitionId = " +
 					cpDefinitionId)) {

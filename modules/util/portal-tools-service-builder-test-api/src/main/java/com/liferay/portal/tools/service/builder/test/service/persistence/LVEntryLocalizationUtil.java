@@ -596,3 +596,4 @@ public class LVEntryLocalizationUtil {
 	private static volatile LVEntryLocalizationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1895131745

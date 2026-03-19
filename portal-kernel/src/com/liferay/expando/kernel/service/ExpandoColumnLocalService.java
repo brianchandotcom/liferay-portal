@@ -407,3 +407,4 @@ public interface ExpandoColumnLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:735367718

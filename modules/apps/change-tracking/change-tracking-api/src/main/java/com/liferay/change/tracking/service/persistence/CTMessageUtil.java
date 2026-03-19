@@ -438,3 +438,4 @@ public class CTMessageUtil {
 	private static volatile CTMessagePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1922776996

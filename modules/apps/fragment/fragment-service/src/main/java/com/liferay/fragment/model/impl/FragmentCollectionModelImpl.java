@@ -1244,3 +1244,4 @@ public class FragmentCollectionModelImpl
 	private FragmentCollection _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1332858558

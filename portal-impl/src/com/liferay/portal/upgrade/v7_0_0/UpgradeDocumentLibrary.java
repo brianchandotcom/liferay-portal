@@ -402,6 +402,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select groupId, folderId, fileName from DLFileEntry group " +
 					"by groupId, folderId, fileName having count(*) > 1");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

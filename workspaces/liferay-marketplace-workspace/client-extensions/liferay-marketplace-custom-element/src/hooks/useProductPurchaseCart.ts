@@ -14,7 +14,7 @@ const channelId = Liferay.CommerceContext.commerceChannelId;
 
 const useProductPurchaseCart = (
 	accountId: number,
-	product: DeliveryProduct,
+	product: DeliveryProduct | undefined,
 	orderTypeExternalReferenceCode: string
 ) => {
 	const {cart, cartItems} = useSelector(cartStore, (state) => state.context);
@@ -85,7 +85,7 @@ const useProductPurchaseCart = (
 
 	useEffect(() => {
 		(async () => {
-			if (!accountId) {
+			if (!accountId || !product) {
 				return;
 			}
 
@@ -125,7 +125,14 @@ const useProductPurchaseCart = (
 
 			setCartItems(cartItems);
 		})();
-	}, [accountId, product.productId, removeCart, setCart, setCartItems]);
+	}, [
+		accountId,
+		product,
+		product?.productId,
+		removeCart,
+		setCart,
+		setCartItems,
+	]);
 
 	return {
 		addCart,

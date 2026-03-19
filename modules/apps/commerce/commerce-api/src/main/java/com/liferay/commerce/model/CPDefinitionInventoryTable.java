@@ -103,3 +103,4 @@ public class CPDefinitionInventoryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1688141426

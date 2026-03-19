@@ -536,3 +536,4 @@ public class DepotEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-851994723

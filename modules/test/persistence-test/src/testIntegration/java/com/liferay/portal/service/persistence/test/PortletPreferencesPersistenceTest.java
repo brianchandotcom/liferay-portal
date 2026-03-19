@@ -612,3 +612,4 @@ public class PortletPreferencesPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-990461209

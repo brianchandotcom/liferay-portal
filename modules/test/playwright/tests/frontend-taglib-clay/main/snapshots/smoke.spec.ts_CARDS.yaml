@@ -1,0 +1,218 @@
+-   tabpanel "Cards":
+    -   heading "Image Cards" [level=3]
+    -   text: Image Cards
+    -   img "thumbnail"
+    -   paragraph:
+        -   link "Madrid":
+            -   /url: "#image-card-href"
+    -   paragraph: Author Action
+    -   button "More actions"
+    -   paragraph: lexicon.icon.camera.svg
+    -   paragraph: Author Action
+    -   button "More actions"
+    -   paragraph: lexicon.icon.camera.svg
+    -   paragraph: Author Action
+    -   button "More actions"
+    -   text: Image Card with Sticker
+    -   img "thumbnail"
+    -   paragraph:
+        -   link "California":
+            -   /url: "#image-card-href"
+    -   paragraph: Author Action
+    -   button "More actions"
+    -   paragraph: lexicon.icon.camera.svg
+    -   paragraph: Author Action
+    -   button "More actions"
+    -   paragraph: lexicon.icon.camera.png
+    -   paragraph: Danger
+    -   button "More actions"
+    -   text: Image Card with Sticker Shape
+    -   img "An image"
+    -   paragraph:
+        -   link "California":
+            -   /url: "#image-card-href"
+    -   paragraph: Author Action
+    -   button "More actions"
+    -   paragraph: lexicon.icon.camera.svg
+    -   paragraph: Author Action
+    -   button "More actions"
+    -   img "Alt Text"
+    -   paragraph: lexicon.icon.camera.png
+    -   paragraph: Author Action
+    -   button "More actions"
+    -   text: Image Card with Labels
+    -   img "thumbnail"
+    -   paragraph:
+        -   link "Beetle":
+            -   /url: "#image-card-href"
+    -   paragraph: Author Action
+    -   text: Approved Pending Canceled
+    -   button "More actions"
+    -   paragraph: lexicon.icon.camera.svg
+    -   paragraph: Author Action
+    -   text: Approved Pending
+    -   button "More actions"
+    -   paragraph: lexicon.icon.camera.svg
+    -   paragraph: Author Action
+    -   text: Approved
+    -   button "More actions"
+    -   text: Selectable Image Card
+    -   checkbox "thumbnail" [checked]
+    -   img "thumbnail"
+    -   paragraph:
+        -   link "Beetle":
+            -   /url: "#image-card-href"
+    -   paragraph: Author Action
+    -   text: Approved
+    -   button "More actions"
+    -   checkbox "Select Card"
+    -   paragraph: lexicon.icon.camera.svg
+    -   paragraph: Author Action
+    -   text: Approved Pending
+    -   button "More actions"
+    -   checkbox "Image Card" [checked]
+    -   img "Image Card"
+    -   paragraph: lexicon.icon.camera.svg
+    -   paragraph: Author Action
+    -   text: Approved Pending Canceled
+    -   button "More actions"
+    -   text: Image Card Using Model
+    -   img "An image"
+    -   paragraph:
+        -   link "California":
+            -   /url: "#1"
+    -   paragraph: Author Action
+    -   text: Approved Pending Canceled
+    -   button "More actions"
+    -   img "An image"
+    -   paragraph:
+        -   link "Mountains":
+            -   /url: "#2"
+    -   paragraph: Author Action
+    -   text: Approved Pending
+    -   button "More actions"
+    -   text: File Cards
+    -   paragraph: deliverable.mp3
+    -   paragraph: Jimi Hendrix
+    -   text: Recommended
+    -   button "More actions"
+    -   checkbox "Select Card" [checked]
+    -   paragraph: deliverable.doc
+    -   paragraph: File Action
+    -   text: Recommended Approved Rejected
+    -   button "More actions"
+    -   text: File Cards Using Model
+    -   checkbox "Select Card" [disabled]
+    -   paragraph: deliverable.pdf
+    -   paragraph: Another PDF document
+    -   text: Recommended
+    -   button "More actions"
+    -   checkbox "Select Card" [checked]
+    -   paragraph:
+        -   link "deliverable.mp3":
+            -   /url: "#file-card-href"
+    -   paragraph: More music
+    -   text: Recommended Approved
+    -   button "More actions"
+    -   text: User Cards
+    -   paragraph: User Name
+    -   paragraph: Latest Action
+    -   paragraph: User Name
+    -   paragraph: Latest Action
+    -   button "More actions"
+    -   img "User Card Image Alt Text"
+    -   paragraph: User Name
+    -   paragraph: Latest Action
+    -   button "More actions" [disabled]
+    -   text: Selectable User Cards
+    -   paragraph: User Name
+    -   paragraph: Latest Action
+    -   paragraph: User Name
+    -   paragraph: Latest Action
+    -   button "More actions"
+    -   img "User Card Image Alt Text"
+    -   paragraph: User Name
+    -   paragraph: Latest Action
+    -   button "More actions"
+    -   text: User Cards Using Model
+    -   paragraph: User Name
+    -   paragraph: Latest Action
+    -   button "More actions" [disabled]
+    -   paragraph:
+        -   link "User Name":
+            -   /url: "#user-card-href"
+    -   paragraph: Latest Action
+    -   button "More actions"
+    -   img "User Card Image Alt Text"
+    -   paragraph:
+        -   link "User Name":
+            -   /url: "#user-card-href"
+    -   paragraph: Latest Action
+    -   button "More actions"
+    -   text: Selectable User Cards Using Display Context
+    -   checkbox "Select Card" [disabled]
+    -   paragraph: User Name
+    -   paragraph: Latest Action
+    -   button "More actions" [disabled]
+    -   checkbox "Select Card"
+    -   paragraph:
+        -   link "User Name":
+            -   /url: "#user-card-href"
+    -   paragraph: Latest Action
+    -   button "More actions"
+    -   checkbox "User Card Image Alt Text"
+    -   img "User Card Image Alt Text"
+    -   paragraph:
+        -   link "User Name":
+            -   /url: "#user-card-href"
+    -   paragraph: Latest Action
+    -   button "More actions"
+    -   text: Horizontal Cards
+    -   paragraph: ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual
+    -   checkbox "ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual More actions" [disabled]
+    -   paragraph: ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual
+    -   button "More actions" [disabled]
+    -   checkbox "Asset Title More actions" [checked]
+    -   paragraph:
+        -   link "Asset Title":
+            -   /url: "#custom-horizontal-card-href"
+    -   button "More actions"
+    -   paragraph: "%A"
+    -   paragraph: a
+    -   text: Vertical Cards
+    -   img "Elephant"
+    -   paragraph: ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual
+    -   paragraph: Card Action
+    -   text: Approved
+    -   button "More actions"
+    -   checkbox "Select Card" [checked]
+    -   paragraph: ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual
+    -   paragraph: Card Action
+    -   text: Approved
+    -   button "More actions"
+    -   text: Vertical Cards Using Model
+    -   checkbox "Vertical Card"
+    -   img "Vertical Card"
+    -   paragraph:
+        -   link "Madrid":
+            -   /url: "#vertical-card-href"
+    -   paragraph: A beautiful city
+    -   text: Approved Pending
+    -   button "More actions"
+    -   paragraph: Vertical Card
+    -   paragraph: This card is disabled
+    -   text: Approved Pending
+    -   button "More actions"
+    -   text: Navigation Cards
+    -   button "Add Page":
+        -   paragraph: Add Page
+    -   link "Children Pages":
+        -   /url: "#"
+        -   paragraph: Children Pages
+    -   paragraph: Private Page
+    -   paragraph: Choose a Display Page Template
+    -   link "Private Page Asset Title Choose a Display Page Template":
+        -   /url: "#custom-navigation-card-href"
+        -   img "Private Page"
+        -   paragraph: Asset Title
+        -   paragraph: Choose a Display Page Template

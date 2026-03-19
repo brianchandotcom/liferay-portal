@@ -677,3 +677,4 @@ public interface DLFileVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:844089163

@@ -56,3 +56,4 @@ public interface OAuth2ScopeGrant
 	public void setScopeAliasesList(java.util.List<String> scopeAliasesList);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1480899796

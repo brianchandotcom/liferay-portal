@@ -145,3 +145,4 @@ public class WorkflowMetricsSLADefinitionVersionModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:810571204

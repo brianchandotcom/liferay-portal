@@ -32,6 +32,7 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.web.internal.info.item.handler.ObjectEntryInfoItemExceptionRequestHandler;
+import com.liferay.object.web.internal.util.ObjectEntryCMSInfoItemFieldValuesUtil;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -100,10 +101,17 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		Map<String, Object> curProperties = _getProperties(
-			objectEntry, infoItemFieldValues);
-
 		try {
+			infoItemFieldValues =
+				ObjectEntryCMSInfoItemFieldValuesUtil.
+					normalizeInfoItemFieldValues(
+						infoItemFieldValues, objectEntry,
+						_objectEntryManagerRegistry,
+						_objectScopeProviderRegistry, serviceContext);
+
+			Map<String, Object> curProperties = _getProperties(
+				objectEntry, infoItemFieldValues);
+
 			String scopeKey = ObjectEntryInfoItemUtil.getScopeKey(
 				objectEntry.getGroupId(), _objectDefinition,
 				_objectScopeProviderRegistry);
@@ -264,8 +272,19 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 	private Map<String, Object> _getProperties(
 		ObjectEntry objectEntry, InfoItemFieldValues infoItemFieldValues) {
 
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			if (infoFieldValue.getValue() instanceof RelatedInfoFieldValue) {
+				return ObjectEntryUtil.toProperties(
+					infoItemFieldValues, _objectDefinition,
+					objectEntry.getValues());
+			}
+		}
+
 		return ObjectEntryUtil.toProperties(
-			infoItemFieldValues, _objectDefinition, objectEntry.getValues());
+			objectEntry.getCompanyId(), infoItemFieldValues,
+			objectEntry.getValues());
 	}
 
 	private void _relateMainObjectEntry(

@@ -668,3 +668,4 @@ public class ListTypeEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1876646272

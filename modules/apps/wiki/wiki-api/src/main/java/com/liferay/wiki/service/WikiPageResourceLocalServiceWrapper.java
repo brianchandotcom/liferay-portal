@@ -486,3 +486,4 @@ public class WikiPageResourceLocalServiceWrapper
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:162148068

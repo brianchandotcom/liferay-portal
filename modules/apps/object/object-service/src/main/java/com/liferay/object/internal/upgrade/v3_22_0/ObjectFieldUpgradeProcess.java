@@ -32,28 +32,27 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-			SQLTransformer.transform(
-			StringBundler.concat(
-			"select ObjectDefinition.objectDefinitionId, ",
-				"ObjectDefinition.companyId, ObjectDefinition.userName, ",
-			"ObjectDefinition.userId from ObjectDefinition where ",
-			"ObjectDefinition.system_ = [$FALSE$]")));
-
-			 PreparedStatement preparedStatement2 =
-				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					 connection,
-					 StringBundler.concat(
-						 "insert into ObjectField (mvccVersion, uuid_, ",
-						 "objectFieldId, companyId, userId, userName, ",
-						 "createDate, modifiedDate, externalReferenceCode, ",
-						 "listTypeDefinitionId, objectDefinitionId, ",
-						 "businessType, dbColumnName, dbTableName, dbType, ",
-						 "defaultValue, indexed, indexedAsKeyWord, ",
-						 "indexedLanguageId, label, name, relationshipType, ",
-						 "required, state_, system_) values (?, ?, ?, ?, ?, ",
-						 "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-						 "?, ?, ?)"));
-
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"select ObjectDefinition.objectDefinitionId, ",
+						"ObjectDefinition.companyId, ObjectDefinition.",
+						"userName, ObjectDefinition.userId from ",
+						"ObjectDefinition where ObjectDefinition.system_ = [$",
+						"FALSE$]")));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into ObjectField (mvccVersion, uuid_, ",
+						"objectFieldId, companyId, userId, userName, ",
+						"createDate, modifiedDate, externalReferenceCode, ",
+						"listTypeDefinitionId, objectDefinitionId, ",
+						"businessType, dbColumnName, dbTableName, dbType, ",
+						"defaultValue, indexed, indexedAsKeyWord, ",
+						"indexedLanguageId, label, name, relationshipType, ",
+						"required, state_, system_) values (?, ?, ?, ?, ?, ?, ",
+						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+						"?, ?)"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

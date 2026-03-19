@@ -1447,3 +1447,4 @@ public class LayoutPageTemplateStructureRelModelImpl
 	private LayoutPageTemplateStructureRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1474721673

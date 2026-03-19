@@ -9,6 +9,7 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceWrapper;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
@@ -149,16 +150,18 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 				JSONUtil.put(
 					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
 					new String[] {
-						ActionKeys.ADD_ENTRY, ActionKeys.DELETE,
-						ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
-						ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+						ActionKeys.ADD_ENTRY,
+						ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
 					}
 				).put(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
 					new String[] {
-						ActionKeys.ADD_ENTRY, ActionKeys.DELETE,
-						ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
-						ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+						ActionKeys.ADD_ENTRY,
+						ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
 					}
 				).put(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER,

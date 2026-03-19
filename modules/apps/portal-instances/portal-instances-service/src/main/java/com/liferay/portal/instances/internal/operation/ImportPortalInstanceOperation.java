@@ -75,6 +75,7 @@ public class ImportPortalInstanceOperation extends BasePortalInstanceOperation {
 
 	private boolean _hasCompany(long companyId) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company where companyId = ?")) {
 

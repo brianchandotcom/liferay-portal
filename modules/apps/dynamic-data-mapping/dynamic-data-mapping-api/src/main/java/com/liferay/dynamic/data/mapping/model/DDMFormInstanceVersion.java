@@ -58,3 +58,4 @@ public interface DDMFormInstanceVersion
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:956981272

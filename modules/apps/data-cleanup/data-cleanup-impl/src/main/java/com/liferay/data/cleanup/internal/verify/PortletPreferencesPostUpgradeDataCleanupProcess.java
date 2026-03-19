@@ -69,6 +69,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcess
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select id_, portletId from Portlet");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

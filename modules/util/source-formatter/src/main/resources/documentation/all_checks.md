@@ -484,6 +484,7 @@ ResourcePermissionCheck | [Bug Prevention](bug_prevention_checks.md#bug-preventi
 ResourceTestInjectionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that if any `*ResourceTest` class injects another resource that is not a `client`. |
 ResultSetGetCallCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds incorrect use of `ResultSet.get*` calls. |
 ReturnVariableDeclarationAsUsedCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .java | Finds cases where a variable declaration should be moved. |
+SHSubshellCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .expect, .sh, or .tpl | Checks that local variables are not assigned via subshells. |
 SQLEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | .sql | Finds missing and unnecessary empty lines. |
 [SQLLongNamesCheck](check/sql_long_names_check.md#sqllongnamescheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .sql | Checks for table and column names that exceed 30 characters. |
 SQLStylingCheck | [Styling](styling_checks.md#styling-checks) | .sql | Applies rules to enforce consistency in code style. |
@@ -554,7 +555,6 @@ UpgradeImportsCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, 
 UpgradeJSPFieldSetGroupCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Run code to remove 'fieldset-group' tag. |
 UpgradeJavaAssetEntryAssetCategoriesCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`. |
 UpgradeJavaBaseFragmentCollectionContributorExtendedClassesCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Adds FragmentCollectionKey to Component annotation in classes that extend `BaseFragmentCollectionContributor` |
-UpgradeJavaBaseModelListenerCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Add parameter in the onAfterUpdate and onBeforeUpdate methods of the BaseModelListener class. |
 UpgradeJavaDDMFormValuesSerializerTrackerCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages. |
 UpgradeJavaDisplayPageInfoItemCapabilityCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Replace all references of DisplayPageInfoItemCapability to InfoItemCapability |
 UpgradeJavaFDSDataProviderCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Upgrade implementations of ClayDataSetDataProvider and CommerceDataSetDataProvider to FDSDataSetDataProvider |
@@ -573,7 +573,6 @@ UpgradeJavaScreenContributorClassCheck | [Upgrade](upgrade_checks.md#upgrade-che
 UpgradeJavaServiceImplCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Add Component annotation to `*ServiceImpl.java` file. |
 UpgradeJavaServiceReferenceAnnotationCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Run code migration to replace '@ServiceReference' by '@Reference'. |
 UpgradeJavaSortFieldNameTranslatorCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Upgrade class that implements SortFieldNameTranslator. |
-UpgradeJavaStorageTypeAwareCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Run code to delete StorageTypeAware interface. |
 UpgradePortletFTLCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file. |
 [UpgradeProcessCheck](check/upgrade_process_check.md#upgradeprocesscheck) | [Performance](performance_checks.md#performance-checks) | .java | Performs several checks on `*UpgradeProcess` classes. |
 UpgradeRejectedExecutionHandlerCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler. |

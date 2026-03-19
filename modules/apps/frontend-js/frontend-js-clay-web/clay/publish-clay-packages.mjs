@@ -171,10 +171,14 @@ function insertAfterUnifiedChangelogIntro(content, section) {
 }
 
 async function getClayReleaseBoundaryCommit() {
-	const history = await run('git', ['log', '--pretty=%H%x09%s', '--', CLAY_DIR], {
-		cwd: ROOT_DIR,
-		stdio: 'pipe',
-	});
+	const history = await run(
+		'git',
+		['log', '--pretty=%H%x09%s', '--', CLAY_DIR],
+		{
+			cwd: ROOT_DIR,
+			stdio: 'pipe',
+		}
+	);
 
 	const lines = (history.stdout || '')
 		.split('\n')
@@ -266,7 +270,10 @@ function updateUnifiedChangelog(targetVersion, section, previewOnly) {
 			return;
 		}
 
-		fs.writeFileSync(UNIFIED_CHANGELOG_PATH, `${createdContent}${section}\n`);
+		fs.writeFileSync(
+			UNIFIED_CHANGELOG_PATH,
+			`${createdContent}${section}\n`
+		);
 
 		return;
 	}
@@ -309,7 +316,10 @@ async function updateUnifiedChangelogForTargetVersion() {
 			continue;
 		}
 
-		const commits = await getPackageCommitsSinceBoundary(boundaryCommitHash, dir);
+		const commits = await getPackageCommitsSinceBoundary(
+			boundaryCommitHash,
+			dir
+		);
 
 		if (!commits.length) {
 			continue;
@@ -331,7 +341,10 @@ async function updateUnifiedChangelogForTargetVersion() {
 		return;
 	}
 
-	const section = renderUnifiedChangelogSection(TARGET_VERSION, packageChanges);
+	const section = renderUnifiedChangelogSection(
+		TARGET_VERSION,
+		packageChanges
+	);
 
 	updateUnifiedChangelog(TARGET_VERSION, section, PREVIEW_CHANGES);
 }

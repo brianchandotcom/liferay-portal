@@ -328,3 +328,4 @@ public class KaleoTransitionCacheModel
 	public boolean defaultTransition;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1209697292

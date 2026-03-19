@@ -9,13 +9,21 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+
+import jakarta.servlet.ServletContext;
+
+import java.io.IOException;
+
+import java.net.URL;
 
 import java.util.List;
 import java.util.Map;
@@ -76,10 +84,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 				String xml = null;
 
 				if (Validator.isNotNull(friendlyURLRoutes)) {
-					Class<?> clazz = getClass();
-
-					xml = _getContent(
-						clazz.getClassLoader(), friendlyURLRoutes);
+					xml = _getContent(portlet, friendlyURLRoutes);
 				}
 
 				router = _newFriendlyURLRouter(xml);
@@ -258,25 +263,21 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 
 	protected Router router;
 
-	private String _getContent(ClassLoader classLoader, String fileName)
+	private String _getContent(Portlet portlet, String fileName)
 		throws Exception {
 
 		String queryString = HttpComponentsUtil.getQueryString(fileName);
 
 		if (Validator.isNull(queryString)) {
-			return StringUtil.read(classLoader, fileName);
+			return _read(portlet, fileName);
 		}
 
 		int pos = fileName.indexOf(StringPool.QUESTION);
 
-		String xml = StringUtil.read(classLoader, fileName.substring(0, pos));
+		String xml = _read(portlet, fileName.substring(0, pos));
 
 		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
 			queryString);
-
-		if (parameterMap == null) {
-			return xml;
-		}
 
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String[] values = entry.getValue();
@@ -348,6 +349,31 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 		}
 
 		return router;
+	}
+
+	private String _read(Portlet portlet, String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		URL url = classLoader.getResource(fileName);
+
+		if (url == null) {
+			PortletApp portletApp = portlet.getPortletApp();
+
+			ServletContext servletContext = portletApp.getServletContext();
+
+			classLoader = servletContext.getClassLoader();
+
+			url = classLoader.getResource(fileName);
+		}
+
+		if (url == null) {
+			throw new IOException(
+				"Unable to read friendly URL routes from " + fileName);
+		}
+
+		return URLUtil.toString(url);
 	}
 
 	private static final boolean _CHECK_MAPPING_WITH_PREFIX = true;

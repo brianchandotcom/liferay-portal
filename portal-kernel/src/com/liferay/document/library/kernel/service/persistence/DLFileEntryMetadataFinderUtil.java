@@ -43,3 +43,4 @@ public class DLFileEntryMetadataFinderUtil {
 	private static DLFileEntryMetadataFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-785415237

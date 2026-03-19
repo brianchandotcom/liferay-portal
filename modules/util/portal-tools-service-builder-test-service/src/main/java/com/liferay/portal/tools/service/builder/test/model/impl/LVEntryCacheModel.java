@@ -192,3 +192,4 @@ public class LVEntryCacheModel
 	public String uniqueGroupKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-686029563

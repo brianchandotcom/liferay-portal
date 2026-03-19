@@ -39,3 +39,4 @@ public abstract class CSDiagramPinBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:345548432

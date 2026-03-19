@@ -446,3 +446,4 @@ public class SocialActivityLimitWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-525022413

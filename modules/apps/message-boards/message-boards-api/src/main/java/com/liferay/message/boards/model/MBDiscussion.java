@@ -50,3 +50,4 @@ public interface MBDiscussion extends MBDiscussionModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:506856581

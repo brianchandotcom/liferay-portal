@@ -533,3 +533,4 @@ public class ObjectActionLocalServiceWrapper
 	private ObjectActionLocalService _objectActionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1907125171

@@ -125,3 +125,4 @@ public abstract class ListTypeEntryServiceBaseImpl
 		ListTypeEntryServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-178466176

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringPool;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Field;
@@ -31,10 +33,12 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -43,6 +47,7 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -110,6 +115,8 @@ public class SearchPermissionCheckerTest {
 			SearchPermissionChecker.class);
 
 		_searchPermissionChecker = _bundleContext.getService(_serviceReference);
+
+		_userGroup = UserGroupTestUtil.addUserGroup();
 	}
 
 	@After
@@ -200,25 +207,9 @@ public class SearchPermissionCheckerTest {
 
 	@Test
 	public void testDepotRolePermissionFilter() throws Exception {
-		_user = UserTestUtil.addGroupUser(
-			_depotEntry.getGroup(), DepotRolesConstants.ASSET_LIBRARY_MEMBER);
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
-
-		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_MEMBER);
-
-		_addViewPermission(
-			ResourceConstants.SCOPE_GROUP, _depotEntry.getGroupId(),
-			role.getRoleId());
-
-		_assertFieldValue(
-			null, Field.GROUP_ID, String.valueOf(_depotEntry.getGroupId()));
-		_assertFieldValue(
-			null, Field.GROUP_ROLE_ID,
-			_depotEntry.getGroupId() + StringPool.DASH + role.getRoleId());
+		_testDepotRolePermissionFilterWhenGroupMember();
+		_testDepotRolePermissionFilterWhenOrganizationMember();
+		_testDepotRolePermissionFilterWhenUserGroupMember();
 	}
 
 	@Test
@@ -366,6 +357,35 @@ public class SearchPermissionCheckerTest {
 				String.valueOf(primKey), roleId);
 	}
 
+	private void _assertAssetLibraryMemberRoleFieldValues(
+			User user, boolean dynamicInheritance)
+		throws Exception {
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+
+		_addViewPermission(
+			ResourceConstants.SCOPE_GROUP, _depotEntry.getGroupId(),
+			role.getRoleId());
+
+		_assertFieldValue(
+			null, Field.GROUP_ROLE_ID,
+			_depotEntry.getGroupId() + StringPool.DASH + role.getRoleId());
+
+		if (dynamicInheritance) {
+			_assertFieldValue(
+				null, Field.ROLE_ID, String.valueOf(role.getRoleId()), false);
+		}
+		else {
+			_assertFieldValue(
+				null, Field.GROUP_ID, String.valueOf(_depotEntry.getGroupId()));
+		}
+	}
+
 	private void _assertFieldValue(long[] groupIds, String field, String value)
 		throws Exception {
 
@@ -392,6 +412,42 @@ public class SearchPermissionCheckerTest {
 			getClassName(), new BooleanFilter(), new SearchContext());
 	}
 
+	private void _testDepotRolePermissionFilterWhenGroupMember()
+		throws Exception {
+
+		_user = UserTestUtil.addGroupUser(
+			_depotEntry.getGroup(), DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+
+		_assertAssetLibraryMemberRoleFieldValues(_user, false);
+	}
+
+	private void _testDepotRolePermissionFilterWhenOrganizationMember()
+		throws Exception {
+
+		OrganizationLocalServiceUtil.addGroupOrganizations(
+			_depotEntry.getGroupId(),
+			new long[] {_organization.getOrganizationId()});
+
+		_user = UserTestUtil.addOrganizationUser(
+			_organization, RoleConstants.ORGANIZATION_USER);
+
+		_assertAssetLibraryMemberRoleFieldValues(_user, true);
+	}
+
+	private void _testDepotRolePermissionFilterWhenUserGroupMember()
+		throws Exception {
+
+		UserGroupLocalServiceUtil.addGroupUserGroup(
+			_depotEntry.getGroupId(), _userGroup.getUserGroupId());
+
+		_user = UserTestUtil.addUser();
+
+		UserGroupLocalServiceUtil.addUserUserGroup(
+			_user.getUserId(), _userGroup.getUserGroupId());
+
+		_assertAssetLibraryMemberRoleFieldValues(_user, true);
+	}
+
 	private static final String _CLASS_NAME_SEGMENTS_CONFIGURATION =
 		"com.liferay.segments.configuration.SegmentsConfiguration";
 
@@ -399,6 +455,9 @@ public class SearchPermissionCheckerTest {
 
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
+
+	@DeleteAfterTestRun
+	private DepotEntryGroupRel _depotEntryGroupRel;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -424,6 +483,8 @@ public class SearchPermissionCheckerTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	private UserGroup _userGroup;
 
 	private static class TestFilterVisitor extends BaseTestFilterVisitor<Void> {
 

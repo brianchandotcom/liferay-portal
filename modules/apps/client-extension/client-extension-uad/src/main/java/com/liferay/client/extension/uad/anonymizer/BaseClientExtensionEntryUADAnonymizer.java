@@ -107,3 +107,4 @@ public abstract class BaseClientExtensionEntryUADAnonymizer
 	protected ClientExtensionEntryLocalService clientExtensionEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1287390026

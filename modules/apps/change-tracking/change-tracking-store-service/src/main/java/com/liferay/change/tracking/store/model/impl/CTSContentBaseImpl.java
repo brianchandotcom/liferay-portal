@@ -39,3 +39,4 @@ public abstract class CTSContentBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1549508330

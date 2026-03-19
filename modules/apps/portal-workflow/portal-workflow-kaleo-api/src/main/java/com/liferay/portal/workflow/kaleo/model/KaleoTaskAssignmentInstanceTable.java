@@ -96,3 +96,4 @@ public class KaleoTaskAssignmentInstanceTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1151768773

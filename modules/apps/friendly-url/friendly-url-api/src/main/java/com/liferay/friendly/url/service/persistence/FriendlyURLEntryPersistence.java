@@ -980,3 +980,4 @@ public interface FriendlyURLEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-190267596

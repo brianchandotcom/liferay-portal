@@ -799,3 +799,4 @@ public class CTProcessModelImpl
 	private CTProcess _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1312254725

@@ -24,6 +24,7 @@ import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPer
 import {permissionsBulkAction} from '../default_permission/BulkPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import openResetAssetPermissionModal from '../default_permission/ResetPermissionModalContent';
+import {handleFindAndReplace} from '../find_and_replace/utils/handleFindAndReplace';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import ExportTranslationModalContent from '../modal/ExportTranslationModalContent';
 import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
@@ -51,7 +52,7 @@ export type AdditionalProps = {
 	assetLibraries: AssetLibrary[];
 	autocompleteURL: string;
 	availableExportFileFormats: any[];
-	availableTargetLocales: any[];
+	availableLocales: any[];
 	baseFolderViewURL: string;
 	brokenLinksCheckerEnabled: boolean;
 	cmsGroupId?: number;
@@ -88,7 +89,7 @@ export default function AssetsFDSPropsTransformer({
 
 	if (additionalProps.galleryViewEnabled) {
 		const galleryViewRenderer: IView = {
-			component: (props: any) => GalleryView({...props, additionalProps}),
+			component: (props: any) => GalleryView({...props}),
 			default: true,
 			label: Liferay.Language.get('gallery'),
 			name: 'gallery',
@@ -174,7 +175,16 @@ export default function AssetsFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: ({value}) => StatusLabel(value),
+					component: ({itemData, value}) => {
+						if (
+							itemData?.entryClassName ===
+							OBJECT_ENTRY_FOLDER_CLASS_NAME
+						) {
+							return '--';
+						}
+
+						return StatusLabel(value);
+					},
 					name: 'statusTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
@@ -365,14 +375,14 @@ export default function AssetsFDSPropsTransformer({
 								itemData.embedded?.title_i18n || {}
 							)
 								.map((languageId) =>
-									additionalProps.availableTargetLocales.find(
+									additionalProps.availableLocales.find(
 										(locale) =>
 											locale.languageId === languageId
 									)
 								)
 								.filter(Boolean),
 							availableTargetLocales:
-								additionalProps.availableTargetLocales,
+								additionalProps.availableLocales,
 							closeModal,
 							defaultSourceLanguageId:
 								itemData.embedded?.defaultLanguageId,
@@ -569,6 +579,22 @@ export default function AssetsFDSPropsTransformer({
 					apiURL: otherProps.apiURL,
 					dataSetId: otherProps.id,
 					selectedData,
+				});
+			}
+			else if (action?.data.id === 'find-and-replace') {
+				handleFindAndReplace({
+					availableLocales: additionalProps.availableLocales,
+					dataSetId: otherProps.id,
+					fdsItems: selectedData.items,
+					stickerConfig: {
+						fileMimeTypeCssClasses:
+							additionalProps.fileMimeTypeCssClasses,
+						fileMimeTypeIcons: additionalProps.fileMimeTypeIcons,
+						objectDefinitionCssClasses:
+							additionalProps.objectDefinitionCssClasses,
+						objectDefinitionIcons:
+							additionalProps.objectDefinitionIcons,
+					},
 				});
 			}
 			else if (action?.data?.id === 'permissions') {

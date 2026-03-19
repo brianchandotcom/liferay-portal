@@ -330,3 +330,4 @@ public interface CSDiagramEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:954055124

@@ -48,3 +48,4 @@ public class AnnouncementsFlagTable extends BaseTable<AnnouncementsFlagTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1654737896

@@ -39,3 +39,4 @@ public abstract class SamlSpSessionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-7274759

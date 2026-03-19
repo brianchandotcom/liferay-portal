@@ -75,3 +75,4 @@ public interface WorkflowDefinitionLinkService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-393960101

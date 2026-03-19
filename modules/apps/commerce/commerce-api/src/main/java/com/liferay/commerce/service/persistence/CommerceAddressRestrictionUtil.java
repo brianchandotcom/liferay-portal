@@ -739,3 +739,4 @@ public class CommerceAddressRestrictionUtil {
 	private static volatile CommerceAddressRestrictionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1603724309

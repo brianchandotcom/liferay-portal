@@ -411,3 +411,4 @@ public class LayoutLocalizationLocalServiceUtil {
 			LayoutLocalizationLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1414684564

@@ -104,3 +104,4 @@ public class ExpandoColumnServiceWrapper
 	private ExpandoColumnService _expandoColumnService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:287555852

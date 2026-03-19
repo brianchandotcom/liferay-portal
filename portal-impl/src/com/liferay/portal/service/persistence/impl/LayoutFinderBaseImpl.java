@@ -72,3 +72,4 @@ public class LayoutFinderBaseImpl extends BasePersistenceImpl<Layout> {
 		LayoutFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:667222670

@@ -39,3 +39,4 @@ public abstract class KBCommentBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-223601238

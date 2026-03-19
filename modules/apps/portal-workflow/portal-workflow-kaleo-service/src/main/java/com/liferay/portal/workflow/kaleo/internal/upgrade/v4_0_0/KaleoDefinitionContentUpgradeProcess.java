@@ -29,6 +29,7 @@ public class KaleoDefinitionContentUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				StringBundler.concat(
 					"select content, ", columnName, " from ", tableName));

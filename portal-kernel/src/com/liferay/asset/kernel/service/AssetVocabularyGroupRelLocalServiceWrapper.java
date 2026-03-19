@@ -501,3 +501,4 @@ public class AssetVocabularyGroupRelLocalServiceWrapper
 		_assetVocabularyGroupRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:172502299

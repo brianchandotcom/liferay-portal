@@ -521,3 +521,4 @@ public class PluginSettingUtil {
 	private static volatile PluginSettingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:546632916

@@ -25,7 +25,9 @@ const ItemRenderer = ({name, value}) => (
 export const SubscriptionDetails = ({currentPlan, planType}) => {
 	const addOns = getPlanAddOns(currentPlan);
 
-	const showAddOns = !!Object.keys(addOns).length;
+	const LDPEnabled = planType?.includes('Data Platform');
+
+	const showAddOns = !!Object.keys(addOns).length && !LDPEnabled;
 
 	return (
 		<Card testId='subscription-details'>
@@ -64,7 +66,7 @@ export const SubscriptionDetails = ({currentPlan, planType}) => {
 				/>
 			</Card.Body>
 
-			{!!Object.keys(addOns).length && (
+			{showAddOns && (
 				<>
 					<Card.Header className='pb-2'>
 						<Card.Title>

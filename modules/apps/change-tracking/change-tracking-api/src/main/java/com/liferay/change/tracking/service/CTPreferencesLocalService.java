@@ -268,3 +268,4 @@ public interface CTPreferencesLocalService
 	public CTPreferences updateCTPreferences(CTPreferences ctPreferences);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:979527111

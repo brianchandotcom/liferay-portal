@@ -125,3 +125,4 @@ public abstract class SegmentsEntryRelServiceBaseImpl
 		SegmentsEntryRelServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-130664156

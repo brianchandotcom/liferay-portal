@@ -407,3 +407,4 @@ public class DDLRecordServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:290623668

@@ -5,8 +5,8 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,8 +21,10 @@ public class TldURIUtil {
 
 	public static String getTldURI(URL url) throws IOException {
 		try (InputStream inputStream = url.openStream();
+
 			InputStreamReader inputStreamReader = new InputStreamReader(
 				inputStream);
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(inputStreamReader)) {
 

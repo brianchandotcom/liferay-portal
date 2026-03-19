@@ -147,3 +147,4 @@ public class DDMTemplateLinkCacheModel
 	public long templateId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-674948798

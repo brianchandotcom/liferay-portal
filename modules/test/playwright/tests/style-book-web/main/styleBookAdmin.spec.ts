@@ -147,3 +147,105 @@ test(
 		});
 	}
 );
+
+test(
+	'It should prevent adding a style book with a name already in use',
+	{tag: '@LPD-80235'},
+	async ({page, site, styleBooksPage}) => {
+		const styleBookName = getRandomString();
+
+		await test.step('Create a new style book', async () => {
+			await styleBooksPage.create(styleBookName);
+
+			await styleBooksPage.goto(site.friendlyUrlPath);
+		});
+
+		const errorMessage = page.getByText('Please enter a unique name.');
+		const input = page.getByRole('textbox', {name: 'Name'});
+		const saveButton = page.getByRole('button', {name: 'Save'});
+
+		await test.step('Attempt to add a style book with a name already in use and verify error message', async () => {
+			await page.getByRole('button', {exact: true, name: 'Add'}).click();
+
+			await input.fill(styleBookName);
+
+			await saveButton.click();
+
+			await expect(errorMessage).toBeVisible();
+			await expect(saveButton).toBeDisabled();
+		});
+
+		await test.step('It allows adding a new style book with a different name', async () => {
+			await input.fill(getRandomString());
+
+			await expect(errorMessage).toBeHidden();
+			await expect(saveButton).toBeEnabled();
+
+			await saveButton.click();
+
+			await waitForAlert(page);
+		});
+	}
+);
+
+test(
+	'It should prevent renaming a style book to a name that already exists',
+	{tag: '@LPD-80235'},
+	async ({page, site, styleBooksPage}) => {
+		const styleBookName1 = getRandomString();
+		const styleBookName2 = getRandomString();
+		const styleBookNames = [styleBookName1, styleBookName2];
+
+		await test.step('Create two style books', async () => {
+			for (const styleBookName of styleBookNames) {
+				await styleBooksPage.create(styleBookName);
+
+				await styleBooksPage.goto(site.friendlyUrlPath);
+			}
+		});
+
+		const errorMessage = page.getByText('Please enter a unique name.');
+		const input = page.getByRole('textbox', {name: 'Name'});
+		const saveButton = page.getByRole('button', {name: 'Save'});
+
+		await test.step('Attempt to rename a style book to a name already in use and verify error message', async () => {
+			await styleBooksPage.clickOnAction(styleBookName2, 'Rename');
+
+			await input.fill(styleBookName1);
+
+			await saveButton.click();
+
+			await expect(errorMessage).toBeVisible();
+			await expect(saveButton).toBeDisabled();
+		});
+
+		await test.step('It allows renaming a style book with a different name', async () => {
+			await input.fill(getRandomString());
+
+			await expect(errorMessage).toBeHidden();
+			await expect(saveButton).toBeEnabled();
+
+			await saveButton.click();
+
+			await waitForAlert(page);
+		});
+	}
+);
+
+test(
+	'It should allow renaming a style book to its current name',
+	{tag: '@LPD-80235'},
+	async ({site, styleBooksPage}) => {
+		const styleBookName = getRandomString();
+
+		await test.step('Create a new style book', async () => {
+			await styleBooksPage.create(styleBookName);
+
+			await styleBooksPage.goto(site.friendlyUrlPath);
+		});
+
+		await test.step('Attempt to rename the style book to its current name and verify success', async () => {
+			await styleBooksPage.rename(styleBookName, styleBookName);
+		});
+	}
+);

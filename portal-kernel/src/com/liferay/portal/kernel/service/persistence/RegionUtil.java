@@ -1187,3 +1187,4 @@ public class RegionUtil {
 	private static volatile RegionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2098629538

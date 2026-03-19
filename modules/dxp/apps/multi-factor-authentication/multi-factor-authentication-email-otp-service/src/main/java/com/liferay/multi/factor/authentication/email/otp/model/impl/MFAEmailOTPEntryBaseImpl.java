@@ -39,3 +39,4 @@ public abstract class MFAEmailOTPEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:32415459

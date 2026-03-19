@@ -399,3 +399,4 @@ public class MBThreadFlagLocalServiceUtil {
 			MBThreadFlagLocalServiceUtil.class, MBThreadFlagLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2070684054

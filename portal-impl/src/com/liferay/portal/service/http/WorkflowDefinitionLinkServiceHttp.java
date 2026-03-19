@@ -249,3 +249,4 @@ public class WorkflowDefinitionLinkServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-195442323

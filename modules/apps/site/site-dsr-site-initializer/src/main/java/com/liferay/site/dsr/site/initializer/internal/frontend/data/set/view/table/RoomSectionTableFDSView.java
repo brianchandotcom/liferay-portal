@@ -36,7 +36,7 @@ public class RoomSectionTableFDSView extends BaseTableFDSView {
 		return fdsTableSchemaBuilder.add(
 			"embedded.name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
-				"actionLink"
+				"view"
 			).setContentRenderer(
 				"roomNameTableCellRenderer"
 			)

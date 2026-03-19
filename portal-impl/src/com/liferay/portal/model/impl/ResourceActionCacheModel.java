@@ -152,3 +152,4 @@ public class ResourceActionCacheModel
 	public long bitwiseValue;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1987977692

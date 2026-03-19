@@ -55,3 +55,4 @@ public class ObjectFolderTable extends BaseTable<ObjectFolderTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1769871252

@@ -182,3 +182,4 @@ public class CTermEntryLocalizationCacheModel
 	public String label;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1115848057

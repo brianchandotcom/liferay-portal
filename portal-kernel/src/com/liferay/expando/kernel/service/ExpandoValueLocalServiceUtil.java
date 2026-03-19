@@ -953,3 +953,4 @@ public class ExpandoValueLocalServiceUtil {
 	private static volatile ExpandoValueLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:850244069

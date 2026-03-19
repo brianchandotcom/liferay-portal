@@ -124,4 +124,7 @@ public interface Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel);
 
+	public default void verifyCompanyStores() throws PortalException {
+	}
+
 }

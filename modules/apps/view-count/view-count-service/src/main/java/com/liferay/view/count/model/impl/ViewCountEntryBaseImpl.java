@@ -39,3 +39,4 @@ public abstract class ViewCountEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:700625153

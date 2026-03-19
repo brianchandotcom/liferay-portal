@@ -146,3 +146,4 @@ public abstract class DLTrashLocalServiceBaseImpl
 		DLTrashLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:951022454

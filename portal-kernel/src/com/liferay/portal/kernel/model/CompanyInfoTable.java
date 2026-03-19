@@ -36,3 +36,4 @@ public class CompanyInfoTable extends BaseTable<CompanyInfoTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1707422040

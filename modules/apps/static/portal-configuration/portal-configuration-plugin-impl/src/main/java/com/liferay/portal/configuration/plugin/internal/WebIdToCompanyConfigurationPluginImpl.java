@@ -68,6 +68,7 @@ public class WebIdToCompanyConfigurationPluginImpl
 				dataSourceServiceReference);
 
 			try (Connection connection = dataSource.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						_db.buildSQL(
@@ -77,7 +78,7 @@ public class WebIdToCompanyConfigurationPluginImpl
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					if (resultSet.next()) {
-						long companyId = resultSet.getLong(1);
+						long companyId = resultSet.getLong("companyId");
 
 						properties.put("companyId", companyId);
 

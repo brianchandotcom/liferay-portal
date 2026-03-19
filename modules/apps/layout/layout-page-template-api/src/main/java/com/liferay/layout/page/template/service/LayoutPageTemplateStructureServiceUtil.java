@@ -57,3 +57,4 @@ public class LayoutPageTemplateStructureServiceUtil {
 			LayoutPageTemplateStructureService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1574621598

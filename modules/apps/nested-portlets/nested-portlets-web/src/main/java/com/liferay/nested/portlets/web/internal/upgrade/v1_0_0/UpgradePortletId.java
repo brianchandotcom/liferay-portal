@@ -40,6 +40,7 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select layoutRevisionId, typeSettings from LayoutRevision " +
 					"where typeSettings LIKE '%nested-column-ids%'");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

@@ -49,3 +49,4 @@ public interface WikiPageResource
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:55179490

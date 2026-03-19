@@ -54,3 +54,4 @@ public interface Lock extends LockModel, PersistedModel {
 	public boolean isNeverExpires();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:662129561

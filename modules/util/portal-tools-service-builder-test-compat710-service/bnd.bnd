@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Tools Service Builder Test Compat710 Service
+Bundle-SymbolicName: com.liferay.portal.tools.service.builder.test.compat710.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

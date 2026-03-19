@@ -729,3 +729,4 @@ public class AssetVocabularyPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1821146987

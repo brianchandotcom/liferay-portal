@@ -579,3 +579,4 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 		_clientExtensionEntryRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1120372855

@@ -538,3 +538,4 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1532866529

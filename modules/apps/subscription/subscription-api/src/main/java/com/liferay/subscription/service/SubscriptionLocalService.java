@@ -501,3 +501,4 @@ public interface SubscriptionLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-190174331

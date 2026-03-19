@@ -26,9 +26,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
-			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("When I repeat the same request changing all the parameters of the second blog post") {
@@ -36,6 +38,8 @@ definition {
 				createStrategy = "UPSERT",
 				numberOfBlogPostings = 2,
 				testCase = "updateOneBlogPosting");
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: completed") {
@@ -71,6 +75,8 @@ definition {
 				blogPostingId = ${blogPostingId},
 				createStrategy = "INSERT",
 				numberOfCommentsToCreate = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: completed") {
@@ -103,6 +109,8 @@ definition {
 				importStrategy = "ON_ERROR_CONTINUE",
 				numberOfBlogPostings = 2,
 				testCase = "incorrectData");
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: completed") {
@@ -131,6 +139,8 @@ definition {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: completed") {
@@ -160,6 +170,8 @@ definition {
 				numberOfBlogPostings = 1,
 				testCase = "nonExistingId",
 				updateStrategy = "PARTIAL_UPDATE");
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: FAILED") {
@@ -185,9 +197,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given blog post created") {
-			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
 				numberOfBlogPostings = 1);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("When I use PUT '/blog-postings/batch' with parameter createStrategy set to UPDATE with non existing externalReferenceCode as one of the updated fields") {
@@ -195,6 +209,8 @@ definition {
 				numberOfBlogPostings = 1,
 				testCase = "updateOneBlogPosting",
 				updateStrategy = "UPDATE");
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: FAILED") {
@@ -232,16 +248,20 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to INSERT to create two blog posts") {
-			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("When I repeat the same request again changing the headline") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				hadline = "new headline",
+				headline = "new headline",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: FAILED") {
@@ -259,15 +279,19 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
-			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("When I use POST with parameter createStrategy set to INSERT with the same data") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: failed") {
@@ -285,9 +309,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given blog post created") {
-			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
 				numberOfBlogPostings = 1);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("When I use PUT '/blog-postings/batch' with parameter createStrategy set to UPDATE with non existing externalReferenceCode as one of the updated fields") {
@@ -295,6 +321,8 @@ definition {
 				numberOfBlogPostings = 1,
 				testCase = "updateAllFields",
 				updateStrategy = "UPDATE");
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: COMPLETED") {
@@ -320,15 +348,19 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
-			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("When I repeat the same request again") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: completed") {
@@ -365,6 +397,8 @@ definition {
 				bodyParameterKey = "headline",
 				bodyParameterValue = "Updated Headline",
 				updateStrategy = "PARTIAL_UPDATE");
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: completed") {
@@ -392,15 +426,19 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to INSERT to create two blog posts") {
-			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("When I use POST with parameter createStrategy set to UPSERT with the same data") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
 				numberOfBlogPostings = 2);
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: completed") {
@@ -427,6 +465,8 @@ definition {
 
 		task ("When in batch engine I invoke non existent POST batch to create a SitePage") {
 			var importTaskId = ImportTask.getIdOfUpdateSitePageBatchEngineImportTask();
+
+			ImportTask.waitForTaskToFinish(importTaskId = ${importTaskId});
 		}
 
 		task ("Then I receive executeStatus: failed") {

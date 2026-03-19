@@ -48,3 +48,4 @@ public interface DepotEntryPin extends DepotEntryPinModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1566134702

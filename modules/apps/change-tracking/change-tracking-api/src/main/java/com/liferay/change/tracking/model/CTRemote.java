@@ -50,3 +50,4 @@ public interface CTRemote extends CTRemoteModel, PersistedModel {
 	public String getUserName();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:847769787

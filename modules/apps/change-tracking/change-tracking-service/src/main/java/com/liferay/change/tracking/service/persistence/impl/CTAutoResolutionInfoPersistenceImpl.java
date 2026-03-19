@@ -2194,3 +2194,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-756021474

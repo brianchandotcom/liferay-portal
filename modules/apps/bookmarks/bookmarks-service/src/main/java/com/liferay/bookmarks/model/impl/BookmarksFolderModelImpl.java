@@ -1457,3 +1457,4 @@ public class BookmarksFolderModelImpl
 	private BookmarksFolder _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1154770305

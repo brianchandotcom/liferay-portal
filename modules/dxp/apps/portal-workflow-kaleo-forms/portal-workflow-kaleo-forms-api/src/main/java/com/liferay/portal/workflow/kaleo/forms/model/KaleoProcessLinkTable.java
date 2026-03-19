@@ -44,3 +44,4 @@ public class KaleoProcessLinkTable extends BaseTable<KaleoProcessLinkTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-888117881

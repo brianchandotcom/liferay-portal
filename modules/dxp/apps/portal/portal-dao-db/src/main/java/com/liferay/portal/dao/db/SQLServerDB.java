@@ -5,6 +5,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -12,7 +13,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -106,11 +106,11 @@ public class SQLServerDB extends BaseDB {
 	@Override
 	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select serverproperty('collation')")) {
+				"select serverproperty('collation') as collation")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getString(1);
+					return resultSet.getString("collation");
 				}
 			}
 		}
@@ -150,6 +150,7 @@ public class SQLServerDB extends BaseDB {
 					"sys.tables on sys.tables.object_id = ",
 					"sys.indexes.object_id where sys.indexes.name like ",
 					"'LIFERAY_%' or sys.indexes.name like 'IX_%'"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

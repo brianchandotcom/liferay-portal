@@ -2168,3 +2168,4 @@ public class CPDefinitionSpecificationOptionValueUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-283728763

@@ -98,3 +98,4 @@ public abstract class BaseUserNotificationDeliveryUADAnonymizer
 		userNotificationDeliveryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1171005718

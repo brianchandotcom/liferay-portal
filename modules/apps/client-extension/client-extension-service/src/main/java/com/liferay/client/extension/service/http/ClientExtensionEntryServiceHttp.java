@@ -335,3 +335,4 @@ public class ClientExtensionEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1129918237

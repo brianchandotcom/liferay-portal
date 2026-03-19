@@ -126,3 +126,4 @@ public abstract class CPConfigurationListServiceBaseImpl
 		CPConfigurationListServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2069703499

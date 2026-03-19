@@ -374,3 +374,4 @@ public class SXPBlueprintServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:933473629

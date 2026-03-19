@@ -994,3 +994,4 @@ public class CommerceWishListItemModelImpl
 	private CommerceWishListItem _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:904621045

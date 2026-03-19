@@ -79,3 +79,4 @@ public interface CPDisplayLayoutService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1115945270

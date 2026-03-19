@@ -194,6 +194,7 @@ public class UpgradeJakartaTest {
 			_upgradeProcess.upgrade();
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select dictionary from Configuration_ where " +
@@ -236,12 +237,14 @@ public class UpgradeJakartaTest {
 			_upgradeProcess.upgrade();
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						StringBundler.concat(
 							"select largeAttributeValue from ",
 							"DDMFieldAttribute where fieldAttributeId = ",
 							"10000"));
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				Assert.assertTrue(resultSet.next());

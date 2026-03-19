@@ -874,3 +874,4 @@ public interface ObjectValidationRuleSettingPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1700398585

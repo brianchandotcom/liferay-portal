@@ -89,3 +89,4 @@ public class OrgLaborServiceUtil {
 	private static volatile OrgLaborService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1283617091

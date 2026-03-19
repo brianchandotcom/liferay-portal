@@ -132,3 +132,4 @@ public class SocialActivityModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-557853645

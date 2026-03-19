@@ -856,3 +856,4 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:788903145

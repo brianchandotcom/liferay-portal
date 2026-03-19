@@ -39,3 +39,4 @@ public abstract class CTEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1843750122

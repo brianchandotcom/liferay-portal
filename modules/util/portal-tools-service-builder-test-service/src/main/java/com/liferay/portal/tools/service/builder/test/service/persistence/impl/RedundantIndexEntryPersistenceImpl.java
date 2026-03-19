@@ -870,3 +870,4 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1335106800

@@ -216,3 +216,4 @@ public class PatcherProductVersionCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1318079583

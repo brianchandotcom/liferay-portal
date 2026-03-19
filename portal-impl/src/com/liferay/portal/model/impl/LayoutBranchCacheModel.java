@@ -211,3 +211,4 @@ public class LayoutBranchCacheModel
 	public boolean master;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-408608773

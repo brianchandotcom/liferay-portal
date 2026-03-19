@@ -1479,3 +1479,4 @@ public class AccountRoleUtil {
 	private static volatile AccountRolePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1721751903

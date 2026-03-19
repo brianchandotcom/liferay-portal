@@ -223,3 +223,4 @@ public class MBBanCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:582737316

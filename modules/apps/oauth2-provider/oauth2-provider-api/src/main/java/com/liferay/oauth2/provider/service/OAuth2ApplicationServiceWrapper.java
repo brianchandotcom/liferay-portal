@@ -174,3 +174,4 @@ public class OAuth2ApplicationServiceWrapper
 	private OAuth2ApplicationService _oAuth2ApplicationService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-893493330

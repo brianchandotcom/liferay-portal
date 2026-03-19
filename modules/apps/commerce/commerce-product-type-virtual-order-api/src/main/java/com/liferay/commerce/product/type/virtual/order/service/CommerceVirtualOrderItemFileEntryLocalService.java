@@ -372,3 +372,4 @@ public interface CommerceVirtualOrderItemFileEntryLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-202386549

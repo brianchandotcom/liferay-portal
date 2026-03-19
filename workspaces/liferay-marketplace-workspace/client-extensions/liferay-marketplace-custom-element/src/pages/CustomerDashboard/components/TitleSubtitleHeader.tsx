@@ -8,8 +8,8 @@ import {ReactNode} from 'react';
 
 type TitleSubtitleHeaderProps = {
 	bold?: boolean;
-	subtitle?: string;
-	title: ReactNode;
+	subtitle?: ReactNode;
+	title?: ReactNode;
 };
 
 const TitleSubtitleHeader: React.FC<TitleSubtitleHeaderProps> = ({

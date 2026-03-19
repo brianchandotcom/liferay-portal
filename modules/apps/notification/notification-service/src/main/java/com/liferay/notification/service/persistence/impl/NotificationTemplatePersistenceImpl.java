@@ -4096,3 +4096,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:414372866

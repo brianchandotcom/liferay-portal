@@ -821,3 +821,4 @@ public class CTSChildUtil {
 	private static volatile CTSChildPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-373394128

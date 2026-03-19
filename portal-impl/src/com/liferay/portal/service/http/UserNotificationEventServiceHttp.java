@@ -139,3 +139,4 @@ public class UserNotificationEventServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-856552518

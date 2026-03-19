@@ -449,3 +449,4 @@ public class CommerceTaxCategoryMappingLocalServiceUtil {
 			CommerceTaxCategoryMappingLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2109647905

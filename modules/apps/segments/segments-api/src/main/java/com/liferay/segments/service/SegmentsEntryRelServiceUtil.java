@@ -94,3 +94,4 @@ public class SegmentsEntryRelServiceUtil {
 			SegmentsEntryRelServiceUtil.class, SegmentsEntryRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1276396073

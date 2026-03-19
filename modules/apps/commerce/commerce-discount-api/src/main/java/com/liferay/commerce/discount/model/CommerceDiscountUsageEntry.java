@@ -55,3 +55,4 @@ public interface CommerceDiscountUsageEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1563146583

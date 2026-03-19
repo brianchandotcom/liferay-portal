@@ -72,3 +72,4 @@ public class CommerceQualifierEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2147428114

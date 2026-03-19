@@ -464,3 +464,4 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 		_ddmFormInstanceRecordVersionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-677673032

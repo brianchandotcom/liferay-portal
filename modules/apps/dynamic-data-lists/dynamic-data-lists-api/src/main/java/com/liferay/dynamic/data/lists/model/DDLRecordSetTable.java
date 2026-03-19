@@ -76,3 +76,4 @@ public class DDLRecordSetTable extends BaseTable<DDLRecordSetTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:69629581

@@ -31,11 +31,11 @@ Important:
 ## High-Level Architecture
 
 -   Build pipeline: `bundle/index.mjs`
--   Format/lint pipeline: `format/index.mjs`, `format/format.mjs`
+-   Format/lint pipeline: `format/index.mjs`, `util/format/doFormat.mjs`
 -   CI checks: `check/ci.mjs`, `check/preflight.mjs`, `format/ci.mjs`
--   Preflight policies: `preflight/runPreflight.mjs`
--   Test orchestration: `test/index.mjs`, `test/jest/runJest.mjs`
--   TypeScript checks and generated tsconfig: `tsc/*`, `tsconfig/*`, `generate/tsconfig.mjs`
+-   Preflight policies: `util/preflight/doPreflight.mjs`
+-   Test orchestration: `test/index.mjs`, `util/jest/runJest.mjs`
+-   TypeScript checks and generated tsconfig: `util/tsc/*`, `util/tsconfig/*`, `generate/tsconfig.mjs`
 -   Global config generation: `generate/globalConfig.mjs`, `util/createGlobalConfig.mjs`
 
 ## Build Internals Developers Must Know
@@ -46,15 +46,15 @@ Main build entry:
 
 Core phases:
 
-1. Load global/project configuration values by reading project config files (especially each module's `node-scripts.config.js`) through helpers in `configuration/*`.
+1. Load global/project configuration values by reading project config files (especially each module's `node-scripts.config.js`) through helpers in `util/configuration/*`.
 2. Clean selected output directories to avoid stale artifacts.
-3. Process CSS and Sass (`bundle/css/*`, `bundle/sass/*`).
-4. Run esbuild bundles for main/export entry points (`bundle/esbuild/*`).
-5. Generate bridges and metadata (`bundle/amd/*`).
+3. Process CSS and Sass (`util/css/*`, `util/sass/*`).
+4. Run esbuild bundles for main/export entry points (`util/esbuild/*`).
+5. Generate bridges and metadata (`util/amd/*`).
 
 Linking and import behavior is centralized in
 
--   `bundle/esbuild/plugins/getLinkerPlugin.mjs`
+-   `util/esbuild/plugins/getLinkerPlugin.mjs`
 
 This is where project imports, global imports, submodule imports, CSS loader stubs, and runtime URL rewrites are enforced.
 
@@ -63,13 +63,13 @@ This is where project imports, global imports, submodule imports, CSS loader stu
 Project-level input:
 
 -   `node-scripts.config.js` per module
--   Resolved through helper readers in `configuration/*` and `util/projectScopeRequire.mjs`
+-   Resolved through helper readers in `util/configuration/*` and `util/projectScopeRequire.mjs`
 
 Global generated config:
 
 -   `modules/node-scripts.config.js`
 -   Rebuild with: `node-scripts generate:global-config`
--   Freshness check: `preflight/checkGlobalNodeScriptsConfig.mjs`
+-   Freshness check: `util/preflight/checkGlobalNodeScriptsConfig.mjs`
 
 If global configuration is stale, preflight fails and build/lint assumptions may drift.
 
@@ -87,14 +87,14 @@ If behavior is generator-owned, update generator code, not generated files.
 
 Preflight runner:
 
--   `preflight/runPreflight.mjs`
+-   `util/preflight/doPreflight.mjs`
 
 Includes checks for:
 
 -   forbidden config names
 -   package.json format/policy
 -   `yarn.lock` policy
--   node-scripts hash consistency (`preflight/checkNodeScriptsHash.mjs`)
+-   node-scripts hash consistency (`util/preflight/checkNodeScriptsHash.mjs`)
 -   global node-scripts config freshness
 -   API submodule constraints
 
@@ -118,7 +118,7 @@ Notable behavior:
 
 Jest execution details:
 
--   Base config + module mapper + user config are merged in `test/jest/runJest.mjs`.
+-   Base config + module mapper + user config are merged in `util/jest/runJest.mjs`.
 -   Temporary config file `TEMP_jest.config.json` is created and removed per run.
 
 ## How To Add A New Feature
@@ -133,19 +133,19 @@ When adding a command
 When adding build behavior
 
 1. Keep orchestration in `bundle/index.mjs` small.
-2. Put new logic into focused modules (`bundle/*`, `util/*`); treat `configuration/*` as config-reader/derivation helpers, not as the canonical source of configuration.
+2. Put new logic into focused modules (`bundle/*`, `util/*`); treat `util/configuration/*` as config-reader/derivation helpers, not as the canonical source of configuration.
 3. If changing import/link semantics, modify `getLinkerPlugin.mjs` carefully.
 4. Validate generated bridge/manifest/package outputs.
 
 When adding policy checks
 
-1. Add check in `preflight/`.
-2. Register it in `runPreflight.mjs`.
+1. Add check in `util/preflight/`.
+2. Register it in `doPreflight.mjs`.
 3. Keep runtime fast (preflight must remain lightweight).
 
 When adding tsconfig generation behavior:
 
-1. Update `tsconfig/visitProjectTsconfig.mjs`.
+1. Update `util/tsconfig/visitProjectTsconfig.mjs`.
 2. Preserve `@generated` hash semantics.
 3. Verify stale detection and regeneration behavior.
 

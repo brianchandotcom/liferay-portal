@@ -221,3 +221,4 @@ public class PortletItemCacheModel
 	public long classNameId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:978294318

@@ -12,6 +12,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.DownstreamFa
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.FormatFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.GitForcePushFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GitLPushFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GradleTaskFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.InvalidGitCommitSHAFailureMessageGenerator;
@@ -2437,6 +2438,7 @@ public abstract class BaseTopLevelBuild
 			new CITestSuiteValidationFailureMessageGenerator(),
 			new CompileFailureMessageGenerator(),
 			new FormatFailureMessageGenerator(),
+            new GitForcePushFailureMessageGenerator(),
 			new GitLPushFailureMessageGenerator(),
 			new JenkinsRegenFailureMessageGenerator(),
 			new JenkinsSourceFormatFailureMessageGenerator(),

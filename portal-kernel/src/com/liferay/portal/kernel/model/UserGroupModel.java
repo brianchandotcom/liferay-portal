@@ -301,3 +301,4 @@ public interface UserGroupModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1957282042

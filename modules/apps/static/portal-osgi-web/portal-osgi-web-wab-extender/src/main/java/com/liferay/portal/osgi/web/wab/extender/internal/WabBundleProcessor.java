@@ -819,6 +819,7 @@ public class WabBundleProcessor {
 
 		try (OutputStream outputStream = new FileOutputStream(
 				annotatedClassesFile);
+
 			PrintWriter printWriter = new PrintWriter(outputStream)) {
 
 			printWriter.println("last.modified=" + _bundle.getLastModified());

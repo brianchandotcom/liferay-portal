@@ -406,3 +406,4 @@ public class PermissionCheckFinderEntryLocalServiceWrapper
 		_permissionCheckFinderEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1377971383

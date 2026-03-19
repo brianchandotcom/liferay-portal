@@ -54,3 +54,4 @@ public class SocialActivityAchievementTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1658154308

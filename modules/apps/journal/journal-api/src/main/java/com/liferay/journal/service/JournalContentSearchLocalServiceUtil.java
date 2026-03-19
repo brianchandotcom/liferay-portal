@@ -413,3 +413,4 @@ public class JournalContentSearchLocalServiceUtil {
 			JournalContentSearchLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:924590493

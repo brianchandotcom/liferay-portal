@@ -935,8 +935,10 @@ public class MirrorsGetTask extends Task {
 
 		try (GZIPInputStream gzipInputStream = new GZIPInputStream(
 				new FileInputStream(file));
+
 			InputStream bufferedInputStream = new BufferedInputStream(
 				gzipInputStream);
+
 			TarInputStream tarInputStream = new TarInputStream(
 				bufferedInputStream)) {
 

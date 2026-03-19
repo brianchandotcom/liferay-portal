@@ -265,3 +265,4 @@ public class DLFileVersionServiceHttp {
 		new Class[] {long.class, boolean.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1564252249

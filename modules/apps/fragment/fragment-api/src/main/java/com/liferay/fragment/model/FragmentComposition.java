@@ -68,3 +68,4 @@ public interface FragmentComposition
 	public void setImagePreviewURL(String imagePreviewURL);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1893068056

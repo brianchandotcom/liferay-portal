@@ -29,3 +29,4 @@ public abstract class CTermEntryLocalizationBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1646958707

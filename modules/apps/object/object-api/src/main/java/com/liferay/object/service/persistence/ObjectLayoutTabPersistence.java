@@ -739,3 +739,4 @@ public interface ObjectLayoutTabPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1413919149

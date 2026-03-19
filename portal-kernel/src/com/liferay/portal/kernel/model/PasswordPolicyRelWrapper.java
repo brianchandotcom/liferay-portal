@@ -258,3 +258,4 @@ public class PasswordPolicyRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1214826176

@@ -69,3 +69,4 @@ public class KaleoConditionTable extends BaseTable<KaleoConditionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-725757301

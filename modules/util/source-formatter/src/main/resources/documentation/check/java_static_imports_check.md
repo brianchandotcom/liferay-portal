@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.util.*;
 Correct:
 
 ```java
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 ```

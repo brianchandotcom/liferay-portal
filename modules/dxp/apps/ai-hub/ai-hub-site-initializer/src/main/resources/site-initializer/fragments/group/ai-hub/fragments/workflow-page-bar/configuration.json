@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "AI Hub Workflow Page Bar",
+					"label": "page-bar-aria-label",
+					"localizable": true,
+					"name": "pagebarAriaLabel",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

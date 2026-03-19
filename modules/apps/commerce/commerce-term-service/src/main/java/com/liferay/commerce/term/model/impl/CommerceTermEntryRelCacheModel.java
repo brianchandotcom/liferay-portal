@@ -196,3 +196,4 @@ public class CommerceTermEntryRelCacheModel
 	public long commerceTermEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1276166047

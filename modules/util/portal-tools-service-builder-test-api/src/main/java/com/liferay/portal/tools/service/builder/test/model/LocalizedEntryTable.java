@@ -35,3 +35,4 @@ public class LocalizedEntryTable extends BaseTable<LocalizedEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:349779186

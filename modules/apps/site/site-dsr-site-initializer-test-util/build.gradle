@@ -6,6 +6,7 @@ dependencies {
 	compileOnly project(":apps:batch-engine:batch-engine-test-util")
 	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:fragment:fragment-api")
+	compileOnly project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:portal:portal-props-test-util")

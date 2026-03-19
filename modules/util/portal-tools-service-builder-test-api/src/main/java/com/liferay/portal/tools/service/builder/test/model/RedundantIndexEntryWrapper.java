@@ -164,3 +164,4 @@ public class RedundantIndexEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1179640730

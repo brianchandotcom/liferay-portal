@@ -416,3 +416,4 @@ public class JournalArticleResourceLocalServiceUtil {
 			JournalArticleResourceLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-221852016

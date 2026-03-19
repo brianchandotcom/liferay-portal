@@ -81,3 +81,4 @@ public class StyleBookEntryTable extends BaseTable<StyleBookEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2145648431

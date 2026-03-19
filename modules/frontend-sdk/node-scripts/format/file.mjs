@@ -5,8 +5,8 @@
 
 import path from 'path';
 
+import doFormat from '../util/format/doFormat.mjs';
 import {PORTAL_DIR} from '../util/locations.mjs';
-import format from './format.mjs';
 
 export default async function main() {
 	const filePath = process.argv[3];
@@ -16,5 +16,5 @@ export default async function main() {
 		process.exit(2);
 	}
 
-	await format(true, [path.relative(PORTAL_DIR, path.resolve(filePath))]);
+	await doFormat(true, [path.relative(PORTAL_DIR, path.resolve(filePath))]);
 }

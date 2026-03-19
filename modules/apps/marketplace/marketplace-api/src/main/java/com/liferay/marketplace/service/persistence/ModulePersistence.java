@@ -1089,3 +1089,4 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1762089487

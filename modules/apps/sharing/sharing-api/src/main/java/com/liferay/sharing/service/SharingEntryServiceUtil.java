@@ -219,3 +219,4 @@ public class SharingEntryServiceUtil {
 			SharingEntryServiceUtil.class, SharingEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1596252407

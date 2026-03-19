@@ -3,29 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import getGlobalImports from '../configuration/getGlobalImports.mjs';
-import getLanguageJSON from '../configuration/getLanguageJSON.mjs';
-import getOverridenPackageSymbols from '../configuration/getOverridenPackageSymbols.mjs';
-import getProjectAlias from '../configuration/getProjectAlias.mjs';
-import getProjectDescription from '../configuration/getProjectDescription.mjs';
-import getProjectEntryPoints from '../configuration/getProjectEntryPoints.mjs';
-import getProjectExports from '../configuration/getProjectExports.mjs';
-import getProjectWebContextPath from '../configuration/getProjectWebContextPath.mjs';
+import writeExportBridges from '../util/amd/writeExportBridges.mjs';
+import writeMainBridge from '../util/amd/writeMainBridge.mjs';
+import writeManifestJson from '../util/amd/writeManifestJson.mjs';
+import writePackageJson from '../util/amd/writePackageJson.mjs';
+import getGlobalImports from '../util/configuration/getGlobalImports.mjs';
+import getLanguageJSON from '../util/configuration/getLanguageJSON.mjs';
+import getOverriddenPackageSymbols from '../util/configuration/getOverriddenPackageSymbols.mjs';
+import getProjectAlias from '../util/configuration/getProjectAlias.mjs';
+import getProjectDescription from '../util/configuration/getProjectDescription.mjs';
+import getProjectEntryPoints from '../util/configuration/getProjectEntryPoints.mjs';
+import getProjectExports from '../util/configuration/getProjectExports.mjs';
+import getProjectWebContextPath from '../util/configuration/getProjectWebContextPath.mjs';
+import processCSSFiles from '../util/css/processCSSFiles.mjs';
 import emptyDir from '../util/emptyDir.mjs';
+import bundleCSSExports from '../util/esbuild/bundleCSSExports.mjs';
+import bundleJavaScriptExports from '../util/esbuild/bundleJavaScriptExports.mjs';
+import bundleJavaScriptMain from '../util/esbuild/bundleJavaScriptMain.mjs';
 import {
 	BUILD_MAIN_EXPORTS_PATH,
 	BUILD_SASS_CACHE_PATH,
 } from '../util/locations.mjs';
-import writeExportBridges from './amd/writeExportBridges.mjs';
-import writeMainBridge from './amd/writeMainBridge.mjs';
-import writeManifestJson from './amd/writeManifestJson.mjs';
-import writePackageJson from './amd/writePackageJson.mjs';
-import processCSSFiles from './css/processCSSFiles.mjs';
-import bundleCSSExports from './esbuild/bundleCSSExports.mjs';
-import bundleJavaScriptExports from './esbuild/bundleJavaScriptExports.mjs';
-import bundleJavaScriptMain from './esbuild/bundleJavaScriptMain.mjs';
-import processSassFiles from './sass/processSassFiles.mjs';
-import writeTimings from './util/writeTimings.mjs';
+import processSassFiles from '../util/sass/processSassFiles.mjs';
+import writeTimings from '../util/writeTimings.mjs';
 
 export default async function main() {
 	const start = Date.now();
@@ -33,7 +33,7 @@ export default async function main() {
 	const [
 		globalImports,
 		languageJSON,
-		overridenPackageSymbols,
+		overriddenPackageSymbols,
 		projectAlias,
 		projectDescription,
 		projectEntryPoints,
@@ -42,7 +42,7 @@ export default async function main() {
 	] = await Promise.all([
 		getGlobalImports(),
 		getLanguageJSON(),
-		getOverridenPackageSymbols(),
+		getOverriddenPackageSymbols(),
 		getProjectAlias(),
 		getProjectDescription(),
 		getProjectEntryPoints(),
@@ -71,7 +71,7 @@ export default async function main() {
 		bundleJavaScriptMain(
 			globalImports,
 			languageJSON,
-			overridenPackageSymbols,
+			overriddenPackageSymbols,
 			projectAlias,
 			projectDescription,
 			projectEntryPoints,
@@ -79,7 +79,7 @@ export default async function main() {
 		),
 		bundleJavaScriptExports(
 			globalImports,
-			overridenPackageSymbols,
+			overriddenPackageSymbols,
 			projectAlias,
 			projectExports,
 			projectWebContextPath

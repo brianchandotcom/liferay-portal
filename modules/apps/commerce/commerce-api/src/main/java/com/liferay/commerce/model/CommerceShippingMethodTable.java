@@ -77,3 +77,4 @@ public class CommerceShippingMethodTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-592530336

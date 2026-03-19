@@ -999,3 +999,4 @@ public class MFAFIDO2CredentialEntryModelImpl
 	private MFAFIDO2CredentialEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1145467777

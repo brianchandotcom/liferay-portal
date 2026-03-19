@@ -70,7 +70,7 @@ public class CTCollectionModelResourcePermission
 		}
 
 		Group group = _groupLocalService.fetchGroup(
-			ctCollection.getCompanyId(),
+			permissionChecker.getCompanyId(),
 			_classNameLocalService.getClassNameId(CTCollection.class),
 			ctCollection.getCtCollectionId());
 

@@ -324,3 +324,4 @@ public class ClassNameUtil {
 	private static volatile ClassNamePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1377656285

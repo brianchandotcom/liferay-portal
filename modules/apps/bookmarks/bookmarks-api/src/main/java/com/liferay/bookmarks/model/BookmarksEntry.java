@@ -59,3 +59,4 @@ public interface BookmarksEntry
 	public long getVisits();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:783336443

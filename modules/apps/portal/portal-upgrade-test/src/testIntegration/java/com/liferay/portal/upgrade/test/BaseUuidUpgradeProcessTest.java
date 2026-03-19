@@ -68,6 +68,7 @@ public class BaseUuidUpgradeProcessTest extends BaseUuidUpgradeProcess {
 
 	private int _getDistinctUuidCount(String tableName) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(distinct(uuid_)) from " + tableName)) {
 
@@ -81,6 +82,7 @@ public class BaseUuidUpgradeProcessTest extends BaseUuidUpgradeProcess {
 
 	private void _insertValues(String tableName, int total) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, "insert into " + tableName + " values (?)")) {

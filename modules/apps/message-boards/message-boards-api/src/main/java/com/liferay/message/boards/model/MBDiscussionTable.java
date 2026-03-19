@@ -57,3 +57,4 @@ public class MBDiscussionTable extends BaseTable<MBDiscussionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2070618188

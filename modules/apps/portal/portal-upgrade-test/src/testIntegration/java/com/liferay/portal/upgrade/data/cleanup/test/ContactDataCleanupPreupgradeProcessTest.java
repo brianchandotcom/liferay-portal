@@ -146,6 +146,7 @@ public class ContactDataCleanupPreupgradeProcessTest
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select * from ", tableName, " where classNameId = ? and ",

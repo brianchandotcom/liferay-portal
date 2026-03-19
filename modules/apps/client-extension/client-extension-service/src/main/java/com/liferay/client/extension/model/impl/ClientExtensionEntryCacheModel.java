@@ -375,3 +375,4 @@ public class ClientExtensionEntryCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-637915665

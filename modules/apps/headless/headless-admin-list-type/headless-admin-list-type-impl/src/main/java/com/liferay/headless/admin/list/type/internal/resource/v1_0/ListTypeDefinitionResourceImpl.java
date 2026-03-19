@@ -85,8 +85,11 @@ public class ListTypeDefinitionResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor
+		<com.liferay.list.type.model.ListTypeDefinition>
+			getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -99,9 +102,10 @@ public class ListTypeDefinitionResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return com.liferay.list.type.model.ListTypeDefinition.class.
-					getName();
+			public Class<com.liferay.list.type.model.ListTypeDefinition>
+				getModelClass() {
+
+				return com.liferay.list.type.model.ListTypeDefinition.class;
 			}
 
 			@Override

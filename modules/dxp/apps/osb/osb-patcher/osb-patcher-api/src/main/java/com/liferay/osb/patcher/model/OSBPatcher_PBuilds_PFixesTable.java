@@ -39,3 +39,4 @@ public class OSBPatcher_PBuilds_PFixesTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1608605281

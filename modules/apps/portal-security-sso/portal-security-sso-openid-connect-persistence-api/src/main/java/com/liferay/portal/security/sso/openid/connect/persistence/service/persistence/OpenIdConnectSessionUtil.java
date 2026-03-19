@@ -1077,3 +1077,4 @@ public class OpenIdConnectSessionUtil {
 	private static volatile OpenIdConnectSessionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1987358836

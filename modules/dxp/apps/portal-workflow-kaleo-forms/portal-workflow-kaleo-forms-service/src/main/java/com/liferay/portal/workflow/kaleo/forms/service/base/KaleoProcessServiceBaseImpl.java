@@ -130,3 +130,4 @@ public abstract class KaleoProcessServiceBaseImpl
 		KaleoProcessServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1560536372

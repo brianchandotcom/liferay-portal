@@ -78,7 +78,7 @@ public class LiferayContextController {
 		ServiceReference<ServletContextHelper> serviceReference,
 		ServletContextHelperDataContext servletContextHelperDataContext,
 		HttpServletEndpointController httpServletEndpointController,
-		String contextName, String contextPath) {
+		String contextName, String contextPath, boolean webServiceTracking) {
 
 		Matcher matcher = _contextNamePattern.matcher(contextName);
 
@@ -128,72 +128,48 @@ public class LiferayContextController {
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				servletContextHelperServiceId));
-
-		_filterServiceTracker.open(true);
-
 		_httpSessionAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, HttpSessionAttributeListener.class,
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				servletContextHelperServiceId));
-
-		_httpSessionAttributeListenerServiceTracker.open(true);
-
 		_httpSessionListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, HttpSessionListener.class,
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				servletContextHelperServiceId));
-
-		_httpSessionListenerServiceTracker.open(true);
-
 		_resourceServiceTracker = new ServiceTracker<>(
 			bundleContext, Object.class,
 			new ResourceServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				servletContextHelperServiceId));
-
-		_resourceServiceTracker.open(true);
-
 		_servletContextAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletContextAttributeListener.class,
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				servletContextHelperServiceId));
-
-		_servletContextAttributeListenerServiceTracker.open(true);
-
 		_servletContextListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletContextListener.class,
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				servletContextHelperServiceId));
-
-		_servletContextListenerServiceTracker.open(true);
-
 		_servletRequestAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletRequestAttributeListener.class,
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				servletContextHelperServiceId));
-
-		_servletRequestAttributeListenerServiceTracker.open(true);
-
 		_servletRequestListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletRequestListener.class,
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				servletContextHelperServiceId));
-
-		_servletRequestListenerServiceTracker.open(true);
-
 		_servletServiceTracker = new ServiceTracker<>(
 			bundleContext, Servlet.class,
 			new ServletServiceTrackerCustomizer(
@@ -201,7 +177,18 @@ public class LiferayContextController {
 				_servletContextHelperDataContext,
 				servletContextHelperServiceId));
 
-		_servletServiceTracker.open(true);
+		_servletContextListenerServiceTracker.open(true);
+
+		if (webServiceTracking) {
+			_filterServiceTracker.open(true);
+			_httpSessionAttributeListenerServiceTracker.open(true);
+			_httpSessionListenerServiceTracker.open(true);
+			_resourceServiceTracker.open(true);
+			_servletContextAttributeListenerServiceTracker.open(true);
+			_servletRequestAttributeListenerServiceTracker.open(true);
+			_servletRequestListenerServiceTracker.open(true);
+			_servletServiceTracker.open(true);
+		}
 	}
 
 	public void checkShutdown() {

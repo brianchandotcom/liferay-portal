@@ -272,3 +272,4 @@ public interface LaunchEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:245723275

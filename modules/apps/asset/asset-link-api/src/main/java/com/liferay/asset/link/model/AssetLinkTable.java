@@ -51,3 +51,4 @@ public class AssetLinkTable extends BaseTable<AssetLinkTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:892103222

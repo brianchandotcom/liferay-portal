@@ -183,12 +183,14 @@ export default function ContentEditorToolbar({
 					value={backURL}
 				/>
 
-				<ClayInput
-					form={formId}
-					name="ObjectEntry_displayDate"
-					type="hidden"
-					value={displayDate}
-				/>
+				{displayDate && (
+					<ClayInput
+						form={formId}
+						name="ObjectEntry_displayDate"
+						type="hidden"
+						value={displayDate}
+					/>
+				)}
 			</Toolbar.Item>
 
 			{showModal ? (

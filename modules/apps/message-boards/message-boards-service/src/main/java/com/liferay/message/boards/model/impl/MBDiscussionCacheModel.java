@@ -240,3 +240,4 @@ public class MBDiscussionCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1096905982

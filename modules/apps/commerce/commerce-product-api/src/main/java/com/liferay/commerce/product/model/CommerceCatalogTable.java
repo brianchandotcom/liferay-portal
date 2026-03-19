@@ -69,3 +69,4 @@ public class CommerceCatalogTable extends BaseTable<CommerceCatalogTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:938356693

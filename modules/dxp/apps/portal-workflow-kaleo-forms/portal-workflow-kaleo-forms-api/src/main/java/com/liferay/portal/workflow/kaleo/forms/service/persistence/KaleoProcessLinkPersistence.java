@@ -350,3 +350,4 @@ public interface KaleoProcessLinkPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1454254563

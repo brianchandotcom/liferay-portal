@@ -283,3 +283,4 @@ public class OpenIdConnectSessionCacheModel
 	public String sessionId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1586543489

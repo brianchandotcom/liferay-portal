@@ -57,3 +57,4 @@ public class AppTable extends BaseTable<AppTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1680321967

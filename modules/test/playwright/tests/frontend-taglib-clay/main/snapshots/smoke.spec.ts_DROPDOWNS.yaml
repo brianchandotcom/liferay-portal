@@ -1,0 +1,13 @@
+-   tabpanel "Dropdowns":
+    -   heading "DROPDOWN MENU" [level=3]
+    -   blockquote:
+        -   paragraph: A dropdown is a list of options related to the element that triggers it.
+    -   button "Default"
+    -   button "Dividers"
+    -   button "Done"
+    -   button "Icon"
+    -   button "Icons"
+    -   button "Secondary Borderless"
+    -   button "Show Actions"
+    -   button "More"
+    -   button "More"

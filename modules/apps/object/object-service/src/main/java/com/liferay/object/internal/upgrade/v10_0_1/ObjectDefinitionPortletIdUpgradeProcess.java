@@ -26,6 +26,7 @@ public class ObjectDefinitionPortletIdUpgradeProcess
 				SQLTransformer.transform(
 					"select objectDefinitionId, className from " +
 						"ObjectDefinition where modifiable = [$TRUE$]"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

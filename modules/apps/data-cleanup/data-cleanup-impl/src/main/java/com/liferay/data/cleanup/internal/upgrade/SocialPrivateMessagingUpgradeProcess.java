@@ -46,6 +46,7 @@ public class SocialPrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					"select mbThreadId from PM_UserThread"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

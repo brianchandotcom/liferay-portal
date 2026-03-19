@@ -328,3 +328,4 @@ public interface EmailAddressModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:704312891

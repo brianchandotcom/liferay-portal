@@ -8,6 +8,7 @@ package com.liferay.journal.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -43,6 +46,7 @@ import com.liferay.portal.upload.test.util.UploadTestUtil;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.PortletException;
+import jakarta.portlet.PortletPreferences;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -91,10 +95,24 @@ public class UpdateArticleMVCActionCommandTest {
 			WorkflowConstants.STATUS_APPROVED, journalArticle1.getStatus());
 		Assert.assertEquals(1.0, journalArticle1.getVersion(), 0.01);
 
-		_processAction(
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(
 				journalArticle1.getArticleId(),
-				journalArticle1.getFriendlyURLMap()));
+				journalArticle1.getFriendlyURLMap());
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		String portletResource =
+			JournalContentPortletKeys.JOURNAL_CONTENT + "_INSTANCE_" +
+				RandomTestUtil.randomString();
+
+		mockLiferayPortletActionRequest.setParameter(
+			"portletResource", portletResource);
+
+		mockLiferayPortletActionRequest.setParameter(
+			"refererPlid", String.valueOf(layout.getPlid()));
+
+		_processAction(mockLiferayPortletActionRequest);
 
 		JournalArticle journalArticle2 =
 			_journalArticleLocalService.fetchArticleByUrlTitle(
@@ -105,6 +123,23 @@ public class UpdateArticleMVCActionCommandTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, journalArticle2.getStatus());
 		Assert.assertEquals(1.1, journalArticle2.getVersion(), 0.01);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, portletResource);
+
+		Assert.assertNotNull(portletPreferences);
+
+		String articleExternalReferenceCode = portletPreferences.getValue(
+			"articleExternalReferenceCode", null);
+
+		Assert.assertNotNull(articleExternalReferenceCode);
+		Assert.assertEquals(
+			journalArticle2.getExternalReferenceCode(),
+			articleExternalReferenceCode);
+
+		Assert.assertNull(
+			portletPreferences.getValue("groupExternalReferenceCode", null));
 	}
 
 	@Test

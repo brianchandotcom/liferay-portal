@@ -302,3 +302,4 @@ public class ObjectEntryServiceUtil {
 		new Snapshot<>(ObjectEntryServiceUtil.class, ObjectEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1473169907

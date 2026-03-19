@@ -4938,3 +4938,4 @@ public class DLFolderUtil {
 	private static volatile DLFolderPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1234922467

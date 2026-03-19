@@ -12,11 +12,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../../utils/getRandomString';
-import {
-	performLoginViaApi,
-	performLogout,
-	userData,
-} from '../../../utils/performLogin';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
@@ -738,8 +734,7 @@ test(
 			String(Number(team.teamId) + 1)
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user1.alternateName});
+		await performUserSwitch(page, user1.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -749,8 +744,7 @@ test(
 				.or(page.getByText('requested resource could not be found'))
 		).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user2.alternateName});
+		await performUserSwitch(page, user2.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 

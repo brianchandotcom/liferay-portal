@@ -76,3 +76,4 @@ public class TranslationEntryServiceUtil {
 			TranslationEntryServiceUtil.class, TranslationEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-680474045

@@ -709,3 +709,4 @@ public interface WorkflowInstanceLinkPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1547321976

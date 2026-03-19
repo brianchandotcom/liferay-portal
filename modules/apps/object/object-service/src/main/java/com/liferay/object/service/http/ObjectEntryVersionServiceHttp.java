@@ -361,3 +361,4 @@ public class ObjectEntryVersionServiceHttp {
 		_getObjectEntryVersionsCountParameterTypes6 = new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:654678231

@@ -77,3 +77,4 @@ public abstract class WikiPageFinderBaseImpl
 		WikiPageFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1878442666

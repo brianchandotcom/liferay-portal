@@ -63,6 +63,7 @@ public class ModuleBuildAutoUpgradeTest extends BaseBuildAutoUpgradeTestCase {
 
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
+
 			JarOutputStream jarOutputStream = new JarOutputStream(
 				unsyncByteArrayOutputStream)) {
 

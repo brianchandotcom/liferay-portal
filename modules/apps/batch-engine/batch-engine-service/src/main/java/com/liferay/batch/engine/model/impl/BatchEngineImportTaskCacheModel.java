@@ -396,3 +396,4 @@ public class BatchEngineImportTaskCacheModel
 	public int totalItemsCount;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:951798398

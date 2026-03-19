@@ -50,3 +50,4 @@ public interface MBMailingList extends MBMailingListModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1309339088

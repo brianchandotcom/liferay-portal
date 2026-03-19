@@ -285,3 +285,4 @@ public class AssetTagGroupRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1132746136

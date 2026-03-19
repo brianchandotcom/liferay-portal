@@ -3286,3 +3286,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2079988762

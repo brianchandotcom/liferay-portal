@@ -589,3 +589,4 @@ public class ListTypeDefinitionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-902251322

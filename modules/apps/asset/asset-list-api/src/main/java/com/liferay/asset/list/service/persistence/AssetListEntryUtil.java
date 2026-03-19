@@ -3917,3 +3917,4 @@ public class AssetListEntryUtil {
 	private static volatile AssetListEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1726173522

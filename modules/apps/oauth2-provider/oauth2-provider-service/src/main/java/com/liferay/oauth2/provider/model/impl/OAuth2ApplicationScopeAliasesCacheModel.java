@@ -150,3 +150,4 @@ public class OAuth2ApplicationScopeAliasesCacheModel
 	public long oAuth2ApplicationId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-297238720

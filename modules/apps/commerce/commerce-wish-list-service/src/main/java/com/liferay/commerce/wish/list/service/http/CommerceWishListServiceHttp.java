@@ -406,3 +406,4 @@ public class CommerceWishListServiceHttp {
 		new Class[] {long.class, String.class, boolean.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1002373596

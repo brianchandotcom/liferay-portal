@@ -714,3 +714,4 @@ public class MBThreadLocalServiceWrapper
 	private MBThreadLocalService _mbThreadLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1163723353

@@ -2692,3 +2692,4 @@ public class PatcherFixPackUtil {
 	private static volatile PatcherFixPackPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1168100027

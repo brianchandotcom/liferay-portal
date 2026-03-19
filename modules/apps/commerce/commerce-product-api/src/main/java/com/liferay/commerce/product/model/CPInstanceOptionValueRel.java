@@ -55,3 +55,4 @@ public interface CPInstanceOptionValueRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2023757744

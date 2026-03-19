@@ -457,3 +457,4 @@ public class ContactsCardTemplateUtil {
 	private static volatile ContactsCardTemplatePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-317074361

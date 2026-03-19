@@ -50,3 +50,4 @@ public interface CTAutoResolutionInfo extends CTAutoResolutionInfoModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1525125060

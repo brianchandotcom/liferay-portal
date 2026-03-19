@@ -122,3 +122,4 @@ public class SharepointOAuth2TokenEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-381416851

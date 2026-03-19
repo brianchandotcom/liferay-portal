@@ -339,3 +339,4 @@ public interface FragmentCollectionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1691469534

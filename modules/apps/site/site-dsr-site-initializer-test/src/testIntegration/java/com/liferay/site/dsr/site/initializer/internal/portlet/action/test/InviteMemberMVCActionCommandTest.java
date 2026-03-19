@@ -5,12 +5,19 @@
 
 package com.liferay.site.dsr.site.initializer.internal.portlet.action.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Role;
@@ -30,8 +37,11 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,13 +53,15 @@ import com.liferay.site.dsr.site.initializer.constants.DSRPortletKeys;
 import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +70,6 @@ import org.junit.runner.RunWith;
  * @author Stefano Motta
  */
 @FeatureFlag("LPD-66359")
-@Ignore
 @RunWith(Arquillian.class)
 public class InviteMemberMVCActionCommandTest {
 
@@ -76,8 +87,38 @@ public class InviteMemberMVCActionCommandTest {
 
 	@Test
 	public void testProcessAction() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, TestPropsValues.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			"business", 1, serviceContext);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_DSR_ROOM", TestPropsValues.getCompanyId());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), 0, null,
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"r_accountToDSRRooms_accountEntryId",
+				accountEntry.getAccountEntryId()
+			).build(),
+			serviceContext);
+
+		objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
 		Group group = _groupLocalService.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+			GetterUtil.getLong(values.get("siteId")));
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(group);
@@ -100,6 +141,8 @@ public class InviteMemberMVCActionCommandTest {
 			TestPropsValues.getCompanyId(), Group.class.getName(),
 			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER,
 			JSONUtil.put(
+				"accountEntryId", accountEntry.getAccountEntryId()
+			).put(
 				"emailAddress", emailAddress
 			).put(
 				"roleKey", role.getName()
@@ -138,6 +181,9 @@ public class InviteMemberMVCActionCommandTest {
 		User user = _userLocalService.fetchUserByEmailAddress(
 			TestPropsValues.getCompanyId(), emailAddress);
 
+		Assert.assertTrue(
+			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
+				accountEntry.getAccountEntryId(), user.getUserId()));
 		Assert.assertTrue(
 			ListUtil.exists(
 				_userGroupRoleLocalService.getUserGroupRoles(
@@ -180,10 +226,22 @@ public class InviteMemberMVCActionCommandTest {
 	}
 
 	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Inject
 	private GroupLocalService _groupLocalService;
 
 	@Inject(filter = "mvc.command.name=/digital_sales_room/invite_member")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

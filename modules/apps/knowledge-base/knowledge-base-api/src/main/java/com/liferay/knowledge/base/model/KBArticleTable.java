@@ -106,3 +106,4 @@ public class KBArticleTable extends BaseTable<KBArticleTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:922988090

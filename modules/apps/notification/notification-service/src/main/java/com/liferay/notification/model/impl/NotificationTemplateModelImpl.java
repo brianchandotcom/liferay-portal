@@ -1675,3 +1675,4 @@ public class NotificationTemplateModelImpl
 	private NotificationTemplate _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:407777000

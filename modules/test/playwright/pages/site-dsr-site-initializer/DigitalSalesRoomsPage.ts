@@ -20,10 +20,12 @@ export class DigitalSalesRoomsPage {
 	readonly page: Page;
 	readonly roomsLink: Locator;
 	readonly saveAsTemplateMenuItem: Locator;
+	readonly shareMenuItem: Locator;
 	readonly settingsMenuItem: Locator;
 	readonly startFromScratchButton: Locator;
 	readonly startFromTemplateButton: Locator;
 	readonly templatesLink: Locator;
+	readonly viewMenuItem: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
@@ -44,10 +46,14 @@ export class DigitalSalesRoomsPage {
 		);
 		this.noResultsFoundMessage = page.getByText('No Results Found');
 		this.page = page;
-		this.roomsLink = page.getByRole('link', {exact: true, name: 'Rooms'});
+		this.roomsLink = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Rooms',
+		});
 		this.saveAsTemplateMenuItem = page.getByRole('menuitem', {
 			name: 'Save as Template',
 		});
+		this.shareMenuItem = page.getByRole('menuitem', {name: 'Share'});
 		this.settingsMenuItem = page.getByRole('menuitem', {name: 'Settings'});
 		this.startFromScratchButton = page.getByRole('menuitem', {
 			name: 'Start from Scratch',
@@ -59,9 +65,17 @@ export class DigitalSalesRoomsPage {
 			exact: true,
 			name: 'Templates',
 		});
+		this.viewMenuItem = page.getByRole('menuitem', {name: 'View'});
+	}
+
+	roomLink(roomName: string): Locator {
+		return this.digitalSalesRoomsTable
+			.cell(roomName, false)
+			.getByRole('link', {name: roomName});
 	}
 
 	async goto() {
 		await this.applicationsMenuPage.goToDigitalSalesRooms();
+		await this.roomsLink.click();
 	}
 }

@@ -4384,3 +4384,4 @@ public class ObjectDefinitionUtil {
 	private static volatile ObjectDefinitionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-66782572

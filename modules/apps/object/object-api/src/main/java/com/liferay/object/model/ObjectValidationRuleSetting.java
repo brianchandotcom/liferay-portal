@@ -57,3 +57,4 @@ public interface ObjectValidationRuleSetting
 	public boolean compareName(String name);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1344105231

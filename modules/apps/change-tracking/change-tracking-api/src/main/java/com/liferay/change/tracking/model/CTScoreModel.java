@@ -128,3 +128,4 @@ public interface CTScoreModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:686135767

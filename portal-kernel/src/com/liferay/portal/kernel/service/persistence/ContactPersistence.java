@@ -744,3 +744,4 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:160172191

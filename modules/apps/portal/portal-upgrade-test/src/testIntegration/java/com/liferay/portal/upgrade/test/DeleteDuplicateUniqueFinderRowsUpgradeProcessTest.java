@@ -229,6 +229,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 				StringBundler.concat(
 					"select count(*) from ", tableName, " group by ",
 					String.join(", ", columnNames), " having count(*) > 1"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (!duplicatesRemoved) {

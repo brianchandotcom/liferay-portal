@@ -345,3 +345,4 @@ public class KaleoNotificationLocalServiceUtil {
 			KaleoNotificationLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1599645773

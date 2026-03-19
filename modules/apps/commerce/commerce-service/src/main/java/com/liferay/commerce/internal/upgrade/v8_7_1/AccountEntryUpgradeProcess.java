@@ -64,6 +64,7 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select accountEntryId, userId, defaultBillingAddressId, " +
 					"defaultShippingAddressId from AccountEntry");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -133,6 +134,7 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select accountEntryId, userId, defaultDeliveryCTermEntryId, " +
 					"defaultPaymentCTermEntryId from AccountEntry");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

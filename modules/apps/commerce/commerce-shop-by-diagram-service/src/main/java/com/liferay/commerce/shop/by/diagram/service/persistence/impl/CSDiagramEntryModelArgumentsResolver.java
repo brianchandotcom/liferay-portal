@@ -133,3 +133,4 @@ public class CSDiagramEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1316679635

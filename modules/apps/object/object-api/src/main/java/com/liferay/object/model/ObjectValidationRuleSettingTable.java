@@ -64,3 +64,4 @@ public class ObjectValidationRuleSettingTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-264918069

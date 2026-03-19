@@ -850,3 +850,4 @@ public interface CommercePricingClassPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:965671083

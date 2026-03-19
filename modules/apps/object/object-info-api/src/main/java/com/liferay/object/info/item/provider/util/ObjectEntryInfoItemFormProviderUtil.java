@@ -137,6 +137,18 @@ public class ObjectEntryInfoItemFormProviderUtil {
 						).infoFieldSetEntry(
 							InfoField.builder(
 							).infoFieldType(
+								ImageInfoFieldType.INSTANCE
+							).namespace(
+								ObjectField.class.getSimpleName()
+							).name(
+								objectField.getObjectFieldId() + "#fileURL"
+							).labelInfoLocalizedValue(
+								InfoLocalizedValue.localize(
+									ObjectEntryInfoItemFields.class, "file-url")
+							).build()
+						).infoFieldSetEntry(
+							InfoField.builder(
+							).infoFieldType(
 								TextInfoFieldType.INSTANCE
 							).namespace(
 								ObjectField.class.getSimpleName()

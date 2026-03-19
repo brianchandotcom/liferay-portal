@@ -539,3 +539,4 @@ public class KaleoNodeSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-349383024

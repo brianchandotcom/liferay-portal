@@ -94,3 +94,4 @@ public class MBMailingListTable extends BaseTable<MBMailingListTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2024316939

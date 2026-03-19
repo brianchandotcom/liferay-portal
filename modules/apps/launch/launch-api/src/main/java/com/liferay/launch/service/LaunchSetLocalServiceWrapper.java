@@ -405,3 +405,4 @@ public class LaunchSetLocalServiceWrapper
 	private LaunchSetLocalService _launchSetLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:219864680

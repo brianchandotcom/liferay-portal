@@ -469,3 +469,4 @@ public interface ObjectEntryFolderModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-486936922

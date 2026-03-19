@@ -662,3 +662,4 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 		CPDefinitionVirtualSettingLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1770886269

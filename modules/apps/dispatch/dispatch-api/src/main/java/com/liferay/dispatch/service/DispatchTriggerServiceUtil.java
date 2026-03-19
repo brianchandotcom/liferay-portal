@@ -111,3 +111,4 @@ public class DispatchTriggerServiceUtil {
 			DispatchTriggerServiceUtil.class, DispatchTriggerService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1755657548

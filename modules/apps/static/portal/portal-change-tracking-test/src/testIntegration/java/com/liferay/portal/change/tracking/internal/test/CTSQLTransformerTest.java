@@ -1124,8 +1124,10 @@ public class CTSQLTransformerTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				sql);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			unsafeConsumer.accept(resultSet);

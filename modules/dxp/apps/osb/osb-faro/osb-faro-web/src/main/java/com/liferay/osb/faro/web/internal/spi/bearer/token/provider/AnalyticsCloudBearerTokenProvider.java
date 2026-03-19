@@ -7,8 +7,8 @@ package com.liferay.osb.faro.web.internal.spi.bearer.token.provider;
 
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.osb.faro.web.internal.util.AccessTokenExpiresInUtil;
+import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 
 import org.osgi.service.component.annotations.Component;

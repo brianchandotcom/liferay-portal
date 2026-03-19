@@ -533,3 +533,4 @@ public class PatcherAccountLocalServiceWrapper
 	private PatcherAccountLocalService _patcherAccountLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-619995511

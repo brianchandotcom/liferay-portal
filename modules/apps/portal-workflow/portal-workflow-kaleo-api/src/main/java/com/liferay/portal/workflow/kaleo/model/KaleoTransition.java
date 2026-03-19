@@ -56,3 +56,4 @@ public interface KaleoTransition extends KaleoTransitionModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:447660069

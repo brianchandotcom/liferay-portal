@@ -1160,3 +1160,4 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1683191700

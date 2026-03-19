@@ -33,3 +33,4 @@ public class RSVEntryTable extends BaseTable<RSVEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1220795147

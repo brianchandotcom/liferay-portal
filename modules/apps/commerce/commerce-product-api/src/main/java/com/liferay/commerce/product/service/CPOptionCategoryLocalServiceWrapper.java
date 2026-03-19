@@ -513,3 +513,4 @@ public class CPOptionCategoryLocalServiceWrapper
 	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-478472925

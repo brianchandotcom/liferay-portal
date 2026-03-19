@@ -73,3 +73,4 @@ public interface CTRemoteService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1447900201

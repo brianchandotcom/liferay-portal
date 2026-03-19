@@ -945,3 +945,4 @@ public class CalendarWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1361808684

@@ -275,8 +275,10 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 			try (Connection connection = _getConnection(
 					parentTableReferenceInfo);
+
 				PreparedStatement preparedStatement = _getPreparedStatement(
 					connection, dslQuery);
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

@@ -216,3 +216,4 @@ public class DDLRecordServiceWrapper
 	private DDLRecordService _ddlRecordService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-594538408

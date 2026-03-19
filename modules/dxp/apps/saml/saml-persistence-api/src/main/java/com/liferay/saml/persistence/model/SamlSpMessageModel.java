@@ -144,3 +144,4 @@ public interface SamlSpMessageModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1472699914

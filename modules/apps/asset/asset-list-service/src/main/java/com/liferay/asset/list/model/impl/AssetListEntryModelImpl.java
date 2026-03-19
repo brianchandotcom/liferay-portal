@@ -1296,3 +1296,4 @@ public class AssetListEntryModelImpl
 	private AssetListEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:578385816

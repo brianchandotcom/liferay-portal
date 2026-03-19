@@ -38,3 +38,4 @@ public class RedundantIndexEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:404993073

@@ -18,7 +18,6 @@ Team team = usersDisplayContext.getTeam();
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 

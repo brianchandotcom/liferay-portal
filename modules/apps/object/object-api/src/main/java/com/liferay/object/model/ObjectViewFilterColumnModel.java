@@ -262,3 +262,4 @@ public interface ObjectViewFilterColumnModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1921606898

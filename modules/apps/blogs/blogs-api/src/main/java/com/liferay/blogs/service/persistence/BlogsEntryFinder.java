@@ -42,3 +42,4 @@ public interface BlogsEntryFinder {
 				<com.liferay.blogs.model.BlogsEntry> queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:544011503

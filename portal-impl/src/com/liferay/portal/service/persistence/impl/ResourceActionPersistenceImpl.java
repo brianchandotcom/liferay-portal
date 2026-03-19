@@ -1414,3 +1414,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1737282565

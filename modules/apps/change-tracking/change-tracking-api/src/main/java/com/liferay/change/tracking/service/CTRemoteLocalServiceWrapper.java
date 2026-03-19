@@ -372,3 +372,4 @@ public class CTRemoteLocalServiceWrapper
 	private CTRemoteLocalService _ctRemoteLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1369780603

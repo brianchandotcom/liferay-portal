@@ -153,3 +153,4 @@ public interface DSLQueryEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:709369616

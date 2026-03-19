@@ -206,3 +206,4 @@ public class RedirectNotFoundEntryCacheModel
 	public String url;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:870299931

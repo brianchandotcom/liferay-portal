@@ -65,10 +65,7 @@ export default function RoomsFDSPropsTransformer({
 		customRenderers: {
 			tableCell: [
 				{
-					component: ({itemData}: {itemData: IRoom}) =>
-						RoomNameRenderer({
-							data: itemData.embedded,
-						}),
+					component: RoomNameRenderer,
 					name: 'roomNameTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

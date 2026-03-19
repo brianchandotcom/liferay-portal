@@ -553,3 +553,4 @@ public class AccountEntryUserRelLocalServiceWrapper
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1485569625

@@ -311,3 +311,4 @@ public interface MBDiscussionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2119348789

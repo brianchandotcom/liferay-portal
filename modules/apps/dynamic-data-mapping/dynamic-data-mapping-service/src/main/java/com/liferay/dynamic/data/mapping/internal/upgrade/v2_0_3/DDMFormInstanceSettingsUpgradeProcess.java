@@ -34,6 +34,7 @@ public class DDMFormInstanceSettingsUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				sql);
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(

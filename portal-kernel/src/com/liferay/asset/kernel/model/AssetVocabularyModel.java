@@ -548,3 +548,4 @@ public interface AssetVocabularyModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1334444994

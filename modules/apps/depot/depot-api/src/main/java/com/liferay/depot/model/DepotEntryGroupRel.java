@@ -50,3 +50,4 @@ public interface DepotEntryGroupRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-45661494

@@ -1101,3 +1101,4 @@ public class CPDVirtualSettingFileEntryUtil {
 	private static volatile CPDVirtualSettingFileEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1049900579

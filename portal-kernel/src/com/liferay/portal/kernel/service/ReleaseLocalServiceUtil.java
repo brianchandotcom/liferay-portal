@@ -322,3 +322,4 @@ public class ReleaseLocalServiceUtil {
 	private static volatile ReleaseLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1130144118

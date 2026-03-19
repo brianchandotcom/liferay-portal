@@ -57,3 +57,4 @@ public class KaleoNodeSettingTable extends BaseTable<KaleoNodeSettingTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-333266536

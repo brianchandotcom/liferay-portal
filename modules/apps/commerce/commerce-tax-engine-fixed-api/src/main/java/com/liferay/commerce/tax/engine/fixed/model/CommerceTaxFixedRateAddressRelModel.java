@@ -288,3 +288,4 @@ public interface CommerceTaxFixedRateAddressRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1234844467

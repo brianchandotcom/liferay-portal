@@ -51,6 +51,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 					"select companyId, resourcePermissionId, roleId from ",
 					"ResourcePermission where name = 'com.liferay.commerce.",
 					"order' and scope = 3"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -98,6 +99,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 					"select companyId, resourcePermissionId, roleId from ",
 					"ResourcePermission where name = 'com.liferay.commerce.",
 					"order' and scope = 1"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

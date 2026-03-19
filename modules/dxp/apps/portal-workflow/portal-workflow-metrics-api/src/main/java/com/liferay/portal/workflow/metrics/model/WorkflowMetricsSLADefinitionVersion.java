@@ -58,3 +58,4 @@ public interface WorkflowMetricsSLADefinitionVersion
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:235154961

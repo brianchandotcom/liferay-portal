@@ -51,3 +51,4 @@ public interface SystemEvent extends PersistedModel, SystemEventModel {
 	public void setReferrerClassName(String referrerClassName);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1094104757

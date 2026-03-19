@@ -98,6 +98,7 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select calendarResourceId, companyId from CalendarResource");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

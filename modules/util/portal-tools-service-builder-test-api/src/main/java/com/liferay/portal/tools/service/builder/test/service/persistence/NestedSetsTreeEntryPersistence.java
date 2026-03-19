@@ -179,3 +179,4 @@ public interface NestedSetsTreeEntryPersistence
 	public void setRebuildTreeEnabled(boolean rebuildTreeEnabled);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-912123378

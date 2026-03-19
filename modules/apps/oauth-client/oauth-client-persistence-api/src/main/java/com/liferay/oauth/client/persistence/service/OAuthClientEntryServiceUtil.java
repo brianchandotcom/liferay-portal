@@ -131,3 +131,4 @@ public class OAuthClientEntryServiceUtil {
 			OAuthClientEntryServiceUtil.class, OAuthClientEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1742141951

@@ -1626,3 +1626,4 @@ public class AccountEntryUtil {
 	private static volatile AccountEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-104101568

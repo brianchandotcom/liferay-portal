@@ -279,3 +279,4 @@ public interface SubscriptionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-17380337

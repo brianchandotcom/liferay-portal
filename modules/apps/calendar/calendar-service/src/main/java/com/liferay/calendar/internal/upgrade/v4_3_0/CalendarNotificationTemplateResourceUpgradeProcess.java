@@ -29,6 +29,7 @@ public class CalendarNotificationTemplateResourceUpgradeProcess
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select calendarNotificationTemplateId, companyId, userId " +
 					"from CalendarNotificationTemplate");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

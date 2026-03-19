@@ -791,3 +791,4 @@ public class DDMStructurePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:723632896

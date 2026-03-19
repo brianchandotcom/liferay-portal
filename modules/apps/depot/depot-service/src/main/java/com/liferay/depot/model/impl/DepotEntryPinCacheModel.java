@@ -166,3 +166,4 @@ public class DepotEntryPinCacheModel
 	public long depotEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1423485036

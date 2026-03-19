@@ -1527,3 +1527,4 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:822661583

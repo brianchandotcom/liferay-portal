@@ -37,6 +37,7 @@ public class SqlUpdateImpl implements SqlUpdate {
 		}
 
 		try (Connection connection = ConnectionUtil.getConnection(_dataSource);
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_sql)) {
 

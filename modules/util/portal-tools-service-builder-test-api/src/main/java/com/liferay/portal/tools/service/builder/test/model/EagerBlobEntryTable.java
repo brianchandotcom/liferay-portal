@@ -38,3 +38,4 @@ public class EagerBlobEntryTable extends BaseTable<EagerBlobEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1649088876

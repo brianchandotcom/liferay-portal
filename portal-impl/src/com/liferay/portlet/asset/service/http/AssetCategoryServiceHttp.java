@@ -1896,3 +1896,4 @@ public class AssetCategoryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-146585217

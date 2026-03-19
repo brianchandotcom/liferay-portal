@@ -57,3 +57,4 @@ public interface CommerceNotificationTemplate
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-629409076

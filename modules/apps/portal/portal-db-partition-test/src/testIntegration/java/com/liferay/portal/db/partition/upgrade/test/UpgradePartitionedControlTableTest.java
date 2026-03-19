@@ -70,6 +70,7 @@ public class UpgradePartitionedControlTableTest
 						try (PreparedStatement preparedStatement =
 								connection.prepareStatement(
 									"select count(1) from " + TEST_TABLE_NAME);
+
 							ResultSet resultSet =
 								preparedStatement.executeQuery()) {
 
@@ -110,6 +111,7 @@ public class UpgradePartitionedControlTableTest
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
 		try (Connection connection = dataSource.getConnection();
+
 			Statement statement = connection.createStatement()) {
 
 			String defaultSchemaName = dbPartitionDB.getDefaultPartitionName(

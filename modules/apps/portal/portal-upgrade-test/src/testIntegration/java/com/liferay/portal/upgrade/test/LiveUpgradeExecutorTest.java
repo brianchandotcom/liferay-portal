@@ -101,6 +101,7 @@ public class LiveUpgradeExecutorTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME + " order by id asc");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -149,6 +150,7 @@ public class LiveUpgradeExecutorTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME + " order by id asc");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -213,6 +215,7 @@ public class LiveUpgradeExecutorTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME + " order by id asc");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -234,6 +237,7 @@ public class LiveUpgradeExecutorTest {
 	private void _checkData(String columnName) throws Exception {
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME + " order by id asc");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());

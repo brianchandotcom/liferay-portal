@@ -330,6 +330,7 @@ public class CompanyCountriesUtil {
 			}
 
 			try (Statement statement = connection.createStatement();
+
 				ResultSet resultSet2 = statement.executeQuery(
 					StringBundler.concat(
 						"select max(", primaryKey, ") from ", tableName))) {

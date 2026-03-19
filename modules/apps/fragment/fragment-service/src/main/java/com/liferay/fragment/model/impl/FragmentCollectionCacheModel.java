@@ -301,3 +301,4 @@ public class FragmentCollectionCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1589139749

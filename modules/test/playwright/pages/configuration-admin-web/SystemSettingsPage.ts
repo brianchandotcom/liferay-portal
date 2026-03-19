@@ -11,7 +11,7 @@ import {waitForPageToBeLoaded} from '../../utils/waitForPageToBeLoaded';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class SystemSettingsPage {
-	private applicationsMenuPage;
+	private readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
 
@@ -99,6 +99,8 @@ export class SystemSettingsPage {
 
 	async resetToDefaultValues() {
 		await this.clickOnAction('Reset Default Values');
+
+		await waitForAlert(this.page);
 	}
 
 	async saveAndWaitForAlert({

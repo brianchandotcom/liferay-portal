@@ -889,3 +889,4 @@ public class SharepointOAuth2TokenEntryModelImpl
 	private SharepointOAuth2TokenEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:816001327

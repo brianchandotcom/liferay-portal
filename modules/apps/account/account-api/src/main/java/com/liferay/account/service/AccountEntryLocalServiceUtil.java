@@ -603,3 +603,4 @@ public class AccountEntryLocalServiceUtil {
 			AccountEntryLocalServiceUtil.class, AccountEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-101200475

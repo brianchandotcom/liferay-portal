@@ -78,3 +78,4 @@ public abstract class CPInstanceOptionValueRelFinderBaseImpl
 		CPInstanceOptionValueRelFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-222760313

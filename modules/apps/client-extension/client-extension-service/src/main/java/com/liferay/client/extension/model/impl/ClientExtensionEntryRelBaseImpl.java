@@ -42,3 +42,4 @@ public abstract class ClientExtensionEntryRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1977745934

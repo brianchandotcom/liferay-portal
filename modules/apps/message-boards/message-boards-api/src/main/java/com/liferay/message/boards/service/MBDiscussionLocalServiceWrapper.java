@@ -506,3 +506,4 @@ public class MBDiscussionLocalServiceWrapper
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1936673669

@@ -116,3 +116,4 @@ public class CalendarBookingTable extends BaseTable<CalendarBookingTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2036579086

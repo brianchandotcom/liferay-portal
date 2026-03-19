@@ -285,3 +285,4 @@ public interface CProductModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1893342287

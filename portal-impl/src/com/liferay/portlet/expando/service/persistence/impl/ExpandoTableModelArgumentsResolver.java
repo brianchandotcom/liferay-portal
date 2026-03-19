@@ -112,3 +112,4 @@ public class ExpandoTableModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1428357331

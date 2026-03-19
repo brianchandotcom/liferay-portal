@@ -39,3 +39,4 @@ public abstract class WikiPageBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1506166866

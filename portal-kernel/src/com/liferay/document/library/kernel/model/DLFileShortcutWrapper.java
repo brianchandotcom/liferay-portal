@@ -865,3 +865,4 @@ public class DLFileShortcutWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1472188883

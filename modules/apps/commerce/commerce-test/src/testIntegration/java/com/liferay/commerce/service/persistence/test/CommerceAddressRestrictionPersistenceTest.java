@@ -610,3 +610,4 @@ public class CommerceAddressRestrictionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:82710390

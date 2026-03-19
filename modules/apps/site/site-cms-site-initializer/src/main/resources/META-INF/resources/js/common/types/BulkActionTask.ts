@@ -88,6 +88,7 @@ export interface IBulkActionTaskStarterDTO<T extends keyof IBulkActionType> {
 		| null;
 	overrideDefaultErrorToast?: boolean;
 	overrideDefaultSuccessToast?: boolean;
+	resetSearch?: boolean;
 	selectedData: IBulkActionFDSData;
 	type: keyof IBulkActionType;
 }
@@ -142,6 +143,9 @@ export interface IBulkActionType {
 	StatusObjectBulkSelectionAction: {
 		status?: string;
 	};
+	UpdateObjectValuesBulkSelectionAction: {
+		values?: Record<string, unknown>;
+	};
 }
 
 export interface IBulkActionTaskType {
@@ -161,6 +165,7 @@ export interface IBulkActionTaskType {
 	PermissionObjectBulkSelectionAction: string;
 	ResetPermissionObjectBulkSelectionAction: string;
 	StatusObjectBulkSelectionAction: string;
+	UpdateObjectValuesBulkSelectionAction: string;
 }
 
 export type TBulkActionTaskDTO = {

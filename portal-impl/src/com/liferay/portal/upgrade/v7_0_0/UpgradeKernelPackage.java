@@ -139,6 +139,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				List<String> primaryKeys = new ArrayList<>();
 
 				try (Statement s = connection.createStatement();
+
 					ResultSet resultSet = s.executeQuery(
 						StringBundler.concat(
 							"select MAX(", primaryKeyColumnNames[0], ") from ",

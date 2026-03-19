@@ -605,3 +605,4 @@ public class MBThreadLocalServiceUtil {
 			MBThreadLocalServiceUtil.class, MBThreadLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-59649292

@@ -579,3 +579,4 @@ public class DepotEntryGroupRelLocalServiceWrapper
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1882054153

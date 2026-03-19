@@ -50,3 +50,4 @@ public interface PatcherAccount extends PatcherAccountModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-104860590

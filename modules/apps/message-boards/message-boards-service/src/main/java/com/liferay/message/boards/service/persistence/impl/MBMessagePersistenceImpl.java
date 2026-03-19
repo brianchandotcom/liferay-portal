@@ -22967,3 +22967,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1736160149

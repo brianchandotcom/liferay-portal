@@ -1068,3 +1068,4 @@ public interface RoleLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1917576602

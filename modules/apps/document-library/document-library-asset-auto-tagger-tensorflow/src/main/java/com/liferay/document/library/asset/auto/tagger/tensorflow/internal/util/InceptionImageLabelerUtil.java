@@ -28,6 +28,7 @@ public class InceptionImageLabelerUtil {
 		byte[] imageBytes, String mimeType) {
 
 		try (Tensor<Float> imageTensor = _normalizeImage(imageBytes, mimeType);
+
 			Tensor<Float> resultTensor = _getOutputTensor(
 				_imageLabelerGraph, imageTensor)) {
 

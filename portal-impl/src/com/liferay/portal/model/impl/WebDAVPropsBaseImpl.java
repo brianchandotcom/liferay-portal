@@ -39,3 +39,4 @@ public abstract class WebDAVPropsBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1376709313

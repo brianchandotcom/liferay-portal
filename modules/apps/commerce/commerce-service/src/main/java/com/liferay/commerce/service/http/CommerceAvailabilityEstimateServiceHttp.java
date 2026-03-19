@@ -338,3 +338,4 @@ public class CommerceAvailabilityEstimateServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1995129871

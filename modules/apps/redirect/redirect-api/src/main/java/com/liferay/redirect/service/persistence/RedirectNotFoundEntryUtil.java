@@ -517,3 +517,4 @@ public class RedirectNotFoundEntryUtil {
 	private static volatile RedirectNotFoundEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1160052214

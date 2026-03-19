@@ -54,3 +54,4 @@ public interface CacheFieldEntry extends CacheFieldEntryModel, PersistedModel {
 	public void setNickname(String nickname);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1910446386

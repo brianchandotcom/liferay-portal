@@ -657,3 +657,4 @@ public interface WikiPageModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-102185189

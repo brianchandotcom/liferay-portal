@@ -415,6 +415,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	private String[] _split(String argument, String delimiter) {
 		if (Validator.isBlank(delimiter)) {
+			if (Validator.isBlank(argument)) {
+				return new String[0];
+			}
+
 			return new String[] {argument};
 		}
 

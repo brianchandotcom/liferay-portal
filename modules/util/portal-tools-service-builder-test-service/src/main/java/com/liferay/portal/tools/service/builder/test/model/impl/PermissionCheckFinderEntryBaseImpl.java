@@ -42,3 +42,4 @@ public abstract class PermissionCheckFinderEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1824781080

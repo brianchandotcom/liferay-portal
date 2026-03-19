@@ -188,3 +188,4 @@ public class CPInstanceUnitOfMeasureServiceWrapper
 	private CPInstanceUnitOfMeasureService _cpInstanceUnitOfMeasureService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-490853596

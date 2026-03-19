@@ -733,3 +733,4 @@ public class CompanyLocalServiceUtil {
 	private static volatile CompanyLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1190961635

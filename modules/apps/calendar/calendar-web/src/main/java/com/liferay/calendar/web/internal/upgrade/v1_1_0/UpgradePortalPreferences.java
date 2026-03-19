@@ -6,6 +6,7 @@
 package com.liferay.calendar.web.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.PortalPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -43,6 +44,53 @@ public class UpgradePortalPreferences extends PortalPreferencesUpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_populatePreferenceNamesMap();
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select oldPortalPreferenceValue.portalPreferenceValueId, ",
+					"oldPortalPreferenceValue.key_ as oldKey, ",
+					"newPortalPreferenceValue.key_ as newKey from ",
+					"PortalPreferenceValue oldPortalPreferenceValue inner ",
+					"join PortalPreferenceValue newPortalPreferenceValue on ",
+					"oldPortalPreferenceValue.companyId = ",
+					"newPortalPreferenceValue.companyId and ",
+					"oldPortalPreferenceValue.portalPreferencesId = ",
+					"newPortalPreferenceValue.portalPreferencesId and ",
+					"oldPortalPreferenceValue.index_ = ",
+					"newPortalPreferenceValue.index_ where ",
+					"oldPortalPreferenceValue.key_ like 'calendar-%' and ",
+					"oldPortalPreferenceValue.namespace = ",
+					"'com.liferay.portal.util.SessionClicks' and ",
+					"newPortalPreferenceValue.key_ like ",
+					"'com.liferay.calendar.web%' and ",
+					"newPortalPreferenceValue.namespace = ",
+					"'com.liferay.portal.kernel.util.SessionClicks'"));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"delete from PortalPreferenceValue where " +
+						"portalPreferenceValueId = ?");
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			while (resultSet.next()) {
+				if (!StringUtil.equals(
+						_preferenceNamesMap.get(
+							_NAMESPACE_OLD_SESSION_CLICKS +
+								resultSet.getString("oldKey")),
+						_NAMESPACE_NEW_SESSION_CLICKS +
+							resultSet.getString("newKey"))) {
+
+					continue;
+				}
+
+				preparedStatement2.setLong(
+					1, resultSet.getLong("portalPreferenceValueId"));
+
+				preparedStatement2.addBatch();
+			}
+
+			preparedStatement2.executeBatch();
+		}
 
 		super.doUpgrade();
 	}

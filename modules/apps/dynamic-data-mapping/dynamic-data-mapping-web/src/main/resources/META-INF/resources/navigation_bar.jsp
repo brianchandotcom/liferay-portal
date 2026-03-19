@@ -8,6 +8,5 @@
 <%@ include file="/init.jsp" %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= ddmDisplayContext.getNavigationItems(liferayPortletRequest, liferayPortletResponse) %>"
 />

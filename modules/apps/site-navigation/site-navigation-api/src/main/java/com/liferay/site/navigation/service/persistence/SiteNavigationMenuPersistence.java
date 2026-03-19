@@ -1887,3 +1887,4 @@ public interface SiteNavigationMenuPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-834025631

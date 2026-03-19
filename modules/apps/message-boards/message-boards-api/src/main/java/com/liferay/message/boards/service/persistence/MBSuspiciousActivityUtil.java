@@ -1193,3 +1193,4 @@ public class MBSuspiciousActivityUtil {
 	private static volatile MBSuspiciousActivityPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1296171409

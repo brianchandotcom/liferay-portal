@@ -141,3 +141,4 @@ public class NotificationQueueEntryAttachmentCacheModel
 	public long notificationQueueEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:78784167

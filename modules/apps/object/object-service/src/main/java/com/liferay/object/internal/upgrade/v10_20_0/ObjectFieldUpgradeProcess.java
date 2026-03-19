@@ -36,41 +36,39 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-			SQLTransformer.transform(
-				StringBundler.concat(
-					"select ObjectDefinition.objectDefinitionId, ",
-					"ObjectDefinition.companyId, ObjectDefinition.userId, ",
-					"ObjectDefinition.userName from ObjectDefinition where ",
-					"ObjectDefinition.objectDefinitionId not in (select ",
-					"distinct ObjectField.objectDefinitionId from ObjectField ",
-					"where ObjectField.name in ('displaydate', ",
-					"'expirationDate','reviewdate')) and ObjectDefinition.",
-					"modifiable = [$TRUE$]")));
-			 PreparedStatement preparedStatement2 =
-				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					 connection,
-					 StringBundler.concat(
-						 "insert into ObjectField (mvccVersion, uuid_, ",
-						 "externalReferenceCode, objectFieldId, companyId, ",
-						 "userId, userName, createDate, modifiedDate, ",
-						 "listTypeDefinitionId, objectDefinitionId, ",
-						 "businessType, dbColumnName, dbTableName, dbType, ",
-						 "indexed, indexedAsKeyword, indexedLanguageId, ",
-						 "label, localized, name, readOnly, ",
-						 "readOnlyConditionExpression, relationshipType,",
-						 "required, state_, system_) values (",
-						 "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-						 "?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-				 ));
-			 PreparedStatement preparedStatement3 =
-				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					 connection,
-					 StringBundler.concat(
-						 "insert into ObjectFieldSetting (mvccVersion, uuid_, ",
-						 "objectFieldSettingId, companyId, userId, userName, ",
-						 "createDate, modifiedDate, objectFieldId, name, ",
-						 "value) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
-
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"select ObjectDefinition.objectDefinitionId, ",
+						"ObjectDefinition.companyId, ObjectDefinition.userId, ",
+						"ObjectDefinition.userName from ObjectDefinition ",
+						"where ObjectDefinition.objectDefinitionId not in (",
+						"select distinct ObjectField.objectDefinitionId from ",
+						"ObjectField where ObjectField.name in ('displaydate'",
+						", 'expirationDate','reviewdate')) and ",
+						"ObjectDefinition.modifiable = [$TRUE$]")));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into ObjectField (mvccVersion, uuid_, ",
+						"externalReferenceCode, objectFieldId, companyId, ",
+						"userId, userName, createDate, modifiedDate, ",
+						"listTypeDefinitionId, objectDefinitionId, ",
+						"businessType, dbColumnName, dbTableName, dbType, ",
+						"indexed, indexedAsKeyword, indexedLanguageId, label, ",
+						"localized, name, readOnly, ",
+						"readOnlyConditionExpression, relationshipType,",
+						"required, state_, system_) values (?, ?, ?, ?, ?, ?, ",
+						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+						"?, ?, ?, ?)"));
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into ObjectFieldSetting (mvccVersion, uuid_, ",
+						"objectFieldSettingId, companyId, userId, userName, ",
+						"createDate, modifiedDate, objectFieldId, name, ",
+						"value) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

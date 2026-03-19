@@ -81,3 +81,4 @@ public interface TestEntityModel extends BaseModel<TestEntity> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-174491040

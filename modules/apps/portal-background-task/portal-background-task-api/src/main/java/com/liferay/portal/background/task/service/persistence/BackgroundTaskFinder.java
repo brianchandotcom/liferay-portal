@@ -20,3 +20,4 @@ public interface BackgroundTaskFinder {
 			int start, int end, boolean orderByType);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2119349261

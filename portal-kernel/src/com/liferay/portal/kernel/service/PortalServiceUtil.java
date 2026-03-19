@@ -86,3 +86,4 @@ public class PortalServiceUtil {
 	private static volatile PortalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-199034555

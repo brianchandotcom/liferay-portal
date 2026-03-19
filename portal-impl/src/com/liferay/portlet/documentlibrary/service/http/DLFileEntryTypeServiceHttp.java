@@ -775,3 +775,4 @@ public class DLFileEntryTypeServiceHttp {
 		new Class[] {long.class, java.util.Map.class, java.util.Map.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-866825760

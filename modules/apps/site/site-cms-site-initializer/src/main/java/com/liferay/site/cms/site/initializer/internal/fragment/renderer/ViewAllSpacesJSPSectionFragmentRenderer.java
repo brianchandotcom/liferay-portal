@@ -5,8 +5,10 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewAllSpacesDisplayContext;
 
@@ -14,6 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marco Leo
@@ -37,7 +41,8 @@ public class ViewAllSpacesJSPSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new ViewAllSpacesDisplayContext(
-			_depotEntryPinLocalService, httpServletRequest, language, _portal);
+			_depotEntryPinLocalService, httpServletRequest, language, _portal,
+			_portletResourcePermission);
 	}
 
 	@Override
@@ -50,5 +55,12 @@ public class ViewAllSpacesJSPSectionFragmentRenderer
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")"
+	)
+	private volatile PortletResourcePermission _portletResourcePermission;
 
 }

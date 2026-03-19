@@ -72,3 +72,4 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	public String getWorkflowDefinition();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1755577750

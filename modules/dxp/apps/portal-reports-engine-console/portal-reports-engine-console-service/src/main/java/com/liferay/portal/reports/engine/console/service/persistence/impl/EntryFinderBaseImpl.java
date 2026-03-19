@@ -56,3 +56,4 @@ public abstract class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
 	protected EntryPersistence entryPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1639653228

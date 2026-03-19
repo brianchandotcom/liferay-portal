@@ -719,3 +719,4 @@ public class SamlIbSloMessageModelImpl
 	private SamlIbSloMessage _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1336117721

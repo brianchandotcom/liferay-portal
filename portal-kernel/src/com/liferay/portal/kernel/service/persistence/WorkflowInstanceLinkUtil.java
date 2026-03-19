@@ -971,3 +971,4 @@ public class WorkflowInstanceLinkUtil {
 	private static volatile WorkflowInstanceLinkPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:844661223

@@ -69,3 +69,4 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 	public boolean isLocked();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:18211669

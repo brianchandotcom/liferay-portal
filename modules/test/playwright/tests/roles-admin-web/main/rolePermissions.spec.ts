@@ -17,8 +17,8 @@ import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganiza
 import {HomePage} from '../../../pages/portal-web/HomePage';
 import getRandomString from '../../../utils/getRandomString';
 import {
-	performLoginViaApi,
 	performLogout,
+	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -52,13 +52,11 @@ test(
 			surname: user.familyName,
 		};
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(page.getByTestId('simulation')).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const role = await apiHelpers.headlessAdminUser.postRole({
 			name: getRandomString(),
@@ -80,8 +78,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(page.getByTestId('simulation')).toBeVisible();
 
@@ -132,8 +129,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await rolesPage.goto(false);
 
@@ -158,8 +154,7 @@ test(
 		await expect(rolesPage.rolesTable.searchInput).toBeEditable();
 		await expect(rolesPage.rolesTable.newButton).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const role2 = await apiHelpers.headlessAdminUser.postRole({
 			name: getRandomString(),
@@ -185,8 +180,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await rolesPage.goto(false);
 
@@ -309,8 +303,7 @@ test(
 
 			const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
 
-			await performLogout(page);
-			await performLoginViaApi({page, screenName: user1.alternateName});
+			await performUserSwitch(page, user1.alternateName);
 
 			await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
 
@@ -340,8 +333,7 @@ test(
 			await waitForAlert(page);
 		}
 		finally {
-			await performLogout(page);
-			await performLoginViaApi({page, screenName: 'test'});
+			await performUserSwitch(page, 'test');
 
 			await apiHelpers.jsonWebServicesResourcePermissionApiHelper.setIndividualResourcePermissions(
 				['VIEW'],
@@ -410,8 +402,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		const homePage = new HomePage(page);
 
@@ -513,8 +504,7 @@ test(
 			surname: user.familyName,
 		};
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -522,16 +512,14 @@ test(
 			0
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await apiHelpers.jsonWebServicesUser.assignUsersToSite(
 			site.id,
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -539,8 +527,7 @@ test(
 			accountsPage.accountsTable.cell(account.name)
 		).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const guestRole = await apiHelpers.headlessAdminUser.getRoleByName(
 			'Guest',
@@ -692,8 +679,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await teamsPage.goTo(site.friendlyUrlPath);
 
@@ -736,8 +722,7 @@ test(
 			).toBeVisible();
 		}).toPass();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -772,8 +757,7 @@ test(
 			String(role.id)
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await teamsPage.goTo(site.friendlyUrlPath);
 
@@ -838,15 +822,13 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
 		await expect(bookmarksPage.bookmarkItem(bookmarkName)).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await apiHelpers.headlessAdminUser.assignUserToSite(
 			role.id,
@@ -854,8 +836,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -967,8 +948,7 @@ test(
 			String(Number(team.teamId) + 1)
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user1.alternateName});
+		await performUserSwitch(page, user1.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -978,8 +958,7 @@ test(
 				.or(page.getByText('requested resource could not be found'))
 		).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user2.alternateName});
+		await performUserSwitch(page, user2.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1144,16 +1123,14 @@ test(
 			String(siteMemberRole.id)
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user1.alternateName});
+		await performUserSwitch(page, user1.alternateName);
 
 		await page.goto(`/web/${organization.name}/${layout.friendlyUrlPath}`);
 
 		await expect(blogsPage.blogTitle(blog.headline)).toBeVisible();
 		await expect(blogsPage.noEntriesMessage).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user2.alternateName});
+		await performUserSwitch(page, user2.alternateName);
 
 		await page.goto(`/web/${organization.name}/${layout.friendlyUrlPath}`);
 
@@ -1258,16 +1235,14 @@ test(
 			String(siteMemberRole.id)
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user1.alternateName});
+		await performUserSwitch(page, user1.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
 		await expect(blogsPage.blogTitle(blog.headline)).toBeVisible();
 		await expect(blogsPage.noEntriesMessage).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user2.alternateName});
+		await performUserSwitch(page, user2.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1309,8 +1284,7 @@ test(
 			String(guestRole.id)
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1320,8 +1294,7 @@ test(
 				.or(page.getByText('requested resource could not be found'))
 		).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
 
@@ -1351,8 +1324,7 @@ test(
 
 		await waitForAlert(page);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 

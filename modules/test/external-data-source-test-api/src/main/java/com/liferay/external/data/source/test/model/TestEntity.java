@@ -50,3 +50,4 @@ public interface TestEntity extends PersistedModel, TestEntityModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1689445274

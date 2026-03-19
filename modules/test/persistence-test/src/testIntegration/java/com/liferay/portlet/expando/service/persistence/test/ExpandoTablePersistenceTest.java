@@ -496,3 +496,4 @@ public class ExpandoTablePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1759464473

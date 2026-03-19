@@ -533,3 +533,4 @@ public interface CPSpecificationOptionListTypeDefinitionRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1865418798

@@ -43,3 +43,4 @@ public interface EntryFinder {
 					orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:563844898

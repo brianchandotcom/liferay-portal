@@ -120,6 +120,7 @@ public class UpgradeConfigurationPidUpgradeProcessTest {
 			_upgradeConfigurationPidUpgradeProcess.upgrade();
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select dictionary from Configuration_ where " +
@@ -172,6 +173,7 @@ public class UpgradeConfigurationPidUpgradeProcessTest {
 		ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"insert into Configuration_ (configurationId, dictionary) " +
 					"values(?, ?)")) {
@@ -213,6 +215,7 @@ public class UpgradeConfigurationPidUpgradeProcessTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select dictionary from Configuration_ where configurationId " +
 					"= ?")) {

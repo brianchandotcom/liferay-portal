@@ -53,3 +53,4 @@ public class SocialActivitySettingTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1813836734

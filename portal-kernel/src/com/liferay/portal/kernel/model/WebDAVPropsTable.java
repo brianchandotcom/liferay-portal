@@ -46,3 +46,4 @@ public class WebDAVPropsTable extends BaseTable<WebDAVPropsTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1882357727

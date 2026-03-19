@@ -10,12 +10,17 @@ import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 
 export class WorkflowTasksPage {
+	readonly assignedToMeLink: Locator;
 	readonly assignedToMyRolesLink: Locator;
 	readonly performanceTab: Locator;
 	readonly processSingleAprover: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.assignedToMeLink = page.getByRole('link', {
+			name: 'Assigned to me',
+		});
+
 		this.assignedToMyRolesLink = page.getByRole('link', {
 			name: 'Assigned to my roles',
 		});

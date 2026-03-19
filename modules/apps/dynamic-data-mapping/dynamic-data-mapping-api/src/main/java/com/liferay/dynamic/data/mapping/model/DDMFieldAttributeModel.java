@@ -209,3 +209,4 @@ public interface DDMFieldAttributeModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:488565399

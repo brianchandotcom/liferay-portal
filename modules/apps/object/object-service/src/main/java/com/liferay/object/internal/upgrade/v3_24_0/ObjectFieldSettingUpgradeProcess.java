@@ -23,27 +23,26 @@ public class ObjectFieldSettingUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-			SQLTransformer.transform(
-				StringBundler.concat(
-					"select ObjectField.objectFieldId, ObjectField.companyId, ",
-					"ObjectField.userId, ObjectField.userName, ",
-					"ObjectRelationship.objectDefinitionId1, ",
-					"ObjectDefinition.name from ObjectField inner join ",
-					"ObjectRelationship on ObjectField.objectFieldId = ",
-					"ObjectRelationship.objectFieldId2 inner join ",
-					"ObjectDefinition on ObjectDefinition.objectDefinitionId ",
-					"= ObjectRelationship.objectDefinitionId1 where ",
-					"ObjectField.businessType = 'Relationship'")));
-
-			 PreparedStatement preparedStatement2 =
-				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					 connection,
-					 StringBundler.concat(
-						 "insert into ObjectFieldSetting (uuid_, ",
-						 "objectFieldSettingId, companyId, userId, userName, ",
-						 "createDate, modifiedDate, objectFieldId, name, ",
-						 "value) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
-
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"select ObjectField.objectFieldId, ObjectField.",
+						"companyId, ObjectField.userId, ObjectField.userName, ",
+						"ObjectRelationship.objectDefinitionId1, ",
+						"ObjectDefinition.name from ObjectField inner join ",
+						"ObjectRelationship on ObjectField.objectFieldId = ",
+						"ObjectRelationship.objectFieldId2 inner join ",
+						"ObjectDefinition on ObjectDefinition.",
+						"objectDefinitionId = ObjectRelationship.",
+						"objectDefinitionId1 where ObjectField.businessType = ",
+						"'Relationship'")));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into ObjectFieldSetting (uuid_, ",
+						"objectFieldSettingId, companyId, userId, userName, ",
+						"createDate, modifiedDate, objectFieldId, name, ",
+						"value) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

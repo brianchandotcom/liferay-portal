@@ -52,3 +52,4 @@ public class CPSpecificationOptionListTypeDefinitionRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1529616941

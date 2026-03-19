@@ -554,3 +554,4 @@ public interface MemberRequestPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:74031323

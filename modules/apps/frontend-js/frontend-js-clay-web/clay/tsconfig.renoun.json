@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@clayui/*": [
+				"./clay-*/src",
+				"./node_modules/@clayui/*/src"
+			]
+		}
+	},
+	"extends": "./tsconfig.json",
+	"include": [
+		"clay-*/src"
+	]
+}

@@ -180,3 +180,4 @@ public class LayoutBranchServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-630838658

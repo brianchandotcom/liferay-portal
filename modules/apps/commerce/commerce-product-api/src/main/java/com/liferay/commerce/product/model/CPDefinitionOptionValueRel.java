@@ -60,3 +60,4 @@ public interface CPDefinitionOptionValueRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1141215540

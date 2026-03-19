@@ -101,6 +101,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 
 	private void _addKaleoProcess(long kaleoProcessId) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into KaleoProcess (uuid_, kaleoProcessId, ",
@@ -135,6 +136,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 			"?, ?)");
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 

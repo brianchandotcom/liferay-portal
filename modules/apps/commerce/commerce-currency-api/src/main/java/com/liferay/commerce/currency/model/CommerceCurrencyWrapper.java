@@ -980,3 +980,4 @@ public class CommerceCurrencyWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1645658582

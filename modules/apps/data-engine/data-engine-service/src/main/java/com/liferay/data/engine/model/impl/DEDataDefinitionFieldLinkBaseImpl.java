@@ -42,3 +42,4 @@ public abstract class DEDataDefinitionFieldLinkBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:631958528

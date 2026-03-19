@@ -1578,3 +1578,4 @@ public interface FragmentCompositionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:390327725

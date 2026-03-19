@@ -2648,3 +2648,4 @@ public class GroupLocalServiceUtil {
 	private static volatile GroupLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1902906618

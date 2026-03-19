@@ -288,3 +288,4 @@ public interface PatcherProductVersionLocalService
 		PatcherProductVersion patcherProductVersion);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1203317816

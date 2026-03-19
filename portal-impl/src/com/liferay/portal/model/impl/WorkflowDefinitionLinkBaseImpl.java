@@ -41,3 +41,4 @@ public abstract class WorkflowDefinitionLinkBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-599653677

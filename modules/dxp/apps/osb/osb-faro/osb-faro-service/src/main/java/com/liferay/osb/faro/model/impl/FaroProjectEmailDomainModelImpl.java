@@ -716,3 +716,4 @@ public class FaroProjectEmailDomainModelImpl
 	private FaroProjectEmailDomain _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1902815110

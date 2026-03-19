@@ -5,6 +5,7 @@
 
 package com.liferay.headless.dsr.internal.resource.v1_0;
 
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.headless.dsr.dto.v1_0.UserAccount;
 import com.liferay.headless.dsr.internal.dto.v1_0.converter.UserAccountDTOConverterContext;
 import com.liferay.headless.dsr.resource.v1_0.UserAccountResource;
@@ -177,11 +178,13 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
+		long accountEntryId = GetterUtil.getLong(
+			values.get("r_accountToDSRRooms_accountEntryId"));
 		Group group = _groupService.getGroup(
 			GetterUtil.getLong(values.get("siteId")));
 
 		Ticket ticket = _addInviteMemberTicket(
-			group.getCompanyId(), group,
+			accountEntryId, group.getCompanyId(), group,
 			GetterUtil.getString(
 				values.get("name"),
 				group.getName(contextAcceptLanguage.getPreferredLocale())),
@@ -201,6 +204,11 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		}
 
 		_userLocalService.addGroupUser(group.getGroupId(), user.getUserId());
+
+		if (accountEntryId > 0) {
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntryId, user.getUserId());
+		}
 
 		if (Validator.isNotNull(userAccount.getRoleKey())) {
 			Role role = _roleLocalService.getRole(
@@ -226,13 +234,16 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	private Ticket _addInviteMemberTicket(
-			long companyId, Group group, String name, UserAccount userAccount)
+			long accountEntryId, long companyId, Group group, String name,
+			UserAccount userAccount)
 		throws Exception {
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			companyId, Group.class.getName(), group.getGroupId(),
 			DSRTicketConstants.TYPE_INVITE_MEMBER,
 			JSONUtil.put(
+				"accountEntryId", accountEntryId
+			).put(
 				"emailAddress", userAccount.getEmailAddress()
 			).put(
 				"roleKey", userAccount.getRoleKey()
@@ -346,6 +357,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				contextUser),
 			user);
 	}
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

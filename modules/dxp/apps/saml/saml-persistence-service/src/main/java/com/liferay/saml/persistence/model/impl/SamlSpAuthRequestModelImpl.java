@@ -758,3 +758,4 @@ public class SamlSpAuthRequestModelImpl
 	private SamlSpAuthRequest _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:80620117

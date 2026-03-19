@@ -272,3 +272,4 @@ public class UADPartialEntryUtil {
 	private static volatile UADPartialEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:165345988

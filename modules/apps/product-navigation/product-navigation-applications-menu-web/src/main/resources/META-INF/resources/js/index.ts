@@ -6,4 +6,11 @@
 // @ts-ignore
 
 export {default as ApplicationsMenu} from './ApplicationsMenu';
+
 export {default as GlobalMenu} from './GlobalMenu';
+
+export {default as ApplicationsHome} from './homes/ApplicationsHome';
+
+export {default as CommerceHome} from './homes/CommerceHome';
+
+export {default as ControlPanelHome} from './homes/ControlPanelHome';

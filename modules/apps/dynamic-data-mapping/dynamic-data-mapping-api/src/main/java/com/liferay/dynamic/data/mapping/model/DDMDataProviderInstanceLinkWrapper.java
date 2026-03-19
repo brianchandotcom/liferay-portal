@@ -267,3 +267,4 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:736402539

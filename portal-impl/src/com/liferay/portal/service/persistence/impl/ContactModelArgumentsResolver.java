@@ -127,3 +127,4 @@ public class ContactModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:394809105

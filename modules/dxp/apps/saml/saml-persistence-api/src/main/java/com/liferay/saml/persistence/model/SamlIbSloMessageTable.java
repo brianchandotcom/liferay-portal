@@ -50,3 +50,4 @@ public class SamlIbSloMessageTable extends BaseTable<SamlIbSloMessageTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-678815613

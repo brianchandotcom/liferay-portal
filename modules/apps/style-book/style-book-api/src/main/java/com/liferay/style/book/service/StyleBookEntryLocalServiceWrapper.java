@@ -701,3 +701,4 @@ public class StyleBookEntryLocalServiceWrapper
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:436187170

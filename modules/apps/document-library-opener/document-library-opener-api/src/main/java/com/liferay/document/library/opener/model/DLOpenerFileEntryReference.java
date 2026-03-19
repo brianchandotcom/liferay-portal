@@ -55,3 +55,4 @@ public interface DLOpenerFileEntryReference
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-33627304

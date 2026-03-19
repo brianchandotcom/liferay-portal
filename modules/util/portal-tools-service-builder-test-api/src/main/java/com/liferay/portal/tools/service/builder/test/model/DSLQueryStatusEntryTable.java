@@ -43,3 +43,4 @@ public class DSLQueryStatusEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-569883417

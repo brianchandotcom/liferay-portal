@@ -62,3 +62,4 @@ public interface CommerceShipment
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1202153121

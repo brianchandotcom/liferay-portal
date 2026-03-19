@@ -39,3 +39,4 @@ public abstract class PatcherFixPackBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1527983663

@@ -311,3 +311,4 @@ public class KaleoInstanceCacheModel
 	public String workflowContext;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1559575787

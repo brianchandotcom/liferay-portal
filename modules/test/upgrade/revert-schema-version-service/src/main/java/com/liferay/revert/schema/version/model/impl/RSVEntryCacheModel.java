@@ -114,3 +114,4 @@ public class RSVEntryCacheModel
 	public long companyId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1925693863

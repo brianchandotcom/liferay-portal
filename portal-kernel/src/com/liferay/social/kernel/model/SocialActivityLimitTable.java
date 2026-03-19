@@ -59,3 +59,4 @@ public class SocialActivityLimitTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-846194530

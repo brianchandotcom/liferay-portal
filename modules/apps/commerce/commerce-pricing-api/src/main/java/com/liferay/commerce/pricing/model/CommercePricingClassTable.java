@@ -70,3 +70,4 @@ public class CommercePricingClassTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:825287395

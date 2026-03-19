@@ -50,3 +50,4 @@ public class LayoutBranchTable extends BaseTable<LayoutBranchTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1199307496

@@ -102,6 +102,7 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 		}
 
 		try (InputStream inputStream = binaryFile.getInputStream();
+
 			Reader reader = new InputStreamReader(
 				inputStream, StandardCharsets.UTF_8)) {
 

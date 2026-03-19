@@ -597,3 +597,4 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1730835883

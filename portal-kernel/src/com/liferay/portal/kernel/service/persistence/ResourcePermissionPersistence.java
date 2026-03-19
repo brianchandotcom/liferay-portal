@@ -2071,3 +2071,4 @@ public interface ResourcePermissionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-673804853

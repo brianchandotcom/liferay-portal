@@ -222,3 +222,4 @@ public class LayoutPageTemplateCollectionServiceUtil {
 			LayoutPageTemplateCollectionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-64202457

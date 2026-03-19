@@ -478,3 +478,4 @@ public class AssetTagGroupRelLocalServiceWrapper
 	private AssetTagGroupRelLocalService _assetTagGroupRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-341795083

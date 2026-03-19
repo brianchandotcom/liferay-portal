@@ -60,3 +60,4 @@ public interface KaleoNode extends KaleoNodeModel, PersistedModel {
 	public boolean hasKaleoTransition();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2031531395

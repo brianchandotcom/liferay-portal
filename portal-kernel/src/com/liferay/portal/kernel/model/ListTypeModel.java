@@ -228,3 +228,4 @@ public interface ListTypeModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:11751932

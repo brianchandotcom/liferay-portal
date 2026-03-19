@@ -117,18 +117,20 @@ public class ConfigurationUpgradeProcessTest {
 		long count = 0;
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select dictionary from Configuration_ where ",
 					"configurationId like '", _CONFIGURATION_ID, "%' and ",
 					"dictionary like '%companyId=%", companyId, "%'"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				count += 1;
 
 				Dictionary<String, Object> dictionary = _toDictionary(
-					resultSet.getString(1));
+					resultSet.getString("dictionary"));
 
 				Assert.assertEquals(
 					companyId,
@@ -146,6 +148,7 @@ public class ConfigurationUpgradeProcessTest {
 			CompanyThreadLocal.getCompanyId(), GroupConstants.GUEST);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"insert into Configuration_ (configurationId, dictionary) " +
 					"values(?, ?)")) {

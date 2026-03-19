@@ -130,3 +130,4 @@ public abstract class CPDefinitionGroupedEntryServiceBaseImpl
 		CPDefinitionGroupedEntryServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:702658661

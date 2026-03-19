@@ -17,14 +17,13 @@ body {
 	border-top-left-radius: 2px;
 	border-top-right-radius: 2px;
 	display: inline-block;
-	font-size: 13px;
+	font-size: 11px;
 	font-weight: 600;
 	height: 20px;
-	padding: 4px 10px;
+	padding: 0 8px;
 	position: absolute;
 	right: 32px;
-	top: -10px;
-	width: 80px;
+	top: -6px;
 }
 
 /* ---------- App type variants ---------- */
@@ -75,6 +74,21 @@ body {
 	--badge-color: #7785ff;
 	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
+}
+
+.beta-badge-label {
+	align-items: center;
+	background-color: #d1ecfa;
+	border-radius: 4px;
+	color: #166e9e;
+	display: flex;
+	font-size: 13px;
+	font-weight: 600;
+	justify-content: center;
+	line-height: 16px;
+	padding: 4px 8px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 /* ---------- Cards ---------- */

@@ -46,3 +46,4 @@ public class SamlSpMessageTable extends BaseTable<SamlSpMessageTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1758575018

@@ -160,3 +160,4 @@ public class DepotAppCustomizationCacheModel
 	public String portletId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1252333787

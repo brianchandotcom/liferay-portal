@@ -117,3 +117,4 @@ public class SavedContentEntryServiceWrapper
 	private SavedContentEntryService _savedContentEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:601294798

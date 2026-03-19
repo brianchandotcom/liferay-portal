@@ -49,10 +49,6 @@ const mockSchema = {
 	title: 'title',
 } as ICardSchema;
 
-const mockAdditionalProps = {
-	contentViewURL: '/content-view-url',
-};
-
 describe('GalleryView', () => {
 	let frontendDataSetContext: Context<any>;
 
@@ -65,7 +61,6 @@ describe('GalleryView', () => {
 	it('renders correctly with initial items', () => {
 		render(
 			<GalleryView
-				additionalProps={mockAdditionalProps}
 				frontendDataSetContext={frontendDataSetContext}
 				items={mockItems}
 				schema={mockSchema}
@@ -82,7 +77,6 @@ describe('GalleryView', () => {
 	it('changes the preview when a thumbnail is clicked', () => {
 		render(
 			<GalleryView
-				additionalProps={mockAdditionalProps}
 				frontendDataSetContext={frontendDataSetContext}
 				items={mockItems}
 				schema={mockSchema}
@@ -98,7 +92,6 @@ describe('GalleryView', () => {
 	it('navigates to the next item when the next button is clicked', () => {
 		render(
 			<GalleryView
-				additionalProps={mockAdditionalProps}
 				frontendDataSetContext={frontendDataSetContext}
 				items={mockItems}
 				schema={mockSchema}
@@ -114,7 +107,6 @@ describe('GalleryView', () => {
 	it('navigates to the previous item when the previous button is clicked', () => {
 		render(
 			<GalleryView
-				additionalProps={mockAdditionalProps}
 				frontendDataSetContext={frontendDataSetContext}
 				items={mockItems}
 				schema={mockSchema}
@@ -134,7 +126,6 @@ describe('GalleryView', () => {
 		const fewItems = mockItems.slice(0, 1);
 		render(
 			<GalleryView
-				additionalProps={mockAdditionalProps}
 				frontendDataSetContext={frontendDataSetContext}
 				items={fewItems}
 				schema={mockSchema}
@@ -152,7 +143,6 @@ describe('GalleryView', () => {
 
 		render(
 			<GalleryView
-				additionalProps={mockAdditionalProps}
 				frontendDataSetContext={frontendDataSetContext}
 				items={mockItems}
 				schema={mockSchema}
@@ -168,7 +158,6 @@ describe('GalleryView', () => {
 	it('changes the preview when a thumbnail is focused and Enter key is pressed', () => {
 		render(
 			<GalleryView
-				additionalProps={mockAdditionalProps}
 				frontendDataSetContext={frontendDataSetContext}
 				items={mockItems}
 				schema={mockSchema}
@@ -185,7 +174,6 @@ describe('GalleryView', () => {
 	it('changes the preview when a thumbnail is focused and Space key is pressed', () => {
 		render(
 			<GalleryView
-				additionalProps={mockAdditionalProps}
 				frontendDataSetContext={frontendDataSetContext}
 				items={mockItems}
 				schema={mockSchema}
@@ -202,7 +190,6 @@ describe('GalleryView', () => {
 	it('checks the accessibility', async () => {
 		const {container} = render(
 			<GalleryView
-				additionalProps={mockAdditionalProps}
 				frontendDataSetContext={frontendDataSetContext}
 				items={mockItems}
 				schema={mockSchema}

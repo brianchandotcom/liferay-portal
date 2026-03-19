@@ -460,3 +460,4 @@ public class DLFolderServiceWrapper
 	private DLFolderService _dlFolderService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1465752933

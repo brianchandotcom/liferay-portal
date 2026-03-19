@@ -1313,3 +1313,4 @@ public class SocialActivityAchievementUtil {
 	private static volatile SocialActivityAchievementPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1258918247

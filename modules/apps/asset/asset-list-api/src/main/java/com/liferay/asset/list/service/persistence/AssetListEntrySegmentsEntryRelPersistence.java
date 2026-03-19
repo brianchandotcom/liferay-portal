@@ -1094,3 +1094,4 @@ public interface AssetListEntrySegmentsEntryRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1159991863

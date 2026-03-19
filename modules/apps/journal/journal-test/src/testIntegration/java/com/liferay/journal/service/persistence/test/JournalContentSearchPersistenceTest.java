@@ -639,3 +639,4 @@ public class JournalContentSearchPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-612448810

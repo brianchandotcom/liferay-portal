@@ -41,3 +41,4 @@ public class OSBPatcher_PFixes_PFixPacksTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-267467287

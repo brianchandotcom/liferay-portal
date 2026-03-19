@@ -718,3 +718,4 @@ public class DDMDataProviderInstanceLinkModelImpl
 	private DDMDataProviderInstanceLink _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:533025508

@@ -38,3 +38,4 @@ public abstract class RoleBaseImpl extends RoleModelImpl implements Role {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:350178266

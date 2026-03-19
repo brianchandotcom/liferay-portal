@@ -57,3 +57,4 @@ public class PortalPreferenceValueTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:764889689

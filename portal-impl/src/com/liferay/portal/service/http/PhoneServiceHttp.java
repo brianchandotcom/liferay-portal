@@ -354,3 +354,4 @@ public class PhoneServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1939764384

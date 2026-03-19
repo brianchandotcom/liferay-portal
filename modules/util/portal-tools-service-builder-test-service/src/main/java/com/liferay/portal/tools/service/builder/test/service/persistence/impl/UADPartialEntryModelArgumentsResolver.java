@@ -114,3 +114,4 @@ public class UADPartialEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1815511102

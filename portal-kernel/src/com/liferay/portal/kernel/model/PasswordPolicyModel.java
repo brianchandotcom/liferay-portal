@@ -643,3 +643,4 @@ public interface PasswordPolicyModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:808708128

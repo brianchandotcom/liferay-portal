@@ -78,3 +78,4 @@ public class CommerceVirtualOrderItemTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1742481243

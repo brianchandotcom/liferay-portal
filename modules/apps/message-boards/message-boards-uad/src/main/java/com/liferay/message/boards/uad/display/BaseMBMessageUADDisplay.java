@@ -75,3 +75,4 @@ public abstract class BaseMBMessageUADDisplay
 	protected MBMessageLocalService mbMessageLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-971059393

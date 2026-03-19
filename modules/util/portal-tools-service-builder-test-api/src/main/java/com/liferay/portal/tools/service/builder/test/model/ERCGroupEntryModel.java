@@ -131,3 +131,4 @@ public interface ERCGroupEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1806719825

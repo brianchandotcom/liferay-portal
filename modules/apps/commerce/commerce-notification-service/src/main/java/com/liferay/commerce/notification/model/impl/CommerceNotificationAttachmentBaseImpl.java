@@ -44,3 +44,4 @@ public abstract class CommerceNotificationAttachmentBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:802665701

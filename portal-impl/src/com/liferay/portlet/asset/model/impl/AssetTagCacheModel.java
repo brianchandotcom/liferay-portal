@@ -259,3 +259,4 @@ public class AssetTagCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-973751218

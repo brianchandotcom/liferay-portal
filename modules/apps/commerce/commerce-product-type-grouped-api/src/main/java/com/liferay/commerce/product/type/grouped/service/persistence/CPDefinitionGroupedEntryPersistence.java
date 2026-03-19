@@ -846,3 +846,4 @@ public interface CPDefinitionGroupedEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1377293829

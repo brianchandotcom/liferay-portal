@@ -2239,3 +2239,4 @@ public class AssetEntryUtil {
 	private static volatile AssetEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1971474521

@@ -510,3 +510,4 @@ public interface SamlPeerBindingPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2127798551

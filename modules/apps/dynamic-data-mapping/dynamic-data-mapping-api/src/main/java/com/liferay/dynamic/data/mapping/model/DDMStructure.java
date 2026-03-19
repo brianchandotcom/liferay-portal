@@ -162,3 +162,4 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public void setDDMForm(DDMForm ddmForm);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1432027553

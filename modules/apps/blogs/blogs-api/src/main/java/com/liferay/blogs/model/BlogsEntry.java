@@ -66,3 +66,4 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 	public void setSmallImageType(String smallImageType);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:735772067

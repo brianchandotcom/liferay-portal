@@ -709,3 +709,4 @@ public class CommerceShippingMethodUtil {
 	private static volatile CommerceShippingMethodPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1784125883

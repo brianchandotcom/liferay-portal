@@ -158,7 +158,7 @@ ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 			href="<%= claySampleImageCard.getHref() %>"
 			imageAlt="thumbnail"
 			imageSrc="https://images.unsplash.com/photo-1503703294279-c83bdf7b4bf4"
-			labels="<%= claySampleImageCard.getLabels() %>"
+			labels="<%= claySampleImageCard.getLabels(3) %>"
 			stickerLabel="<%= claySampleImageCard.getStickerLabel() %>"
 			stickerStyle="danger"
 			subtitle="<%= claySampleImageCard.getSubtitle() %>"
@@ -172,7 +172,7 @@ ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 		<clay:image-card
 			actionDropdownItems="<%= claySampleImageCard.getActionDropdownItems() %>"
 			icon="camera"
-			labels="<%= claySampleImageCard.getLabels() %>"
+			labels="<%= claySampleImageCard.getLabels(2) %>"
 			stickerLabel="SVG"
 			stickerStyle="warning"
 			subtitle="<%= claySampleImageCard.getSubtitle() %>"
@@ -185,7 +185,7 @@ ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 	>
 		<clay:image-card
 			actionDropdownItems="<%= claySampleImageCard.getActionDropdownItems() %>"
-			labels="<%= claySampleImageCard.getLabels() %>"
+			labels="<%= claySampleImageCard.getLabels(1) %>"
 			stickerLabel="PNG"
 			stickerStyle="<%= claySampleImageCard.getStickerStyle() %>"
 			subtitle="<%= claySampleImageCard.getSubtitle() %>"
@@ -205,7 +205,7 @@ ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 			href="<%= claySampleImageCard.getHref() %>"
 			imageAlt="thumbnail"
 			imageSrc="https://images.unsplash.com/photo-1510360638044-c6f328b5d283"
-			labels="<%= claySampleImageCard.getLabels() %>"
+			labels="<%= claySampleImageCard.getLabels(1) %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
 			stickerLabel="<%= claySampleImageCard.getStickerLabel() %>"
@@ -223,7 +223,7 @@ ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 			actionDropdownItems="<%= claySampleImageCard.getActionDropdownItems() %>"
 			checkboxProps="<%= checkboxProps %>"
 			icon="camera"
-			labels="<%= claySampleImageCard.getLabels() %>"
+			labels="<%= claySampleImageCard.getLabels(2) %>"
 			selectable="<%= true %>"
 			selected="<%= false %>"
 			stickerLabel="SVG"
@@ -240,7 +240,7 @@ ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 			actionDropdownItems="<%= claySampleImageCard.getActionDropdownItems() %>"
 			imageAlt="<%= claySampleImageCard.getTitle() %>"
 			imageSrc="https://images.unsplash.com/photo-1525151212033-377d12acc381"
-			labels="<%= claySampleImageCard.getLabels() %>"
+			labels="<%= claySampleImageCard.getLabels(3) %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
 			stickerLabel="PNG"
@@ -261,6 +261,7 @@ ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 		<%
 		claySampleImageCard.setHref("#1");
 		claySampleImageCard.setImageSrc("https://images.unsplash.com/photo-1503891450247-ee5f8ec46dc3");
+		claySampleImageCard.setLabels(3);
 		claySampleImageCard.setSelectable(false);
 		claySampleImageCard.setTitle("California");
 		%>
@@ -277,6 +278,7 @@ ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 		<%
 		claySampleImageCard.setHref("#2");
 		claySampleImageCard.setImageSrc("https://images.unsplash.com/photo-1485970671356-ff9156bd4a98");
+		claySampleImageCard.setLabels(2);
 		claySampleImageCard.setSelected(true);
 		claySampleImageCard.setTitle("Mountains");
 		%>
@@ -301,7 +303,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 			actionDropdownItems="<%= claySampleFileCard.getActionDropdownItems() %>"
 			disabled="<%= true %>"
 			icon="user"
-			labels="<%= claySampleFileCard.getLabels() %>"
+			labels="<%= claySampleFileCard.getLabels(2) %>"
 			stickerLabel="PDF"
 			stickerStyle="<%= claySampleFileCard.getStickerStyle() %>"
 			subtitle="<%= claySampleFileCard.getSubtitle() %>"
@@ -314,7 +316,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 	>
 		<clay:file-card
 			actionDropdownItems="<%= claySampleFileCard.getActionDropdownItems() %>"
-			labels="<%= claySampleFileCard.getLabels() %>"
+			labels="<%= claySampleFileCard.getLabels(1) %>"
 			selectable="<%= false %>"
 			stickerLabel="MP3"
 			stickerStyle="warning"
@@ -330,7 +332,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 			actionDropdownItems="<%= claySampleFileCard.getActionDropdownItems() %>"
 			checkboxProps="<%= checkboxProps %>"
 			icon="list"
-			labels="<%= claySampleFileCard.getLabels() %>"
+			labels="<%= claySampleFileCard.getLabels(3) %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
 			stickerLabel="<%= claySampleFileCard.getStickerLabel() %>"
@@ -350,6 +352,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 
 		<%
 		claySampleFileCard.setDisabled(true);
+		claySampleFileCard.setLabels(1);
 		claySampleFileCard.setStickerLabel("PDF");
 		claySampleFileCard.setStickerStyle("info");
 		claySampleFileCard.setSubtitle("Another PDF document");
@@ -369,6 +372,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 		<%
 		claySampleFileCard.setDisabled(false);
 		claySampleFileCard.setIcon("list");
+		claySampleFileCard.setLabels(2);
 		claySampleFileCard.setSelectable(true);
 		claySampleFileCard.setSelected(true);
 		claySampleFileCard.setStickerLabel("MP3");
@@ -647,7 +651,7 @@ ClaySampleVerticalCard claySampleVerticalCard = new ClaySampleVerticalCard();
 			actionDropdownItems="<%= claySampleVerticalCard.getActionDropdownItems() %>"
 			imageAlt="Elephant"
 			imageSrc="https://images.unsplash.com/photo-1502290822284-9538ef1f1291"
-			labels="<%= claySampleVerticalCard.getLabels() %>"
+			labels="<%= claySampleVerticalCard.getLabels(1) %>"
 			selectable="<%= false %>"
 			stickerLabel="DXP"
 			stickerStyle="info"
@@ -663,7 +667,7 @@ ClaySampleVerticalCard claySampleVerticalCard = new ClaySampleVerticalCard();
 			actionDropdownItems="<%= claySampleVerticalCard.getActionDropdownItems() %>"
 			checkboxProps="<%= checkboxProps %>"
 			icon="camera"
-			labels="<%= claySampleVerticalCard.getLabels() %>"
+			labels="<%= claySampleVerticalCard.getLabels(1) %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
 			stickerLabel="JPG"
@@ -684,6 +688,7 @@ ClaySampleVerticalCard claySampleVerticalCard = new ClaySampleVerticalCard();
 		<%
 		claySampleVerticalCard.setImageAlt(claySampleVerticalCard.getTitle());
 		claySampleVerticalCard.setImageSrc("https://images.unsplash.com/photo-1554939437-ecc492c67b78");
+		claySampleVerticalCard.setLabels(2);
 		claySampleVerticalCard.setSelectable(true);
 		claySampleVerticalCard.setStickerLabel("MAD");
 		claySampleVerticalCard.setStickerStyle("success");
@@ -703,6 +708,7 @@ ClaySampleVerticalCard claySampleVerticalCard = new ClaySampleVerticalCard();
 		<%
 		claySampleVerticalCard.setDisabled(true);
 		claySampleVerticalCard.setImageSrc(null);
+		claySampleVerticalCard.setLabels(2);
 		claySampleVerticalCard.setSelectable(false);
 		claySampleVerticalCard.setSelected(true);
 		claySampleVerticalCard.setStickerLabel(null);

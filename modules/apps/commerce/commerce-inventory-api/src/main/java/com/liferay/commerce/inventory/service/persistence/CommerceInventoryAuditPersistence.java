@@ -473,3 +473,4 @@ public interface CommerceInventoryAuditPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-255671651

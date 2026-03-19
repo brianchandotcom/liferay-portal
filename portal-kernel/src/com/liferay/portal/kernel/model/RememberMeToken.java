@@ -49,3 +49,4 @@ public interface RememberMeToken extends PersistedModel, RememberMeTokenModel {
 	public boolean isExpired();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1538038680

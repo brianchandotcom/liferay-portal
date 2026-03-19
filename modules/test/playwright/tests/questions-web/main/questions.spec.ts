@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -15,6 +16,9 @@ import {questionsPagesTest} from './fixtures/questionsPagesTest';
 
 export const baseTest = mergeTests(
 	apiHelpersTest,
+	featureFlagsTest({
+		'LPD-82301': {enabled: true},
+	}),
 	isolatedLayoutTest({publish: false, type: 'portlet'}),
 	isolatedSiteTest,
 	loginTest(),

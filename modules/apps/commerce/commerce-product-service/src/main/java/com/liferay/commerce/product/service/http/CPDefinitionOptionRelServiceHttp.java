@@ -942,3 +942,4 @@ public class CPDefinitionOptionRelServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1969429152

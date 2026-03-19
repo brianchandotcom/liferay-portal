@@ -6,6 +6,7 @@
 import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -18,6 +19,7 @@ import {structureBuilderPagesTest} from './fixtures/structureBuilderPagesTest';
 import {FIELD_TYPES} from './pages/StructureBuilderPage';
 
 const test = mergeTests(
+	dataApiHelpersTest,
 	cmsPagesTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
@@ -498,6 +500,78 @@ test(
 		await expect(
 			page.locator('.treeview-link', {hasText: 'Text'})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Can customize experience after publishing a structure',
+	{tag: '@LPD-78725'},
+	async ({page, structureBuilderPage, structuresPage}) => {
+
+		// Create and publish a structure
+
+		const label = `Structure${getRandomInt()}`;
+
+		await structureBuilderPage.goToCreateStructure();
+
+		await structureBuilderPage.changeStructureSettings({
+			label,
+			name: label,
+		});
+
+		// Click on the customize editor button
+
+		await page.getByRole('button', {name: 'Customize Editor'}).click();
+
+		// Check the warning is shown
+
+		await expect(
+			page.getByText(
+				'To customize the editor you need to publish the content structure first.'
+			)
+		).toBeAttached();
+
+		// Publish the structure
+
+		await page
+			.getByRole('dialog', {
+				name: 'Publish to Customize Editor',
+			})
+			.getByRole('button', {name: 'Publish'})
+			.click();
+
+		// Go to the editor
+
+		await page
+			.getByRole('alert')
+			.getByRole('button', {name: 'Customize Editor'})
+			.click();
+
+		await structureBuilderPage.waitForEditorCustomizerModal();
+
+		// Check the title field is visible
+
+		await expect(page.getByLabel('Title (Read Only)')).toBeVisible();
+
+		// Delete the structure
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'Delete',
+			filter: label,
+		});
+
+		await page
+			.getByPlaceholder('Confirm Content Structure Name')
+			.fill(label);
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(page, `${label} was deleted successfully`, {
+			type: 'success',
+		});
+
+		await expect(structuresPage.getItem(label)).toBeHidden();
 	}
 );
 

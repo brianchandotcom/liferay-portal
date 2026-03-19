@@ -1159,3 +1159,4 @@ public class CountryServiceHttp {
 		new Class[] {long.class, boolean.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1750450001

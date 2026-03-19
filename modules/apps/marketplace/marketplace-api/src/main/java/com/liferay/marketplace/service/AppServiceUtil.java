@@ -61,3 +61,4 @@ public class AppServiceUtil {
 		AppServiceUtil.class, AppService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1109222097

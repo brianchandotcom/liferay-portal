@@ -20,3 +20,4 @@ public class DDLUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1485867266

@@ -429,3 +429,4 @@ public class UserNotificationDeliveryLocalServiceWrapper
 		_userNotificationDeliveryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1401276372

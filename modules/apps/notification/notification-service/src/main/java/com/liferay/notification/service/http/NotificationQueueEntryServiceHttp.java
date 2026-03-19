@@ -230,3 +230,4 @@ public class NotificationQueueEntryServiceHttp {
 		_resendNotificationQueueEntryParameterTypes3 = new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-859936314

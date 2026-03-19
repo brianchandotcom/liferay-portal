@@ -370,3 +370,4 @@ public interface KaleoInstanceTokenModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-168391179

@@ -78,3 +78,4 @@ public abstract class DDMFormInstanceFinderBaseImpl
 		DDMFormInstanceFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1847823756

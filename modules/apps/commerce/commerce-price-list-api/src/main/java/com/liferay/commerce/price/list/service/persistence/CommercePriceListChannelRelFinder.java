@@ -32,3 +32,4 @@ public interface CommercePriceListChannelRelFinder {
 				boolean inlineSQLHelper);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-659004186

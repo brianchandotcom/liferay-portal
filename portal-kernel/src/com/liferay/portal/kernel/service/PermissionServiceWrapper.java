@@ -76,3 +76,4 @@ public class PermissionServiceWrapper
 	private PermissionService _permissionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1109725145

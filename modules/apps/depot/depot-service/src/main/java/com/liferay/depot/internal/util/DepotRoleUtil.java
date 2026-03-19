@@ -50,11 +50,7 @@ public class DepotRoleUtil {
 	}
 
 	public static Map<Locale, String> getTitleMap(
-		long companyId, Language language, String name) {
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
-			return null;
-		}
+		Language language, String name) {
 
 		Map<Locale, String> titleMap = new HashMap<>();
 
@@ -67,6 +63,16 @@ public class DepotRoleUtil {
 		}
 
 		return titleMap;
+	}
+
+	public static Map<Locale, String> getTitleMap(
+		long companyId, Language language, String name) {
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
+			return null;
+		}
+
+		return getTitleMap(language, name);
 	}
 
 	private static String _getDescription(

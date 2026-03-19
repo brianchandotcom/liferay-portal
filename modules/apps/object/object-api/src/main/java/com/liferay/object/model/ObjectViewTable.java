@@ -55,3 +55,4 @@ public class ObjectViewTable extends BaseTable<ObjectViewTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:762926430

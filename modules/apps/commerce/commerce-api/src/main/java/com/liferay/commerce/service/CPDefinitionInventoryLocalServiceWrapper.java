@@ -521,3 +521,4 @@ public class CPDefinitionInventoryLocalServiceWrapper
 		_cpDefinitionInventoryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:298303028

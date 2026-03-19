@@ -4,7 +4,7 @@
 		"node-scripts": "./bin.js"
 	},
 	"com.liferay": {
-		"sha256": "6de7920f9ebce4907520051df799e3f9d8f9009258be857df8355621557dbfd2"
+		"sha256": "9868c2a6e7fe090707411a78b1afbdf4aef8ba36f62700ea1c30fa251bfe32e4"
 	},
 	"dependencies": {
 		"@babel/preset-env": "7.24.7",
@@ -61,7 +61,7 @@
 	},
 	"exports": {
 		".": "./index.js",
-		"./theme": "./exports/theme.js"
+		"./theme": "./api/exports/theme.js"
 	},
 	"name": "@liferay/node-scripts",
 	"scripts": {

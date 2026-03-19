@@ -95,6 +95,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 			"layoutPageTemplateEntryKey");
 
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select distinct layoutPageTemplateEntryKey, name from " +
 					"LayoutPageTemplateEntry")) {
@@ -142,6 +143,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 		_loadDistinctKeysAndNames();
 
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select layoutPageTemplateEntryId, " +
 					"layoutPageTemplateEntryKey, layoutPrototypeId, name " +

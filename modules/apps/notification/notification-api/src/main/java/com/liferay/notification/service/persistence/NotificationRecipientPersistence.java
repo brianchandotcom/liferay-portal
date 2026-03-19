@@ -499,3 +499,4 @@ public interface NotificationRecipientPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1646973558

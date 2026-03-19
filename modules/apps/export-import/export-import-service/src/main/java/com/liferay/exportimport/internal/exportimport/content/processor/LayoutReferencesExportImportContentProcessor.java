@@ -10,7 +10,9 @@ import com.liferay.exportimport.configuration.ExportImportServiceConfigurationWh
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
+import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -79,139 +83,6 @@ public class LayoutReferencesExportImportContentProcessor
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content, boolean exportReferencedContent,
 			boolean escapeContent)
-		throws Exception {
-
-		return replaceExportLayoutReferences(
-			portletDataContext, stagedModel, content);
-	}
-
-	@Override
-	public String replaceImportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			String content)
-		throws Exception {
-
-		return replaceImportLayoutReferences(portletDataContext, content);
-	}
-
-	@Override
-	public void validateContentReferences(long groupId, String content)
-		throws PortalException {
-
-		validateLayoutReferences(groupId, content);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_exportImportServiceConfiguration = ConfigurableUtil.createConfigurable(
-			ExportImportServiceConfiguration.class, properties);
-	}
-
-	protected String replaceExportHostname(
-			Group group, String url, StringBundler urlSB)
-		throws PortalException {
-
-		if (!HttpComponentsUtil.hasProtocol(url)) {
-			return url;
-		}
-
-		boolean secure = HttpComponentsUtil.isSecure(url);
-
-		int serverPort = _portal.getPortalServerPort(secure);
-
-		if (serverPort == -1) {
-			return url;
-		}
-
-		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
-
-		NavigableMap<String, String> publicLayoutSetVirtualHostnames =
-			publicLayoutSet.getVirtualHostnames();
-
-		String portalURL = StringPool.BLANK;
-
-		if (!publicLayoutSetVirtualHostnames.isEmpty()) {
-			portalURL = _portal.getPortalURL(
-				publicLayoutSetVirtualHostnames.firstKey(), serverPort, secure);
-
-			if (url.startsWith(portalURL)) {
-				if (secure) {
-					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
-				}
-				else {
-					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL);
-				}
-
-				return url.substring(portalURL.length());
-			}
-		}
-
-		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
-
-		NavigableMap<String, String> privateLayoutSetVirtualHostnames =
-			privateLayoutSet.getVirtualHostnames();
-
-		if (!privateLayoutSetVirtualHostnames.isEmpty()) {
-			portalURL = _portal.getPortalURL(
-				privateLayoutSetVirtualHostnames.firstKey(), serverPort,
-				secure);
-
-			if (url.startsWith(portalURL)) {
-				if (secure) {
-					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
-				}
-				else {
-					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_URL);
-				}
-
-				return url.substring(portalURL.length());
-			}
-		}
-
-		Company company = _companyLocalService.getCompany(group.getCompanyId());
-
-		String companyVirtualHostname = company.getVirtualHostname();
-
-		if (Validator.isNotNull(companyVirtualHostname)) {
-			portalURL = _getPortalURL(
-				url,
-				_portal.getPortalURL(
-					companyVirtualHostname, serverPort, secure));
-
-			if (url.startsWith(portalURL)) {
-				if (_isDefaultGroup(group)) {
-					if (secure) {
-						urlSB.append(
-							_DATA_HANDLER_COMPANY_SECURE_DEFAULT_GROUP_URL);
-					}
-					else {
-						urlSB.append(_DATA_HANDLER_COMPANY_DEFAULT_GROUP_URL);
-					}
-				}
-				else if (secure) {
-					urlSB.append(_DATA_HANDLER_COMPANY_SECURE_URL);
-				}
-				else {
-					urlSB.append(_DATA_HANDLER_COMPANY_URL);
-				}
-
-				return url.substring(portalURL.length());
-			}
-		}
-
-		portalURL = _portal.getPortalURL("localhost", serverPort, secure);
-
-		if (url.startsWith(portalURL)) {
-			return url.substring(portalURL.length());
-		}
-
-		return url;
-	}
-
-	protected String replaceExportLayoutReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			String content)
 		throws Exception {
 
 		Group group = _groupLocalService.getGroup(
@@ -481,7 +352,7 @@ public class LayoutReferencesExportImportContentProcessor
 
 					portletDataContext.addReferenceElement(
 						stagedModel, entityElement, layout,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+						PortletDataContext.REFERENCE_TYPE_LAZY, true);
 
 					continue;
 				}
@@ -561,7 +432,7 @@ public class LayoutReferencesExportImportContentProcessor
 
 				portletDataContext.addReferenceElement(
 					stagedModel, entityElement, layout,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+					PortletDataContext.REFERENCE_TYPE_LAZY, true);
 			}
 			catch (Exception exception) {
 				if (((exception instanceof NoSuchLayoutException) &&
@@ -611,8 +482,10 @@ public class LayoutReferencesExportImportContentProcessor
 		return sb.toString();
 	}
 
-	protected String replaceImportLayoutReferences(
-			PortletDataContext portletDataContext, String content)
+	@Override
+	public String replaceImportContentReferences(
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			String content)
 		throws Exception {
 
 		String companyDefaultGroupPortalURL = StringPool.BLANK;
@@ -781,31 +654,64 @@ public class LayoutReferencesExportImportContentProcessor
 				continue;
 			}
 
-			String groupUuid = content.substring(groupUuidPos + 1, endIndex);
+			String groupReference = content.substring(
+				groupUuidPos + 1, endIndex);
 
 			Group groupFriendlyUrlGroup =
 				_groupLocalService.fetchGroupByUuidAndCompanyId(
-					groupUuid, portletDataContext.getCompanyId());
+					groupReference, portletDataContext.getCompanyId());
 
 			if (groupFriendlyUrlGroup == null) {
 				groupFriendlyUrlGroup =
 					_groupLocalService.fetchFriendlyURLGroup(
-						portletDataContext.getCompanyId(), groupUuid);
+						portletDataContext.getCompanyId(), groupReference);
 			}
 
 			if ((groupFriendlyUrlGroup == null) ||
-				groupUuid.contains(_TEMPLATE_NAME_PREFIX)) {
+				groupReference.contains(_TEMPLATE_NAME_PREFIX)) {
 
 				content = StringUtil.replaceFirst(
 					content, _DATA_HANDLER_GROUP_FRIENDLY_URL,
 					group.getFriendlyURL(), groupFriendlyUrlPos);
 				content = StringUtil.replaceFirst(
-					content, StringPool.AT + groupUuid + StringPool.AT,
+					content, StringPool.AT + groupReference + StringPool.AT,
 					StringPool.BLANK, groupFriendlyUrlPos);
 
-				if (groupUuid.contains(_TEMPLATE_NAME_PREFIX)) {
+				if (groupReference.contains(_TEMPLATE_NAME_PREFIX)) {
 					content = _replaceTemplateLinkToLayout(
 						content, portletDataContext.isPrivateLayout());
+				}
+				else {
+					String externalReferenceCode = null;
+
+					if (stagedModel instanceof ExternalReferenceCodeModel) {
+						ExternalReferenceCodeModel externalReferenceCodeModel =
+							(ExternalReferenceCodeModel)stagedModel;
+
+						externalReferenceCode =
+							externalReferenceCodeModel.
+								getExternalReferenceCode();
+					}
+
+					Class<?> modelClass = stagedModel.getModelClass();
+
+					_exportImportReportEntryLocalService.
+						getOrAddErrorExportImportReportEntry(
+							group.getGroupId(),
+							portletDataContext.getCompanyId(),
+							externalReferenceCode,
+							ExportImportClassedModelUtil.getClassNameId(
+								stagedModel),
+							ExportImportClassedModelUtil.getClassPK(
+								stagedModel),
+							GetterUtil.getLong(
+								portletDataContext.getExportImportProcessId()),
+							StringBundler.concat(
+								"Warning: The referenced Layout group ",
+								"reference ('", groupReference,
+								"') was not found. Defaulting to the current '",
+								group.getGroupKey(), "' group"),
+							StringPool.BLANK, modelClass.getName());
 				}
 
 				continue;
@@ -815,7 +721,7 @@ public class LayoutReferencesExportImportContentProcessor
 				content, _DATA_HANDLER_GROUP_FRIENDLY_URL, StringPool.BLANK,
 				groupFriendlyUrlPos);
 			content = StringUtil.replaceFirst(
-				content, StringPool.AT + groupUuid + StringPool.AT,
+				content, StringPool.AT + groupReference + StringPool.AT,
 				groupFriendlyUrlGroup.getFriendlyURL(), groupFriendlyUrlPos);
 		}
 
@@ -856,6 +762,121 @@ public class LayoutReferencesExportImportContentProcessor
 			virtualHostPublicLayoutFriendlyURLReplacement);
 
 		return content;
+	}
+
+	@Override
+	public void validateContentReferences(long groupId, String content)
+		throws PortalException {
+
+		validateLayoutReferences(groupId, content);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_exportImportServiceConfiguration = ConfigurableUtil.createConfigurable(
+			ExportImportServiceConfiguration.class, properties);
+	}
+
+	protected String replaceExportHostname(
+			Group group, String url, StringBundler urlSB)
+		throws PortalException {
+
+		if (!HttpComponentsUtil.hasProtocol(url)) {
+			return url;
+		}
+
+		boolean secure = HttpComponentsUtil.isSecure(url);
+
+		int serverPort = _portal.getPortalServerPort(secure);
+
+		if (serverPort == -1) {
+			return url;
+		}
+
+		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
+
+		NavigableMap<String, String> publicLayoutSetVirtualHostnames =
+			publicLayoutSet.getVirtualHostnames();
+
+		String portalURL = StringPool.BLANK;
+
+		if (!publicLayoutSetVirtualHostnames.isEmpty()) {
+			portalURL = _portal.getPortalURL(
+				publicLayoutSetVirtualHostnames.firstKey(), serverPort, secure);
+
+			if (url.startsWith(portalURL)) {
+				if (secure) {
+					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
+				}
+				else {
+					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL);
+				}
+
+				return url.substring(portalURL.length());
+			}
+		}
+
+		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
+
+		NavigableMap<String, String> privateLayoutSetVirtualHostnames =
+			privateLayoutSet.getVirtualHostnames();
+
+		if (!privateLayoutSetVirtualHostnames.isEmpty()) {
+			portalURL = _portal.getPortalURL(
+				privateLayoutSetVirtualHostnames.firstKey(), serverPort,
+				secure);
+
+			if (url.startsWith(portalURL)) {
+				if (secure) {
+					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
+				}
+				else {
+					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_URL);
+				}
+
+				return url.substring(portalURL.length());
+			}
+		}
+
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
+
+		String companyVirtualHostname = company.getVirtualHostname();
+
+		if (Validator.isNotNull(companyVirtualHostname)) {
+			portalURL = _getPortalURL(
+				url,
+				_portal.getPortalURL(
+					companyVirtualHostname, serverPort, secure));
+
+			if (url.startsWith(portalURL)) {
+				if (_isDefaultGroup(group)) {
+					if (secure) {
+						urlSB.append(
+							_DATA_HANDLER_COMPANY_SECURE_DEFAULT_GROUP_URL);
+					}
+					else {
+						urlSB.append(_DATA_HANDLER_COMPANY_DEFAULT_GROUP_URL);
+					}
+				}
+				else if (secure) {
+					urlSB.append(_DATA_HANDLER_COMPANY_SECURE_URL);
+				}
+				else {
+					urlSB.append(_DATA_HANDLER_COMPANY_URL);
+				}
+
+				return url.substring(portalURL.length());
+			}
+		}
+
+		portalURL = _portal.getPortalURL("localhost", serverPort, secure);
+
+		if (url.startsWith(portalURL)) {
+			return url.substring(portalURL.length());
+		}
+
+		return url;
 	}
 
 	protected void validateLayoutReferences(long groupId, String content)
@@ -1336,6 +1357,10 @@ public class LayoutReferencesExportImportContentProcessor
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	private volatile ExportImportServiceConfiguration
 		_exportImportServiceConfiguration;

@@ -52,3 +52,4 @@ public class CTermEntryLocalizationTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2031474433

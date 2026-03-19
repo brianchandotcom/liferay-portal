@@ -439,3 +439,4 @@ public class SamlPeerBindingWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1550176328

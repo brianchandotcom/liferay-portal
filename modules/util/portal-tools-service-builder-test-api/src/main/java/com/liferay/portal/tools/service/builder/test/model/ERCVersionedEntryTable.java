@@ -49,3 +49,4 @@ public class ERCVersionedEntryTable extends BaseTable<ERCVersionedEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:489743092

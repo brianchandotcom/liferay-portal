@@ -151,3 +151,4 @@ public class CTCollectionServiceUtil {
 			CTCollectionServiceUtil.class, CTCollectionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1118160705

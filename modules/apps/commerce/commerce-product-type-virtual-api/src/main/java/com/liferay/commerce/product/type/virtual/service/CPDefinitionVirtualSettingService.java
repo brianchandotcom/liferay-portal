@@ -96,3 +96,4 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-430384338

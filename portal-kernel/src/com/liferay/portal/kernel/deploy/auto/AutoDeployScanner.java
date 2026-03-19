@@ -15,11 +15,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 public class AutoDeployScanner extends Thread {
 
 	public AutoDeployScanner(
-		ThreadGroup threadGroup, String name, AutoDeployDir autoDeployDir) {
+		ThreadGroup threadGroup, String name, int interval) {
 
 		super(threadGroup, name);
 
-		_autoDeployDir = autoDeployDir;
+		_interval = interval;
 
 		Class<?> clazz = getClass();
 
@@ -46,7 +46,7 @@ public class AutoDeployScanner extends Thread {
 
 		while (_started) {
 			try {
-				sleep(_autoDeployDir.getInterval());
+				sleep(_interval);
 			}
 			catch (InterruptedException interruptedException) {
 				if (_log.isDebugEnabled()) {
@@ -55,7 +55,7 @@ public class AutoDeployScanner extends Thread {
 			}
 
 			try {
-				_autoDeployDir.scanDirectory();
+				AutoDeployDir.scanDirectory();
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -69,7 +69,7 @@ public class AutoDeployScanner extends Thread {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AutoDeployScanner.class);
 
-	private final AutoDeployDir _autoDeployDir;
+	private final int _interval;
 	private boolean _started = true;
 
 }

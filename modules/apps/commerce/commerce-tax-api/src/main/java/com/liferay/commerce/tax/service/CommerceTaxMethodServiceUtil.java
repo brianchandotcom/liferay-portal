@@ -140,3 +140,4 @@ public class CommerceTaxMethodServiceUtil {
 			CommerceTaxMethodServiceUtil.class, CommerceTaxMethodService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-215593063

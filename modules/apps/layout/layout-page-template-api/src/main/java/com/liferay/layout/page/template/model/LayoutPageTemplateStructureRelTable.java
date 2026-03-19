@@ -89,3 +89,4 @@ public class LayoutPageTemplateStructureRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:153756095

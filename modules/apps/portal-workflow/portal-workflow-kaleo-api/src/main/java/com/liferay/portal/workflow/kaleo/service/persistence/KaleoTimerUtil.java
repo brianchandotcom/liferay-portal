@@ -677,3 +677,4 @@ public class KaleoTimerUtil {
 	private static volatile KaleoTimerPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:676072263

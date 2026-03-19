@@ -572,3 +572,4 @@ public interface KaleoDefinitionVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1213073949

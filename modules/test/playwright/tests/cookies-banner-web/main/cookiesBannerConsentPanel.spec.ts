@@ -31,6 +31,8 @@ const cookieKeys = [
 export const test = mergeTests(
 	accountSettingsPagesTest,
 	featureFlagsTest({
+		'LPD-51356': {enabled: true},
+		'LPD-75027': {enabled: true},
 		'LPD-75032': {enabled: true},
 	}),
 	loginTest(),
@@ -55,6 +57,74 @@ test.beforeEach(async ({page}) => {
 		});
 	});
 });
+
+test(
+	'Verify floating icon enabled is visible and can be disabled',
+	{tag: '@LPD-78592'},
+	async ({systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
+
+		const floatingIconButton = systemSettingsPage.page.getByLabel(
+			'Floating Icon Enabled'
+		);
+
+		await floatingIconButton.waitFor({state: 'visible'});
+
+		await expect(floatingIconButton).toBeChecked();
+
+		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
+			name: 'Accept All',
+		});
+
+		await acceptAllButton.click();
+
+		await expect(acceptAllButton).not.toBeVisible();
+
+		await floatingIconButton.uncheck();
+
+		await systemSettingsPage.page
+			.getByRole('button', {name: 'Update'})
+			.click();
+
+		await expect(floatingIconButton).not.toBeChecked();
+	}
+);
+
+test(
+	'Floating icon can be selected',
+	{tag: '@LPD-78592'},
+	async ({page, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
+
+		const controlPanelIcon = page.locator(
+			'label:has(svg.lexicon-icon-control-panel)'
+		);
+
+		await expect(controlPanelIcon).toBeVisible();
+
+		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
+			name: 'Accept All',
+		});
+
+		await acceptAllButton.click();
+
+		await expect(acceptAllButton).not.toBeVisible();
+
+		await controlPanelIcon.check();
+
+		await systemSettingsPage.page
+			.getByRole('button', {name: 'Update'})
+			.click();
+
+		await expect(controlPanelIcon).toBeChecked();
+	}
+);
 
 test(
 	'Verify Cookie Banner Consent Panel buttons',

@@ -68,3 +68,4 @@ public interface CommerceVirtualOrderItem
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2056594551

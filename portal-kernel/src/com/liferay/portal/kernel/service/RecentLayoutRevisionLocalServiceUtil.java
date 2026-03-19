@@ -330,3 +330,4 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	private static volatile RecentLayoutRevisionLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:267763746

@@ -67,3 +67,4 @@ public interface LayoutPrototype extends LayoutPrototypeModel, PersistedModel {
 	public boolean hasSetModifiedDate();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:527614693

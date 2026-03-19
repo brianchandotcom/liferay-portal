@@ -75,3 +75,4 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 	public void setImagePreviewURL(String imagePreviewURL);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1320415919

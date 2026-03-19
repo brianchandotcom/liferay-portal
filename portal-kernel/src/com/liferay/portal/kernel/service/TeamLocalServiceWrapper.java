@@ -691,3 +691,4 @@ public class TeamLocalServiceWrapper
 	private TeamLocalService _teamLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:448518711

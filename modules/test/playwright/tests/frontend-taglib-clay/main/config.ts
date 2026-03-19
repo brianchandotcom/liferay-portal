@@ -4,6 +4,12 @@
  */
 
 export const config = {
+	expect: {
+		toMatchAriaSnapshot: {
+			pathTemplate:
+				'tests/frontend-taglib-clay/main/snapshots/{testFilePath}_{arg}{ext}',
+		},
+	},
 	name: 'frontend-taglib-clay.main',
 	testDir: 'tests/frontend-taglib-clay/main',
 };

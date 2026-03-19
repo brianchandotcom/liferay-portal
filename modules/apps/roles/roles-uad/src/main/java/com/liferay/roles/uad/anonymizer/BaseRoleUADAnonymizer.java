@@ -89,3 +89,4 @@ public abstract class BaseRoleUADAnonymizer
 	protected RoleLocalService roleLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1815080865

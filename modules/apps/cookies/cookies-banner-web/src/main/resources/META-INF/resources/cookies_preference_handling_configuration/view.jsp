@@ -11,6 +11,8 @@
 CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingConfigurationDisplayContext = (CookiesPreferenceHandlingConfigurationDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT);
 %>
 
+<aui:link hashedFile="<%= true %>" href="cookies-banner-web/cookies_preference_handling_configuration/css/main.css" rel="stylesheet" type="text/css" />
+
 <div class="c-mt-5 row">
 	<div class="col-sm-12 form-group">
 		<div class="form-group__inner">
@@ -84,6 +86,65 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			</div>
 		</div>
 	</div>
+</c:if>
+
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-75027") %>'>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="floating-icon" /></h3>
+
+	<clay:row>
+		<clay:col
+			cssClass="form-group"
+			sm="12"
+		>
+			<div class="form-group__inner">
+				<clay:checkbox
+					checked="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingFloatingIconEnabled() %>"
+					id='<%= liferayPortletResponse.getNamespace() + "floatingIconEnabled" %>'
+					label="floating-icon-enabled"
+					name='<%= liferayPortletResponse.getNamespace() + "floatingIconEnabled" %>'
+				/>
+
+				<div aria-hidden="true" class="form-feedback-group">
+					<div class="form-text text-weight-normal"><liferay-ui:message key="floating-icon-enabled-help" /></div>
+				</div>
+			</div>
+		</clay:col>
+	</clay:row>
+
+	<clay:row>
+		<clay:col
+			cssClass="form-group"
+			sm="12"
+		>
+			<h4><liferay-ui:message key="icon" /></h4>
+
+			<div class="align-items-center d-flex flex-wrap">
+
+				<%
+				for (String icon : new String[] {"cookie", "shield-check", "unlock", "control-panel"}) {
+				%>
+
+					<div class="align-items-center d-flex mb-3 mr-4">
+						<aui:input checked="<%= Objects.equals(cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingFloatingIcon(), icon) %>" id="<%= icon %>" label="" name="floatingIcon" type="radio" value="<%= icon %>" wrapperCssClass="mb-0" />
+
+						<label class="align-items-center cursor-pointer d-inline-flex floating-icon-custom justify-content-center mb-0 ml-3 rounded-circle text-white" for="<portlet:namespace /><%= icon %>">
+							<clay:icon
+								symbol="<%= icon %>"
+							/>
+						</label>
+					</div>
+
+				<%
+				}
+				%>
+
+			</div>
+
+			<div aria-hidden="true" class="form-feedback-group mt-2">
+				<div class="form-text text-weight-normal"><liferay-ui:message key="floating-icon-help" /></div>
+			</div>
+		</clay:col>
+	</clay:row>
 </c:if>
 
 <liferay-frontend:component

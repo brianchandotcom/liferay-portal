@@ -49,3 +49,4 @@ public interface Release extends PersistedModel, ReleaseModel {
 	public String getBundleSymbolicName();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1143620444

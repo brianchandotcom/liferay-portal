@@ -242,3 +242,4 @@ public class OrgLaborCacheModel
 	public int satClose;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1272530361

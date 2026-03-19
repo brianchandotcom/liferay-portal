@@ -78,3 +78,4 @@ public interface CPDefinitionInventoryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1841793067

@@ -28,6 +28,35 @@
 	}
 }
 
+.cms-find-and-replace {
+	.fds {
+		.management-bar-wrapper {
+			border-bottom: 0;
+		}
+
+		.list-item__success {
+			background-color: $success-l2;
+		}
+	}
+
+	&-preview {
+		gap: 200px;
+
+		&__footer {
+			border-top: 1px solid $primary-l1;
+		}
+
+		&__replacement {
+			background-color: $success-l2;
+		}
+
+		&__search {
+			background-color: $danger-l2;
+			text-decoration: line-through;
+		}
+	}
+}
+
 .cms-related-assets {
 	padding-top: 1px;
 	position: relative;

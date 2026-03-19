@@ -57,3 +57,4 @@ public interface SocialActivityLimit
 	public void setCount(int limitPeriod, int count);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2129828775

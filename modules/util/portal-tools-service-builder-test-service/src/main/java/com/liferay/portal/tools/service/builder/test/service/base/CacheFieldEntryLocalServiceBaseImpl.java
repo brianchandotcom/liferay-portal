@@ -510,3 +510,4 @@ public abstract class CacheFieldEntryLocalServiceBaseImpl
 		CacheFieldEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1745810760

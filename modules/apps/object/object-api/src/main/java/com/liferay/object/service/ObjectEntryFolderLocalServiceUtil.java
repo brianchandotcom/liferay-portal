@@ -245,6 +245,14 @@ public class ObjectEntryFolderLocalServiceUtil {
 		return getService().fetchObjectEntryFolder(objectEntryFolderId);
 	}
 
+	public static ObjectEntryFolder fetchObjectEntryFolder(
+		long groupId, long companyId, long parentObjectEntryFolderId,
+		String name) {
+
+		return getService().fetchObjectEntryFolder(
+			groupId, companyId, parentObjectEntryFolderId, name);
+	}
+
 	public static ObjectEntryFolder
 		fetchObjectEntryFolderByExternalReferenceCode(
 			String externalReferenceCode, long groupId, long companyId) {
@@ -543,3 +551,4 @@ public class ObjectEntryFolderLocalServiceUtil {
 			ObjectEntryFolderLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-446673031

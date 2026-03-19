@@ -75,3 +75,4 @@ public class SXPBlueprintTable extends BaseTable<SXPBlueprintTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:155146428

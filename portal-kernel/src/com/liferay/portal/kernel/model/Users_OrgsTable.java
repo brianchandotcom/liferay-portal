@@ -38,3 +38,4 @@ public class Users_OrgsTable extends BaseTable<Users_OrgsTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-733764966

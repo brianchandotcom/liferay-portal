@@ -494,3 +494,4 @@ public class AssetLinkLocalServiceUtil {
 			AssetLinkLocalServiceUtil.class, AssetLinkLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:279943030

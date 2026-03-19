@@ -449,3 +449,4 @@ public class DLOpenerFileEntryReferenceLocalServiceUtil {
 			DLOpenerFileEntryReferenceLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1468077897

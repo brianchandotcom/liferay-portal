@@ -125,3 +125,4 @@ public abstract class ObjectFieldServiceBaseImpl
 		ObjectFieldServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1581378510

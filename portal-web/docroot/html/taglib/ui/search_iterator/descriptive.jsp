@@ -13,7 +13,7 @@
 
 	<%
 	if (searchResultCssClass == null) {
-		searchResultCssClass = "list-group list-group-notification show-quick-actions-on-hover";
+		searchResultCssClass = "list-group show-quick-actions-on-hover";
 	}
 
 	List<ResultRowSplitterEntry> resultRowSplitterEntries = new ArrayList<ResultRowSplitterEntry>();

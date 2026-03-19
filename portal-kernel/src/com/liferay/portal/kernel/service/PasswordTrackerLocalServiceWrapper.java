@@ -379,3 +379,4 @@ public class PasswordTrackerLocalServiceWrapper
 	private PasswordTrackerLocalService _passwordTrackerLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:788547449

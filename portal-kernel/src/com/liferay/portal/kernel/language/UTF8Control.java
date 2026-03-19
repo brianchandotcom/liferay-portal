@@ -67,6 +67,7 @@ public class UTF8Control extends ResourceBundle.Control {
 		urlConnection.setUseCaches(!reload);
 
 		try (InputStream inputStream = urlConnection.getInputStream();
+
 			Reader reader = new InputStreamReader(
 				inputStream, StringPool.UTF8)) {
 

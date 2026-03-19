@@ -801,3 +801,4 @@ public interface WikiPageLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:876616006

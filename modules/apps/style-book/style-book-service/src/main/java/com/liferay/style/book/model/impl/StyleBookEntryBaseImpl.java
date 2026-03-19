@@ -46,3 +46,4 @@ public abstract class StyleBookEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-375538697

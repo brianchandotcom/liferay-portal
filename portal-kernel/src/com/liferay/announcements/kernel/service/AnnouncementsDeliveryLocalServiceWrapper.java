@@ -433,3 +433,4 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 		_announcementsDeliveryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2026996958

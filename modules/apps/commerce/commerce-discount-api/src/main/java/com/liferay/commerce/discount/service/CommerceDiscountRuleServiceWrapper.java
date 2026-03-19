@@ -165,3 +165,4 @@ public class CommerceDiscountRuleServiceWrapper
 	private CommerceDiscountRuleService _commerceDiscountRuleService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1821746317

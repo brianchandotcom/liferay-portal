@@ -366,3 +366,4 @@ public class ContactServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1786244899

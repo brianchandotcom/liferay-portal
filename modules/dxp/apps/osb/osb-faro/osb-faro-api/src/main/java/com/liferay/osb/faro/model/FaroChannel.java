@@ -48,3 +48,4 @@ public interface FaroChannel extends FaroChannelModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1188644699

@@ -634,3 +634,4 @@ public class ObjectFieldLocalServiceUtil {
 			ObjectFieldLocalServiceUtil.class, ObjectFieldLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:926532685

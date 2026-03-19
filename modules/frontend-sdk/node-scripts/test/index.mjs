@@ -8,10 +8,10 @@ import path from 'path';
 
 import getNamedArguments from '../util/getNamedArguments.mjs';
 import getYarnWorkspaceProjects from '../util/getYarnWorkspaceProjects.mjs';
+import runJest from '../util/jest/runJest.mjs';
 import runConcurrentTasks, {
 	MAX_CONCURRENT_TASKS,
 } from '../util/runConcurrentTasks.mjs';
-import runJest from './jest/runJest.mjs';
 
 export default async function () {
 	const {sync} = getNamedArguments({

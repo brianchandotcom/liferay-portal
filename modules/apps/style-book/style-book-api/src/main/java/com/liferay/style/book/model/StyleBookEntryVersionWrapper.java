@@ -663,3 +663,4 @@ public class StyleBookEntryVersionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1457907

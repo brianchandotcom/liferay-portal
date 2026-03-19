@@ -22,10 +22,8 @@ import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectD
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -226,34 +224,21 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 						return url;
 					}
 
-					long groupId = GetterUtil.getLong(
-						ddmFormField.getProperty("groupId"));
+					ObjectEntry objectEntry =
+						_objectEntryLocalService.fetchObjectEntry(
+							GetterUtil.getLong(
+								ddmFormField.getProperty("objectEntryId")));
 
-					String objectDefinitionExternalReferenceCode =
-						GetterUtil.getString(
-							ddmFormField.getProperty(
-								"objectDefinitionExternalReferenceCode"));
-
-					ObjectDefinition objectDefinition =
-						_objectDefinitionLocalService.
-							fetchObjectDefinitionByExternalReferenceCode(
-								objectDefinitionExternalReferenceCode,
-								fileEntry.getCompanyId());
-
-					ObjectEntry objectEntry = null;
-
-					if (objectDefinition != null) {
-						objectEntry = _objectEntryLocalService.fetchObjectEntry(
-							GetterUtil.getString(
-								ddmFormField.getProperty(
-									"objectEntryExternalReferenceCode")),
-							groupId, objectDefinition.getObjectDefinitionId());
+					if (objectEntry == null) {
+						return StringPool.BLANK;
 					}
 
 					return ObjectFieldUtil.getAttachmentDownloadURL(
-						_dlURLHelper, fileEntry, groupId,
-						objectDefinitionExternalReferenceCode, objectEntry,
-						_objectEntryService,
+						_dlURLHelper, fileEntry, objectEntry.getGroupId(),
+						GetterUtil.getString(
+							ddmFormField.getProperty(
+								"objectDefinitionExternalReferenceCode")),
+						objectEntry, _objectEntryService,
 						_objectFieldLocalService.fetchObjectField(
 							GetterUtil.getLong(
 								ddmFormField.getProperty("objectFieldId"))),
@@ -420,9 +405,6 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 	private Language _language;
 
 	private volatile ObjectConfiguration _objectConfiguration;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

@@ -273,3 +273,4 @@ public interface RenameFinderColumnEntryLocalService
 		RenameFinderColumnEntry renameFinderColumnEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-53159632

@@ -457,3 +457,4 @@ public class ClientExtensionEntryLocalServiceUtil {
 			ClientExtensionEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1851473346

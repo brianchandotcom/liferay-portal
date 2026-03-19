@@ -844,3 +844,4 @@ public interface AssetVocabularyGroupRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1712648980

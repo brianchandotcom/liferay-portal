@@ -50,3 +50,4 @@ public interface DataLimitEntry extends DataLimitEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1635285382

@@ -627,3 +627,4 @@ public class FinderWhereClauseEntryModelImpl
 	private FinderWhereClauseEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1468441204

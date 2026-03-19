@@ -299,3 +299,4 @@ public interface RedirectEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-44323162

@@ -516,3 +516,4 @@ public interface CommerceAddressRestrictionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:149544328

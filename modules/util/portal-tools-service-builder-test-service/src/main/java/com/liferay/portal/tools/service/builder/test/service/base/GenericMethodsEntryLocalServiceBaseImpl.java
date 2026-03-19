@@ -150,3 +150,4 @@ public abstract class GenericMethodsEntryLocalServiceBaseImpl
 		GenericMethodsEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1572629865

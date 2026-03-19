@@ -891,3 +891,4 @@ public class ContactWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1527932921

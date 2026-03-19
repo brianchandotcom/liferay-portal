@@ -478,3 +478,4 @@ public class CommercePricingClassLocalServiceUtil {
 			CommercePricingClassLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2122950214

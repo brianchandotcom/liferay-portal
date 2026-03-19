@@ -517,3 +517,4 @@ public class CSDiagramSettingWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:668422017

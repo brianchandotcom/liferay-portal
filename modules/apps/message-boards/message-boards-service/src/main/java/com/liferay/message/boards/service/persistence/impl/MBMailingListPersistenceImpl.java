@@ -3157,3 +3157,4 @@ public class MBMailingListPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:80826859

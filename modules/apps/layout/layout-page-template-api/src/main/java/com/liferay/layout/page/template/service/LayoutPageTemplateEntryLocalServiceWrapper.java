@@ -841,3 +841,4 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 		_layoutPageTemplateEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-774049713

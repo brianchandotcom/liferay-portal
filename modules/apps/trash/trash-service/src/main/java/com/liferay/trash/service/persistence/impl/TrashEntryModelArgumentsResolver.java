@@ -132,3 +132,4 @@ public class TrashEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-605969141

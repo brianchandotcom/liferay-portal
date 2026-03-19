@@ -394,3 +394,4 @@ public class SamlSpAuthRequestLocalServiceWrapper
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1177573966

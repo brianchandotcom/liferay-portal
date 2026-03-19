@@ -546,3 +546,4 @@ public class OAuthClientEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1393402967

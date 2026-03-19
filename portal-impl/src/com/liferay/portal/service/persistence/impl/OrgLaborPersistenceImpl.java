@@ -1133,3 +1133,4 @@ public class OrgLaborPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1501938365

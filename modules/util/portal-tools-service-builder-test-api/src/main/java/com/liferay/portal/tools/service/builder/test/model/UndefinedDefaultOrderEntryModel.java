@@ -99,3 +99,4 @@ public interface UndefinedDefaultOrderEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-814109881

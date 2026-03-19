@@ -492,3 +492,4 @@ public class SamlIbSloMessagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-884576025

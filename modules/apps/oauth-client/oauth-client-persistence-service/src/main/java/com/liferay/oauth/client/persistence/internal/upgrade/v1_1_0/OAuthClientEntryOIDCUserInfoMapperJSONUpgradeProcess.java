@@ -23,6 +23,7 @@ public class OAuthClientEntryOIDCUserInfoMapperJSONUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select oAuthClientEntryId from OAuthClientEntry");
+
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

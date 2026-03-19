@@ -524,3 +524,4 @@ public class BatchPlannerPolicyUtil {
 	private static volatile BatchPlannerPolicyPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-60913620

@@ -62,3 +62,4 @@ public interface CalendarNotificationTemplate
 			notificationTypeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-864333038

@@ -221,3 +221,4 @@ public class MBThreadServiceUtil {
 		new Snapshot<>(MBThreadServiceUtil.class, MBThreadService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1844828881

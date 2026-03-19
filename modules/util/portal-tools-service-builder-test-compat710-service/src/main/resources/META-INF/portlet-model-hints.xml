@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.ArrayableEntry">
+		<field name="arrayableEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="integer" type="int" />
+		<field name="name" type="String" />
+		<field name="type" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.BasicEntry">
+		<field name="basicEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.CacheDisabledEntry">
+		<field name="cacheDisabledEntryId" type="long" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.ConvertNullEntry">
+		<field name="convertNullEntryId" type="long" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.EagerBlobEntry">
+		<field name="uuid" type="String" />
+		<field name="eagerBlobEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="blob" type="Blob" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.ERCCompanyEntry">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="ercCompanyEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="column1" type="int" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.ERCGroupEntry">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="ercGroupEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.ERCVersionedEntry">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="ercVersionedEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.LazyBlobEntry">
+		<field name="uuid" type="String" />
+		<field name="lazyBlobEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="blob1" type="Blob" />
+		<field name="blob2" type="Blob" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.LikeFinderEntry">
+		<field name="likeFinderEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="ownerId" type="long" />
+		<field name="ownerType" type="int" />
+		<field name="portletId" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.LocalizedEntry">
+		<field name="defaultLanguageId" type="String" />
+		<field name="localizedEntryId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.LocalizedEntryLocalization">
+		<field name="mvccVersion" type="long" />
+		<field name="localizedEntryLocalizationId" type="long" />
+		<field name="localizedEntryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="title" type="String" />
+		<field name="content" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.ManyColumnsEntry">
+		<field name="manyColumnsEntryId" type="long" />
+		<field name="column1" type="int" />
+		<field name="column2" type="int" />
+		<field name="column3" type="int" />
+		<field name="column4" type="int" />
+		<field name="column5" type="int" />
+		<field name="column6" type="int" />
+		<field name="column7" type="int" />
+		<field name="column8" type="int" />
+		<field name="column9" type="int" />
+		<field name="column10" type="int" />
+		<field name="column11" type="int" />
+		<field name="column12" type="int" />
+		<field name="column13" type="int" />
+		<field name="column14" type="int" />
+		<field name="column15" type="int" />
+		<field name="column16" type="int" />
+		<field name="column17" type="int" />
+		<field name="column18" type="int" />
+		<field name="column19" type="int" />
+		<field name="column20" type="int" />
+		<field name="column21" type="int" />
+		<field name="column22" type="int" />
+		<field name="column23" type="int" />
+		<field name="column24" type="int" />
+		<field name="column25" type="int" />
+		<field name="column26" type="int" />
+		<field name="column27" type="int" />
+		<field name="column28" type="int" />
+		<field name="column29" type="int" />
+		<field name="column30" type="int" />
+		<field name="column31" type="int" />
+		<field name="column32" type="int" />
+		<field name="column33" type="int" />
+		<field name="column34" type="int" />
+		<field name="column35" type="int" />
+		<field name="column36" type="int" />
+		<field name="column37" type="int" />
+		<field name="column38" type="int" />
+		<field name="column39" type="int" />
+		<field name="column40" type="int" />
+		<field name="column41" type="int" />
+		<field name="column42" type="int" />
+		<field name="column43" type="int" />
+		<field name="column44" type="int" />
+		<field name="column45" type="int" />
+		<field name="column46" type="int" />
+		<field name="column47" type="int" />
+		<field name="column48" type="int" />
+		<field name="column49" type="int" />
+		<field name="column50" type="int" />
+		<field name="column51" type="int" />
+		<field name="column52" type="int" />
+		<field name="column53" type="int" />
+		<field name="column54" type="int" />
+		<field name="column55" type="int" />
+		<field name="column56" type="int" />
+		<field name="column57" type="int" />
+		<field name="column58" type="int" />
+		<field name="column59" type="int" />
+		<field name="column60" type="int" />
+		<field name="column61" type="int" />
+		<field name="column62" type="int" />
+		<field name="column63" type="int" />
+		<field name="column64" type="int" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.MappingEntry">
+		<field name="mappingEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.MVCCEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="mvccEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.TrashEntry">
+		<field name="trashEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.TreeEntry">
+		<field name="treeEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="parentTreeEntryId" type="long" />
+		<field name="leftTreeEntryId" type="long" />
+		<field name="rightTreeEntryId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.VersionedEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="headId" type="long" />
+		<field name="versionedEntryId" type="long" />
+		<field name="groupId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.VersionedEntryVersion">
+		<field name="versionedEntryVersionId" type="long" />
+		<field name="version" type="int" />
+		<field name="versionedEntryId" type="long" />
+		<field name="groupId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.WhereClauseEntry">
+		<field name="whereClauseEntryId" type="long" />
+		<field name="name" type="String" />
+		<field name="nickname" type="String" />
+	</model>
+</model-hints>

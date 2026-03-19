@@ -535,3 +535,4 @@ public abstract class NullConvertibleEntryLocalServiceBaseImpl
 		NullConvertibleEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1306210736

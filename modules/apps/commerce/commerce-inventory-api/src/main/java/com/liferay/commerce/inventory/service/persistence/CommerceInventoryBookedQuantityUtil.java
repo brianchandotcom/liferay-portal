@@ -869,3 +869,4 @@ public class CommerceInventoryBookedQuantityUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1515323977

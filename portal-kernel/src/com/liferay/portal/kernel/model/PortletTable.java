@@ -39,3 +39,4 @@ public class PortletTable extends BaseTable<PortletTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1894166262

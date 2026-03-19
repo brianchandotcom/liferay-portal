@@ -11,6 +11,7 @@ import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfigurati
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileMimeTypeException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
@@ -24,12 +25,23 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -70,6 +82,28 @@ public class AttachmentManagerTest {
 
 		_objectField = _objectFieldLocalService.getObjectField(
 			_objectDefinition.getObjectDefinitionId(), "attachment");
+	}
+
+	@Test
+	public void testGetDLFolder() throws Exception {
+		Company company = _companyLocalService.getCompanyById(
+			TestPropsValues.getCompanyId());
+		User user = UserTestUtil.addUser();
+
+		DLFolder dlFolder = _attachmentManager.getDLFolder(
+			TestPropsValues.getCompanyId(), company.getGroupId(),
+			_objectDefinition.getPortletId(), new ServiceContext(),
+			user.getUserId());
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(), DLFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(dlFolder.getFolderId()), role.getRoleId(),
+				ActionKeys.VIEW));
 	}
 
 	@Test
@@ -287,6 +321,9 @@ public class AttachmentManagerTest {
 	@Inject
 	private AttachmentManager _attachmentManager;
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private ObjectDefinition _objectDefinition;
 
 	@Inject
@@ -296,5 +333,11 @@ public class AttachmentManagerTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

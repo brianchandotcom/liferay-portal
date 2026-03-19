@@ -448,3 +448,4 @@ public class ObjectStateFlowLocalServiceWrapper
 	private ObjectStateFlowLocalService _objectStateFlowLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-703836354

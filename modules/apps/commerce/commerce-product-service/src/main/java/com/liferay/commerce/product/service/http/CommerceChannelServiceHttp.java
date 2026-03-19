@@ -711,3 +711,4 @@ public class CommerceChannelServiceHttp {
 			new Class[] {String.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1627604430

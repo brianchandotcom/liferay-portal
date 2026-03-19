@@ -280,3 +280,4 @@ public class OAuthClientASLocalMetadataCacheModel
 	public String oAuthASMetadataJSON;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1301188829

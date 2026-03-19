@@ -347,3 +347,4 @@ public interface PasswordPolicyRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1184702160

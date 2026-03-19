@@ -302,3 +302,4 @@ public interface CTSChildLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2143759573

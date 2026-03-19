@@ -39,3 +39,4 @@ public abstract class TrashVersionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:905352524

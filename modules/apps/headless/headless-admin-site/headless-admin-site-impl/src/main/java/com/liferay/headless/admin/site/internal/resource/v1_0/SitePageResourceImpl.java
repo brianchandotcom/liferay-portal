@@ -142,8 +142,8 @@ public class SitePageResourceImpl
 		return _entityModel;
 	}
 
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<Layout> getExportImportDescriptor() {
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -156,8 +156,8 @@ public class SitePageResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return Layout.class.getName();
+			public Class<Layout> getModelClass() {
+				return Layout.class;
 			}
 
 			@Override

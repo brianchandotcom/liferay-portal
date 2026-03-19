@@ -133,3 +133,4 @@ public class KaleoTaskFormModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:435121396

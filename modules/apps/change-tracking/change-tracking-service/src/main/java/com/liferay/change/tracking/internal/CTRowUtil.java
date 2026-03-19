@@ -8,6 +8,7 @@ package com.liferay.change.tracking.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.io.Serializable;
@@ -58,11 +59,12 @@ public class CTRowUtil {
 
 			sb.append(")");
 
-			try (PreparedStatement selectPreparedStatement =
+			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(selectSQL);
-				PreparedStatement insertPreparedStatement =
-					connection.prepareStatement(sb.toString());
-				ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+				PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection, sb.toString());
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {
 					int parameterIndex = 1;
@@ -71,11 +73,11 @@ public class CTRowUtil {
 						if (type == Types.BLOB) {
 							Blob blob = resultSet.getBlob(parameterIndex);
 
-							insertPreparedStatement.setBlob(
+							preparedStatement2.setBlob(
 								parameterIndex, blob.getBinaryStream());
 						}
 						else {
-							insertPreparedStatement.setObject(
+							preparedStatement2.setObject(
 								parameterIndex,
 								resultSet.getObject(parameterIndex));
 						}
@@ -83,12 +85,12 @@ public class CTRowUtil {
 						parameterIndex++;
 					}
 
-					insertPreparedStatement.addBatch();
+					preparedStatement2.addBatch();
 				}
 
 				int result = 0;
 
-				for (int count : insertPreparedStatement.executeBatch()) {
+				for (int count : preparedStatement2.executeBatch()) {
 					result += count;
 				}
 

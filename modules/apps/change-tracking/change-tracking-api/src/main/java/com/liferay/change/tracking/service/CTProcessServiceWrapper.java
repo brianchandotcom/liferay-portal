@@ -78,3 +78,4 @@ public class CTProcessServiceWrapper
 	private CTProcessService _ctProcessService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1255028544

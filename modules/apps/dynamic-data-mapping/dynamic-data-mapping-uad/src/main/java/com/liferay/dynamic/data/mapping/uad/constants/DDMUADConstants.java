@@ -19,3 +19,4 @@ public class DDMUADConstants {
 		{"userId", "versionUserId"};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1202185148

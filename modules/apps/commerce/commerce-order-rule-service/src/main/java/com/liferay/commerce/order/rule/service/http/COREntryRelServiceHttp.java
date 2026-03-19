@@ -802,3 +802,4 @@ public class COREntryRelServiceHttp {
 		new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1628152109

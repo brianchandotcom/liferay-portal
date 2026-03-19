@@ -465,3 +465,4 @@ public interface Layout extends LayoutModel, PersistedModel {
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1586302573

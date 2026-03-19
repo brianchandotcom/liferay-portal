@@ -373,3 +373,4 @@ public class ReleaseLocalServiceWrapper
 	private ReleaseLocalService _releaseLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-874055889

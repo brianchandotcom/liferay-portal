@@ -48,3 +48,4 @@ public interface FaroUser extends FaroUserModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-84221121

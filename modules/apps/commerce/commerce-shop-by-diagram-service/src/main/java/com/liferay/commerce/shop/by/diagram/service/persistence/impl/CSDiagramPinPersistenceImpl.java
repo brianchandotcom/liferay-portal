@@ -1501,3 +1501,4 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1151650667

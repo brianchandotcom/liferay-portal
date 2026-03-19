@@ -69,6 +69,12 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 	async licenseKeyTypeFreeRenew(licenseKey: number) {
 		await this.post(`/license-key-type-free/${licenseKey}/renew`);
 	}
+
+	async provisionCMPBeta(payload: any) {
+		return this.post('/cmp-beta-license-key', payload, {
+			earlyReturn: true,
+		});
+	}
 }
 
 const provisioningOAuth2 = new ProvisioningOAuth2('/provisioning');

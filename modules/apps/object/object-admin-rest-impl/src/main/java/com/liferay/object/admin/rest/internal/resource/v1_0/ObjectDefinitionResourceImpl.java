@@ -175,8 +175,10 @@ public class ObjectDefinitionResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<com.liferay.object.model.ObjectDefinition>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -189,9 +191,10 @@ public class ObjectDefinitionResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return com.liferay.object.model.ObjectDefinition.class.
-					getName();
+			public Class<com.liferay.object.model.ObjectDefinition>
+				getModelClass() {
+
+				return com.liferay.object.model.ObjectDefinition.class;
 			}
 
 			@Override

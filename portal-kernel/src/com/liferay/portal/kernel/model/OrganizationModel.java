@@ -400,3 +400,4 @@ public interface OrganizationModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1959641683

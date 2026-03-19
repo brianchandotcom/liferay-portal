@@ -13,7 +13,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Javier Gamarra
  */
 @ExtendedObjectClassDefinition(
-	category = "message-boards", generateUI = true,
+	category = "message-boards", featureFlagKey = "LPD-82301",
+	generateUI = true,
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(

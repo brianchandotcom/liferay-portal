@@ -36,10 +36,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -222,6 +224,55 @@ public class GCSStore implements Store {
 		Iterator<Blob> filesFoundIterator = filesFoundIterable.iterator();
 
 		return filesFoundIterator.hasNext();
+	}
+
+	@Override
+	public void verifyCompanyStores() throws PortalException {
+		try {
+			long[] companyIds = PortalInstancePool.getCompanyIds();
+
+			String prefix = StoreArea.getCurrentStoreAreaPath();
+
+			Page<Blob> blobPage = _gcsStore.list(
+				_gcsStoreConfiguration.bucketName(),
+				Storage.BlobListOption.prefix(prefix),
+				Storage.BlobListOption.currentDirectory());
+
+			for (Blob blob : blobPage.iterateAll()) {
+				String name = blob.getName();
+
+				if (!prefix.isEmpty() && StringUtil.startsWith(name, prefix)) {
+					name = StringUtil.removeSubstring(name, prefix);
+				}
+
+				if (!name.endsWith(StringPool.SLASH)) {
+					continue;
+				}
+
+				String folderName = name.substring(0, name.length() - 1);
+
+				if (!Validator.isNumber(folderName)) {
+					continue;
+				}
+
+				long storeCompanyId = GetterUtil.getLong(folderName);
+
+				if (ArrayUtil.contains(companyIds, storeCompanyId)) {
+					continue;
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Manually remove unused store ", storeCompanyId,
+							" that belongs to company ", storeCompanyId,
+							" if it is no longer used anywhere else"));
+				}
+			}
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
 	}
 
 	@Activate

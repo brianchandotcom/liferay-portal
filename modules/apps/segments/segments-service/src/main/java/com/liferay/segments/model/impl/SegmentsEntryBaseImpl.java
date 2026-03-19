@@ -39,3 +39,4 @@ public abstract class SegmentsEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-243625830

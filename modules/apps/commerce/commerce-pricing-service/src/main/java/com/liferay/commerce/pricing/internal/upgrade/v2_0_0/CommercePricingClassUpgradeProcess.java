@@ -50,6 +50,7 @@ public class CommercePricingClassUpgradeProcess extends UpgradeProcess {
 				"CommercePricingClass";
 
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				selectCommercePricingClassSQL)) {
 

@@ -61,3 +61,4 @@ public class WebsiteTable extends BaseTable<WebsiteTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-262934237

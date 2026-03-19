@@ -134,3 +134,4 @@ public class KaleoInstanceTokenModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1137130366

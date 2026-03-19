@@ -1539,3 +1539,4 @@ public interface DEDataDefinitionFieldLinkPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-702190015

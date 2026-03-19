@@ -42,3 +42,4 @@ public abstract class CommercePriceModifierRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1780867211

@@ -320,3 +320,4 @@ public class OAuth2AuthorizationServiceHttp {
 		new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-470102935

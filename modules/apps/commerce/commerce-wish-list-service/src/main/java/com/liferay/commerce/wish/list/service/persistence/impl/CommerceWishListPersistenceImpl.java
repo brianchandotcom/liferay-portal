@@ -4898,3 +4898,4 @@ public class CommerceWishListPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1584146

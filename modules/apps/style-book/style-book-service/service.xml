@@ -45,6 +45,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="defaultStyleBookEntry" />
 		</finder>
+		<finder name="G_N" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
 		<finder name="G_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
@@ -65,6 +69,7 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateStyleBookEntryKey</exception>
+		<exception>DuplicateStyleBookEntryName</exception>
 		<exception>StyleBookEntryFile</exception>
 		<exception>StyleBookEntryName</exception>
 		<exception>StyleBookEntryThemeId</exception>

@@ -6899,3 +6899,4 @@ public class MBMessageUtil {
 	private static volatile MBMessagePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:858460593

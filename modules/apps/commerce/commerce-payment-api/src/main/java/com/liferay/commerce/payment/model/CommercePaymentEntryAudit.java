@@ -55,3 +55,4 @@ public interface CommercePaymentEntryAudit
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-878721706

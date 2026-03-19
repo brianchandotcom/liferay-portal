@@ -457,3 +457,4 @@ public class ObjectActionLocalServiceUtil {
 			ObjectActionLocalServiceUtil.class, ObjectActionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1137417248

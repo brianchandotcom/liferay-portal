@@ -67,3 +67,4 @@ public class ObjectViewSortColumnTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:476075192

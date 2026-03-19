@@ -61,6 +61,31 @@ test(
 );
 
 test(
+	'Folders should not show status',
+	{tag: '@LPD-78615'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const folderTitle = getRandomString();
+
+		await apiHelpers.objectFolder.createObjectEntryFolder({
+			scopeKey: 'Default',
+			title: folderTitle,
+		});
+
+		await assetsPage.gotoFiles();
+
+		await assetsPage.changeVisualizationMode('Table');
+
+		const row = page
+			.getByRole('row')
+			.filter({has: page.getByRole('link', {name: folderTitle})});
+
+		await expect(
+			row.getByRole('cell', {exact: true, name: '--'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Folders have View Folder action, but not View',
 	{tag: '@LPD-58720'},
 	async ({apiHelpers, assetsPage, page}) => {

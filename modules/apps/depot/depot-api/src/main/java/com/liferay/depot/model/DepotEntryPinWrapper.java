@@ -332,3 +332,4 @@ public class DepotEntryPinWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-76151580

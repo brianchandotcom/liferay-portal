@@ -455,3 +455,4 @@ public interface ContactsLayoutTemplatePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-849520230

@@ -56,3 +56,4 @@ public class ChangesetCollectionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-315251520

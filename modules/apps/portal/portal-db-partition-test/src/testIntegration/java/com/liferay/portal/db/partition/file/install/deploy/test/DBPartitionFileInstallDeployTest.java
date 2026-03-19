@@ -178,6 +178,7 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> {
 				try (Connection connection = _dataSource.getConnection();
+
 					PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							"select dictionary from Configuration_ where " +
@@ -368,6 +369,7 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
 					try (Connection connection = _dataSource.getConnection();
+
 						PreparedStatement preparedStatement =
 							connection.prepareStatement(
 								"delete from Configuration_ where " +

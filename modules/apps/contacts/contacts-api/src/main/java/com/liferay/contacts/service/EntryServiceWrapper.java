@@ -55,3 +55,4 @@ public class EntryServiceWrapper
 	private EntryService _entryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1141324268

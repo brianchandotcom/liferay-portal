@@ -796,3 +796,4 @@ public class SpringEntryUtil {
 	private static volatile SpringEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:695574158

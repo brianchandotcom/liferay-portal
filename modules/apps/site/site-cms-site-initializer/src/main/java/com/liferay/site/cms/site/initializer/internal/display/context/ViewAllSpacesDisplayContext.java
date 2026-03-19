@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryPin;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -61,12 +63,13 @@ public class ViewAllSpacesDisplayContext {
 
 	public ViewAllSpacesDisplayContext(
 		DepotEntryPinLocalService entryPinLocalService,
-		HttpServletRequest httpServletRequest, Language language,
-		Portal portal) {
+		HttpServletRequest httpServletRequest, Language language, Portal portal,
+		PortletResourcePermission portletResourcePermission) {
 
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_portal = portal;
+		_portletResourcePermission = portletResourcePermission;
 
 		_depotEntryPinLocalService = entryPinLocalService;
 
@@ -126,6 +129,10 @@ public class ViewAllSpacesDisplayContext {
 
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
+			() -> _portletResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				DepotActionKeys.ADD_DEPOT_ENTRY),
 			dropdownItem -> {
 				dropdownItem.setHref(_getNewSpaceCreationURL());
 				dropdownItem.setIcon("forms");
@@ -379,6 +386,7 @@ public class ViewAllSpacesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final ThemeDisplay _themeDisplay;
 
 }

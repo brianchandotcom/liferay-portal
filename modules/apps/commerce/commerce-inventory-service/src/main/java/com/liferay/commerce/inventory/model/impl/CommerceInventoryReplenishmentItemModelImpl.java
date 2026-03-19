@@ -1227,3 +1227,4 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	private CommerceInventoryReplenishmentItem _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2047373509

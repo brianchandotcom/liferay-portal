@@ -150,3 +150,4 @@ public class CPDVirtualSettingFileEntryServiceWrapper
 		_cpdVirtualSettingFileEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1232636060

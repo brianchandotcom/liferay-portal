@@ -919,3 +919,4 @@ public class DepotEntryUtil {
 	private static volatile DepotEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:746655454

@@ -64,3 +64,4 @@ public class GroupFinderBaseImpl extends BasePersistenceImpl<Group> {
 		GroupFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1346907397

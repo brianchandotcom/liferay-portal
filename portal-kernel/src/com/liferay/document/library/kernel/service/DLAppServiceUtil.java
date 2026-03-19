@@ -2521,3 +2521,4 @@ public class DLAppServiceUtil {
 	private static volatile DLAppService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-35035

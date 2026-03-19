@@ -55,3 +55,4 @@ public interface CommerceCurrency
 	public java.math.BigDecimal round(java.math.BigDecimal value);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2134054864

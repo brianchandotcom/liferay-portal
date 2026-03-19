@@ -383,6 +383,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 		_assertInfoField(
 			objectField.getObjectFieldId() + "#fileName", _childInfoForm);
 		_assertInfoField(
+			objectField.getObjectFieldId() + "#fileURL", _childInfoForm);
+		_assertInfoField(
 			objectField.getObjectFieldId() + "#mimeType", _childInfoForm);
 		_assertInfoField(
 			objectField.getObjectFieldId() + "#size", _childInfoForm);

@@ -11,17 +11,18 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 
 const test = mergeTests(systemSettingsPageTest, loginTest());
 
-test.afterEach(async ({page, systemSettingsPage}) => {
-	await page.reload();
-
+test.beforeEach(async ({systemSettingsPage}) => {
 	await systemSettingsPage.goToSystemSetting('Assets', 'Asset Auto Tagging');
+});
+
+test.afterEach(async ({systemSettingsPage}) => {
 	await systemSettingsPage.resetToDefaultValues();
 });
 
 test(
 	'System settings can be saved using the keyboard',
 	{tag: '@LPS-97907'},
-	async ({page, systemSettingsPage}) => {
+	async ({page}) => {
 		const value = Math.floor(1 + 100 * Math.random()).toString();
 
 		const input = page.getByRole('textbox', {
@@ -29,12 +30,11 @@ test(
 		});
 
 		await test.step('Change value and save using keyboard', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Assets',
-				'Asset Auto Tagging'
-			);
+			await input.scrollIntoViewIfNeeded();
 
 			await input.click();
+
+			await expect(input).toBeFocused();
 
 			await input.fill(value);
 
@@ -46,6 +46,7 @@ test(
 		await test.step('Assert value is persisted', async () => {
 			await page.reload();
 
+			await expect(input).toBeVisible();
 			await expect(input).toHaveValue(value);
 		});
 	}

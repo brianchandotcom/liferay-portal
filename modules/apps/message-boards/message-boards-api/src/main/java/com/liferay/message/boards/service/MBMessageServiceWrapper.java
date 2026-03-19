@@ -474,3 +474,4 @@ public class MBMessageServiceWrapper
 	private MBMessageService _mbMessageService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2128467890

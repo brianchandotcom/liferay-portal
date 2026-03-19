@@ -358,3 +358,4 @@ public class ObjectRelationshipCacheModel
 	public String type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:225164513

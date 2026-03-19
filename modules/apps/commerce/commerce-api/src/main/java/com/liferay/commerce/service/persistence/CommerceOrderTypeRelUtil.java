@@ -1152,3 +1152,4 @@ public class CommerceOrderTypeRelUtil {
 	private static volatile CommerceOrderTypeRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-446569921

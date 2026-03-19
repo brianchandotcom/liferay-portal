@@ -574,3 +574,4 @@ public class ReadingTimeEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1199045994

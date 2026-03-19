@@ -469,3 +469,4 @@ public abstract class KaleoInstanceLocalServiceBaseImpl
 		KaleoInstanceLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-492315464

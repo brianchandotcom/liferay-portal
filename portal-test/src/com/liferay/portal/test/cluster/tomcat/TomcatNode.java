@@ -631,6 +631,7 @@ public class TomcatNode {
 		public T call() throws ProcessException {
 			try (InputStream inputStream = new UnsyncByteArrayInputStream(
 					_data);
+
 				ObjectInputStream objectInputStream =
 					new ClassLoaderObjectInputStream(
 						inputStream,

@@ -81,3 +81,4 @@ public abstract class OrganizationBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-616975056

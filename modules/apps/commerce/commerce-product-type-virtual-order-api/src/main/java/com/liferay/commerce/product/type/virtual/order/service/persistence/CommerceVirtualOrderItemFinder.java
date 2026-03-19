@@ -29,3 +29,4 @@ public interface CommerceVirtualOrderItemFinder {
 						CommerceVirtualOrderItem> orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1056424362

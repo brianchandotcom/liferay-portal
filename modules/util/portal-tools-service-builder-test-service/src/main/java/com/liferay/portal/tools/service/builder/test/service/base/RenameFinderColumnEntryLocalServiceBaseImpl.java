@@ -547,3 +547,4 @@ public abstract class RenameFinderColumnEntryLocalServiceBaseImpl
 		RenameFinderColumnEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1630291890

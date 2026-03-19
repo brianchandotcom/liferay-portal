@@ -7,6 +7,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
 import {
+	OrderTypes,
 	OrderWorkflowStatusCode,
 	getOrderStatusLabel,
 	orderWorkflowStatusCodeLabels,
@@ -25,6 +26,14 @@ const OrderStatus = ({placedOrder}: OrderStatusProps) => {
 		const orderStatus = placedOrder.orderStatusInfo.code;
 
 		if (
+			placedOrder.orderStatusInfo.code !==
+				OrderWorkflowStatusCode.COMPLETED &&
+			placedOrder.orderTypeExternalReferenceCode === OrderTypes.AI_HUB
+		) {
+			return 'order-status-icon-processing';
+		}
+
+		if (
 			orderStatusLabel ===
 				orderWorkflowStatusCodeLabels[
 					OrderWorkflowStatusCode.PENDING_PAYMENT
@@ -38,7 +47,7 @@ const OrderStatus = ({placedOrder}: OrderStatusProps) => {
 			return 'order-status-icon-completed';
 		}
 
-		return 'order-status-icon-in-progress';
+		return 'order-status-icon-processing';
 	};
 
 	return (

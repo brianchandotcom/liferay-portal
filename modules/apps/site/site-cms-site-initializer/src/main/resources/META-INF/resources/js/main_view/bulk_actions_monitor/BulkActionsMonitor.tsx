@@ -36,10 +36,16 @@ import {
 } from './util/constants';
 import {getBulkActionTaskMessage} from './util/notifications';
 
+type DataSetLoading = Record<string, {resetSearch?: boolean}>;
+
+const INITIAL_DATA_SET_LOADING = {
+	[TASK_REPORT_FDS_ID]: {resetSearch: false},
+};
+
 function BulkActionsMonitor() {
 	const [active, setActive] = useState<boolean>(false);
-	const [dataSetLoading, setDataSetLoading] = useState(
-		new Set([TASK_REPORT_FDS_ID])
+	const [dataSetLoading, setDataSetLoading] = useState<DataSetLoading>(
+		INITIAL_DATA_SET_LOADING
 	);
 	const [processingTasks, setProcessingTask] = useState(0);
 	const [taskContext, setTaskContext] = useState<Record<string, any>>(() => {
@@ -178,14 +184,17 @@ function BulkActionsMonitor() {
 				}
 
 				if (dataTotalCount < processingTasksRef.current) {
-					dataSetLoading.forEach((dataSetId) => {
-						Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
-							id: dataSetId,
-						});
-					});
+					Object.entries(dataSetLoading).forEach(
+						([dataSetId, options]) => {
+							Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+								id: dataSetId,
+								resetSearch: options.resetSearch,
+							});
+						}
+					);
 
 					if (dataTotalCount === 0) {
-						setDataSetLoading(new Set([TASK_REPORT_FDS_ID]));
+						setDataSetLoading(INITIAL_DATA_SET_LOADING);
 					}
 				}
 
@@ -238,9 +247,9 @@ function BulkActionsMonitor() {
 							...prevContext,
 							[newTask.id]: {
 								assetName,
-								itemCount: selectedData.items
-									? selectedData.items.length
-									: 0,
+								itemCount: selectedData.items?.length || 0,
+								replacement: additionalData?.replacement,
+								search: additionalData?.search,
 								selectAll: selectedData.selectAll,
 								targetName: additionalData?.targetName,
 							},
@@ -251,10 +260,12 @@ function BulkActionsMonitor() {
 
 					setDataSetLoading((prevState) => {
 						if (bulkActionDTO.dataSetId) {
-							const newDataSet = new Set(prevState);
-							newDataSet.add(bulkActionDTO.dataSetId);
-
-							return newDataSet;
+							return {
+								...prevState,
+								[bulkActionDTO.dataSetId]: {
+									resetSearch: bulkActionDTO.resetSearch,
+								},
+							};
 						}
 
 						return prevState;

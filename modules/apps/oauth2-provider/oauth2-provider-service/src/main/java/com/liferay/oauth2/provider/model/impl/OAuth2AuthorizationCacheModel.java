@@ -319,3 +319,4 @@ public class OAuth2AuthorizationCacheModel
 	public String rememberDeviceContent;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1014306663

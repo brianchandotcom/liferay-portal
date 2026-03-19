@@ -214,7 +214,7 @@ export class ApplicationsMenuPage {
 		});
 		this.digitalSalesRoomsMenuItem = page.getByRole('menuitem', {
 			exact: true,
-			name: 'Digital Sales Rooms',
+			name: 'Digital Sales Room Management',
 		});
 		this.exportMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -549,7 +549,8 @@ export class ApplicationsMenuPage {
 	}
 
 	async goToDigitalSalesRooms() {
-		await this.page.goto('/web/dsr/rooms');
+		await this.goToCommercePanel();
+		await this.digitalSalesRoomsMenuItem.click();
 	}
 
 	async goToExport() {

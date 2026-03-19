@@ -94,3 +94,4 @@ public interface LayoutSEOEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1999548202

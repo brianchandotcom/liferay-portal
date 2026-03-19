@@ -150,3 +150,4 @@ public class FriendlyURLEntryMappingCacheModel
 	public long friendlyURLEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:624035373

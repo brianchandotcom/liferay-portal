@@ -1,0 +1,53 @@
+-   tabpanel "Buttons":
+    -   blockquote:
+        -   paragraph: Buttons communicate an action to happen on user interaction.
+    -   heading "TYPES" [level=3]
+    -   table:
+        -   rowgroup:
+            -   row "TYPE USAGE":
+                -   cell "TYPE"
+                -   cell "USAGE"
+        -   rowgroup:
+            -   'row "Primary Workflow Primary Workflow Primary: The primary button is always use for the most important actions. There can''t be two primary actions together or near by."':
+                -   cell "Primary Workflow Primary Workflow":
+                    -   button "Primary"
+                    -   button "Workflow"
+                    -   button "Primary" [disabled]
+                    -   button "Workflow" [disabled]
+                -   'cell "Primary: The primary button is always use for the most important actions. There can''t be two primary actions together or near by."':
+                    -   strong: Primary
+            -   'row "Secondary Wiki Secondary Wiki Secondary: The secondary button is always use for the secondary actions. There can be several secondary actions near by."':
+                -   cell "Secondary Wiki Secondary Wiki":
+                    -   button "Secondary"
+                    -   button "Wiki"
+                    -   button "Secondary" [disabled]
+                    -   button "Wiki" [disabled]
+                -   'cell "Secondary: The secondary button is always use for the secondary actions. There can be several secondary actions near by."':
+                    -   strong: Secondary
+            -   'row "Borderless Page Template Borderless Page Template Borderless: Use in those cases as toolbars where the secondary button would be too heavy for the pattern design. In this way the design gets cleaner."':
+                -   cell "Borderless Page Template Borderless Page Template":
+                    -   button "Borderless"
+                    -   button "Page Template"
+                    -   button "Borderless" [disabled]
+                    -   button "Page Template" [disabled]
+                -   'cell "Borderless: Use in those cases as toolbars where the secondary button would be too heavy for the pattern design. In this way the design gets cleaner."':
+                    -   strong: Borderless
+            -   'row "Link Add Role Link Add Role Link: Used for many Cancel actions."':
+                -   cell "Link Add Role Link Add Role":
+                    -   button "Link"
+                    -   button "Add Role"
+                    -   button "Link" [disabled]
+                    -   button "Add Role" [disabled]
+                -   'cell "Link: Used for many Cancel actions."':
+                    -   strong: Link
+    -   heading "VARIATIONS" [level=3]
+    -   button "Share"
+    -   text: Icon and Text Button
+    -   button "Monospaced Button"
+    -   text: Monospaced Button
+    -   button "Button"
+    -   text: Block Level Button
+    -   button "Plus Button"
+    -   text: Plus Button
+    -   button "Action Button"
+    -   text: Action Button

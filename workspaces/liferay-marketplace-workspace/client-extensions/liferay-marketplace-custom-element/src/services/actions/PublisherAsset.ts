@@ -141,7 +141,7 @@ export default class PublisherAsset {
 			const packageFolderId = await this.getPackageFolderId(appFolderId);
 
 			const productRelationshipName =
-				this.properties.featurePreview?.includes(
+				this.properties?.featurePreview?.includes(
 					'product-versioning-new-primary-key'
 				)
 					? 'r_productEntryToPublisherAssets_CProductId'

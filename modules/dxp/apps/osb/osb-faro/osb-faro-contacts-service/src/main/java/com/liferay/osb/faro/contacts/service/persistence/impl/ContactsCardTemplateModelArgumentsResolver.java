@@ -118,3 +118,4 @@ public class ContactsCardTemplateModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2031525480

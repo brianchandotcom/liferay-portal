@@ -271,3 +271,4 @@ public class LayoutClassedModelUsageCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:526688588

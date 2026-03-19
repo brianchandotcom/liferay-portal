@@ -48,3 +48,4 @@ public interface ChangesetEntry extends ChangesetEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1005215988

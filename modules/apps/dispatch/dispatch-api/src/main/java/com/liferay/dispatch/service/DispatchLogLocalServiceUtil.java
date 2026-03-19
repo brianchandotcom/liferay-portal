@@ -347,3 +347,4 @@ public class DispatchLogLocalServiceUtil {
 			DispatchLogLocalServiceUtil.class, DispatchLogLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2128174621

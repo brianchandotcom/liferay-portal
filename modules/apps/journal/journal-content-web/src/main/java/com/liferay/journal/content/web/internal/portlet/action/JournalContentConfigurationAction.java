@@ -149,7 +149,7 @@ public class JournalContentConfigurationAction
 
 		long groupId = _getArticleGroupId(actionRequest);
 
-		if (groupId > 0) {
+		if ((groupId > 0) && (themeDisplay.getScopeGroupId() != groupId)) {
 			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if (group != null) {

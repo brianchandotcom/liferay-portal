@@ -45,3 +45,4 @@ public class AssetTagFinderUtil {
 	private static AssetTagFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1488182395

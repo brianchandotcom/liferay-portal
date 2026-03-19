@@ -244,3 +244,4 @@ public interface FaroChannelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:923186504

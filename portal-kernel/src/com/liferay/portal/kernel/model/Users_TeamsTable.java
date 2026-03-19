@@ -38,3 +38,4 @@ public class Users_TeamsTable extends BaseTable<Users_TeamsTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:801665123

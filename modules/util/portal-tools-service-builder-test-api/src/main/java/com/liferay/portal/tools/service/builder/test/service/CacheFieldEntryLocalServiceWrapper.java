@@ -357,3 +357,4 @@ public class CacheFieldEntryLocalServiceWrapper
 	private CacheFieldEntryLocalService _cacheFieldEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-598627583

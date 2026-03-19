@@ -5,8 +5,8 @@
 
 package com.liferay.portal.template;
 
+import com.liferay.petra.io.unsync.UnsyncCharArrayWriter;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncCharArrayWriter;
 import com.liferay.portal.kernel.template.TemplateResource;
 
 import java.io.IOException;

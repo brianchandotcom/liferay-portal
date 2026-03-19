@@ -475,3 +475,4 @@ public class CommerceOrderNoteLocalServiceUtil {
 			CommerceOrderNoteLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1562273404

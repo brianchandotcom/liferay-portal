@@ -234,3 +234,4 @@ public class ObjectEntryFolderServiceWrapper
 	private ObjectEntryFolderService _objectEntryFolderService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:423579147

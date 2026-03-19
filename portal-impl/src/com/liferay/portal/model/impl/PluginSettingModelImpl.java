@@ -796,3 +796,4 @@ public class PluginSettingModelImpl
 	private PluginSetting _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1451563216

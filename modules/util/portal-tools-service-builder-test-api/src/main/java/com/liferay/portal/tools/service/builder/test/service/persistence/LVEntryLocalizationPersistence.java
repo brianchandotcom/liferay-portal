@@ -396,3 +396,4 @@ public interface LVEntryLocalizationPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:739154002

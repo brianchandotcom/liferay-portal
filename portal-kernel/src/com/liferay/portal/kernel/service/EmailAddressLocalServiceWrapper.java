@@ -453,3 +453,4 @@ public class EmailAddressLocalServiceWrapper
 	private EmailAddressLocalService _emailAddressLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1037155599

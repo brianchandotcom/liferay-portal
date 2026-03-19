@@ -9,6 +9,7 @@ locals {
 		"${local.secret_prefixes.certificates}${var.argocd_domain_config.tls_external_secret_name}"
 	)
 	argocd_tls_secret_name="argocd-server-tls"
+	aws_marketplace_enabled=var.liferay_helm_chart_name == "liferay-aws-marketplace"
 	cluster_name="${var.deployment_name}-eks"
 	common_labels={
 		"app.kubernetes.io/component"="gitops-infrastructure"
@@ -45,6 +46,7 @@ locals {
 			--overwrite
 	EOT
 	ecr_credentials_sync_serviceaccount_name="ecr-credentials-sync-sa"
+	gateway_class_name="liferay-gateway-class"
 	gateway_name="${var.infrastructure_git_repo_config.target.slugProjectId}-${var.infrastructure_git_repo_config.target.slugEnvironmentId}-gateway"
 	git_repo_auth_configs=merge(
 		local.git_repo_infrastructure_separate_from_liferay ? {
@@ -90,6 +92,7 @@ locals {
 			values_scope_prefix="liferay-aws.liferay-default."
 		} : {},
 	)
+	liferay_namespace_pattern="liferay-*"
 	liferay_service_account_role_name="${var.deployment_name}-irsa"
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	secret_prefixes={

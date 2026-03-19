@@ -79,3 +79,4 @@ public class JournalFolderTable extends BaseTable<JournalFolderTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-47692359

@@ -1,0 +1,348 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.portal.tools.service.builder.test.compat700">
+	<namespace>SBCompat700</namespace>
+	<entity local-service="true" name="ArrayableEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="arrayableEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="integer" type="int" />
+		<column name="name" type="String" />
+		<column name="type" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="integer" />
+			<order-column name="type" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="groupId" />
+		</finder>
+	</entity>
+	<entity cache-enabled="true" local-service="true" name="BasicEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="basicEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+
+		<!-- Relationships -->
+
+		<column entity="MappingEntry" mapping-table="MappingEntries_BasicEntries" name="mappingEntries" type="Collection" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="C_N" return-type="BasicEntry" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity cache-enabled="false" local-service="true" name="CacheDisabledEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="cacheDisabledEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="CacheDisabledEntry" unique="true">
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity cache-enabled="false" local-service="true" name="ConvertNullEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="convertNullEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column convert-null="true" name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="ConvertNullEntry" unique="true">
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="EagerBlobEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="eagerBlobEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column lazy="false" name="blob" type="Blob" />
+	</entity>
+	<entity local-service="true" name="LazyBlobEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="lazyBlobEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="blob1" type="Blob" />
+		<column name="blob2" type="Blob" />
+	</entity>
+	<entity local-service="true" name="LikeFinderEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="likeFinderEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="ownerId" type="long" />
+		<column name="ownerType" type="int" />
+		<column name="portletId" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="O_O_P" return-type="LikeFinderEntry" unique="true">
+			<finder-column name="ownerId" />
+			<finder-column name="ownerType" />
+			<finder-column name="portletId" />
+		</finder>
+		<finder name="C_O_O_LikeP" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="ownerId" />
+			<finder-column name="ownerType" />
+			<finder-column comparator="LIKE" name="portletId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="ManyColumnsEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="manyColumnsEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="column1" type="int" />
+		<column name="column2" type="int" />
+		<column name="column3" type="int" />
+		<column name="column4" type="int" />
+		<column name="column5" type="int" />
+		<column name="column6" type="int" />
+		<column name="column7" type="int" />
+		<column name="column8" type="int" />
+		<column name="column9" type="int" />
+		<column name="column10" type="int" />
+		<column name="column11" type="int" />
+		<column name="column12" type="int" />
+		<column name="column13" type="int" />
+		<column name="column14" type="int" />
+		<column name="column15" type="int" />
+		<column name="column16" type="int" />
+		<column name="column17" type="int" />
+		<column name="column18" type="int" />
+		<column name="column19" type="int" />
+		<column name="column20" type="int" />
+		<column name="column21" type="int" />
+		<column name="column22" type="int" />
+		<column name="column23" type="int" />
+		<column name="column24" type="int" />
+		<column name="column25" type="int" />
+		<column name="column26" type="int" />
+		<column name="column27" type="int" />
+		<column name="column28" type="int" />
+		<column name="column29" type="int" />
+		<column name="column30" type="int" />
+		<column name="column31" type="int" />
+		<column name="column32" type="int" />
+		<column name="column33" type="int" />
+		<column name="column34" type="int" />
+		<column name="column35" type="int" />
+		<column name="column36" type="int" />
+		<column name="column37" type="int" />
+		<column name="column38" type="int" />
+		<column name="column39" type="int" />
+		<column name="column40" type="int" />
+		<column name="column41" type="int" />
+		<column name="column42" type="int" />
+		<column name="column43" type="int" />
+		<column name="column44" type="int" />
+		<column name="column45" type="int" />
+		<column name="column46" type="int" />
+		<column name="column47" type="int" />
+		<column name="column48" type="int" />
+		<column name="column49" type="int" />
+		<column name="column50" type="int" />
+		<column name="column51" type="int" />
+		<column name="column52" type="int" />
+		<column name="column53" type="int" />
+		<column name="column54" type="int" />
+		<column name="column55" type="int" />
+		<column name="column56" type="int" />
+		<column name="column57" type="int" />
+		<column name="column58" type="int" />
+		<column name="column59" type="int" />
+		<column name="column60" type="int" />
+		<column name="column61" type="int" />
+		<column name="column62" type="int" />
+		<column name="column63" type="int" />
+		<column name="column64" type="int" />
+	</entity>
+	<entity local-service="true" name="MappingEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="mappingEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+
+		<!-- Relationships -->
+
+		<column entity="BasicEntry" mapping-table="MappingEntries_BasicEntries" name="basicEntries" type="Collection" />
+
+		<!-- References -->
+
+		<reference entity="BasicEntry" package-path="com.liferay.portal.tools.service.builder.test.compat700" />
+	</entity>
+	<entity local-service="true" mvcc-enabled="true" name="MVCCEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="mvccEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_N" return-type="MVCCEntry" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="TrashEntry" remote-service="false" trash-enabled="true">
+
+		<!-- PK fields -->
+
+		<column name="trashEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+	</entity>
+	<entity local-service="true" name="TreeEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="treeEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="parentTreeEntryId" type="long" />
+		<column name="leftTreeEntryId" type="long" />
+		<column name="rightTreeEntryId" type="long" />
+	</entity>
+	<entity local-service="true" name="WhereClauseEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="whereClauseEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="nickname" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name_Nickname" return-type="Collection" where="nickname IS NOT NULL">
+			<finder-column name="name" />
+		</finder>
+	</entity>
+</service-builder>

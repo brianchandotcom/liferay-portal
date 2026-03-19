@@ -962,58 +962,229 @@ test.describe('Manage object fields through Model Builder', () => {
 });
 
 test.describe('Manage objectFields through Objects Admin UI', () => {
-	test('can update custom object field in a system object', async ({
+	test('can create and edit a formula field on a custom object', async ({
 		apiHelpers,
 		objectFieldsPage,
 		page,
 	}) => {
-		const {items} = await apiHelpers.objectAdmin.getAllObjectDefinitions();
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
 
-		const accountObjectDefinition = items.find((item: ObjectDefinition) => {
-			return item.externalReferenceCode === 'L_ACCOUNT';
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
 		});
 
-		const objectFieldAPIClient =
-			await apiHelpers.buildRestClient(ObjectFieldAPI);
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
 
-		const objectFieldLabel = 'objectFieldLabel';
+		await objectFieldsPage.addObjectField({
+			formulaFieldOutput: 'Decimal',
+			objectFieldBusinessType: 'Formula',
+			objectFieldLabel: 'Custom Formula Field',
+		});
 
-		await objectFieldAPIClient.postObjectDefinitionObjectField(
-			accountObjectDefinition.id,
-			{
-				DBType: 'String',
-				businessType: 'Text',
-				label: {en_US: objectFieldLabel},
-				name: 'customField' + getRandomInt(),
-				required: false,
-			}
-		);
+		await expect(
+			page.getByRole('link', {name: 'Custom Formula Field'})
+		).toBeVisible();
 
-		await objectFieldsPage.goto(accountObjectDefinition.label.en_US);
+		const objectFieldLabel = 'Custom Formula Field';
 
 		await objectFieldsPage.openObjectField(objectFieldLabel);
 
-		const newObjectFieldLabel = 'newObjectFieldLabel';
+		await objectFieldsPage.iframeLocator
+			.getByLabel('LabelMandatory')
+			.fill(`${objectFieldLabel} Updated`);
 
-		await page
-			.frameLocator('iframe')
-			.getByLabel('Label')
-			.fill(newObjectFieldLabel);
-
-		await page
-			.frameLocator('iframe')
-			.getByRole('button', {name: 'save'})
+		await objectFieldsPage.iframeLocator
+			.getByLabel('Expand input area.')
 			.click();
 
+		test.step('can see all operations', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Divided By'})
+			).toBeVisible();
+			await expect(
+				page.getByRole('button', {name: 'Minus'})
+			).toBeVisible();
+			await expect(
+				page.getByRole('button', {name: 'Plus'})
+			).toBeVisible();
+			await expect(
+				page.getByRole('button', {name: 'Times'})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('button', {exact: true, name: 'And'})
+			).toBeHidden();
+			await expect(
+				page.getByRole('button', {exact: true, name: 'Or'})
+			).toBeHidden();
+		});
+
+		await page.getByRole('button', {exact: true, name: 'ID'}).click();
+
+		await page.getByRole('button', {name: 'Plus'}).click();
+
+		await page.getByRole('button', {name: 'Done'}).click();
+
+		await page.waitForTimeout(500);
+
+		await objectFieldsPage.editFieldSaveButton.click();
+
 		await expect(
-			page.getByRole('row').filter({hasText: newObjectFieldLabel})
+			page.getByRole('link', {name: `${objectFieldLabel} Updated`})
 		).toBeVisible();
 
-		await objectFieldsPage.deleteObjectFieldByLabel(newObjectFieldLabel);
+		await objectFieldsPage.openObjectField(`${objectFieldLabel} Updated`);
 
 		await expect(
-			page.getByRole('row').filter({hasText: newObjectFieldLabel})
-		).toBeHidden();
+			objectFieldsPage.iframeLocator.getByPlaceholder(
+				'Create an expression.'
+			)
+		).toHaveValue('idfield_name1 + field_name2');
+	});
+
+	test('can edit an aggregation field', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const objectRelationship1 =
+			'objectRelationship' + Math.floor(Math.random() * 99);
+
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition.externalReferenceCode!,
+			{
+				label: {en_US: objectRelationship1},
+				name: objectRelationship1,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition.externalReferenceCode,
+				objectDefinitionId2: objectDefinition.id,
+				objectDefinitionName2: objectDefinition.name,
+				type: 'oneToMany',
+			}
+		);
+
+		const objectRelationship2 =
+			'objectRelationship' + Math.floor(Math.random() * 99);
+
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition.externalReferenceCode!,
+			{
+				label: {en_US: objectRelationship2},
+				name: objectRelationship2,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition2.externalReferenceCode,
+				objectDefinitionId2: objectDefinition2.id,
+				objectDefinitionName2: objectDefinition2.name,
+				type: 'oneToMany',
+			}
+		);
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		const objectFieldLabel = 'Custom Aggregation';
+
+		await objectFieldsPage.addObjectField({
+			aggregationField: 'ID',
+			aggregationFieldFunction: 'Max',
+			aggregationFieldRelationship: objectRelationship1,
+			objectFieldBusinessType: 'Aggregation',
+			objectFieldLabel,
+		});
+
+		await page.getByRole('link', {name: objectFieldLabel}).click();
+
+		await objectFieldsPage.iframeLocator
+			.getByLabel('LabelMandatory')
+			.fill(`${objectFieldLabel} Updated`);
+
+		await objectFieldsPage.iframeLocator
+			.getByLabel('RelationshipMandatory')
+			.click();
+
+		await objectFieldsPage.iframeLocator
+			.getByRole('option', {name: objectRelationship2})
+			.click();
+
+		await objectFieldsPage.iframeLocator
+			.getByLabel('FunctionMandatory')
+			.click();
+
+		await objectFieldsPage.iframeLocator
+			.getByRole('option', {name: 'Min'})
+			.click();
+
+		await objectFieldsPage.iframeLocator
+			.getByLabel('FieldMandatory')
+			.click();
+
+		await objectFieldsPage.iframeLocator
+			.getByRole('option', {name: 'ID'})
+			.click();
+
+		await objectFieldsPage.editFieldSaveButton.click();
+
+		await expect(
+			page.getByRole('link', {name: `${objectFieldLabel} Updated`})
+		).toBeVisible();
+	});
+
+	test('can create a formula field on a custom object', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		await objectFieldsPage.addObjectField({
+			formulaFieldOutput: 'Decimal',
+			objectFieldBusinessType: 'Formula',
+			objectFieldLabel: 'Custom Formula Field',
+		});
+
+		await expect(
+			page.getByRole('link', {name: 'Custom Formula Field'})
+		).toBeVisible();
+
+		const fieldRow = page
+			.getByRole('row')
+			.filter({hasText: 'Custom Formula Field'});
+
+		await expect(
+			fieldRow.getByText('Formula', {exact: true})
+		).toBeVisible();
 	});
 
 	test('can create custom object field in a system object definition', async ({
@@ -1276,6 +1447,68 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		}
 	});
 
+	test('can delete an aggregation field', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const objectRelationshipName =
+			'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition.externalReferenceCode!,
+			{
+				label: {en_US: 'Relationship'},
+				name: objectRelationshipName,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition.externalReferenceCode,
+				objectDefinitionId2: objectDefinition.id,
+				objectDefinitionName2: objectDefinition.name,
+				type: 'oneToMany',
+			}
+		);
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		const objectFieldLabel = 'Custom Aggregation';
+
+		await objectFieldsPage.addObjectField({
+			aggregationFieldFunction: 'Count',
+			aggregationFieldRelationship: 'Relationship',
+			objectFieldBusinessType: 'Aggregation',
+			objectFieldLabel,
+		});
+
+		await expect(
+			page.getByRole('link', {name: objectFieldLabel})
+		).toBeVisible();
+
+		await objectFieldsPage.deleteObjectFieldByLabel(objectFieldLabel);
+
+		await waitForAlert(
+			page,
+			`Success:${objectFieldLabel} was deleted successfully.`
+		);
+
+		await expect(
+			page.getByRole('link', {name: objectFieldLabel})
+		).toBeHidden();
+	});
+
 	test(
 		'can delete created custom fields in a System Object',
 		{tag: ['@LPD-53450']},
@@ -1386,6 +1619,110 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				newERCValue
 			);
 		});
+	});
+
+	test('can update custom object field in a system object', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const {items} = await apiHelpers.objectAdmin.getAllObjectDefinitions();
+
+		const accountObjectDefinition = items.find((item: ObjectDefinition) => {
+			return item.externalReferenceCode === 'L_ACCOUNT';
+		});
+
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
+
+		const objectFieldLabel = 'objectFieldLabel';
+
+		await objectFieldAPIClient.postObjectDefinitionObjectField(
+			accountObjectDefinition.id,
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				label: {en_US: objectFieldLabel},
+				name: 'customField' + getRandomInt(),
+				required: false,
+			}
+		);
+
+		await objectFieldsPage.goto(accountObjectDefinition.label.en_US);
+
+		await objectFieldsPage.openObjectField(objectFieldLabel);
+
+		const newObjectFieldLabel = 'newObjectFieldLabel';
+
+		await page
+			.frameLocator('iframe')
+			.getByLabel('Label')
+			.fill(newObjectFieldLabel);
+
+		await page
+			.frameLocator('iframe')
+			.getByRole('button', {name: 'save'})
+			.click();
+
+		await expect(
+			page.getByRole('row').filter({hasText: newObjectFieldLabel})
+		).toBeVisible();
+
+		await objectFieldsPage.deleteObjectFieldByLabel(newObjectFieldLabel);
+
+		await expect(
+			page.getByRole('row').filter({hasText: newObjectFieldLabel})
+		).toBeHidden();
+	});
+
+	test('can view more than 20 picklists in the picklist drop-down', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const listTypeDefinitions = await Promise.all(
+			Array(21)
+				.fill(null)
+				.map(async () => {
+					const listTypeDef =
+						await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+					apiHelpers.data.push({
+						id: listTypeDef.id,
+						type: 'listTypeDefinition',
+					});
+
+					return listTypeDef;
+				})
+		);
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		await objectFieldsPage.addObjectFieldButton.click();
+
+		await objectFieldsPage.objectFieldLabelInput.fill('Field Picklist');
+
+		await objectFieldsPage.objectFieldOptionsDropdown.click();
+
+		await page.getByRole('option', {exact: true, name: 'Picklist'}).click();
+
+		await objectFieldsPage.objectFieldOptionsDropdown.click();
+
+		for (const listTypeDef of listTypeDefinitions) {
+			await expect(
+				page.getByRole('option', {name: listTypeDef.name})
+			).toBeVisible();
+		}
 	});
 
 	test('cannot create localized object fields in unmodifiable system object definition', async ({
@@ -1585,6 +1922,35 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 					.getByRole('button', {name: 'Actions'})
 			).toBeHidden();
 		}
+	});
+
+	test('cannot edit external reference code from system fields', async ({
+		apiHelpers,
+		objectFieldsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		await objectFieldsPage.openObjectField('External Reference Code');
+
+		await expect(
+			objectFieldsPage.iframeLocator.locator('input[name="name"]')
+		).toBeDisabled();
+
+		await expect(
+			objectFieldsPage.iframeLocator.getByRole('combobox', {
+				name: 'Type Mandatory',
+			})
+		).toBeDisabled();
 	});
 
 	test('navigates to documentation from the "unsupported translations" alert link', async ({

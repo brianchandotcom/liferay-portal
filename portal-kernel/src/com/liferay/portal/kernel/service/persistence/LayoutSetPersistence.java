@@ -799,3 +799,4 @@ public interface LayoutSetPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-323561004

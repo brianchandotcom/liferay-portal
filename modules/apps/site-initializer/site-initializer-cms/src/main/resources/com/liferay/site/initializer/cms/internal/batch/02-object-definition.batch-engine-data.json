@@ -77,7 +77,7 @@
 						},
 						{
 							"name": "fileSource",
-							"value": "userComputerToDocumentsAndMedia"
+							"value": "userComputerToCMSBasicDocument"
 						},
 						{
 							"name": "showFilesInLibrary",
@@ -311,7 +311,7 @@
 						},
 						{
 							"name": "fileSource",
-							"value": "userComputerToDocumentsAndMedia"
+							"value": "userComputerToCMSBasicDocument"
 						},
 						{
 							"name": "showFilesInLibrary",

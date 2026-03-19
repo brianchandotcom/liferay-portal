@@ -1571,3 +1571,4 @@ public class ERCVersionedEntryVersionUtil {
 	private static volatile ERCVersionedEntryVersionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-850110422

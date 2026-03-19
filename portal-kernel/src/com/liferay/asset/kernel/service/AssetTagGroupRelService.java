@@ -62,3 +62,4 @@ public interface AssetTagGroupRelService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1680960357

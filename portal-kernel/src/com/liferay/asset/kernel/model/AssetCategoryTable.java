@@ -73,3 +73,4 @@ public class AssetCategoryTable extends BaseTable<AssetCategoryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-226998557

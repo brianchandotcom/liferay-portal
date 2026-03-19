@@ -5,6 +5,8 @@
 
 package com.liferay.info.exception;
 
+import com.liferay.asset.kernel.exception.AssetCategoryException;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.InfoFormException;
@@ -288,6 +290,38 @@ public class InfoFormValidationException extends InfoFormException {
 			return LanguageUtil.format(
 				locale, "the-x-is-invalid", fieldLabel, false);
 		}
+
+	}
+
+	public static class RequiredAssetCategory
+		extends InfoFormValidationException {
+
+		public RequiredAssetCategory(
+			AssetCategoryException assetCategoryException,
+			AssetVocabulary assetVocabulary) {
+
+			_assetVocabulary = assetVocabulary;
+			_assetCategoryException = assetCategoryException;
+		}
+
+		public AssetCategoryException getAssetCategoryException() {
+			return _assetCategoryException;
+		}
+
+		public AssetVocabulary getAssetVocabulary() {
+			return _assetVocabulary;
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.format(
+				locale, "please-select-at-least-one-category-for-x",
+				(_assetVocabulary != null) ? _assetVocabulary.getTitle(locale) :
+					StringPool.BLANK);
+		}
+
+		private final AssetCategoryException _assetCategoryException;
+		private final AssetVocabulary _assetVocabulary;
 
 	}
 

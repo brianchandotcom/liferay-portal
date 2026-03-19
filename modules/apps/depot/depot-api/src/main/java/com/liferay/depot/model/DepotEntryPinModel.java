@@ -192,3 +192,4 @@ public interface DepotEntryPinModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1716810385

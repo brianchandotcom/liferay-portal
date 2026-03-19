@@ -8720,3 +8720,4 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1032121096

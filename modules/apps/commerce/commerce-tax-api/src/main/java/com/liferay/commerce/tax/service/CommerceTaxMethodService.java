@@ -107,3 +107,4 @@ public interface CommerceTaxMethodService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2010855232

@@ -128,3 +128,4 @@ public interface PatcherBuildRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1773892626

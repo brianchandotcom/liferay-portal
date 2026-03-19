@@ -45,3 +45,4 @@ public class UserGroupRoleFinderBaseImpl
 	protected UserGroupRolePersistence userGroupRolePersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1936732332

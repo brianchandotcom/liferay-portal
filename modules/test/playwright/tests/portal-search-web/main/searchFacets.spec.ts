@@ -340,3 +340,90 @@ test.describe('Custom Facet', () => {
 		});
 	});
 });
+
+test.describe('Folder Facet', () => {
+	test('Includes CMS object entry folders @LPD-75959', async ({
+		apiHelpers,
+		layout,
+		page,
+		searchPage,
+	}) => {
+		let folderFacetTerm: Locator;
+		let objectEntryContent: any;
+		let objectEntryFolder: any;
+		let space: any;
+
+		const cmsId = `CMS_${getRandomString()}`;
+
+		await test.step('Create a new Space', async () => {
+			space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: `Space ${cmsId}`,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a folder for that space', async () => {
+			objectEntryFolder =
+				await apiHelpers.objectFolder.createObjectEntryFolder({
+					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					scopeKey: space.siteId,
+					title: `${cmsId} Folder`,
+				});
+		});
+
+		await test.step('Create a web content within the new folder', async () => {
+			objectEntryContent = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode:
+						objectEntryFolder.externalReferenceCode,
+					title: `${cmsId} Content`,
+				},
+				'cms/basic-web-contents',
+				space.name
+			);
+		});
+
+		await test.step('Add search widgets to new page', async () => {
+			await page.goto('/web/guest' + layout.friendlyURL);
+
+			await searchPage.addPortlet('Search Bar', 'Search');
+			await searchPage.addPortlet('Folder Facet', 'Search');
+			await searchPage.addPortlet('Search Results', 'Search');
+		});
+
+		await test.step('Configure search bar scope', async () => {
+			await searchPage.openSearchPortletConfiguration('Search Bar', 1);
+
+			await searchPage.selectPortletConfigurationsSelect([
+				{
+					label: 'Scope',
+					value: 'Everything',
+				},
+			]);
+
+			await searchPage.savePortletConfiguration();
+		});
+
+		await test.step('Search for CMS and expect to see the folder facet term', async () => {
+			await searchPage.searchKeywordInMainContent(cmsId);
+
+			folderFacetTerm = await searchPage.getSearchFacetCheckbox(
+				objectEntryFolder.title,
+				'Folder'
+			);
+
+			await expect(folderFacetTerm).toBeVisible();
+		});
+
+		await test.step('Select the folder facet term and expect to see results', async () => {
+			await searchPage.selectSearchFacetCheckbox(folderFacetTerm);
+
+			await expect(
+				searchPage.searchResults.getByRole('link', {
+					name: objectEntryContent.title,
+				})
+			).toBeVisible();
+		});
+	});
+});

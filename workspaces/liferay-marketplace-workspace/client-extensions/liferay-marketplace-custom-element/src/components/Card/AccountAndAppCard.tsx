@@ -32,9 +32,9 @@ export function AccountAndAppCard({
 			</div>
 
 			<div className="card-info">
-				<span className="card-info-description">{category}</span>
-
 				<span className="card-info-text">{title}</span>
+
+				<span className="card-info-description">{category}</span>
 			</div>
 		</div>
 	);

@@ -373,3 +373,4 @@ public interface UserNotificationDeliveryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1179169828

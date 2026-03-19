@@ -63,29 +63,15 @@ html#{$cadmin-selector} {
 			}
 		}
 
+		.control-menu-level-1-light,
 		.control-menu-level-1-dark {
-			background-color: $control-menu-level-1-bg;
-			color: $control-menu-level-1-color;
-
-			.control-menu-nav-link {
-				color: $control-menu-level-1-link-color;
-
-				&:focus,
-				&:hover {
-					background-color: $control-menu-level-1-link-background-color;
-					color: $control-menu-level-1-link-hover-color;
-				}
-			}
-
-			.control-menu-level-1-heading {
-				color: $cadmin-white;
-			}
-		}
-
-		.control-menu-level-1-light {
 			background-color: $control-menu-level-1-light-bg;
 			border-bottom: $control-menu-level-1-light-border;
 			color: $control-menu-level-1-light-color;
+
+			@media (max-resolution: 1dppx) {
+				border-bottom-color: $control-menu-level-1-light-border-color;
+			}
 
 			.control-menu-nav-link {
 				color: $control-menu-level-1-light-link-color;

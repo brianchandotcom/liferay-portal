@@ -504,3 +504,4 @@ public class TeamServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-581966319

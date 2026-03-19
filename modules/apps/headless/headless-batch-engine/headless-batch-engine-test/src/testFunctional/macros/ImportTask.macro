@@ -72,4 +72,21 @@ definition {
 		return ${importTaskStatus};
 	}
 
+	@summary = "Default summary"
+	macro waitForTaskToFinish(importTaskId = null) {
+		var counter = 0;
+		var maxRetries = 10;
+		var status = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
+
+		while ((${counter} != ${maxRetries}) && (${status} != "COMPLETED") && (${status} != "FAILED")) {
+			var counter = ${counter} + 1;
+
+			// Wait for the import task to finish. Needed for LPD-82599.
+
+			Pause(value1 = 500);
+
+			var status = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
+		}
+	}
+
 }

@@ -377,3 +377,4 @@ public class UserIdMapperLocalServiceWrapper
 	private UserIdMapperLocalService _userIdMapperLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1880253938

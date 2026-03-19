@@ -1048,3 +1048,4 @@ public class ObjectFolderItemUtil {
 	private static volatile ObjectFolderItemPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:239283766

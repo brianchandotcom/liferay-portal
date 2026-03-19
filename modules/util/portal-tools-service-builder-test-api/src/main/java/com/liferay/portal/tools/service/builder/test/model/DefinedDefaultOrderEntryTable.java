@@ -40,3 +40,4 @@ public class DefinedDefaultOrderEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1670276757

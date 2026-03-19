@@ -1,0 +1,10 @@
+-   tabpanel "Stickers":
+    -   blockquote:
+        -   paragraph: Stickers are a visual way to quickly identify content in a different way than badges and labels.
+    -   heading "SQUARE" [level=3]
+    -   heading "ROUND" [level=3]
+    -   heading "POSITION" [level=3]
+    -   img "Thumbnail of hot air ballon"
+    -   img "Thumbnail of hot air ballon"
+    -   img "Thumbnail of hot air ballon"
+    -   img "Thumbnail of hot air ballon"

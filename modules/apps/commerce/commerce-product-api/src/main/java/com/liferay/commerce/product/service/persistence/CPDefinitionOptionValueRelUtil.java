@@ -1887,3 +1887,4 @@ public class CPDefinitionOptionValueRelUtil {
 	private static volatile CPDefinitionOptionValueRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2014892095

@@ -225,6 +225,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 					connection.prepareStatement(
 						"select value, classNameId from ClassName_ order by " +
 							"classNameId asc limit 1; ");
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				if (resultSet.next()) {
@@ -254,13 +255,17 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCopyConfiguration() throws Exception {
-		companyLocalService.forEachCompanyId(
-			companyId -> {
+		for (long companyId : COMPANY_IDS) {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						companyId)) {
+
 				int rowCount = -1;
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							"select count(1) from Configuration_");
+
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					if (resultSet.next()) {
@@ -269,8 +274,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 				}
 
 				Assert.assertEquals(0, rowCount);
-			},
-			COMPANY_IDS);
+			}
+		}
 	}
 
 	@Test
@@ -297,6 +302,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 						"select resourceActionId, name, actionId, " +
 							"bitwiseValue from ResourceAction order by " +
 								"resourceActionId asc limit 1;");
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				if (resultSet.next()) {

@@ -423,3 +423,4 @@ public class ListTypeLocalServiceWrapper
 	private ListTypeLocalService _listTypeLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-214153983

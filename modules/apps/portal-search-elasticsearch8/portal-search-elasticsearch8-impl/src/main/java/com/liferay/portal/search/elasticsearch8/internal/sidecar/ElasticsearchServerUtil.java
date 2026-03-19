@@ -15,10 +15,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-
-import java.security.MessageDigest;
+import java.nio.file.Path;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -28,8 +25,8 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.elasticsearch.bootstrap.ServerArgs;
 import org.elasticsearch.cli.ExitCodes;
-import org.elasticsearch.common.hash.MessageDigests;
 import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
 import org.elasticsearch.common.io.stream.StreamOutput;
 import org.elasticsearch.common.logging.LogConfigurator;
@@ -94,11 +91,12 @@ public class ElasticsearchServerUtil {
 		_shutdownCountDownLatch.countDown();
 	}
 
-	public static void start() throws ProcessException {
+	public static void start(String settingsString) throws ProcessException {
 		InputStream originalSystemInInputStream = System.in;
 
 		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-				new UnsyncByteArrayInputStream(_getSidecarServerArgs())) {
+				new UnsyncByteArrayInputStream(
+					_getSidecarServerArgs(settingsString))) {
 
 			System.setIn(unsyncByteArrayInputStream);
 
@@ -172,55 +170,29 @@ public class ElasticsearchServerUtil {
 		}
 	}
 
-	private static byte[] _getSidecarServerArgs() {
+	private static byte[] _getSidecarServerArgs(String settingsString) {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
+
 			StreamOutput streamOutput = new OutputStreamStreamOutput(
 				unsyncByteArrayOutputStream)) {
 
-			streamOutput.writeBoolean(false);
-			streamOutput.writeBoolean(false);
-			streamOutput.writeOptionalString(null);
-			streamOutput.writeString(KeyStoreWrapper.class.getName());
-
-			try (KeyStoreWrapper keyStoreWrapper = KeyStoreWrapper.create()) {
-				streamOutput.writeInt(keyStoreWrapper.getFormatVersion());
-				streamOutput.writeBoolean(keyStoreWrapper.hasPassword());
-				streamOutput.writeBoolean(false);
-				streamOutput.writeVInt(1);
-				streamOutput.writeString(KeyStoreWrapper.SEED_SETTING.getKey());
-
-				ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(
-					ElasticsearchServerUtil.class.getSimpleName());
-
-				byte[] bytes = byteBuffer.array();
-
-				MessageDigest messageDigest = MessageDigests.sha256();
-
-				streamOutput.writeByteArray(bytes);
-				streamOutput.writeByteArray(messageDigest.digest(bytes));
-				streamOutput.writeBoolean(false);
-			}
-
-			Method method = ReflectionUtil.getDeclaredMethod(
-				LogConfigurator.class, "configureESLogging");
-
-			method.invoke(null);
+			LogConfigurator.configureESLogging();
 
 			Settings.Builder builder = Settings.builder();
 
-			builder.loadFromSource(
-				System.getenv("sidecar.settings"), XContentType.JSON);
+			builder.loadFromSource(settingsString, XContentType.JSON);
 
 			Settings settings = builder.build();
 
-			method = ReflectionUtil.getDeclaredMethod(
-				Settings.class, "writeTo", new Class<?>[] {StreamOutput.class});
+			try (KeyStoreWrapper keyStoreWrapper = KeyStoreWrapper.create()) {
+				ServerArgs serverArgs = new ServerArgs(
+					false, false, null, keyStoreWrapper, settings,
+					Path.of(System.getProperty("es.path.conf")),
+					Path.of(settings.get("path.logs")));
 
-			method.invoke(settings, streamOutput);
-
-			streamOutput.writeString(System.getProperty("es.path.conf"));
-			streamOutput.writeString(settings.get("path.logs"));
+				serverArgs.writeTo(streamOutput);
+			}
 
 			streamOutput.flush();
 

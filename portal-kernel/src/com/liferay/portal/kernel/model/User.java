@@ -406,3 +406,4 @@ public interface User extends PersistedModel, UserModel {
 	public void setUserGroupIds(long[] userGroupIds);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:900785891

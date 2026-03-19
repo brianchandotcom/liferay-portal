@@ -355,3 +355,4 @@ public class TicketLocalServiceUtil {
 	private static volatile TicketLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:646365471

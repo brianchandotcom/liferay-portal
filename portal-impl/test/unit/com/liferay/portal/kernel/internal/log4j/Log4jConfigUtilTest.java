@@ -70,6 +70,7 @@ public class Log4jConfigUtilTest {
 				Mockito.mockStatic(PortalInstancePool.class);
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
+
 			PrintStream printStream = new PrintStream(byteArrayOutputStream)) {
 
 			System.setOut(printStream);

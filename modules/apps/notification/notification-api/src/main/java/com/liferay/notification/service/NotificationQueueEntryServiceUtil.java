@@ -78,3 +78,4 @@ public class NotificationQueueEntryServiceUtil {
 			NotificationQueueEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1143829872

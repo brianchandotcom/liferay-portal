@@ -21,6 +21,7 @@ public class KaleoActionUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select kaleoActionId, script from KaleoAction where script " +
 					"like '%WorkflowConstants.toStatus(%'");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

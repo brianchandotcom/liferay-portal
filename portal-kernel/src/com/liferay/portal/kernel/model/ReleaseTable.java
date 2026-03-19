@@ -53,3 +53,4 @@ public class ReleaseTable extends BaseTable<ReleaseTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-869631349

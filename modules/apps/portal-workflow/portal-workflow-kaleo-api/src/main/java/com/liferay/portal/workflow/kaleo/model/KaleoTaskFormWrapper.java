@@ -740,3 +740,4 @@ public class KaleoTaskFormWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-445575884

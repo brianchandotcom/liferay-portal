@@ -384,3 +384,4 @@ public class ObjectLayoutRowWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1980097994

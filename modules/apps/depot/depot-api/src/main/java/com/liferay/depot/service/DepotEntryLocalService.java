@@ -316,7 +316,7 @@ public interface DepotEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getDepotEntryGroupIds(
-		long companyId, long userId, int type, boolean userGroupsOnly);
+		long companyId, long userId, int type, boolean dynamicInheritanceOnly);
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
@@ -401,3 +401,4 @@ public interface DepotEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-109196086

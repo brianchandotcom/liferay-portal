@@ -61,3 +61,4 @@ public interface JournalFolder
 	public boolean isRoot();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:565683259

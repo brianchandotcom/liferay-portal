@@ -121,8 +121,10 @@ public class SearchPortletUpgradeProcessTest {
 
 	private int _count(String sql) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				sql);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();

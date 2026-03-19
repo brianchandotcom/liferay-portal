@@ -46,3 +46,4 @@ public class CPInstanceOptionValueRelServiceUtil {
 			CPInstanceOptionValueRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:521048821

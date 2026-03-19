@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.util.MethodHandler;
 
 import org.osgi.annotation.versioning.ProviderType;

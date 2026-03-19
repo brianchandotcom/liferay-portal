@@ -556,3 +556,4 @@ public class FragmentEntryLinkCacheModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-490799766

@@ -541,3 +541,4 @@ public class ERCGroupEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:386865460

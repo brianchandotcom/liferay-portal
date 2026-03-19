@@ -210,6 +210,7 @@ public class MethodKeyTest {
 					new UnsyncByteArrayInputStream(
 						unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
 						unsyncByteArrayOutputStream.size());
+
 				ObjectInputStream objectInputStream = new ObjectInputStream(
 					unsyncByteArrayInputStream)) {
 

@@ -112,3 +112,4 @@ public class RatingsStatsModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2090741422

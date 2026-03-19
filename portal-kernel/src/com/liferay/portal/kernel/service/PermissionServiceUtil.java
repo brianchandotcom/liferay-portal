@@ -74,3 +74,4 @@ public class PermissionServiceUtil {
 	private static volatile PermissionService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-801068601

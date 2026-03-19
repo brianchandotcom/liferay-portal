@@ -52,3 +52,4 @@ public interface AssetTagGroupRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1780928832

@@ -1,0 +1,20 @@
+buildService {
+	apiDir = "../portal-tools-service-builder-test-compat740-api/src/main/java"
+
+	doFirst {
+		if (!System.getenv("JENKINS_HOME") &&
+			!project.hasProperty("build.service.compat")) {
+
+			println "${project.path}:buildService SKIPPED"
+			println "    This is a compatibility test module that guards against unintended changes to older Service Builder outputs."
+			println "    To regenerate locally, run: gradlew ${project.path}:buildService -Pbuild.service.compat"
+
+			throw new StopExecutionException()
+		}
+	}
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.4.3.132"
+	compileOnly project(":util:portal-tools-service-builder-test-compat740-api")
+}

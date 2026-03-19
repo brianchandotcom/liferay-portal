@@ -105,3 +105,4 @@ public interface LocalizedEntryModel extends BaseModel<LocalizedEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1212442485

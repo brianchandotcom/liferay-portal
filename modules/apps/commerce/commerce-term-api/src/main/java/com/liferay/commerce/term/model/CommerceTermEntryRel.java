@@ -52,3 +52,4 @@ public interface CommerceTermEntryRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-656683390

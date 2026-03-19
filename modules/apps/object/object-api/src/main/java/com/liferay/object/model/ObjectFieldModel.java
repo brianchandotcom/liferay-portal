@@ -627,3 +627,4 @@ public interface ObjectFieldModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1896763938

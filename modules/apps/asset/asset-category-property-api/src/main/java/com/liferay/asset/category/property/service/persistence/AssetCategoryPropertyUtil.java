@@ -969,3 +969,4 @@ public class AssetCategoryPropertyUtil {
 	private static volatile AssetCategoryPropertyPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:491226126

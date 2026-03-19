@@ -352,3 +352,4 @@ public class CTCollectionTemplateWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-336807331

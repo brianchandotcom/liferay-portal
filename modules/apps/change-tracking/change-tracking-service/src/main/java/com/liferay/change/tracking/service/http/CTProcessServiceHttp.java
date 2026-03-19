@@ -174,3 +174,4 @@ public class CTProcessServiceHttp {
 		new Class[] {long.class, long.class, String.class, int.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1430446439

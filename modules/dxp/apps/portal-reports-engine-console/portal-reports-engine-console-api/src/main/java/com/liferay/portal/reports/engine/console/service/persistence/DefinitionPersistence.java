@@ -849,3 +849,4 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:373179404

@@ -158,3 +158,4 @@ public class MicroblogsEntryServiceWrapper
 	private MicroblogsEntryService _microblogsEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-711097712

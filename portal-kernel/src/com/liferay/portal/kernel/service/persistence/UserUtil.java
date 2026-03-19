@@ -3984,3 +3984,4 @@ public class UserUtil {
 	private static volatile UserPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-779990229

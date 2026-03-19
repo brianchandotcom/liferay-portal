@@ -352,3 +352,4 @@ public class LaunchSetLocalServiceUtil {
 			LaunchSetLocalServiceUtil.class, LaunchSetLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-601942292

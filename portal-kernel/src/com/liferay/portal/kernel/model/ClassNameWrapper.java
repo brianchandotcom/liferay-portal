@@ -175,3 +175,4 @@ public class ClassNameWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1702533026

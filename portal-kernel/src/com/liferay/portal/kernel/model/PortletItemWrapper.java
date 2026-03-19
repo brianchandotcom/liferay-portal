@@ -412,3 +412,4 @@ public class PortletItemWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-961118277

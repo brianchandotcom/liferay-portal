@@ -46,3 +46,4 @@ public class TrashVersionTable extends BaseTable<TrashVersionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-556301345

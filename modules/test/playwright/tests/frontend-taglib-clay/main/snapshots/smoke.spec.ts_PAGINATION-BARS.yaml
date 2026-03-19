@@ -1,0 +1,34 @@
+-   tabpanel "Pagination Bars":
+    -   blockquote:
+        -   paragraph: A pagination bar provides navigation through datasets.
+    -   heading "Default" [level=3]
+    -   combobox "Items Per Page"
+    -   text: /Showing 1 - \d+ of \d+/
+    -   navigation "Pagination":
+        -   list:
+            -   listitem
+            -   listitem: "1"
+            -   listitem: "2"
+            -   listitem: "3"
+            -   listitem: "4"
+            -   listitem:
+                -   button "Show pages 5 through 9"
+            -   listitem: /\d+/
+            -   listitem:
+                -   button "Go to the next page, 2"
+    -   heading "Without DropDown" [level=3]
+    -   text: /Showing \d+ - \d+ of \d+/
+    -   navigation "Pagination":
+        -   list:
+            -   listitem:
+                -   button "Go to the previous page, 3"
+            -   listitem: "1"
+            -   listitem: "2"
+            -   listitem: "3"
+            -   listitem: "4"
+            -   listitem: "5"
+            -   listitem: "6"
+            -   listitem: "7"
+            -   listitem: "8"
+            -   listitem:
+                -   button "Go to the next page, 5"

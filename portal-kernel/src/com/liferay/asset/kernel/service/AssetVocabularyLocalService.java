@@ -504,3 +504,4 @@ public interface AssetVocabularyLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1095472505

@@ -416,3 +416,4 @@ public class CommerceOrderPaymentLocalServiceWrapper
 	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-826841287

@@ -834,3 +834,4 @@ public class ObjectEntryFolderServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:446815518

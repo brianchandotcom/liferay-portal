@@ -60,3 +60,4 @@ public class ClassNameServiceWrapper
 	private ClassNameService _classNameService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-96713285

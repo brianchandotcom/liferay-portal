@@ -49,3 +49,4 @@ public interface PortalPreferences
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:161219955

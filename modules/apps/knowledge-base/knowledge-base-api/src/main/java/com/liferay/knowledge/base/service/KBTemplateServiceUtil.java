@@ -109,3 +109,4 @@ public class KBTemplateServiceUtil {
 		new Snapshot<>(KBTemplateServiceUtil.class, KBTemplateService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1364571248

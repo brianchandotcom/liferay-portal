@@ -78,3 +78,4 @@ public interface LayoutSetPrototype
 			settingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1416426795

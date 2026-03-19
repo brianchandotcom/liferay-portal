@@ -153,3 +153,4 @@ public interface PasswordPolicyRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1855012376

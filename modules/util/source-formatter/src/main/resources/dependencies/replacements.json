@@ -80,6 +80,27 @@
 	},
 	{
 		"classNames": [
+			"BaseModelListener"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-7865",
+		"methodsToFormat": [
+			{
+				"from": "regex:\\((?<paramType>[\\S]*?)\\s*(?<paramName>[\\S]*?)\\)(?<methodContent>\\s*\\{[\\s\\S]*?)(?<methodCall>super.onAfterUpdate|onBeforeUpdate)\\([\\S]*?\\);",
+				"to": "(${paramType} ${paramName})${methodContent}${methodCall}((${paramType})${paramName}.clone(), ${paramName});"
+			},
+			{
+				"from": "regex:(?<methodDeclaration>public\\s*void\\s*(onAfterUpdate|onBeforeUpdate))\\((?<paramType>[\\S]*)\\s*(?<paramName>[\\S]*)\\)",
+				"to": "${methodDeclaration}(${paramType} original${paramName}, ${paramType} ${paramName})"
+			},
+			{
+				"from": "regex:(?<methodDeclaration>public\\s*void\\s*(onAfterUpdate|onBeforeUpdate)\\(\\w\\s*(?<paramOriginalModel>\\S*),\\s*\\w\\s*(?<paramModel>\\S*)\\)\\s*)(?<methodContent>\\{(?:(?!public|private|protected|@|\\}\\s*$)[\\s\\S])*?)(?<methodCall>super.onAfterUpdate|onBeforeUpdate)\\(\\(\\w\\)[\\s\\S]*?\\);",
+				"to": "${methodDeclaration}${methodContent}${methodCall}(${paramOriginalModel}, ${paramModel});"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"BasePanelApp"
 		],
 		"classStructurePattern": true,
@@ -252,6 +273,15 @@
 				"from": "regex:@Override\\s*@Reference\\s*\\(\\s*target\\s*=\\s*\"(?<target>[^\"]*)\",[\\s\\S]*?\\)\\s*public\\s+void\\s+setServletContext\\(ServletContext\\s+servletContext\\)\\s*\\{[\\s\\S]*?\\}",
 				"to": "@Reference(\n\t\ttarget = \"${target}\"\n\t)\n\tprivate ServletContext _servletContext;\n\n\t@Override\n\tpublic ServletContext getServletContext() {\n\t\treturn _servletContext;\n\t}"
 			}
+		]
+	},
+	{
+		"classNames": [
+			"SchedulerEntry"
+		],
+		"issueKey": "LPD-8091",
+		"removeImplements": [
+			"StorageTypeAware"
 		]
 	},
 	{
@@ -5286,6 +5316,14 @@
 		"from": "getSiteMapManager(long paramName, boolean paramName, ThemeDisplay paramName)",
 		"issueKey": "LPD-59820",
 		"to": "getSitemap(param#0#, param#1#, param#2#)"
+	},
+	{
+		"from": "regex:(?<variableName>\\w+)\\.getParameter\\((?<nameAttribute>\\w*)\\)",
+		"issueKey": "LPD-59929",
+		"newImports": [
+			"com.liferay.portal.kernel.util.HttpComponentsUtil"
+		],
+		"to": "HttpComponentsUtil.getParameter(HttpComponentsUtil.getRequestURL(${variableName}), ${nameAttribute})"
 	},
 	{
 		"classNames": [

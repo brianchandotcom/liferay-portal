@@ -376,3 +376,4 @@ public class NestedSetsTreeEntryLocalServiceWrapper
 	private NestedSetsTreeEntryLocalService _nestedSetsTreeEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1024704378

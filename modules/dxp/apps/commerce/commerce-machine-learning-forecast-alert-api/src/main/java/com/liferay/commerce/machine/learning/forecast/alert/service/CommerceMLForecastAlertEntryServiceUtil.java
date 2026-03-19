@@ -112,3 +112,4 @@ public class CommerceMLForecastAlertEntryServiceUtil {
 			CommerceMLForecastAlertEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1158038783

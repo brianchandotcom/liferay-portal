@@ -451,3 +451,4 @@ public class BatchEngineImportTaskServiceHttp {
 		new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:751024603

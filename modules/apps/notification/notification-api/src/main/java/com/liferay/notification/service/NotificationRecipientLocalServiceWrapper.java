@@ -425,3 +425,4 @@ public class NotificationRecipientLocalServiceWrapper
 		_notificationRecipientLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2009132914

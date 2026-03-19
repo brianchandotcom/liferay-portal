@@ -155,17 +155,19 @@ public class PortletPreferencesModelListener
 				}
 
 				if (layout.isDraftLayout()) {
+					long userId = layout.getUserId();
+
 					ServiceContext serviceContext =
 						ServiceContextThreadLocal.getServiceContext();
 
 					if ((serviceContext != null) &&
-						(serviceContext.getUserId() == 0)) {
+						(serviceContext.getUserId() != 0)) {
 
-						serviceContext.setUserId(layout.getUserId());
+						userId = serviceContext.getUserId();
 					}
 
 					_layoutLocalService.updateStatus(
-						serviceContext.getUserId(), layout.getPlid(),
+						userId, layout.getPlid(),
 						WorkflowConstants.STATUS_DRAFT, serviceContext);
 				}
 				else {

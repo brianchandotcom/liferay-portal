@@ -27,6 +27,7 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select externalReferenceCode, clientExtensionEntryId from " +
 					"ClientExtensionEntry")) {
@@ -72,6 +73,7 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 		List<String[]> portletIds = new ArrayList<>();
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select externalReferenceCode, companyId from " +
 					"ClientExtensionEntry")) {

@@ -561,3 +561,4 @@ public class CPConfigurationListServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:12592093

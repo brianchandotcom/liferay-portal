@@ -595,3 +595,4 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 			CommerceInventoryWarehouseItemLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1896607626

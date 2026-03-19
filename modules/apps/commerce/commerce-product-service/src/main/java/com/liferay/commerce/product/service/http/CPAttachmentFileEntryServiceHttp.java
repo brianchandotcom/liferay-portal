@@ -673,3 +673,4 @@ public class CPAttachmentFileEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1202935469

@@ -723,3 +723,4 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 		DLFileEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1333830032

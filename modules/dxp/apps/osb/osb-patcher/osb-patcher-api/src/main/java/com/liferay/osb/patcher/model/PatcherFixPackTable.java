@@ -67,3 +67,4 @@ public class PatcherFixPackTable extends BaseTable<PatcherFixPackTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1493400655

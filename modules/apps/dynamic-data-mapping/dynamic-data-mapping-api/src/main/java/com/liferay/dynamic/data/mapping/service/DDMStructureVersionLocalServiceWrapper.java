@@ -434,3 +434,4 @@ public class DDMStructureVersionLocalServiceWrapper
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-691255162

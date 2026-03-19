@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.internal.util.DDMFormRuleValidatorUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.HashSet;
@@ -122,6 +123,12 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 				for (DDMFormLayoutColumn ddmFormLayoutColumn :
 						ddmFormLayoutRow.getDDMFormLayoutColumns()) {
 
+					if (ListUtil.isEmpty(
+							ddmFormLayoutColumn.getDDMFormFieldNames())) {
+
+						continue;
+					}
+
 					int columnSize = ddmFormLayoutColumn.getSize();
 
 					if ((columnSize <= 0) || (columnSize > _MAX_ROW_SIZE)) {
@@ -131,7 +138,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 					rowSize += ddmFormLayoutColumn.getSize();
 				}
 
-				if (rowSize != _MAX_ROW_SIZE) {
+				if (rowSize > _MAX_ROW_SIZE) {
 					throw new InvalidRowSize();
 				}
 			}

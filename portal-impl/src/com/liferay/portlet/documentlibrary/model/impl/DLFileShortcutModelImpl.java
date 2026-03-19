@@ -1520,3 +1520,4 @@ public class DLFileShortcutModelImpl
 	private DLFileShortcut _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:685103644

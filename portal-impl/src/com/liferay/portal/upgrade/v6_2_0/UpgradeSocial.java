@@ -190,6 +190,7 @@ public class UpgradeSocial extends UpgradeProcess {
 					connection.prepareStatement(
 						"select activityId, activitySetId from " +
 							"SO_SocialActivity");
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

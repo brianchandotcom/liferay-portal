@@ -107,3 +107,4 @@ public class BatchEngineImportTaskTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-669000055

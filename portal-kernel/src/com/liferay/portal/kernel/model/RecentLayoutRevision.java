@@ -51,3 +51,4 @@ public interface RecentLayoutRevision
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1769011126

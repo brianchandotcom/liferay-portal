@@ -202,3 +202,4 @@ public class CommerceDiscountCommerceAccountGroupRelCacheModel
 	public long commerceAccountGroupId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:952076650

@@ -1872,3 +1872,4 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 				BigDecimalEntry> bigDecimalEntries);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1098508233

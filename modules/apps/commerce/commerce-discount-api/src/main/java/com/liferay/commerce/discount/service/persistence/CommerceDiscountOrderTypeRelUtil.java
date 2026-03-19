@@ -1098,3 +1098,4 @@ public class CommerceDiscountOrderTypeRelUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-579625743

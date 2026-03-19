@@ -46,3 +46,4 @@ public class CTPreferencesTable extends BaseTable<CTPreferencesTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1434131916

@@ -199,3 +199,4 @@ public interface PatcherFixComponentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1673190671

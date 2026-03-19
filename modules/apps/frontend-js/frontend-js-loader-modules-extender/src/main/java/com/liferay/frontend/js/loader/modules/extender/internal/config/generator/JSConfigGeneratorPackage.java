@@ -332,6 +332,7 @@ public class JSConfigGeneratorPackage {
 		}
 
 		try (InputStream inputStream = url.openStream();
+
 			Reader reader = new InputStreamReader(inputStream)) {
 
 			JSONTokener jsonTokener = new JSONTokener(reader);

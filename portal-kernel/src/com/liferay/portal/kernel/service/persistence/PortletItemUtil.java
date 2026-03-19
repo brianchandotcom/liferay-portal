@@ -741,3 +741,4 @@ public class PortletItemUtil {
 	private static volatile PortletItemPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:785034851

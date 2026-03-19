@@ -31,3 +31,4 @@ public class TestEntityTable extends BaseTable<TestEntityTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1770398669

@@ -534,3 +534,4 @@ public class SamlSpAuthRequestUtil {
 	private static volatile SamlSpAuthRequestPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:463505354

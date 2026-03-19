@@ -361,3 +361,4 @@ public interface PasswordPolicyLocalService
 	public PasswordPolicy updatePasswordPolicy(PasswordPolicy passwordPolicy);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1754018081

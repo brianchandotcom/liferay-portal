@@ -57,3 +57,4 @@ public class UserNotificationDeliveryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1231846852

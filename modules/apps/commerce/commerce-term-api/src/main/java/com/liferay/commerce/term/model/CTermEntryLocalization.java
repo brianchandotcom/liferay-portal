@@ -50,3 +50,4 @@ public interface CTermEntryLocalization extends CTermEntryLocalizationModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-531063927

@@ -76,3 +76,4 @@ public class COREntryTable extends BaseTable<COREntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1527446297

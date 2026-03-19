@@ -322,3 +322,4 @@ public class UserIdMapperLocalServiceUtil {
 	private static volatile UserIdMapperLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1727083899

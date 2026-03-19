@@ -33,6 +33,7 @@ public class ConfigurationHandler {
 	public static Object read(String value) throws IOException {
 		try (UnsyncStringReader unsyncStringReader = new UnsyncStringReader(
 				value);
+
 			PushbackReader pushbackReader = new PushbackReader(
 				unsyncStringReader, 1)) {
 

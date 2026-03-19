@@ -484,3 +484,4 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 		CommerceShippingMethodLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:638168838

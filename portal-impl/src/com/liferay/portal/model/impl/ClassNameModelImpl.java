@@ -617,3 +617,4 @@ public class ClassNameModelImpl
 	private ClassName _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-438655885

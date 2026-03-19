@@ -607,3 +607,4 @@ public class CTCommentUtil {
 	private static volatile CTCommentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1769024484

@@ -394,3 +394,4 @@ public interface SourceModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1595452330

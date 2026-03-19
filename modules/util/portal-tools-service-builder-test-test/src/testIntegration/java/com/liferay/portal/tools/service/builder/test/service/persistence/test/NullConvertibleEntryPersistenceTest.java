@@ -494,3 +494,4 @@ public class NullConvertibleEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-671830849

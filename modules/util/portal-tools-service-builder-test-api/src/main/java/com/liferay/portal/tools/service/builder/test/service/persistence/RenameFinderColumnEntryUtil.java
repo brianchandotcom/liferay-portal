@@ -355,3 +355,4 @@ public class RenameFinderColumnEntryUtil {
 	private static volatile RenameFinderColumnEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1557345340

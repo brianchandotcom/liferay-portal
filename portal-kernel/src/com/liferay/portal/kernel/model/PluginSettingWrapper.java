@@ -340,3 +340,4 @@ public class PluginSettingWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-262149758

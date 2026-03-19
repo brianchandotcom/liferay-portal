@@ -5,10 +5,10 @@
 
 package com.liferay.portal.modules.util;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -81,6 +81,7 @@ public class ModulesStructureTestUtil {
 		throws IOException {
 
 		try (FileReader fileReader = new FileReader(path.toFile());
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(fileReader)) {
 

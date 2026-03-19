@@ -578,3 +578,4 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 		_layoutClassedModelUsageLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-407308880

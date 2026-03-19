@@ -52,3 +52,4 @@ public interface CPConfigurationListRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-43123511

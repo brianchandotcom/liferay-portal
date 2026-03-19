@@ -331,3 +331,4 @@ public interface OAuth2AuthorizationModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1163386414

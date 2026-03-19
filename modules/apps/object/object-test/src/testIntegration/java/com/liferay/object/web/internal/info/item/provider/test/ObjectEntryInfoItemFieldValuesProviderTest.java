@@ -10,10 +10,13 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.KeyLocalizedLabelPair;
+import com.liferay.info.type.WebImage;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -145,7 +148,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				"attachmentObjectFieldName"
 			).objectFieldSettings(
 				Arrays.asList(
-					_createObjectFieldSetting("acceptedFileExtensions", "txt"),
+					_createObjectFieldSetting("acceptedFileExtensions", "png"),
 					_createObjectFieldSetting(
 						"fileSource", "documentsAndMedia"),
 					_createObjectFieldSetting("maximumFileSize", "100"))
@@ -205,8 +208,9 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 	public void testObjectEntryInfoItemFieldValuesProvider() throws Exception {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.txt",
-			ContentTypes.TEXT, RandomTestUtil.randomBytes(), null, null, null,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.png",
+			ContentTypes.IMAGE_PNG, RandomTestUtil.randomBytes(), null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		LocalDateTime localDateTime = LocalDateTime.of(2026, 1, 1, 23, 30);
@@ -413,6 +417,44 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 						String.valueOf(downloadURLInfoFieldValue.getValue()),
 						"doAsUserId", false));
 			}
+
+			InfoFieldValue<Object> fileURLInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(
+					objectField.getObjectFieldId() + "#fileURL");
+
+			Assert.assertTrue(
+				fileURLInfoFieldValue.getValue() instanceof WebImage);
+
+			WebImage webImage = (WebImage)fileURLInfoFieldValue.getValue();
+
+			InfoItemReference infoItemReference =
+				webImage.getInfoItemReference();
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
+			Assert.assertEquals(
+				fileEntry.getFileEntryId(),
+				classPKInfoItemIdentifier.getClassPK());
+
+			Assert.assertEquals(
+				HttpComponentsUtil.removeParameter(
+					_dlURLHelper.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), themeDisplay,
+						StringPool.BLANK),
+					"t"),
+				HttpComponentsUtil.removeParameter(webImage.getURL(), "t"));
+
+			InfoFieldValue<Object> previewURLInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(
+					objectField.getObjectFieldId() + "#previewURL");
+
+			Assert.assertEquals(
+				_dlURLHelper.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), themeDisplay,
+					StringPool.BLANK),
+				previewURLInfoFieldValue.getValue());
 
 			_assertInfoFieldValue(
 				"#fileName", infoItemFieldValues, objectField,

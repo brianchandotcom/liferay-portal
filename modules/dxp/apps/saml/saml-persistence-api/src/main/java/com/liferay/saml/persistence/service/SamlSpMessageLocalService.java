@@ -276,3 +276,4 @@ public interface SamlSpMessageLocalService
 	public SamlSpMessage updateSamlSpMessage(SamlSpMessage samlSpMessage);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1000820939

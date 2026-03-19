@@ -54,3 +54,4 @@ public interface JournalArticleResource
 	public long getLatestArticlePK();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1422701186

@@ -1498,3 +1498,4 @@ public class FaroProjectModelImpl
 	private FaroProject _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-667493939

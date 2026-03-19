@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.site.cms.site.initializer.internal.util.PermissionUtil;
@@ -135,7 +136,7 @@ public abstract class BaseSectionDisplayContext {
 					getTranslationInfoItemFieldValuesExporters(),
 				this::_getExportFileFormatJSONObject)
 		).put(
-			"availableTargetLocales",
+			"availableLocales",
 			_getLocalesJSONArray(
 				themeDisplay.getLocale(),
 				LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
@@ -514,13 +515,26 @@ public abstract class BaseSectionDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		locales.forEach(
-			currentLocale -> jsonArray.put(
-				JSONUtil.put(
-					"displayName",
-					LocaleUtil.getLocaleDisplayName(currentLocale, locale)
-				).put(
-					"languageId", LocaleUtil.toLanguageId(currentLocale)
-				)));
+			currentLocale -> {
+				String w3cLanguageId = LocaleUtil.toW3cLanguageId(
+					currentLocale);
+
+				jsonArray.put(
+					JSONUtil.put(
+						"displayName",
+						LocaleUtil.getLocaleDisplayName(currentLocale, locale)
+					).put(
+						"id", LocaleUtil.toLanguageId(currentLocale)
+					).put(
+						"label", w3cLanguageId
+					).put(
+						"languageId", LocaleUtil.toLanguageId(currentLocale)
+					).put(
+						"name", currentLocale.getDisplayName()
+					).put(
+						"symbol", StringUtil.toLowerCase(w3cLanguageId)
+					));
+			});
 
 		return jsonArray;
 	}

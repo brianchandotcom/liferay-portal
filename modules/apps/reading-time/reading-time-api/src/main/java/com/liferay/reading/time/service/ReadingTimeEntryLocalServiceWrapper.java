@@ -523,3 +523,4 @@ public class ReadingTimeEntryLocalServiceWrapper
 	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1815950438

@@ -26,6 +26,7 @@ public class SamlSpIdpConnectionDataUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select samlSpIdpConnectionId, userAttributeMappings from " +
 					"SamlSpIdpConnection")) {

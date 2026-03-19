@@ -9,7 +9,7 @@
 	<clay:button
 		aria-label='<%= LanguageUtil.get(request, "go-to-other-site") %>'
 		borderless="<%= true %>"
-		cssClass="lfr-portal-tooltip text-white"
+		cssClass="lfr-portal-tooltip"
 		displayType="secondary"
 		icon="sites"
 		id='<%= liferayPortletResponse.getNamespace() + "manageSitesLink" %>'

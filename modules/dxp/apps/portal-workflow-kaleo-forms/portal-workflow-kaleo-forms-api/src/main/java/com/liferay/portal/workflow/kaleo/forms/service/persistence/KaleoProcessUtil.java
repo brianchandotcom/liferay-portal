@@ -997,3 +997,4 @@ public class KaleoProcessUtil {
 	private static volatile KaleoProcessPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1126846785

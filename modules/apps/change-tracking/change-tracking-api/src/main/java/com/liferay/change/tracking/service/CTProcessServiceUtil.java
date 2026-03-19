@@ -70,3 +70,4 @@ public class CTProcessServiceUtil {
 		new Snapshot<>(CTProcessServiceUtil.class, CTProcessService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-275490895

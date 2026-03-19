@@ -460,3 +460,4 @@ public class ChangesetEntryLocalServiceWrapper
 	private ChangesetEntryLocalService _changesetEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-236575965

@@ -6,6 +6,7 @@
 package com.liferay.marketplace.service;
 
 import com.liferay.headless.admin.user.client.custom.field.CustomField;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
@@ -30,8 +31,10 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -175,7 +178,7 @@ public class KoroneikiService {
 			productPurchase);
 	}
 
-	public void postAccountAccountKeyProductPurchase(
+	public ProductPurchase postAccountAccountKeyProductPurchase(
 			String accountKey, Jwt jwt, String licenseType,
 			String licenseUsageType, OrderItem orderItem)
 		throws Exception {
@@ -225,6 +228,55 @@ public class KoroneikiService {
 		if (_log.isInfoEnabled()) {
 			_log.info("Created account product purchase " + productPurchase);
 		}
+
+		return productPurchase;
+	}
+
+	public ProductPurchase[] postAccountProductPurchases(
+			Jwt jwt, String licenseType, Order order)
+		throws Exception {
+
+		String accountExternalReferenceCode =
+			order.getAccountExternalReferenceCode();
+
+		if (!accountExternalReferenceCode.startsWith("KOR-")) {
+			com.liferay.headless.admin.user.client.resource.v1_0.AccountResource
+				accountResource = _marketplaceService.getAccountResource();
+
+			com.liferay.headless.admin.user.client.dto.v1_0.Account account =
+				accountResource.getAccount(order.getAccountId());
+
+			accountResource.patchAccount(
+				account.getId(),
+				new com.liferay.headless.admin.user.client.dto.v1_0.Account() {
+					{
+						setExternalReferenceCode(
+							() -> postKoroneikiAccount(
+								account, jwt
+							).getKey());
+					}
+				});
+		}
+
+		List<ProductPurchase> productPurchases = new ArrayList<>();
+
+		try {
+			for (OrderItem orderItem : order.getOrderItems()) {
+				ProductPurchase productPurchase =
+					postAccountAccountKeyProductPurchase(
+						accountExternalReferenceCode, jwt, licenseType,
+						MarketplaceUtil.getSkuOptionValue(
+							"license-usage-type", orderItem.getOptions()),
+						orderItem);
+
+				productPurchases.add(productPurchase);
+			}
+		}
+		catch (Exception exception) {
+			_log.error("Unable to create account product purchase", exception);
+		}
+
+		return productPurchases.toArray(new ProductPurchase[0]);
 	}
 
 	public Account postKoroneikiAccount(

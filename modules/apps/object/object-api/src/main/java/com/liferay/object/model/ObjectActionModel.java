@@ -598,3 +598,4 @@ public interface ObjectActionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1427334243

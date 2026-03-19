@@ -90,3 +90,4 @@ public class SegmentsExperienceTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-307977738

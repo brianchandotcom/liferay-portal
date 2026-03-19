@@ -63,3 +63,4 @@ public class UserNotificationEventServiceUtil {
 	private static volatile UserNotificationEventService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:525772599

@@ -621,3 +621,4 @@ public class SocialActivityWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1378605271

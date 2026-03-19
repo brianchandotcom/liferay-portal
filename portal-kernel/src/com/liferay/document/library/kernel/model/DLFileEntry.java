@@ -122,3 +122,4 @@ public interface DLFileEntry
 			extraSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:978159339

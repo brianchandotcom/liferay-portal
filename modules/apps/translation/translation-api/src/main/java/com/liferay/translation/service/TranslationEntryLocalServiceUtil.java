@@ -445,3 +445,4 @@ public class TranslationEntryLocalServiceUtil {
 			TranslationEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1138737562

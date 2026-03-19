@@ -222,3 +222,4 @@ public class SavedContentEntryCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1261291949

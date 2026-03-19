@@ -10,8 +10,8 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -41,6 +41,7 @@ public class CounterDataCleanupPreupgradeProcess
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select name, currentId from Counter");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			DBInspector dbInspector = new DBInspector(connection);
@@ -306,6 +307,7 @@ public class CounterDataCleanupPreupgradeProcess
 					connection.prepareStatement(
 						StringBundler.concat(
 							"select ", columnName, " from ", tableName));
+
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {
@@ -332,6 +334,7 @@ public class CounterDataCleanupPreupgradeProcess
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select max(", columnName, ") from ", tableName));
+
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			if (resultSet.next()) {

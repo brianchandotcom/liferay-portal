@@ -240,6 +240,7 @@ public class DBPartitionUtil {
 					"select configurationId from ", getPartitionName(companyId),
 					".Configuration_ where dictionary like ",
 					"'%org.apache.felix.configadmin.revision%'"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -265,6 +266,7 @@ public class DBPartitionUtil {
 				StringBundler.concat(
 					"select configurationId, dictionary from ",
 					getPartitionName(companyId), ".Configuration_"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Map<String, String> configurations = new HashMap<>();

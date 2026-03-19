@@ -78,3 +78,4 @@ public class ExportImportConfigurationTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2105516035

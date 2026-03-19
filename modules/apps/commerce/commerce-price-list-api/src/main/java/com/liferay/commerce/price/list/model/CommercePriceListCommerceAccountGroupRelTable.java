@@ -76,3 +76,4 @@ public class CommercePriceListCommerceAccountGroupRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:249097670

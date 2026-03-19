@@ -1741,3 +1741,4 @@ public class CommercePriceModifierModelImpl
 	private CommercePriceModifier _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:988956159

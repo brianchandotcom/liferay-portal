@@ -189,3 +189,4 @@ public class KBFolderServiceWrapper
 	private KBFolderService _kbFolderService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:431832831

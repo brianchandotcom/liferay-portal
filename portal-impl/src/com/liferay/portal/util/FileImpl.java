@@ -5,13 +5,14 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.util.FileComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
@@ -761,6 +761,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	@Override
 	public void unzip(File source, File destination) {
 		try (InputStream inputStream = new FileInputStream(source);
+
 			ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
 
 			ZipEntry entry = null;

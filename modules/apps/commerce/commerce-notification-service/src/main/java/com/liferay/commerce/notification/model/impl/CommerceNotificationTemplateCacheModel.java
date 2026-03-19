@@ -397,3 +397,4 @@ public class CommerceNotificationTemplateCacheModel
 	public String body;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-914538634

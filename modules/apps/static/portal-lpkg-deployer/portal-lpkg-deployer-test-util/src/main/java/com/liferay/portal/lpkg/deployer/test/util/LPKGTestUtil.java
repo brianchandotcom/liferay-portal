@@ -5,15 +5,14 @@
 
 package com.liferay.portal.lpkg.deployer.test.util;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.StreamUtil;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.nio.file.Path;
 
@@ -125,11 +124,10 @@ public class LPKGTestUtil {
 					StringBundler.concat(
 						symbolicName, "-", jarVersion, ".jar")));
 
-			try (InputStream inputStream = createJAR(symbolicName, jarVersion);
-				OutputStream outputStream = StreamUtil.uncloseable(
-					zipOutputStream)) {
+			try (InputStream inputStream = createJAR(
+					symbolicName, jarVersion)) {
 
-				StreamUtil.transfer(inputStream, outputStream);
+				StreamUtil.transfer(inputStream, zipOutputStream, false);
 			}
 
 			zipOutputStream.closeEntry();
@@ -138,11 +136,8 @@ public class LPKGTestUtil {
 				zipOutputStream.putNextEntry(
 					new ZipEntry(symbolicName.concat("-war-1.0.0.war")));
 
-				try (InputStream inputStream = createWAR(symbolicName);
-					OutputStream outputStream = StreamUtil.uncloseable(
-						zipOutputStream)) {
-
-					StreamUtil.transfer(inputStream, outputStream);
+				try (InputStream inputStream = createWAR(symbolicName)) {
+					StreamUtil.transfer(inputStream, zipOutputStream, false);
 				}
 			}
 		}

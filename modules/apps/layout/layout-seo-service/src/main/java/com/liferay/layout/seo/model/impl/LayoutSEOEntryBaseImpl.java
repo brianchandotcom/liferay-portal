@@ -39,3 +39,4 @@ public abstract class LayoutSEOEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:894594570

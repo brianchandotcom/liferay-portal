@@ -679,3 +679,4 @@ public class ObjectStateFlowUtil {
 	private static volatile ObjectStateFlowPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:870348687

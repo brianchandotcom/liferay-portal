@@ -942,3 +942,4 @@ public class DepotEntryModelImpl
 	private DepotEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1152247172

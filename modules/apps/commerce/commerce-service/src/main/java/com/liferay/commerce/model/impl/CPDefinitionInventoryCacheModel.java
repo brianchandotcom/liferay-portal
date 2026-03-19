@@ -327,3 +327,4 @@ public class CPDefinitionInventoryCacheModel
 	public BigDecimal multipleOrderQuantity;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:78813917

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.index.ConcurrentReindexManager;
 import com.liferay.portal.search.index.SyncReindexManager;
@@ -77,28 +76,26 @@ public class ReindexPortalBackgroundTaskExecutor
 		List<Future<?>> futures = new ArrayList<>();
 
 		try (SafeCloseable safeCloseable1 = SearchContext.openBatchMode()) {
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					List<Indexer<?>> indexers = _serviceTrackerMap.getService(
-						companyId == CompanyConstants.SYSTEM);
+			for (long companyId : companyIds) {
+				List<Indexer<?>> indexers = _serviceTrackerMap.getService(
+					companyId == CompanyConstants.SYSTEM);
 
-					futures.add(
-						executorService.submit(
-							() -> {
-								try (SafeCloseable safeCloseable2 =
-										BackgroundTaskThreadLocal.
-											setBackgroundTaskIdWithSafeCloseable(
-												backgroundTaskId)) {
+				futures.add(
+					executorService.submit(
+						() -> {
+							try (SafeCloseable safeCloseable2 =
+									BackgroundTaskThreadLocal.
+										setBackgroundTaskIdWithSafeCloseable(
+											backgroundTaskId)) {
 
-									_reindexCompany(
-										companyId, companyIds, executionMode,
-										executorService, indexers);
+								_reindexCompany(
+									companyId, companyIds, executionMode,
+									executorService, indexers);
 
-									return null;
-								}
-							}));
-				},
-				companyIds);
+								return null;
+							}
+						}));
+			}
 
 			for (Future<?> future : futures) {
 				future.get();
@@ -157,9 +154,6 @@ public class ReindexPortalBackgroundTaskExecutor
 		_syncReindexManagerSnapshot = new Snapshot<>(
 			ReindexPortalBackgroundTaskExecutor.class, SyncReindexManager.class,
 			null, true);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;

@@ -80,3 +80,4 @@ public interface GroupFinder {
 		long companyId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:382135008

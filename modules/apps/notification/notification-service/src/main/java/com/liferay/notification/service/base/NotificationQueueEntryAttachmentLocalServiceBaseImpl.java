@@ -495,3 +495,4 @@ public abstract class NotificationQueueEntryAttachmentLocalServiceBaseImpl
 		NotificationQueueEntryAttachmentLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1647000328

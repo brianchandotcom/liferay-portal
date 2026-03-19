@@ -130,5 +130,17 @@
 			"en_US": "Solutions - 30 day trial"
 		},
 		"neverExpire": true
+	},
+	{
+		"active": true,
+		"description": {
+			"en_US": "Designates that the order contains a CMP Beta."
+		},
+		"displayOrder": 11,
+		"externalReferenceCode": "CMP_BETA",
+		"name": {
+			"en_US": "CMP Beta"
+		},
+		"neverExpire": true
 	}
 ]

@@ -523,3 +523,4 @@ public class ServiceComponentUtil {
 	private static volatile ServiceComponentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1739904010

@@ -130,3 +130,4 @@ public abstract class CPInstanceUnitOfMeasureServiceBaseImpl
 		CPInstanceUnitOfMeasureServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1207254895

@@ -170,3 +170,4 @@ public class AccountGroupServiceWrapper
 	private AccountGroupService _accountGroupService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2103767622

@@ -672,3 +672,4 @@ public class BookmarksEntryLocalServiceWrapper
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1655111957

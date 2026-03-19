@@ -154,3 +154,4 @@ public class CommerceNotificationTemplateServiceUtil {
 			CommerceNotificationTemplateService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1373076700

@@ -650,7 +650,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
-		if (!jsonObject.getBoolean("classStructurePattern")) {
+		if (!jsonObject.getBoolean("classStructurePattern") &&
+			!jsonObject.has("removeImplements")) {
+
 			return _formatCalls(content, fileName, javaClass, jsonObject);
 		}
 
@@ -671,6 +673,25 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 				return newContent;
 			}
+		}
+
+		if (jsonObject.has("removeImplements")) {
+			String[] removeImplements = null;
+
+			JSONArray removeImplementsJSONArray = jsonObject.getJSONArray(
+				"removeImplements");
+
+			if (removeImplementsJSONArray != null) {
+				removeImplements = JSONUtil.toStringArray(
+					removeImplementsJSONArray);
+			}
+			else {
+				removeImplements = new String[] {
+					jsonObject.getString("removeImplements")
+				};
+			}
+
+			newContent = _removeImplements(newContent, removeImplements);
 		}
 
 		String[] newMethods = JSONUtil.toStringArray(
@@ -1125,6 +1146,44 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		return newContent;
 	}
 
+	private String _removeImplements(String content, String[] interfaceNames) {
+		for (String interfaceName : interfaceNames) {
+			content = content.replaceAll(
+				"import\\s+[^;]+\\." + interfaceName + ";\\s*",
+				StringPool.BLANK);
+		}
+
+		content = content.replaceAll("extends\\s*\\n\\s*", "extends ");
+
+		Matcher matcher = _implementsPattern.matcher(content);
+
+		StringBuilder sb = new StringBuilder();
+
+		while (matcher.find()) {
+			String[] remainingInterfaceNames = ArrayUtil.filter(
+				StringUtil.split(matcher.group(1), StringPool.COMMA),
+				interfaceName -> !ArrayUtil.contains(
+					interfaceNames, interfaceName.trim()));
+
+			String replacement = StringPool.BLANK;
+
+			if (ArrayUtil.isNotEmpty(remainingInterfaceNames)) {
+				replacement = StringBundler.concat(
+					" implements ",
+					StringUtil.merge(
+						remainingInterfaceNames, StringPool.COMMA_AND_SPACE),
+					StringPool.SPACE);
+			}
+
+			matcher.appendReplacement(
+				sb, Matcher.quoteReplacement(replacement));
+		}
+
+		matcher.appendTail(sb);
+
+		return sb.toString();
+	}
+
 	private static final String _CONSTRUCTOR_REGEX =
 		"n?e?w? ?(:?[A-Z][a-z]*)+\\(.*\\)";
 
@@ -1135,6 +1194,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			"([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?:extends\\s+[^\\s]+)?\\s*",
 			"(?:implements\\s+[^\\s]+(?:,\\s+[^\\s]+)*)?\\s*\\{"),
 		Pattern.MULTILINE);
+	private static final Pattern _implementsPattern = Pattern.compile(
+		"\\s*implements\\s+([^{]+)", Pattern.MULTILINE);
 	private static String _issueKey;
 	private static final Pattern _parameterNamePattern = Pattern.compile(
 		"\\w+#(\\d+)#");

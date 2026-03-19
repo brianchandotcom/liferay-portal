@@ -942,3 +942,4 @@ public class CSDiagramEntryUtil {
 	private static volatile CSDiagramEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1500918540

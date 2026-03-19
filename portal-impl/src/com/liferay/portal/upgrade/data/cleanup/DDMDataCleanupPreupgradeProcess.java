@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -230,6 +231,7 @@ public class DDMDataCleanupPreupgradeProcess
 						connection.prepareStatement(
 							"select groupId, parentGroupId from Group_ where " +
 								"parentGroupId != 0");
+
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {
@@ -244,6 +246,7 @@ public class DDMDataCleanupPreupgradeProcess
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							"select groupId, structureKey from DDMStructure");
+
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {
@@ -296,7 +299,8 @@ public class DDMDataCleanupPreupgradeProcess
 				try (PreparedStatement preparedStatement1 =
 						connection.prepareStatement(sql);
 					PreparedStatement preparedStatement2 =
-						connection.prepareStatement(
+						AutoBatchPreparedStatementUtil.autoBatch(
+							connection,
 							"delete from JournalArticle where groupId = ? " +
 								"and DDMStructureKey = ?")) {
 

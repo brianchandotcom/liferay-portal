@@ -4000,3 +4000,4 @@ public class RatingsEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1110714012

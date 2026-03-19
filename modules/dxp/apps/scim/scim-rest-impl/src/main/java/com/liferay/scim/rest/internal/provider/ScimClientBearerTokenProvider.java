@@ -6,8 +6,8 @@
 package com.liferay.scim.rest.internal.provider;
 
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
+import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 
 import java.util.concurrent.TimeUnit;

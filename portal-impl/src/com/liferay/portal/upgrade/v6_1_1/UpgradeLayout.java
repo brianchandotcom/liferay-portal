@@ -81,6 +81,7 @@ public class UpgradeLayout extends UpgradeProcess {
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(sb.toString());
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				// Get pages with a sourcePrototypeLayoutUuid that have a page

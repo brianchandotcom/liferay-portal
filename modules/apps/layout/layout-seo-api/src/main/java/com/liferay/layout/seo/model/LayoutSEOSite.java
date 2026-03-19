@@ -48,3 +48,4 @@ public interface LayoutSEOSite extends LayoutSEOSiteModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:342737044

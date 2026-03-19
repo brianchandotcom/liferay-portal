@@ -216,3 +216,4 @@ public interface AkismetEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:214115708

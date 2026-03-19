@@ -123,3 +123,4 @@ public class ListTypeDefinitionServiceUtil {
 			ListTypeDefinitionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1756263622

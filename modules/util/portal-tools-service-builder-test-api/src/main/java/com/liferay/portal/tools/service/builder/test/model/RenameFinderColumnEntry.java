@@ -55,3 +55,4 @@ public interface RenameFinderColumnEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-705030791

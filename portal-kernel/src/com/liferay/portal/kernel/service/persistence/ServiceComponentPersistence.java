@@ -349,3 +349,4 @@ public interface ServiceComponentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:587217439

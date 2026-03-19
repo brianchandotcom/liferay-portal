@@ -85,3 +85,4 @@ public class JournalFeedTable extends BaseTable<JournalFeedTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1526783640

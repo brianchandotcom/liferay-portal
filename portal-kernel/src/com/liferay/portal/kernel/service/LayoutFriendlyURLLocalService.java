@@ -425,3 +425,4 @@ public interface LayoutFriendlyURLLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1326916560

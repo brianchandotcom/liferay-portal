@@ -5,6 +5,7 @@
 
 package com.liferay.data.cleanup.internal.verify;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -74,7 +75,8 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 			new SearchIndexPostUpgradeDataCleanupProcess(
 				_indexInformation, _indexNameBuilder),
 			new ServiceComponentPostUpgradeDataCleanupProcess(
-				connection, _serviceComponentLocalService));
+				connection, _serviceComponentLocalService),
+			new StorePostUpgradeDataCleanupProcess(_store));
 	}
 
 	@Reference
@@ -100,5 +102,8 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 
 	@Reference
 	private ServiceComponentLocalService _serviceComponentLocalService;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 }

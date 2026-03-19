@@ -54,3 +54,4 @@ public interface AnnouncementsDeliveryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-484285696

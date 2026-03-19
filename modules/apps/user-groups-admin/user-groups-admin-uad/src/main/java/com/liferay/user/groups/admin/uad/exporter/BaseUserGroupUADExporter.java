@@ -66,3 +66,4 @@ public abstract class BaseUserGroupUADExporter
 	protected UserGroupLocalService userGroupLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2134597348

@@ -491,3 +491,4 @@ public class SavedContentEntryLocalServiceWrapper
 	private SavedContentEntryLocalService _savedContentEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2074317108

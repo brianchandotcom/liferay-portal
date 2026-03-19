@@ -56,3 +56,4 @@ public interface SAPEntry extends PersistedModel, SAPEntryModel {
 			ConfigurationException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-133241364

@@ -60,6 +60,7 @@ public class SQLNullDateTest {
 	@Test
 	public void testNullDate() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			Statement statement = connection.createStatement()) {
 
 			String sql =

@@ -18,10 +18,7 @@ interface IMemberCellProps {
 }
 
 const MemberCell: React.FC<IMemberCellProps> = ({className, data, routeFn}) => {
-	const {
-		name,
-		properties: {email, emailAddress}
-	} = data;
+	const {name, properties: {email, emailAddress} = {}} = data;
 
 	const resolvedEmail = email || emailAddress;
 

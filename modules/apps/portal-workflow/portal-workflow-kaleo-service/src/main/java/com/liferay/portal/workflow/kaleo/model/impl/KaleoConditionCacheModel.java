@@ -267,3 +267,4 @@ public class KaleoConditionCacheModel
 	public String scriptRequiredContexts;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1254147727

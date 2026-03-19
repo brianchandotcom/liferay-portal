@@ -12,9 +12,10 @@ variable "crossplane_namespace" {
 	default="crossplane-system"
 }
 variable "deployment_name" {
+	type=string
 	validation {
-		condition=can(regex("^[a-z0-9-]*$", var.deployment_name))
-		error_message="The deployment_name must contain only lowercase letters, numbers, and hyphens."
+		condition=can(regex("^[a-z][a-z0-9-]{2,23}$", var.deployment_name))
+		error_message="The variable \"deployment_name\" must be 3-24 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens."
 	}
 }
 variable "external_secret_store_provider_hcl" {
@@ -23,9 +24,6 @@ variable "external_secret_store_provider_hcl" {
 }
 variable "external_secrets_namespace" {
 	default="external-secrets-system"
-}
-variable "gateway_class_name" {
-	default="liferay-gateway-class"
 }
 variable "gateway_namespace" {
 	default="envoy-gateway-system"
@@ -76,7 +74,7 @@ variable "infrastructure_helm_chart_config" {
 			chart_name=optional(string, "liferay-aws-infrastructure")
 			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure")
 			path=optional(string, null)
-			version=optional(string, "0.4.0")
+			version=optional(string, "0.4.1")
 		})
 }
 variable "infrastructure_provider_helm_chart_config" {
@@ -86,7 +84,7 @@ variable "infrastructure_provider_helm_chart_config" {
 			chart_name=optional(string, "liferay-aws-infrastructure-provider")
 			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure-provider")
 			path=optional(string, null)
-			version=optional(string, "0.3.1")
+			version=optional(string, "0.3.2")
 		})
 }
 variable "liferay_git_repo_config" {

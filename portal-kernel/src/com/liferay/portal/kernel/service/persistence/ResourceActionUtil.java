@@ -503,3 +503,4 @@ public class ResourceActionUtil {
 	private static volatile ResourceActionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1459938001

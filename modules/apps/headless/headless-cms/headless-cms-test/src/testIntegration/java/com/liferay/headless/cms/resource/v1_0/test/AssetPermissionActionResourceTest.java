@@ -14,6 +14,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.headless.cms.client.dto.v1_0.ResetAssetPermissionAction;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -93,6 +95,19 @@ public class AssetPermissionActionResourceTest
 	@Test
 	public void testPostAssetPermission() throws Exception {
 		_testPostAssetPermissionWithTypeResetAssetPermission();
+	}
+
+	private void _assertHasActionIds(
+		ResourcePermission resourcePermission, String... actionIds) {
+
+		for (String actionId : _ACTION_IDS) {
+			if (ArrayUtil.contains(actionIds, actionId)) {
+				Assert.assertTrue(resourcePermission.hasActionId(actionId));
+			}
+			else {
+				Assert.assertFalse(resourcePermission.hasActionId(actionId));
+			}
+		}
 	}
 
 	private Role _getOrAddCMSAdministratorRole(long companyId, long userId)
@@ -162,7 +177,10 @@ public class AssetPermissionActionResourceTest
 			"OBJECT_ENTRY_FOLDERS",
 			JSONUtil.put(
 				RoleConstants.CMS_ADMINISTRATOR,
-				JSONUtil.putAll(ActionKeys.ADD_ENTRY, ActionKeys.SUBSCRIBE))
+				JSONUtil.putAll(
+					ActionKeys.ADD_ENTRY,
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+					ActionKeys.SUBSCRIBE))
 		);
 
 		ObjectEntry objectEntry1 = CMSDefaultPermissionUtil.fetchObjectEntry(
@@ -221,9 +239,8 @@ public class AssetPermissionActionResourceTest
 				String.valueOf(objectEntry2.getObjectEntryId()),
 				_cmsAdministratorRole.getRoleId());
 
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(
+			resourcePermission, ActionKeys.UPDATE, ActionKeys.VIEW);
 
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.
@@ -304,10 +321,8 @@ public class AssetPermissionActionResourceTest
 				String.valueOf(objectEntry3.getObjectEntryId()),
 				_cmsAdministratorRole.getRoleId());
 
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(
-			resourcePermission.hasActionId(ActionKeys.PERMISSIONS));
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(
+			resourcePermission, ActionKeys.DELETE, ActionKeys.PERMISSIONS);
 
 		ObjectEntryFolder objectEntryFolder3 =
 			_objectEntryFolderLocalService.addObjectEntryFolder(
@@ -344,10 +359,16 @@ public class AssetPermissionActionResourceTest
 				String.valueOf(objectEntryFolder3.getObjectEntryFolderId()),
 				_cmsAdministratorRole.getRoleId());
 
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.ADD_ENTRY));
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.SUBSCRIBE));
+		_assertHasActionIds(
+			resourcePermission, ActionKeys.ADD_ENTRY,
+			ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, ActionKeys.SUBSCRIBE);
 	}
+
+	private static final String[] _ACTION_IDS = {
+		ActionKeys.ADD_ENTRY, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+		ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.SUBSCRIBE,
+		ActionKeys.UPDATE, ActionKeys.VIEW
+	};
 
 	private Role _cmsAdministratorRole;
 

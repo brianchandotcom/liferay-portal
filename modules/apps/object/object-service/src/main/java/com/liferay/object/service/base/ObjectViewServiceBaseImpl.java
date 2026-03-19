@@ -125,3 +125,4 @@ public abstract class ObjectViewServiceBaseImpl
 		ObjectViewServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1032891171

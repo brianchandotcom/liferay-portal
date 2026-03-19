@@ -745,3 +745,4 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 		DLFileShortcutLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-215820543

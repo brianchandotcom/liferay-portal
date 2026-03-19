@@ -18,7 +18,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {nextPage, setItemsPerPage} from '../../../utils/pagination';
 import {
 	performLoginViaApi,
-	performLogout,
+	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -561,13 +561,11 @@ test(
 			roleAssigneesPage.assigneesTable.cell(user.name)
 		).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(rolesPage.applicationsMenuButton).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await rolesPage.goto();
 
@@ -590,8 +588,7 @@ test(
 			roleAssigneesPage.assigneesTable.cell(user.name)
 		).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(rolesPage.applicationsMenuButton).toHaveCount(0);
 	}
@@ -680,13 +677,11 @@ test(
 			roleAssigneesPage.assigneesTable.cell(userGroup.name)
 		).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(rolesPage.applicationsMenuButton).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await rolesPage.goto();
 
@@ -713,8 +708,7 @@ test(
 			roleAssigneesPage.assigneesTable.cell(userGroup.name)
 		).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(rolesPage.applicationsMenuButton).toHaveCount(0);
 	}
@@ -808,13 +802,11 @@ test(
 			roleAssigneesPage.assigneesTable.cell(organization.name)
 		).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(rolesPage.applicationsMenuButton).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await rolesPage.goto();
 
@@ -843,8 +835,7 @@ test(
 			roleAssigneesPage.assigneesTable.cell(organization.name)
 		).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(rolesPage.applicationsMenuButton).toHaveCount(0);
 	}
@@ -1047,13 +1038,11 @@ test(
 			roleAssigneesPage.assigneesTable.cell(site.name)
 		).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(rolesPage.applicationsMenuButton).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await rolesPage.goto();
 
@@ -1078,8 +1067,7 @@ test(
 			roleAssigneesPage.assigneesTable.cell(site.name)
 		).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(rolesPage.applicationsMenuButton).toHaveCount(0);
 	}
@@ -1714,8 +1702,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site1.name}/${layout1.friendlyUrlPath}`);
 
@@ -1725,16 +1712,14 @@ test(
 
 		await expect(bookmarksPage.bookmarkItem(bookmarkName2)).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await apiHelpers.headlessAdminUser.assignUserToRole(
 			role.externalReferenceCode,
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site1.name}/${layout1.friendlyUrlPath}`);
 
@@ -2017,8 +2002,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await rolesPage.goto(false);
 
@@ -2034,8 +2018,7 @@ test(
 
 		await expect(rolesPage.duplicateMenuItem).not.toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const role2 = await apiHelpers.headlessAdminUser.postRole({
 			name: getRandomString(),
@@ -2055,8 +2038,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await rolesPage.goto(false);
 
@@ -2101,8 +2083,7 @@ test(
 			).not.toBeVisible();
 		}
 		finally {
-			await performLogout(page);
-			await performLoginViaApi({page, screenName: 'test'});
+			await performUserSwitch(page, 'test');
 
 			await rolesPage.goto();
 

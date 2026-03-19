@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import runPreflight from '../preflight/runPreflight.mjs';
+import doPreflight from '../util/preflight/doPreflight.mjs';
 
 export default async function main() {
-	const errors = await runPreflight();
+	const errors = await doPreflight();
 
 	if (errors.length) {
 		console.error(`

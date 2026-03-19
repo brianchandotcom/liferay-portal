@@ -8815,3 +8815,4 @@ public class JournalFolderPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:26781938

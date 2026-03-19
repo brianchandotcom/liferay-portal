@@ -819,3 +819,4 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1844531470

@@ -35,3 +35,4 @@ public class CacheFieldEntryTable extends BaseTable<CacheFieldEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:450921805

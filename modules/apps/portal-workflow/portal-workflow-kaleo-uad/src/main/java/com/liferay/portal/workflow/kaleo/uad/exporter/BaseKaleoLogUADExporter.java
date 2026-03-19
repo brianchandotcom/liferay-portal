@@ -66,3 +66,4 @@ public abstract class BaseKaleoLogUADExporter
 	protected KaleoLogLocalService kaleoLogLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-617255609

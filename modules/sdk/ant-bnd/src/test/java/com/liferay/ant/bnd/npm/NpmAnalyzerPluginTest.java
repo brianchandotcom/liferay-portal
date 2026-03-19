@@ -385,8 +385,10 @@ public class NpmAnalyzerPluginTest {
 		Class<?> clazz = getClass();
 
 		try (InputStream inputStream = clazz.getResourceAsStream(path);
+
 			InputStreamReader inputStreamReader = new InputStreamReader(
 				inputStream, StandardCharsets.UTF_8);
+
 			BufferedReader bufferedReader = new BufferedReader(
 				inputStreamReader)) {
 

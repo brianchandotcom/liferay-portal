@@ -161,3 +161,4 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:368111822

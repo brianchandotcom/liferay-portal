@@ -354,3 +354,4 @@ public class AnalyticsAssociationLocalServiceUtil {
 			AnalyticsAssociationLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1542509382

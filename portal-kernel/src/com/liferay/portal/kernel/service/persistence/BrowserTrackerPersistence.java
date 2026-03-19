@@ -196,3 +196,4 @@ public interface BrowserTrackerPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:589572127

@@ -60,3 +60,4 @@ public interface SharingEntry extends PersistedModel, SharingEntryModel {
 			sharingEntryAction);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1195895875

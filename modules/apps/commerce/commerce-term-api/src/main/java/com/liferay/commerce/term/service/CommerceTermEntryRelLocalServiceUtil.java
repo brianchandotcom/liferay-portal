@@ -372,3 +372,4 @@ public class CommerceTermEntryRelLocalServiceUtil {
 			CommerceTermEntryRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1489538058

@@ -405,3 +405,4 @@ public class CommerceQualifierEntryLocalServiceUtil {
 			CommerceQualifierEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1729513008

@@ -213,3 +213,4 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1004181242

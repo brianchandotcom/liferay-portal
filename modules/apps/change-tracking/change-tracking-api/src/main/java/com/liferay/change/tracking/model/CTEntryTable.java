@@ -57,3 +57,4 @@ public class CTEntryTable extends BaseTable<CTEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-786878075

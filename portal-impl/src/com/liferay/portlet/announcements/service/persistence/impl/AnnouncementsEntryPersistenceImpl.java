@@ -9254,3 +9254,4 @@ public class AnnouncementsEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1417340236

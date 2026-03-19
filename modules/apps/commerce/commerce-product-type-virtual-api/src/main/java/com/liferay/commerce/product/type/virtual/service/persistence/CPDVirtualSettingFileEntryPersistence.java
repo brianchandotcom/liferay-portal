@@ -806,3 +806,4 @@ public interface CPDVirtualSettingFileEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-652808559

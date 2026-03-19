@@ -6,11 +6,9 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {IFDSState} from '@liferay/frontend-data-set-web';
+import {IFDSState, getFDSAtom} from '@liferay/frontend-data-set-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import React, {useEffect, useMemo, useState} from 'react';
-
-import {getAtom} from '../utils/getAtom';
 
 const ADVANCED_FDS_ATOM_KEY = 'advancedFDSAtom';
 
@@ -24,7 +22,7 @@ const ADVANCED_FDS_ATOM_KEY = 'advancedFDSAtom';
  */
 const AdvancedSearch = () => {
 	const memoizedAtom = useMemo(
-		() => getAtom({key: ADVANCED_FDS_ATOM_KEY}),
+		() => getFDSAtom({atomKey: ADVANCED_FDS_ATOM_KEY}),
 		[]
 	);
 

@@ -50,3 +50,4 @@ public interface SpringEntry extends PersistedModel, SpringEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-639670014

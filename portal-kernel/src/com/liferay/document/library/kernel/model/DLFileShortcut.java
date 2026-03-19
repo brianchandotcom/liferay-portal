@@ -70,3 +70,4 @@ public interface DLFileShortcut
 	public boolean isInHiddenFolder();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:577831719

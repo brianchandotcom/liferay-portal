@@ -88,3 +88,4 @@ public class ObjectLayoutServiceWrapper
 	private ObjectLayoutService _objectLayoutService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1168983519

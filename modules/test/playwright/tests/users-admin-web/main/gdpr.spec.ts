@@ -21,11 +21,7 @@ import {siteStagingPageTest} from '../../../fixtures/siteStagingPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import {
-	performLoginViaApi,
-	performLogout,
-	userData,
-} from '../../../utils/performLogin';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -138,8 +134,7 @@ test(
 			)
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await page.goto(`/web/${site.name}`);
 
@@ -234,8 +229,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const blog1Name = 'Blog1';
 		const blog2Name = 'Blog2';
@@ -262,8 +256,7 @@ testAdmin(
 
 		await waitForAlert(page, 'Local staging is successfully enabled.');
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -340,8 +333,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -374,8 +366,7 @@ testAdmin(
 			)
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -464,8 +455,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		await apiHelpers.headlessDelivery.postBlog(site.id, {
 			headline: getRandomString(),
@@ -483,8 +473,7 @@ testAdmin(
 			groupId: site.id,
 		});
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 
@@ -567,8 +556,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: 'Site' + getRandomInt(),
@@ -592,8 +580,7 @@ testAdmin(
 			}
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 
@@ -684,8 +671,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -730,8 +716,7 @@ testAdmin(
 
 		await waitForAlert(page, 'Local staging is successfully enabled.');
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -865,8 +850,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -949,8 +933,7 @@ testAdmin(
 		await userAssociatedDataEditMessageBoardThreadPage.doneButton.click();
 		await userAssociatedDataEditMessageBoardThreadPage.publishButton.click();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -1028,8 +1011,7 @@ testAdmin(
 			title: 'Page' + getRandomInt(),
 		});
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const blog = await apiHelpers.headlessDelivery.postBlog(site.id, {
 			headline: getRandomString(),
@@ -1046,8 +1028,7 @@ testAdmin(
 
 		await waitForAlert(page, 'Local staging is successfully enabled.');
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -1125,8 +1106,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -1197,8 +1177,7 @@ testAdmin(
 				groupId: site.id,
 			});
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -1262,8 +1241,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -1286,8 +1264,7 @@ testAdmin(
 			headline: getRandomString(),
 		});
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -1410,8 +1387,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: 'Site' + getRandomInt(),
@@ -1435,8 +1411,7 @@ testAdmin(
 			groupId: site.id,
 		});
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -1540,8 +1515,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -1580,8 +1554,7 @@ testAdmin(
 			}
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -1714,8 +1687,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -1746,8 +1718,7 @@ testAdmin(
 
 		await expect(page.getByText(announcement.title)).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -1816,8 +1787,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -1836,8 +1806,7 @@ testAdmin(
 			}
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -1928,8 +1897,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		// My profile
 
@@ -1979,8 +1947,7 @@ testAdmin(
 		);
 		await userAssociatedDataEditMessageBoardThreadPage.publishButton.click();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -2043,8 +2010,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -2071,8 +2037,7 @@ testAdmin(
 			subject: 'Message' + getRandomInt(),
 		});
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -2177,8 +2142,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -2193,8 +2157,7 @@ testAdmin(
 			headline: 'Blog' + getRandomInt(),
 		});
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -2259,8 +2222,7 @@ testAdmin(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -2272,8 +2234,7 @@ testAdmin(
 			headline: 'Blog' + getRandomInt(),
 		});
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (

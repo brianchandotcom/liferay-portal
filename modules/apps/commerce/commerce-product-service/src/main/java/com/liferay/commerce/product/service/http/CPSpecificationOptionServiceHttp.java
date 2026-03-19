@@ -437,3 +437,4 @@ public class CPSpecificationOptionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-679290319

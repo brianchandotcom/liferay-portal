@@ -518,3 +518,4 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 		_commerceShippingFixedOptionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1325543046

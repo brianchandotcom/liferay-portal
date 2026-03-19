@@ -167,3 +167,4 @@ public class RenameFinderColumnEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:662959328

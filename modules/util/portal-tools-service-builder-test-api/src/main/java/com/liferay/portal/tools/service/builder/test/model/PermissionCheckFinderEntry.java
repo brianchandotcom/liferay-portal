@@ -55,3 +55,4 @@ public interface PermissionCheckFinderEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-136511633

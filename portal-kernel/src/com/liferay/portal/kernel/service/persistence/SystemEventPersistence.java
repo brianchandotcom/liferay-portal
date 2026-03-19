@@ -800,3 +800,4 @@ public interface SystemEventPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1465006123

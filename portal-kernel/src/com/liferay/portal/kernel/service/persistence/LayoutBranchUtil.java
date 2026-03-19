@@ -1072,3 +1072,4 @@ public class LayoutBranchUtil {
 	private static volatile LayoutBranchPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-325731156

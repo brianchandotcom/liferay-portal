@@ -50,3 +50,4 @@ public interface DSLQueryEntry extends DSLQueryEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1365983510

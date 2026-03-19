@@ -39,3 +39,4 @@ public class ResourceActionTable extends BaseTable<ResourceActionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1995240767

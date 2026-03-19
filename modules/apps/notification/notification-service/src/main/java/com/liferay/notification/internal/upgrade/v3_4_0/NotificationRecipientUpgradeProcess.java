@@ -26,6 +26,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select count(*) as count from NotificationRecipient");
+
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select count(*) as count from NotificationRecipientSetting");
@@ -44,6 +45,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 					"select notificationQueueEntryId, companyId, userId, ",
 					"userName, createDate, modifiedDate from ",
 					"NotificationQueueEntry"));
+
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(

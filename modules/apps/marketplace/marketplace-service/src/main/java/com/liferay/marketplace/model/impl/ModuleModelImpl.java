@@ -808,3 +808,4 @@ public class ModuleModelImpl
 	private Module _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1350815419

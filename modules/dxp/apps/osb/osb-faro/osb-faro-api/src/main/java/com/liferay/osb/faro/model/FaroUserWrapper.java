@@ -491,3 +491,4 @@ public class FaroUserWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1826873976

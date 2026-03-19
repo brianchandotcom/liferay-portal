@@ -90,3 +90,4 @@ public class CommerceTermEntryTable extends BaseTable<CommerceTermEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-650843250

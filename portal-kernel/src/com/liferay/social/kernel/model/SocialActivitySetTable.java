@@ -61,3 +61,4 @@ public class SocialActivitySetTable extends BaseTable<SocialActivitySetTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1776007598

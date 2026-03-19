@@ -212,3 +212,4 @@ public interface PortletPreferenceValueModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-248739769

@@ -98,3 +98,4 @@ public class ObjectFieldTable extends BaseTable<ObjectFieldTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-168406844

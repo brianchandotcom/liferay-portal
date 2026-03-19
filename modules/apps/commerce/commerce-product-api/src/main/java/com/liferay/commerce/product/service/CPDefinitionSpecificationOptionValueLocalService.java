@@ -465,3 +465,4 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-5516669

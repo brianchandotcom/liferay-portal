@@ -346,3 +346,4 @@ public class ImageWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1881539043

@@ -427,6 +427,7 @@ public abstract class BaseDBPartitionTestCase {
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
 		try (Connection connection = dataSource.getConnection();
+
 			Statement statement = connection.createStatement()) {
 
 			statement.execute(getCreateTableSQL(tableName));

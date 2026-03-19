@@ -65,3 +65,4 @@ public class LayoutLocalizationTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1769471135

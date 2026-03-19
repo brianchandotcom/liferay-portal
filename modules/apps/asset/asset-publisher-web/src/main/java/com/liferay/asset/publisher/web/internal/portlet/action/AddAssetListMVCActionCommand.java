@@ -196,6 +196,12 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 				unicodeProperties.put(name, value);
 			}
 
+			if (Validator.isNull(
+					unicodeProperties.getProperty("anyAssetType"))) {
+
+				unicodeProperties.put("anyAssetType", "true");
+			}
+
 			return _assetListEntryService.addDynamicAssetListEntry(
 				null, scopeGroupId, title, unicodeProperties.toString(),
 				serviceContext);

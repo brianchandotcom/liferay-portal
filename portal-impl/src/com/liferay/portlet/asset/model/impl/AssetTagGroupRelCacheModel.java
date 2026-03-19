@@ -159,3 +159,4 @@ public class AssetTagGroupRelCacheModel
 	public long tagId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-128595912

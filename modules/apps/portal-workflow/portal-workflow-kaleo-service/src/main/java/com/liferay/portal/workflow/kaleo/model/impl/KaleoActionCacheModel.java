@@ -391,3 +391,4 @@ public class KaleoActionCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1626355375

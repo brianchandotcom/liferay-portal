@@ -245,3 +245,4 @@ public class CommerceQualifierEntryCacheModel
 	public String targetCommerceQualifierMetadataKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:644047548

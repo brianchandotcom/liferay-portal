@@ -112,6 +112,7 @@ public class DBUpgraderTest {
 		String currentSchemaVersion;
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select schemaVersion from Release_ where releaseId = ?")) {
 
@@ -469,6 +470,7 @@ public class DBUpgraderTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"update Release_ set buildNumber = ?, state_ = ? where " +
 					"releaseId = ?")) {
@@ -490,6 +492,7 @@ public class DBUpgraderTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"update Release_ set schemaVersion = ? where releaseId = ?")) {
 

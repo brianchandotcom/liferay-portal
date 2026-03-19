@@ -1103,6 +1103,12 @@ public class ServiceBuilder {
 				"java.class.name[", key, StringPool.CLOSE_BRACKET));
 	}
 
+	public String getCompatJavaFieldName(String key) {
+		return _compatProperties.getProperty(
+			StringBundler.concat(
+				"java.field.name[", key, StringPool.CLOSE_BRACKET));
+	}
+
 	public String getCreateMappingTableSQL(EntityMapping entityMapping)
 		throws Exception {
 
@@ -2041,16 +2047,6 @@ public class ServiceBuilder {
 		}
 
 		return txRequiredMethodNames.contains(javaMethod.getName());
-	}
-
-	public boolean isVersionGTE_7_0_0() {
-		if (_dtdVersion.isLaterVersionThan("7.0.0") ||
-			_dtdVersion.isSameVersionAs("7.0.0")) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isVersionGTE_7_1_0() {
@@ -3514,6 +3510,9 @@ public class ServiceBuilder {
 
 			context.put("cacheFields", _getCacheFields(modelImplJavaClass));
 
+			context.put(
+				"databaseInMaxParameters",
+				getCompatJavaFieldName("databaseInMaxParameters"));
 			context.put("entity", entity);
 			context.put("persistence", Boolean.TRUE);
 			context.put("referenceEntities", _mergeReferenceEntities(entity));
@@ -3681,7 +3680,7 @@ public class ServiceBuilder {
 	private void _createService(Entity entity, int sessionType)
 		throws Exception {
 
-		Set<String> imports = new HashSet<>();
+		Set<String> imports = new TreeSet<>();
 
 		JavaClass javaClass = _getJavaClass(
 			StringBundler.concat(
@@ -3761,6 +3760,21 @@ public class ServiceBuilder {
 		context = _putDeprecatedKeys(context, javaClass);
 
 		String content = _processTemplate(_tplService, context);
+
+		for (String importValue : imports) {
+			String importLine = "import " + importValue + ";\n";
+
+			int index = importValue.lastIndexOf('.');
+
+			String simpleName = importValue.substring(index + 1);
+
+			String contentWithoutImport = StringUtil.removeSubstring(
+				content, importLine);
+
+			if (!contentWithoutImport.contains(simpleName)) {
+				content = contentWithoutImport;
+			}
+		}
 
 		File file = new File(
 			StringBundler.concat(
@@ -8134,8 +8148,10 @@ public class ServiceBuilder {
 
 		String year = simpleDateFormat.format(new Date());
 
+		String oldContent = null;
+
 		if (file.exists()) {
-			String oldContent = _read(file);
+			oldContent = _read(file);
 
 			int x = oldContent.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
 
@@ -8149,6 +8165,22 @@ public class ServiceBuilder {
 		header = header.replaceFirst(Pattern.quote("{$year}"), year);
 
 		content = header + "\n\n" + content;
+
+		if (oldContent != null) {
+			int index = oldContent.lastIndexOf(
+				_LIFERAY_SERVICE_BUILDER_HASH_PREFIX);
+
+			if (index != -1) {
+				int contentHash = content.hashCode();
+
+				String hashLine = oldContent.substring(
+					index + _LIFERAY_SERVICE_BUILDER_HASH_PREFIX.length());
+
+				if (GetterUtil.getInteger(hashLine) == contentHash) {
+					return;
+				}
+			}
+		}
 
 		String fileName = _normalize(file.toString());
 
@@ -8181,16 +8213,19 @@ public class ServiceBuilder {
 			}
 		}
 
-		ToolsUtil.writeFileRaw(
+		String parsedContent = JavaParser.parse(
 			file,
-			JavaParser.parse(
-				file,
-				StringUtil.replace(
-					fileName.substring(
-						startIndex, fileName.lastIndexOf(StringPool.SLASH)),
-					CharPool.SLASH, CharPool.PERIOD),
-				content, _MAX_LINE_LENGTH, false),
-			modifiedFileNames);
+			StringUtil.replace(
+				fileName.substring(
+					startIndex, fileName.lastIndexOf(StringPool.SLASH)),
+				CharPool.SLASH, CharPool.PERIOD),
+			content, _MAX_LINE_LENGTH, false);
+
+		parsedContent =
+			parsedContent + _LIFERAY_SERVICE_BUILDER_HASH_PREFIX +
+				content.hashCode();
+
+		ToolsUtil.writeFileRaw(file, parsedContent, modifiedFileNames);
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
@@ -8204,6 +8239,9 @@ public class ServiceBuilder {
 
 	private static final String _HIBERNATE_5_HBM_NAMESPACE =
 		"\"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd\"";
+
+	private static final String _LIFERAY_SERVICE_BUILDER_HASH_PREFIX =
+		"\n// LIFERAY-SERVICE-BUILDER-HASH:";
 
 	private static final int _MAX_LINE_LENGTH = 80;
 

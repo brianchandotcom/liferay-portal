@@ -1034,3 +1034,4 @@ public class CTProcessUtil {
 	private static volatile CTProcessPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:891620958

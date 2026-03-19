@@ -346,3 +346,4 @@ public interface CommerceNotificationAttachmentLocalService
 		CommerceNotificationAttachment commerceNotificationAttachment);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-537135124

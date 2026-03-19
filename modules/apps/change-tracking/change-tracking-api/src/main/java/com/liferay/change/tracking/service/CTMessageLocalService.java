@@ -263,3 +263,4 @@ public interface CTMessageLocalService
 	public CTMessage updateCTMessage(CTMessage ctMessage);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2048068147

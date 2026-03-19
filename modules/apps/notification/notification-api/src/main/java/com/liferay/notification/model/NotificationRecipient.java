@@ -55,3 +55,4 @@ public interface NotificationRecipient
 		getNotificationRecipientSettings();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2024465837

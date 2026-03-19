@@ -15,6 +15,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinitionSetting;
@@ -65,6 +66,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Daniel Sanz
@@ -181,7 +183,8 @@ public class SectionDisplayContextHelper {
 			return creationMenu;
 		}
 
-		List<Long> depotEntryGroupIds = null;
+		List<Long> objectEntryDepotEntryGroupIds = new ArrayList<>();
+		List<Long> objectEntryFolderDepotEntryGroupIds = new ArrayList<>();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -193,28 +196,61 @@ public class SectionDisplayContextHelper {
 			rootObjectEntryFolderExternalReferenceCode);
 
 		if (objectEntryFolder != null) {
-			depotEntryGroupIds = Collections.singletonList(
-				objectEntryFolder.getGroupId());
+			if (_modelResourcePermissionContains(
+					ActionKeys.ADD_ENTRY,
+					objectEntryFolder.getObjectEntryFolderId(), themeDisplay)) {
+
+				objectEntryDepotEntryGroupIds.add(
+					objectEntryFolder.getGroupId());
+			}
+
+			if (_modelResourcePermissionContains(
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+					objectEntryFolder.getObjectEntryFolderId(), themeDisplay)) {
+
+				objectEntryFolderDepotEntryGroupIds.add(
+					objectEntryFolder.getGroupId());
+			}
 		}
 		else {
-			depotEntryGroupIds = DepotEntryServiceUtil.getDepotEntryGroupIds(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				DepotConstants.TYPE_SPACE);
+			Map<Long, List<Long>> objectEntryFolderIdsMap =
+				_getObjectEntryFolderIdsMap(
+					themeDisplay.getCompanyId(),
+					rootObjectEntryFolderExternalReferenceCode,
+					themeDisplay.getUserId());
+
+			objectEntryDepotEntryGroupIds = _getDepotEntryGroupIds(
+				ActionKeys.ADD_ENTRY, objectEntryFolderIdsMap, themeDisplay);
+
+			objectEntryFolderDepotEntryGroupIds = _getDepotEntryGroupIds(
+				ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+				objectEntryFolderIdsMap, themeDisplay);
 		}
 
-		depotEntryGroupIds = _filter(
-			depotEntryGroupIds, ActionKeys.ADD_ENTRY,
-			_getRootObjectEntryFolderExternalReferenceCodes(
-				rootObjectEntryFolderExternalReferenceCode),
-			themeDisplay);
+		if (objectEntryDepotEntryGroupIds.isEmpty() &&
+			objectEntryFolderDepotEntryGroupIds.isEmpty()) {
 
-		if (ListUtil.isEmpty(depotEntryGroupIds)) {
 			return creationMenu;
 		}
 
 		for (DropdownItem dropdownItem : dropdownItems) {
-			JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray(
-				depotEntryGroupIds, dropdownItem, themeDisplay.getLocale());
+			JSONArray depotEntriesJSONArray = null;
+
+			Map<String, Object> dropdownItemData =
+				(Map<String, Object>)dropdownItem.get("data");
+
+			if (Objects.equals(
+					dropdownItemData.get("action"), "createFolder")) {
+
+				depotEntriesJSONArray = _getDepotEntriesJSONArray(
+					objectEntryFolderDepotEntryGroupIds, dropdownItem,
+					themeDisplay.getLocale());
+			}
+			else {
+				depotEntriesJSONArray = _getDepotEntriesJSONArray(
+					objectEntryDepotEntryGroupIds, dropdownItem,
+					themeDisplay.getLocale());
+			}
 
 			if (depotEntriesJSONArray.length() == 0) {
 				continue;
@@ -362,54 +398,18 @@ public class SectionDisplayContextHelper {
 				null, "update", null),
 			new FDSActionDropdownItem(
 				null, "copy", "copy",
-				_language.get(httpServletRequest, "copy-to"), null, null, null),
+				_language.get(httpServletRequest, "copy-to"), null, "update",
+				null),
 			new FDSActionDropdownItem(
 				null, "move-folder", "move",
-				_language.get(httpServletRequest, "move"), null, null, null),
+				_language.get(httpServletRequest, "move"), null, "update",
+				null),
 			_getPermissionsFDSActionDropdownItem(
 				httpServletRequest, themeDisplay),
 			new FDSActionDropdownItem(
 				null, "trash", "delete",
 				_language.get(httpServletRequest, "delete"), null, "delete",
 				null));
-	}
-
-	private List<Long> _filter(
-		List<Long> depotEntryGroupIds, String actionId,
-		String[] objectEntryFolderExternalReferenceCodes,
-		ThemeDisplay themeDisplay) {
-
-		return ListUtil.filter(
-			depotEntryGroupIds,
-			depotEntryGroupId -> {
-				for (String objectEntryFolderExternalReferenceCode :
-						objectEntryFolderExternalReferenceCodes) {
-
-					ObjectEntryFolder objectEntryFolder =
-						ObjectEntryFolderLocalServiceUtil.
-							fetchObjectEntryFolderByExternalReferenceCode(
-								objectEntryFolderExternalReferenceCode,
-								depotEntryGroupId, themeDisplay.getCompanyId());
-
-					try {
-						if ((objectEntryFolder != null) &&
-							_objectEntryFolderModelResourcePermission.contains(
-								themeDisplay.getPermissionChecker(),
-								objectEntryFolder.getObjectEntryFolderId(),
-								actionId)) {
-
-							return true;
-						}
-					}
-					catch (PortalException portalException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(portalException);
-						}
-					}
-				}
-
-				return false;
-			});
 	}
 
 	private List<Long> _getAcceptedDepotEntryGroupIds(
@@ -457,7 +457,7 @@ public class SectionDisplayContextHelper {
 		Locale locale) {
 
 		Map<String, Object> dropdownItemData =
-			(HashMap<String, Object>)dropdownItem.get("data");
+			(Map<String, Object>)dropdownItem.get("data");
 
 		long objectDefinitionId = GetterUtil.getLong(
 			dropdownItemData.get("objectDefinitionId"));
@@ -486,6 +486,29 @@ public class SectionDisplayContextHelper {
 		}
 
 		return jsonArray;
+	}
+
+	private List<Long> _getDepotEntryGroupIds(
+		String actionId, Map<Long, List<Long>> objectEntryFolderIdsMap,
+		ThemeDisplay themeDisplay) {
+
+		List<Long> depotEntryGroupIds = new ArrayList<>();
+
+		for (Map.Entry<Long, List<Long>> entry :
+				objectEntryFolderIdsMap.entrySet()) {
+
+			for (long objectEntryFolderId : entry.getValue()) {
+				if (_modelResourcePermissionContains(
+						actionId, objectEntryFolderId, themeDisplay)) {
+
+					depotEntryGroupIds.add(entry.getKey());
+
+					break;
+				}
+			}
+		}
+
+		return depotEntryGroupIds;
 	}
 
 	private JSONObject _getJSONObject(long groupId, Locale locale) {
@@ -521,6 +544,40 @@ public class SectionDisplayContextHelper {
 		}
 
 		return null;
+	}
+
+	private Map<Long, List<Long>> _getObjectEntryFolderIdsMap(
+		long companyId, String rootObjectEntryFolderExternalReferenceCode,
+		long userId) {
+
+		Map<Long, List<Long>> objectEntryFolderIdsMap = new HashMap<>();
+
+		for (long depotEntryGroupId :
+				DepotEntryServiceUtil.getDepotEntryGroupIds(
+					companyId, userId, DepotConstants.TYPE_SPACE)) {
+
+			for (String objectEntryFolderExternalReferenceCode :
+					_getRootObjectEntryFolderExternalReferenceCodes(
+						rootObjectEntryFolderExternalReferenceCode)) {
+
+				ObjectEntryFolder objectEntryFolder =
+					ObjectEntryFolderLocalServiceUtil.
+						fetchObjectEntryFolderByExternalReferenceCode(
+							objectEntryFolderExternalReferenceCode,
+							depotEntryGroupId, companyId);
+
+				if (objectEntryFolder != null) {
+					List<Long> objectEntryFolderIds =
+						objectEntryFolderIdsMap.computeIfAbsent(
+							depotEntryGroupId, key -> new ArrayList<>());
+
+					objectEntryFolderIds.add(
+						objectEntryFolder.getObjectEntryFolderId());
+				}
+			}
+		}
+
+		return objectEntryFolderIdsMap;
 	}
 
 	private FDSActionDropdownItem _getPermissionsFDSActionDropdownItem(
@@ -654,6 +711,23 @@ public class SectionDisplayContextHelper {
 			Validator.isNull(objectDefinitionSetting.getValue())) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _modelResourcePermissionContains(
+		String actionId, long objectEntryFolderId, ThemeDisplay themeDisplay) {
+
+		try {
+			return _objectEntryFolderModelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), objectEntryFolderId,
+				actionId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 		}
 
 		return false;

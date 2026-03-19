@@ -314,3 +314,4 @@ public class CTPreferencesLocalServiceUtil {
 			CTPreferencesLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-544738574

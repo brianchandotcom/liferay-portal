@@ -145,3 +145,4 @@ public class ListTypeDefinitionServiceWrapper
 	private ListTypeDefinitionService _listTypeDefinitionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1705919129

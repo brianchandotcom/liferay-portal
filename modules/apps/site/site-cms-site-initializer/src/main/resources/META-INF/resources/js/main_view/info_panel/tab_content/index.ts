@@ -81,9 +81,11 @@ export const VERSION_ACTIONS: any = {
 						type: 'success',
 					});
 
-					Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
-						id: dataSetId,
-					});
+					if (dataSetId) {
+						Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+							id: dataSetId,
+						});
+					}
 				},
 				showToast: false,
 				url: objectEntry.actions.copy.href,
@@ -97,7 +99,8 @@ export const VERSION_ACTIONS: any = {
 			event: React.MouseEvent<HTMLAnchorElement>,
 			objectEntry: IAssetObjectEntry,
 			loadData: () => {},
-			objectEntryTitle: string
+			objectEntryTitle: string,
+			dataSetId?: string
 		) => {
 			event?.preventDefault();
 
@@ -107,6 +110,7 @@ export const VERSION_ACTIONS: any = {
 					`<strong>${sub(Liferay.Language.get('version-x'), objectEntry.systemProperties.version.number)}</strong>`,
 					Liferay.Util.escapeHTML(objectEntryTitle)
 				),
+				dataSetId,
 				deleteAction: objectEntry.actions.delete,
 				loadData,
 				successMessage: sub(
@@ -126,13 +130,23 @@ export const VERSION_ACTIONS: any = {
 		action: (
 			event: React.MouseEvent<HTMLAnchorElement>,
 			objectEntry: IAssetObjectEntry,
-			refreshData: () => {}
+			refreshData: (responseData: any) => {},
+			objectEntryTitle: string,
+			dataSetId?: string
 		) => {
 			event?.preventDefault();
 
 			executeAsyncItemAction({
 				method: objectEntry.actions.expire.method,
-				refreshData,
+				refreshData: (responseData) => {
+					refreshData?.(responseData);
+
+					if (dataSetId) {
+						Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+							id: dataSetId,
+						});
+					}
+				},
 				successMessage: sub(
 					Liferay.Language.get('expire-version-success-message'),
 					`<strong>${sub(Liferay.Language.get('version-x'), objectEntry.systemProperties.version.number)}</strong>`
@@ -193,13 +207,23 @@ export const VERSION_ACTIONS: any = {
 		action: (
 			event: React.MouseEvent<HTMLAnchorElement>,
 			objectEntry: IAssetObjectEntry,
-			refreshData: () => {}
+			refreshData: (responseData: any) => {},
+			objectEntryTitle: string,
+			dataSetId?: string
 		) => {
-			event.preventDefault();
+			event?.preventDefault();
 
 			executeAsyncItemAction({
 				method: objectEntry.actions.restore.method,
-				refreshData,
+				refreshData: (responseData) => {
+					refreshData?.(responseData);
+
+					if (dataSetId) {
+						Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+							id: dataSetId,
+						});
+					}
+				},
 				successMessage: sub(
 					Liferay.Language.get('restore-version-success-message'),
 					`<strong>${sub(Liferay.Language.get('version-x'), objectEntry.systemProperties.version.number)}</strong>`

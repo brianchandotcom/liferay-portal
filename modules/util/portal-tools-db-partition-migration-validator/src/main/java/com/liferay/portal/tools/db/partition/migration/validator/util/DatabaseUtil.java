@@ -66,6 +66,7 @@ public class DatabaseUtil {
 				"select Company.companyId, webId, name, hostname from " +
 					"Company left join VirtualHost on Company.companyId = " +
 						"VirtualHost.companyId");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -86,6 +87,7 @@ public class DatabaseUtil {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -102,6 +104,7 @@ public class DatabaseUtil {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from CompanyInfo");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -143,6 +146,7 @@ public class DatabaseUtil {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select servletContextName, schemaVersion, state_, verified " +
 					"from Release_");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

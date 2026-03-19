@@ -41,3 +41,4 @@ public abstract class RecentLayoutSetBranchBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1598829233

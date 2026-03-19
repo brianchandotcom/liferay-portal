@@ -1,3 +1,0 @@
-liferay-marketplace-etc-spring-boot-oaua:
-    .serviceAddress: 172.17.0.1:58081
-    .serviceScheme: http

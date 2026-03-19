@@ -1,5 +1,9 @@
-apply from: "../../build-jakarta-transformer.gradle"
-
-dependencies {
-	compileOnly group: "com.liferay.faces", name: "com.liferay.faces.util", transitive: false, version: "3.4.1"
+ext {
+	gitHash = "0f1deecb36977a7bc84d2da69ff2bbcd18bb4b67"
+	gitHubOwner = "liferay"
+	gitHubRepository = "liferay-faces-util"
+	mvnJARInclude = "com.liferay.faces.util-5.0.0.jar"
+	mvnTargetDir = "target"
 }
+
+apply from: "../build-maven.gradle"

@@ -321,3 +321,4 @@ public class TrashVersionLocalServiceUtil {
 			TrashVersionLocalServiceUtil.class, TrashVersionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-303566839

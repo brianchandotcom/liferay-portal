@@ -760,3 +760,4 @@ public class TranslationEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-452417401

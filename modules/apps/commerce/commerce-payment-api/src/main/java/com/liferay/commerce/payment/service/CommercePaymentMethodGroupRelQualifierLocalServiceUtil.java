@@ -428,3 +428,4 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceUtil {
 				CommercePaymentMethodGroupRelQualifierLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1610000107

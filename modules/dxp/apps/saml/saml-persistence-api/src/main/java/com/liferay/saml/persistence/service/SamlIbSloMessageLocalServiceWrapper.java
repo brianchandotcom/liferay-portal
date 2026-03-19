@@ -378,3 +378,4 @@ public class SamlIbSloMessageLocalServiceWrapper
 	private SamlIbSloMessageLocalService _samlIbSloMessageLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-761061863

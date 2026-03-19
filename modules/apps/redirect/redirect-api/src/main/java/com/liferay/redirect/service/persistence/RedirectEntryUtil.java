@@ -1260,3 +1260,4 @@ public class RedirectEntryUtil {
 	private static volatile RedirectEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-480045209

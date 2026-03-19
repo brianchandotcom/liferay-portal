@@ -5,15 +5,15 @@
 
 import path from 'path';
 
-import runPreflight from '../preflight/runPreflight.mjs';
-import checkProjects from '../tsc/checkProjects.mjs';
-import extractProjectDirs from '../tsc/extractProjectDirs.mjs';
-import visitOutdatedTsconfigFiles from '../tsconfig/visitOutdatedTsconfigFiles.mjs';
-import getFilePaths from '../util/getFilePaths.mjs';
+import doFormat from '../util/format/doFormat.mjs';
+import getFilePaths from '../util/format/getFilePaths.mjs';
 import getNamedArguments from '../util/getNamedArguments.mjs';
 import gitUtil from '../util/gitUtil.mjs';
 import {MODULES_DIR} from '../util/locations.mjs';
-import format from './format.mjs';
+import doPreflight from '../util/preflight/doPreflight.mjs';
+import checkProjects from '../util/tsc/checkProjects.mjs';
+import extractProjectDirs from '../util/tsc/extractProjectDirs.mjs';
+import visitOutdatedTsconfigFiles from '../util/tsconfig/visitOutdatedTsconfigFiles.mjs';
 
 export default async function main() {
 	const {all, ignorePreflight, ignoreTypescript} = getNamedArguments({
@@ -42,7 +42,7 @@ export default async function main() {
 	if (!ignorePreflight) {
 		console.log('\n⚙️ Running preflight checks...');
 
-		const preflightErrors = await runPreflight();
+		const preflightErrors = await doPreflight();
 
 		if (preflightErrors.length) {
 			console.error(
@@ -82,7 +82,7 @@ export default async function main() {
 
 	console.log('\n⚙️ Running format on files...');
 
-	const formatOutput = await format(true, files);
+	const formatOutput = await doFormat(true, files);
 
 	if (formatOutput) {
 		console.error(

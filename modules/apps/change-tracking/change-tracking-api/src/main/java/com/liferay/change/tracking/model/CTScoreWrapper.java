@@ -220,3 +220,4 @@ public class CTScoreWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1143717998

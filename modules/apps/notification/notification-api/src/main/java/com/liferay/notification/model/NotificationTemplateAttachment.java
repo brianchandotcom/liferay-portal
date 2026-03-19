@@ -56,3 +56,4 @@ public interface NotificationTemplateAttachment
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1371585836

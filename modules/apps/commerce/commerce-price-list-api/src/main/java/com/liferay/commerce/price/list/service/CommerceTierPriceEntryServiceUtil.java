@@ -270,3 +270,4 @@ public class CommerceTierPriceEntryServiceUtil {
 			CommerceTierPriceEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-846957157

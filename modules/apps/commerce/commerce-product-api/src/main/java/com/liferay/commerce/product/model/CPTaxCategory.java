@@ -50,3 +50,4 @@ public interface CPTaxCategory extends CPTaxCategoryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2093474072

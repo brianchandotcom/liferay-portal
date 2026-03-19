@@ -1114,3 +1114,4 @@ public class CPDVirtualSettingFileEntryModelImpl
 	private CPDVirtualSettingFileEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1860960537

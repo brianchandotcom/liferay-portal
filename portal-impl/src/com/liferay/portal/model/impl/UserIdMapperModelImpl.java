@@ -796,3 +796,4 @@ public class UserIdMapperModelImpl
 	private UserIdMapper _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1909561078

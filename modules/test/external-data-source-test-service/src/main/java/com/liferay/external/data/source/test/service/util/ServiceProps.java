@@ -55,3 +55,4 @@ public class ServiceProps {
 	private Configuration _configuration;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1324416838

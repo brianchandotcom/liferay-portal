@@ -65,3 +65,4 @@ public interface DLFileEntryType extends DLFileEntryTypeModel, PersistedModel {
 	public boolean isExportable();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:570431168

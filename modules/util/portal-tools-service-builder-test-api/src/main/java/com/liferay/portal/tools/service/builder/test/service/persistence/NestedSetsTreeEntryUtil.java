@@ -324,3 +324,4 @@ public class NestedSetsTreeEntryUtil {
 	private static volatile NestedSetsTreeEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2083512704

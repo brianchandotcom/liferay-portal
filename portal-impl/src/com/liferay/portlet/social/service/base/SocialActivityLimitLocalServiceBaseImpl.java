@@ -539,3 +539,4 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 		SocialActivityLimitLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1840683671

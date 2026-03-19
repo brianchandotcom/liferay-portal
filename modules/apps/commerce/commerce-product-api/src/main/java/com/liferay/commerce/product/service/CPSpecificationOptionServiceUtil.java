@@ -126,3 +126,4 @@ public class CPSpecificationOptionServiceUtil {
 			CPSpecificationOptionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1040745902

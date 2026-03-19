@@ -62,3 +62,4 @@ public class CPDisplayLayoutTable extends BaseTable<CPDisplayLayoutTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1825344536

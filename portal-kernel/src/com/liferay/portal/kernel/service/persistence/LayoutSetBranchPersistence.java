@@ -891,3 +891,4 @@ public interface LayoutSetBranchPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-499933463

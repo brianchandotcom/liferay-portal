@@ -79,3 +79,4 @@ public class AnnouncementsEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:320046041

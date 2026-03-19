@@ -2046,3 +2046,4 @@ public class UserWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1765458361

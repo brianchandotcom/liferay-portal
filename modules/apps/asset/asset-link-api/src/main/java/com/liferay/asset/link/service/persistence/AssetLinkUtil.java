@@ -1230,3 +1230,4 @@ public class AssetLinkUtil {
 	private static volatile AssetLinkPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:114836962

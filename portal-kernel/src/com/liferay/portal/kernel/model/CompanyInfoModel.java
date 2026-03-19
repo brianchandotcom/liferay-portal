@@ -113,3 +113,4 @@ public interface CompanyInfoModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1825035269

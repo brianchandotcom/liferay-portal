@@ -238,3 +238,4 @@ public class LayoutLocalizationCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:547361095

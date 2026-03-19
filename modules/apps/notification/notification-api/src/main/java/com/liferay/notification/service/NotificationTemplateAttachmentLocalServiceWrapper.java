@@ -401,3 +401,4 @@ public class NotificationTemplateAttachmentLocalServiceWrapper
 		_notificationTemplateAttachmentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:384130406

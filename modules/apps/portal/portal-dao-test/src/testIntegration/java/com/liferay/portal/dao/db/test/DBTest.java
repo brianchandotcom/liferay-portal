@@ -237,6 +237,7 @@ public class DBTest {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select nilColumn from " + TABLE_NAME_1 + " order by id");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();
@@ -282,6 +283,7 @@ public class DBTest {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select typeString from " + TABLE_NAME_1);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();
@@ -366,6 +368,7 @@ public class DBTest {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select testColumn from " + TABLE_NAME_1);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();
@@ -392,6 +395,7 @@ public class DBTest {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select testColumn from " + TABLE_NAME_1);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();
@@ -489,6 +493,7 @@ public class DBTest {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id asc");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -561,6 +566,7 @@ public class DBTest {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id2 asc");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -740,6 +746,7 @@ public class DBTest {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -814,6 +821,7 @@ public class DBTest {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id2");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());

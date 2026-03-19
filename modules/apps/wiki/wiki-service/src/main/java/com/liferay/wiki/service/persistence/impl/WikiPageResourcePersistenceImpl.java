@@ -2607,3 +2607,4 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-383568577

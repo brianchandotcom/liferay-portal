@@ -533,3 +533,4 @@ public class RegionLocalizationUtil {
 	private static volatile RegionLocalizationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1044494177

@@ -40,27 +40,29 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		for (String modelName : _MODEL_NAMES) {
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
-						"select count(*) from Counter where name like '%." +
-							modelName + "'");
+						StringBundler.concat(
+							"select count(*) as count from Counter where name ",
+							"like '%.", modelName, "'"));
+
 				ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 				if (resultSet1.next()) {
-					int count = resultSet1.getInt(1);
-
-					if (count <= 1) {
+					if (resultSet1.getInt("count") <= 1) {
 						continue;
 					}
 
 					try (PreparedStatement preparedStatement2 =
 							connection.prepareStatement(
 								StringBundler.concat(
-									"select max(currentId) from Counter where ",
-									"name like '%.", modelName, "'"));
+									"select max(currentId) as currentId from ",
+									"Counter where name like '%.", modelName,
+									"'"));
+
 						ResultSet resultSet2 =
 							preparedStatement2.executeQuery()) {
 
 						if (resultSet2.next()) {
-							long currentId = resultSet2.getLong(1);
+							long currentId = resultSet2.getLong("currentId");
 
 							CounterLocalServiceUtil.reset(
 								"com.liferay.saml.model." + modelName,

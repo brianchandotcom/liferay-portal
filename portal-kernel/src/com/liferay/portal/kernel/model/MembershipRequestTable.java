@@ -57,3 +57,4 @@ public class MembershipRequestTable extends BaseTable<MembershipRequestTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:116664683

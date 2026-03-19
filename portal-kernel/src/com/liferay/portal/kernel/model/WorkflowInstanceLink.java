@@ -51,3 +51,4 @@ public interface WorkflowInstanceLink
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1939810324

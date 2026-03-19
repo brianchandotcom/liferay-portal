@@ -193,3 +193,4 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1251853392

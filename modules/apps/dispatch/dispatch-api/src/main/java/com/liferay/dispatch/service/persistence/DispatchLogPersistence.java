@@ -450,3 +450,4 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-951857021

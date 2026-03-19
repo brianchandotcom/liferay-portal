@@ -975,3 +975,4 @@ public interface CalendarPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1044985414

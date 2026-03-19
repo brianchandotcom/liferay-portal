@@ -67,3 +67,4 @@ public class ERAssetVocabularyLocalServiceWrapper
 	private ERAssetVocabularyLocalService _erAssetVocabularyLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1977986615

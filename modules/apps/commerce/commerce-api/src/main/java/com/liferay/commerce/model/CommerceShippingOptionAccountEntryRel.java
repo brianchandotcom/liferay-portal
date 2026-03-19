@@ -58,3 +58,4 @@ public interface CommerceShippingOptionAccountEntryRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-412461382

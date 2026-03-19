@@ -115,6 +115,18 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 				"expire"
 			));
 		fdsBulkActionDropdownItems.add(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"semantic-search"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "find-and-replace")
+			).build(
+				"find-and-replace"
+			));
+		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "password-policies", "permissions",
 				LanguageUtil.get(_httpServletRequest, "permissions"), null,

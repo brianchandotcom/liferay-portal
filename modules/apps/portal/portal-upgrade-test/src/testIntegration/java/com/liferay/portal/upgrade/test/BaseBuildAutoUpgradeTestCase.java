@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
@@ -81,6 +81,7 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 	@Before
 	public void setUp() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"drop table BuildAutoUpgradeTestEntity")) {
 
@@ -102,6 +103,7 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		}
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"drop table BuildAutoUpgradeTestEntity")) {
 
@@ -157,6 +159,7 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		_bundle.start();
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"insert into BuildAutoUpgradeTestEntity values (1, 'data')")) {
 
@@ -176,8 +179,10 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 			"BuildAutoUpgradeTestEntity", "id_", "data_", "data2");
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select id_, data_, data2 from BuildAutoUpgradeTestEntity");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -193,6 +198,7 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		}
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"update BuildAutoUpgradeTestEntity set data2 = 'data2' where " +
 					"id_ = 1")) {
@@ -208,8 +214,10 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 			"BuildAutoUpgradeTestEntity", "id_", "data2");
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select id_, data2 from BuildAutoUpgradeTestEntity");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -228,8 +236,10 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 			"BuildAutoUpgradeTestEntity", "id_", "data_");
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select id_, data_ from BuildAutoUpgradeTestEntity");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());

@@ -443,3 +443,4 @@ public class CTSGrandParentUtil {
 	private static volatile CTSGrandParentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1040089272

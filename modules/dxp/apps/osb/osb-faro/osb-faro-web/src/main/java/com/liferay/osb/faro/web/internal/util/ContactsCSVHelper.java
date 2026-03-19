@@ -15,10 +15,10 @@ import com.liferay.osb.faro.contacts.model.constants.ContactsConstants;
 import com.liferay.osb.faro.engine.client.model.DataSource;
 import com.liferay.osb.faro.engine.client.model.DataSourceField;
 import com.liferay.osb.faro.web.internal.exception.FaroException;
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
+import com.liferay.petra.io.unsync.UnsyncBufferedWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
@@ -80,6 +80,7 @@ public class ContactsCSVHelper {
 
 		try (Reader reader = new InputStreamReader(
 				new FileInputStream(file), charset);
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(reader);
 			Writer writer = new OutputStreamWriter(

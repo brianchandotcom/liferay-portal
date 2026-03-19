@@ -398,16 +398,17 @@ describe('StructureFieldSettings', () => {
 		).not.toBeInTheDocument();
 
 		await userEvent.click(
-			screen.getByLabelText('show-files-in-documents-and-media')
+			screen.getByLabelText('show-files-in-cms-library')
 		);
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
 				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
-				fileSource: 'userComputerToDocumentsAndMedia',
+				fileSource: 'userComputerToCMSBasicDocument',
 				maximumFileSize: 100,
 				showFilesInLibrary: true,
-				storageDLFolderPath: '/new',
+				storageDLFolderPath: '/',
+				storageDepotGroup: undefined,
 			},
 			type: 'update-field',
 			uuid,
@@ -426,7 +427,7 @@ describe('StructureFieldSettings', () => {
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
 				acceptedFileExtensions: 'gif',
-				fileSource: 'userComputerToDocumentsAndMedia',
+				fileSource: 'userComputerToCMSBasicDocument',
 				maximumFileSize: 100,
 			},
 			type: 'update-field',
@@ -442,7 +443,7 @@ describe('StructureFieldSettings', () => {
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
 				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
-				fileSource: 'userComputerToDocumentsAndMedia',
+				fileSource: 'userComputerToCMSBasicDocument',
 				maximumFileSize: 200,
 			},
 			type: 'update-field',

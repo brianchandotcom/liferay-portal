@@ -14,3 +14,4 @@ public class SiteTeamsUADConstants {
 	public static final String[] USER_ID_FIELD_NAMES_TEAM = {"userId"};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1468300704

@@ -456,3 +456,4 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 		_kaleoTaskFormInstanceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1226110168

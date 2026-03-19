@@ -230,3 +230,4 @@ public class SocialActivityCacheModel
 	public long receiverUserId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:714501771

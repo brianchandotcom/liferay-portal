@@ -465,3 +465,4 @@ public class RedirectEntryLocalServiceUtil {
 			RedirectEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1930830259

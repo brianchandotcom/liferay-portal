@@ -1915,3 +1915,4 @@ public interface LayoutClassedModelUsagePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:214258247

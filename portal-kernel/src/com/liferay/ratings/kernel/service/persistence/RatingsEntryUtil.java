@@ -1181,3 +1181,4 @@ public class RatingsEntryUtil {
 	private static volatile RatingsEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1944155019

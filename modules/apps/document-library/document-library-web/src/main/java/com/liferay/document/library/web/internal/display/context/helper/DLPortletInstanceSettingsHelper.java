@@ -128,13 +128,12 @@ public class DLPortletInstanceSettingsHelper {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
+		String selectedGroupExternalReferenceCode =
+			dlPortletInstanceSettings.getSelectedGroupExternalReferenceCode();
 
-		Group selectedGroup =
-			GroupLocalServiceUtil.getGroupByExternalReferenceCode(
-				dlPortletInstanceSettings.
-					getSelectedGroupExternalReferenceCode(),
-				themeDisplay.getCompanyId());
+		Group selectedGroup = _getSelectedGroup(
+			dlPortletInstanceSettings, selectedGroupExternalReferenceCode,
+			_dlRequestHelper.getThemeDisplay());
 
 		return DLAppLocalServiceUtil.getFolderByExternalReferenceCode(
 			rootFolderExternalReferenceCode, selectedGroup.getGroupId());
@@ -243,6 +242,21 @@ public class DLPortletInstanceSettingsHelper {
 		allEntryColumns += ",modified-date,create-date";
 
 		return StringUtil.split(allEntryColumns);
+	}
+
+	private Group _getSelectedGroup(
+			DLPortletInstanceSettings dlPortletInstanceSettings,
+			String selectedGroupExternalReferenceCode,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (Validator.isNull(selectedGroupExternalReferenceCode)) {
+			return themeDisplay.getScopeGroup();
+		}
+
+		return GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+			dlPortletInstanceSettings.getSelectedGroupExternalReferenceCode(),
+			themeDisplay.getCompanyId());
 	}
 
 	private void _populateDisplayViews() {

@@ -147,3 +147,4 @@ public class CTPreferencesCacheModel
 	public boolean confirmationEnabled;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1482254921

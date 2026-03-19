@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -71,6 +72,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -431,12 +433,17 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			DDMStructure ddmStructure = getDDMStructure();
 
 			if (ddmStructure != null) {
-				_documentMap.put(
-					languageId,
-					_getDocument(
-						ddmStructure,
-						DDMFieldLocalServiceUtil.getDDMFormValues(
-							ddmStructure.getDDMForm(), getId(), languageId)));
+				Document document = _getDocument(
+					ddmStructure,
+					DDMFieldLocalServiceUtil.getDDMFormValues(
+						ddmStructure.getDDMForm(), getId(), languageId));
+
+				if (document != null) {
+					_filterDynamicContentByLocale(
+						document.getRootElement(), languageId);
+				}
+
+				_documentMap.put(languageId, document);
 			}
 		}
 
@@ -781,6 +788,46 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public void setTitleMap(Map<Locale, String> titleMap) {
 		_titleMap = titleMap;
+	}
+
+	private void _filterDynamicContentByLocale(
+		Element parentElement, String languageId) {
+
+		for (Element dynamicElementElement :
+				parentElement.elements("dynamic-element")) {
+
+			_filterDynamicContentByLocale(dynamicElementElement, languageId);
+
+			List<Element> dynamicContentElements =
+				dynamicElementElement.elements("dynamic-content");
+
+			if (dynamicContentElements.size() <= 1) {
+				continue;
+			}
+
+			Element matchingElement = null;
+
+			for (Element dynamicContentElement : dynamicContentElements) {
+				if (Objects.equals(
+						dynamicContentElement.attributeValue("language-id"),
+						languageId)) {
+
+					matchingElement = dynamicContentElement;
+
+					break;
+				}
+			}
+
+			if (matchingElement == null) {
+				matchingElement = dynamicContentElements.get(0);
+			}
+
+			for (Element dynamicContentElement : dynamicContentElements) {
+				if (dynamicContentElement != matchingElement) {
+					dynamicElementElement.remove(dynamicContentElement);
+				}
+			}
+		}
 	}
 
 	private String _getContent(

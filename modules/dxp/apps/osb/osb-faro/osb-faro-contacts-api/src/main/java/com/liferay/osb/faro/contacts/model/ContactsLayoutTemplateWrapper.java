@@ -435,3 +435,4 @@ public class ContactsLayoutTemplateWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1563010082

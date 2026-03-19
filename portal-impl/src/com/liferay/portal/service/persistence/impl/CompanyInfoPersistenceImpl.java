@@ -822,3 +822,4 @@ public class CompanyInfoPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1710342786

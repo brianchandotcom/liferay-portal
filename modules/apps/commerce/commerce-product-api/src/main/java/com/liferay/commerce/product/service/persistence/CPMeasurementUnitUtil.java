@@ -1405,3 +1405,4 @@ public class CPMeasurementUnitUtil {
 	private static volatile CPMeasurementUnitPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1610711109

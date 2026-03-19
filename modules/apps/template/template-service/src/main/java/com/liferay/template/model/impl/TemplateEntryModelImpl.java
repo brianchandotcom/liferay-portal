@@ -1167,3 +1167,4 @@ public class TemplateEntryModelImpl
 	private TemplateEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1821483392

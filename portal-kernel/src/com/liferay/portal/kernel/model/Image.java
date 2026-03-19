@@ -51,3 +51,4 @@ public interface Image extends ImageModel, PersistedModel {
 	public void setTextObj(byte[] textObj);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:753832360

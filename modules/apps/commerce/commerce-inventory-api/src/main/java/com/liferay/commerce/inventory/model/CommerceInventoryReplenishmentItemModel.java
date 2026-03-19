@@ -298,3 +298,4 @@ public interface CommerceInventoryReplenishmentItemModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1742922435

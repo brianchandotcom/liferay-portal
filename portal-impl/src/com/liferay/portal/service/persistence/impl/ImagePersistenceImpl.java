@@ -1400,3 +1400,4 @@ public class ImagePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-81895688

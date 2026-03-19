@@ -60,3 +60,4 @@ public interface CommerceInventoryWarehouse
 	public boolean isGeolocated();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1131368859

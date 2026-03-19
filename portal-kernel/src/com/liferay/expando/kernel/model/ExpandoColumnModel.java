@@ -210,3 +210,4 @@ public interface ExpandoColumnModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1404352673

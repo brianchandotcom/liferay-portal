@@ -97,3 +97,4 @@ public class AccountEntryTable extends BaseTable<AccountEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-110914125

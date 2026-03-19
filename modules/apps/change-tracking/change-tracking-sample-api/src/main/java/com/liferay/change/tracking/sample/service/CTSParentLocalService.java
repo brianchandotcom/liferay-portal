@@ -288,3 +288,4 @@ public interface CTSParentLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2118862870

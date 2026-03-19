@@ -94,3 +94,4 @@ public class MBMessageTable extends BaseTable<MBMessageTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1345852243

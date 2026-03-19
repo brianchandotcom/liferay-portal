@@ -28,6 +28,7 @@ public class DLFileEntryTypeUpgradeProcess extends UpgradeProcess {
 				"select fileEntryTypeId, companyId, userId from " +
 					"DLFileEntryType where fileEntryTypeKey in ('IMAGE " +
 						"GALLERY IMAGE', 'Image Gallery Image')");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

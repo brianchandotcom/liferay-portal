@@ -407,3 +407,4 @@ public class DDMContentLocalServiceUtil {
 			DDMContentLocalServiceUtil.class, DDMContentLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1421593038

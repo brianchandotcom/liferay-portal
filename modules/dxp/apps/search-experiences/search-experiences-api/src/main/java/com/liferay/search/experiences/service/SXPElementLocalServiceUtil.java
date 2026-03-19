@@ -394,3 +394,4 @@ public class SXPElementLocalServiceUtil {
 			SXPElementLocalServiceUtil.class, SXPElementLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-411735547

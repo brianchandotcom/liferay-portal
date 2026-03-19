@@ -429,3 +429,4 @@ public class CommerceNotificationAttachmentLocalServiceUtil {
 			CommerceNotificationAttachmentLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:665624983

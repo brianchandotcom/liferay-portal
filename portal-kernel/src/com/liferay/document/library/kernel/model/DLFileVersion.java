@@ -90,3 +90,4 @@ public interface DLFileVersion
 			extraSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:483811389

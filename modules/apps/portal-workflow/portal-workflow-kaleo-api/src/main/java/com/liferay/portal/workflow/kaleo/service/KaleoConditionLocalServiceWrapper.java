@@ -390,3 +390,4 @@ public class KaleoConditionLocalServiceWrapper
 	private KaleoConditionLocalService _kaleoConditionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1296648991

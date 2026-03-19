@@ -129,3 +129,4 @@ public class KaleoProcessLinkCacheModel
 	public long DDMTemplateId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1621704944

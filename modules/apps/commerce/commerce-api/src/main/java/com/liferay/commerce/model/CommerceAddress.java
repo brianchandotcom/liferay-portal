@@ -65,3 +65,4 @@ public interface CommerceAddress extends CommerceAddressModel {
 	public boolean isSameAddress(CommerceAddress commerceAddress);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1275177839

@@ -722,3 +722,4 @@ public interface CalendarNotificationTemplatePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1630597098

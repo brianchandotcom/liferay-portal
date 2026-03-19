@@ -315,3 +315,4 @@ public class SegmentsExperimentCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-615398035

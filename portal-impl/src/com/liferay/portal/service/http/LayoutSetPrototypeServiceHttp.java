@@ -508,3 +508,4 @@ public class LayoutSetPrototypeServiceHttp {
 		new Class[] {long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1653062143

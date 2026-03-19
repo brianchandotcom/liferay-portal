@@ -1060,3 +1060,4 @@ public class LayoutSetUtil {
 	private static volatile LayoutSetPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-934667257

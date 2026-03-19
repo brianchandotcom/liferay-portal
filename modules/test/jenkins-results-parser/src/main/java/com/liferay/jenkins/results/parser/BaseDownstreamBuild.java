@@ -622,6 +622,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		StringBuilder sb = new StringBuilder();
 
 		try (InputStream inputStream = poshiWarningsURL.openStream();
+
 			GZIPInputStream gzipInputStream = new GZIPInputStream(
 				inputStream)) {
 

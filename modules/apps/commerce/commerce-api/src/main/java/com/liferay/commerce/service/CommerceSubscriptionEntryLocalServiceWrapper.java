@@ -755,3 +755,4 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 		_commerceSubscriptionEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1894108683

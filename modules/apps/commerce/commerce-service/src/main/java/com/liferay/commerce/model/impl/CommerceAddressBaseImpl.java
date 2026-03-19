@@ -31,3 +31,4 @@ public abstract class CommerceAddressBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:462695637

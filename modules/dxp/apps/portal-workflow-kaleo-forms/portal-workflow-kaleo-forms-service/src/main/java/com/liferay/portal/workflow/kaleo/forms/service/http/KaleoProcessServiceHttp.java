@@ -329,3 +329,4 @@ public class KaleoProcessServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1458730212

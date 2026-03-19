@@ -207,3 +207,4 @@ public interface DDMStorageLinkModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1143986654

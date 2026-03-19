@@ -366,3 +366,4 @@ public interface KaleoInstanceTokenLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1729114486

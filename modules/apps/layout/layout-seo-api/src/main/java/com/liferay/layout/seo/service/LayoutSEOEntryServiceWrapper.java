@@ -122,3 +122,4 @@ public class LayoutSEOEntryServiceWrapper
 	private LayoutSEOEntryService _layoutSEOEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:683196863

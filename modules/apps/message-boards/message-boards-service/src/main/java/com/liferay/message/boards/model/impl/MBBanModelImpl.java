@@ -989,3 +989,4 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private MBBan _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:905952407

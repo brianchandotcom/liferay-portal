@@ -51,3 +51,4 @@ public class RecentLayoutRevisionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2005340399

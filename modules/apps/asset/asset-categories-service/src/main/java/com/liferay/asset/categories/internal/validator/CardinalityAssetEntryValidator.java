@@ -10,15 +10,26 @@ import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,11 +56,35 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 		long classNameId = _classNameLocalService.getClassNameId(className);
 
-		for (AssetVocabulary assetVocabulary :
-				_assetVocabularyLocalService.getGroupsVocabularies(
-					_siteConnectedGroupGroupProvider.
-						getCurrentAndAncestorSiteAndDepotGroupIds(groupId))) {
+		List<AssetVocabulary> assetVocabularies = new ArrayList<>(
+			_assetVocabularyLocalService.getGroupsVocabularies(
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(groupId)));
 
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564")) {
+
+			List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
+				new ArrayList<>(
+					_assetVocabularyGroupRelLocalService.
+						getAssetVocabularyGroupRelsByGroupId(groupId));
+
+			assetVocabularyGroupRels.addAll(
+				_assetVocabularyGroupRelLocalService.
+					getAssetVocabularyGroupRelsByGroupId(
+						GroupConstants.ANY_PARENT_GROUP_ID));
+
+			assetVocabularies.addAll(
+				TransformUtil.transform(
+					assetVocabularyGroupRels,
+					assetVocabularyGroupRel ->
+						_assetVocabularyLocalService.getVocabulary(
+							assetVocabularyGroupRel.getVocabularyId())));
+		}
+
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			validate(
 				groupId, classNameId, classTypePK, categoryIds,
 				assetVocabulary);
@@ -83,7 +118,8 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 	}
 
 	private boolean _isCategorizable(
-		long groupId, String className, long classPK) {
+			long groupId, String className, long classPK)
+		throws PortalException {
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -93,6 +129,15 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 			!assetRendererFactory.isCategorizable()) {
 
 			return false;
+		}
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (Validator.isNotNull(
+				_assetEntryLocalService.fetchEntry(className, classPK)) &&
+			group.isDepot()) {
+
+			return true;
 		}
 
 		if (classPK != 0L) {
@@ -127,10 +172,20 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 		CardinalityAssetEntryValidator.class.getName());
 
 	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
+
+	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;

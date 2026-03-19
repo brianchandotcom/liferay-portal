@@ -122,6 +122,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"'%com_liferay_portal_search_web_low_level_search_options_",
 					"portlet_LowLevelSearchOptionsPortlet_INSTANCE%' and ",
 					"PortletPreferenceValue.name = 'attributes'"));
+
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +
@@ -172,6 +173,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"SearchBarPortlet_INSTANCE_%' and ",
 					"PortletPreferenceValue.name = ",
 					"'suggestionsContributorConfigurations'"));
+
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +
@@ -232,6 +234,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"'%com_liferay_search_experiences_web_internal_blueprint_",
 					"options_portlet_SXPBlueprintOptionsPortlet_INSTANCE_%' ",
 					"and PortletPreferenceValue.name = 'sxpBlueprintId'"));
+
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +

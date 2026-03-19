@@ -643,3 +643,4 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:12445404

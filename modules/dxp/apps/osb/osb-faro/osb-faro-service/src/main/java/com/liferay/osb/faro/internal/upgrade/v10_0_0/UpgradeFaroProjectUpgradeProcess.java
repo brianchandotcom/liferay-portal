@@ -7,6 +7,7 @@ package com.liferay.osb.faro.internal.upgrade.v10_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -45,7 +46,7 @@ public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getLong(1);
+					return resultSet.getLong("roleId");
 				}
 
 				throw new Exception("Could not find site owner role ID");
@@ -60,27 +61,28 @@ public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 					"FaroProject.faroProjectId from OSBFaro_FaroProject inner ",
 					"join OSBFaro_FaroUser on OSBFaro_FaroProject.groupId = ",
 					"OSBFaro_FaroUser.groupId where OSBFaro_FaroUser.roleId = ",
-					"?"))) {
+					"?"));
+			PreparedStatement updatePreparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"update OSBFaro_FaroProject set " +
+						"incidentReportEmailAddresses = ? where " +
+							"faroProjectId = ?")) {
 
 			preparedStatement.setLong(1, _getSiteOwnerRoleId());
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					try (PreparedStatement updatePreparedStatement =
-							connection.prepareStatement(
-								"update OSBFaro_FaroProject set " +
-									"incidentReportEmailAddresses = ? where " +
-										"faroProjectId = ?")) {
+					updatePreparedStatement.setString(
+						1, "[\"" + resultSet.getString("emailAddress") + "\"]");
+					updatePreparedStatement.setLong(
+						2, resultSet.getLong("faroProjectId"));
 
-						updatePreparedStatement.setString(
-							1, "[\"" + resultSet.getString(1) + "\"]");
-						updatePreparedStatement.setLong(
-							2, resultSet.getLong(2));
-
-						updatePreparedStatement.executeUpdate();
-					}
+					updatePreparedStatement.addBatch();
 				}
 			}
+
+			updatePreparedStatement.executeBatch();
 		}
 	}
 

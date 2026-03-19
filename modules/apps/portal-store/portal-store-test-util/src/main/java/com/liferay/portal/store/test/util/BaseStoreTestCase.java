@@ -8,13 +8,20 @@ package com.liferay.portal.store.test.util;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
@@ -31,12 +38,13 @@ public abstract class BaseStoreTestCase {
 	public void setUp() {
 		_companyId = RandomTestUtil.nextLong();
 		_repositoryId = RandomTestUtil.nextLong();
+
 		_store = getStore();
 	}
 
 	@After
-	public void tearDown() {
-		_store.deleteDirectory(_companyId, _repositoryId, StringPool.SLASH);
+	public void tearDown() throws PortalException {
+		_store.deleteDirectory(_companyId);
 	}
 
 	@Test
@@ -381,6 +389,37 @@ public abstract class BaseStoreTestCase {
 		}
 	}
 
+	@Test
+	public void testVerifyCompanyStores() throws Exception {
+		String fileName = RandomTestUtil.randomString();
+		String warnMessage = StringBundler.concat(
+			"Manually remove unused store ", _companyId,
+			" that belongs to company ", _companyId,
+			" if it is no longer used anywhere else");
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				getStoreClassName(), LoggerTestUtil.WARN)) {
+
+			_store.verifyCompanyStores();
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertFalse(
+				messages.toString(), messages.contains(warnMessage));
+
+			_store.addFile(
+				_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+
+			_store.verifyCompanyStores();
+
+			messages = logCapture.getMessages();
+
+			Assert.assertTrue(
+				messages.toString(), messages.contains(warnMessage));
+		}
+	}
+
 	protected void addVersions(String fileName, int newVersionCount)
 		throws Exception {
 
@@ -394,6 +433,10 @@ public abstract class BaseStoreTestCase {
 	}
 
 	protected abstract Store getStore();
+
+	protected String getStoreClassName() {
+		return PropsUtil.get(PropsKeys.DL_STORE_IMPL);
+	}
 
 	protected static final byte[] DATA_VERSION =
 		new byte[BaseStoreTestCase._DATA_SIZE];

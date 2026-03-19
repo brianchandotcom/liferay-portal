@@ -43,3 +43,4 @@ public class ExpandoRowTable extends BaseTable<ExpandoRowTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-927880219

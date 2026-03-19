@@ -82,3 +82,4 @@ public interface SegmentsEntryRelService extends BaseService {
 		long segmentsEntryId, long classNameId, long classPK);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2018630828

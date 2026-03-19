@@ -807,3 +807,4 @@ public class AssetVocabularyGroupRelModelImpl
 	private AssetVocabularyGroupRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1572002339

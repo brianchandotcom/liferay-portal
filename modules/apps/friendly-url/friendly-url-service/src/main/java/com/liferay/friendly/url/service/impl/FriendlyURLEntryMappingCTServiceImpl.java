@@ -49,3 +49,4 @@ public class FriendlyURLEntryMappingCTServiceImpl
 		_friendlyURLEntryMappingPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1205382920

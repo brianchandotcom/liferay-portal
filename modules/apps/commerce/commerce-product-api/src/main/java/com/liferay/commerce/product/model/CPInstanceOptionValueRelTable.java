@@ -70,3 +70,4 @@ public class CPInstanceOptionValueRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1638300803

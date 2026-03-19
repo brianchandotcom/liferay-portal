@@ -222,3 +222,4 @@ public class ObjectLayoutColumnCacheModel
 	public int size;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-917379415

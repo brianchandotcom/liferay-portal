@@ -54,13 +54,17 @@ public abstract class BaseTestrayAttachmentUploader
 
 		testrayAttachmentRecorder.record();
 
-		try {
-			JenkinsResultsParserUtil.copy(
-				testrayAttachmentRecorder.getRecordedFilesBaseDir(),
-				preparedFilesBaseDir);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+		File recordedFilesBaseDir =
+			testrayAttachmentRecorder.getRecordedFilesBaseDir();
+
+		if (recordedFilesBaseDir.exists()) {
+			try {
+				JenkinsResultsParserUtil.copy(
+					recordedFilesBaseDir, preparedFilesBaseDir);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 		}
 
 		for (File preparedFile : getPreparedFiles()) {

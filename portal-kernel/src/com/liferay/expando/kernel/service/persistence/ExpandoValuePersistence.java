@@ -1470,3 +1470,4 @@ public interface ExpandoValuePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1255546579

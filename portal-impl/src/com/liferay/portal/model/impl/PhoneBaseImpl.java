@@ -38,3 +38,4 @@ public abstract class PhoneBaseImpl extends PhoneModelImpl implements Phone {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:475336797

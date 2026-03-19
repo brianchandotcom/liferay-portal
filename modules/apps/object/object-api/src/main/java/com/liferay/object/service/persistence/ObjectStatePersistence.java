@@ -791,3 +791,4 @@ public interface ObjectStatePersistence extends BasePersistence<ObjectState> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1395361288

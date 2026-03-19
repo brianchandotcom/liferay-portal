@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch8.internal.sidecar;
 
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.io.Deserializer;
-import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
@@ -23,16 +22,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
-
 import java.net.URL;
 import java.net.URLClassLoader;
 
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Tina Tian
@@ -42,25 +38,9 @@ public class PersistedProcessUtil {
 	public static <T extends Serializable> ProcessChannel<T> start(
 		PersistedProcess persistedProcess, ProcessExecutor processExecutor) {
 
-		String[] processCallableClassNames =
-			persistedProcess.getProcessCallableClassNames();
-
-		if (processCallableClassNames.length == 0) {
-			throw new IllegalArgumentException(
-				"No process callable is defined");
-		}
-
 		ClassLoader reactClassLoader = new URLClassLoader(
 			new URL[] {persistedProcess.getBundleURL()},
 			PortalClassLoaderUtil.getClassLoader());
-
-		List<ProcessCallable<?>> processCallables = new ArrayList<>();
-
-		for (String processCallableClassName : processCallableClassNames) {
-			processCallables.add(
-				(ProcessCallable<?>)_getInstance(
-					reactClassLoader, processCallableClassName));
-		}
 
 		ProcessConfig persistedProcessConfig =
 			persistedProcess.getProcessConfig();
@@ -82,36 +62,40 @@ public class PersistedProcessUtil {
 
 		ProcessChannel<?> processChannel = null;
 
-		for (ProcessCallable<?> processCallable : processCallables) {
-			if (processChannel == null) {
-				try {
-					processChannel = processExecutor.execute(
-						processConfig, processCallable);
-				}
-				catch (ProcessException processException) {
-					throw new RuntimeException(
-						"Unable to start process " +
-							persistedProcess.getProcessName(),
-						processException);
+		try {
+			processChannel = processExecutor.execute(
+				processConfig,
+				persistedProcess.getSidecarMainProcessCallable());
+		}
+		catch (ProcessException processException) {
+			throw new RuntimeException(
+				"Unable to start process " + persistedProcess.getProcessName(),
+				processException);
+		}
+
+		NoticeableFuture<?> noticeableFuture = processChannel.write(
+			persistedProcess.getStartSidecarProcessCallable());
+
+		try {
+			noticeableFuture.get();
+		}
+		catch (Exception exception1) {
+			NoticeableFuture<?> processNoticeableFuture =
+				processChannel.getProcessNoticeableFuture();
+
+			processNoticeableFuture.cancel(true);
+
+			try {
+				processNoticeableFuture.get();
+			}
+			catch (Exception exception2) {
+				if (exception2 instanceof ExecutionException) {
+					exception1.addSuppressed(exception2.getCause());
 				}
 			}
-			else {
-				NoticeableFuture<?> noticeableFuture = processChannel.write(
-					processCallable);
 
-				try {
-					noticeableFuture.get();
-				}
-				catch (Exception exception) {
-					NoticeableFuture<?> processNoticeableFuture =
-						processChannel.getProcessNoticeableFuture();
-
-					processNoticeableFuture.cancel(true);
-
-					throw new RuntimeException(
-						"Unable to execute process callable", exception);
-				}
-			}
+			throw new RuntimeException(
+				"Unable to execute process callable", exception1);
 		}
 
 		return (ProcessChannel<T>)processChannel;
@@ -172,22 +156,6 @@ public class PersistedProcessUtil {
 		}
 		else {
 			_log.error(processLog.getMessage(), processLog.getThrowable());
-		}
-	}
-
-	private static Object _getInstance(
-		ClassLoader classLoader, String className) {
-
-		try {
-			Class<?> clazz = classLoader.loadClass(className);
-
-			Constructor<?> constructor = clazz.getConstructor();
-
-			return constructor.newInstance();
-		}
-		catch (Exception exception) {
-			throw new IllegalStateException(
-				"Unable to create instance for " + className, exception);
 		}
 	}
 

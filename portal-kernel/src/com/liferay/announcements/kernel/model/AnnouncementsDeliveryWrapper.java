@@ -393,3 +393,4 @@ public class AnnouncementsDeliveryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1739846135

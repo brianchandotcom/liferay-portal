@@ -310,3 +310,4 @@ public class NestedSetsTreeEntryLocalServiceUtil {
 	private static volatile NestedSetsTreeEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1736199042

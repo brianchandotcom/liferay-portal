@@ -1106,3 +1106,4 @@ public class DefinitionUtil {
 	private static volatile DefinitionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:584175397

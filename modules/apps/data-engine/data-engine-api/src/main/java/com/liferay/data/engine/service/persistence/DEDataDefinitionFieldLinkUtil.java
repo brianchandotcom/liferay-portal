@@ -1999,3 +1999,4 @@ public class DEDataDefinitionFieldLinkUtil {
 	private static volatile DEDataDefinitionFieldLinkPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-343177300

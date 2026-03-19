@@ -90,3 +90,4 @@ public class ObjectViewServiceUtil {
 		new Snapshot<>(ObjectViewServiceUtil.class, ObjectViewService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:649967739

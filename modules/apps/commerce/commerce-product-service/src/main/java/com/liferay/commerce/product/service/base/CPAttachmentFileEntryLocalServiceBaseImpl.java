@@ -758,3 +758,4 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 		CPAttachmentFileEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1763934832

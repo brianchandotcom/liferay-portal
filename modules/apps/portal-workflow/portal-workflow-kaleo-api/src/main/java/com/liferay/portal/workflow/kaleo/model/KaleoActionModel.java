@@ -426,3 +426,4 @@ public interface KaleoActionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:505247271

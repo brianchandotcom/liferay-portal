@@ -39,3 +39,4 @@ public abstract class SavedContentEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1911096913

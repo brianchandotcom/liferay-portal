@@ -22,7 +22,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{

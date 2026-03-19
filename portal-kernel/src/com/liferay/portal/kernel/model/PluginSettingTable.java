@@ -42,3 +42,4 @@ public class PluginSettingTable extends BaseTable<PluginSettingTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1102185547

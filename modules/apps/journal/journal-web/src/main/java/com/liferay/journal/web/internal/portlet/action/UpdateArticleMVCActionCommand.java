@@ -136,13 +136,19 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 					portletResource);
 
 			if (portletPreferences != null) {
-				Group group = _groupLocalService.fetchGroup(
-					article.getGroupId());
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-				if (group != null) {
-					portletPreferences.setValue(
-						"groupExternalReferenceCode",
-						group.getExternalReferenceCode());
+				if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
+					Group group = _groupLocalService.fetchGroup(
+						article.getGroupId());
+
+					if (group != null) {
+						portletPreferences.setValue(
+							"groupExternalReferenceCode",
+							group.getExternalReferenceCode());
+					}
 				}
 
 				portletPreferences.setValue(

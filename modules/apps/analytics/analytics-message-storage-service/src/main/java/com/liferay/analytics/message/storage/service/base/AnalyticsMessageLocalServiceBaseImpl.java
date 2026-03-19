@@ -555,3 +555,4 @@ public abstract class AnalyticsMessageLocalServiceBaseImpl
 	private boolean _useTempFile;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1034630726

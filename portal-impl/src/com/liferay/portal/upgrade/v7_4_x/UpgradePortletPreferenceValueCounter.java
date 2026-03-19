@@ -20,6 +20,7 @@ public class UpgradePortletPreferenceValueCounter extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet1 = statement.executeQuery(
 				StringBundler.concat(
 					"select currentId from Counter where name = '",

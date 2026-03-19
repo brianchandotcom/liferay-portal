@@ -126,3 +126,4 @@ public abstract class ObjectValidationRuleServiceBaseImpl
 		ObjectValidationRuleServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:45754575

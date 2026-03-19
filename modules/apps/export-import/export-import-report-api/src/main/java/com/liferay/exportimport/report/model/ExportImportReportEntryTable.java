@@ -82,3 +82,4 @@ public class ExportImportReportEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1289063528

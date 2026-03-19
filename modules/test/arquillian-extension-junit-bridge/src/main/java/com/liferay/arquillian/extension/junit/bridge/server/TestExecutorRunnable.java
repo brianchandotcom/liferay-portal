@@ -71,6 +71,7 @@ public class TestExecutorRunnable implements Runnable {
 	public void run() {
 		try (Socket socket = new Socket(
 				_reportServerHostName, _reportServerPort);
+
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				socket.getOutputStream());
 			ObjectInputStream objectInputStream = new ObjectInputStream(

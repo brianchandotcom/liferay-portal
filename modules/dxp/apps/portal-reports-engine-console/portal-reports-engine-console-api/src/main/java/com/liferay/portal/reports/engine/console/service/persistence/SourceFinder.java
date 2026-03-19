@@ -38,3 +38,4 @@ public interface SourceFinder {
 					orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1548732365

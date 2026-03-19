@@ -328,3 +328,4 @@ public class OAuthClientEntryCacheModel
 	public String tokenRequestParametersJSON;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2108411939

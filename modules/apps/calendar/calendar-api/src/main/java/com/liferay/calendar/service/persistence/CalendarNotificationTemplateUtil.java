@@ -991,3 +991,4 @@ public class CalendarNotificationTemplateUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:763287386

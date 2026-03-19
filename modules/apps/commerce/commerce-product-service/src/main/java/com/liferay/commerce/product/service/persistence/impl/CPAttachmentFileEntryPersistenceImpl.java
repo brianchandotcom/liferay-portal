@@ -9828,3 +9828,4 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-872225146

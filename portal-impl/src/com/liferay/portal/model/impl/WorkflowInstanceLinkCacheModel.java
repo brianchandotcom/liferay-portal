@@ -212,3 +212,4 @@ public class WorkflowInstanceLinkCacheModel
 	public long workflowInstanceId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2133460852

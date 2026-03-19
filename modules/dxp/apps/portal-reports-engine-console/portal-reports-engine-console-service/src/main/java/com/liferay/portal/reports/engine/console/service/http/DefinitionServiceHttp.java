@@ -336,3 +336,4 @@ public class DefinitionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1280428027

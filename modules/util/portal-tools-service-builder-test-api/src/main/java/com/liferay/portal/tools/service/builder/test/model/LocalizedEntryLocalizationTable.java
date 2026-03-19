@@ -48,3 +48,4 @@ public class LocalizedEntryLocalizationTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1955072385

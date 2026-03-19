@@ -529,3 +529,4 @@ public class JournalArticleCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1158676019

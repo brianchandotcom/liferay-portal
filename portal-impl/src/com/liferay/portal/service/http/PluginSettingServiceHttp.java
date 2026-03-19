@@ -92,3 +92,4 @@ public class PluginSettingServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1192066878

@@ -1510,3 +1510,4 @@ public interface KaleoDefinitionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-898646084

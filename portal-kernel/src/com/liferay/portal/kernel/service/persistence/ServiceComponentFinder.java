@@ -18,3 +18,4 @@ public interface ServiceComponentFinder {
 		findByMaxBuildNumber();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-235658902

@@ -23,3 +23,4 @@ public interface DLFileEntryMetadataFinder {
 			findByNoStructures();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1859907154

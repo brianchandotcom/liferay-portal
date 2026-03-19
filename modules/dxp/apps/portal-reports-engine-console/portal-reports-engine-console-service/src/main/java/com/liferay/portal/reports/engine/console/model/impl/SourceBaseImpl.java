@@ -38,3 +38,4 @@ public abstract class SourceBaseImpl extends SourceModelImpl implements Source {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1257331666

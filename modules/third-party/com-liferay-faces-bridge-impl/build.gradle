@@ -1,5 +1,23 @@
-apply from: "../../build-jakarta-transformer.gradle"
+ext {
+	gitHash = "9f0e9a3100140368631618f84fc5dae5e33d79bd"
+	gitHubOwner = "liferay"
+	gitHubRepository = "liferay-faces-bridge-impl"
+	mvnJARInclude = "com.liferay.faces.bridge.impl-7.0.0.jar"
+	mvnTargetDir = "bridge-impl/target"
+}
 
-dependencies {
-	compileOnly group: "com.liferay.faces", name: "com.liferay.faces.bridge.impl", transitive: false, version: "4.3.0"
+apply from: "../build-maven.gradle"
+
+downloadSource {
+	doLast {
+		File pomXmlFile = new File(mvnSourceDir, "pom.xml")
+
+		if (pomXmlFile.exists()) {
+			pomXmlFile.text = pomXmlFile.text.replace("<module>demo</module>", "")
+			pomXmlFile.text = pomXmlFile.text.replace("<module>issue</module>", "")
+			pomXmlFile.text = pomXmlFile.text.replace("<module>support</module>", "")
+			pomXmlFile.text = pomXmlFile.text.replace("<module>tck</module>", "")
+			pomXmlFile.text = pomXmlFile.text.replace("<module>test</module>", "")
+		}
+	}
 }

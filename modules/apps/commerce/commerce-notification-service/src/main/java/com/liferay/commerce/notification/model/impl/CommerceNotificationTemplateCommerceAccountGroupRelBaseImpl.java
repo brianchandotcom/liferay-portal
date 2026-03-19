@@ -45,3 +45,4 @@ public abstract class
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1270617910

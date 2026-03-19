@@ -138,3 +138,4 @@ public class AccountEntryOrganizationRelCacheModel
 	public long organizationId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-274994168

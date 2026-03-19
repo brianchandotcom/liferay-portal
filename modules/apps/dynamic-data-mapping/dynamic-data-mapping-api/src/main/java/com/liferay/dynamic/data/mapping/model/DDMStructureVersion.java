@@ -62,3 +62,4 @@ public interface DDMStructureVersion
 	public void setDDMForm(DDMForm ddmForm);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1341620207

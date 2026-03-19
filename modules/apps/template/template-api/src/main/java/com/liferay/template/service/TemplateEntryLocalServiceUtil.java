@@ -456,3 +456,4 @@ public class TemplateEntryLocalServiceUtil {
 			TemplateEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1936612832

@@ -5,12 +5,12 @@
 
 package com.liferay.portal.tools.db.migration.importer;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -87,7 +87,9 @@ public class DBMigrationImportProcess {
 		StringBundler sb = new StringBundler(6);
 
 		try (Connection connection = _sourceDataSource.getConnection();
+
 			Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select buildDate, buildNumber, schemaVersion from Release_ " +
 					"where servletContextName = 'portal'")) {
@@ -382,6 +384,7 @@ public class DBMigrationImportProcess {
 
 		for (String sql : _syncInitialSQLs) {
 			try (Connection connection = dataSource.getConnection();
+
 				Statement statement = connection.createStatement()) {
 
 				statement.executeUpdate(sql);
@@ -398,6 +401,7 @@ public class DBMigrationImportProcess {
 				_executorService.submit(
 					() -> {
 						try (Connection connection = dataSource.getConnection();
+
 							Statement statement =
 								connection.createStatement()) {
 
@@ -423,6 +427,7 @@ public class DBMigrationImportProcess {
 
 		for (String sql : _syncFinalSQLs) {
 			try (Connection connection = dataSource.getConnection();
+
 				Statement statement = connection.createStatement()) {
 
 				statement.executeUpdate(sql);

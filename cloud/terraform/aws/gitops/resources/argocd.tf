@@ -74,7 +74,7 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 										},
 										{
 											name="gateway.className"
-											value=var.gateway_class_name
+											value=local.gateway_class_name
 										},
 										{
 											name="gateway.name"
@@ -161,7 +161,7 @@ resource "kubernetes_manifest" "infrastructure_appproject" {
 					server="https://kubernetes.default.svc"
 				},
 				{
-					namespace="liferay-*"
+					namespace=local.liferay_namespace_pattern
 					server="https://kubernetes.default.svc"
 				},
 				{
@@ -253,7 +253,7 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 								},
 								{
 									name="gateway.className"
-									value=var.gateway_class_name
+									value=local.gateway_class_name
 								},
 								{
 									name="gateway.envoyProxyRoleArn"
@@ -364,18 +364,6 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 											value=local.gateway_name
 										},
 										{
-											name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-											value="arn:aws:iam::${local.account_id}:role/${var.deployment_name}-irsa"
-										},
-										{
-											name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.create"
-											value=true
-										},
-										{
-											name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.name"
-											value="liferay-default"
-										},
-										{
 											name="global.aws.accountId"
 											value=local.account_id
 										},
@@ -385,13 +373,25 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 										},
 										{
 											name="global.environmentId"
-											value=var.infrastructure_git_repo_config.target.slugEnvironmentId
+											value=var.liferay_git_repo_config.target.slugEnvironmentId
+										},
+										{
+											name="global.liferayServiceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+											value=data.aws_iam_role.liferay_irsa.arn
+										},
+										{
+											name="global.liferayServiceAccount.create"
+											value=true
+										},
+										{
+											name="global.liferayServiceAccount.name"
+											value="liferay-default"
 										},
 										{
 											name="global.projectId"
-											value=var.infrastructure_git_repo_config.target.slugProjectId
+											value=var.liferay_git_repo_config.target.slugProjectId
 										},
-									]
+									],
 									valueFiles=[
 										"$values/${var.liferay_git_repo_config.source_paths.base}/${var.liferay_git_repo_config.source_paths.values_filename}",
 										"$values/{{path}}/${var.liferay_git_repo_config.source_paths.values_filename}",
@@ -466,7 +466,7 @@ resource "kubernetes_manifest" "liferay_appproject" {
 			description="ArgoCD project for Liferay cloud native applications."
 			destinations=[
 				{
-					namespace="liferay-*"
+					namespace=local.liferay_namespace_pattern
 					server="https://kubernetes.default.svc"
 				},
 			]

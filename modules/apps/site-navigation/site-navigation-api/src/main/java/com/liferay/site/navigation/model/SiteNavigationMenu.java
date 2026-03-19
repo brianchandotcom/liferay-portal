@@ -75,3 +75,4 @@ public interface SiteNavigationMenu
 	public boolean isPrimary();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1559345548

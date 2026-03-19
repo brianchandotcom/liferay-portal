@@ -33,6 +33,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -239,6 +240,50 @@ public class AzureStore implements Store {
 			_getAzurePath(companyId, repositoryId, fileName, versionLabel));
 
 		return blobClient.exists();
+	}
+
+	@Override
+	public void verifyCompanyStores() throws PortalException {
+		long[] companyIds = PortalInstancePool.getCompanyIds();
+
+		try {
+			PagedIterable<BlobItem> blobs =
+				_blobContainerClient.listBlobsByHierarchy(StringPool.BLANK);
+
+			for (BlobItem blobItem : blobs) {
+				if (!Boolean.TRUE.equals(blobItem.isPrefix())) {
+					continue;
+				}
+
+				String folderName = blobItem.getName();
+
+				if (folderName.endsWith(StringPool.SLASH)) {
+					folderName = folderName.substring(
+						0, folderName.length() - 1);
+				}
+
+				if (!Validator.isNumber(folderName)) {
+					continue;
+				}
+
+				long storeCompanyId = GetterUtil.getLong(folderName);
+
+				if (ArrayUtil.contains(companyIds, storeCompanyId)) {
+					continue;
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Manually remove unused store ", storeCompanyId,
+							" that belongs to company ", storeCompanyId,
+							" if it is no longer used anywhere else"));
+				}
+			}
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
 	}
 
 	@Activate

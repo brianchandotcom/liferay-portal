@@ -50,7 +50,8 @@ public class FolderSearcher extends BaseSearcher {
 	private static final String[] _FOLDER_CLASS_NAMES = {
 		"com.liferay.bookmarks.model.BookmarksFolder",
 		"com.liferay.document.library.kernel.model.DLFolder",
-		"com.liferay.journal.model.JournalFolder"
+		"com.liferay.journal.model.JournalFolder",
+		"com.liferay.object.model.ObjectEntryFolder"
 	};
 
 }

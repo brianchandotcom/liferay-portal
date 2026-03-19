@@ -137,3 +137,4 @@ public class AssetCategoryPropertyModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1613229276

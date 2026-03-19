@@ -388,3 +388,4 @@ public class CommerceAddressLocalServiceWrapper
 	private CommerceAddressLocalService _commerceAddressLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:786935859

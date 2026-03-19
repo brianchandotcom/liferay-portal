@@ -188,3 +188,4 @@ public class DDMFormInstanceReportCacheModel
 	public String data;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2061446121

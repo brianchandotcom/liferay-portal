@@ -183,3 +183,4 @@ public class CTAutoResolutionInfoCacheModel
 	public String conflictIdentifier;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1606788589

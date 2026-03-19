@@ -132,3 +132,4 @@ public class DefinitionModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-859569080

@@ -282,3 +282,4 @@ public interface MBBanModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:923201729

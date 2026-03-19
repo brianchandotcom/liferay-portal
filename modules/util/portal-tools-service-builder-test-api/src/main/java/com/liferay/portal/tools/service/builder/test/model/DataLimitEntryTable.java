@@ -43,3 +43,4 @@ public class DataLimitEntryTable extends BaseTable<DataLimitEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1824557730

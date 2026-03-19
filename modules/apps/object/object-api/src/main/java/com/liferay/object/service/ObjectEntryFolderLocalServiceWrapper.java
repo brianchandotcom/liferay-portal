@@ -273,6 +273,15 @@ public class ObjectEntryFolderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntryFolder fetchObjectEntryFolder(
+		long groupId, long companyId, long parentObjectEntryFolderId,
+		String name) {
+
+		return _objectEntryFolderLocalService.fetchObjectEntryFolder(
+			groupId, companyId, parentObjectEntryFolderId, name);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntryFolder
 		fetchObjectEntryFolderByExternalReferenceCode(
 			String externalReferenceCode, long groupId, long companyId) {
@@ -631,3 +640,4 @@ public class ObjectEntryFolderLocalServiceWrapper
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:228768141

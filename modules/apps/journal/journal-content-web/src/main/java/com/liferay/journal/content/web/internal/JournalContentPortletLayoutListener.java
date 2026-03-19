@@ -201,24 +201,20 @@ public class JournalContentPortletLayoutListener
 			return null;
 		}
 
+		long groupId = layout.getGroupId();
+
 		String groupExternalReferenceCode = GetterUtil.getString(
 			portletPreferences.getValue("groupExternalReferenceCode", null));
 
-		if (Validator.isNull(groupExternalReferenceCode)) {
-			return null;
-		}
+		if (Validator.isNotNull(groupExternalReferenceCode)) {
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				groupExternalReferenceCode, layout.getCompanyId());
 
-		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-			groupExternalReferenceCode, layout.getCompanyId());
+			if (group == null) {
+				return null;
+			}
 
-		long groupId = 0;
-
-		if (group != null) {
 			groupId = group.getGroupId();
-		}
-
-		if (groupId <= 0) {
-			return null;
 		}
 
 		String articleExternalReferenceCode = portletPreferences.getValue(

@@ -321,3 +321,4 @@ public interface JSONStorageEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1362213364

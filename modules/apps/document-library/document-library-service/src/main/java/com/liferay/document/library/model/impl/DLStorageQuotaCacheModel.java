@@ -123,3 +123,4 @@ public class DLStorageQuotaCacheModel
 	public long storageSize;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-482165192

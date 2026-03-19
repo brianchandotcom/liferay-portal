@@ -227,7 +227,13 @@ public class DLFileEntryModelDocumentContributor
 						StringPool.SPACE, text));
 			}
 		}
-		catch (IOException | PortalException exception) {
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to extract text from file version " +
+						dlFileVersion.getFileVersionId());
+			}
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}

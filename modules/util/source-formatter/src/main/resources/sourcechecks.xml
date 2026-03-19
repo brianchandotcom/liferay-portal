@@ -1788,6 +1788,11 @@
 		</check>
 	</source-processor>
 	<source-processor name="SHSourceProcessor">
+		<check name="SHSubshellCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that local variables are not assigned via subshells." />
+			<property name="enabled" value="false" />
+		</check>
 		<check name="WhitespaceCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace." />
@@ -1937,10 +1942,6 @@
 			<category name="Upgrade" />
 			<description name="Adds FragmentCollectionKey to Component annotation in classes that extend `BaseFragmentCollectionContributor`" />
 		</check>
-		<check name="UpgradeJavaBaseModelListenerCheck">
-			<category name="Upgrade" />
-			<description name="Add parameter in the onAfterUpdate and onBeforeUpdate methods of the BaseModelListener class." />
-		</check>
 		<check name="UpgradeJavaDDMFormValuesSerializerTrackerCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages." />
@@ -2016,10 +2017,6 @@
 		<check name="UpgradeJavaSortFieldNameTranslatorCheck">
 			<category name="Upgrade" />
 			<description name="Upgrade class that implements SortFieldNameTranslator." />
-		</check>
-		<check name="UpgradeJavaStorageTypeAwareCheck">
-			<category name="Upgrade" />
-			<description name="Run code to delete StorageTypeAware interface." />
 		</check>
 		<check name="UpgradeJSPFieldSetGroupCheck">
 			<category name="Upgrade" />

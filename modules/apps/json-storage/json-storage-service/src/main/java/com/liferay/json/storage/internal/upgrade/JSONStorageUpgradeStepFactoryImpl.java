@@ -67,6 +67,7 @@ public class JSONStorageUpgradeStepFactoryImpl
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(sb.toString());
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

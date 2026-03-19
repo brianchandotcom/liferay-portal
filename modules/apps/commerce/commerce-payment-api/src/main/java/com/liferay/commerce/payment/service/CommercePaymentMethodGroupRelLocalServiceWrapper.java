@@ -588,3 +588,4 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 		_commercePaymentMethodGroupRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-866646740

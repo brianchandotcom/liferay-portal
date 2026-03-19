@@ -1191,3 +1191,4 @@ public class CTSchemaVersionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-954125483

@@ -39,10 +39,13 @@ public class UncompressUtil {
 		Files.createDirectories(destinationDirectoryPath);
 
 		try (InputStream inputStream = Files.newInputStream(tarGzFilePath);
+
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(
 				inputStream, _CHARS_BUFFER_SIZE);
+
 			GzipCompressorInputStream gzipCompressorInputStream =
 				new GzipCompressorInputStream(bufferedInputStream);
+
 			TarArchiveInputStream tarArchiveInputStream =
 				new TarArchiveInputStream(gzipCompressorInputStream)) {
 
@@ -96,6 +99,7 @@ public class UncompressUtil {
 		Files.createDirectories(destinationDirectoryPath);
 
 		try (InputStream inputStream = Files.newInputStream(zipFilePath);
+
 			ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
 
 			ZipEntry zipEntry;

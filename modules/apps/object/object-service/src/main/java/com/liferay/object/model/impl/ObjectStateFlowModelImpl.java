@@ -877,3 +877,4 @@ public class ObjectStateFlowModelImpl
 	private ObjectStateFlow _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-540337205

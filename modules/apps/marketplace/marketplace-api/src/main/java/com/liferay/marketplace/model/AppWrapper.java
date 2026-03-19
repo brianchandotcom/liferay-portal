@@ -531,3 +531,4 @@ public class AppWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-895228961

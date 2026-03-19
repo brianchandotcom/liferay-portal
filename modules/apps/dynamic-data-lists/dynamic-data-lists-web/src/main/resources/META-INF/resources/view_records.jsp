@@ -23,7 +23,6 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 
 <c:if test="<%= ddlViewRecordsDisplayContext.isAdminPortlet() %>">
 	<clay:navigation-bar
-		inverted="<%= true %>"
 		navigationItems="<%= ddlViewRecordsDisplayContext.getNavigationItems() %>"
 	/>
 </c:if>

@@ -7,6 +7,7 @@ import {FieldErrors, UseFormRegister} from 'react-hook-form';
 
 import {RequiredMask} from '../../../../../../../components/FieldBase';
 import FormInput from '../../../../../../../components/Input/formInput';
+import i18n from '../../../../../../../i18n';
 import {CreateLicenseForm} from './types';
 
 type InputPropsLicense = {
@@ -19,7 +20,7 @@ type InputPropsLicense = {
 
 const LicenseDetails = ({inputProps}: InputPropsLicense) => (
 	<div className="license-details-form">
-		<div className="h5">
+		<div className="h4">
 			Environment Details <RequiredMask />
 		</div>
 
@@ -28,15 +29,19 @@ const LicenseDetails = ({inputProps}: InputPropsLicense) => (
 		<FormInput
 			{...inputProps}
 			boldLabel
-			className="custom-input text-capitalize"
+			className="custom-input"
 			helpMessage="Include a description to uniquely identify this environment. This cannot be edited later."
 			label="Description"
 			name="description"
 		/>
 
-		<div className="h5 mt-7">
-			Activation Key Server Details <RequiredMask />
-		</div>
+		<p className="h4 mt-7">
+			{i18n.translate('activation-key-server-details')}
+		</p>
+
+		<small>
+			At least one of the following pieces of information is required.
+		</small>
 
 		<hr className="mt-2" />
 

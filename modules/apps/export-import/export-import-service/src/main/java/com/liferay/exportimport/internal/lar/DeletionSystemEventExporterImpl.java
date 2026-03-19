@@ -17,7 +17,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.lar.DeletionSystemEventExporter;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -39,12 +39,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -64,14 +64,9 @@ public class DeletionSystemEventExporterImpl
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		List<Long> exportedSystemEventIds = null;
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("deletion-system-events");
-
 		Set<StagedModelType> deletionSystemEventStagedModelTypes =
 			portletDataContext.getDeletionSystemEventStagedModelTypes();
+		List<SystemEvent> systemEvents = null;
 
 		if (!deletionSystemEventStagedModelTypes.isEmpty() &&
 			MapUtil.getBoolean(
@@ -86,15 +81,34 @@ public class DeletionSystemEventExporterImpl
 					new StagedModelType(Layout.class));
 			}
 
-			exportedSystemEventIds = _exportDeletionSystemEvents(
-				portletDataContext, rootElement,
-				deletionSystemEventStagedModelTypes);
+			systemEvents = _getDeletionSystemEvents(
+				portletDataContext, deletionSystemEventStagedModelTypes);
 		}
 
-		if (exportedSystemEventIds != null) {
-			for (Long systemEventId : exportedSystemEventIds) {
-				SystemEvent systemEvent =
-					_systemEventLocalService.fetchSystemEvent(systemEventId);
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("deletion-system-events");
+
+		if (systemEvents != null) {
+			Map<String, List<SystemEvent>> batchSystemEventsMap =
+				new HashMap<>();
+
+			for (SystemEvent systemEvent : systemEvents) {
+				if (BatchEnginePortletDataHandlerRegistryUtil.hasByClassName(
+						systemEvent.getClassName(),
+						portletDataContext.getCompanyId())) {
+
+					List<SystemEvent> batchSystemEvents =
+						batchSystemEventsMap.computeIfAbsent(
+							systemEvent.getClassName(),
+							__ -> new ArrayList<>());
+
+					batchSystemEvents.add(systemEvent);
+				}
+				else {
+					_exportDeletionSystemEvent(
+						rootElement, portletDataContext, systemEvent);
+				}
 
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					systemEvent.getExtraData());
@@ -111,44 +125,34 @@ public class DeletionSystemEventExporterImpl
 				manifestSummary.addAssetTitle(
 					systemEvent.getClassName(), String.valueOf(assetTitle));
 			}
-		}
 
-		portletDataContext.addZipEntry(
-			ExportImportPathUtil.getRootPath(portletDataContext) +
-				"/deletion-system-events.xml",
-			document.formattedString());
+			portletDataContext.addZipEntry(
+				ExportImportPathUtil.getRootPath(portletDataContext) +
+					"/deletion-system-events.xml",
+				document.formattedString());
 
-		Map<String, Map<?, ?>> newPrimaryKeysMaps =
-			portletDataContext.getNewPrimaryKeysMaps();
+			for (Map.Entry<String, List<SystemEvent>> entry :
+					batchSystemEventsMap.entrySet()) {
 
-		for (String key : newPrimaryKeysMaps.keySet()) {
-			if (!key.endsWith(
-					BatchEnginePortletDataHandler.
-						BATCH_DELETE_CLASS_NAME_POSTFIX)) {
+				BatchEnginePortletDataHandler batchEnginePortletDataHandler =
+					BatchEnginePortletDataHandlerRegistryUtil.getByClassName(
+						portletDataContext.getCompanyId(), entry.getKey());
 
-				continue;
-			}
-
-			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
-				BatchEnginePortletDataHandlerRegistryUtil.getByClassName(
-					portletDataContext.getCompanyId(),
-					StringUtil.removeLast(
-						key,
-						BatchEnginePortletDataHandler.
-							BATCH_DELETE_CLASS_NAME_POSTFIX));
-
-			if (batchEnginePortletDataHandler != null) {
-				batchEnginePortletDataHandler.exportDeletionSystemEvents(
-					portletDataContext);
+				if (batchEnginePortletDataHandler != null) {
+					batchEnginePortletDataHandler.exportDeletionSystemEvents(
+						entry.getKey(), portletDataContext, entry.getValue());
+				}
 			}
 		}
 
-		if (ListUtil.isNotEmpty(exportedSystemEventIds) &&
+		if (ListUtil.isNotEmpty(systemEvents) &&
 			ExportImportThreadLocal.isStagingInProcess()) {
 
 			_exportImportProcessCallbackRegistry.registerCallback(
 				portletDataContext.getExportImportProcessId(),
-				new DeleteSystemEventsCallable(exportedSystemEventIds));
+				new DeleteSystemEventsCallable(
+					TransformUtil.transform(
+						systemEvents, SystemEvent::getSystemEventId)));
 		}
 	}
 
@@ -241,86 +245,68 @@ public class DeletionSystemEventExporterImpl
 		String className = PortalUtil.getClassName(
 			systemEvent.getClassNameId());
 
-		if (BatchEnginePortletDataHandlerRegistryUtil.hasByClassName(
-				className, portletDataContext.getCompanyId())) {
+		Element deletionSystemEventElement =
+			deletionSystemEventsElement.addElement("deletion-system-event");
 
-			Map<String, String> newPrimaryKeysMap =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					systemEvent.getClassName() +
-						BatchEnginePortletDataHandler.
-							BATCH_DELETE_CLASS_NAME_POSTFIX);
+		deletionSystemEventElement.addAttribute(
+			"class-external-reference-code",
+			systemEvent.getClassExternalReferenceCode());
+		deletionSystemEventElement.addAttribute("class-name", className);
 
-			newPrimaryKeysMap.put(
-				systemEvent.getClassExternalReferenceCode(), StringPool.BLANK);
-		}
-		else {
-			Element deletionSystemEventElement =
-				deletionSystemEventsElement.addElement("deletion-system-event");
+		if (className.equals(FragmentEntry.class.getName())) {
+			try {
+				JSONObject extraDataJSONObject = _jsonFactory.createJSONObject(
+					systemEvent.getExtraData());
 
-			deletionSystemEventElement.addAttribute(
-				"class-external-reference-code",
-				systemEvent.getClassExternalReferenceCode());
-			deletionSystemEventElement.addAttribute("class-name", className);
+				Long[] layoutIds = ArrayUtil.toArray(
+					portletDataContext.getLayoutIds());
 
-			if (className.equals(FragmentEntry.class.getName())) {
-				try {
-					JSONObject extraDataJSONObject =
-						_jsonFactory.createJSONObject(
-							systemEvent.getExtraData());
+				if (layoutIds.length > 0) {
+					String[] layoutUUIDs = new String[layoutIds.length];
 
-					Long[] layoutIds = ArrayUtil.toArray(
-						portletDataContext.getLayoutIds());
+					for (int i = 0; i < layoutIds.length; i++) {
+						Layout layout = _layoutLocalService.getLayout(
+							portletDataContext.getGroupId(),
+							portletDataContext.isPrivateLayout(), layoutIds[i]);
 
-					if (layoutIds.length > 0) {
-						String[] layoutUUIDs = new String[layoutIds.length];
-
-						for (int i = 0; i < layoutIds.length; i++) {
-							Layout layout = _layoutLocalService.getLayout(
-								portletDataContext.getGroupId(),
-								portletDataContext.isPrivateLayout(),
-								layoutIds[i]);
-
-							layoutUUIDs[i] = layout.getUuid();
-						}
-
-						extraDataJSONObject.put(
-							"layoutUUIDs", layoutUUIDs
-						).put(
-							"privateLayout",
-							portletDataContext.isPrivateLayout()
-						);
+						layoutUUIDs[i] = layout.getUuid();
 					}
 
-					deletionSystemEventElement.addAttribute(
-						"extra-data", extraDataJSONObject.toString());
+					extraDataJSONObject.put(
+						"layoutUUIDs", layoutUUIDs
+					).put(
+						"privateLayout", portletDataContext.isPrivateLayout()
+					);
 				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
 
-					deletionSystemEventElement.addAttribute(
-						"extra-data", systemEvent.getExtraData());
-				}
+				deletionSystemEventElement.addAttribute(
+					"extra-data", extraDataJSONObject.toString());
 			}
-			else {
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				deletionSystemEventElement.addAttribute(
 					"extra-data", systemEvent.getExtraData());
 			}
-
-			deletionSystemEventElement.addAttribute(
-				"group-id", String.valueOf(systemEvent.getGroupId()));
-
-			if (systemEvent.getReferrerClassNameId() > 0) {
-				deletionSystemEventElement.addAttribute(
-					"referrer-class-name",
-					PortalUtil.getClassName(
-						systemEvent.getReferrerClassNameId()));
-			}
-
-			deletionSystemEventElement.addAttribute(
-				"uuid", systemEvent.getClassUuid());
 		}
+		else {
+			deletionSystemEventElement.addAttribute(
+				"extra-data", systemEvent.getExtraData());
+		}
+
+		deletionSystemEventElement.addAttribute(
+			"group-id", String.valueOf(systemEvent.getGroupId()));
+
+		if (systemEvent.getReferrerClassNameId() > 0) {
+			deletionSystemEventElement.addAttribute(
+				"referrer-class-name",
+				PortalUtil.getClassName(systemEvent.getReferrerClassNameId()));
+		}
+
+		deletionSystemEventElement.addAttribute(
+			"uuid", systemEvent.getClassUuid());
 
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
@@ -331,12 +317,12 @@ public class DeletionSystemEventExporterImpl
 				systemEvent.getReferrerClassNameId()));
 	}
 
-	private List<Long> _exportDeletionSystemEvents(
-			PortletDataContext portletDataContext, Element rootElement,
+	private List<SystemEvent> _getDeletionSystemEvents(
+			PortletDataContext portletDataContext,
 			Set<StagedModelType> deletionSystemEventStagedModelTypes)
 		throws Exception {
 
-		List<Long> systemEventIds = new ArrayList<>();
+		List<SystemEvent> systemEvents = new ArrayList<>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_systemEventLocalService.getActionableDynamicQuery();
@@ -347,16 +333,11 @@ public class DeletionSystemEventExporterImpl
 				dynamicQuery));
 		actionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 		actionableDynamicQuery.setPerformActionMethod(
-			(SystemEvent systemEvent) -> {
-				_exportDeletionSystemEvent(
-					rootElement, portletDataContext, systemEvent);
-
-				systemEventIds.add(systemEvent.getSystemEventId());
-			});
+			(SystemEvent systemEvent) -> systemEvents.add(systemEvent));
 
 		actionableDynamicQuery.performActions();
 
-		return systemEventIds;
+		return systemEvents;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

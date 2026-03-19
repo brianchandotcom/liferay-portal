@@ -180,3 +180,4 @@ public interface FragmentCollectionService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-860931514

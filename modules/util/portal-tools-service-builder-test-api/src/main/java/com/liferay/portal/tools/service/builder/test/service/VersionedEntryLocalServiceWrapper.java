@@ -517,3 +517,4 @@ public class VersionedEntryLocalServiceWrapper
 	private VersionedEntryLocalService _versionedEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1179922925

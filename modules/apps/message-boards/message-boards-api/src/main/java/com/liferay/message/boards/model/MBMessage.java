@@ -108,3 +108,4 @@ public interface MBMessage extends MBMessageModel, PersistedModel, TreeModel {
 	public void setAttachmentsFolderId(long attachmentsFolderId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-671626065

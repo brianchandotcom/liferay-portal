@@ -96,6 +96,7 @@ public class MultipartBodyMessageBodyReaderTest {
 			"Content-Type", "multipart/form-data; boundary=" + boundary);
 
 		try (OutputStream outputStream = httpURLConnection.getOutputStream();
+
 			PrintWriter printWriter = new PrintWriter(
 				new OutputStreamWriter(outputStream, StandardCharsets.UTF_8),
 				true)) {

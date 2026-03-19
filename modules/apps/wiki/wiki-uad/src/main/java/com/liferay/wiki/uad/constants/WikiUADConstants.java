@@ -20,3 +20,4 @@ public class WikiUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:890968621

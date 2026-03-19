@@ -105,3 +105,4 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2101823749

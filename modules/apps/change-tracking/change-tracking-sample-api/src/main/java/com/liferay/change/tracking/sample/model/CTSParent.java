@@ -50,3 +50,4 @@ public interface CTSParent extends CTSParentModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1993924152

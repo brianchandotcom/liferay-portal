@@ -21,6 +21,8 @@ import com.ibm.cloud.objectstorage.services.s3.model.DeleteObjectsRequest;
 import com.ibm.cloud.objectstorage.services.s3.model.GetObjectMetadataRequest;
 import com.ibm.cloud.objectstorage.services.s3.model.GetObjectRequest;
 import com.ibm.cloud.objectstorage.services.s3.model.ListObjectsRequest;
+import com.ibm.cloud.objectstorage.services.s3.model.ListObjectsV2Request;
+import com.ibm.cloud.objectstorage.services.s3.model.ListObjectsV2Result;
 import com.ibm.cloud.objectstorage.services.s3.model.ObjectListing;
 import com.ibm.cloud.objectstorage.services.s3.model.ObjectMetadata;
 import com.ibm.cloud.objectstorage.services.s3.model.PutObjectRequest;
@@ -35,17 +37,21 @@ import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
+import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.io.unsync.UnsyncFilterInputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
@@ -59,6 +65,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -340,6 +350,65 @@ public class IBMS3Store implements Store {
 		}
 	}
 
+	@Override
+	public void verifyCompanyStores() throws PortalException {
+		try {
+			long[] companyIds = PortalInstancePool.getCompanyIds();
+			boolean hasNext = true;
+			ListObjectsV2Request listObjectsV2Request =
+				new ListObjectsV2Request(
+				).withBucketName(
+					_s3StoreConfiguration.bucketName()
+				).withDelimiter(
+					StringPool.SLASH
+				);
+
+			while (hasNext) {
+				ListObjectsV2Result listObjectsV2Result =
+					_amazonS3.listObjectsV2(listObjectsV2Request);
+
+				List<String> commonPrefixes =
+					listObjectsV2Result.getCommonPrefixes();
+
+				for (String commonPrefix : commonPrefixes) {
+					if (commonPrefix.endsWith(StringPool.SLASH)) {
+						commonPrefix = commonPrefix.substring(
+							0, commonPrefix.length() - 1);
+					}
+
+					if (!Validator.isNumber(commonPrefix)) {
+						continue;
+					}
+
+					long storeCompanyId = GetterUtil.getLong(commonPrefix);
+
+					if (ArrayUtil.contains(companyIds, storeCompanyId)) {
+						continue;
+					}
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Manually remove unused store ", storeCompanyId,
+								" that belongs to company ", storeCompanyId,
+								" if it is no longer used anywhere else"));
+					}
+				}
+
+				if (listObjectsV2Result.isTruncated()) {
+					listObjectsV2Request.setContinuationToken(
+						listObjectsV2Result.getNextContinuationToken());
+				}
+				else {
+					hasNext = false;
+				}
+			}
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_s3StoreConfiguration = ConfigurableUtil.createConfigurable(
@@ -407,9 +476,12 @@ public class IBMS3Store implements Store {
 			_amazonS3 = amazonS3ClientBuilder.build();
 		}
 
-		_threadPoolExecutor = new ThreadPoolExecutor(
+		_threadPoolExecutor = new NoticeableThreadPoolExecutor(
 			_s3StoreConfiguration.corePoolSize(),
-			_s3StoreConfiguration.maxPoolSize());
+			_s3StoreConfiguration.maxPoolSize(), 60, TimeUnit.SECONDS,
+			new LinkedBlockingQueue<>(), Executors.defaultThreadFactory(),
+			new ThreadPoolExecutor.AbortPolicy(),
+			new ThreadPoolHandlerAdapter());
 
 		_transferManager = TransferManagerBuilder.standard(
 		).withS3Client(
@@ -674,7 +746,7 @@ public class IBMS3Store implements Store {
 	private AmazonS3 _amazonS3;
 	private S3StoreConfiguration _s3StoreConfiguration;
 	private StorageClass _storageClass;
-	private ThreadPoolExecutor _threadPoolExecutor;
+	private NoticeableThreadPoolExecutor _threadPoolExecutor;
 	private TransferManager _transferManager;
 
 }

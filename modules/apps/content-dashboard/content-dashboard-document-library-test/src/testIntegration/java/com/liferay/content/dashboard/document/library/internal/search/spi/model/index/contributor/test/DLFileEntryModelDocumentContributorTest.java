@@ -8,6 +8,7 @@ package com.liferay.content.dashboard.document.library.internal.search.spi.model
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.processor.RawMetadataProcessorUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -26,12 +28,20 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.InputStream;
+
 import java.nio.charset.StandardCharsets;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,6 +69,48 @@ public class DLFileEntryModelDocumentContributorTest {
 	@Test
 	public void testFileEntryMetadataAttributes() throws Exception {
 		_testFileEntryMetadataAttributesBasicFileEntry();
+
+		TextExtractor testTextExtractor = new TextExtractor() {
+
+			@Override
+			public String extractText(
+				InputStream inputStream, int maxStringLength) {
+
+				throw new RuntimeException();
+			}
+
+		};
+
+		TextExtractor originalTextExtractor =
+			ReflectionTestUtil.getAndSetFieldValue(
+				_dlFileEntryModelDocumentContributor, "_textExtractor",
+				testTextExtractor);
+
+		Class<?> clazz = _dlFileEntryModelDocumentContributor.getClass();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				clazz.getName(), LoggerTestUtil.WARN)) {
+
+			DLFileVersion dlFileVersion =
+				_testFileEntryMetadataAttributesBasicFileEntry();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Unable to extract text from file version " +
+					dlFileVersion.getFileVersionId(),
+				logEntry.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				_dlFileEntryModelDocumentContributor, "_textExtractor",
+				originalTextExtractor);
+		}
+
 		_testFileEntryMetadataAttributesImageFileEntry(
 			"square", "dependencies/225x225.jpeg", ContentTypes.IMAGE_JPEG);
 		_testFileEntryMetadataAttributesImageFileEntry(
@@ -90,7 +142,7 @@ public class DLFileEntryModelDocumentContributorTest {
 			null, null, ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _testFileEntryMetadataAttributesBasicFileEntry()
+	private DLFileVersion _testFileEntryMetadataAttributesBasicFileEntry()
 		throws Exception {
 
 		DLFileEntry dlFileEntry = _addDLFileEntry();
@@ -106,6 +158,8 @@ public class DLFileEntryModelDocumentContributorTest {
 		Assert.assertEquals(
 			0L, GetterUtil.getLong(document.get("imageLength")));
 		Assert.assertEquals(0L, GetterUtil.getLong(document.get("imageWidth")));
+
+		return dlFileEntry.getFileVersion();
 	}
 
 	private void _testFileEntryMetadataAttributesImageFileEntry(

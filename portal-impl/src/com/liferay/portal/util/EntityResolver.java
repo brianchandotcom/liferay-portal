@@ -434,45 +434,6 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			"-//Liferay//DTD Resource Action Mapping 7.4.0//EN",
 			"liferay-resource-action-mapping_7_4_0.dtd"),
 		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 3.5.0//EN",
-			"liferay-service-builder_3_5_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 3.6.1//EN",
-			"liferay-service-builder_3_6_1.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 4.0.0//EN",
-			"liferay-service-builder_4_0_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 4.2.0//EN",
-			"liferay-service-builder_4_2_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 4.3.0//EN",
-			"liferay-service-builder_4_3_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 4.3.3//EN",
-			"liferay-service-builder_4_3_3.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 4.4.0//EN",
-			"liferay-service-builder_4_4_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 5.0.0//EN",
-			"liferay-service-builder_5_0_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 5.1.0//EN",
-			"liferay-service-builder_5_1_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 5.2.0//EN",
-			"liferay-service-builder_5_2_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 6.0.0//EN",
-			"liferay-service-builder_6_0_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 6.1.0//EN",
-			"liferay-service-builder_6_1_0.dtd"),
-		new KeyValuePair(
-			"-//Liferay//DTD Service Builder 6.2.0//EN",
-			"liferay-service-builder_6_2_0.dtd"),
-		new KeyValuePair(
 			"-//Liferay//DTD Service Builder 7.0.0//EN",
 			"liferay-service-builder_7_0_0.dtd"),
 		new KeyValuePair(

@@ -1017,3 +1017,4 @@ public interface ChangesetEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1336432567

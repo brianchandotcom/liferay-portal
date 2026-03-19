@@ -331,3 +331,4 @@ public class BrowserTrackerUtil {
 	private static volatile BrowserTrackerPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-380249187

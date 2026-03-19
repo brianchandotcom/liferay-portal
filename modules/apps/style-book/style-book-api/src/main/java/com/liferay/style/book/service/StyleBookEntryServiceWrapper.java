@@ -248,3 +248,4 @@ public class StyleBookEntryServiceWrapper
 	private StyleBookEntryService _styleBookEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-845427600

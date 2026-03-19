@@ -351,3 +351,4 @@ public class PatcherTicketHintUtil {
 	private static volatile PatcherTicketHintPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-925379064

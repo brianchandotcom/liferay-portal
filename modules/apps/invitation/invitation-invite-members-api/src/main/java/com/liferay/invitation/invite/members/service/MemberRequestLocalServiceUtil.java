@@ -382,3 +382,4 @@ public class MemberRequestLocalServiceUtil {
 			MemberRequestLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1297045862

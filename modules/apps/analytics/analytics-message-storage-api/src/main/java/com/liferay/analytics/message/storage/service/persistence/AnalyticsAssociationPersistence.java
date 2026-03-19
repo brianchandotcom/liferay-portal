@@ -661,3 +661,4 @@ public interface AnalyticsAssociationPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1737883035

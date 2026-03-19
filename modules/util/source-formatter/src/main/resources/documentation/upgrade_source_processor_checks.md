@@ -14,7 +14,6 @@ UpgradeImportsCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replaces dep
 UpgradeJSPFieldSetGroupCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Run code to remove 'fieldset-group' tag. |
 UpgradeJavaAssetEntryAssetCategoriesCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`. |
 UpgradeJavaBaseFragmentCollectionContributorExtendedClassesCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Adds FragmentCollectionKey to Component annotation in classes that extend `BaseFragmentCollectionContributor` |
-UpgradeJavaBaseModelListenerCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Add parameter in the onAfterUpdate and onBeforeUpdate methods of the BaseModelListener class. |
 UpgradeJavaDDMFormValuesSerializerTrackerCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages. |
 UpgradeJavaDisplayPageInfoItemCapabilityCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replace all references of DisplayPageInfoItemCapability to InfoItemCapability |
 UpgradeJavaFDSDataProviderCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Upgrade implementations of ClayDataSetDataProvider and CommerceDataSetDataProvider to FDSDataSetDataProvider |
@@ -33,7 +32,6 @@ UpgradeJavaScreenContributorClassCheck | [Upgrade](upgrade_checks.md#upgrade-che
 UpgradeJavaServiceImplCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Add Component annotation to `*ServiceImpl.java` file. |
 UpgradeJavaServiceReferenceAnnotationCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Run code migration to replace '@ServiceReference' by '@Reference'. |
 UpgradeJavaSortFieldNameTranslatorCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Upgrade class that implements SortFieldNameTranslator. |
-UpgradeJavaStorageTypeAwareCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Run code to delete StorageTypeAware interface. |
 UpgradePortletFTLCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file. |
 UpgradeRejectedExecutionHandlerCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler. |
 UpgradeSCSSMixinsCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replace outdated mixins (e.g. media-query, respond-to, etc.). |

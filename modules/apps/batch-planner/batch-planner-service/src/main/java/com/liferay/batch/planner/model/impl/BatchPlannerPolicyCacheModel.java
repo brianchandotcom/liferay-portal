@@ -215,3 +215,4 @@ public class BatchPlannerPolicyCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1153487085

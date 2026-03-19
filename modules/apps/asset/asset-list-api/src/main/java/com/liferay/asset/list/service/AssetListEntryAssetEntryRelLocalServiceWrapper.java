@@ -609,3 +609,4 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 		_assetListEntryAssetEntryRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1349328289

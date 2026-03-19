@@ -39,3 +39,4 @@ public abstract class DepotEntryPinBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:662145087

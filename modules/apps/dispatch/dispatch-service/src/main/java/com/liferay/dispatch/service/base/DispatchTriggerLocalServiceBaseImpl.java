@@ -580,3 +580,4 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 		DispatchTriggerLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1647956949

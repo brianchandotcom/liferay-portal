@@ -139,3 +139,4 @@ public class KaleoDefinitionVersionServiceHttp {
 		new Class[] {long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1021276326

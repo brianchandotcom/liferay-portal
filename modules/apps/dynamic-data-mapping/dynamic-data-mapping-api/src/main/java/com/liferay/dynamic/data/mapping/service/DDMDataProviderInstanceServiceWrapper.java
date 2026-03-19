@@ -177,3 +177,4 @@ public class DDMDataProviderInstanceServiceWrapper
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-69310145

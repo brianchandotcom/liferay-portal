@@ -291,3 +291,4 @@ public interface CTScoreLocalService
 	public CTScore updateCTScore(CTScore ctScore);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:625404289

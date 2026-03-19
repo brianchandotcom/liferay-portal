@@ -96,7 +96,6 @@ public class SQLServerDBCTTest {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			Connection connection = DataAccess.getConnection();
-
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from CTSChild where ctCollectionId = ?")) {
 
@@ -147,10 +146,10 @@ public class SQLServerDBCTTest {
 			WorkflowConstants.STATUS_APPROVED, _ctCollection.getStatus());
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			 Connection connection = DataAccess.getConnection();
+			Connection connection = DataAccess.getConnection();
 
-			 PreparedStatement preparedStatement = connection.prepareStatement(
-				 "select * from CTSChild where ctCollectionId = ?")) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select * from CTSChild where ctCollectionId = ?")) {
 
 			preparedStatement.setLong(1, -_ctCollection.getCtCollectionId());
 

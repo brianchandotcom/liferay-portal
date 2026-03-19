@@ -2620,3 +2620,4 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-792066733

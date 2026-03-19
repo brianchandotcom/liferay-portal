@@ -109,6 +109,7 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

@@ -414,3 +414,4 @@ public class SubscriptionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1504590192

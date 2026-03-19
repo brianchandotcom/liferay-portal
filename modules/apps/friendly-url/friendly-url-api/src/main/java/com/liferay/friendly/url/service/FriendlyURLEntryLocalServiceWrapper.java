@@ -781,3 +781,4 @@ public class FriendlyURLEntryLocalServiceWrapper
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-362891831

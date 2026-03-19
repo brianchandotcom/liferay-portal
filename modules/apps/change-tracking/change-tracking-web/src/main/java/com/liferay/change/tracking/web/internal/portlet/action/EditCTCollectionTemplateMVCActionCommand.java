@@ -10,7 +10,6 @@ import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationH
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -123,8 +122,8 @@ public class EditCTCollectionTemplateMVCActionCommand
 					defaultSandboxCTCollectionTemplateId
 				).build());
 		}
-		catch (PortalException portalException) {
-			SessionErrors.add(actionRequest, portalException.getClass());
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			_portal.copyRequestParameters(actionRequest, actionResponse);
 

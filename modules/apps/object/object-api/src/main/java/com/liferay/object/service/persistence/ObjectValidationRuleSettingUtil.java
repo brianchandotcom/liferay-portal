@@ -1197,3 +1197,4 @@ public class ObjectValidationRuleSettingUtil {
 	private static volatile ObjectValidationRuleSettingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-756450925

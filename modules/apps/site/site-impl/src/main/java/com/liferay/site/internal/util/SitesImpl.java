@@ -459,6 +459,10 @@ public class SitesImpl implements Sites {
 			return false;
 		}
 
+		if (lastMergeTime != 0) {
+			return false;
+		}
+
 		LayoutSet layoutSetPrototypeLayoutSet =
 			layoutSetPrototype.getLayoutSet();
 

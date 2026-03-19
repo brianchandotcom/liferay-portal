@@ -317,3 +317,4 @@ public class PortalPreferenceValueLocalServiceUtil {
 	private static volatile PortalPreferenceValueLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1696655263

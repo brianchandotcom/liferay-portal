@@ -271,3 +271,4 @@ public interface CommerceMLForecastAlertEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-372152852

@@ -80,3 +80,4 @@ public abstract class CommerceCurrencyFinderBaseImpl
 		CommerceCurrencyFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-506197322

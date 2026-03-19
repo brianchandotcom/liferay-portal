@@ -67,13 +67,22 @@
 			"name": "com.liferay.petra.io.AnnotatedObjectOutputStream"
 		},
 		{
+			"name": "com.liferay.petra.io.WriterOutputStream"
+		},
+		{
 			"name": "com.liferay.petra.io.unsync.UnsyncBufferedReader"
+		},
+		{
+			"name": "com.liferay.petra.io.unsync.UnsyncBufferedWriter"
 		},
 		{
 			"name": "com.liferay.petra.io.unsync.UnsyncByteArrayInputStream"
 		},
 		{
 			"name": "com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream"
+		},
+		{
+			"name": "com.liferay.petra.io.unsync.UnsyncPrintWriter"
 		},
 		{
 			"name": "com.liferay.petra.io.unsync.UnsyncStringWriter"
@@ -86,18 +95,6 @@
 		},
 		{
 			"name": "com.liferay.portal.kernel.deploy.auto.AutoDeployer"
-		},
-		{
-			"name": "com.liferay.portal.kernel.io.WriterOutputStream"
-		},
-		{
-			"name": "com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader"
-		},
-		{
-			"name": "com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter"
-		},
-		{
-			"name": "com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter"
 		},
 		{
 			"name": "com.liferay.portal.kernel.test.CaptureHandler"

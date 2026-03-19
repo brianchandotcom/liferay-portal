@@ -35,6 +35,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Collections;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,13 +74,25 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
+	public ExportImportDescriptor<LayoutPageTemplateCollection>
+		getExportImportDescriptor() {
+
 		return new ExportImportVulcanBatchEngineTaskItemDelegate.
-			ExportImportDescriptor() {
+			ExportImportDescriptor<>() {
+
+			@Override
+			public Function<LayoutPageTemplateCollection, Boolean>
+				getApplicableModelFunction() {
+
+				return layoutPageTemplateCollection ->
+					layoutPageTemplateCollection.getType() ==
+						LayoutPageTemplateCollectionTypeConstants.BASIC;
+			}
 
 			@Override
 			public String getKey() {
-				return PageTemplateSetResourceImpl.class.getName();
+				return LayoutPageTemplateCollection.class.getName() + "#" +
+					LayoutPageTemplateCollectionTypeConstants.BASIC;
 			}
 
 			@Override
@@ -88,8 +101,8 @@ public class PageTemplateSetResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return LayoutPageTemplateCollection.class.getName();
+			public Class<LayoutPageTemplateCollection> getModelClass() {
+				return LayoutPageTemplateCollection.class;
 			}
 
 			@Override

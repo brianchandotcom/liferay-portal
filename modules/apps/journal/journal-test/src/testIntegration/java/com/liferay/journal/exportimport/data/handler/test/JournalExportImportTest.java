@@ -23,10 +23,12 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
-import com.liferay.exportimport.kernel.exception.MissingReferenceException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -58,6 +60,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -132,50 +135,84 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Test
-	public void testExportImportJournalArticleWithLayoutURLLayoutDoesNotExistOnImportSide()
+	public void testExportImportJournalArticleWithLayoutURLLayoutAndGroupDoesNotExistOnImportSide()
 		throws Exception {
 
-		long groupId = group.getGroupId();
+		Group randomGroup = GroupTestUtil.addGroup();
 
-		Layout parentLayout = LayoutTestUtil.addTypePortletLayout(group);
+		Layout parentLayout = LayoutTestUtil.addTypePortletLayout(randomGroup);
 
 		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
-			group, parentLayout.getPlid());
+			randomGroup, parentLayout.getPlid());
 
 		String content = StringUtil.replace(
 			_read("journal_article_content.xml"),
 			new String[] {"[$GROUP_NAME$]", "[[$LAYOUT_FRIENDLY_URL$]$]"},
 			new String[] {
-				StringUtil.toLowerCase(group.getName("en_US")),
+				StringUtil.toLowerCase(randomGroup.getName("en_US")),
 				StringUtil.toLowerCase(childLayout.getFriendlyURL())
 			});
 
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
-				"journal", _dataDefinitionResourceFactory, groupId,
-				_read("data_definition.json"), TestPropsValues.getUser());
+				"journal", _dataDefinitionResourceFactory,
+				randomGroup.getGroupId(), _read("data_definition.json"),
+				TestPropsValues.getUser());
 
-		JournalTestUtil.addArticleWithXMLContent(
-			groupId, content, dataDefinition.getDataDefinitionKey(), null);
+		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
+			randomGroup.getGroupId(), content,
+			dataDefinition.getDataDefinitionKey(), null);
 
 		exportPortlet(JournalPortletKeys.JOURNAL, parentLayout);
 
-		_layoutService.deleteLayout(
-			groupId, parentLayout.isPrivateLayout(), parentLayout.getLayoutId(),
-			ServiceContextThreadLocal.getServiceContext());
+		GroupTestUtil.deleteGroup(randomGroup);
 
-		try {
-			importPortlet(JournalPortletKeys.JOURNAL, parentLayout);
-		}
-		catch (MissingReferenceException missingReferenceException) {
-			Assert.assertEquals(
-				missingReferenceException.getClass(),
-				MissingReferenceException.class);
-		}
+		ExportImportConfiguration exportImportConfiguration = importPortlet(
+			JournalPortletKeys.JOURNAL, parentLayout);
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				exportImportConfiguration.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
+
+		Assert.assertEquals(
+			exportImportReportEntries.toString(), 1,
+			exportImportReportEntries.size());
+
+		ExportImportReportEntry exportImportReportEntry =
+			exportImportReportEntries.get(0);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Warning: The referenced Layout group reference ('/",
+				StringUtil.toLowerCase(randomGroup.getName("en_US")),
+				"') was not found. Defaulting to the current '",
+				importedGroup.getGroupKey(), "' group"),
+			exportImportReportEntry.getErrorMessage());
+
+		Assert.assertEquals(
+			1,
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				importedGroup.getGroupId()));
+
+		JournalArticle groupArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				article.getUuid(), importedGroup.getGroupId());
+
+		String expectedContent = StringUtil.replace(
+			_read("journal_article_content.xml"),
+			new String[] {"[$GROUP_NAME$]", "[[$LAYOUT_FRIENDLY_URL$]$]"},
+			new String[] {
+				StringUtil.toLowerCase(importedGroup.getName("en_US")),
+				StringUtil.toLowerCase(childLayout.getFriendlyURL())
+			});
+
+		Assert.assertNotNull(groupArticle);
+		Assert.assertEquals(expectedContent, groupArticle.getContent());
 	}
 
 	@Test
-	public void testExportImportJournalArticleWithLayoutURLLayoutExistOnImportSide()
+	public void testExportImportJournalArticleWithLayoutURLLayoutDoesNotExistOnImportSide()
 		throws Exception {
 
 		long groupId = group.getGroupId();
@@ -203,7 +240,21 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		exportPortlet(JournalPortletKeys.JOURNAL, parentLayout);
 
-		importPortlet(JournalPortletKeys.JOURNAL, parentLayout);
+		_layoutService.deleteLayout(
+			groupId, parentLayout.isPrivateLayout(), parentLayout.getLayoutId(),
+			ServiceContextThreadLocal.getServiceContext());
+
+		ExportImportConfiguration exportImportConfiguration = importPortlet(
+			JournalPortletKeys.JOURNAL, parentLayout);
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				exportImportConfiguration.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
+
+		Assert.assertEquals(
+			exportImportReportEntries.toString(), 0,
+			exportImportReportEntries.size());
 
 		Assert.assertEquals(
 			1,
@@ -865,6 +916,10 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	@Inject
 	private JournalContent _journalContent;

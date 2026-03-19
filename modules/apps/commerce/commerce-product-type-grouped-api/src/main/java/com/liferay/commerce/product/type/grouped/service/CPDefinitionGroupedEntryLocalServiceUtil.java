@@ -501,3 +501,4 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 			CPDefinitionGroupedEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1073826856

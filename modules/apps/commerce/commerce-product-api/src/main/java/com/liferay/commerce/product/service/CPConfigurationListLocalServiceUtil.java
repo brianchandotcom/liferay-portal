@@ -504,3 +504,4 @@ public class CPConfigurationListLocalServiceUtil {
 			CPConfigurationListLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1242057607

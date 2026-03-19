@@ -283,3 +283,4 @@ public interface RecentLayoutRevisionLocalService
 		RecentLayoutRevision recentLayoutRevision);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2062922861

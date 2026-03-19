@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -93,12 +94,24 @@ public class MasterPageResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<LayoutPageTemplateEntry>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
+
+			@Override
+			public Function<LayoutPageTemplateEntry, Boolean>
+				getApplicableModelFunction() {
+
+				return layoutPageTemplateEntry ->
+					layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT;
+			}
 
 			@Override
 			public String getKey() {
-				return MasterPageResourceImpl.class.getName();
+				return LayoutPageTemplateEntry.class.getName() + "#" +
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT;
 			}
 
 			@Override
@@ -107,8 +120,8 @@ public class MasterPageResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return LayoutPageTemplateEntry.class.getName();
+			public Class<LayoutPageTemplateEntry> getModelClass() {
+				return LayoutPageTemplateEntry.class;
 			}
 
 			@Override

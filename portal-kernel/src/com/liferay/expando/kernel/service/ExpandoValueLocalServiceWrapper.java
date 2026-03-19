@@ -1097,3 +1097,4 @@ public class ExpandoValueLocalServiceWrapper
 	private ExpandoValueLocalService _expandoValueLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1003331169

@@ -35,9 +35,6 @@ import FDSDndProvider from './dnd/FDSDndProvider';
 import isFileDropEnabled from './utils/isFileDropEnabled';
 
 import './styles/main.scss';
-
-import {Atom, Selector, State} from '@liferay/frontend-js-state-web';
-
 import DnDContext from './DnDContext';
 import FrontendDataSetContext from './FrontendDataSetContext';
 import useFDSDrop from './dnd/useFDSDrop';
@@ -63,6 +60,7 @@ import {readConfigFromURL} from './utils/configInURL';
 import EVENTS from './utils/eventsDefinitions';
 import {activateFilter} from './utils/filters/activateFilter';
 import {deactivateFilter} from './utils/filters/deactivateFilter';
+import {getFDSAtom} from './utils/getFDSAtom';
 import getRandomId from './utils/getRandomId';
 
 // @ts-ignore
@@ -100,31 +98,6 @@ import viewsReducer, {EViewsActionTypes} from './views/viewsReducer';
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
 
-const getAtom = ({
-	atom,
-	id,
-}: {
-	atom: Atom<IFDSState> | undefined;
-	id: string;
-}): Atom<IFDSState> | Selector<IFDSState> => {
-	if (atom) {
-		return atom;
-	}
-
-	const key = `${id}_fdsState`;
-
-	const fallbackAtom: Atom<IFDSState> | null =
-		State.__unsafe__.getAtomOrSelectorKey(key) as Atom<IFDSState> | null;
-
-	return (
-		fallbackAtom ||
-		State.atom<IFDSState>(key, {
-			filters: [],
-			search: {query: ''},
-		})
-	);
-};
-
 const FrontendDataSetContent = ({
 	actionParameterName,
 	additionalAPIURLParameters: initialAdditionalAPIURLParameters,
@@ -157,6 +130,7 @@ const FrontendDataSetContent = ({
 	nestedItemsReferenceKey,
 	onActionDropdownItemClick,
 	onBulkActionItemClick,
+	onItemsPropSearch,
 	onSelectedItemsChange,
 	overrideEmptyResultView,
 	pagination,
@@ -390,7 +364,10 @@ const FrontendDataSetContent = ({
 		id,
 	});
 
-	const memoizedAtom = useMemo(() => getAtom({atom, id}), [atom, id]);
+	const memoizedAtom = useMemo(
+		() => getFDSAtom({atom, fdsName: id}),
+		[atom, id]
+	);
 
 	const [additionalAPIURLParameters, setAdditionalAPIURLParameters] =
 		useState(initialAdditionalAPIURLParameters);
@@ -664,6 +641,12 @@ const FrontendDataSetContent = ({
 		name: activeViewName,
 		...currentViewProps
 	} = activeView;
+
+	const paginationEnabled =
+		(activeView.showPagination ?? showPagination) &&
+		!!pagination &&
+		!!items?.length &&
+		!!total;
 
 	const requestData = useCallback(() => {
 		if (!apiURL) {
@@ -1041,18 +1024,42 @@ const FrontendDataSetContent = ({
 	]);
 
 	useEffect(() => {
-		if (itemsProp) {
-
-			// Assuming default pagination values if data comes from items instead of apiURL
-
-			updateDataSetItems({
-				items: itemsProp,
-				lastPage: 1,
-				page: 1,
-				totalCount: itemsProp.length,
-			});
+		if (apiURL || !itemsProp) {
+			return;
 		}
-	}, [itemsProp, updateDataSetItems]);
+
+		const searchQuery = globalFDSState.search.query || '';
+
+		const filteredItems =
+			searchQuery && onItemsPropSearch
+				? itemsProp.filter((item) =>
+						onItemsPropSearch(item, searchQuery)
+					)
+				: itemsProp;
+
+		const start = (pageNumber - 1) * paginationDelta;
+		const end = start + paginationDelta;
+
+		updateDataSetItems({
+			items: paginationEnabled
+				? filteredItems.slice(start, end)
+				: filteredItems,
+			lastPage: paginationEnabled
+				? Math.ceil(filteredItems.length / paginationDelta) || 1
+				: 1,
+			page: pageNumber,
+			totalCount: filteredItems.length,
+		});
+	}, [
+		apiURL,
+		globalFDSState.search.query,
+		itemsProp,
+		onItemsPropSearch,
+		pageNumber,
+		paginationEnabled,
+		paginationDelta,
+		updateDataSetItems,
+	]);
 
 	function deselectItems(value: any) {
 		const values = Array.isArray(value) ? value : [value];
@@ -1425,9 +1432,25 @@ const FrontendDataSetContent = ({
 
 	useEffect(() => {
 		function handleRefreshFromTheOutside(event: any) {
-			if (event.id === id) {
-				refreshData();
+			if (event.id !== id) {
+				return;
 			}
+
+			if (event.resetSearch && globalFDSState.search.query) {
+				const unfrozenGlobalFDSState: IFDSState =
+					deepClone(globalFDSState);
+
+				setGlobalFDSState({
+					...unfrozenGlobalFDSState,
+					search: {query: ''},
+				});
+
+				viewsDispatch(updatePageNumber(1));
+
+				return;
+			}
+
+			refreshData();
 		}
 
 		function handleCloseSidePanel() {
@@ -1455,7 +1478,16 @@ const FrontendDataSetContent = ({
 				window.removeEventListener('popstate', handlePopState);
 			}
 		};
-	}, [configInURLBehavior, handlePopState, id, refreshData]);
+	}, [
+		configInURLBehavior,
+		globalFDSState,
+		handlePopState,
+		id,
+		refreshData,
+		setGlobalFDSState,
+		updatePageNumber,
+		viewsDispatch,
+	]);
 
 	const fdsRef = useRef(null);
 
@@ -1534,11 +1566,11 @@ const FrontendDataSetContent = ({
 		!dataLoading && !componentLoading ? (
 			<div className="data-set-content-wrapper">
 				<input
-					hidden
 					name={`${namespace || id + '_'}${
 						actionParameterName || selectedItemsKey
 					}`}
 					readOnly
+					type="hidden"
 					value={selectedItemsValue.join(',')}
 				/>
 
@@ -1599,33 +1631,29 @@ const FrontendDataSetContent = ({
 			<ClayLoadingIndicator className="my-7" />
 		);
 
-	const paginationComponent =
-		(activeView.showPagination ?? showPagination) &&
-		pagination &&
-		items?.length &&
-		total ? (
-			<div className="data-set-pagination-wrapper">
-				<ClayPaginationBarWithBasicItems
-					active={pageNumber}
-					activeDelta={paginationDelta}
-					deltas={pagination?.deltas}
-					disableEllipsis={items.length / paginationDelta - 5 > 999}
-					ellipsisBuffer={3}
-					labels={{
-						paginationResults: Liferay.Language.get(
-							'showing-x-to-x-of-x-entries'
-						),
-						perPageItems: Liferay.Language.get('x-items'),
-						selectPerPageItems: Liferay.Language.get('x-items'),
-					}}
-					onActiveChange={(page: number) =>
-						viewsDispatch(updatePageNumber(page))
-					}
-					onDeltaChange={handleDeltaChange}
-					totalItems={total}
-				/>
-			</div>
-		) : null;
+	const paginationComponent = paginationEnabled ? (
+		<div className="data-set-pagination-wrapper">
+			<ClayPaginationBarWithBasicItems
+				active={pageNumber}
+				activeDelta={paginationDelta}
+				deltas={pagination?.deltas}
+				disableEllipsis={items.length / paginationDelta - 5 > 999}
+				ellipsisBuffer={3}
+				labels={{
+					paginationResults: Liferay.Language.get(
+						'showing-x-to-x-of-x-entries'
+					),
+					perPageItems: Liferay.Language.get('x-items'),
+					selectPerPageItems: Liferay.Language.get('x-items'),
+				}}
+				onActiveChange={(page: number) =>
+					viewsDispatch(updatePageNumber(page))
+				}
+				onDeltaChange={handleDeltaChange}
+				totalItems={total}
+			/>
+		</div>
+	) : null;
 
 	function executeAsyncItemAction({
 		errorMessage,

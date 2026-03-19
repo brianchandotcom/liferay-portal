@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -23,8 +24,10 @@ public class UpgradeAccount extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update ListType set type_ = ? where type_ = ?")) {
+		try (PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"update ListType set type_ = ? where type_ = ?")) {
 
 			for (String typeName :
 					new String[] {
@@ -54,19 +57,21 @@ public class UpgradeAccount extends UpgradeProcess {
 
 		try (Statement selectAccountsStatement = connection.createStatement();
 			PreparedStatement updateCompanyPreparedStatement =
-				connection.prepareStatement(updateCompanySQL);
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection, updateCompanySQL);
 			PreparedStatement updateAddressPreparedStatement =
-				connection.prepareStatement(
-					_getUpdateClassNameIdClassPKSQL("Address"));
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection, _getUpdateClassNameIdClassPKSQL("Address"));
 			PreparedStatement updateEmailAddressPreparedStatement =
-				connection.prepareStatement(
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
 					_getUpdateClassNameIdClassPKSQL("EmailAddress"));
 			PreparedStatement updatePhonePreparedStatement =
-				connection.prepareStatement(
-					_getUpdateClassNameIdClassPKSQL("Phone"));
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection, _getUpdateClassNameIdClassPKSQL("Phone"));
 			PreparedStatement updateWebsitePreparedStatement =
-				connection.prepareStatement(
-					_getUpdateClassNameIdClassPKSQL("Website"))) {
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection, _getUpdateClassNameIdClassPKSQL("Website"))) {
 
 			try (ResultSet resultSet = selectAccountsStatement.executeQuery(
 					"select * from Account_")) {

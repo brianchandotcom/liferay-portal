@@ -5,6 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -134,6 +136,27 @@ public class StructureBuilderDisplayContext {
 				() -> StringBundler.concat(
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
 					"/cms/reset_translation_display_page")
+			).put(
+				"spaceExternalReferenceCode",
+				() -> {
+					List<Long> depotEntryGroupIds =
+						DepotEntryServiceUtil.getDepotEntryGroupIds(
+							_themeDisplay.getCompanyId(),
+							_themeDisplay.getUserId(),
+							DepotConstants.TYPE_SPACE);
+
+					for (Long groupId : depotEntryGroupIds) {
+						Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+						if (group == null) {
+							continue;
+						}
+
+						return group.getExternalReferenceCode();
+					}
+
+					return null;
+				}
 			).put(
 				"structureBuilderURL",
 				() -> PortalUtil.getLayoutFullURL(

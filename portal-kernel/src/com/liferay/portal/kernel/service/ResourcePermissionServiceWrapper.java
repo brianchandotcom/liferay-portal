@@ -220,3 +220,4 @@ public class ResourcePermissionServiceWrapper
 	private ResourcePermissionService _resourcePermissionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:993922002

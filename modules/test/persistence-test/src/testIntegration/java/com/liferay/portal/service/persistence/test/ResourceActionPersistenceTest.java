@@ -490,3 +490,4 @@ public class ResourceActionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-702371119

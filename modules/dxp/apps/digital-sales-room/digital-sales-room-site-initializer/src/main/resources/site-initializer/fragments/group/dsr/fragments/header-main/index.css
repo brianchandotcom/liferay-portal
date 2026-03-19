@@ -5,6 +5,7 @@
 	display: flex;
 	height: 100px;
 	justify-content: center;
+	position: relative;
 	width: 100px;
 }
 
@@ -21,7 +22,7 @@
 
 .dsr-container-logos img,
 .dsr-container-logos picture {
-  	height: 80px !important;
+	height: 80px !important;
 	width: 80px !important;
 }
 
@@ -64,7 +65,7 @@
 	border-radius: 50%;
 	height: 80px;
 	object-fit: cover;
-	position: relative;
+	position: absolute;
 	width: 80px;
 	z-index: 2;
 }
@@ -78,15 +79,26 @@
 }
 
 .dsr-logo-name {
-    bottom: 0;
-    color: var(--white, #FFF);
-    font-size: 3rem;
-    font-weight: bold;
-    left: 0;
-    line-height: 80px;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    text-transform: capitalize;
-    top: 0;
+	bottom: 0;
+	color: var(--white, #FFF);
+	font-size: 3rem;
+	font-weight: bold;
+	left: 50%;
+	line-height: 80px;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	text-transform: capitalize;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.dsr-primary-logo .dsr-logo-api,
+.dsr-primary-logo .dsr-logo-custom,
+.dsr-primary-logo .dsr-logo-name {
+	opacity: 0;
+}
+
+.dsr-primary-logo .dsr-logo-custom {
+	z-index: 3;
 }

@@ -62,3 +62,4 @@ public class BackgroundTaskServiceUtil {
 			BackgroundTaskServiceUtil.class, BackgroundTaskService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1958418030

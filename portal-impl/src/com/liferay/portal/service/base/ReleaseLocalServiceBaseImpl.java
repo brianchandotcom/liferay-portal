@@ -496,3 +496,4 @@ public abstract class ReleaseLocalServiceBaseImpl
 		ReleaseLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-144459548

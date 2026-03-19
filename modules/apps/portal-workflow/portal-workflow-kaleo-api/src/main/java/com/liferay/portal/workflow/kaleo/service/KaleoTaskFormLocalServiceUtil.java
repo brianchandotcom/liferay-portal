@@ -327,3 +327,4 @@ public class KaleoTaskFormLocalServiceUtil {
 			KaleoTaskFormLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1903094842

@@ -366,3 +366,4 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	public String status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1943142479

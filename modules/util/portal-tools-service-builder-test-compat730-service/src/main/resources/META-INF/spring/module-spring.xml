@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.ArrayableEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.ArrayableEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.ArrayableEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.ArrayableEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.BasicEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.BasicEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.BasicEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.BasicEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.CacheDisabledEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.CacheDisabledEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.CacheDisabledEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.CacheDisabledEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.ConvertNullEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.ConvertNullEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.ConvertNullEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.ConvertNullEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.EagerBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.EagerBlobEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.EagerBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.EagerBlobEntryService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.EagerBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.EagerBlobEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.ERCCompanyEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.ERCCompanyEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.ERCCompanyEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.ERCCompanyEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.ERCGroupEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.ERCGroupEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.ERCGroupEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.ERCGroupEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.ERCVersionedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.ERCVersionedEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.ERCVersionedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.ERCVersionedEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.LazyBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.LazyBlobEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.LazyBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.LazyBlobEntryService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.LazyBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.LazyBlobEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.LikeFinderEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.LikeFinderEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.LikeFinderEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.LikeFinderEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.LocalizedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.LocalizedEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.LocalizedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.LocalizedEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.LocalizedEntryLocalizationPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.LocalizedEntryLocalizationPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.ManyColumnsEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.ManyColumnsEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.ManyColumnsEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.ManyColumnsEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.MappingEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.MappingEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.MappingEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.MappingEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.MVCCEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.MVCCEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.MVCCEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.MVCCEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.TrashEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.TrashEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.TrashEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.TrashEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.TreeEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.TreeEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.TreeEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.TreeEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.VersionedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.VersionedEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.VersionedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.VersionedEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.VersionedEntryVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.VersionedEntryVersionPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.impl.WhereClauseEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.WhereClauseEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.WhereClauseEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.compat730.service.persistence.WhereClauseEntryPersistence" />
+</beans>

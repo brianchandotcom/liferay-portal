@@ -39,3 +39,4 @@ public abstract class RepositoryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1891303841

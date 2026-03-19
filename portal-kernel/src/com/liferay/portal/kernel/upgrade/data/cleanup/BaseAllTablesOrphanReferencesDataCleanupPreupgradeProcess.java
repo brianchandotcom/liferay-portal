@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Luis Ortiz
@@ -92,6 +94,9 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 
 		String sourceColumnName = dbInspector.normalizeName(_sourceColumnName);
 
+		Set<String> liferayTableNames = DBResourceUtil.getLiferayTableNames(
+			connection);
+
 		processConcurrently(
 			tableNames.toArray(new String[0]),
 			sourceTableName -> {
@@ -111,17 +116,27 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 						targetTableName, targetColumnName);
 
 					if (numericSourceColumn != numericTargetColumn) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringBundler.concat(
-									"Table ", sourceTableName, " and column ",
-									sourceColumnName,
-									" has an incompatible type with table ",
-									targetTableName, " and column ",
-									targetColumnName));
-						}
+						String message = StringBundler.concat(
+							"Table ", sourceTableName, " and column ",
+							sourceColumnName,
+							" has an incompatible type with table ",
+							targetTableName, " and column ", targetColumnName);
 
 						compatibleTypes = false;
+
+						if (!dbInspector.isObjectTable(sourceTableName) &&
+							!liferayTableNames.contains(sourceTableName)) {
+
+							if (_log.isDebugEnabled()) {
+								_log.debug(message);
+							}
+
+							break;
+						}
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(message);
+						}
 
 						break;
 					}

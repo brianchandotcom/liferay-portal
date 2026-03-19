@@ -18151,3 +18151,4 @@ public class KBArticleUtil {
 	private static volatile KBArticlePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:773842956

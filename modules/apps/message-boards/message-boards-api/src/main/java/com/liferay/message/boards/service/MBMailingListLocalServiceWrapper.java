@@ -503,3 +503,4 @@ public class MBMailingListLocalServiceWrapper
 	private MBMailingListLocalService _mbMailingListLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:859292285

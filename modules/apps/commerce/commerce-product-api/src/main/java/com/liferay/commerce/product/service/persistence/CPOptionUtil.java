@@ -1151,3 +1151,4 @@ public class CPOptionUtil {
 	private static volatile CPOptionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1040053759

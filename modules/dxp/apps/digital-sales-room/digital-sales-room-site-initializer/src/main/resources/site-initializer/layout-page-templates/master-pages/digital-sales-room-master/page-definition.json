@@ -57,7 +57,7 @@
 								"displayStyle": "horizontal",
 								"hoveredItemColor": "",
 								"selectedItemColor": "",
-								"source": "",
+								"source": "{\"privateLayout\": true}",
 								"sublevels": "-1"
 							},
 							"fragmentFields": [

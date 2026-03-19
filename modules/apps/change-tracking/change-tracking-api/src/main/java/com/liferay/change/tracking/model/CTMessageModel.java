@@ -130,3 +130,4 @@ public interface CTMessageModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1840004010

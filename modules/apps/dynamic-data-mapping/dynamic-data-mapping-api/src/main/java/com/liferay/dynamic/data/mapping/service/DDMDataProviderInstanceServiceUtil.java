@@ -157,3 +157,4 @@ public class DDMDataProviderInstanceServiceUtil {
 			DDMDataProviderInstanceService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2014720941

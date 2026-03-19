@@ -734,3 +734,4 @@ public class GroupServiceWrapper
 	private GroupService _groupService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:599547405

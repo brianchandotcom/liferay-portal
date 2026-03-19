@@ -595,3 +595,4 @@ public class DepotAppCustomizationUtil {
 	private static volatile DepotAppCustomizationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1462608185

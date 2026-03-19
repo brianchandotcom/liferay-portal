@@ -4,8 +4,8 @@ variable "arn_partition" {
 variable "deployment_name" {
 	type=string
 	validation {
-		condition=can(regex("^[a-z0-9-]*$", var.deployment_name))
-		error_message="The deployment_name must contain only lowercase letters, numbers, and hyphens."
+		condition=can(regex("^[a-z][a-z0-9-]{2,23}$", var.deployment_name))
+		error_message="The variable \"deployment_name\" must be 3-24 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens."
 	}
 }
 variable "deployment_namespace" {
@@ -24,6 +24,14 @@ variable "gateway_namespace" {
 }
 variable "max_availability_zones" {
 	default=2
+}
+variable "observability_config" {
+	default={}
+	type=object(
+		{
+			enabled=optional(bool, true)
+		}
+	)
 }
 variable "private_subnets" {
 	default=null

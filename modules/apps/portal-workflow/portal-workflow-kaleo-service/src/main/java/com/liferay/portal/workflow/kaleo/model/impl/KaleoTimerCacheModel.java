@@ -326,3 +326,4 @@ public class KaleoTimerCacheModel
 	public String recurrenceScale;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-554762563

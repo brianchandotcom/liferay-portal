@@ -83,3 +83,4 @@ public class DispatchTriggerTable extends BaseTable<DispatchTriggerTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:797978199

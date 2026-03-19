@@ -94,3 +94,4 @@ public class OAuth2AuthorizationServiceUtil {
 			OAuth2AuthorizationService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1571295943

@@ -577,3 +577,4 @@ public class TeamLocalServiceUtil {
 	private static volatile TeamLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-799407002

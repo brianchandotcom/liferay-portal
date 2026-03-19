@@ -407,3 +407,4 @@ public class CTMessagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:336080262

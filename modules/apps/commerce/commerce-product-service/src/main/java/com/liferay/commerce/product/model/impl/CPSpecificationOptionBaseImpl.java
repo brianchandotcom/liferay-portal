@@ -41,3 +41,4 @@ public abstract class CPSpecificationOptionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-38907535

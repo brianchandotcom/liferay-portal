@@ -1028,3 +1028,4 @@ public class DDMContentUtil {
 	private static volatile DDMContentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1647240769

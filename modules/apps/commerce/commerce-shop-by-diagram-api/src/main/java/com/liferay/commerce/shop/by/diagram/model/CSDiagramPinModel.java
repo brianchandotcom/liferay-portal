@@ -262,3 +262,4 @@ public interface CSDiagramPinModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-686159228

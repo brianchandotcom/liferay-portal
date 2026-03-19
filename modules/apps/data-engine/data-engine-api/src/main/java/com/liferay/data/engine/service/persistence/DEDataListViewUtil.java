@@ -1065,3 +1065,4 @@ public class DEDataListViewUtil {
 	private static volatile DEDataListViewPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1556331106

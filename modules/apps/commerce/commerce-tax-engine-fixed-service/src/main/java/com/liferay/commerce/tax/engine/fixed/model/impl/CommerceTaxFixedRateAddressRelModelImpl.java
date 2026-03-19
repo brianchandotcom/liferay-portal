@@ -1086,3 +1086,4 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	private CommerceTaxFixedRateAddressRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-650695092

@@ -78,3 +78,4 @@ public abstract class BaseEntryUADExporter
 	protected EntryLocalService entryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:316788325

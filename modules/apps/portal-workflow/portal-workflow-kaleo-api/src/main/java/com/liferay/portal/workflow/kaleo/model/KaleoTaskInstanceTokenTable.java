@@ -98,3 +98,4 @@ public class KaleoTaskInstanceTokenTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-155911509

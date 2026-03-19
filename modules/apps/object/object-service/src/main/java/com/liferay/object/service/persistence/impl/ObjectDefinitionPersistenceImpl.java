@@ -15818,3 +15818,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1789932653

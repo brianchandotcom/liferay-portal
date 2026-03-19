@@ -220,3 +220,4 @@ public class LayoutPageTemplateStructureCacheModel
 	public long plid;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:707304508

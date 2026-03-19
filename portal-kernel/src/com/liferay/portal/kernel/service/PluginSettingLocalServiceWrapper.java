@@ -381,3 +381,4 @@ public class PluginSettingLocalServiceWrapper
 	private PluginSettingLocalService _pluginSettingLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2050714116

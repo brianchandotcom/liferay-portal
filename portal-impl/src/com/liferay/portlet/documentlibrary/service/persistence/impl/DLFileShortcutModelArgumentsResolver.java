@@ -113,3 +113,4 @@ public class DLFileShortcutModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1344981968

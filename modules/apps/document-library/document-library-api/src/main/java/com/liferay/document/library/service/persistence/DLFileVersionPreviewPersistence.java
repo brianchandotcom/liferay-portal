@@ -557,3 +557,4 @@ public interface DLFileVersionPreviewPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-629652417

@@ -413,3 +413,4 @@ public class DepotAppCustomizationLocalServiceWrapper
 		_depotAppCustomizationLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1406847594

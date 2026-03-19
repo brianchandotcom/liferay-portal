@@ -286,3 +286,4 @@ public interface CommerceInventoryAuditLocalService
 		CommerceInventoryAudit commerceInventoryAudit);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1248053979

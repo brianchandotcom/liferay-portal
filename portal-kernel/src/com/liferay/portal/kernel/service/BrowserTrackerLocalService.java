@@ -270,3 +270,4 @@ public interface BrowserTrackerLocalService
 	public BrowserTracker updateBrowserTracker(long userId, long browserKey);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1079297981

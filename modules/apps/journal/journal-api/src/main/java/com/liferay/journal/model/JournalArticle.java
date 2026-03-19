@@ -201,3 +201,4 @@ public interface JournalArticle
 	public void setTitleMap(java.util.Map<java.util.Locale, String> titleMap);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-908451758

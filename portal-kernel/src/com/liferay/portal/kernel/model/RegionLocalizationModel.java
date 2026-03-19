@@ -162,3 +162,4 @@ public interface RegionLocalizationModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1441327034

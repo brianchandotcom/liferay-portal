@@ -1,0 +1,146 @@
+{
+	"externalReferenceCode": "PRODUCT-FEEDBACK",
+	"label": {
+		"en_US": "Product Feedback"
+	},
+	"name": "ProductFeedback",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Company Name"
+			},
+			"name": "companyName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Email Address"
+			},
+			"name": "emailAddress",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Full Name"
+			},
+			"name": "fullName",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Job Title"
+			},
+			"name": "jobTitle",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Notify"
+			},
+			"name": "notify",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Rating Ease of Use"
+			},
+			"name": "ratingEaseOfUse",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Rating Satisfaction"
+			},
+			"name": "ratingSatisfaction",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Rating Usefulness"
+			},
+			"name": "ratingUsefulness",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Suggestion (Features)"
+			},
+			"name": "suggestionFeatures",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Suggestion (Improvements)"
+			},
+			"name": "suggestionImprovements",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Suggestion (Satisfaction)"
+			},
+			"name": "suggestionSatisfaction",
+			"required": false,
+			"type": "Clob"
+		}
+	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
+	"pluralLabel": {
+		"en_US": "Product Feedbacks"
+	},
+	"scope": "company"
+}

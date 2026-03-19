@@ -301,3 +301,4 @@ public interface PortletPreferenceValueLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2087641868

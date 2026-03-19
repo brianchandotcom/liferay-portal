@@ -521,3 +521,4 @@ public class SamlSpMessageUtil {
 	private static volatile SamlSpMessagePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1921826237

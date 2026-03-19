@@ -77,6 +77,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -117,12 +118,24 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<LayoutPageTemplateEntry>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
+
+			@Override
+			public Function<LayoutPageTemplateEntry, Boolean>
+				getApplicableModelFunction() {
+
+				return layoutPageTemplateEntry ->
+					layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE;
+			}
 
 			@Override
 			public String getKey() {
-				return DisplayPageTemplateResourceImpl.class.getName();
+				return LayoutPageTemplateEntry.class.getName() + "#" +
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE;
 			}
 
 			@Override
@@ -131,8 +144,8 @@ public class DisplayPageTemplateResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return LayoutPageTemplateEntry.class.getName();
+			public Class<LayoutPageTemplateEntry> getModelClass() {
+				return LayoutPageTemplateEntry.class;
 			}
 
 			@Override

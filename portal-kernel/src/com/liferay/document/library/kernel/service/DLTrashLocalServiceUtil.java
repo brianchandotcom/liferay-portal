@@ -75,3 +75,4 @@ public class DLTrashLocalServiceUtil {
 	private static volatile DLTrashLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-343789585

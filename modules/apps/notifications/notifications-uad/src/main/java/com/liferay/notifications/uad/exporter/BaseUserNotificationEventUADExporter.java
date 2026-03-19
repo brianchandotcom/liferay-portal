@@ -63,3 +63,4 @@ public abstract class BaseUserNotificationEventUADExporter
 		userNotificationEventLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2082129207

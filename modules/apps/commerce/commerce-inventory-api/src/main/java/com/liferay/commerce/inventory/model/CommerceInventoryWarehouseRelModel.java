@@ -245,3 +245,4 @@ public interface CommerceInventoryWarehouseRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:982349969

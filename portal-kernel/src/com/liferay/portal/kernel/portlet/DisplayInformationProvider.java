@@ -14,6 +14,7 @@ public interface DisplayInformationProvider {
 
 	public String getClassName();
 
-	public String getClassPK(PortletPreferences portletPreferences);
+	public String getClassPK(
+		PortletPreferences portletPreferences, long scopeGroupId);
 
 }

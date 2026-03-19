@@ -103,3 +103,4 @@ public class AnnouncementsEntryFinderUtil {
 	private static AnnouncementsEntryFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1300554457

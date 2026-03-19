@@ -701,3 +701,4 @@ public class CTPreferencesUtil {
 	private static volatile CTPreferencesPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:230534002

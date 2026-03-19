@@ -348,10 +348,10 @@ public class DepotEntryLocalServiceUtil {
 	}
 
 	public static List<Long> getDepotEntryGroupIds(
-		long companyId, long userId, int type, boolean userGroupsOnly) {
+		long companyId, long userId, int type, boolean dynamicInheritanceOnly) {
 
 		return getService().getDepotEntryGroupIds(
-			companyId, userId, type, userGroupsOnly);
+			companyId, userId, type, dynamicInheritanceOnly);
 	}
 
 	/**
@@ -463,3 +463,4 @@ public class DepotEntryLocalServiceUtil {
 			DepotEntryLocalServiceUtil.class, DepotEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:239845251

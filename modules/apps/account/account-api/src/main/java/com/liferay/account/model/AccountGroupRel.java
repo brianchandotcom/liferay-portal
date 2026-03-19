@@ -48,3 +48,4 @@ public interface AccountGroupRel extends AccountGroupRelModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-52654850

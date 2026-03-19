@@ -144,7 +144,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			null, _userLocalService.getGuestUserId(companyId),
 			repository.getGroupId(), repository.getRepositoryId(), false,
 			repository.getDlFolderId(), String.valueOf(userId), null, false,
-			serviceContext);
+			_getServiceContext(serviceContext));
 	}
 
 	@Override
@@ -337,13 +337,17 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			return repository;
 		}
 
+		return _portletFileRepository.addPortletRepository(
+			groupId, portletId, _getServiceContext(serviceContext));
+	}
+
+	private ServiceContext _getServiceContext(ServiceContext serviceContext) {
 		serviceContext = (ServiceContext)serviceContext.clone();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		return _portletFileRepository.addPortletRepository(
-			groupId, portletId, serviceContext);
+		return serviceContext;
 	}
 
 	private Long _getStorageDLFolderId(

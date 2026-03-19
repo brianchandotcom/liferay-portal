@@ -48,3 +48,4 @@ public interface MBBan extends MBBanModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1804359041

@@ -389,10 +389,10 @@ public class DepotEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<Long> getDepotEntryGroupIds(
-		long companyId, long userId, int type, boolean userGroupsOnly) {
+		long companyId, long userId, int type, boolean dynamicInheritanceOnly) {
 
 		return _depotEntryLocalService.getDepotEntryGroupIds(
-			companyId, userId, type, userGroupsOnly);
+			companyId, userId, type, dynamicInheritanceOnly);
 	}
 
 	/**
@@ -546,3 +546,4 @@ public class DepotEntryLocalServiceWrapper
 	private DepotEntryLocalService _depotEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2008945564

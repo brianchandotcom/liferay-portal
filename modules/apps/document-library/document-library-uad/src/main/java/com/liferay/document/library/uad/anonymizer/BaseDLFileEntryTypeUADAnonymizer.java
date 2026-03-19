@@ -93,3 +93,4 @@ public abstract class BaseDLFileEntryTypeUADAnonymizer
 	protected DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-534137681

@@ -1,0 +1,162 @@
+-   tabpanel "Form Elements":
+    -   heading "CHECKBOX" [level=3]
+    -   blockquote:
+        -   paragraph: A checkbox is a component that allows the user selecting something written in its associated text label. A list of consecutive checkboxes would allow the user to select multiple things.
+    -   table:
+        -   rowgroup:
+            -   row "STATE DEFINITION":
+                -   cell "STATE"
+                -   cell "DEFINITION"
+        -   rowgroup:
+            -   row "On":
+                -   cell "On":
+                    -   checkbox "On" [checked]
+                -   cell "On"
+            -   row "Off":
+                -   cell "Off":
+                    -   checkbox "Off"
+                -   cell "Off"
+            -   row "With custom class and id":
+                -   cell "With custom class and id":
+                    -   checkbox "With custom class and id" [checked]
+                -   cell "With custom class and id"
+            -   row "Checkbox with Label Checkbox with Label With Label":
+                -   cell "Checkbox with Label Checkbox with Label":
+                    -   checkbox "Checkbox with Label"
+                -   cell "With Label"
+            -   row "On disabled":
+                -   cell "On disabled":
+                    -   checkbox "On disabled" [checked] [disabled]
+                -   cell "On disabled"
+            -   row "Off disabled":
+                -   cell "Off disabled":
+                    -   checkbox "Off disabled" [disabled]
+                -   cell "Off disabled"
+            -   row "Indeterminate":
+                -   cell "Indeterminate":
+                    -   checkbox "Indeterminate" [checked=mixed]
+                -   cell "Indeterminate"
+    -   blockquote:
+        -   paragraph: Demonstrate a checkbox with an indeterminate state in the TreeView component.
+    -   application:
+        -   tree:
+            -   treeitem "Liferay DXP" [expanded]:
+                -   button "Liferay DXP" [expanded]
+                -   checkbox "Liferay DXP" [checked=mixed]
+                -   group "Liferay DXP":
+                    -   treeitem "Design" [expanded]:
+                        -   button "Design" [expanded]
+                        -   checkbox "Design" [checked]
+                        -   group "Design":
+                            -   treeitem "Style Books":
+                                -   checkbox "Style Books" [checked]
+                            -   treeitem "Fragments":
+                                -   checkbox "Fragments" [checked]
+                    -   treeitem "Content & Data" [expanded]:
+                        -   button "Content & Data" [expanded]
+                        -   checkbox "Content & Data" [checked=mixed]
+                        -   group "Content & Data":
+                            -   treeitem "Kaleo Forms Admin":
+                                -   checkbox "Kaleo Forms Admin" [checked]
+                            -   treeitem "Web Contend":
+                                -   checkbox "Web Contend"
+                            -   treeitem "Blogs":
+                                -   checkbox "Blogs"
+                            -   treeitem "Bookmarks":
+                                -   checkbox "Bookmarks"
+                    -   treeitem "Categorization":
+                        -   checkbox "Categorization"
+    -   heading "RADIO" [level=3]
+    -   blockquote:
+        -   paragraph: A radio button is a component that allows the user selecting something written in its associated text label. A list of consecutive radio buttons would allow the user to select just one thing.
+    -   table:
+        -   rowgroup:
+            -   row "STATE DEFINITION":
+                -   cell "STATE"
+                -   cell "DEFINITION"
+        -   rowgroup:
+            -   row "My Input On":
+                -   cell "My Input":
+                    -   radio "My Input"
+                -   cell "On"
+            -   row "My Input Off":
+                -   cell "My Input":
+                    -   radio "My Input"
+                -   cell "Off"
+            -   row "My Input On disabled":
+                -   cell "My Input":
+                    -   radio "My Input" [checked] [disabled]
+                -   cell "On disabled"
+            -   row "My Input Off disabled":
+                -   cell "My Input":
+                    -   radio "My Input" [disabled]
+                -   cell "Off disabled"
+    -   heading "SELECTOR" [level=3]
+    -   blockquote:
+        -   paragraph: Selectors are frequently used as a part of forms. This elements are used when we need to select one or more within several options. These options are displayed in the button once selected.
+    -   text: Regular Select Element
+    -   combobox "Regular Select Element":
+        -   option "Sample 0" [selected]
+        -   option "Sample 1"
+        -   option "Sample 2"
+        -   option "Sample 3"
+        -   option "Sample 4"
+        -   option "Sample 5"
+        -   option "Sample 6"
+        -   option "Sample 7"
+    -   text: Disabled Regular Select Element
+    -   combobox "Disabled Regular Select Element" [disabled]:
+        -   option "Sample 0" [selected]
+        -   option "Sample 1"
+        -   option "Sample 2"
+        -   option "Sample 3"
+        -   option "Sample 4"
+        -   option "Sample 5"
+        -   option "Sample 6"
+        -   option "Sample 7"
+    -   text: Multiple Select Element
+    -   listbox "Multiple Select Element":
+        -   option "Sample 0"
+        -   option "Sample 1"
+        -   option "Sample 2"
+        -   option "Sample 3"
+        -   option "Sample 4"
+        -   option "Sample 5"
+        -   option "Sample 6"
+        -   option "Sample 7"
+    -   text: Disabled Multiple Select Element
+    -   listbox "Disabled Multiple Select Element" [disabled]:
+        -   option "Sample 0"
+        -   option "Sample 1"
+        -   option "Sample 2"
+        -   option "Sample 3"
+        -   option "Sample 4"
+        -   option "Sample 5"
+        -   option "Sample 6"
+        -   option "Sample 7"
+    -   heading "MULTISELECT" [level=3]
+    -   text: Multiselect 1
+    -   grid:
+        -   row "one Remove one":
+            -   gridcell "one"
+            -   gridcell "Remove one":
+                -   button "Remove one"
+        -   row "two Remove two":
+            -   gridcell "two"
+            -   gridcell "Remove two":
+                -   button "Remove two"
+    -   combobox "Multiselect 1"
+    -   button "Clear All"
+    -   text: Press backspace to delete the current row. Help text is displayed here. Multiselect with Custom Menu Renderer
+    -   grid:
+        -   row "one Remove one":
+            -   gridcell "one"
+            -   gridcell "Remove one":
+                -   button "Remove one"
+        -   row "two Remove two":
+            -   gridcell "two"
+            -   gridcell "Remove two":
+                -   button "Remove two"
+    -   combobox "Multiselect with Custom Menu Renderer"
+    -   button "Clear All"
+    -   text: Press backspace to delete the current row. Help text is displayed here.

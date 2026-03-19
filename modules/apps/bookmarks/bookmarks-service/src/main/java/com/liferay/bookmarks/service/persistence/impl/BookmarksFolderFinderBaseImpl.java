@@ -77,3 +77,4 @@ public abstract class BookmarksFolderFinderBaseImpl
 		BookmarksFolderFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1839939208

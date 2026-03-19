@@ -337,3 +337,4 @@ public class BatchEngineImportTaskErrorLocalServiceUtil {
 			BatchEngineImportTaskErrorLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:52606254

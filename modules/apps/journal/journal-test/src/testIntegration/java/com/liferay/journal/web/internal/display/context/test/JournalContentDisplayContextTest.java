@@ -6,14 +6,17 @@
 package com.liferay.journal.web.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -34,6 +38,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.test.MockLiferayPortletContext;
 
 import jakarta.portlet.Portlet;
+import jakarta.portlet.PortletPreferences;
 import jakarta.portlet.RenderRequest;
 
 import org.junit.Assert;
@@ -58,9 +63,11 @@ public class JournalContentDisplayContextTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_company = _companyLocalService.getCompany(_group.getCompanyId());
 		_journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
 	}
 
 	@Test
@@ -75,6 +82,59 @@ public class JournalContentDisplayContextTest {
 	public void testGetArticleGroupId() throws Exception {
 		_testGetArticleGroupIdFromRenderParameter();
 		_testGetArticleGroupIdFromPortletPreferencesRenderParameter();
+	}
+
+	@Test
+	public void testGetSelectedArticle() throws Exception {
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_getMockLiferayPortletRenderRequest();
+
+		PortletPreferences jxPortletPreferences =
+			PortletPreferencesFactoryUtil.getPortletSetup(
+				_layout,
+				JournalContentPortletKeys.JOURNAL_CONTENT + "_INSTANCE_" +
+					RandomTestUtil.randomString(),
+				null);
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		jxPortletPreferences.setValue(
+			"articleExternalReferenceCode",
+			journalArticle1.getExternalReferenceCode());
+
+		mockLiferayPortletRenderRequest.setPreferences(jxPortletPreferences);
+
+		JournalArticle selectedJournalArticle = _getSelectedArticle(
+			mockLiferayPortletRenderRequest);
+
+		Assert.assertNotNull(selectedJournalArticle);
+		Assert.assertEquals(
+			journalArticle1.getArticleId(),
+			selectedJournalArticle.getArticleId());
+
+		Group companyGroup = _company.getGroup();
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			companyGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		jxPortletPreferences.setValue(
+			"articleExternalReferenceCode",
+			journalArticle2.getExternalReferenceCode());
+
+		jxPortletPreferences.setValue(
+			"groupExternalReferenceCode",
+			companyGroup.getExternalReferenceCode());
+
+		selectedJournalArticle = _getSelectedArticle(
+			mockLiferayPortletRenderRequest);
+
+		Assert.assertNotNull(selectedJournalArticle);
+		Assert.assertEquals(
+			journalArticle2.getArticleId(),
+			selectedJournalArticle.getArticleId());
 	}
 
 	private JournalArticle _getArticle(RenderRequest renderRequest)
@@ -120,11 +180,8 @@ public class JournalContentDisplayContextTest {
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId());
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setLayoutSet(layout.getLayoutSet());
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_layout.getLayoutSet());
 
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 
@@ -143,6 +200,19 @@ public class JournalContentDisplayContextTest {
 		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
 
 		return mockLiferayPortletRenderRequest;
+	}
+
+	private JournalArticle _getSelectedArticle(RenderRequest renderRequest)
+		throws Exception {
+
+		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+		mvcPortlet.render(
+			renderRequest, new MockLiferayPortletRenderResponse());
+
+		return ReflectionTestUtil.invoke(
+			renderRequest.getAttribute("JOURNAL_CONTENT_DISPLAY_CONTEXT#"),
+			"getSelectedArticle", new Class<?>[0]);
 	}
 
 	private void _testGetArticleGroupIdFromPortletPreferencesRenderParameter()
@@ -234,6 +304,8 @@ public class JournalContentDisplayContextTest {
 		Assert.assertNull(_getArticle(_getMockLiferayPortletRenderRequest()));
 	}
 
+	private Company _company;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -242,6 +314,8 @@ public class JournalContentDisplayContextTest {
 
 	@DeleteAfterTestRun
 	private JournalArticle _journalArticle;
+
+	private Layout _layout;
 
 	@Inject(
 		filter = "component.name=com.liferay.journal.content.web.internal.portlet.JournalContentPortlet"

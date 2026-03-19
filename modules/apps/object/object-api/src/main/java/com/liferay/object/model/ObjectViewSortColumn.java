@@ -50,3 +50,4 @@ public interface ObjectViewSortColumn extends ObjectViewSortColumnModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1083738963

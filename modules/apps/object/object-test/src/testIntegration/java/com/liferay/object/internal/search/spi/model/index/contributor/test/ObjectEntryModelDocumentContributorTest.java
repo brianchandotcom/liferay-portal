@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -33,6 +36,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -57,6 +61,7 @@ public class ObjectEntryModelDocumentContributorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testContribute() throws Exception {
 		String objectFieldName = "a" + RandomTestUtil.randomString();
@@ -82,11 +87,14 @@ public class ObjectEntryModelDocumentContributorTest {
 				TestPropsValues.getUserId(),
 				modifiableSystemObjectDefinition.getObjectDefinitionId());
 
+		Date displayDate = new Date();
 		String objectFieldValue = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			TestPropsValues.getGroupId(), modifiableSystemObjectDefinition,
 			HashMapBuilder.<String, Serializable>put(
+				Field.DISPLAY_DATE, displayDate
+			).put(
 				objectFieldName, objectFieldValue
 			).put(
 				objectFieldName + "_i18n",
@@ -106,7 +114,13 @@ public class ObjectEntryModelDocumentContributorTest {
 
 		objectEntryModelDocumentContributor.contribute(document, objectEntry);
 
-		Field field = document.getField("objectEntryContent");
+		Field field = document.getField(Field.DISPLAY_DATE);
+
+		Assert.assertEquals(
+			DateUtil.getDate(displayDate, "yyyyMMddHHmmss", LocaleUtil.US),
+			field.getValue());
+
+		field = document.getField("objectEntryContent");
 
 		String value = field.getValue();
 

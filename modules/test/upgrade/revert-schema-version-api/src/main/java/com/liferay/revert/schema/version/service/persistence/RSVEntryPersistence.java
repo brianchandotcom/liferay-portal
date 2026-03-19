@@ -151,3 +151,4 @@ public interface RSVEntryPersistence extends BasePersistence<RSVEntry> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1045656148

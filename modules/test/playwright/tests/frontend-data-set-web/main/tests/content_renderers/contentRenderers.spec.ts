@@ -47,3 +47,48 @@ test('Number fields', {tag: ['@LPD-64534']}, async ({fdsSamplePage}) => {
 		await expect(numberDefaultCell).toHaveText('0');
 	});
 });
+
+test(
+	'Search and pagination with static items',
+	{tag: ['@LPD-82348']},
+	async ({fdsSamplePage, page}) => {
+		await test.step('Check only items 0 and 1 are visible by default', async () => {
+			await expect(fdsSamplePage.table.bodyRows).toHaveCount(2);
+
+			await expect(page.getByText('Item with 0')).toBeVisible();
+			await expect(page.getByText('Item with 1')).toBeVisible();
+		});
+
+		await test.step('Check pagination', async () => {
+			await fdsSamplePage.changePage(2);
+
+			await expect(page.getByText('Item with 2')).toBeVisible();
+		});
+
+		await test.step('Check search', async () => {
+			await expect(async () => {
+				await fdsSamplePage.search('3');
+
+				await expect(page.getByText('Item with 2')).not.toBeVisible({
+					timeout: 1000,
+				});
+
+				await expect(page.getByText('Item with 3')).toBeVisible({
+					timeout: 1000,
+				});
+			}).toPass();
+		});
+
+		await test.step('Check we only have one page and it is selected after search', async () => {
+			const pageLinks = page
+				.locator('.pagination')
+				.getByLabel('Go to page');
+
+			await expect(pageLinks).toHaveCount(1);
+
+			const activePage = page.locator('.page-item.active .page-link');
+
+			await expect(activePage).toContainText('1');
+		});
+	}
+);

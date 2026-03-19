@@ -210,3 +210,4 @@ public class SegmentsEntryRelCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-476949236

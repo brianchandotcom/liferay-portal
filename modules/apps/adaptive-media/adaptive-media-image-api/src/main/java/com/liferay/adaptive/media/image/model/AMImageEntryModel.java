@@ -252,3 +252,4 @@ public interface AMImageEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1782014735

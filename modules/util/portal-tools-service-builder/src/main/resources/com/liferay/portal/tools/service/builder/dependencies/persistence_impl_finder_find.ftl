@@ -2110,8 +2110,8 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		if (list == null) {
 			try {
-				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (databaseInMaxParameters > 0) && (<#list entityFinderArrayableColsList as arrayableentityColumn>
-						(${arrayableentityColumn.pluralName}.length > databaseInMaxParameters)
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (${databaseInMaxParameters} > 0) && (<#list entityFinderArrayableColsList as arrayableentityColumn>
+						(${arrayableentityColumn.pluralName}.length > ${databaseInMaxParameters})
 
 						<#if arrayableentityColumn_has_next>
 							||
@@ -2121,7 +2121,7 @@ that may or may not be enforced with a unique index at the database level. Case
 					list = new ArrayList<${entity.name}>();
 
 					<#list entityFinderArrayableColsList as arrayableentityColumn>
-						${arrayableentityColumn.type}[][] ${arrayableentityColumn.pluralName}Pages = (${arrayableentityColumn.type}[][])ArrayUtil.split(${arrayableentityColumn.pluralName}, databaseInMaxParameters);
+						${arrayableentityColumn.type}[][] ${arrayableentityColumn.pluralName}Pages = (${arrayableentityColumn.type}[][])<#if serviceBuilder.isVersionGTE_7_1_0()>ArrayUtil.split<#else>_split</#if>(${arrayableentityColumn.pluralName}, ${databaseInMaxParameters});
 					</#list>
 
 					<#list entityFinderArrayableColsList as arrayableentityColumn>

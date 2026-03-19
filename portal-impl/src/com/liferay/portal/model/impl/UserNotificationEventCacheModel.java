@@ -233,3 +233,4 @@ public class UserNotificationEventCacheModel
 	public boolean archived;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1170683020

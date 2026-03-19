@@ -461,3 +461,4 @@ public abstract class FaroNotificationLocalServiceBaseImpl
 		FaroNotificationLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1931629694

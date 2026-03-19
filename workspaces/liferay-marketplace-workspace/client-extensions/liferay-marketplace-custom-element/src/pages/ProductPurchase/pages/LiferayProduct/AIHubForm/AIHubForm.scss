@@ -1,0 +1,46 @@
+.liferay-ai-hub-form {
+	&-aggreements-text {
+		font-size: 11px;
+		text-align: justify;
+	}
+
+	&-aggreements-check-box,
+	&-label-check-box,
+	&-purpose-helper-text {
+		font-size: 11px;
+	}
+
+	&-fail {
+		border: solid 1px red !important;
+	}
+
+	&-select-input {
+		height: 40px;
+	}
+
+	.dropdown-menu {
+		border-radius: 10px !important;
+		max-width: none !important;
+		padding: 8px !important;
+		transition: all 0.3s ease-in-out !important;
+		width: 525px;
+
+		.dropdown-item:hover {
+			color: #0053f0;
+		}
+	}
+
+	.loading-animation {
+		margin: 0px !important;
+	}
+
+	&-container {
+		max-width: 610px;
+	}
+
+	&-next-step-page-icon {
+		height: 40px !important;
+		margin: 20px !important;
+		width: 40px !important;
+	}
+}

@@ -86,3 +86,4 @@ public class EntryServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1378860430

@@ -465,3 +465,4 @@ public class WikiPageServiceUtil {
 		new Snapshot<>(WikiPageServiceUtil.class, WikiPageService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:163069927

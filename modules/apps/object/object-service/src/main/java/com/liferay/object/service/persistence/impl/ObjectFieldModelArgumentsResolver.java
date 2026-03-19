@@ -131,3 +131,4 @@ public class ObjectFieldModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-374515308

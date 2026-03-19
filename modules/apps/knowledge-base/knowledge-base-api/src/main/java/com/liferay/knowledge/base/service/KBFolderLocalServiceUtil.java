@@ -537,3 +537,4 @@ public class KBFolderLocalServiceUtil {
 			KBFolderLocalServiceUtil.class, KBFolderLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2070313128

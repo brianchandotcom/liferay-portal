@@ -67,3 +67,4 @@ public class LayoutSetPrototypeTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1434367588

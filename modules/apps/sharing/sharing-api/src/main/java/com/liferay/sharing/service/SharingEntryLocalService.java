@@ -718,3 +718,4 @@ public interface SharingEntryLocalService
 	public SharingEntry updateSharingEntry(SharingEntry sharingEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-690008110

@@ -1990,3 +1990,4 @@ public class CalendarBookingServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:14406453

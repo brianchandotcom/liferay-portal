@@ -1000,3 +1000,4 @@ public class CommerceShippingFixedOptionQualifierModelImpl
 	private CommerceShippingFixedOptionQualifier _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2097276019

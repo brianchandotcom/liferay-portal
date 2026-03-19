@@ -45,3 +45,4 @@ public class VirtualHostTable extends BaseTable<VirtualHostTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:740810212

@@ -652,3 +652,4 @@ public abstract class CPInstanceOptionValueRelLocalServiceBaseImpl
 		CPInstanceOptionValueRelLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1316854646

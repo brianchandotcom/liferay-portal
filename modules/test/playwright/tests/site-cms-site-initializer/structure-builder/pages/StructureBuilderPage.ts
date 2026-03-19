@@ -191,6 +191,7 @@ export class StructureBuilderPage {
 		name,
 		picklist,
 		requestFile,
+		showFilesInLibrary,
 	}: {
 		erc?: string;
 		label?: string;
@@ -200,6 +201,7 @@ export class StructureBuilderPage {
 		name?: string;
 		picklist?: string;
 		requestFile?: 'computer' | 'document-library';
+		showFilesInLibrary?: boolean;
 	}) {
 		if (erc !== undefined) {
 			const ercInput = this.page.getByLabel('ERC');
@@ -269,10 +271,23 @@ export class StructureBuilderPage {
 					name:
 						requestFile === 'computer'
 							? 'Computer'
-							: 'Documents and Media',
+							: 'Item Selector',
 				}),
 				trigger: this.page.getByLabel('Request Files'),
 			});
+		}
+
+		if (showFilesInLibrary !== undefined) {
+			const showFilesInLibraryToggle = this.page.getByRole('checkbox', {
+				name: 'Show Files in CMS Library',
+			});
+
+			if (
+				(await showFilesInLibraryToggle.isChecked()) !==
+				showFilesInLibrary
+			) {
+				await showFilesInLibraryToggle.click();
+			}
 		}
 	}
 
@@ -374,6 +389,7 @@ export class StructureBuilderPage {
 		name = `StructureName${getRandomInt()}`,
 		page,
 		publish = true,
+		spaces,
 	}: {
 		autoDelete?: boolean;
 		erc?: string;
@@ -381,10 +397,16 @@ export class StructureBuilderPage {
 		name?: string;
 		page: StructureBuilderPage;
 		publish?: boolean;
+		spaces?: string[];
 	}) {
 		await page.goToCreateStructure();
 
-		await page.enableForAllSpaces();
+		if (!spaces) {
+			await page.enableForAllSpaces();
+		}
+		else {
+			await this.selectSpaces(spaces);
+		}
 
 		await page.changeStructureSettings({
 			erc,

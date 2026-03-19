@@ -683,3 +683,4 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 		TranslationEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1361984767

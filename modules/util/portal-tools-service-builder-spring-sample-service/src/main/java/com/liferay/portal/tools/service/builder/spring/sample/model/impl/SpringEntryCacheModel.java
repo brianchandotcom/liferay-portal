@@ -148,3 +148,4 @@ public class SpringEntryCacheModel
 	public long createDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1077462295

@@ -122,6 +122,7 @@ public class DBPartitionSchemaValidator {
 
 	private static List<Long> _getCompanyIds() throws Exception {
 		try (Statement statement = _connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select companyId from Company order by createDate asc")) {
 
@@ -160,6 +161,7 @@ public class DBPartitionSchemaValidator {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				query);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

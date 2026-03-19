@@ -91,3 +91,4 @@ public class ExpandoColumnServiceUtil {
 	private static volatile ExpandoColumnService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:454122641

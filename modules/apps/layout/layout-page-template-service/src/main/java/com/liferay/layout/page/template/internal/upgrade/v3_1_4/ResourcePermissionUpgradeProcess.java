@@ -30,6 +30,7 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 
 	private void _insertResourcePermissions() {
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				StringBundler.concat(
 					"select mvccVersion, resourcePermissionId, companyId, ",

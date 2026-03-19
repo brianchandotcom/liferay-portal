@@ -254,3 +254,4 @@ public interface SamlPeerBindingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1940735393

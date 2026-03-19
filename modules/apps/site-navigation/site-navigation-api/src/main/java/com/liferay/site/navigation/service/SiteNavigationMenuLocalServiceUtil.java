@@ -525,3 +525,4 @@ public class SiteNavigationMenuLocalServiceUtil {
 			SiteNavigationMenuLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1474406708

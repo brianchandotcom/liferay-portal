@@ -800,3 +800,4 @@ public class CommerceOrderItemCacheModel
 	public double width;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-766857863

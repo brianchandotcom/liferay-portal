@@ -73,3 +73,4 @@ public class CommerceVirtualOrderItemFileEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:170206671

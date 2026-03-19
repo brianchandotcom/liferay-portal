@@ -335,3 +335,4 @@ public interface OAuthClientASLocalMetadataLocalService
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2081777850

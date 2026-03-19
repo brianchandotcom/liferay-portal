@@ -349,6 +349,7 @@ public class ConfigurationPersistenceManager
 
 	private void _deleteFromDatabase(String pid) throws IOException {
 		try (Connection connection = _dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_db.buildSQL(
 					"delete from Configuration_ where configurationId = ?"))) {
@@ -366,6 +367,7 @@ public class ConfigurationPersistenceManager
 		throws IOException {
 
 		try (Connection connection = _dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_db.buildSQL(
 					"select dictionary from Configuration_ where " +
@@ -375,7 +377,7 @@ public class ConfigurationPersistenceManager
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					String dictionaryString = resultSet.getString(1);
+					String dictionaryString = resultSet.getString("dictionary");
 
 					if (dictionaryString == null) {
 						return new HashMapDictionary<>();
@@ -447,6 +449,7 @@ public class ConfigurationPersistenceManager
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> {
 				try (Connection connection = _dataSource.getConnection();
+
 					PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							_db.buildSQL(
@@ -454,33 +457,37 @@ public class ConfigurationPersistenceManager
 									"Configuration_"),
 							ResultSet.TYPE_FORWARD_ONLY,
 							ResultSet.CONCUR_READ_ONLY);
+
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {
-						String pid = resultSet.getString(1);
+						String pid = resultSet.getString("configurationId");
 
 						Dictionary<Object, Object> dictionary =
-							_verifyDictionary(pid, resultSet.getString(2));
+							_verifyDictionary(
+								pid, resultSet.getString("dictionary"));
 
-						if (dictionary != null) {
-							if (PropsValues.DATABASE_PARTITION_ENABLED) {
-								Long scopeCompanyId = (Long)dictionary.get(
-									ExtendedObjectClassDefinition.Scope.COMPANY.
-										getPropertyKey());
-
-								if ((scopeCompanyId != null) &&
-									(scopeCompanyId != 0) &&
-									!scopeCompanyId.equals(companyId)) {
-
-									continue;
-								}
-							}
-
-							overridePropertiesMap.remove(pid);
-
-							_dictionaries.put(
-								pid, _overrideDictionary(pid, dictionary));
+						if (dictionary == null) {
+							continue;
 						}
+
+						if (PropsValues.DATABASE_PARTITION_ENABLED) {
+							Long scopeCompanyId = (Long)dictionary.get(
+								ExtendedObjectClassDefinition.Scope.COMPANY.
+									getPropertyKey());
+
+							if ((scopeCompanyId != null) &&
+								(scopeCompanyId != 0) &&
+								!scopeCompanyId.equals(companyId)) {
+
+								continue;
+							}
+						}
+
+						overridePropertiesMap.remove(pid);
+
+						_dictionaries.put(
+							pid, _overrideDictionary(pid, dictionary));
 					}
 				}
 			});

@@ -272,3 +272,4 @@ public interface MFAFIDO2CredentialEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-103754471

@@ -33,3 +33,18 @@
 .card-page-item-asset {
 	min-width: 193px;
 }
+
+.management-bar.management-bar-light {
+	border-bottom-width: 0.05rem;
+	border-color: $secondary-l0;
+
+	@media (max-resolution: 1dppx) {
+		border-color: $secondary-l2;
+	}
+}
+
+.navigation-bar-light {
+	@media (max-resolution: 1dppx) {
+		border-color: $secondary-l2;
+	}
+}

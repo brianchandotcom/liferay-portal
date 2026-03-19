@@ -65,3 +65,4 @@ public class SocialActivitySetFinderBaseImpl
 		SocialActivitySetFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1147534014

@@ -911,3 +911,4 @@ public class AccountGroupRelModelImpl
 	private AccountGroupRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1850456954

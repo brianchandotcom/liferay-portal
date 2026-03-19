@@ -925,3 +925,4 @@ public class CPSpecificationOptionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:327828165

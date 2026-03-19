@@ -107,3 +107,4 @@ public class LayoutSetBranchServiceWrapper
 	private LayoutSetBranchService _layoutSetBranchService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-809384956

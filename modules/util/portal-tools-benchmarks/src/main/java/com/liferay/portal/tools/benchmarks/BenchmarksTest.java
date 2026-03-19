@@ -178,8 +178,10 @@ public class BenchmarksTest {
 
 		try (Connection connection = DriverManager.getConnection(
 				_jdbcURL, _jdbcUserName, _jdbcPassword);
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				sql);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

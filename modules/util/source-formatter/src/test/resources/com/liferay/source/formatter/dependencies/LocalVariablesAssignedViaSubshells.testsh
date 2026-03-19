@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function test {
+	local bar="BAR"
+	local foo="FOO"
+
+	local variable1=\"${foo}/${bar}\"
+	local variable2="Today is $(date)"
+	local variable3=`ls`
+	local variable4=$(ls)
+	local variable5='Do not $(ls) this'
+	local variable6=\"/tmp/$(date +%Y)\"
+	local variable7=$((1 + 1))
+}
+
+test

@@ -618,3 +618,4 @@ public class SharingEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-9341893

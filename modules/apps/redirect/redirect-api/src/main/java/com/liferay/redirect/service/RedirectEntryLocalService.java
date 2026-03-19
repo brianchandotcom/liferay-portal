@@ -375,3 +375,4 @@ public interface RedirectEntryLocalService
 	public RedirectEntry updateRedirectEntry(RedirectEntry redirectEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1396390387

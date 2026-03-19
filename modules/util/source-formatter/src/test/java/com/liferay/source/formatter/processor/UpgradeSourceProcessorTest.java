@@ -85,11 +85,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaBaseModelListenerCheck() throws Exception {
-		test("upgrade/UpgradeJavaBaseModelListenerCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaDDMFormValuesSerializerTrackerCheck()
 		throws Exception {
 
@@ -211,11 +206,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testUpgradeJavaSortFieldNameTranslatorCheck() throws Exception {
 		test("upgrade/UpgradeJavaSortFieldNameTranslatorCheck.testjava");
-	}
-
-	@Test
-	public void testUpgradeJavaStorageTypeAwareCheck() throws Exception {
-		test("upgrade/UpgradeJavaStorageTypeAwareCheck.testjava");
 	}
 
 	@Test

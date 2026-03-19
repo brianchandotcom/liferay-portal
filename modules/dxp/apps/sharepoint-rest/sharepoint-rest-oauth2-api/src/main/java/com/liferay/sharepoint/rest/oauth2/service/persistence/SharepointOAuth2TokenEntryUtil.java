@@ -534,3 +534,4 @@ public class SharepointOAuth2TokenEntryUtil {
 	private static volatile SharepointOAuth2TokenEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1982617516

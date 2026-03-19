@@ -913,3 +913,4 @@ public interface RatingsEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:946691352

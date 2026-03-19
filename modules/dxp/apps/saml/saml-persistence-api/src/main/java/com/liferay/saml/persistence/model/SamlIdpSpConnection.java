@@ -52,3 +52,4 @@ public interface SamlIdpSpConnection
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1989738675

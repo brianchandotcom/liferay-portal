@@ -1,0 +1,11 @@
+ext {
+	jakartaFacesModule = true
+}
+
+apply from: "../../build-jakarta-transformer.gradle"
+
+dependencies {
+	// TODO 15.0.6.LIFERAY-PATCHED-1 needs to be in modules/third-party
+	// TODO Rename com.liferay.faces to com.liferay
+	compileOnly group: "com.liferay.faces", name: "primefaces", transitive: false, version: "15.0.6.LIFERAY-PATCHED-1"
+}

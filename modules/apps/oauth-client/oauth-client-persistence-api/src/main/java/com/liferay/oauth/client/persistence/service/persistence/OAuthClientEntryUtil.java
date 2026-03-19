@@ -1143,3 +1143,4 @@ public class OAuthClientEntryUtil {
 	private static volatile OAuthClientEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1635100094

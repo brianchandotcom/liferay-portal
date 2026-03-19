@@ -49,3 +49,4 @@ public interface PortletPreferences
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-767738335

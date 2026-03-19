@@ -672,3 +672,4 @@ public interface CommerceNotificationAttachmentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1630012939

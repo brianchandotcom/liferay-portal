@@ -470,3 +470,4 @@ public class CTCollectionTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1387700558

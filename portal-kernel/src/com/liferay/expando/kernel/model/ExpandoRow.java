@@ -50,3 +50,4 @@ public interface ExpandoRow extends ExpandoRowModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:965625189

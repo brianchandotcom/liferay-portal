@@ -322,3 +322,4 @@ public class VirtualHostWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-26506638

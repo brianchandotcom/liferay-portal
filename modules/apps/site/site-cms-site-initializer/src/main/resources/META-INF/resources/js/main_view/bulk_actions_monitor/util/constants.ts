@@ -29,6 +29,8 @@ export const BULK_ACTION_RESET_PERMISSIONS =
 	'ResetPermissionObjectBulkSelectionAction';
 export const BULK_ACTION_STATUS = 'StatusObjectBulkSelectionAction';
 export const BULK_ACTION_TAGS = 'EditObjectTagsBulkSelectionAction';
+export const BULK_ACTION_UPDATE_OBJECT_VALUES =
+	'UpdateObjectValuesBulkSelectionAction';
 
 export const INTERVAL_TASK_POLLING_MS = 5000;
 
@@ -59,6 +61,8 @@ export const LABELS_BULK_ACTIONS: {[key in keyof IBulkActionTaskType]: string} =
 		),
 		[BULK_ACTION_STATUS]: Liferay.Language.get('state-update'),
 		[BULK_ACTION_TAGS]: Liferay.Language.get('assets-tagging'),
+		[BULK_ACTION_UPDATE_OBJECT_VALUES]:
+			Liferay.Language.get('text-replace'),
 	};
 
 export const STATUS_COMPLETED = 'completed';

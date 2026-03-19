@@ -60,3 +60,4 @@ public interface FaroProject extends FaroProjectModel, PersistedModel {
 	public boolean isTrial();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:798404575

@@ -229,3 +229,4 @@ public class NotificationTemplateAttachmentWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-680723737

@@ -23211,3 +23211,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1616885936

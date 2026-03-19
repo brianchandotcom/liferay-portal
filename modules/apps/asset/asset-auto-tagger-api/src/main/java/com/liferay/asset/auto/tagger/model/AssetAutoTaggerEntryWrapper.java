@@ -345,3 +345,4 @@ public class AssetAutoTaggerEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-751189415

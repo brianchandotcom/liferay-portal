@@ -384,3 +384,4 @@ public class CSDiagramSettingLocalServiceUtil {
 			CSDiagramSettingLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1037417405

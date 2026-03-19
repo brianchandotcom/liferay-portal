@@ -470,3 +470,4 @@ public class CommercePaymentEntryCacheModel
 	public int type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:984367069

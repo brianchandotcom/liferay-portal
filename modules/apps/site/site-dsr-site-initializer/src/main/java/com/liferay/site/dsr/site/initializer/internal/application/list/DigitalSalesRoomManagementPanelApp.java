@@ -1,0 +1,104 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.site.dsr.site.initializer.internal.application.list;
+
+import com.liferay.application.list.BasePanelApp;
+import com.liferay.application.list.PanelApp;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLWrapper;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.impl.PortletImpl;
+import com.liferay.site.dsr.site.initializer.internal.constants.DSRConstants;
+
+import jakarta.portlet.PortletURL;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Stefano Motta
+ */
+@Component(
+	property = {
+		"panel.app.order:Integer=100",
+		"panel.category.key=commerce.digital_sales_room_management"
+	},
+	service = PanelApp.class
+)
+public class DigitalSalesRoomManagementPanelApp extends BasePanelApp {
+
+	@Override
+	public String getLabel(Locale locale) {
+		return _language.get(locale, "digital-sales-room-management");
+	}
+
+	@Override
+	public int getNotificationsCount(User user) {
+		return 0;
+	}
+
+	@Override
+	public Portlet getPortlet() {
+		return new PortletImpl();
+	}
+
+	@Override
+	public String getPortletId() {
+		return "commerce.digital_sales_room_management";
+	}
+
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return new PortletURLWrapper(null) {
+
+			@Override
+			public String toString() {
+				return StringBundler.concat(
+					themeDisplay.getPathFriendlyURLPublic(),
+					DSRConstants.DSR_FRIENDLY_URL, "/home");
+			}
+
+		};
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				permissionChecker.getCompanyId(), "LPD-66359")) {
+
+			return false;
+		}
+
+		return PortalPermissionUtil.contains(
+			permissionChecker, ActionKeys.VIEW_CONTROL_PANEL);
+	}
+
+	@Reference
+	private Language _language;
+
+}

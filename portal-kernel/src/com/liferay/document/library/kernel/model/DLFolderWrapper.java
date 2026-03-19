@@ -1089,3 +1089,4 @@ public class DLFolderWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:680358368

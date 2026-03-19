@@ -98,3 +98,4 @@ public interface DefinedDefaultOrderEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1806449903

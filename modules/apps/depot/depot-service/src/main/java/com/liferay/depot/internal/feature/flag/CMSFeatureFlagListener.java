@@ -47,7 +47,7 @@ public class CMSFeatureFlagListener implements FeatureFlagListener {
 				}
 
 				Map<Locale, String> titleMap = DepotRoleUtil.getTitleMap(
-					companyId, _language, name);
+					_language, name);
 
 				if (Objects.equals(titleMap, role.getTitleMap())) {
 					continue;

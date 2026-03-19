@@ -39,3 +39,4 @@ public abstract class KaleoConditionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1791637540

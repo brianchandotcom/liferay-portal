@@ -1431,3 +1431,4 @@ public class KBArticlePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:376693266

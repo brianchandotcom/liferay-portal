@@ -95,3 +95,4 @@ public interface CacheFieldEntryModel extends BaseModel<CacheFieldEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1776081660

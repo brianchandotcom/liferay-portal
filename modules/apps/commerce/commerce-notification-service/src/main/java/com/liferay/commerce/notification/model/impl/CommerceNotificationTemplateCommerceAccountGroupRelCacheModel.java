@@ -224,3 +224,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 	public long commerceAccountGroupId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:201643571

@@ -1548,3 +1548,4 @@ public class JournalFolderModelImpl
 	private JournalFolder _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1946614685

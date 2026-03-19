@@ -495,6 +495,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		if (dslQuery != null) {
 			try (PreparedStatement preparedStatement = _getPreparedStatement(
 					connection, dslQuery);
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
@@ -691,6 +692,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				constraintEntriesSQL);
+
 			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 			while (resultSet1.next()) {
@@ -941,6 +943,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(sb.toString()));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			List<Long> primaryKeys = new ArrayList<>();
@@ -1089,6 +1092,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sb.toString());
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

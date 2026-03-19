@@ -123,3 +123,4 @@ public interface CommerceChannelRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2098064934

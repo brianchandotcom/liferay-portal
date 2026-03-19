@@ -707,3 +707,4 @@ public class DLSyncEventModelImpl
 	private DLSyncEvent _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-444719174

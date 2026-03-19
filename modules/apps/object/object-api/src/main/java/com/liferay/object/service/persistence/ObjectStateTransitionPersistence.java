@@ -886,3 +886,4 @@ public interface ObjectStateTransitionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:240256330

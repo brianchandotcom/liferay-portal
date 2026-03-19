@@ -267,3 +267,4 @@ public class KBCommentCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1829547171

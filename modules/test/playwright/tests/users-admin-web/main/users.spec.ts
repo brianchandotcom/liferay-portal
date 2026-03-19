@@ -18,11 +18,7 @@ import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {nextPage} from '../../../utils/pagination';
-import performLogin, {
-	performLoginViaApi,
-	performLogout,
-	userData,
-} from '../../../utils/performLogin';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
@@ -168,8 +164,7 @@ test(
 			'#user_ACTION_ADD_MESSAGE',
 		]);
 
-		await performLogout(page);
-		await performLogin(page, name);
+		await performUserSwitch(page, name);
 
 		await accountSettingsPage.goToAccountSettings();
 		await accountSettingsPage.organizationsMenuItem.click();
@@ -205,8 +200,7 @@ test(
 			'Thread Body created as User'
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const adminRole =
 			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
@@ -216,8 +210,7 @@ test(
 			userAccountWithApostrophe.id
 		);
 
-		await performLogout(page);
-		await performLogin(page, name);
+		await performUserSwitch(page, name);
 
 		await page.goto(`/web/${site.name}${messageBoardPage.friendlyUrlPath}`);
 
@@ -355,8 +348,7 @@ test(
 
 		await expect(editUserPage.firstNameInput).toHaveValue(name);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		await page.goto(`/web/${userAccount.alternateName}`);
 

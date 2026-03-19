@@ -57,3 +57,4 @@ public class ThemeServiceUtil {
 	private static volatile ThemeService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1469555484

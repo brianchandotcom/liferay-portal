@@ -54,3 +54,4 @@ public class PatcherTicketHintTable extends BaseTable<PatcherTicketHintTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1701389018

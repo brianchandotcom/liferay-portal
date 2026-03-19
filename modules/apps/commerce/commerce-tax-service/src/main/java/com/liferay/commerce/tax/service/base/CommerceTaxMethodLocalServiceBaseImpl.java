@@ -462,3 +462,4 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 		CommerceTaxMethodLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1283643417

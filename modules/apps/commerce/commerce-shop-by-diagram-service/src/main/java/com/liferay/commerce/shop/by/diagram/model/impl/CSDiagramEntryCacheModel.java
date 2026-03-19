@@ -272,3 +272,4 @@ public class CSDiagramEntryCacheModel
 	public String sku;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1072782656

@@ -2656,3 +2656,4 @@ public class ReadingTimeEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1793888600

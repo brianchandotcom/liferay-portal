@@ -1295,3 +1295,4 @@ public class DDMDataProviderInstanceUtil {
 	private static volatile DDMDataProviderInstancePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1397941130

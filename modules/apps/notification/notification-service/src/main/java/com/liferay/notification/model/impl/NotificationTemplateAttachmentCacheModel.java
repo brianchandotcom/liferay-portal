@@ -139,3 +139,4 @@ public class NotificationTemplateAttachmentCacheModel
 	public long objectFieldId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:930610946

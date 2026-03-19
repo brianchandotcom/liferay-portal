@@ -115,3 +115,4 @@ public class FaroNotificationModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-499354462

@@ -114,6 +114,7 @@ public class KaleoDefinitionVersionUpgradeProcessTest {
 				"version INTEGER,draftVersion INTEGER)"));
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into KaleoDraftDefinition (groupId, companyId, ",

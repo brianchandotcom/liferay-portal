@@ -12,7 +12,11 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
+import {
+	performLoginViaApi,
+	performLogout,
+	performUserSwitch,
+} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -115,8 +119,7 @@ test(
 			).toBeVisible();
 		}
 		finally {
-			await performLogout(page);
-			await performLoginViaApi({page, screenName: 'test'});
+			await performUserSwitch(page, 'test');
 
 			await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
 				false

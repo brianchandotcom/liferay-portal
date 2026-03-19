@@ -9,10 +9,10 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.ai.hub.configuration.AIHubConfiguration;
+import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
+import com.liferay.ai.hub.cell.security.JWTTokenUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
-import com.liferay.ai.hub.security.JWTTokenUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -130,7 +130,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		_originalName = PrincipalThreadLocal.getName();
 
 		ConfigurationTestUtil.saveConfiguration(
-			AIHubConfiguration.class.getName(),
+			AIHubCellConfiguration.class.getName(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"clientId", RandomTestUtil.randomString()
 			).put(
@@ -242,7 +242,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		PrincipalThreadLocal.setName(_originalName);
 
 		ConfigurationTestUtil.deleteConfiguration(
-			AIHubConfiguration.class.getName());
+			AIHubCellConfiguration.class.getName());
 	}
 
 	@After
@@ -464,7 +464,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			"ai-hub/v1.0/tasks",
 			HashMapBuilder.put(
-				"Liferay-AI-Hub-On-Behalf-Of",
+				"Liferay-AI-Hub-Cell-On-Behalf-Of",
 				_generateToken(TestPropsValues.getUserId())
 			).build(),
 			Http.Method.POST);
@@ -528,7 +528,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			"ai-hub/v1.0/tasks",
 			HashMapBuilder.put(
-				"Liferay-AI-Hub-On-Behalf-Of",
+				"Liferay-AI-Hub-Cell-On-Behalf-Of",
 				_generateToken(TestPropsValues.getUserId())
 			).build(),
 			Http.Method.POST);
@@ -564,7 +564,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			"ai-hub/v1.0/tasks",
 			HashMapBuilder.put(
-				"Liferay-AI-Hub-On-Behalf-Of",
+				"Liferay-AI-Hub-Cell-On-Behalf-Of",
 				_generateToken(TestPropsValues.getUserId())
 			).build(),
 			Http.Method.POST);
@@ -637,7 +637,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 					).toString(),
 					"ai-hub/v1.0/tasks",
 					HashMapBuilder.put(
-						"Liferay-AI-Hub-On-Behalf-Of", userToken
+						"Liferay-AI-Hub-Cell-On-Behalf-Of", userToken
 					).build(),
 					Http.Method.POST);
 
@@ -675,7 +675,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 					).toString(),
 					"ai-hub/v1.0/tasks",
 					HashMapBuilder.put(
-						"Liferay-AI-Hub-On-Behalf-Of", userToken
+						"Liferay-AI-Hub-Cell-On-Behalf-Of", userToken
 					).build(),
 					Http.Method.POST);
 
@@ -749,7 +749,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			"ai-hub/v1.0/tasks",
 			HashMapBuilder.put(
-				"Liferay-AI-Hub-On-Behalf-Of",
+				"Liferay-AI-Hub-Cell-On-Behalf-Of",
 				_generateToken(TestPropsValues.getUserId())
 			).build(),
 			Http.Method.POST);

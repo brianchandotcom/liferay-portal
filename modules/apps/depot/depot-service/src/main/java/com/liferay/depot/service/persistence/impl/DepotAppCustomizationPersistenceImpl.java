@@ -1986,3 +1986,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1203944682

@@ -77,3 +77,4 @@ public abstract class MBThreadFinderBaseImpl
 		MBThreadFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:618313388

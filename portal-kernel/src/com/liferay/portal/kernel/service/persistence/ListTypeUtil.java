@@ -1035,3 +1035,4 @@ public class ListTypeUtil {
 	private static volatile ListTypePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1842427333

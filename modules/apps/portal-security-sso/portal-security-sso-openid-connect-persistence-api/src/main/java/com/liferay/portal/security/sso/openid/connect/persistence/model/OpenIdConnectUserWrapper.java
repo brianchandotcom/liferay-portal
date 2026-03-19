@@ -312,3 +312,4 @@ public class OpenIdConnectUserWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1850964775

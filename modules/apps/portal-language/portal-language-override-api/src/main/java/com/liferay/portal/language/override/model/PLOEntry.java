@@ -50,3 +50,4 @@ public interface PLOEntry extends PersistedModel, PLOEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1411545661

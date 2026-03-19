@@ -113,3 +113,4 @@ public class JournalFeedServiceWrapper
 	private JournalFeedService _journalFeedService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1171689216

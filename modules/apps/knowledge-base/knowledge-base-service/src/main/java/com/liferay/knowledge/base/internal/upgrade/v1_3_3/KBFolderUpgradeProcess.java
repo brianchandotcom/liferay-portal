@@ -65,6 +65,7 @@ public class KBFolderUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select kbFolderId, name from KBFolder where (KBFolder." +
 					"urlTitle is null) or (KBFolder.urlTitle = '')");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Map<Long, String> urlTitles = new HashMap<>();

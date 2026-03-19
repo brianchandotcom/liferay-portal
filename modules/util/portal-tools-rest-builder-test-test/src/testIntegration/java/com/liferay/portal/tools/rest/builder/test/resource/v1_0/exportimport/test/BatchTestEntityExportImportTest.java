@@ -23,6 +23,7 @@ import com.liferay.exportimport.report.service.ExportImportReportEntryLocalServi
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -692,13 +693,17 @@ public class BatchTestEntityExportImportTest {
 			batchTestEntities1[0].getExternalReferenceCode(), _CLASS_NAME,
 			RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
 			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
-			StringPool.BLANK);
+			JSONUtil.put(
+				"type", "BatchTestEntityKey"
+			).toString());
 		_systemEventLocalService.addSystemEvent(
 			TestPropsValues.getUserId(), _companyGroup.getGroupId(),
 			sharedInternalModelBatchTestEntities[0].getExternalReferenceCode(),
 			_CLASS_NAME, RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
 			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
-			StringPool.BLANK);
+			JSONUtil.put(
+				"type", "SharedInternalModelBatchTestEntityKey"
+			).toString());
 
 		File larFile = _exportLayout(true);
 

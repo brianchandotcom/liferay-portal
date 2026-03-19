@@ -669,3 +669,4 @@ public class AssetDisplayPageEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2106530656

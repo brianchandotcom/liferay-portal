@@ -201,3 +201,4 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2030536413

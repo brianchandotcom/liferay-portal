@@ -41,3 +41,4 @@ public abstract class ObjectStateTransitionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2052580643

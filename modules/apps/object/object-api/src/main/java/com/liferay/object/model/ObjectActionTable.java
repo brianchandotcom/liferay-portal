@@ -81,3 +81,4 @@ public class ObjectActionTable extends BaseTable<ObjectActionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:337843256

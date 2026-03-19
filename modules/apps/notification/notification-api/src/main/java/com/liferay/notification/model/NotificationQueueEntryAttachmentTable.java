@@ -48,3 +48,4 @@ public class NotificationQueueEntryAttachmentTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1156869781

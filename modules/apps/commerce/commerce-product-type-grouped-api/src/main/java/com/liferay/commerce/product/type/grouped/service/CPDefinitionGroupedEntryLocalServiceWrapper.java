@@ -631,3 +631,4 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 		_cpDefinitionGroupedEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-569886602

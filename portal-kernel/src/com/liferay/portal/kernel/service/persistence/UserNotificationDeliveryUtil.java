@@ -561,3 +561,4 @@ public class UserNotificationDeliveryUtil {
 	private static volatile UserNotificationDeliveryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1216348650

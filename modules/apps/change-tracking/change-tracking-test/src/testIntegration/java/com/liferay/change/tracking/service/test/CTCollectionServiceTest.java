@@ -221,6 +221,7 @@ public class CTCollectionServiceTest {
 				_ctCollection.getCtCollectionId()));
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) as count from JournalArticle where id_ = ? " +
 					"and ctCollectionId = ?")) {

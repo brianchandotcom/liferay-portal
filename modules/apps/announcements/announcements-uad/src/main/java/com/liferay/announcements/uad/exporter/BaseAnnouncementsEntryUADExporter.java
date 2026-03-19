@@ -74,3 +74,4 @@ public abstract class BaseAnnouncementsEntryUADExporter
 	protected AnnouncementsEntryLocalService announcementsEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1165826424

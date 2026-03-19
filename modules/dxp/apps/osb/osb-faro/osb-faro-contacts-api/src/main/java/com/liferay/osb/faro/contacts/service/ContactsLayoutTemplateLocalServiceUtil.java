@@ -342,3 +342,4 @@ public class ContactsLayoutTemplateLocalServiceUtil {
 			ContactsLayoutTemplateLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1287186983

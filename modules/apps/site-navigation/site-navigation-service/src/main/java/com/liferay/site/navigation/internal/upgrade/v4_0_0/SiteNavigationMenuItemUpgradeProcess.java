@@ -96,6 +96,7 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 
 			try (PreparedStatement preparedStatement3 =
 					connection.prepareStatement(sql);
+
 				ResultSet resultSet3 = preparedStatement3.executeQuery()) {
 
 				if (resultSet3.next()) {

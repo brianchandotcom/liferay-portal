@@ -547,3 +547,4 @@ public class CPDefinitionLocalizationUtil {
 	private static volatile CPDefinitionLocalizationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:809147857

@@ -278,3 +278,4 @@ public class MFATimeBasedOTPEntryCacheModel
 	public String sharedSecret;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:254618724

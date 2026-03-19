@@ -1452,3 +1452,4 @@ public class CommerceShippingMethodModelImpl
 	private CommerceShippingMethod _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-66219734

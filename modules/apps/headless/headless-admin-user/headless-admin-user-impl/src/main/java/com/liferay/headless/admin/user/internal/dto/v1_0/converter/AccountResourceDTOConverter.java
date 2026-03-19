@@ -217,8 +217,8 @@ public class AccountResourceDTOConverter
 				setLogoId(accountEntry::getLogoId);
 				setLogoURL(
 					() -> StringBundler.concat(
-						"/image/organization_logo?img_id=",
-						accountEntry.getLogoId(), "&t=",
+						"/image/account_logo?img_id=", accountEntry.getLogoId(),
+						"&t=",
 						_webServerServletToken.getToken(
 							accountEntry.getLogoId())));
 				setName(accountEntry::getName);

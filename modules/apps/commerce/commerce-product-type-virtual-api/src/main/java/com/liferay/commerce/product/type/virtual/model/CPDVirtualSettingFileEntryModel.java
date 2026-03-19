@@ -280,3 +280,4 @@ public interface CPDVirtualSettingFileEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-813910774

@@ -259,3 +259,4 @@ public class DDMContentCacheModel
 	public String data;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1397740454

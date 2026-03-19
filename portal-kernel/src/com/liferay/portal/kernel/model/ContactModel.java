@@ -511,3 +511,4 @@ public interface ContactModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1549772699

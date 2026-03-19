@@ -174,3 +174,4 @@ public interface DLFileEntryFinder {
 					queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:648598606

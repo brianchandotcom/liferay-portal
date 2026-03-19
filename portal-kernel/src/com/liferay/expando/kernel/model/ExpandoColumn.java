@@ -61,3 +61,4 @@ public interface ExpandoColumn extends ExpandoColumnModel, PersistedModel {
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-499624011

@@ -136,3 +136,4 @@ public class WorkflowInstanceLinkModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1254446220

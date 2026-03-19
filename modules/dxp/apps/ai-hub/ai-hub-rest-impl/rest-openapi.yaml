@@ -50,14 +50,7 @@ components:
                 context:
                     additionalProperties: true
                     type: object
-                scope:
-                    $ref: "#/components/schemas/Scope"
                 text:
-                    type: string
-            type: object
-        Scope:
-            properties:
-                externalReferenceCode:
                     type: string
             type: object
         Status:
@@ -82,21 +75,6 @@ components:
                 sseEventSinkKey:
                     type: string
                 type:
-                    type: string
-            type: object
-        Token:
-            properties:
-                accessToken:
-                    readOnly: true
-                    type: string
-                scope:
-                    readOnly: true
-                    type: string
-                serviceURL:
-                    readOnly: true
-                    type: string
-                userToken:
-                    readOnly: true
                     type: string
             type: object
         Variable:
@@ -287,16 +265,3 @@ paths:
                     content:
                         text/event-stream: {}
             tags: ["Task"]
-    "/tokens":
-        post:
-            operationId: postToken
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Token"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Token"
-            tags: ["Token"]

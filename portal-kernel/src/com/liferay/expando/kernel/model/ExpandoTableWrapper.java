@@ -278,3 +278,4 @@ public class ExpandoTableWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1127908113

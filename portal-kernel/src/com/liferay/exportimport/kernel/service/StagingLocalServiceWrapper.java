@@ -143,3 +143,4 @@ public class StagingLocalServiceWrapper
 	private StagingLocalService _stagingLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1859704143

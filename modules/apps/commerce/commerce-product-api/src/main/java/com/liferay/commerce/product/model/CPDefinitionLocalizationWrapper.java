@@ -449,3 +449,4 @@ public class CPDefinitionLocalizationWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:898017590

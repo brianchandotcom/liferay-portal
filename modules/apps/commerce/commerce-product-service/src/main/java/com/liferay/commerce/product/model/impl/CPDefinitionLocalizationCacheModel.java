@@ -272,3 +272,4 @@ public class CPDefinitionLocalizationCacheModel
 	public String shortDescription;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1370271246

@@ -41,3 +41,4 @@ public abstract class ObjectViewFilterColumnBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1763872905

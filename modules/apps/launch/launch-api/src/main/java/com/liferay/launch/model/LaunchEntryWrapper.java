@@ -447,3 +447,4 @@ public class LaunchEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1909748486

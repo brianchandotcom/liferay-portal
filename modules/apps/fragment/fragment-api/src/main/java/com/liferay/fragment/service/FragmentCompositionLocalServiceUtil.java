@@ -521,3 +521,4 @@ public class FragmentCompositionLocalServiceUtil {
 			FragmentCompositionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:823944975

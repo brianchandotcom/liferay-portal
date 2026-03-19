@@ -64,3 +64,4 @@ public class RoleFinderBaseImpl extends BasePersistenceImpl<Role> {
 		RoleFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1173672971

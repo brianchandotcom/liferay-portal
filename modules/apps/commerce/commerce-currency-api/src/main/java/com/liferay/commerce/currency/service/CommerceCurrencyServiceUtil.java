@@ -181,3 +181,4 @@ public class CommerceCurrencyServiceUtil {
 			CommerceCurrencyServiceUtil.class, CommerceCurrencyService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-876575814

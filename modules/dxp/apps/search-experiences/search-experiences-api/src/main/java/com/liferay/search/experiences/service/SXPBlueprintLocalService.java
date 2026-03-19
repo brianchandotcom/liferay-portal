@@ -337,3 +337,4 @@ public interface SXPBlueprintLocalService
 	public SXPBlueprint updateSXPBlueprint(SXPBlueprint sxpBlueprint);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:227853017

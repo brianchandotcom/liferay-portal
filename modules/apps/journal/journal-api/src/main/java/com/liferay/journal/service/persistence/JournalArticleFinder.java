@@ -90,3 +90,4 @@ public interface JournalArticleFinder {
 				<com.liferay.journal.model.JournalArticle> queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:745632460

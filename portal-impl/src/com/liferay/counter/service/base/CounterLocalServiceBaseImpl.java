@@ -110,3 +110,4 @@ public abstract class CounterLocalServiceBaseImpl
 		CounterLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:841039782

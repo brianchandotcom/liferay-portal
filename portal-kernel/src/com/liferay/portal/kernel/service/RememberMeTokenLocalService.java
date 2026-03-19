@@ -281,3 +281,4 @@ public interface RememberMeTokenLocalService
 		RememberMeToken rememberMeToken);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-894300907

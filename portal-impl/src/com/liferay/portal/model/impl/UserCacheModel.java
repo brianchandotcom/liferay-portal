@@ -738,3 +738,4 @@ public class UserCacheModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:426377161

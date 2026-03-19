@@ -1032,3 +1032,4 @@ public class ObjectEntryLocalServiceWrapper
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1537866868

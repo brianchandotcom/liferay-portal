@@ -2350,3 +2350,4 @@ public class BookmarksFolderUtil {
 	private static volatile BookmarksFolderPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:219630136

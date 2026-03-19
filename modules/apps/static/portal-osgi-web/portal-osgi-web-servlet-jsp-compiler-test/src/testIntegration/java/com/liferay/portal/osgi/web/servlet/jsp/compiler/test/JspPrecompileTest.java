@@ -7,6 +7,7 @@ package com.liferay.portal.osgi.web.servlet.jsp.compiler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.CharPool;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.test.servlet.PrecompileTestServlet;
@@ -302,11 +302,9 @@ public class JspPrecompileTest {
 				jarOutputStream.putNextEntry(new ZipEntry(path));
 
 				try (InputStream inputStream = classLoader.getResourceAsStream(
-						path);
-					OutputStream outputStream = StreamUtil.uncloseable(
-						jarOutputStream)) {
+						path)) {
 
-					StreamUtil.transfer(inputStream, outputStream);
+					StreamUtil.transfer(inputStream, jarOutputStream, false);
 				}
 
 				jarOutputStream.closeEntry();
@@ -347,11 +345,9 @@ public class JspPrecompileTest {
 			jarOutputStream.putNextEntry(new ZipEntry(resourcePath));
 
 			try (InputStream inputStream = classLoader.getResourceAsStream(
-					resourcePath);
-				OutputStream outputStream = StreamUtil.uncloseable(
-					jarOutputStream)) {
+					resourcePath)) {
 
-				StreamUtil.transfer(inputStream, outputStream);
+				StreamUtil.transfer(inputStream, jarOutputStream, false);
 			}
 
 			jarOutputStream.closeEntry();

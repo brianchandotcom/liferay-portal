@@ -518,6 +518,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 				L_FILES: [],
 				OBJECT_ENTRY_FOLDERS: [
 					{key: 'ADD_ENTRY', label: 'Add Entry'},
+					{key: 'ADD_OBJECT_ENTRY_FOLDER', label: 'Add Subfolder'},
 					{key: 'VIEW', label: 'View'},
 				],
 			},
@@ -574,10 +575,20 @@ describe('BulkDefaultPermissionModalContent', () => {
 				screen.getByTestId('row-checkbox-CMS Administrator_ADD_ENTRY')
 			).toBeChecked();
 			expect(
+				screen.getByTestId(
+					'row-checkbox-CMS Administrator_ADD_OBJECT_ENTRY_FOLDER'
+				)
+			).toBeChecked();
+			expect(
 				screen.getByTestId('row-checkbox-CMS Administrator_VIEW')
 			).toBeChecked();
 			expect(
 				screen.queryByTestId('row-checkbox-Guest_ADD_ENTRY')
+			).not.toBeChecked();
+			expect(
+				screen.queryByTestId(
+					'row-checkbox-Guest_ADD_OBJECT_ENTRY_FOLDER'
+				)
 			).not.toBeChecked();
 			expect(
 				screen.queryByTestId('row-checkbox-Guest_VIEW')

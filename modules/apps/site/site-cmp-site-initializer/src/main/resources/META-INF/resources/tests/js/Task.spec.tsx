@@ -83,7 +83,11 @@ afterEach(() => {
 describe('Kanban Task', () => {
 	const task = {
 		actions: {
+			assignToMe: true,
+			delete: true,
+			get: true,
 			subscribe: true,
+			update: true,
 		},
 		embedded: {
 			assignTo: {name: 'Alice', portrait: 'p.jpg'},
@@ -130,6 +134,34 @@ describe('Kanban Task', () => {
 				'Current User'
 			);
 		});
+	});
+
+	it('hides other items actions when task only has view permissions', () => {
+		const taskWithOnlyViewPermission = {
+			...task,
+			actions: {
+				assignToMe: false,
+				delete: false,
+				get: true,
+				subscribe: false,
+				update: false,
+			},
+		};
+
+		const {queryByText} = render(
+			<KanbanViewContext.Provider
+				value={{itemsActions: [], loadData: mockLoadData} as any}
+			>
+				<Task {...taskWithOnlyViewPermission} />
+			</KanbanViewContext.Provider>
+		);
+
+		expect(queryByText('view')).toBeInTheDocument();
+
+		expect(queryByText('assign-to-...')).not.toBeInTheDocument();
+		expect(queryByText('delete')).not.toBeInTheDocument();
+		expect(queryByText('edit')).not.toBeInTheDocument();
+		expect(queryByText('watch-task')).not.toBeInTheDocument();
 	});
 
 	it('navigates when edit and view actions are clicked', async () => {
@@ -205,6 +237,16 @@ describe('Kanban Task', () => {
 		expect(getByText('In Progress')).toBeInTheDocument();
 	});
 
+	it('shows all items actions when task has full permissions', () => {
+		const {queryByText} = renderTask();
+
+		expect(queryByText('assign-to-...')).toBeInTheDocument();
+		expect(queryByText('delete')).toBeInTheDocument();
+		expect(queryByText('edit')).toBeInTheDocument();
+		expect(queryByText('view')).toBeInTheDocument();
+		expect(queryByText('watch-task')).toBeInTheDocument();
+	});
+
 	it('shows error toast when assign-to-me fails', async () => {
 		mockGetUserAccount.mockResolvedValue({
 			externalReferenceCode: 'u1',
@@ -221,48 +263,12 @@ describe('Kanban Task', () => {
 		});
 	});
 
-	describe('watch-task', () => {
-		it('watches a task successfully', async () => {
-			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
-				error: null,
-			});
-
-			const {getByText} = renderTask();
-
-			fireEvent.click(getByText('watch-task'));
-
-			await waitFor(() => {
-				expect(
-					mockPostSubscribeTaskByExternalReferenceCode
-				).toHaveBeenCalledWith({
-					externalReferenceCode: 'erc-1',
-					scopeKey: 1,
-				});
-				expect(mockLoadData).toHaveBeenCalled();
-				expect(mockDisplayRequestSuccessToast).toHaveBeenCalled();
-			});
-		});
-
-		it('shows an error toast when watch task fails', async () => {
-			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
-				error: 'error',
-			});
-
-			const {getByText} = renderTask();
-
-			fireEvent.click(getByText('watch-task'));
-
-			await waitFor(() => {
-				expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');
-			});
-		});
-	});
-
 	describe('stop-watching-task', () => {
 		const taskWithSubscription = {
 			...task,
 			actions: {
 				subscribe: false,
+				unsubscribe: true,
 			},
 		};
 
@@ -319,6 +325,43 @@ describe('Kanban Task', () => {
 			);
 
 			fireEvent.click(getByText('stop-watching-task'));
+
+			await waitFor(() => {
+				expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');
+			});
+		});
+	});
+
+	describe('watch-task', () => {
+		it('watches a task successfully', async () => {
+			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
+				error: null,
+			});
+
+			const {getByText} = renderTask();
+
+			fireEvent.click(getByText('watch-task'));
+
+			await waitFor(() => {
+				expect(
+					mockPostSubscribeTaskByExternalReferenceCode
+				).toHaveBeenCalledWith({
+					externalReferenceCode: 'erc-1',
+					scopeKey: 1,
+				});
+				expect(mockLoadData).toHaveBeenCalled();
+				expect(mockDisplayRequestSuccessToast).toHaveBeenCalled();
+			});
+		});
+
+		it('shows an error toast when watch task fails', async () => {
+			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
+				error: 'error',
+			});
+
+			const {getByText} = renderTask();
+
+			fireEvent.click(getByText('watch-task'));
 
 			await waitFor(() => {
 				expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');

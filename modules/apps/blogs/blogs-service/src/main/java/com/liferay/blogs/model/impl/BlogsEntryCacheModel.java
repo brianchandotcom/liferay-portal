@@ -510,3 +510,4 @@ public class BlogsEntryCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:695005974

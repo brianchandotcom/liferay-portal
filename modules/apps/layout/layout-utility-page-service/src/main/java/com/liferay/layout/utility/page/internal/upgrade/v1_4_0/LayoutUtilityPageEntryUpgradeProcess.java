@@ -41,6 +41,7 @@ public class LayoutUtilityPageEntryUpgradeProcess extends UpgradeProcess {
 						"plid = ?")) {
 
 			try (Statement statement = connection.createStatement();
+
 				ResultSet resultSet = statement.executeQuery(
 					StringBundler.concat(
 						"select groupId, plid, typeSettings from Layout where ",

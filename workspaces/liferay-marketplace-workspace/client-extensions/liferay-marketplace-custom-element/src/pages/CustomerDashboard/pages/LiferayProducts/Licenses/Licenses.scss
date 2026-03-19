@@ -1,7 +1,3 @@
-.close-license-alert-icon {
-	color: #0e7835;
-}
-
 .deactivate-license-key {
 	&:hover {
 		background-color: #fbe3e3;
@@ -27,12 +23,28 @@
 	}
 
 	&-card {
-		background-color: #d1eedc80;
 		border-radius: 8px;
 		box-shadow: 0 0;
-		color: #0e7835;
 		gap: 8px;
 		padding: 16px;
+
+		&-info {
+			background-color: #e6ebf5;
+			color: #1c3667;
+
+			.close-license-alert-icon {
+				color: #1c3667;
+			}
+		}
+
+		&-success {
+			background-color: #d1eedc80;
+			color: #0e7835;
+
+			.close-license-alert-icon {
+				color: #0e7835;
+			}
+		}
 	}
 
 	&-content {
@@ -42,10 +54,6 @@
 
 		.icon {
 			font-size: 24px;
-		}
-
-		.new-license {
-			color: #4aab3b;
 		}
 
 		.renewable {
@@ -66,26 +74,6 @@
 		line-height: 20px;
 		margin: 0;
 		margin-bottom: 6px;
-	}
-}
-
-.license-download-btn {
-	background: transparent;
-	border: 1px solid #2b3a4b;
-	border-radius: 6px;
-	color: #2b3a4b;
-	font-size: 14px;
-	padding: 8px 12px;
-
-	&:disabled {
-		background: transparent;
-		opacity: 0.5;
-	}
-
-	&:hover {
-		background: rgba(43, 58, 75, 0.04);
-		border-color: #2b3a4b;
-		color: #2b3a4b;
 	}
 }
 
@@ -122,17 +110,4 @@
 			line-height: 16px;
 		}
 	}
-}
-
-.new-license-button {
-	align-items: center;
-	border-radius: 8px;
-	border-width: 1px;
-	display: inline-flex;
-	font-size: 16px !important;
-	font-weight: 600;
-	justify-content: center;
-	padding: 8px 16px;
-	white-space: nowrap;
-	width: fit-content;
 }

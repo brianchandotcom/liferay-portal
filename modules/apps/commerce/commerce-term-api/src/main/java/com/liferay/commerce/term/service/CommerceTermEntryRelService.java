@@ -101,3 +101,4 @@ public interface CommerceTermEntryRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-911318059

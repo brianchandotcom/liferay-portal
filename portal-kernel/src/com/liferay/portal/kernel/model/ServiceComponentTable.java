@@ -44,3 +44,4 @@ public class ServiceComponentTable extends BaseTable<ServiceComponentTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:319153233

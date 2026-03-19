@@ -370,3 +370,4 @@ public class CTCommentLocalServiceWrapper
 	private CTCommentLocalService _ctCommentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:415961817

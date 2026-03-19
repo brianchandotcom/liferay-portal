@@ -54,3 +54,4 @@ public interface ServiceComponent
 	public String getTablesSQL();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1711866746

@@ -698,3 +698,4 @@ public class AccountEntryUserRelModelImpl
 	private AccountEntryUserRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1142992209

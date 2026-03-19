@@ -210,3 +210,4 @@ public class CommerceShippingMethodServiceUtil {
 			CommerceShippingMethodService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:667618440

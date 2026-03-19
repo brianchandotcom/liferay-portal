@@ -88,7 +88,6 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
@@ -97,6 +96,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Calendar;
@@ -872,7 +872,14 @@ public class JournalArticleStagedModelDataHandler
 						}
 					}
 					finally {
-						StreamUtil.cleanUp(true, inputStream);
+						try {
+							inputStream.close();
+						}
+						catch (IOException ioException) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(ioException);
+							}
+						}
 					}
 				}
 			}

@@ -351,3 +351,4 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 			MFAFIDO2CredentialEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-236933396

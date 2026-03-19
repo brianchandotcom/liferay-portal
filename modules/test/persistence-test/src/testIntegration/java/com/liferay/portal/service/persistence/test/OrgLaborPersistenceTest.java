@@ -491,3 +491,4 @@ public class OrgLaborPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2015083101

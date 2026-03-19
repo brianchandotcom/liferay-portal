@@ -411,6 +411,7 @@ public class FileUtil {
 		throws Exception {
 
 		try (InputStream inputStream = Files.newInputStream(tarPath);
+
 			TarArchiveInputStream tarArchiveInputStream =
 				new TarArchiveInputStream(
 					new GzipCompressorInputStream(inputStream))) {

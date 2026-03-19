@@ -121,3 +121,4 @@ public class DEDataDefinitionFieldLinkModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:967040881

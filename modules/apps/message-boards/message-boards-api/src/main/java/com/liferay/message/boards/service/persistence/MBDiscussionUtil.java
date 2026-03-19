@@ -801,3 +801,4 @@ public class MBDiscussionUtil {
 	private static volatile MBDiscussionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:927211247

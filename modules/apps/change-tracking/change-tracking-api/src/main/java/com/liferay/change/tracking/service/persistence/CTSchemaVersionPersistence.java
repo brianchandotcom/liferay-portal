@@ -296,3 +296,4 @@ public interface CTSchemaVersionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1297013758

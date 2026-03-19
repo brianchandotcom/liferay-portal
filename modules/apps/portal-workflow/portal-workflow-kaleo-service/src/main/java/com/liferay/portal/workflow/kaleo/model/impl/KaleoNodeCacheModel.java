@@ -307,3 +307,4 @@ public class KaleoNodeCacheModel
 	public boolean terminal;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:540530504

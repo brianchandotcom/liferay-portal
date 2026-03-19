@@ -163,10 +163,11 @@ export type UploadField = BaseField & {
 } & {
 	settings: {
 		acceptedFileExtensions: string;
-		fileSource: 'userComputerToDocumentsAndMedia' | 'documentsAndMedia';
+		fileSource: 'userComputerToCMSBasicDocument' | 'CMSBasicDocument';
 		maximumFileSize: number;
 		showFilesInLibrary?: boolean;
 		storageDLFolderPath?: string;
+		storageDepotGroup?: string;
 	};
 };
 
@@ -254,7 +255,7 @@ export function getDefaultField({
 			...base,
 			settings: {
 				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
-				fileSource: 'userComputerToDocumentsAndMedia',
+				fileSource: 'userComputerToCMSBasicDocument',
 				maximumFileSize: 100,
 			},
 			type: 'upload',

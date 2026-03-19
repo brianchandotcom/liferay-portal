@@ -451,3 +451,4 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 		DLStorageQuotaLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1425694330

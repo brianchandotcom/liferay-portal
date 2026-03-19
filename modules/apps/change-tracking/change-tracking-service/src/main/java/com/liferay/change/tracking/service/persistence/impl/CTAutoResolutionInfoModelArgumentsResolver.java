@@ -137,3 +137,4 @@ public class CTAutoResolutionInfoModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1305588434

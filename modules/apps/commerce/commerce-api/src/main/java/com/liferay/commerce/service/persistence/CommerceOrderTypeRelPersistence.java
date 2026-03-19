@@ -866,3 +866,4 @@ public interface CommerceOrderTypeRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:746400979

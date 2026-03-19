@@ -43,6 +43,7 @@ public class UpgradeDLFileEntry extends UpgradeProcess {
 				"select ctCollectionId, fileEntryId from DLFileEntry where " +
 					"externalReferenceCode is null or externalReferenceCode " +
 						"= ''");
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(

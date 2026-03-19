@@ -35,7 +35,7 @@ export async function createEventSource() {
 
 async function postToken() {
 	try {
-		const response = await fetch(`${AI_HUB_ENDPOINT}/tokens`, {
+		const response = await fetch('/o/ai-hub-cell/v1.0/tokens', {
 			method: 'POST',
 		});
 
@@ -87,7 +87,7 @@ export async function postTask(
 			'Accept': 'application/json',
 			'Authorization': `Bearer ${token.accessToken}`,
 			'Content-Type': 'application/json',
-			'Liferay-AI-Hub-On-Behalf-Of': token.userToken,
+			'Liferay-AI-Hub-Cell-On-Behalf-Of': token.userToken,
 		}),
 		method: 'POST',
 	});

@@ -547,3 +547,4 @@ public class AddressLocalServiceWrapper
 	private AddressLocalService _addressLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-165161254

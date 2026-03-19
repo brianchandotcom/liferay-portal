@@ -493,3 +493,4 @@ public class KaleoLogCacheModel
 	public String workflowContext;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1859449784

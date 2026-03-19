@@ -502,3 +502,4 @@ public class NotificationQueueEntryAttachmentUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:862044514

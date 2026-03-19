@@ -17,21 +17,19 @@ import java.net.URL;
 public class PersistedProcess implements Serializable {
 
 	public PersistedProcess(
-		URL bundleURL, String[] processCallableClassNames,
-		ProcessConfig processConfig, String processName) {
+		URL bundleURL, ProcessConfig processConfig, String processName,
+		SidecarMainProcessCallable sidecarMainProcessCallable,
+		StartSidecarProcessCallable startSidecarProcessCallable) {
 
 		_bundleURL = bundleURL;
-		_processCallableClassNames = processCallableClassNames;
 		_processConfig = processConfig;
 		_processName = processName;
+		_sidecarMainProcessCallable = sidecarMainProcessCallable;
+		_startSidecarProcessCallable = startSidecarProcessCallable;
 	}
 
 	public URL getBundleURL() {
 		return _bundleURL;
-	}
-
-	public String[] getProcessCallableClassNames() {
-		return _processCallableClassNames;
 	}
 
 	public ProcessConfig getProcessConfig() {
@@ -42,11 +40,20 @@ public class PersistedProcess implements Serializable {
 		return _processName;
 	}
 
+	public SidecarMainProcessCallable getSidecarMainProcessCallable() {
+		return _sidecarMainProcessCallable;
+	}
+
+	public StartSidecarProcessCallable getStartSidecarProcessCallable() {
+		return _startSidecarProcessCallable;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private final URL _bundleURL;
-	private final String[] _processCallableClassNames;
 	private final ProcessConfig _processConfig;
 	private final String _processName;
+	private final SidecarMainProcessCallable _sidecarMainProcessCallable;
+	private final StartSidecarProcessCallable _startSidecarProcessCallable;
 
 }

@@ -543,3 +543,4 @@ public class CommerceShippingFixedOptionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1745531065

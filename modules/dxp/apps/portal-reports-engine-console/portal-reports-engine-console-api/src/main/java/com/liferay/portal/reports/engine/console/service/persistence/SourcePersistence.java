@@ -846,3 +846,4 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:594360868

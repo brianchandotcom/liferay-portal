@@ -50,6 +50,7 @@ const ACTIONS = {
 	) {
 		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-style-book'),
+			disableSubmitOnError: true,
 			formSubmitURL: updateStyleBookEntryURL,
 			idFieldName: 'id',
 			idFieldValue: styleBookEntryId,

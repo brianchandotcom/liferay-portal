@@ -4128,3 +4128,4 @@ public class MBThreadUtil {
 	private static volatile MBThreadPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-864979239

@@ -63,3 +63,4 @@ public class SharingEntryTable extends BaseTable<SharingEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-952874687

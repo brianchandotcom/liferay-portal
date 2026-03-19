@@ -5,9 +5,9 @@
 
 package com.liferay.portal.bundle.blacklist;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

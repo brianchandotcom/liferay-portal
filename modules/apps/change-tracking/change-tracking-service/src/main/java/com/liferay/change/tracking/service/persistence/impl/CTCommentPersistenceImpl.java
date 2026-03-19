@@ -1714,3 +1714,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:97032273

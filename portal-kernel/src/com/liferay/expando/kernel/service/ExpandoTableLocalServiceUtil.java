@@ -421,3 +421,4 @@ public class ExpandoTableLocalServiceUtil {
 	private static volatile ExpandoTableLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1832626414

@@ -215,3 +215,4 @@ public class CTMessageWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:792390318

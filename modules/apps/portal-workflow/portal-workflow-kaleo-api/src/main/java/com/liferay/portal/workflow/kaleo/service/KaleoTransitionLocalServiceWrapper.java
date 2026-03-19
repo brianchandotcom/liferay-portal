@@ -432,3 +432,4 @@ public class KaleoTransitionLocalServiceWrapper
 	private KaleoTransitionLocalService _kaleoTransitionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1726027875

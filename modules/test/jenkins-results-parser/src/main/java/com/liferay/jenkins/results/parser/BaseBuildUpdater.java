@@ -88,9 +88,11 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		}
 
 		if (!_hasMaximumInvocationCount()) {
-			_build.setStatus("starting");
-
 			_build.reset();
+
+			reinvoke();
+
+			_build.setStatus("queued");
 
 			return;
 		}

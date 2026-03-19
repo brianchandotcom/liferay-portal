@@ -1243,3 +1243,4 @@ public class RoleServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:107301783

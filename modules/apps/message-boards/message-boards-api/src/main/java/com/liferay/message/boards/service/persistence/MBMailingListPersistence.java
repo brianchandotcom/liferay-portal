@@ -695,3 +695,4 @@ public interface MBMailingListPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1181956183

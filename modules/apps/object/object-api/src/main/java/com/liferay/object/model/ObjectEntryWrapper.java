@@ -1007,3 +1007,4 @@ public class ObjectEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-969202240

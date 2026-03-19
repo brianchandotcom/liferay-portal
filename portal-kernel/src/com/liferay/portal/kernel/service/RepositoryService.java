@@ -76,3 +76,4 @@ public interface RepositoryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1370624913

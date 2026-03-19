@@ -666,3 +666,4 @@ public class DLFileShortcutLocalServiceWrapper
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1472845477

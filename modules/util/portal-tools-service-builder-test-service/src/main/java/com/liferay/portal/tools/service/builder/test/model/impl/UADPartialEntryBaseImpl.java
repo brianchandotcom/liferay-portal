@@ -39,3 +39,4 @@ public abstract class UADPartialEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1571110812

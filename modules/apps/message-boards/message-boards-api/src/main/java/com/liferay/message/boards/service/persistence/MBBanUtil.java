@@ -1225,3 +1225,4 @@ public class MBBanUtil {
 	private static volatile MBBanPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1734618809

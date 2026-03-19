@@ -840,3 +840,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:953465792

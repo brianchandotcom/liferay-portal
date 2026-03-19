@@ -25,7 +25,6 @@ public class CPSpecificationOptionUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
 					"select * from CPSpecificationOption");
-
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -53,11 +52,11 @@ public class CPSpecificationOptionUpgradeProcess extends UpgradeProcess {
 						5, resultSet.getLong("CPSpecificationOptionId"));
 					preparedStatement.setLong(6, listTypeDefinitionId);
 
-					preparedStatement.executeUpdate();
+					preparedStatement.addBatch();
 				}
-			}
 
-			preparedStatement.executeBatch();
+				preparedStatement.executeBatch();
+			}
 		}
 	}
 

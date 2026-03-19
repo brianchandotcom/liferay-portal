@@ -706,3 +706,4 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:744148952

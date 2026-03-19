@@ -115,3 +115,4 @@ public class ViewCountEntryCacheModel
 	public transient ViewCountEntryPK viewCountEntryPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1497281291

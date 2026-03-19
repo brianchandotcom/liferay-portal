@@ -74,3 +74,4 @@ public class CalendarNotificationTemplateServiceUtil {
 			CalendarNotificationTemplateService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-958404840

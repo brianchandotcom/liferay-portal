@@ -642,6 +642,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				StringBundler.concat(
 					"select count(1) from ", partitionName, StringPool.PERIOD,
 					tableName, whereClause));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
@@ -655,6 +656,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	private int _getDefaultSchemaCount(String tableName) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(1) from " + tableName);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
@@ -739,6 +741,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				StringBundler.concat(
 					"select count(1) from ", getPartitionName(companyId),
 					StringPool.PERIOD, tableName, whereClause));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

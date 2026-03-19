@@ -29,3 +29,4 @@ public abstract class RegionLocalizationBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1465900828

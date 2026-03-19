@@ -10,10 +10,7 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import performLogin, {
-	performLogout,
-	userData,
-} from '../../../utils/performLogin';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 
 export const test = mergeTests(
 	accountsPagesTest,
@@ -136,8 +133,7 @@ test('LPD-44889 Can view account roles with permissions', async ({
 		userAccount.id
 	);
 
-	await performLogout(page);
-	await performLogin(page, userAccount.alternateName);
+	await performUserSwitch(page, userAccount.alternateName);
 
 	await accountsPage.gotoAccountAdmin();
 	await (await accountsPage.accountsTable.cellLink(account1.name)).click();

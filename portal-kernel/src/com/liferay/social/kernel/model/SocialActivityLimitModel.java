@@ -250,3 +250,4 @@ public interface SocialActivityLimitModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1428841582

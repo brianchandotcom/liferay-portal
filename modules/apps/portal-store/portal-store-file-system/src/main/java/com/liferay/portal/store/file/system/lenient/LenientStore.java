@@ -104,6 +104,11 @@ public class LenientStore implements Store {
 		return true;
 	}
 
+	@Override
+	public void verifyCompanyStores() throws PortalException {
+		_store.verifyCompanyStores();
+	}
+
 	private static final byte[] _DUMMY_CONTENT =
 		"This is a test file.".getBytes();
 

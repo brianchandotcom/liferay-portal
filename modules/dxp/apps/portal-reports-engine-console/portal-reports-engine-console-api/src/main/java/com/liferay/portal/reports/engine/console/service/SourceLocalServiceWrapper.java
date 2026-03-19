@@ -479,3 +479,4 @@ public class SourceLocalServiceWrapper
 	private SourceLocalService _sourceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:658109707

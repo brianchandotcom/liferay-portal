@@ -30,6 +30,7 @@ function BulkActionsMonitorItemList({items}: {items: IBulkActionTask[]}) {
 
 				return (
 					<ClayPanel
+						className="p-2"
 						displayTitle={
 							<ClayPanel.Title className="d-flex task-status-item">
 								<div className="task-status-item-icon">
@@ -68,7 +69,7 @@ function BulkActionsMonitorItemList({items}: {items: IBulkActionTask[]}) {
 									</span>
 
 									<Label
-										className="align-self-start"
+										className="align-self-start mt-1"
 										displayType={displayType}
 									>
 										{label}

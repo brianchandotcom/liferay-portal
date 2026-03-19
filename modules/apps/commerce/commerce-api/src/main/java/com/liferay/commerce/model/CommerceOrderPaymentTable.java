@@ -67,3 +67,4 @@ public class CommerceOrderPaymentTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1665560836

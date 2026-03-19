@@ -349,3 +349,4 @@ public interface CommerceInventoryWarehouseRelLocalService
 		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1911508479

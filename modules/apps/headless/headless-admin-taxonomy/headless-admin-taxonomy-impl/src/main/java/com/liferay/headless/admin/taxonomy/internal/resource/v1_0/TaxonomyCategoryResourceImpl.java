@@ -144,8 +144,8 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<AssetCategory> getExportImportDescriptor() {
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -158,8 +158,8 @@ public class TaxonomyCategoryResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return AssetCategory.class.getName();
+			public Class<AssetCategory> getModelClass() {
+				return AssetCategory.class;
 			}
 
 			@Override

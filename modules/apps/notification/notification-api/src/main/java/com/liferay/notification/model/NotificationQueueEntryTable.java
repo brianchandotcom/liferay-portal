@@ -77,3 +77,4 @@ public class NotificationQueueEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-371409627

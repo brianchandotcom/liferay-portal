@@ -542,3 +542,4 @@ public abstract class FinderWhereClauseEntryLocalServiceBaseImpl
 		FinderWhereClauseEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1021457078

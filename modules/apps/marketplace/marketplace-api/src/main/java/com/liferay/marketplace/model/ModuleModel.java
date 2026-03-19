@@ -157,3 +157,4 @@ public interface ModuleModel extends BaseModel<Module>, ShardedModel {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-226263302

@@ -423,3 +423,4 @@ public class LayoutBranchLocalServiceWrapper
 	private LayoutBranchLocalService _layoutBranchLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1125986267

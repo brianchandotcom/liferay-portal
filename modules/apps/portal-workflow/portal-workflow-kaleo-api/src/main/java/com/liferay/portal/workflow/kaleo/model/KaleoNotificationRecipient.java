@@ -55,3 +55,4 @@ public interface KaleoNotificationRecipient
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-213826116

@@ -342,3 +342,4 @@ public interface JournalContentSearchLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1637324526

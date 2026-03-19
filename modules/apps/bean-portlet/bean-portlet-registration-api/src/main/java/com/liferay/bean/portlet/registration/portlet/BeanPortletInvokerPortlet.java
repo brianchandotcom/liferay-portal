@@ -63,7 +63,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 
 				if (ClassUtil.isSubclass(
 						method.getDeclaringClass(),
-						"jakarta.portlet.faces.GenericFacesPortlet")) {
+						"com.liferay.faces.GenericFacesPortlet")) {
 
 					facesPortlet = true;
 

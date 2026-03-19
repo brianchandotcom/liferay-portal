@@ -45,3 +45,4 @@ public class DLFileEntryTypes_DLFoldersTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:179542363

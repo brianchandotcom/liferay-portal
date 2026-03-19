@@ -283,3 +283,4 @@ public interface SavedContentEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2101715553

@@ -5,10 +5,15 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {expectToPass} from '../../../../utils/expectToPass';
+
 export class DataSetPage {
 	readonly activeViewSelector: Locator;
 	readonly assetLink: (assetName: string) => Locator;
+	readonly loading: Locator;
 	readonly page: Page;
+	readonly searchInput: Locator;
 	readonly table: {
 		bodyRows: Locator;
 		container: Locator;
@@ -31,8 +36,9 @@ export class DataSetPage {
 			container: tableContainer,
 			headRow: tableContainer.locator('thead tr'),
 		};
-
+		this.loading = page.locator('.data-set .loading-animation');
 		this.page = page;
+		this.searchInput = this.page.getByPlaceholder('Search');
 		this.selectAllLink = page.getByRole('button', {
 			exact: true,
 			name: 'Select All',
@@ -101,5 +107,31 @@ export class DataSetPage {
 			.getByRole('listbox')
 			.getByRole('option', {name: visualizationMode})
 			.click();
+	}
+
+	async search(value: string) {
+		await expectToPass(
+			async () => {
+				await this.searchInput.fill(value);
+
+				await this.searchInput.press('Enter');
+
+				await this.page
+					.locator('.search-resume-label', {
+						has: this.page.locator('strong', {hasText: value}),
+					})
+					.waitFor();
+
+				await this.loading.waitFor({state: 'hidden'});
+			},
+			{timeout: 8000}
+		);
+	}
+
+	async selectAll() {
+		await clickAndExpectToBeVisible({
+			target: this.page.getByText('All Selected'),
+			trigger: this.page.getByTitle('Select Items'),
+		});
 	}
 }

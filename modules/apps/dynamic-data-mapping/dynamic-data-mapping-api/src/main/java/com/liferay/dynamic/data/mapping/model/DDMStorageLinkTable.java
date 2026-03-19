@@ -49,3 +49,4 @@ public class DDMStorageLinkTable extends BaseTable<DDMStorageLinkTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-457224681

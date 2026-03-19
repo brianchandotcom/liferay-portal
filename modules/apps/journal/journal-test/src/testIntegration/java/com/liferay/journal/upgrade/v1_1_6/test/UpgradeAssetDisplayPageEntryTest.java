@@ -128,6 +128,7 @@ public class UpgradeAssetDisplayPageEntryTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into AssetEntry (entryId, groupId, companyId, ",
@@ -151,6 +152,7 @@ public class UpgradeAssetDisplayPageEntryTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into JournalArticle (uuid_, id_, resourcePrimKey, ",

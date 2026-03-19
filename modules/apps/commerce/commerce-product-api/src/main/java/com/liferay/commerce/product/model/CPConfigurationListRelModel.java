@@ -262,3 +262,4 @@ public interface CPConfigurationListRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:45754998

@@ -435,3 +435,4 @@ public class CPOptionCategoryLocalServiceUtil {
 			CPOptionCategoryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:962407252

@@ -73,3 +73,4 @@ public class AssetDisplayPageEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:503783783

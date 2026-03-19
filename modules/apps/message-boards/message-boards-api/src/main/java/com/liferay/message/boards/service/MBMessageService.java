@@ -280,3 +280,4 @@ public interface MBMessageService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2051911275

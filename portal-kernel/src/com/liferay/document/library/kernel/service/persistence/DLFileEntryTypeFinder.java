@@ -52,3 +52,4 @@ public interface DLFileEntryTypeFinder {
 						orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2029027716

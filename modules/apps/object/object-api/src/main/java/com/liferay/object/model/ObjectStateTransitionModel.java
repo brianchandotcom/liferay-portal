@@ -245,3 +245,4 @@ public interface ObjectStateTransitionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1406163554

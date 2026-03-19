@@ -237,7 +237,6 @@ test('Can import account restricted entry when account does and does not exist i
 
 		await companyExportImportPage.import({
 			filePath: exportFilePath,
-			taskStatus: 'completedWithErrors',
 		});
 
 		const newImportedObjectEntry = await apiHelpers.get(

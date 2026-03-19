@@ -1279,3 +1279,4 @@ public class FragmentCollectionServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1594386082

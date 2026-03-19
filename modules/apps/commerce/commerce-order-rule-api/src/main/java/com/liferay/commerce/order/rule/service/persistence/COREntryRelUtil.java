@@ -710,3 +710,4 @@ public class COREntryRelUtil {
 	private static volatile COREntryRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-927507921

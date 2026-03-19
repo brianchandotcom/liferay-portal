@@ -339,3 +339,4 @@ public class ModuleLocalServiceUtil {
 		new Snapshot<>(ModuleLocalServiceUtil.class, ModuleLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1812001527

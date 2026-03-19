@@ -63,6 +63,22 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 		return cookiesPreferenceHandlingConfiguration.explicitConsentMode();
 	}
 
+	public String getCompanyFloatingIcon(long companyId) {
+		CookiesPreferenceHandlingConfiguration
+			cookiesPreferenceHandlingConfiguration =
+				_getCompanyCookiesPreferenceHandlingConfiguration(companyId);
+
+		return cookiesPreferenceHandlingConfiguration.floatingIcon();
+	}
+
+	public boolean getCompanyFloatingIconEnabled(long companyId) {
+		CookiesPreferenceHandlingConfiguration
+			cookiesPreferenceHandlingConfiguration =
+				_getCompanyCookiesPreferenceHandlingConfiguration(companyId);
+
+		return cookiesPreferenceHandlingConfiguration.floatingIconEnabled();
+	}
+
 	public boolean getCompanyStoreConsent(long companyId) {
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
@@ -98,6 +114,24 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 		return cookiesPreferenceHandlingConfiguration.explicitConsentMode();
 	}
 
+	public String getGroupFloatingIcon(long companyId, long groupId) {
+		CookiesPreferenceHandlingConfiguration
+			cookiesPreferenceHandlingConfiguration =
+				_getGroupCookiesPreferenceHandlingConfiguration(
+					companyId, groupId);
+
+		return cookiesPreferenceHandlingConfiguration.floatingIcon();
+	}
+
+	public boolean getGroupFloatingIconEnabled(long companyId, long groupId) {
+		CookiesPreferenceHandlingConfiguration
+			cookiesPreferenceHandlingConfiguration =
+				_getGroupCookiesPreferenceHandlingConfiguration(
+					companyId, groupId);
+
+		return cookiesPreferenceHandlingConfiguration.floatingIconEnabled();
+	}
+
 	public boolean getGroupStoreConsent(long companyId, long groupId) {
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
@@ -125,6 +159,15 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 	public boolean getSystemExplicitConsentMode() {
 		return _systemCookiesPreferenceHandlingConfiguration.
 			explicitConsentMode();
+	}
+
+	public String getSystemFloatingIcon() {
+		return _systemCookiesPreferenceHandlingConfiguration.floatingIcon();
+	}
+
+	public boolean getSystemFloatingIconEnabled() {
+		return _systemCookiesPreferenceHandlingConfiguration.
+			floatingIconEnabled();
 	}
 
 	public boolean getSystemStoreConsent() {

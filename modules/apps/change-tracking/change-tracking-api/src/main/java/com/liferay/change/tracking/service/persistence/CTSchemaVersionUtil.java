@@ -446,3 +446,4 @@ public class CTSchemaVersionUtil {
 	private static volatile CTSchemaVersionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1975803757

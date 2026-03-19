@@ -18,6 +18,7 @@ export {default as withHelpWidget} from './WithHelpWidget';
 export {default as withHistory} from './WithHistory';
 export {default as withIndividual} from './WithIndividual';
 export {default as withInterval} from './WithInterval';
+export {default as withLDPEnabled} from './WithLDPEnabled';
 export {default as withOnboarding} from './WithOnboarding';
 export {default as withPaginationBar} from './WithPaginationBar';
 export {default as withPermission, withAdminPermission} from './WithPermission';

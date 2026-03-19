@@ -147,3 +147,4 @@ public class DDMDataProviderInstanceLinkCacheModel
 	public long structureId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2131228064

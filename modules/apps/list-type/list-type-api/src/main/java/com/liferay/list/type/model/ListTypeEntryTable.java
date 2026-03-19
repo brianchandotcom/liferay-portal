@@ -64,3 +64,4 @@ public class ListTypeEntryTable extends BaseTable<ListTypeEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-202937825

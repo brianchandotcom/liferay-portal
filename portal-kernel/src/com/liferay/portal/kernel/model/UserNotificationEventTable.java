@@ -67,3 +67,4 @@ public class UserNotificationEventTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-246146630

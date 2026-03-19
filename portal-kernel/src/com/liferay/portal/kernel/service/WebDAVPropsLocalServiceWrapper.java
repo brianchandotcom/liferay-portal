@@ -361,3 +361,4 @@ public class WebDAVPropsLocalServiceWrapper
 	private WebDAVPropsLocalService _webDAVPropsLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-911162027

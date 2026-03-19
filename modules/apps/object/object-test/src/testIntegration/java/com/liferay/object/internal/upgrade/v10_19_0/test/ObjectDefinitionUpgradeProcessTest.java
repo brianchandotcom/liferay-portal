@@ -75,6 +75,7 @@ public class ObjectDefinitionUpgradeProcessTest {
 		_runUpgrade();
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select name, value from ObjectDefinitionSetting where " +
 					"objectDefinitionId = ?")) {

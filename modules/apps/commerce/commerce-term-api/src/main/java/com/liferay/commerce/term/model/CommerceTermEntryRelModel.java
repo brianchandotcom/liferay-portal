@@ -243,3 +243,4 @@ public interface CommerceTermEntryRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1346333476

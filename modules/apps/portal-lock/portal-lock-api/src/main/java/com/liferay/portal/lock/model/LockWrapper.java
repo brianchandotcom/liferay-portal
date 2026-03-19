@@ -449,3 +449,4 @@ public class LockWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1593708203

@@ -43,6 +43,7 @@ public class OpenIdConnectSessionUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select openIdConnectSessionId, configurationPid from " +
 					"OpenIdConnectSession");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

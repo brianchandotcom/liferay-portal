@@ -144,3 +144,4 @@ public class CommerceShippingFixedOptionServiceUtil {
 			CommerceShippingFixedOptionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1927091734

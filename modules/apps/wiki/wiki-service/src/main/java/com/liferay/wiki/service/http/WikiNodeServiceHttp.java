@@ -798,3 +798,4 @@ public class WikiNodeServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-943499898

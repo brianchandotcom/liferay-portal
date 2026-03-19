@@ -154,3 +154,4 @@ public class ExpandoRowCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-71183670

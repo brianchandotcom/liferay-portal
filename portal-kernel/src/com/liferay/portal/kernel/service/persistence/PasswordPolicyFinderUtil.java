@@ -59,3 +59,4 @@ public class PasswordPolicyFinderUtil {
 	private static PasswordPolicyFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1106155761

@@ -2714,3 +2714,4 @@ public class LayoutPageTemplateCollectionUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:979473763

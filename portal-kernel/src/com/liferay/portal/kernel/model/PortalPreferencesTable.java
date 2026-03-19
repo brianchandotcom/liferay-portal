@@ -42,3 +42,4 @@ public class PortalPreferencesTable extends BaseTable<PortalPreferencesTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1842928456

@@ -42,3 +42,4 @@ public abstract class MFAFIDO2CredentialEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1064960355

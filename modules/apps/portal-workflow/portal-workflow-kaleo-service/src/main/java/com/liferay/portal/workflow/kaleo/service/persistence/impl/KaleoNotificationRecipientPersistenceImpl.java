@@ -2695,3 +2695,4 @@ public class KaleoNotificationRecipientPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1262562447

@@ -66,3 +66,4 @@ public interface ListTypeService extends BaseService {
 	public void validate(long listTypeId, String type) throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:732655786

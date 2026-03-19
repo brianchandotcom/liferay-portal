@@ -646,3 +646,4 @@ public interface ObjectFieldSettingPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2016009597

@@ -24,7 +24,6 @@ renderResponse.setTitle(article.getTitle(locale));
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= journalHistoryDisplayContext.getNavigationItems() %>"
 />
 

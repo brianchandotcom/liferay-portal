@@ -400,3 +400,4 @@ public class ContactLocalServiceWrapper
 	private ContactLocalService _contactLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1134206522

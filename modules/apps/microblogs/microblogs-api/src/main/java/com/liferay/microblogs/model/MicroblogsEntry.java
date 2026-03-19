@@ -55,3 +55,4 @@ public interface MicroblogsEntry extends MicroblogsEntryModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1456208815

@@ -154,3 +154,4 @@ public class PushNotificationsDeviceCacheModel
 	public String token;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:925410072

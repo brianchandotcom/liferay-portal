@@ -30,3 +30,4 @@ public abstract class JournalArticleLocalizationBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1562214904

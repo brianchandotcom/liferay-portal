@@ -65,6 +65,20 @@ public class PanelCategoryHelper {
 			portletId, panelCategoryKey, permissionChecker, group);
 	}
 
+	public PanelCategory getActivePanelCategory(
+		String panelCategoryKey, String portletId, ThemeDisplay themeDisplay) {
+
+		for (PanelCategory childPanelCategory :
+				getChildPanelCategories(panelCategoryKey, themeDisplay)) {
+
+			if (containsPortlet(portletId, childPanelCategory.getKey())) {
+				return childPanelCategory;
+			}
+		}
+
+		return null;
+	}
+
 	public List<PanelApp> getAllPanelApps(String panelCategoryKey) {
 		List<PanelApp> panelApps = new ArrayList<>();
 

@@ -29,9 +29,11 @@ import ContactSalesPage from './pages/App/InsuficientResources/ContactSales';
 import ContactSalesForm from './pages/App/InsuficientResources/ContactSalesForm';
 import License from './pages/App/License';
 import PaymentMethod from './pages/App/PaymentMethod';
-import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm/ActivationKeyForm';
+import OrderSummary from './pages/App/PaymentMethod/OrderSummary/OrderSummary';
+import AIHubForm from './pages/LiferayProduct/AIHubForm/AIHubForm';
+import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm';
+import LDPOrderSummary from './pages/LiferayProduct/LDPOrderSummary';
 import LDPProvisioning from './pages/LiferayProduct/LDPProvisioningForm';
-import OrderSummary from './pages/LiferayProduct/OrderSummary';
 import ProjectSelection from './pages/LiferayProduct/Project';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
@@ -92,7 +94,26 @@ export const productTypeRoutes = {
 			const solutionType =
 				marketplaceDeliveryProduct.specificationValues.SOLUTION_TYPE;
 
-			if (solutionType === SolutionTypes.DXP) {
+			if (solutionType === SolutionTypes.AI_HUB) {
+				return [
+					{
+						element: ProductPurchaseAccountSelection,
+						index: true,
+						title: i18n.translate('account'),
+					},
+					{
+						element: AIHubForm,
+						path: 'ai-hub-form',
+						title: i18n.translate('ai-hub'),
+					},
+				];
+			}
+
+			if (
+				[SolutionTypes.CMP, SolutionTypes.DXP].includes(
+					solutionType as SolutionTypes
+				)
+			) {
 				return [
 					{
 						element: ProductPurchaseAccountSelection,
@@ -114,7 +135,6 @@ export const productTypeRoutes = {
 						index: true,
 						title: i18n.translate('account'),
 					},
-
 					{
 						element: ProjectSelection,
 						path: 'project',
@@ -127,7 +147,7 @@ export const productTypeRoutes = {
 						title: i18n.translate('provisioning'),
 					},
 					{
-						element: OrderSummary,
+						element: LDPOrderSummary,
 						path: 'summary',
 						title: i18n.translate('summary'),
 					},

@@ -372,3 +372,4 @@ public class JSONStorageEntryLocalServiceUtil {
 			JSONStorageEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-541354957

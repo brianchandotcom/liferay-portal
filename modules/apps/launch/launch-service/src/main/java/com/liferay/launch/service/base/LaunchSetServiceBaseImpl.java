@@ -125,3 +125,4 @@ public abstract class LaunchSetServiceBaseImpl
 		LaunchSetServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1626792683

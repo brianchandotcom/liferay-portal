@@ -1,4 +1,5 @@
 import * as API from 'shared/api';
+import AccountMembership from '../components/AccountMembership';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -146,14 +147,15 @@ const IndividualProfileCDP: React.FC<IIndividualProfileCDPProps> = ({
 
 	const authorized = currentUser.isAdmin();
 
+	const showEmptyState =
+		isNil(dataSourceData?.total) || dataSourceData?.total === 0;
+
 	return (
 		<>
 			<IndividualAttributesCDP
 				contactId={individual.get('id')}
 				propertiesData={individual.get('properties')}
-				showEmptyState={
-					isNil(dataSourceData?.total) || dataSourceData?.total === 0
-				}
+				showEmptyState={showEmptyState}
 			>
 				<ProfileCDPEmptyState
 					authorized={authorized}
@@ -164,12 +166,23 @@ const IndividualProfileCDP: React.FC<IIndividualProfileCDPProps> = ({
 				/>
 			</IndividualAttributesCDP>
 
+			<AccountMembership
+				accountData={individual.getIn(['accounts', 0])}
+				showEmptyState={showEmptyState}
+			>
+				<ProfileCDPEmptyState
+					authorized={authorized}
+					dataSourceData={dataSourceData}
+					dataSourceLoading={dataSourceLoading}
+					groupId={groupId}
+					pageDisplay={false}
+				/>
+			</AccountMembership>
+
 			<IndividualDetailsCDP
 				groupId={groupId}
 				individualId={individual.get('id')}
-				showEmptyState={
-					isNil(dataSourceData?.total) || dataSourceData?.total === 0
-				}
+				showEmptyState={showEmptyState}
 			>
 				<ProfileCDPEmptyState
 					authorized={authorized}

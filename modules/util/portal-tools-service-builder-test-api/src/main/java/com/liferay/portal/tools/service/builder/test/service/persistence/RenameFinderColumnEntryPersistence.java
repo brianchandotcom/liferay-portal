@@ -202,3 +202,4 @@ public interface RenameFinderColumnEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1827172996

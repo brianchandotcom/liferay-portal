@@ -425,3 +425,4 @@ public class DLOpenerFileEntryReferenceUtil {
 	private static volatile DLOpenerFileEntryReferencePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1124411878

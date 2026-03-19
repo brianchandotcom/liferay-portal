@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -169,6 +170,17 @@ public class CalendarServiceUpgradeStepRegistrator
 			"4.3.0", "4.4.0",
 			UpgradeProcessFactory.addColumns(
 				"CalendarBooking", "externalReferenceCode VARCHAR(75)"));
+
+		registry.register(
+			"4.4.0", "4.5.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[] getTableNames() {
+					return new String[] {"CalendarBooking"};
+				}
+
+			});
 	}
 
 	@Reference

@@ -89,3 +89,4 @@ public class ListTypeServiceWrapper
 	private ListTypeService _listTypeService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1315426182

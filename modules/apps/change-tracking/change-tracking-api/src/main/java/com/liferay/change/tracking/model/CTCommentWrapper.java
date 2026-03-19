@@ -349,3 +349,4 @@ public class CTCommentWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:145427350

@@ -119,3 +119,4 @@ public class SAPEntryServiceUtil {
 		new Snapshot<>(SAPEntryServiceUtil.class, SAPEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-430612859

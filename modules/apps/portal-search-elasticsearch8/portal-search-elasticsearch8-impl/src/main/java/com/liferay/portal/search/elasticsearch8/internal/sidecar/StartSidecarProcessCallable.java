@@ -18,7 +18,14 @@ import java.nio.file.Path;
  * @author Tina Tian
  */
 public class StartSidecarProcessCallable
-	implements ProcessCallable<Serializable> {
+	implements ProcessCallable<Serializable>, Serializable {
+
+	public StartSidecarProcessCallable(
+		String log4j2Properties, String settings) {
+
+		_log4j2Properties = log4j2Properties;
+		_settings = settings;
+	}
 
 	@Override
 	public Serializable call() throws ProcessException {
@@ -54,19 +61,21 @@ public class StartSidecarProcessCallable
 				"es.path.conf", String.valueOf(configPath.toAbsolutePath()));
 
 			Files.writeString(
-				configPath.resolve("log4j2.properties"),
-				System.getProperty("sidecar.log4j2.properties"));
+				configPath.resolve("log4j2.properties"), _log4j2Properties);
 		}
 		catch (IOException ioException) {
 			throw new ProcessException(
 				"Unable to create log4j2.properties", ioException);
 		}
 
-		ElasticsearchServerUtil.start();
+		ElasticsearchServerUtil.start(_settings);
 
 		return null;
 	}
 
 	private static final long serialVersionUID = 1L;
+
+	private final String _log4j2Properties;
+	private final String _settings;
 
 }

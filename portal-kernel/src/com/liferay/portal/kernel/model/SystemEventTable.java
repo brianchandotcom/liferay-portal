@@ -71,3 +71,4 @@ public class SystemEventTable extends BaseTable<SystemEventTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2139583526

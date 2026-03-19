@@ -28,6 +28,7 @@ public class JournalArticleUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select id_, content from JournalArticle where content like " +
 					"'%type=\"radio\"%'");
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(

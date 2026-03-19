@@ -3440,7 +3440,7 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.VIEW, "getObjectEntry",
+						ActionKeys.UPDATE, "getObjectEntry",
 						serviceBuilderObjectEntry,
 						dtoConverterContext.getUriInfo());
 				}
@@ -3453,7 +3453,7 @@ public class DefaultObjectEntryManagerImpl
 			).put(
 				"versions",
 				_addAction(
-					ActionKeys.VIEW,
+					ActionKeys.UPDATE,
 					new String[] {
 						"getByExternalReferenceCodeVersionsPage",
 						"getScopeScopeKeyByExternalReferenceCodeVersionsPage"

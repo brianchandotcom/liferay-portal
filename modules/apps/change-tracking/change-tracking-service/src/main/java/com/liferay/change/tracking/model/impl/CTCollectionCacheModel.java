@@ -284,3 +284,4 @@ public class CTCollectionCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:956614182

@@ -769,3 +769,4 @@ public interface AppPersistence extends BasePersistence<App> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-701543343

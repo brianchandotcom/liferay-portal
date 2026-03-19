@@ -23,3 +23,4 @@ public interface CPInstanceOptionValueRelFinder {
 						queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1106493469

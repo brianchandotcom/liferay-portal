@@ -409,3 +409,4 @@ public class RatingsStatsWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1898403171

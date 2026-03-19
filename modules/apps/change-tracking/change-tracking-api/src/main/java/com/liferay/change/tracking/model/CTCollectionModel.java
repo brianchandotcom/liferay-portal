@@ -363,3 +363,4 @@ public interface CTCollectionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1380836720

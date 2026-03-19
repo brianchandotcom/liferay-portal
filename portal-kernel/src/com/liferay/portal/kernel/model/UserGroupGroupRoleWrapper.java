@@ -318,3 +318,4 @@ public class UserGroupGroupRoleWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1122361565

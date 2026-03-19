@@ -621,3 +621,4 @@ public class KBCommentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-684527316

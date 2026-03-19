@@ -57,6 +57,7 @@ public class CompanyThreadLocal {
 		}
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select userId, languageId, timeZoneId from User_ where " +
 					"companyId = ? and type_ = ?")) {

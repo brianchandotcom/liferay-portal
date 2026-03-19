@@ -253,3 +253,4 @@ public interface MicroblogsEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1624509614

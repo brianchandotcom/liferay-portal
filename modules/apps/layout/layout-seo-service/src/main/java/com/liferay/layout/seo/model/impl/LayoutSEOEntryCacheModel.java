@@ -370,3 +370,4 @@ public class LayoutSEOEntryCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1380553226

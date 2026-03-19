@@ -113,3 +113,4 @@ public class MBThreadFlagModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-734202017

@@ -1113,3 +1113,4 @@ public class KBArticleLocalServiceWrapper
 	private KBArticleLocalService _kbArticleLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2135641997

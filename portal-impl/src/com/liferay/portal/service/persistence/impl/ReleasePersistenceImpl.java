@@ -866,3 +866,4 @@ public class ReleasePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:966967647

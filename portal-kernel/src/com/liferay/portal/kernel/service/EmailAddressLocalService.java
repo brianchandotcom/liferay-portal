@@ -348,3 +348,4 @@ public interface EmailAddressLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-780943504

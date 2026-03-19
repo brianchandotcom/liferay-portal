@@ -41,3 +41,4 @@ public abstract class KaleoTaskFormInstanceBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1238218320

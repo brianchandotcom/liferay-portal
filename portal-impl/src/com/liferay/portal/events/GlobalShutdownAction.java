@@ -7,7 +7,6 @@ package com.liferay.portal.events;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
@@ -74,7 +73,7 @@ public class GlobalShutdownAction extends SimpleAction {
 
 		// Auto deploy
 
-		AutoDeployUtil.unregisterDir(AutoDeployDir.DEFAULT_NAME);
+		AutoDeployDir.stop();
 
 		// Hot deploy
 

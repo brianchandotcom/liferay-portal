@@ -293,3 +293,4 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2135867116

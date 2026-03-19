@@ -44,3 +44,4 @@ public class UserTrackerPathTable extends BaseTable<UserTrackerPathTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-979132125

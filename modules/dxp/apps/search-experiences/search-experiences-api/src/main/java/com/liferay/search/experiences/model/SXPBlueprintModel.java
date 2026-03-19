@@ -644,3 +644,4 @@ public interface SXPBlueprintModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-660572011

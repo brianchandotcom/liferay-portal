@@ -44,6 +44,7 @@ public class MappingSqlQueryImpl<T> implements MappingSqlQuery<T> {
 		}
 
 		try (Connection connection = ConnectionUtil.getConnection(_dataSource);
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_sql)) {
 

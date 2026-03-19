@@ -1210,3 +1210,4 @@ public class DDMFieldAttributeUtil {
 	private static volatile DDMFieldAttributePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:511417190

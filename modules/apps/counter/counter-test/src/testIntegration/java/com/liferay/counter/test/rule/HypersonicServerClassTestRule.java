@@ -5,11 +5,11 @@
 
 package com.liferay.counter.test.rule;
 
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -61,6 +61,7 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 						put("user", "sa");
 					}
 				});
+
 			Statement statement = testServerConnection.createStatement()) {
 
 			statement.execute("SHUTDOWN COMPACT");
@@ -146,6 +147,7 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 						put("user", "sa");
 					}
 				});
+
 			Statement statement = testServerConnection.createStatement()) {
 
 			statement.execute("SET WRITE_DELAY FALSE");

@@ -141,3 +141,4 @@ public class CPTaxCategoryServiceWrapper
 	private CPTaxCategoryService _cpTaxCategoryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1918910179

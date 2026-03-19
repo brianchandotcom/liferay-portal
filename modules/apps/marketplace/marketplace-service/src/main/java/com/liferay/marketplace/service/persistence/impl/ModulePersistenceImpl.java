@@ -4315,3 +4315,4 @@ public class ModulePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1296509244

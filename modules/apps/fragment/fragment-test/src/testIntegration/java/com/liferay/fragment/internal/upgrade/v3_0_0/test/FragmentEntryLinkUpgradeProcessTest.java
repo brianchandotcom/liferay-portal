@@ -377,47 +377,46 @@ public class FragmentEntryLinkUpgradeProcessTest
 			fragmentEntryLinkIds);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select FragmentEntryLink1.ctCollectionId, ",
-					"FragmentEntry.fragmentEntryId, ",
-					"FragmentEntryLink1.fragmentEntryLinkId, ",
-					"FragmentEntryLink2.fragmentEntryLinkId from ",
+					"select FragmentEntryLink1.ctCollectionId, FragmentEntry.",
+					"fragmentEntryId, FragmentEntryLink1.fragmentEntryLinkId ",
+					"as fragmentEntryLinkId1, FragmentEntryLink2.",
+					"fragmentEntryLinkId as fragmentEntryLinkId2 from ",
 					"FragmentEntryLink FragmentEntryLink1 left join ",
-					"FragmentEntryLink FragmentEntryLink2 on ",
-					"(FragmentEntryLink2.ctCollectionId = ",
-					"FragmentEntryLink1.ctCollectionId or ",
-					"FragmentEntryLink2.ctCollectionId = 0) and ",
-					"FragmentEntryLink1.originalFragmentEntryLinkERC = ",
+					"FragmentEntryLink FragmentEntryLink2 on (",
+					"FragmentEntryLink2.ctCollectionId = FragmentEntryLink1.",
+					"ctCollectionId or FragmentEntryLink2.ctCollectionId = 0) ",
+					"and FragmentEntryLink1.originalFragmentEntryLinkERC = ",
 					"FragmentEntryLink2.externalReferenceCode left join ",
 					"FragmentEntry on (FragmentEntry.ctCollectionId = ",
-					"FragmentEntryLink1.ctCollectionId or ",
-					"FragmentEntry.ctCollectionId = 0) and ",
-					"FragmentEntry.externalReferenceCode = ",
-					"FragmentEntryLink1.fragmentEntryERC left join Group_ on ",
-					"(Group_.ctCollectionId = ",
-					"FragmentEntryLink1.ctCollectionId or ",
-					"Group_.ctCollectionId = 0) and ( ",
-					"Group_.externalReferenceCode = ",
-					"FragmentEntryLink1.fragmentEntryScopeERC or ( ",
-					"Group_.groupId = FragmentEntryLink1.groupId and ",
-					"FragmentEntryLink1.fragmentEntryScopeERC is null)) and ",
-					"FragmentEntry.groupId = Group_.groupId"));
+					"FragmentEntryLink1.ctCollectionId or FragmentEntry.",
+					"ctCollectionId = 0) and FragmentEntry.",
+					"externalReferenceCode = FragmentEntryLink1.",
+					"fragmentEntryERC left join Group_ on (Group_.",
+					"ctCollectionId = FragmentEntryLink1.ctCollectionId or ",
+					"Group_.ctCollectionId = 0) and ( Group_.",
+					"externalReferenceCode = FragmentEntryLink1.",
+					"fragmentEntryScopeERC or ( Group_.groupId = ",
+					"FragmentEntryLink1.groupId and FragmentEntryLink1.",
+					"fragmentEntryScopeERC is null)) and FragmentEntry.",
+					"groupId = Group_.groupId"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long ctCollectionId = resultSet.getLong(1);
-				long fragmentEntryId = resultSet.getLong(2);
-				long fragmentEntryLinkId1 = resultSet.getLong(3);
-				long fragmentEntryLinkId2 = resultSet.getLong(4);
-
 				_db.runSQL(
 					StringBundler.concat(
 						"update FragmentEntryLink set ",
-						"originalFragmentEntryLinkId = ", fragmentEntryLinkId2,
-						", fragmentEntryId = ", fragmentEntryId,
-						" where fragmentEntryLinkId = ", fragmentEntryLinkId1,
-						" and ctCollectionId = ", ctCollectionId));
+						"originalFragmentEntryLinkId = ",
+						resultSet.getLong("fragmentEntryLinkId2"),
+						", fragmentEntryId = ",
+						resultSet.getLong("fragmentEntryId"),
+						" where fragmentEntryLinkId = ",
+						resultSet.getLong("fragmentEntryLinkId1"),
+						" and ctCollectionId = ",
+						resultSet.getLong("ctCollectionId")));
 			}
 		}
 

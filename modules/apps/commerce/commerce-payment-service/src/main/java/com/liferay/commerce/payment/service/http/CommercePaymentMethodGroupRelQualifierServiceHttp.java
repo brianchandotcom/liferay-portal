@@ -666,3 +666,4 @@ public class CommercePaymentMethodGroupRelQualifierServiceHttp {
 			new Class[] {long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:60329700

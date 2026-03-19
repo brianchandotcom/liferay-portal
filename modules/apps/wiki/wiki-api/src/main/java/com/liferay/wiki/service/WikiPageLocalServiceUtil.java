@@ -1105,3 +1105,4 @@ public class WikiPageLocalServiceUtil {
 			WikiPageLocalServiceUtil.class, WikiPageLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2131732958

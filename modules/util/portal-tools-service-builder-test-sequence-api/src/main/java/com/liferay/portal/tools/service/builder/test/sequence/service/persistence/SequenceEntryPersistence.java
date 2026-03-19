@@ -451,3 +451,4 @@ public interface SequenceEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-523802222

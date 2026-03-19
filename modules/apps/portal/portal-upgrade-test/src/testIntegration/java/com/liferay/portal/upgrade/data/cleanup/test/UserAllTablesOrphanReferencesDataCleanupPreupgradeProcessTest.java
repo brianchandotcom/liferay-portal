@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 
 import java.util.List;
@@ -61,7 +62,6 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 					" (mvccVersion LONG default 0 not null, testId LONG not ",
 					"null, userId VARCHAR(50) not null, companyId LONG not ",
 					"null, primary key(testId, userId))"));
-
 			db.runSQL(
 				StringBundler.concat(
 					"insert into ", _TABLE_NAME, " (mvccVersion, testId, ",
@@ -84,6 +84,32 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			db.runSQL(
 				connection,
 				StringBundler.concat(
+					"insert into MFATimeBasedOTPEntry (mvccVersion, ",
+					"mfaTimeBasedOTPEntryId, companyId, userId) values (0, ",
+					RandomTestUtil.nextLong(), ", ", _companyId, ", ", _userId,
+					")"));
+			db.runSQL(
+				connection,
+				StringBundler.concat(
+					"insert into OAuth2Authorization (oAuth2AuthorizationId, ",
+					"companyId, userId) values (", RandomTestUtil.nextLong(),
+					", ", _companyId, ", ", _userId, ")"));
+			db.runSQL(
+				connection,
+				StringBundler.concat(
+					"insert into OpenIdConnectUser (mvccVersion, ",
+					"openIdConnectUserId, companyId, userId) values (0, ",
+					RandomTestUtil.nextLong(), ", ", _companyId, ", ", _userId,
+					")"));
+			db.runSQL(
+				connection,
+				StringBundler.concat(
+					"insert into SamlPeerBinding (samlPeerBindingId, ",
+					"companyId, userId) values (", RandomTestUtil.nextLong(),
+					", ", _companyId, ", ", _userId, ")"));
+			db.runSQL(
+				connection,
+				StringBundler.concat(
 					"insert into Users_Roles (companyId, roleId, userId, ",
 					"ctCollectionId) values (", _companyId, ", ",
 					RandomTestUtil.nextLong(), ", ", _userId, ", 0)"));
@@ -97,8 +123,28 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 		return (logCapture1, logCapture2) -> {
 			List<String> messages = logCapture1.getMessages();
 
+			String message = StringUtil.merge(messages);
+
+			Assert.assertFalse(
+				message,
+				message.contains(
+					dbInspector.normalizeName("MFATimeBasedOTPEntry")));
+			Assert.assertFalse(
+				message,
+				message.contains(
+					dbInspector.normalizeName("OAuth2Authorization")));
+			Assert.assertFalse(
+				message,
+				message.contains(
+					dbInspector.normalizeName("OpenIdConnectUser")));
+			Assert.assertFalse(
+				message,
+				message.contains(dbInspector.normalizeName("SamlPeerBinding")));
 			Assert.assertTrue(
-				messages.contains(
+				message, message.contains("No admin user found for company 0"));
+			Assert.assertTrue(
+				message,
+				message.contains(
 					StringBundler.concat(
 						"Table ", dbInspector.normalizeName("Layout"), ", 1 ",
 						"row updated column ",
@@ -109,7 +155,8 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 						dbInspector.normalizeName("userId"), " from table ",
 						dbInspector.normalizeName("User_"))));
 			Assert.assertTrue(
-				messages.contains(
+				message,
+				message.contains(
 					StringBundler.concat(
 						"Table ", dbInspector.normalizeName("Users_Roles"),
 						", 1 row deleted because ",
@@ -117,12 +164,11 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 						_userId, " was not found in column ",
 						dbInspector.normalizeName("userId"), " from table ",
 						dbInspector.normalizeName("User_"))));
-			Assert.assertTrue(
-				messages.contains("No admin user found for company 0"));
 
 			messages = logCapture2.getMessages();
 
 			Assert.assertTrue(
+				messages.toString(),
 				messages.contains(
 					StringBundler.concat(
 						"Table ", dbInspector.normalizeName(_TABLE_NAME),

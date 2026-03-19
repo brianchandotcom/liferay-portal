@@ -5,6 +5,18 @@ variable "deployment_name" {
 		error_message="The variable \"deployment_name\" must be 3-24 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens."
 	}
 }
+variable "deployment_namespace" {
+	default="liferay-system"
+	type=string
+	validation {
+		condition=can(regex("^[a-z0-9-]*$", var.deployment_namespace))
+		error_message="The deployment_namespace must contain only lowercase letters, numbers, and hyphens."
+	}
+}
+variable "gateway_namespace" {
+	default="envoy-gateway-system"
+	type=string
+}
 variable "gke_security_group" {
 	default=null
 	type=string

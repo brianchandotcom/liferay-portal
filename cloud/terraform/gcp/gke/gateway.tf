@@ -1,0 +1,34 @@
+resource "helm_release" "envoy_gateway" {
+	chart="gateway-helm"
+	create_namespace=true
+	depends_on=[
+		time_sleep.wait_for_gateway,
+	]
+	name="envoy-gateway"
+	namespace=var.gateway_namespace
+	repository="oci://docker.io/envoyproxy"
+	values=[
+		yamlencode(
+			{
+				config={
+					envoyGateway={
+						extensionApis={
+							enableBackend=false
+						}
+					}
+				}
+				deployment={
+					replicas=2
+				}
+			}),
+	]
+	version="v1.6.3"
+}
+
+resource "time_sleep" "wait_for_gateway" {
+	create_duration="60s"
+	depends_on=[
+		google_container_cluster.primary,
+		google_gke_hub_membership.membership,
+	]
+}

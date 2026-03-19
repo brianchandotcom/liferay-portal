@@ -131,19 +131,6 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 	}
 
 	@Override
-	public boolean hasExportableFragmentCompositionsAndFragmentEntries() {
-		if (FragmentCompositionLocalServiceUtil.
-				hasExportableFragmentCompositions(getFragmentCollectionId()) ||
-			FragmentEntryLocalServiceUtil.hasExportableFragmentEntries(
-				getFragmentCollectionId())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean hasResources() throws PortalException {
 		Repository repository = _getRepository(true);
 
@@ -157,6 +144,20 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isExportable() throws PortalException {
+		if (FragmentCompositionLocalServiceUtil.
+				hasExportableFragmentCompositions(getFragmentCollectionId()) ||
+			FragmentEntryLocalServiceUtil.hasExportableFragmentEntries(
+				getFragmentCollectionId()) ||
+			hasResources()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

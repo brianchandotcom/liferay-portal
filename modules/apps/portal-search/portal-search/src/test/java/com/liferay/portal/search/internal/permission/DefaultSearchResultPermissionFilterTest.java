@@ -152,12 +152,11 @@ public class DefaultSearchResultPermissionFilterTest {
 			_getSearchRequestBuilderFactory();
 
 		return new DefaultSearchResultPermissionFilter(
+			_defaultSearchResultPermissionFilterConfiguration,
 			Mockito.mock(FacetPostProcessor.class),
 			Mockito.mock(IndexerRegistry.class), _permissionChecker,
 			Mockito.mock(RelatedEntryIndexerRegistry.class), _searchFunction,
-			searchRequestBuilderFactory,
-			_defaultSearchResultPermissionFilterConfiguration,
-			_serviceTrackerMap);
+			searchRequestBuilderFactory, _serviceTrackerMap);
 	}
 
 	private Document _getDocument(String companyId, int index) {

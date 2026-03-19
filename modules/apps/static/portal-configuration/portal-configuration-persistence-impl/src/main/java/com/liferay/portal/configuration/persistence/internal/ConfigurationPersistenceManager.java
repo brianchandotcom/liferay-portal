@@ -383,9 +383,10 @@ public class ConfigurationPersistenceManager
 						return new HashMapDictionary<>();
 					}
 
-					return ConfigurationHandler.read(
-						new UnsyncByteArrayInputStream(
-							dictionaryString.getBytes(StringPool.UTF8)));
+					return new HashMapDictionary<>(
+						(Map<Object, Object>)ConfigurationHandler.read(
+							new UnsyncByteArrayInputStream(
+								dictionaryString.getBytes(StringPool.UTF8))));
 				}
 			}
 

@@ -23,12 +23,10 @@ export function BaseLinkRenderer({
 	actions,
 	className,
 	itemData,
-	options,
+	options: {actionId},
 	symbol,
 	value,
 }: BaseLinkRendererProps & {className: string; symbol: string}) {
-	const {actionId} = options;
-
 	const selectedAction = findAction(actions, actionId);
 
 	if (!actions.length || !actionId || !selectedAction?.href) {

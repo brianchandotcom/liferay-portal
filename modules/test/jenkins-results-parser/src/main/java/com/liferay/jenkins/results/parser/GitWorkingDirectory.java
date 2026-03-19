@@ -2128,17 +2128,17 @@ public class GitWorkingDirectory {
 			upstreamBranchName, true, upstreamBranchSHA);
 	}
 
-	public String getUpstreamMasterAheadBehindCount() {
-		if (_upstreamMasterAheadBehindCount != null) {
-			return _upstreamMasterAheadBehindCount;
+	public String getUpstreamMasterAheadBehindDescription() {
+		if (_upstreamMasterAheadBehindDescription != null) {
+			return _upstreamMasterAheadBehindDescription;
 		}
 
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		if (upstreamGitRemote == null) {
-			_upstreamMasterAheadBehindCount = "";
+			_upstreamMasterAheadBehindDescription = "";
 
-			return _upstreamMasterAheadBehindCount;
+			return _upstreamMasterAheadBehindDescription;
 		}
 
 		executeBashCommands(
@@ -2159,16 +2159,16 @@ public class GitWorkingDirectory {
 			throw new GitWorkingDirectoryRuntimeException(
 				this,
 				JenkinsResultsParserUtil.combine(
-					"Unable to get ahead/behind count for upstream master\n",
+					"Unable to get ahead/behind count for current branch\n",
 					executionResult.getStandardError()));
 		}
 
-		String aheadBehindCount = _formatAheadBehindCount(
+		String aheadBehindDescription = _formatAheadBehindCount(
 			executionResult.getStandardOut());
 
-		_upstreamMasterAheadBehindCount = aheadBehindCount;
+		_upstreamMasterAheadBehindDescription = aheadBehindDescription;
 
-		return aheadBehindCount;
+		return aheadBehindDescription;
 	}
 
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {
@@ -3393,7 +3393,7 @@ public class GitWorkingDirectory {
 	private String _mergeBaseWithUpstreamMasterSHA;
 	private List<File> _modifiedFilesList;
 	private final String _upstreamBranchName;
-	private String _upstreamMasterAheadBehindCount;
+	private String _upstreamMasterAheadBehindDescription;
 	private boolean _useUpstreamMasterDiffBase;
 	private File _workingDirectory;
 

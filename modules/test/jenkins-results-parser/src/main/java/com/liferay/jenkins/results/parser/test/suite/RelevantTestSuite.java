@@ -37,6 +37,7 @@ public class RelevantTestSuite {
 
 		_relevantRuleEngine = RelevantRuleEngine.getInstance(
 			portalAcceptancePullRequestJob);
+		_testSuiteName = portalAcceptancePullRequestJob.getTestSuiteName();
 	}
 
 	public List<TestBatch> getTestBatches(boolean validateAllRules) {
@@ -46,12 +47,12 @@ public class RelevantTestSuite {
 		String testBatchNamesPropertyValue =
 			JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getProperties(baseTestPropertiesFile),
-				"relevant.batch.names.whitelist");
+				"relevant.batch.names.whitelist", _testSuiteName);
 
 		if (testBatchNamesPropertyValue == null) {
 			testBatchNamesPropertyValue = JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getProperties(baseTestPropertiesFile),
-				"test.batch.names[relevant]");
+				"test.batch.names", _testSuiteName);
 
 			if (testBatchNamesPropertyValue == null) {
 				throw new RuntimeException(
@@ -151,5 +152,6 @@ public class RelevantTestSuite {
 	private final RelevantRuleEngine _relevantRuleEngine;
 	private final Set<JobProperty> _testBatchNamesJobProperties =
 		new HashSet<>();
+	private final String _testSuiteName;
 
 }

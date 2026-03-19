@@ -6,7 +6,6 @@
 package com.liferay.jenkins.results.parser.test.suite;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
@@ -32,7 +31,7 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 	@Override
 	public List<TestScriptCommand> getTestScriptCommands() {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)getGitWorkingDirectory();
+			getPortalGitWorkingDirectory();
 
 		try {
 			List<File> modulesToCompile = new ArrayList<>();
@@ -71,7 +70,7 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 
 			for (File modifiedModuleDir : modulesToCompile) {
 				sb.append(" ");
-				sb.append(_getGradlePackageName(modifiedModuleDir));
+				sb.append(getGradlePackageName(modifiedModuleDir));
 				sb.append(":deploy");
 			}
 
@@ -90,7 +89,7 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 	@Override
 	public boolean matches(File modifiedFile) {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)getGitWorkingDirectory();
+			getPortalGitWorkingDirectory();
 
 		try {
 			List<File> modifiedModuleDirsList =
@@ -120,22 +119,6 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 		}
 
 		return super.matches(modifiedFile);
-	}
-
-	private String _getGradlePackageName(File moduleDir) {
-		String moduleDirFilePath = JenkinsResultsParserUtil.getCanonicalPath(
-			moduleDir);
-
-		int index = moduleDirFilePath.indexOf("/modules/");
-
-		if (index == -1) {
-			return "";
-		}
-
-		String relativeModuleDirFilePath = moduleDirFilePath.substring(
-			index + 9);
-
-		return ":" + relativeModuleDirFilePath.replace('/', ':');
 	}
 
 }

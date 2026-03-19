@@ -29,10 +29,6 @@ variable "min_node_count" {
 	default=1
 	type=number
 }
-variable "pod_cidr" {
-	default="10.1.0.0/16"
-	type=string
-}
 variable "project_id" {
 	type=string
 }
@@ -42,10 +38,6 @@ variable "region" {
 variable "regional_cluster" {
 	default=false
 	type=bool
-}
-variable "service_cidr" {
-	default="10.2.0.0/16"
-	type=string
 }
 variable "spot_instances" {
 	default=true

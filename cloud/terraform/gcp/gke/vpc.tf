@@ -85,7 +85,7 @@ resource "google_compute_router_nat" "nat" {
 	source_subnetwork_ip_ranges_to_nat="ALL_SUBNETWORKS_ALL_IP_RANGES"
 }
 resource "google_compute_subnetwork" "subnet" {
-	ip_cidr_range=var.vpc_cidr
+	ip_cidr_range=local.subnet_cidr
 	log_config {
 		aggregation_interval="INTERVAL_10_MIN"
 		flow_sampling=0.5
@@ -97,11 +97,11 @@ resource "google_compute_subnetwork" "subnet" {
 	project=var.project_id
 	region=var.region
 	secondary_ip_range {
-		ip_cidr_range=var.pod_cidr
+		ip_cidr_range=local.pod_cidr
 		range_name="${var.deployment_name}-pods"
 	}
 	secondary_ip_range {
-		ip_cidr_range=var.service_cidr
+		ip_cidr_range=local.service_cidr
 		range_name="${var.deployment_name}-services"
 	}
 }

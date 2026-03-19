@@ -97,8 +97,10 @@ public class DLTestUtil {
 		return addDLFolder(groupId, true, serviceContext);
 	}
 
-	public static String randomTextFileContent(int length) {
-		return StringUtil.randomId(length);
+	public static byte[] randomTextFileContent(int length) {
+		return StringUtil.randomId(
+			length
+		).getBytes();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DLTestUtil.class);

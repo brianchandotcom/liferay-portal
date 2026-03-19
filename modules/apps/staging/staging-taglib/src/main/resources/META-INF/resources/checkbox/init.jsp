@@ -9,6 +9,7 @@
 
 <%
 boolean checked = GetterUtil.getBoolean(request.getAttribute("liferay-staging:checkbox:checked"));
+Map<String, Object> data = (Map<String, Object>)GetterUtil.getObject(request.getAttribute("liferay-staging:checkbox:data"), Collections.emptyMap());
 long deletions = GetterUtil.getLong(request.getAttribute("liferay-staging:checkbox:deletions"));
 String descriptionKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:description"));
 boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-staging:checkbox:disabled"));

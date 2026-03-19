@@ -11,10 +11,17 @@ import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.PageContext;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * @author Péter Borkuti
  */
 public class CheckboxTag extends BaseCssTag {
+
+	public Map<String, Object> getData() {
+		return _data;
+	}
 
 	public long getDeletions() {
 		return _deletions;
@@ -73,6 +80,10 @@ public class CheckboxTag extends BaseCssTag {
 		_checked = checked;
 	}
 
+	public void setData(Map<String, Object> data) {
+		_data = data;
+	}
+
 	public void setDeletions(long deletions) {
 		_deletions = deletions;
 	}
@@ -129,6 +140,7 @@ public class CheckboxTag extends BaseCssTag {
 		super.cleanUp();
 
 		_checked = false;
+		_data = Collections.emptyMap();
 		_deletions = 0;
 		_description = StringPool.BLANK;
 		_disabled = false;
@@ -151,6 +163,7 @@ public class CheckboxTag extends BaseCssTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
 			"liferay-staging:checkbox:checked", _checked);
+		httpServletRequest.setAttribute("liferay-staging:checkbox:data", _data);
 		httpServletRequest.setAttribute(
 			"liferay-staging:checkbox:deletions", _deletions);
 		httpServletRequest.setAttribute(
@@ -175,6 +188,7 @@ public class CheckboxTag extends BaseCssTag {
 	private static final String _PAGE = "/checkbox/aui/page.jsp";
 
 	private boolean _checked;
+	private Map<String, Object> _data = Collections.emptyMap();
 	private long _deletions;
 	private String _description = StringPool.BLANK;
 	private boolean _disabled;

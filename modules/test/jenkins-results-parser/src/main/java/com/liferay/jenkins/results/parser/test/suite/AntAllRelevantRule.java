@@ -40,10 +40,11 @@ public class AntAllRelevantRule extends RelevantRule {
 			for (File modifiedModuleDir :
 					portalGitWorkingDirectory.getModifiedModuleDirsList()) {
 
-				String absolutePath = JenkinsResultsParserUtil.getCanonicalPath(
-					modifiedModuleDir);
+				String modifiedModuleDirFilePath =
+					JenkinsResultsParserUtil.getCanonicalPath(
+						modifiedModuleDir);
 
-				if (absolutePath.contains("/modules/dxp/")) {
+				if (modifiedModuleDirFilePath.contains("/modules/dxp/")) {
 					hasDxpModules = true;
 
 					break;

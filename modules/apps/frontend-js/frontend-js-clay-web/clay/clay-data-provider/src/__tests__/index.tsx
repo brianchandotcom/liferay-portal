@@ -195,15 +195,11 @@ describe('ClayDataProvider', () => {
 		expect(container.innerHTML).toMatchSnapshot();
 	});
 
-	xit('calls clay.data and returns the timeout error', async () => {
+	it('calls clay.data and returns the timeout error', async () => {
 		fetchMock.mockResponseOnce(
 			() =>
 				new Promise((resolve) => {
-					const timer = setTimeout(() => resolve({body: 'ok'}), 200);
-
-					timer.unref();
-
-					return timer;
+					setTimeout(() => resolve({body: 'ok'}), 200);
 				})
 		);
 
@@ -221,7 +217,9 @@ describe('ClayDataProvider', () => {
 			</Provider>
 		);
 
-		await fetchMock.mock.results[0]!.value;
+		await waitFor(() =>
+			expect(container.innerHTML).toContain('Timeout Error')
+		);
 
 		expect(fetchMock.mock.calls.length).toEqual(1);
 

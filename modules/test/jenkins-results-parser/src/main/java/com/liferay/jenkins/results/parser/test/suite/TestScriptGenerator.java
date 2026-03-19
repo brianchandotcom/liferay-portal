@@ -79,7 +79,24 @@ public class TestScriptGenerator {
 		sb.append(upstreamMasterAheadBehindCount);
 
 		sb.append(" upstream/master.\"\n");
-		sb.append("\techo \"\"\n\n");
+		sb.append("\techo \"\"\n");
+
+		if (upstreamMasterAheadBehindCount.contains("behind")) {
+			sb.append("\techo \"Warning: Your branch is behind ");
+			sb.append("upstream/master. It is recommended to rebase your ");
+			sb.append("branch before running tests.\"\n");
+			sb.append("\techo -n \"Do you want to continue anyway? (y/N) \"\n");
+			sb.append("\tread -n 1 -r REPLY\n");
+			sb.append("\techo \"\"\n\n");
+			sb.append("\tif [[ ! ${REPLY} =~ ^[Yy]$ ]]\n");
+			sb.append("\tthen\n");
+			sb.append("\t\texit 1\n");
+			sb.append("\tfi\n\n");
+		}
+		else {
+			sb.append("\techo \"\"\n");
+		}
+
 		sb.append("\tdurations=()\n");
 		sb.append("\tfailed_commands=0\n");
 		sb.append("\tresults=()\n");

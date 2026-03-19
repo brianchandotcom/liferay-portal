@@ -141,6 +141,10 @@ public class TomcatNode {
 		return _connectorPort;
 	}
 
+	public int getNodeId() {
+		return _nodeId;
+	}
+
 	public Path getPortalExtPropertiesPath() {
 		return _portalExtPropertiesPath;
 	}

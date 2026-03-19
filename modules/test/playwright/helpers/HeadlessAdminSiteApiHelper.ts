@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {createReadStream} from 'fs';
+
+import {zipFolder} from '../utils/zip';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 export type TNavigationMenu = {
@@ -29,6 +32,20 @@ export type TNavigationMenuItem = {
 	type: 'asset_vocabulary' | 'layout' | 'node' | 'url' | string;
 };
 
+export type TSite = {
+	active?: boolean;
+	description?: string;
+	externalReferenceCode?: string;
+	friendlyUrlPath?: string;
+	id?: string;
+	key?: string;
+	membershipType?: string;
+	name: string;
+	parentSiteExternalReferenceCode?: string;
+	templateKey?: number;
+	templateType?: string;
+};
+
 export class HeadlessAdminSiteApiHelper {
 	apiHelpers: ApiHelpers | DataApiHelpers;
 	basePath: string;
@@ -45,6 +62,23 @@ export class HeadlessAdminSiteApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/site-pages`,
 			{data: page, failOnStatusCode: true}
+		);
+	}
+
+	async deleteSite(externalReferenceCode: string) {
+		await this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${externalReferenceCode}`,
+			{failOnStatusCode: true}
+		);
+	}
+
+	async deleteSiteNavigationMenu(
+		siteExternalReferenceCode: string,
+		navigationMenuExternalReferenceCode: string
+	): Promise<any> {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/navigation-menus/${navigationMenuExternalReferenceCode}`,
+			{failOnStatusCode: true}
 		);
 	}
 
@@ -66,15 +100,26 @@ export class HeadlessAdminSiteApiHelper {
 		);
 	}
 
-	async putPage(
-		siteExternalReferenceCode: string,
-		pageExternalReferenceCode: string,
-		page: any
-	): Promise<any> {
-		return this.apiHelpers.put(
-			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/site-pages/${pageExternalReferenceCode}`,
-			{data: page, failOnStatusCode: true}
+	async getSite(siteExternalReferenceCode: string): Promise<Site> {
+		return await this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}`
 		);
+	}
+
+	async postSite(site: TSite): Promise<Site> {
+		const responseSite: Site = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites`,
+			{data: site, failOnStatusCode: true}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: responseSite.externalReferenceCode,
+				type: 'site',
+			});
+		}
+
+		return responseSite;
 	}
 
 	async postSiteNavigationMenu(
@@ -99,13 +144,45 @@ export class HeadlessAdminSiteApiHelper {
 		return postNavigationMenu;
 	}
 
-	async deleteSiteNavigationMenu(
+	async postSiteSiteInitializer(
+		site: TSite,
+		siteInitializerPath: string
+	): Promise<Site> {
+		const zip = await zipFolder(siteInitializerPath, {
+			destPath: 'site-initializer/',
+		});
+
+		const responseSite: Site = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/site-initializer`,
+			{
+				headers: {
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				},
+				multipart: {
+					file: createReadStream(zip),
+					site: JSON.stringify(site),
+				},
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: responseSite.externalReferenceCode,
+				type: 'site',
+			});
+		}
+
+		return responseSite;
+	}
+
+	async putPage(
 		siteExternalReferenceCode: string,
-		navigationMenuExternalReferenceCode: string
+		pageExternalReferenceCode: string,
+		page: any
 	): Promise<any> {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/navigation-menus/${navigationMenuExternalReferenceCode}`,
-			{failOnStatusCode: true}
+		return this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/site-pages/${pageExternalReferenceCode}`,
+			{data: page, failOnStatusCode: true}
 		);
 	}
 }

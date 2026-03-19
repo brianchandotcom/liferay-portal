@@ -97,6 +97,10 @@ public class DLTestUtil {
 		return addDLFolder(groupId, true, serviceContext);
 	}
 
+	public static byte[] randomTextFileContent() {
+		return randomTextFileContent(8);
+	}
+
 	public static byte[] randomTextFileContent(int length) {
 		return StringUtil.randomId(
 			length

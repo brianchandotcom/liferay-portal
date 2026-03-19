@@ -172,7 +172,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 										<aui:select fieldParam="<%= customClaimsKeyId %>" id="<%= customClaimsKeyId %>" inlineField="<%= true %>" label="user-custom-fields" name="<%= customClaimsKeyId %>" showEmptyOption="<%= true %>">
 
 												<%
-												for (ExpandoColumn expandoColumn : (List<ExpandoColumn>)request.getAttribute("expandoColumns")) {
+												for (ExpandoColumn expandoColumn : (List<ExpandoColumn>)request.getAttribute(OAuthClientWebKeys.EXPANDO_COLUMNS)) {
 												%>
 
 													<aui:option label="<%= expandoColumn.getName() %>" selected="<%= Objects.equals(expandoColumn.getName(), key) %>" value="<%= expandoColumn.getName() %>"></aui:option>

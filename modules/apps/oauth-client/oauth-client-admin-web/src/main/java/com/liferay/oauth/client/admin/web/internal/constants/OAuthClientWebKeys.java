@@ -10,21 +10,24 @@ package com.liferay.oauth.client.admin.web.internal.constants;
  */
 public class OAuthClientWebKeys {
 
-	public static final String AUTHORIZATION_ENDPOINT = "authorizationEndpoint";
+	public static final String AUTHORIZATION_ENDPOINT =
+		"AUTHORIZATION_ENDPOINT";
 
-	public static final String JWKS_URI = "jwksURI";
+	public static final String EXPANDO_COLUMNS = "EXPANDO_COLUMNS";
 
-	public static final String REGISTRATION_ENDPOINT = "registrationEndpoint";
+	public static final String JWKS_URI = "JWKS_URI";
 
-	public static final String SUPPORTED_GRANT_TYPES = "supportedGrantTypes";
+	public static final String REGISTRATION_ENDPOINT = "REGISTRATION_ENDPOINT";
 
-	public static final String SUPPORTED_SCOPES = "supportedScopes";
+	public static final String SUPPORTED_GRANT_TYPES = "SUPPORTED_GRANT_TYPES";
+
+	public static final String SUPPORTED_SCOPES = "SUPPORTED_SCOPES";
 
 	public static final String SUPPORTED_SUBJECT_TYPES =
-		"supportedSubjectTypes";
+		"SUPPORTED_SUBJECT_TYPES";
 
-	public static final String TOKEN_ENDPOINT = "tokenEndpoint";
+	public static final String TOKEN_ENDPOINT = "TOKEN_ENDPOINT";
 
-	public static final String USER_INFO_ENDPOINT = "userInfoEndpoint";
+	public static final String USER_INFO_ENDPOINT = "USER_INFO_ENDPOINT";
 
 }

@@ -5,11 +5,13 @@
 
 package com.liferay.portal.upgrade.data.cleanup;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.data.cleanup.BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
@@ -18,6 +20,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.sql.PreparedStatement;
 
 import java.util.List;
 import java.util.Set;
@@ -31,6 +35,8 @@ public class CompanyDataCleanupPreupgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		_dropOrphanObjectTables();
+
+		upgrade(new UpdateCompanyIdByGroupIdDataCleanupPreupgradeProcess());
 
 		upgrade(
 			new DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
@@ -47,6 +53,55 @@ public class CompanyDataCleanupPreupgradeProcess
 				"[$SOURCE_TABLE_ALIAS$].ownerType = " +
 					PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 				"ownerId", "PortletPreferences", "companyId", "Company"));
+	}
+
+	protected class UpdateCompanyIdByGroupIdDataCleanupPreupgradeProcess
+		extends BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess {
+
+		public UpdateCompanyIdByGroupIdDataCleanupPreupgradeProcess() {
+			super("groupId", "Group_");
+		}
+
+		@Override
+		protected void cleanUp(
+				String sourceColumnName, String sourceTableName,
+				String[] targetColumnNames, String targetTableName)
+			throws Exception {
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			String companyIdColumnName = dbInspector.normalizeName("companyId");
+
+			if (!dbInspector.hasColumn(sourceTableName, companyIdColumnName)) {
+				return;
+			}
+
+			String normalizedTableName = dbInspector.normalizeName(
+				sourceTableName);
+
+			String setSubquery = StringBundler.concat(
+				"(select ", companyIdColumnName, " from ", targetTableName,
+				" where ", targetTableName, StringPool.PERIOD,
+				targetColumnNames[0], " = ", normalizedTableName,
+				StringPool.PERIOD, sourceColumnName, ")");
+
+			String existsSubquery = StringBundler.concat(
+				"exists (select 1 from ", targetTableName, " where ",
+				targetTableName, StringPool.PERIOD, targetColumnNames[0], " = ",
+				normalizedTableName, StringPool.PERIOD, sourceColumnName, ")");
+
+			String sql = StringBundler.concat(
+				"update ", normalizedTableName, " set ", companyIdColumnName,
+				" = ", setSubquery, " where coalesce(", companyIdColumnName,
+				", 0) = 0 and ", sourceColumnName, " > 0 and ", existsSubquery);
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(sql)) {
+
+				preparedStatement.executeUpdate();
+			}
+		}
+
 	}
 
 	private void _dropOrphanObjectTables() throws Exception {

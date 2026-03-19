@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -291,21 +290,24 @@ public class MarketplaceUtil {
 
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
-		if (Objects.equals(licenseType, "Subscription")) {
-			Instant instant = zonedDateTime.plusYears(
-				1
-			).toInstant();
-
-			return Date.from(instant);
+		if (StringUtil.equalsIgnoreCase(licenseType, "3 Months Limited Beta")) {
+			return Date.from(
+				zonedDateTime.plusMonths(
+					3
+				).toInstant());
 		}
-		else if (Objects.equals(licenseUsageType, "trial")) {
+
+		if (StringUtil.equalsIgnoreCase(licenseUsageType, "Trial")) {
 			return Date.from(
 				zonedDateTime.plusMonths(
 					1
 				).toInstant());
 		}
 
-		return null;
+		return Date.from(
+			zonedDateTime.plusYears(
+				1
+			).toInstant());
 	}
 
 	public static String getSkuOptionValue(String key, SkuOption[] skuOptions) {

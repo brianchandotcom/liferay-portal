@@ -244,7 +244,7 @@ public class DBPartitionUtil {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				pids.add(resultSet.getString(1));
+				pids.add(resultSet.getString("configurationId"));
 			}
 		}
 
@@ -273,7 +273,8 @@ public class DBPartitionUtil {
 
 			while (resultSet.next()) {
 				configurations.put(
-					resultSet.getString(1), resultSet.getString(2));
+					resultSet.getString("configurationId"),
+					resultSet.getString("dictionary"));
 			}
 
 			return configurations;
@@ -388,7 +389,7 @@ public class DBPartitionUtil {
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					if (resultSet.next()) {
-						_defaultCompanyId = resultSet.getLong(1);
+						_defaultCompanyId = resultSet.getLong("companyId");
 					}
 				}
 			}

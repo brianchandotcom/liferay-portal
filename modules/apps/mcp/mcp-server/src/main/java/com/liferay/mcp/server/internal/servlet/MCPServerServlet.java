@@ -118,6 +118,10 @@ public class MCPServerServlet extends HttpServlet {
 					request -> McpTransportContext.create(
 						HashMapBuilder.<String, Object>put(
 							"authorization", request.getHeader("Authorization")
+						).put(
+							"liferayAIHubCellOnBehalfOf",
+							request.getHeader(
+								"Liferay-AI-Hub-Cell-On-Behalf-Of")
 						).build())
 				).build();
 
@@ -189,17 +193,22 @@ public class MCPServerServlet extends HttpServlet {
 				body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		}
 
+		McpTransportContext mcpTransportContext =
+			mcpSyncServerExchange.transportContext();
+
+		Object liferayAIHubCellOnBehalfOf = mcpTransportContext.get(
+			"liferayAIHubCellOnBehalfOf");
+
 		options.setHeaders(
 			HashMapBuilder.put(
 				"Authorization",
 				() -> {
-					McpTransportContext mcpTransportContext =
-						mcpSyncServerExchange.transportContext();
-
 					Object authorization = mcpTransportContext.get(
 						"authorization");
 
-					if (authorization == null) {
+					if ((authorization == null) ||
+						(liferayAIHubCellOnBehalfOf != null)) {
+
 						return null;
 					}
 
@@ -210,6 +219,15 @@ public class MCPServerServlet extends HttpServlet {
 				() ->
 					Validator.isNotNull(body) ? ContentTypes.APPLICATION_JSON :
 						null
+			).put(
+				"Liferay-AI-Hub-Cell-On-Behalf-Of",
+				() -> {
+					if (liferayAIHubCellOnBehalfOf == null) {
+						return null;
+					}
+
+					return String.valueOf(liferayAIHubCellOnBehalfOf);
+				}
 			).build());
 
 		options.setLocation(location);

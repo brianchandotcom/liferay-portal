@@ -17,6 +17,7 @@ describe('viewReducer ADD_OBJECT_LAYOUT_TAB', () => {
 			enableCategorization: true,
 			enableFriendlyURLCustomization: true,
 			isViewOnly: false,
+			objectDefinitionExternalReferenceCode: '',
 			objectFieldBusinessTypes: [],
 			objectFields: [],
 			objectLayout: {
@@ -54,6 +55,7 @@ describe('viewReducer ADD_OBJECT_LAYOUT_BOX', () => {
 			enableCategorization: true,
 			enableFriendlyURLCustomization: true,
 			isViewOnly: false,
+			objectDefinitionExternalReferenceCode: '',
 			objectFieldBusinessTypes: [],
 			objectFields: [],
 			objectLayout: {

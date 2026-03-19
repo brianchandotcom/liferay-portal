@@ -23,6 +23,7 @@ type TState = {
 	enableCategorization: boolean;
 	enableFriendlyURLCustomization: boolean;
 	isViewOnly: boolean;
+	objectDefinitionExternalReferenceCode: string;
 	objectFieldBusinessTypes: ObjectFieldBusinessType[];
 	objectFields: TObjectField[];
 	objectLayout: TObjectLayout;
@@ -36,6 +37,7 @@ export type TAction =
 				creationLanguageId: Liferay.Language.Locale;
 				enableCategorization: boolean;
 				enableFriendlyURLCustomization: boolean;
+				objectDefinitionExternalReferenceCode: string;
 				objectLayout: TObjectLayout;
 				objectRelationships: TObjectRelationship[];
 			};
@@ -146,6 +148,7 @@ export function layoutReducer(state: TState, action: TAction) {
 				creationLanguageId,
 				enableCategorization,
 				enableFriendlyURLCustomization,
+				objectDefinitionExternalReferenceCode,
 				objectLayout,
 				objectRelationships,
 			} = action.payload;
@@ -155,6 +158,7 @@ export function layoutReducer(state: TState, action: TAction) {
 				creationLanguageId,
 				enableCategorization,
 				enableFriendlyURLCustomization,
+				objectDefinitionExternalReferenceCode,
 				objectLayout,
 				objectRelationships,
 			};

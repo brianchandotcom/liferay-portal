@@ -128,7 +128,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			const objectRelationships =
 				await API.getObjectDefinitionByExternalReferenceCodeObjectRelationships(
 					objectDefinitionExternalReferenceCode,
-					{filter: 'edge eq false'}
+					{filter: 'edge eq false', pageSize: '-1'}
 				);
 
 			const objectLayout = {
@@ -144,6 +144,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					enableCategorization: objectDefinition.enableCategorization,
 					enableFriendlyURLCustomization:
 						objectDefinition.enableFriendlyURLCustomization,
+					objectDefinitionExternalReferenceCode,
 					objectLayout,
 					objectRelationships: normalizeObjectRelationships({
 						objectLayoutTabs,

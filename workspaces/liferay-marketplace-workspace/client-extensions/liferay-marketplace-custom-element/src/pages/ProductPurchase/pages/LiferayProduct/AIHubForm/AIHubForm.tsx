@@ -27,6 +27,8 @@ import {PURPOSE_OPTIONS} from '../ActivationKeyForm/constants';
 
 import './AIHubForm.scss';
 
+import '../index.scss';
+
 const setValuesOptions = {
 	shouldDirty: true,
 	shouldValidate: true,
@@ -252,16 +254,19 @@ const AIHubForm = () => {
 					</div>
 				</ClayForm.Group>
 
-				<p className="h4">{i18n.translate('purpose')}</p>
+				<p className="h4">
+					{i18n.translate('purpose')} <RequiredMask />
+				</p>
 
 				<ClayDropDown
 					active={active}
 					alignmentPosition={Align.BottomLeft}
-					className="app-type-dropdown provide-app-build-page-cloud-compatible-container w-100"
+					className="w-100"
+					menuElementAttrs={{className: 'dropdown-menu-purpose'}}
 					onActiveChange={setActive}
 					trigger={
 						<ClayButton
-							className="align-items-center app-type-dropdown d-flex justify-content-between liferay-ai-hub-form-select-input rounded-lg w-100"
+							className="align-items-center d-flex justify-content-between liferay-ai-hub-form-select-input rounded-lg w-100"
 							displayType="secondary"
 							onClick={() => setActive(!active)}
 						>
@@ -279,7 +284,7 @@ const AIHubForm = () => {
 						</ClayButton>
 					}
 				>
-					<ClayDropDown.ItemList className="app-type-list-unstyled">
+					<ClayDropDown.ItemList>
 						{PURPOSE_OPTIONS.map((option, index) => (
 							<ClayDropDown.Item
 								className="d-flex flex-column"

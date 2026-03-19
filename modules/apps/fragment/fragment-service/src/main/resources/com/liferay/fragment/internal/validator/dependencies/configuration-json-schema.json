@@ -443,6 +443,10 @@
 					"title": "The Configuration Role Schema",
 					"type": "string"
 				},
+				"customComponentModule": {
+					"title": "The CustomComponentModule Schema",
+					"type": "string"
+				},
 				"fields": {
 					"items": {
 						"$ref": "#/definitions/field"

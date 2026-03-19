@@ -7,14 +7,17 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
-	loginTest(),
 	instanceSettingsPagesTest,
+	isolatedSiteTest,
+	loginTest(),
 	usersAndOrganizationsPagesTest
 );
 
@@ -22,39 +25,105 @@ test('LPD-30006 Configure default userGroup associations', async ({
 	apiHelpers,
 	defaultUserAssociationsPage,
 	editUserPage,
-	instanceSettingsPage,
 	page,
 	usersAndOrganizationsPage,
 }) => {
 	const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
 
-	await instanceSettingsPage.goToInstanceSetting(
-		'Users',
-		'Default User Associations'
-	);
+	await defaultUserAssociationsPage.goto();
 
 	await defaultUserAssociationsPage.userGroupsInput.fill(userGroup.name);
 	await defaultUserAssociationsPage.saveButton.click();
 
 	await waitForAlert(page);
 
-	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+	try {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-	await usersAndOrganizationsPage.goToUsers();
+		await usersAndOrganizationsPage.goToUsers();
 
-	await (
-		await usersAndOrganizationsPage.usersTableRowLink(user.alternateName)
-	).click();
-
-	await editUserPage.membershipsLink.click();
-
-	await expect(
-		(
-			await editUserPage.membershipsUserGroupsTableRow(
-				0,
-				userGroup.name,
-				true
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
 			)
-		).row
-	).toBeVisible();
+		).click();
+
+		await editUserPage.membershipsLink.click();
+
+		await expect(
+			(
+				await editUserPage.membershipsUserGroupsTableRow(
+					0,
+					userGroup.name,
+					true
+				)
+			).row
+		).toBeVisible();
+	}
+	finally {
+		await defaultUserAssociationsPage.resetFields();
+	}
 });
+
+test(
+	'Configure default user associations for organization sites, roles, and sites',
+	{tag: '@LPD-81993'},
+	async ({
+		apiHelpers,
+		defaultUserAssociationsPage,
+		editUserPage,
+		page,
+		site,
+		usersAndOrganizationsPage,
+	}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: `Role${getRandomString()}`,
+		});
+
+		await test.step('Set default user associations for organization site, role, and site', async () => {
+			await defaultUserAssociationsPage.goto();
+
+			await defaultUserAssociationsPage.organizationSitesInput.fill(
+				organization.name
+			);
+			await defaultUserAssociationsPage.regularRolesInput.fill(role.name);
+			await defaultUserAssociationsPage.sitesInput.fill(site.name);
+			await defaultUserAssociationsPage.saveButton.click();
+
+			await waitForAlert(page);
+		});
+
+		try {
+			await test.step('Verify new user has all default associations', async () => {
+				const user =
+					await apiHelpers.headlessAdminUser.postUserAccount();
+
+				await usersAndOrganizationsPage.goToUsers();
+
+				await (
+					await usersAndOrganizationsPage.usersTableRowLink(
+						user.alternateName
+					)
+				).click();
+
+				await editUserPage.membershipsLink.click();
+
+				await expect(
+					await editUserPage.membershipsSiteTableCell(site.name)
+				).toBeVisible();
+
+				await editUserPage.rolesLink.click();
+
+				await expect(
+					editUserPage.regularRoleCell(role.name)
+				).toBeVisible();
+			});
+		}
+		finally {
+			await defaultUserAssociationsPage.resetFields();
+		}
+	}
+);

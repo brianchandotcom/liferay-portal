@@ -15,10 +15,17 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {createCategories} from '../../../helpers/CreateCategories';
+import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {nextPage} from '../../../utils/pagination';
-import {performUserSwitch, userData} from '../../../utils/performLogin';
+import {
+	performLoginViaApi,
+	performLogout,
+	performUserSwitch,
+	userData,
+} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
@@ -1460,5 +1467,224 @@ test(
 
 		await expect(editUserPage.selectSiteRolesButton).not.toBeVisible();
 		await expect(editUserPage.cannotSelectSiteRolesMessage).toBeVisible();
+	}
+);
+
+test(
+	'User login after activation and deactivation',
+	{tag: '@LPD-81993'},
+	async ({apiHelpers, page, userLoginPage, usersAndOrganizationsPage}) => {
+		page.on('dialog', (dialog) => dialog.accept());
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName: `user${getRandomInt()}`,
+		});
+
+		const userName = `${user.givenName} ${user.familyName}`;
+
+		await test.step('Deactivate user via Actions menu and verify login fails', async () => {
+			await usersAndOrganizationsPage.goToUsers();
+
+			await expect(async () => {
+				await (
+					await usersAndOrganizationsPage.usersTableRowActions(
+						user.alternateName
+					)
+				).click();
+
+				await expect(
+					usersAndOrganizationsPage.deactivateUserMenuItem
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
+
+			await usersAndOrganizationsPage.deactivateUserMenuItem.click();
+
+			await waitForAlert(page);
+
+			await performLogout(page);
+
+			await userLoginPage.goto();
+			await userLoginPage.emailAddressInput.fill(user.emailAddress);
+			await userLoginPage.passwordInput.fill('test');
+			await userLoginPage.signInButton.click();
+
+			await expect(userLoginPage.authenticationFailedAlert).toBeVisible();
+		});
+
+		await test.step('Reactivate user and verify login succeeds', async () => {
+			await performLoginViaApi({page, screenName: 'test'});
+
+			await usersAndOrganizationsPage.goToUsers();
+
+			await usersAndOrganizationsPage.filterUsers('Inactive');
+			await usersAndOrganizationsPage.activateUsers([userName]);
+
+			await performLogout(page);
+
+			await userLoginPage.goto();
+			await userLoginPage.emailAddressInput.fill(user.emailAddress);
+			await userLoginPage.passwordInput.fill('test');
+			await userLoginPage.signInButton.click();
+
+			if (await userLoginPage.iAgreeButton.isVisible()) {
+				await userLoginPage.iAgreeButton.click();
+				await page.waitForLoadState('networkidle');
+			}
+
+			await expect(
+				page.getByLabel(`${user.givenName} ${user.familyName}`)
+			).toBeVisible({timeout: 30000});
+		});
+
+		await test.step('Deactivate user via checkbox and button and verify login fails', async () => {
+			await performLoginViaApi({page, screenName: 'test'});
+
+			await usersAndOrganizationsPage.goToUsers();
+			await usersAndOrganizationsPage.deActivateUsers([userName]);
+
+			await performLogout(page);
+
+			await userLoginPage.goto();
+			await userLoginPage.emailAddressInput.fill(user.emailAddress);
+			await userLoginPage.passwordInput.fill('test');
+			await userLoginPage.signInButton.click();
+
+			await expect(userLoginPage.authenticationFailedAlert).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Logout user via URL',
+	{tag: '@LPD-81993'},
+	async ({apiHelpers, page, userLoginPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName: `user${getRandomInt()}`,
+		});
+
+		await performLogout(page);
+
+		await userLoginPage.goto();
+		await userLoginPage.emailAddressInput.fill(user.emailAddress);
+		await userLoginPage.passwordInput.fill('test');
+		await userLoginPage.signInButton.click();
+
+		await expect(
+			page.getByLabel(`${user.givenName} ${user.familyName}`)
+		).toBeVisible({timeout: 30000});
+
+		await page.goto('/c/portal/logout');
+
+		await expect(page.getByRole('button', {name: 'Sign In'})).toBeVisible();
+	}
+);
+
+test(
+	'View user form persistence',
+	{tag: '@LPD-81993'},
+	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName: `user${getRandomInt()}`,
+		});
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+
+		await editUserPage.contactLink.click();
+		await editUserPage.contactInformationLink.click();
+
+		await editUserPage.addNewPhoneNumber(false, '1111111111');
+
+		await editUserPage.skypeInput.fill('skype12345');
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			(await editUserPage.phoneNumbersTableRow(0, '1111111111', true)).row
+		).toBeVisible();
+		await expect(editUserPage.skypeInput).toHaveValue('skype12345');
+
+		await expect(async () => {
+			await (
+				await editUserPage.phoneNumbersTableRowActions('1111111111')
+			).click();
+
+			await expect(editUserPage.removeMenuItem).toBeVisible({
+				timeout: 500,
+			});
+		}).toPass({timeout: 5000});
+
+		await editUserPage.removeMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			editUserPage.phoneNumbersTable.getByText('1111111111')
+		).not.toBeVisible();
+		await expect(editUserPage.skypeInput).toHaveValue('skype12345');
+	}
+);
+
+test(
+	'View category associated to user',
+	{tag: ['@LPD-81993', '@LPS-111656']},
+	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {
+		const vocabularyName = getRandomString();
+		const categoryName = getRandomString();
+
+		const categories = await createCategories({
+			apiHelpers,
+			categoryNames: [{name: categoryName}],
+			siteId: await getGlobalSiteId(apiHelpers),
+			vocabularyName,
+		});
+
+		apiHelpers.data.push({
+			id: (categories[0] as any).vocabularyId,
+			type: 'taxonomyVocabulary',
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName: `user${getRandomInt()}`,
+		});
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+
+		await editUserPage.categoryInput(vocabularyName).click();
+		await editUserPage.categoryInput(vocabularyName).fill(categoryName);
+		await editUserPage.categoryOption(categoryName).click();
+
+		await expect(editUserPage.categoryGridCell(categoryName)).toBeVisible();
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await editUserPage.membershipsLink.click();
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+
+		await expect(editUserPage.categoryGridCell(categoryName)).toBeVisible();
 	}
 );

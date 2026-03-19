@@ -26,9 +26,6 @@ public class TestScriptGenerator {
 		if (args.length > 0) {
 			gitRepositoryDirPath = args[0];
 		}
-		else {
-			gitRepositoryDirPath = System.getProperty("user.dir");
-		}
 
 		TestScriptGenerator testScriptGenerator = new TestScriptGenerator(
 			gitRepositoryDirPath);
@@ -52,6 +49,11 @@ public class TestScriptGenerator {
 	}
 
 	public TestScriptGenerator(String gitRepositoryDirPath) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(gitRepositoryDirPath)) {
+			throw new IllegalArgumentException(
+				"Git repository directory is not set");
+		}
+
 		_gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				"master", gitRepositoryDirPath);

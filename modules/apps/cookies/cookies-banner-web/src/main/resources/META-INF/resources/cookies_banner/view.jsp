@@ -11,63 +11,65 @@
 CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_BANNER_DISPLAY_CONTEXT);
 %>
 
-<clay:container-fluid
-	cssClass="container-view"
->
-	<clay:row>
-		<clay:content-row
-			cssClass="autofit-float-sm-down px-2 px-md-0"
-			noGutters="true"
-			verticalAlign="center"
-		>
-			<clay:content-col
-				expand="<%= true %>"
+<div aria-label="banner cookies" class="cookies-banner cookies-banner-bottom" role="dialog">
+	<clay:container-fluid
+		cssClass="container-view"
+	>
+		<clay:row>
+			<clay:content-row
+				cssClass="autofit-float-sm-down px-2 px-md-0"
+				noGutters="true"
+				verticalAlign="center"
 			>
-				<p class="mb-2 text-5 text-weight-semi-bold">
-					<%= HtmlUtil.escape(cookiesBannerDisplayContext.getTitle(locale)) %>
-				</p>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<p class="mb-2 text-5 text-weight-semi-bold">
+						<%= HtmlUtil.escape(cookiesBannerDisplayContext.getTitle(locale)) %>
+					</p>
 
-				<p class="mb-0">
-					<%= HtmlUtil.escape(cookiesBannerDisplayContext.getContent(locale)) %>
+					<p class="mb-0">
+						<%= HtmlUtil.escape(cookiesBannerDisplayContext.getContent(locale)) %>
 
-					<clay:link
-						href="<%= HtmlUtil.escape(cookiesBannerDisplayContext.getPrivacyPolicyLink()) %>"
-						label="<%= HtmlUtil.escape(cookiesBannerDisplayContext.getLinkDisplayText(locale)) %>"
-					/>
-				</p>
-			</clay:content-col>
+						<clay:link
+							href="<%= HtmlUtil.escape(cookiesBannerDisplayContext.getPrivacyPolicyLink()) %>"
+							label="<%= HtmlUtil.escape(cookiesBannerDisplayContext.getLinkDisplayText(locale)) %>"
+						/>
+					</p>
+				</clay:content-col>
 
-			<clay:content-col>
-				<clay:button
-					displayType="link"
-					id='<%= liferayPortletResponse.getNamespace() + "configurationButton" %>'
-					label='<%= LanguageUtil.get(request, "configuration") %>'
-					small="<%= true %>"
-				/>
-			</clay:content-col>
-
-			<clay:content-col>
-				<clay:button
-					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "acceptAllButton" %>'
-					label='<%= LanguageUtil.get(request, "accept-all") %>'
-					small="<%= true %>"
-				/>
-			</clay:content-col>
-
-			<c:if test="<%= cookiesBannerDisplayContext.isIncludeDeclineAllButton() %>">
 				<clay:content-col>
 					<clay:button
-						displayType="secondary"
-						id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
-						label='<%= LanguageUtil.get(request, "decline-all") %>'
+						displayType="link"
+						id='<%= liferayPortletResponse.getNamespace() + "configurationButton" %>'
+						label='<%= LanguageUtil.get(request, "configuration") %>'
 						small="<%= true %>"
 					/>
 				</clay:content-col>
-			</c:if>
-		</clay:content-row>
-	</clay:row>
-</clay:container-fluid>
+
+				<clay:content-col>
+					<clay:button
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "acceptAllButton" %>'
+						label='<%= LanguageUtil.get(request, "accept-all") %>'
+						small="<%= true %>"
+					/>
+				</clay:content-col>
+
+				<c:if test="<%= cookiesBannerDisplayContext.isIncludeDeclineAllButton() %>">
+					<clay:content-col>
+						<clay:button
+							displayType="secondary"
+							id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
+							label='<%= LanguageUtil.get(request, "decline-all") %>'
+							small="<%= true %>"
+						/>
+					</clay:content-col>
+				</c:if>
+			</clay:content-row>
+		</clay:row>
+	</clay:container-fluid>
+</div>
 
 <liferay-frontend:component
 	componentId="CookiesBanner"

@@ -2147,7 +2147,7 @@ public class GitWorkingDirectory {
 					executionResult.getStandardError()));
 		}
 
-		return _formatAheadBehindCount(executionResult.getStandardOut());
+		return _formatAheadBehindDescription(executionResult.getStandardOut());
 	}
 
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {
@@ -3100,28 +3100,27 @@ public class GitWorkingDirectory {
 		return true;
 	}
 
-	private String _formatAheadBehindCount(String standardOut) {
-		String[] values = standardOut.trim(
-		).split(
-			"\\s+"
-		);
+	private String _formatAheadBehindDescription(String output) {
+		output = output.trim();
 
-		String behindCount = values[0];
-		String aheadCount = values[1];
+		String[] values = output.split("\\s+");
+
+		String ahead = values[1];
+		String behind = values[0];
 
 		StringBuilder sb = new StringBuilder();
 
-		if (!aheadCount.equals("0")) {
-			sb.append(aheadCount);
+		if (!ahead.equals("0")) {
+			sb.append(ahead);
 			sb.append(" commits ahead");
 		}
 
-		if (!behindCount.equals("0")) {
-			if (!aheadCount.equals("0")) {
+		if (!behind.equals("0")) {
+			if (!ahead.equals("0")) {
 				sb.append(", ");
 			}
 
-			sb.append(behindCount);
+			sb.append(behind);
 			sb.append(" commits behind");
 		}
 

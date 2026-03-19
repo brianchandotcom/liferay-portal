@@ -35,10 +35,10 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 			(PortalGitWorkingDirectory)getGitWorkingDirectory();
 
 		try {
+			List<File> modulesToCompile = new ArrayList<>();
+
 			List<File> modifiedModuleDirsList =
 				portalGitWorkingDirectory.getModifiedModuleDirsList();
-
-			List<File> modulesToCompile = new ArrayList<>();
 
 			if (modifiedModuleDirsList.size() <= 5) {
 				modulesToCompile.addAll(modifiedModuleDirsList);
@@ -65,20 +65,20 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 					"ant setup-profile-dxp compile install-portal-snapshots",
 					"."));
 
-			StringBuilder commandSb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
-			commandSb.append("../gradlew");
+			sb.append("../gradlew");
 
 			for (File modifiedModuleDir : modulesToCompile) {
-				commandSb.append(" ");
-				commandSb.append(_getGradlePackageName(modifiedModuleDir));
-				commandSb.append(":deploy");
+				sb.append(" ");
+				sb.append(_getGradlePackageName(modifiedModuleDir));
+				sb.append(":deploy");
 			}
 
-			commandSb.append(" --parallel");
+			sb.append(" --parallel");
 
 			testScriptCommands.add(
-				new TestScriptCommand(commandSb.toString(), "modules"));
+				new TestScriptCommand(sb.toString(), "modules"));
 
 			return testScriptCommands;
 		}
@@ -123,18 +123,19 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 	}
 
 	private String _getGradlePackageName(File moduleDir) {
-		String absolutePath = JenkinsResultsParserUtil.getCanonicalPath(
+		String moduleDirFilePath = JenkinsResultsParserUtil.getCanonicalPath(
 			moduleDir);
 
-		int x = absolutePath.indexOf("/modules/");
+		int index = moduleDirFilePath.indexOf("/modules/");
 
-		if (x == -1) {
+		if (index == -1) {
 			return "";
 		}
 
-		String relativePath = absolutePath.substring(x + 9);
+		String relativeModuleDirFilePath = moduleDirFilePath.substring(
+			index + 9);
 
-		return ":" + relativePath.replace('/', ':');
+		return ":" + relativeModuleDirFilePath.replace('/', ':');
 	}
 
 }

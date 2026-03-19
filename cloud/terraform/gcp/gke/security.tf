@@ -6,7 +6,7 @@ resource "google_compute_firewall" "allow_health_checks" {
 	name="${var.deployment_name}-allow-health-checks"
 	network=google_compute_network.vpc.name
 	priority=1000
-	source_ranges=["130.211.0.0/22", "35.191.0.0/16",]
+	source_ranges=local.health_check_cidrs
 }
 resource "google_compute_firewall" "allow_internal" {
 	allow {

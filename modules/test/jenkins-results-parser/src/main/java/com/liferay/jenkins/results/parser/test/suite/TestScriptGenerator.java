@@ -103,6 +103,9 @@ public class TestScriptGenerator {
 			sb.append("\t\texit 1\n");
 			sb.append("\tfi\n\n");
 		}
+		else {
+			sb.append("\n");
+		}
 
 		sb.append("\tdurations=()\n");
 		sb.append("\tfailed_commands=0\n");
@@ -178,7 +181,7 @@ public class TestScriptGenerator {
 
 		sb.append("\t)\n\n");
 		sb.append("\t_execute_commands\n\n");
-		sb.append("\techo \"\"\n\n");
+		sb.append("\techo \"\"\n");
 		sb.append("\techo \"");
 		sb.append(_SEPARATOR);
 		sb.append("\"\n");
@@ -231,7 +234,7 @@ public class TestScriptGenerator {
 		sb.append("\t\techo \"");
 		sb.append(_SEPARATOR);
 		sb.append("\"\n");
-		sb.append("\techo \"Executing command [$((${i} + 1))/");
+		sb.append("\t\techo \"Executing command [$((${i} + 1))/");
 		sb.append("${#commands_list[@]}]: [${!dir_ref}] ${!cmd_ref}\"\n");
 		sb.append("\t\techo \"");
 		sb.append(_SEPARATOR);

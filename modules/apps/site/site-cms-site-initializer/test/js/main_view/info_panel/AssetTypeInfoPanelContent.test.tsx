@@ -37,7 +37,7 @@ const testSpace = {
 } as Space;
 
 const testAdditionalProps = {
-	assetLibraries: [testSpace.id],
+	candidateAssetLibraries: [testSpace.id],
 	fileMimeTypeIcons: {
 		default: 'document-default',
 		image: 'document-image',

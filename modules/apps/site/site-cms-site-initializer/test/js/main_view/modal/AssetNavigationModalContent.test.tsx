@@ -118,7 +118,7 @@ const sharingItem = {
 
 const DEFAULT_PROPS = {
 	additionalProps: {
-		assetLibraries: [{groupId: 35393, name: 'Default'}],
+		candidateAssetLibraries: [{groupId: 35393, name: 'Default'}],
 		cmsGroupId: 123,
 		commentsProps: {
 			addCommentURL: '/my-random-add-url',

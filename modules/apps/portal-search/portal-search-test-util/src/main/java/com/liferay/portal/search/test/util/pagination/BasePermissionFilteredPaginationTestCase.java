@@ -292,11 +292,10 @@ public abstract class BasePermissionFilteredPaginationTestCase
 			_getSearchRequestBuilderFactory();
 
 		return new DefaultSearchResultPermissionFilter(
+			defaultSearchResultPermissionFilterConfiguration,
 			new FacetPostProcessorImpl(), indexerRegistry, permissionChecker,
 			relatedEntryIndexerRegistry, this::doSearch,
-			searchRequestBuilderFactory,
-			defaultSearchResultPermissionFilterConfiguration,
-			serviceTrackerMap);
+			searchRequestBuilderFactory, serviceTrackerMap);
 	}
 
 	protected void doAssertPagination(

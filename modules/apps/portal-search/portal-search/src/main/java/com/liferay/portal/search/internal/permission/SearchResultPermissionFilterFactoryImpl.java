@@ -49,13 +49,12 @@ public class SearchResultPermissionFilterFactoryImpl
 		PermissionChecker permissionChecker) {
 
 		return new DefaultSearchResultPermissionFilter(
+			_defaultSearchResultPermissionFilterConfiguration,
 			facetPostProcessor, indexerRegistry, permissionChecker,
 			relatedEntryIndexerRegistry,
 			searchContext -> _search(
 				searchResultPermissionFilterSearcher, searchContext),
-			searchRequestBuilderFactory,
-			_defaultSearchResultPermissionFilterConfiguration,
-			_serviceTrackerMap);
+			searchRequestBuilderFactory, _serviceTrackerMap);
 	}
 
 	@Activate

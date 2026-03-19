@@ -154,7 +154,7 @@ public class ExportImportReportEntryLocalServiceImpl
 			exportImportReportEntryPersistence.fetchByG_C_C_C_E_T(
 				groupId, companyId, classExternalReferenceCode, classNameId,
 				exportImportConfigurationId,
-				ExportImportReportEntryConstants.TYPE_ERROR, false);
+				ExportImportReportEntryConstants.TYPE_ERROR);
 
 		if (exportImportReportEntry != null) {
 			return exportImportReportEntry;

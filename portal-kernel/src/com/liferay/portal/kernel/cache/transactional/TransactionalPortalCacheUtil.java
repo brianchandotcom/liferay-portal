@@ -139,6 +139,8 @@ public class TransactionalPortalCacheUtil {
 			uncommittedBuffer.commit(readOnly);
 		}
 
+		_invalidateParentBufferEntries(portalCacheMap);
+
 		portalCacheMap.clear();
 	}
 
@@ -246,6 +248,88 @@ public class TransactionalPortalCacheUtil {
 		}
 
 		return uncommittedBuffer;
+	}
+
+	private static void _invalidateParentBufferEntries(
+		PortalCacheMap committedPortalCacheMap) {
+
+		List<PortalCacheMap> portalCacheMaps = _portalCacheMaps.get();
+
+		if (portalCacheMaps.isEmpty()) {
+			return;
+		}
+
+		PortalCacheMap parentPortalCacheMap = portalCacheMaps.get(
+			portalCacheMaps.size() - 1);
+
+		for (Map.Entry
+				<PortalCache<? extends Serializable, ?>, UncommittedBuffer>
+					entry : committedPortalCacheMap.entrySet()) {
+
+			UncommittedBuffer parentUncommittedBuffer =
+				parentPortalCacheMap.get(entry.getKey());
+
+			if (parentUncommittedBuffer == null) {
+				continue;
+			}
+
+			_invalidateParentUncommittedBuffer(
+				parentUncommittedBuffer, entry.getValue());
+		}
+	}
+
+	private static void _invalidateParentUncommittedBuffer(
+		UncommittedBuffer parentUncommittedBuffer,
+		UncommittedBuffer committedUncommittedBuffer) {
+
+		if (committedUncommittedBuffer instanceof
+				ShardedUncommittedBuffer) {
+
+			if (!(parentUncommittedBuffer instanceof
+					ShardedUncommittedBuffer)) {
+
+				return;
+			}
+
+			ShardedUncommittedBuffer shardedCommittedBuffer =
+				(ShardedUncommittedBuffer)committedUncommittedBuffer;
+			ShardedUncommittedBuffer shardedParentBuffer =
+				(ShardedUncommittedBuffer)parentUncommittedBuffer;
+
+			for (Map.Entry<Long, UncommittedBuffer> shardEntry :
+					shardedCommittedBuffer.
+						_shardedUncommittedBuffers.entrySet()) {
+
+				UncommittedBuffer parentShardBuffer =
+					shardedParentBuffer._shardedUncommittedBuffers.get(
+						shardEntry.getKey());
+
+				if (parentShardBuffer != null) {
+					_invalidateParentUncommittedBuffer(
+						parentShardBuffer, shardEntry.getValue());
+				}
+			}
+		}
+		else if (committedUncommittedBuffer instanceof
+					MVCCUncommittedBuffer) {
+
+			if (!(parentUncommittedBuffer instanceof
+					MVCCUncommittedBuffer)) {
+
+				return;
+			}
+
+			MVCCUncommittedBuffer mvccCommittedBuffer =
+				(MVCCUncommittedBuffer)committedUncommittedBuffer;
+			MVCCUncommittedBuffer mvccParentBuffer =
+				(MVCCUncommittedBuffer)parentUncommittedBuffer;
+
+			for (Serializable key :
+					mvccCommittedBuffer._uncommittedMap.keySet()) {
+
+				mvccParentBuffer._uncommittedMap.remove(key);
+			}
+		}
 	}
 
 	private static boolean _isTransactionalCacheEnabled() {

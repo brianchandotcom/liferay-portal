@@ -629,6 +629,108 @@ public class TransactionalPortalCacheTest {
 	}
 
 	@Test
+	public void testTransactionalCacheWithRequiresNewInvalidatesParent() {
+		_setEnableTransactionalCache(true);
+
+		TransactionalPortalCache<String, String> transactionalPortalCache =
+			new TransactionalPortalCache<>(_portalCache, false);
+
+		// Start parent transaction (T1)
+
+		TransactionalPortalCacheUtil.begin();
+
+		// T1 reads KEY_1, gets null (not in cache), then caches a value
+		// simulating a negative cache entry (e.g., "not found" result)
+
+		Assert.assertNull(transactionalPortalCache.get(_KEY_1));
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		Assert.assertEquals(_VALUE_1, transactionalPortalCache.get(_KEY_1));
+
+		// Start inner transaction (T2) with REQUIRES_NEW semantics
+
+		TransactionalPortalCacheUtil.begin();
+
+		// T2 puts a different value for the same key
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_2);
+
+		Assert.assertEquals(_VALUE_2, transactionalPortalCache.get(_KEY_1));
+
+		// T2 commits — flushes to real cache and invalidates T1's buffer
+
+		TransactionalPortalCacheUtil.commit(false);
+
+		// T1 resumes — T1's stale entry for KEY_1 should have been
+		// invalidated, so T1 should see T2's committed value from the
+		// real cache
+
+		Assert.assertEquals(_VALUE_2, transactionalPortalCache.get(_KEY_1));
+
+		// Also verify a key that only T1 touched is still in T1's buffer
+
+		transactionalPortalCache.put(_KEY_2, _VALUE_1);
+
+		Assert.assertEquals(_VALUE_1, transactionalPortalCache.get(_KEY_2));
+
+		// Commit parent transaction
+
+		TransactionalPortalCacheUtil.commit(false);
+
+		Assert.assertEquals(_VALUE_2, _portalCache.get(_KEY_1));
+	}
+
+	@Test
+	public void testTransactionalCacheWithRequiresNewRemoveInvalidatesParent() {
+		_setEnableTransactionalCache(true);
+
+		TransactionalPortalCache<String, String> transactionalPortalCache =
+			new TransactionalPortalCache<>(_portalCache, false);
+
+		// Populate real cache
+
+		_portalCache.put(_KEY_1, _VALUE_1);
+
+		// Start parent transaction (T1)
+
+		TransactionalPortalCacheUtil.begin();
+
+		// T1 reads KEY_1 from real cache
+
+		Assert.assertEquals(_VALUE_1, transactionalPortalCache.get(_KEY_1));
+
+		// T1 caches its own value for KEY_1
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_2);
+
+		Assert.assertEquals(_VALUE_2, transactionalPortalCache.get(_KEY_1));
+
+		// Start inner transaction (T2)
+
+		TransactionalPortalCacheUtil.begin();
+
+		// T2 removes KEY_1
+
+		transactionalPortalCache.remove(_KEY_1);
+
+		Assert.assertNull(transactionalPortalCache.get(_KEY_1));
+
+		// T2 commits — real cache now has KEY_1 removed, T1's stale entry
+		// should be invalidated
+
+		TransactionalPortalCacheUtil.commit(false);
+
+		// T1 resumes — should NOT see its stale VALUE_2 for KEY_1
+
+		Assert.assertNull(transactionalPortalCache.get(_KEY_1));
+
+		// Commit parent transaction
+
+		TransactionalPortalCacheUtil.commit(false);
+	}
+
+	@Test
 	public void testTransactionalPortalCacheUtilEnabled() {
 		_setEnableTransactionalCache(false);
 

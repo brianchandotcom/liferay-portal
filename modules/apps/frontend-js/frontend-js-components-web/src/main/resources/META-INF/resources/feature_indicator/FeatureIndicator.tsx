@@ -9,6 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayPopover, {ALIGN_POSITIONS} from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -44,6 +45,7 @@ type featureIndicatorProps = (
 	| featureIndicatorInteractiveProps
 	| featureIndicatorEnterpriseProps
 ) & {
+	className?: string;
 	dark?: boolean;
 	tooltipAlign?: (typeof ALIGN_POSITIONS)[number];
 };
@@ -51,6 +53,7 @@ type featureIndicatorProps = (
 const ENTERPRISE_URL = 'https://www.liferay.com/web/lr/cms-upgrade';
 
 export default function FeatureIndicator({
+	className,
 	dark,
 	interactive,
 	learnResourceContext,
@@ -123,6 +126,7 @@ export default function FeatureIndicator({
 								aria-controls={ariaControlsId}
 								aria-expanded={show}
 								aria-haspopup="dialog"
+								className={className}
 								dark={dark}
 								data-tooltip-align={tooltipAlign}
 								displayType={displayType}
@@ -168,7 +172,7 @@ export default function FeatureIndicator({
 				</ClayTooltipProvider>
 			) : (
 				<ClayBadge
-					className="text-uppercase"
+					className={classNames('text-uppercase', className)}
 					dark={dark}
 					displayType={displayType}
 					label={label}

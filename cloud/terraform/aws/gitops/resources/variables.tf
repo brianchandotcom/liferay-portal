@@ -74,8 +74,11 @@ variable "infrastructure_helm_chart_config" {
 			chart_name=optional(string, "liferay-aws-infrastructure")
 			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure")
 			path=optional(string, null)
-			version=optional(string, "0.4.1")
+			version=optional(string, null)
 		})
+}
+variable "infrastructure_helm_chart_version" {
+	type=string
 }
 variable "infrastructure_provider_helm_chart_config" {
 	default={}
@@ -84,8 +87,11 @@ variable "infrastructure_provider_helm_chart_config" {
 			chart_name=optional(string, "liferay-aws-infrastructure-provider")
 			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure-provider")
 			path=optional(string, null)
-			version=optional(string, "0.3.2")
+			version=optional(string, null)
 		})
+}
+variable "infrastructure_provider_helm_chart_version" {
+	type=string
 }
 variable "liferay_git_repo_config" {
 	default={

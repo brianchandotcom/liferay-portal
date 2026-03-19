@@ -99,7 +99,7 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 									]
 								}
 								repoURL=var.infrastructure_helm_chart_config.chart_url
-								targetRevision=var.infrastructure_helm_chart_config.version
+								targetRevision=var.infrastructure_helm_chart_version
 							},
 							var.infrastructure_helm_chart_config.path == null ? {
 								chart=var.infrastructure_helm_chart_config.chart_name
@@ -273,7 +273,7 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 							]
 						}
 						repoURL=var.infrastructure_provider_helm_chart_config.chart_url
-						targetRevision=var.infrastructure_provider_helm_chart_config.version
+						targetRevision=var.infrastructure_provider_helm_chart_version
 					},
 					var.infrastructure_provider_helm_chart_config.path == null ? {
 						chart=var.infrastructure_provider_helm_chart_config.chart_name
@@ -398,7 +398,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 									]
 								}
 								repoURL=local.liferay_helm_chart_config.chart_url
-								targetRevision=local.liferay_helm_chart_config.version
+								targetRevision=var.liferay_helm_chart_version
 							},
 							local.liferay_helm_chart_config.path == null ? {
 								chart=local.liferay_helm_chart_config.chart_name

@@ -37,5 +37,5 @@ resource "helm_release" "envoy_gateway" {
 				}
 			}),
 	]
-	version="v1.6.3"
+	version="v${var.envoy_gateway_helm_chart_version}"
 }

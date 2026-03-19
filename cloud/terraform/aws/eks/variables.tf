@@ -19,6 +19,9 @@ variable "ecr_repositories" {
 	type=map(object({ arn=string, url=string }))
 	default={}
 }
+variable "envoy_gateway_helm_chart_version" {
+	type=string
+}
 variable "gateway_namespace" {
 	default="envoy-gateway-system"
 }

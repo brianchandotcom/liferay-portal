@@ -34,7 +34,7 @@ resource "helm_release" "argo_workflows" {
 				}
 			}),
 	]
-	version="0.47.3"
+	version=var.argo_workflows_helm_chart_version
 }
 resource "kubernetes_namespace" "argo_workflows" {
 	metadata {

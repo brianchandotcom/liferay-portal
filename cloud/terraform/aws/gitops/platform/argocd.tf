@@ -140,7 +140,7 @@ resource "helm_release" "argocd" {
 				}
 			}),
 	]
-	version="9.1.5"
+	version=var.argocd_helm_chart_version
 	wait=true
 }
 resource "kubernetes_namespace" "argocd" {

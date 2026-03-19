@@ -71,7 +71,6 @@ locals {
 		var.liferay_helm_chart_config,
 		{
 			chart_name=var.liferay_helm_chart_name
-			version=var.liferay_helm_chart_version,
 		},
 		var.liferay_helm_chart_name == "liferay-default" ? {
 			chart_url=coalesce(var.liferay_helm_chart_config.chart_url, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-default")

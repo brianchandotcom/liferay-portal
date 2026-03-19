@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,6 +45,14 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 			String sourceColumnName, String sourceTableName,
 			String[] targetColumnNames, String targetTableName)
 		throws Exception {
+
+		if (StringUtil.startsWith(sourceTableName, "MFA") ||
+			StringUtil.startsWith(sourceTableName, "OAuth") ||
+			StringUtil.startsWith(sourceTableName, "OpenId") ||
+			StringUtil.startsWith(sourceTableName, "Saml")) {
+
+			return;
+		}
 
 		DBInspector dbInspector = new DBInspector(connection);
 

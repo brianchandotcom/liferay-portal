@@ -135,14 +135,8 @@ public class TrialRestController extends BaseRestController {
 			_log.info("Expired trial " + orderId);
 		}
 
-		_marketplaceService.updateOrder(
-			null, orderId, MarketplaceConstants.ORDER_STATUS_PENDING);
-
-		_marketplaceService.updateOrder(
-			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
-
-		_marketplaceService.updateOrder(
-			null, orderId, MarketplaceConstants.ORDER_STATUS_COMPLETED);
+		_marketplaceService.completeOrder(
+			orderId, MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED);
 
 		delete(orderId);
 	}

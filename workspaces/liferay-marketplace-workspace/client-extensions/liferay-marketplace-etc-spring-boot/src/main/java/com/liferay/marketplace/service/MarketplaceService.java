@@ -85,6 +85,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class MarketplaceService extends BaseService {
 
+	public void completeOrder(long orderId, int paymentStatus)
+		throws Exception {
+
+		updateOrder(null, orderId, MarketplaceConstants.ORDER_STATUS_PENDING);
+
+		updateOrder(
+			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
+
+		updateOrder(
+			null, orderId, MarketplaceConstants.ORDER_STATUS_COMPLETED,
+			paymentStatus);
+	}
+
 	public void deployCloudService(JSONObject jsonObject, Order order)
 		throws Exception {
 
@@ -708,6 +721,32 @@ public class MarketplaceService extends BaseService {
 
 		order.setCustomFields(() -> customFields);
 		order.setOrderStatus(() -> orderStatus);
+
+		OrderResource orderResource = getOrderResource();
+
+		orderResource.patchOrder(orderId, order);
+	}
+
+	public void updateOrder(
+			Map<String, ?> customFields, long orderId, int orderStatus,
+			int paymentStatus)
+		throws Exception {
+
+		Order order = new Order();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Updating status for order ", orderId, " to ",
+					MarketplaceConstants.getOrderStatusLabel(orderStatus),
+					" and payment status to ",
+					MarketplaceConstants.getOrderPaymentStatusLabel(
+						paymentStatus)));
+		}
+
+		order.setCustomFields(() -> customFields);
+		order.setOrderStatus(() -> orderStatus);
+		order.setPaymentStatus(() -> paymentStatus);
 
 		OrderResource orderResource = getOrderResource();
 

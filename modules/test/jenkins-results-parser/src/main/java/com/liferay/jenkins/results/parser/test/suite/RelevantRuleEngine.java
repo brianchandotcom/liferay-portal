@@ -15,8 +15,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -119,6 +121,64 @@ public class RelevantRuleEngine {
 		return matchingRelevantRules;
 	}
 
+	public RelevantRule getRelevantRule(
+		String filePath, Job job, Properties properties,
+		String relevantRuleName) {
+
+		String relevantRuleKey = filePath + "_" + relevantRuleName;
+
+		for (RelevantRule relevantRule : _relevantRuleMap.keySet()) {
+			if (relevantRuleKey.equals(relevantRule.getKey())) {
+				return relevantRule;
+			}
+		}
+
+		String ruleType = JenkinsResultsParserUtil.getProperty(
+			properties, "relevant.rule.type", relevantRuleName, _testSuiteName);
+
+		RelevantRule relevantRule = null;
+
+		if (Objects.equals(ruleType, "modules-compile")) {
+			relevantRule = new ModulesCompileRelevantRule(
+				filePath, _gitWorkingDirectory, job, relevantRuleName,
+				properties);
+		}
+
+		if (Objects.equals(ruleType, "ant-all")) {
+			relevantRule = new AntAllRelevantRule(
+				filePath, _gitWorkingDirectory, job, relevantRuleName,
+				properties);
+		}
+
+		if (Objects.equals(ruleType, "workspace-build")) {
+			relevantRule = new WorkspaceBuildRelevantRule(
+				filePath, _gitWorkingDirectory, job, relevantRuleName,
+				properties);
+		}
+
+		if (Objects.equals(ruleType, "modules-java-unit-test")) {
+			relevantRule = new ModulesJavaUnitTestRelevantRule(
+				filePath, _gitWorkingDirectory, job, relevantRuleName,
+				properties);
+		}
+
+		if (Objects.equals(ruleType, "portal-core-java-unit-test")) {
+			relevantRule = new PortalCoreJavaUnitTestRelevantRule(
+				filePath, _gitWorkingDirectory, job, relevantRuleName,
+				properties);
+		}
+
+		if (relevantRule == null) {
+			relevantRule = new RelevantRule(
+				filePath, _gitWorkingDirectory, job, relevantRuleName,
+				properties);
+		}
+
+		_relevantRuleMap.put(relevantRule, new HashSet<>());
+
+		return relevantRule;
+	}
+
 	public List<String> getRelevantRuleNames(List<RelevantRule> relevantRules) {
 		List<String> relevantRuleNames = new ArrayList<>();
 
@@ -135,40 +195,6 @@ public class RelevantRuleEngine {
 
 	public void setBaseDir(File baseDir) {
 		_baseDir = baseDir;
-	}
-
-	private RelevantRuleEngine(
-		PortalAcceptancePullRequestJob portalAcceptancePullRequestJob) {
-
-		_job = portalAcceptancePullRequestJob;
-		_testSuiteName = portalAcceptancePullRequestJob.getTestSuiteName();
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			portalAcceptancePullRequestJob.getPortalGitWorkingDirectory();
-
-		_baseDir = portalGitWorkingDirectory.getWorkingDirectory();
-
-		_relevantRuleEngine = this;
-	}
-
-	private RelevantRule _getRelevantRule(
-		String filePath, Job job, String relevantRuleName,
-		Properties properties) {
-
-		String relevantRuleKey = filePath + "_" + relevantRuleName;
-
-		for (RelevantRule relevantRule : _relevantRuleMap.keySet()) {
-			if (relevantRuleKey.equals(relevantRule.getKey())) {
-				return relevantRule;
-			}
-		}
-
-		RelevantRule relevantRule = new RelevantRule(
-			filePath, job, relevantRuleName, properties);
-
-		_relevantRuleMap.put(relevantRule, new HashSet<>());
-
-		return relevantRule;
 	}
 
 	private Properties _getRelevantRuleProperties(
@@ -286,7 +312,7 @@ public class RelevantRuleEngine {
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Job _job;
 	private final Map<RelevantRule, Set<File>> _relevantRuleMap =
-		new HashMap<>();
+		new LinkedHashMap<>();
 	private final String _testSuiteName;
 
 }

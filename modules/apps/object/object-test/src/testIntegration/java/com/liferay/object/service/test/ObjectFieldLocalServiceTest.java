@@ -1723,7 +1723,7 @@ public class ObjectFieldLocalServiceTest {
 						TempFileEntryUtil.getTempFileName(
 							StringUtil.randomString() + ".txt"),
 						FileUtil.createTempFile(
-							DLTestUtil.randomTextFileContent()),
+							DLTestUtil.randomTextFileBytes()),
 						ContentTypes.TEXT_PLAIN);
 
 					return fileEntry.getFileEntryId();

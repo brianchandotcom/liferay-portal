@@ -1564,7 +1564,7 @@ public class DefaultObjectEntryManagerImplTest
 									objectDefinition.getPortletId(),
 									TempFileEntryUtil.getTempFileName(fileName),
 									FileUtil.createTempFile(
-										DLTestUtil.randomTextFileContent()),
+										DLTestUtil.randomTextFileBytes()),
 									ContentTypes.TEXT_PLAIN);
 
 							return fileEntry.getFileEntryId();
@@ -10101,7 +10101,7 @@ public class DefaultObjectEntryManagerImplTest
 			TempFileEntryUtil.addTempFileEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 				folderName, TempFileEntryUtil.getTempFileName(title + ".txt"),
-				FileUtil.createTempFile(DLTestUtil.randomTextFileContent()),
+				FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
 				ContentTypes.TEXT_PLAIN);
 
 		return fileEntry.getFileEntryId();

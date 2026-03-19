@@ -646,7 +646,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			_objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName("document.txt"),
-			FileUtil.createTempFile(DLTestUtil.randomTextFileContent()),
+			FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
 			ContentTypes.TEXT_PLAIN);
 
 		_addObjectEntry(

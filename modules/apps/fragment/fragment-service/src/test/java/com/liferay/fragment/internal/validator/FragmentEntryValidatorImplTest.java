@@ -611,6 +611,15 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValidFieldCustomComponentComplete()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_readJSONObject(
+				"configuration_valid_field_customcomponent_complete.json"));
+	}
+
+	@Test
 	public void testValidateConfigurationValidFieldItemSelectorComplete()
 		throws Exception {
 

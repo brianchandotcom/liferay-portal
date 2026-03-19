@@ -5,6 +5,8 @@
 
 package com.liferay.osb.faro.web.internal.model.display.contacts;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.liferay.osb.faro.engine.client.model.AssetSummary;
 import com.liferay.osb.faro.engine.client.model.Metric;
 
@@ -19,16 +21,16 @@ public class AssetSummaryDisplay {
 		_assetType = assetSummary.getAssetType();
 		_downloadsMetric = assetSummary.getDownloadsMetric();
 		_impressionsMetric = assetSummary.getImpressionsMetric();
-		_readsMetric = assetSummary.getReadsMetric();
 		_viewsMetric = assetSummary.getViewsMetric();
 	}
 
+	@JsonProperty("id")
 	private final String _assetId;
+
 	private final String _assetTitle;
 	private final String _assetType;
 	private final Metric _downloadsMetric;
 	private final Metric _impressionsMetric;
-	private final Metric _readsMetric;
 	private final Metric _viewsMetric;
 
 }

@@ -50,8 +50,8 @@ public class ObjectEntrySharingPermissionChecker
 
 	private static final Set<SharingEntryAction> _actionKeysSet = new HashSet<>(
 		Arrays.asList(
-			SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
-			SharingEntryAction.VIEW));
+			SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.DOWNLOAD,
+			SharingEntryAction.UPDATE, SharingEntryAction.VIEW));
 
 	private final ModelResourcePermission<ObjectEntry> _modelResourcePermission;
 

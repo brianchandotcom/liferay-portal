@@ -2147,7 +2147,36 @@ public class GitWorkingDirectory {
 					executionResult.getStandardError()));
 		}
 
-		return _formatAheadBehindDescription(executionResult.getStandardOut());
+		String output = executionResult.getStandardOut();
+
+		output = output.trim();
+
+		String[] values = output.split("\\s+");
+
+		String ahead = values[1];
+		String behind = values[0];
+
+		StringBuilder sb = new StringBuilder();
+
+		if (!ahead.equals("0")) {
+			sb.append(ahead);
+			sb.append(" commits ahead");
+		}
+
+		if (!behind.equals("0")) {
+			if (!ahead.equals("0")) {
+				sb.append(", ");
+			}
+
+			sb.append(behind);
+			sb.append(" commits behind");
+		}
+
+		if (sb.length() == 0) {
+			return "up to date";
+		}
+
+		return sb.toString();
 	}
 
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {
@@ -3098,37 +3127,6 @@ public class GitWorkingDirectory {
 				joinedBranchNames.replaceAll("\\s", "\n    ")));
 
 		return true;
-	}
-
-	private String _formatAheadBehindDescription(String output) {
-		output = output.trim();
-
-		String[] values = output.split("\\s+");
-
-		String ahead = values[1];
-		String behind = values[0];
-
-		StringBuilder sb = new StringBuilder();
-
-		if (!ahead.equals("0")) {
-			sb.append(ahead);
-			sb.append(" commits ahead");
-		}
-
-		if (!behind.equals("0")) {
-			if (!ahead.equals("0")) {
-				sb.append(", ");
-			}
-
-			sb.append(behind);
-			sb.append(" commits behind");
-		}
-
-		if (sb.length() == 0) {
-			return "up to date";
-		}
-
-		return sb.toString();
 	}
 
 	private String _getGitRepositoryName(GitRemote gitRemote) {

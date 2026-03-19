@@ -13,6 +13,7 @@ import com.liferay.frontend.data.set.view.table.DateTimeFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Locale;
 
@@ -72,6 +73,7 @@ public class AllCommerceOrderTableFDSView extends BaseTableFDSView {
 			true
 		);
 
+		dateTimeFDSTableSchemaField.setFormat(JSONUtil.put("year", "2-digit"));
 		dateTimeFDSTableSchemaField.setTimeZoneBehavior(
 			FDSTimeZoneBehaviorConstants.APPLY_THEME_DISPLAY_TIME_ZONE);
 

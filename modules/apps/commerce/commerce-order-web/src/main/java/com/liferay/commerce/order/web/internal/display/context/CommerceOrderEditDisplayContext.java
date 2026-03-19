@@ -262,11 +262,15 @@ public class CommerceOrderEditDisplayContext {
 		ThemeDisplay themeDisplay =
 			_commerceOrderRequestHelper.getThemeDisplay();
 
-		Format format = FastDateFormatFactoryUtil.getDate(
+		Format dateFormat = FastDateFormatFactoryUtil.getDate(
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
-		return format.format(date);
+		Format timeFormat = FastDateFormatFactoryUtil.getTime(
+			DateFormat.MEDIUM, themeDisplay.getLocale(),
+			themeDisplay.getTimeZone());
+
+		return dateFormat.format(date) + " " + timeFormat.format(date);
 	}
 
 	public long getCommerceOrderId() {

@@ -28,17 +28,11 @@ export function BaseLinkRenderer({
 	value,
 }: BaseLinkRendererProps & {className: string; symbol: string}) {
 	const {actionId} = options;
-	const title =
-		value && value !== '' ? value : Liferay.Language.get('untitled-asset');
-
-	if (!actions.length || !actionId) {
-		return <>{title}</>;
-	}
 
 	const selectedAction = findAction(actions, actionId);
 
-	if (!selectedAction?.href) {
-		return <>{title}</>;
+	if (!actions.length || !actionId || !selectedAction?.href) {
+		return <>{value}</>;
 	}
 
 	const formattedHref = replaceTokens(selectedAction.href, itemData);
@@ -57,8 +51,8 @@ export function BaseLinkRenderer({
 				<ClayIcon symbol={symbol} />
 			</ClaySticker>
 
-			<ClayLink aria-label={title} data-senna-off href={formattedHref}>
-				{title}
+			<ClayLink aria-label={value} data-senna-off href={formattedHref}>
+				{value}
 			</ClayLink>
 		</div>
 	);

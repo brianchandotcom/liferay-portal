@@ -154,13 +154,14 @@ describe('ClayDataProvider', () => {
 		expect(container.innerHTML).toMatchSnapshot();
 	});
 
-	xit('calls clay.data and returns data from the cache and fetches data on the network', async () => {
-		fetchMock.mockResponse(JSON.stringify({title: 'Bar'}));
+	it('calls clay.data and returns data from the cache and fetches data on the network', async () => {
+		fetchMock.mockResponseOnce(JSON.stringify({title: 'Foo'}));
 
-		const {container} = render(
+		const {container, rerender} = render(
 			<Provider spritemap="">
 				<DataProvider
 					fetchPolicy={FetchPolicy.CacheAndNetwork}
+					key="render-1"
 					link="https://clay.data"
 				>
 					{({data}) => <h1>{data && data.title}</h1>}
@@ -168,11 +169,29 @@ describe('ClayDataProvider', () => {
 			</Provider>
 		);
 
+		await waitFor(() => expect(fetchMock.mock.calls.length).toEqual(1));
+		await waitFor(() => expect(container.innerHTML).toContain('Foo'));
+
 		expect(container.innerHTML).toMatchSnapshot();
 
-		await waitFor(() => expect(fetchMock.mock.calls.length).toEqual(1));
+		fetchMock.mockResponseOnce(JSON.stringify({title: 'Bar'}));
 
-		expect(fetchMock.mock.calls[0]![0]).toEqual('https://clay.data/');
+		rerender(
+			<Provider spritemap="">
+				<DataProvider
+					fetchPolicy={FetchPolicy.CacheAndNetwork}
+					key="render-2"
+					link="https://clay.data"
+				>
+					{({data}) => <h1>{data && data.title}</h1>}
+				</DataProvider>
+			</Provider>
+		);
+
+		await waitFor(() => expect(fetchMock.mock.calls.length).toEqual(2));
+		await waitFor(() => expect(container.innerHTML).toContain('Bar'));
+
+		expect(fetchMock.mock.calls[1]![0]).toEqual('https://clay.data/');
 		expect(container.innerHTML).toMatchSnapshot();
 	});
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -434,6 +435,13 @@ public class KeywordResourceImpl
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(Field.NAME, search);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				// Asset Tag entries are never checked for VIEW permissions, but
+				// instead are sanitized (see AssetTagService.sanitize) if the
+				// user is not a company admin or owner.
+
+				searchContext.setUserId(UserConstants.USER_ID_DEFAULT);
+				searchContext.setVulcanCheckPermissions(false);
 
 				DepotEntry depotEntry = _depotEntryService.fetchGroupDepotEntry(
 					groupId);

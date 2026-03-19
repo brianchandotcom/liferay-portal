@@ -117,6 +117,11 @@
 				"scope": 1
 			},
 			{
+				"actionId": "EXPORT_IMPORT_PORTLET_INFO",
+				"resource": "com.liferay.portal.kernel.model.Group",
+				"scope": 1
+			},
+			{
 				"actionId": "MANAGE_TAG",
 				"resource": "com.liferay.asset.tags",
 				"scope": 1

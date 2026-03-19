@@ -462,24 +462,17 @@ public class ProjectController extends BaseFaroController {
 			@PathParam("projectId") String projectId)
 		throws Exception {
 
-		Map<String, Object> properties = new HashMap<>();
-
 		FaroProject faroProject =
-			faroProjectLocalService.fetchFaroProjectByWeDeployKey(
+			faroProjectLocalService.getFaroProjectByWeDeployKey(
 				projectId + ".lfr.cloud");
 
-		if (faroProject == null) {
-			return properties;
-		}
-
-		properties.put(
+		return HashMapBuilder.<String, Object>put(
 			"liferayAnalyticsEndpointURL",
-			EngineServiceURLUtil.getPublisherExternalURL(faroProject));
-		properties.put(
+			EngineServiceURLUtil.getPublisherExternalURL(faroProject)
+		).put(
 			"liferayAnalyticsFaroBackendURL",
-			EngineServiceURLUtil.getBackendExternalURL(faroProject));
-
-		return properties;
+			EngineServiceURLUtil.getBackendExternalURL(faroProject)
+		).build();
 	}
 
 	@GET

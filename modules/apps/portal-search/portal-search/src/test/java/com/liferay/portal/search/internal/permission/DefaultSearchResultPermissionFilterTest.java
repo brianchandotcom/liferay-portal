@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.permission;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.FacetPostProcessor;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
 import com.liferay.portal.search.internal.searcher.SearchResponseImpl;
@@ -154,7 +156,8 @@ public class DefaultSearchResultPermissionFilterTest {
 			Mockito.mock(IndexerRegistry.class), _permissionChecker,
 			Mockito.mock(RelatedEntryIndexerRegistry.class), _searchFunction,
 			searchRequestBuilderFactory,
-			_defaultSearchResultPermissionFilterConfiguration);
+			_defaultSearchResultPermissionFilterConfiguration,
+			_serviceTrackerMap);
 	}
 
 	private Document _getDocument(String companyId, int index) {
@@ -334,5 +337,7 @@ public class DefaultSearchResultPermissionFilterTest {
 	private int _permissionFilteredSearchResultAccurateCountThreshold;
 	private final Function<SearchContext, Hits> _searchFunction = Mockito.mock(
 		Function.class);
+	private final ServiceTrackerMap<String, ModelResourcePermission<?>>
+		_serviceTrackerMap = Mockito.mock(ServiceTrackerMap.class);
 
 }

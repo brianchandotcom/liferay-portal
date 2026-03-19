@@ -112,11 +112,11 @@ public class MySQLDB extends BaseDB {
 	@Override
 	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select @@character_set_database")) {
+				"select @@character_set_database as characterSetDatabase")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getString(1);
+					return resultSet.getString("characterSetDatabase");
 				}
 			}
 		}

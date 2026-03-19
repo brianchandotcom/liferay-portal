@@ -265,6 +265,20 @@ public class SectionDisplayContextHelper {
 	}
 
 	public JSONArray getDepotEntriesJSONArray(
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _getDepotEntriesJSONArray(
+			DepotEntryServiceUtil.getDepotEntryGroupIds(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				DepotConstants.TYPE_SPACE),
+			themeDisplay.getLocale());
+	}
+
+	public JSONArray getDepotEntriesJSONArray(
 		HttpServletRequest httpServletRequest,
 		String rootObjectEntryFolderExternalReferenceCode) {
 

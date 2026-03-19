@@ -118,6 +118,10 @@ public abstract class BaseSectionDisplayContext {
 
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
+			"assetLibraries",
+			_sectionDisplayContextHelper.getDepotEntriesJSONArray(
+				httpServletRequest)
+		).put(
 			"autocompleteURL",
 			() -> StringBundler.concat(
 				"/o/search/v1.0/search?emptySearch=",

@@ -302,7 +302,7 @@ public class SectionDisplayContextHelper {
 				ActionUtil.getBaseViewFolderURL(themeDisplay) + "{embedded.id}",
 				"view", "actionLinkFolder",
 				LanguageUtil.get(httpServletRequest, "view-folder"), "get",
-				"update", null,
+				"get", null,
 				HashMapBuilder.<String, Object>put(
 					"entryClassName", ObjectEntryFolder.class.getName()
 				).build()),

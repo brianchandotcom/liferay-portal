@@ -5,6 +5,7 @@
 
 import {Underline} from '@ckeditor/ckeditor5-basic-styles/dist/index.js';
 import {Bookmark} from '@ckeditor/ckeditor5-bookmark/dist/index.js';
+import {Editor} from '@ckeditor/ckeditor5-core/dist/index.js';
 import {
 	CKEditor5ClassicEditor as ClassicEditor,
 	LiferayEditorConfig,
@@ -22,18 +23,18 @@ const CKEditor5ReactClassicEditor = ({
 }) => {
 	const [myEditor, setMyEditor] = useState<any>(null);
 
-	function fetchEditor(editor: any) {
+	function fetchEditor(editor: Editor) {
 		setMyEditor(editor);
 	}
 
 	function toggleReadOnlyMode() {
 		if (myEditor) {
-			if (!myEditor!.isReadOnly) {
-				myEditor.enableReadOnlyMode('toogle');
+			if (myEditor.isReadOnly) {
+				myEditor.enableReadOnlyMode('toggle');
 				myEditor.ui.element.classList.add('lfr-ck-disabled');
 			}
 			else {
-				myEditor.disableReadOnlyMode('toogle');
+				myEditor.disableReadOnlyMode('toggle');
 				myEditor.ui.element.classList.remove('lfr-ck-disabled');
 			}
 		}

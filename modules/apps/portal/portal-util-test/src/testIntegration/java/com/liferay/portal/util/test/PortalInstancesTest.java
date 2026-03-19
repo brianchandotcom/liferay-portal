@@ -225,7 +225,12 @@ public class PortalInstancesTest {
 		mockHttpServletRequest.addHeader("Host", hostname);
 		mockHttpServletRequest.setServerName(hostname);
 
-		_assertGetCompanyId(true, mockHttpServletRequest);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					CompanyConstants.SYSTEM)) {
+
+			_assertGetCompanyId(mockHttpServletRequest);
+		}
 
 		Assert.assertEquals(
 			_company.getCompanyId(),
@@ -245,13 +250,18 @@ public class PortalInstancesTest {
 		mockHttpServletRequest.addHeader("Host", hostname);
 		mockHttpServletRequest.setServerName(hostname);
 
-		Assert.assertEquals(
-			_company.getCompanyId(),
-			PortalInstances.getCompanyId(mockHttpServletRequest));
-		Assert.assertEquals(
-			expectedLanguageId,
-			mockHttpServletRequest.getAttribute(
-				WebKeys.VIRTUAL_HOST_LANGUAGE_ID));
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					CompanyConstants.SYSTEM)) {
+
+			Assert.assertEquals(
+				_company.getCompanyId(),
+				PortalInstances.getCompanyId(mockHttpServletRequest));
+			Assert.assertEquals(
+				expectedLanguageId,
+				mockHttpServletRequest.getAttribute(
+					WebKeys.VIRTUAL_HOST_LANGUAGE_ID));
+		}
 	}
 
 	private void _updateLayoutSetVirtualHostname(

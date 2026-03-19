@@ -3,12 +3,12 @@
 <project basedir="." name="portal-test-analytics-cloud" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<macrodef name="build-analytics-cloud-images">
+	<macrodef name="build-analytics-cloud-asah-images">
 		<sequential>
 			<if>
 				<equals arg1="${env.OSB_ASAH_STAGING_ENABLED}" arg2="true" />
 				<then>
-					<echo>Skipping build-analytics-cloud-images due to staging</echo>
+					<echo>Skipping build-analytics-cloud-asah-images due to staging</echo>
 				</then>
 				<else>
 					<lstopwatch action="start" name="build-analytics-cloud-asah-images" />
@@ -113,8 +113,27 @@
 					</if>
 
 					<lstopwatch action="total" name="build-analytics-cloud-asah-images" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
 
+	<macrodef name="build-analytics-cloud-faro-images">
+		<sequential>
+			<if>
+				<equals arg1="${env.OSB_ASAH_STAGING_ENABLED}" arg2="true" />
+				<then>
+					<echo>Skipping build-analytics-cloud-faro-images due to staging</echo>
+				</then>
+				<else>
 					<lstopwatch action="start" name="build-analytics-cloud-faro-images" />
+
+					<loadproperties srcfile="${project.dir}/.gradle/gradle.properties" />
+
+					<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.password=${systemProp.repository.private.password}</echo>
+					<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.username=${systemProp.repository.private.username}</echo>
+
+					<create-analytics-cloud-docker-compose start.analytics.cloud="false" />
 
 					<if>
 						<available file="${project.dir}/dist/liferay-docker-faro.tar" />
@@ -230,6 +249,14 @@
 					<lstopwatch action="total" name="build-analytics-cloud-faro-images" />
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="build-analytics-cloud-images">
+		<sequential>
+			<build-analytics-cloud-asah-images />
+
+			<build-analytics-cloud-faro-images />
 		</sequential>
 	</macrodef>
 
@@ -1015,6 +1042,14 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 			</execute>
 		</sequential>
 	</macrodef>
+
+	<target name="build-analytics-cloud-asah-images">
+		<build-analytics-cloud-asah-images />
+	</target>
+
+	<target name="build-analytics-cloud-faro-images">
+		<build-analytics-cloud-faro-images />
+	</target>
 
 	<target name="build-analytics-cloud-images">
 		<build-analytics-cloud-images />

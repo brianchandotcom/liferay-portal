@@ -3,11 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayPanel from '@clayui/panel';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
+import {debounce, loadModule} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {FRAGMENT_CONFIGURATION_FIELDS} from '../../../../../../app/components/fragment_configuration_fields/index';
 import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/containerWidthTypes';
@@ -64,6 +67,7 @@ function getAvailableFields(item, fields, fragmentEntryLinks, viewportSize) {
 }
 
 export function FieldSet({
+	customComponentModule,
 	description,
 	embedInCollapsableSection = true,
 	fragmentEntryLinks,
@@ -82,6 +86,36 @@ export function FieldSet({
 		fragmentEntryLinks,
 		selectedViewportSize
 	);
+
+	if (customComponentModule) {
+		const content = (
+			<div className="page-editor__sidebar__fieldset">
+				{description && <p className="text-secondary">{description}</p>}
+
+				<ConfigurationCustomComponentRenderer
+					customComponentModule={customComponentModule}
+					onValueSelect={onValueSelect}
+					values={values}
+				/>
+			</div>
+		);
+
+		if (label && embedInCollapsableSection) {
+			return (
+				<ClayPanel
+					collapsable
+					defaultExpanded
+					displayTitle={label}
+					displayType="unstyled"
+					showCollapseIcon
+				>
+					<ClayPanel.Body>{content}</ClayPanel.Body>
+				</ClayPanel>
+			);
+		}
+
+		return content;
+	}
 
 	return !!availableFields.length && label && embedInCollapsableSection ? (
 		<ClayPanel
@@ -235,7 +269,55 @@ function getFieldValue({field, languageId, values}) {
 	return getEditableLocalizedValue(value, languageId, field.defaultValue);
 }
 
+function ConfigurationCustomComponentRenderer({
+	customComponentModule,
+	onValueSelect,
+	values,
+}) {
+	const [Component, setComponent] = useState(null);
+	const [error, setError] = useState(false);
+	const isMounted = useIsMounted();
+
+	const debouncedOnValueSelect = useMemo(
+		() => debounce(onValueSelect, 300),
+		[onValueSelect]
+	);
+
+	useEffect(() => {
+		loadModule(customComponentModule)
+			.then((component) => {
+				if (isMounted()) {
+					setComponent(() => component);
+				}
+			})
+			.catch((loadError) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(loadError);
+				}
+
+				if (isMounted()) {
+					setError(true);
+				}
+			});
+	}, [customComponentModule, isMounted]);
+
+	if (error) {
+		return (
+			<ClayAlert displayType="danger">
+				{Liferay.Language.get('an-unexpected-error-occurred')}
+			</ClayAlert>
+		);
+	}
+
+	if (!Component) {
+		return null;
+	}
+
+	return <Component onValueSelect={debouncedOnValueSelect} values={values} />;
+}
+
 FieldSet.propTypes = {
+	customComponentModule: PropTypes.string,
 	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
 	fragmentEntryLinks: PropTypes.object,
 	isCustomStylesFieldSet: PropTypes.bool,

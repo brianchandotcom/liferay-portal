@@ -68,6 +68,9 @@ export function FragmentAdvancedPanel({item}) {
 				fieldSets.map((fieldSet, index) => {
 					return (
 						<FieldSet
+							customComponentModule={
+								fieldSet.customComponentModule
+							}
 							description={fieldSet.description}
 							fields={fieldSet.fields}
 							fragmentEntryLinks={fragmentEntryLinksRef.current}

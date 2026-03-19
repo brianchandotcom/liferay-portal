@@ -64,7 +64,6 @@ public class SystemDataSetsDataProvider
 
 		List<SystemFDSEntry> systemFDSEntries = _getSystemFDSEntries(
 			fdsKeywords.getKeywords());
-
 		int start = Math.max(fdsPagination.getStartPosition(), 0);
 		int end = Math.min(
 			fdsPagination.getEndPosition(), systemFDSEntries.size());
@@ -80,7 +79,9 @@ public class SystemDataSetsDataProvider
 
 		List<SystemDataSet> systemDataSets = new ArrayList<>(end - start);
 
-		for (SystemFDSEntry systemFDSEntry : systemFDSEntries.subList(start, end)) {
+		for (SystemFDSEntry systemFDSEntry :
+				systemFDSEntries.subList(start, end)) {
+
 			systemDataSets.add(
 				_toSystemDataSet(
 					httpServletRequest, objectDefinition, systemFDSEntry));
@@ -100,7 +101,9 @@ public class SystemDataSetsDataProvider
 
 		_checkPermissions(themeDisplay);
 
-		return _getSystemFDSEntries(fdsKeywords.getKeywords()).size();
+		return _getSystemFDSEntries(
+			fdsKeywords.getKeywords()
+		).size();
 	}
 
 	private void _checkPermissions(ThemeDisplay themeDisplay)
@@ -117,7 +120,8 @@ public class SystemDataSetsDataProvider
 	}
 
 	private List<SystemFDSEntry> _getSystemFDSEntries(String keywords) {
-		Set<String> systemFDSNames = _systemFDSEntryRegistry.getSystemFDSNames();
+		Set<String> systemFDSNames =
+			_systemFDSEntryRegistry.getSystemFDSNames();
 
 		if (systemFDSNames == null) {
 			return Collections.emptyList();
@@ -129,13 +133,10 @@ public class SystemDataSetsDataProvider
 			SystemFDSEntry systemFDSEntry =
 				_systemFDSEntryRegistry.getSystemFDSEntry(systemFDSName);
 
-			if (systemFDSEntry == null) {
-				continue;
-			}
-
-			if (Validator.isNotNull(keywords) &&
-				!StringUtil.matchesIgnoreCase(
-					systemFDSEntry.getTitle(), keywords)) {
+			if ((systemFDSEntry == null) ||
+				(Validator.isNotNull(keywords) &&
+				 !StringUtil.matchesIgnoreCase(
+					 systemFDSEntry.getTitle(), keywords))) {
 
 				continue;
 			}
@@ -161,11 +162,12 @@ public class SystemDataSetsDataProvider
 	}
 
 	private SystemDataSet _toSystemDataSet(
-		HttpServletRequest httpServletRequest, ObjectDefinition objectDefinition,
-		SystemFDSEntry systemFDSEntry) {
+		HttpServletRequest httpServletRequest,
+		ObjectDefinition objectDefinition, SystemFDSEntry systemFDSEntry) {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			systemFDSEntry.getName(), ObjectDefinitionConstants.GROUP_ID_DEFAULT,
+			systemFDSEntry.getName(),
+			ObjectDefinitionConstants.GROUP_ID_DEFAULT,
 			objectDefinition.getObjectDefinitionId());
 
 		return new SystemDataSet(

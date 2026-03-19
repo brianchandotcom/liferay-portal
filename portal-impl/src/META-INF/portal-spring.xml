@@ -101,6 +101,9 @@
 	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" id="com.liferay.exportimport.kernel.service.StagingLocalService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" id="com.liferay.exportimport.kernel.service.StagingService" />
+	<bean class="com.liferay.portal.feature.flag.FeatureFlagsBagProviderImpl" id="com.liferay.portal.feature.flag.FeatureFlagsBagProvider" />
+	<bean class="com.liferay.portal.feature.flag.manager.FeatureFlagPreferencesManager" id="com.liferay.portal.feature.flag.manager.FeatureFlagPreferencesManager" />
+	<bean class="com.liferay.portal.feature.flag.FeatureFlagManagerImpl" id="com.liferay.portal.kernel.feature.flag.FeatureFlagManager" />
 	<bean class="com.liferay.portal.service.impl.AddressLocalServiceImpl" id="com.liferay.portal.kernel.service.AddressLocalService" />
 	<bean class="com.liferay.portal.service.impl.AddressServiceImpl" id="com.liferay.portal.kernel.service.AddressService" />
 	<bean class="com.liferay.portal.service.persistence.impl.AddressModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.AddressModelArgumentsResolver" />
@@ -391,7 +394,4 @@
 	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRequestModelArgumentsResolver" id="com.liferay.portlet.social.service.persistence.impl.SocialRequestModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRequestPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialRequestPersistence" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialRequestInterpreterLocalService" />
-	<bean class="com.liferay.portal.feature.flag.FeatureFlagManagerImpl" id="com.liferay.portal.kernel.feature.flag.FeatureFlagManager" />
-	<bean class="com.liferay.portal.feature.flag.FeatureFlagsBagProviderImpl" id="com.liferay.portal.feature.flag.FeatureFlagsBagProvider" />
-	<bean class="com.liferay.portal.feature.flag.manager.FeatureFlagPreferencesManager" id="com.liferay.portal.feature.flag.manager.FeatureFlagPreferencesManager" />
 </beans>

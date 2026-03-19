@@ -6,7 +6,6 @@
 package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
 import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminPortletKeys;
-import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientWebKeys;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataService;
 import com.liferay.petra.string.StringPool;
@@ -78,24 +77,23 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 				actionRequest, "oAuthClientASLocalMetadataId");
 
 			String authorizationEndpoint = ParamUtil.getString(
-				actionRequest, OAuthClientWebKeys.AUTHORIZATION_ENDPOINT);
+				actionRequest, "authorizationEndpoint");
 			String issuer = ParamUtil.getString(actionRequest, "issuer");
-			String jwksURI = ParamUtil.getString(
-				actionRequest, OAuthClientWebKeys.JWKS_URI);
+			String jwksURI = ParamUtil.getString(actionRequest, "jwksURI");
 			boolean enabledLocalWellKnown = ParamUtil.getBoolean(
 				actionRequest, "enabledLocalWellKnown");
 			String registrationEndpoint = ParamUtil.getString(
 				actionRequest, "registrationEndpoint");
 			String supportedGrantTypes = ParamUtil.getString(
-				actionRequest, OAuthClientWebKeys.SUPPORTED_GRANT_TYPES);
+				actionRequest, "supportedGrantTypes");
 			String supportedScopes = ParamUtil.getString(
-				actionRequest, OAuthClientWebKeys.SUPPORTED_SCOPES);
+				actionRequest, "supportedScopes");
 			String supportedSubjectTypes = ParamUtil.getString(
-				actionRequest, OAuthClientWebKeys.SUPPORTED_SUBJECT_TYPES);
+				actionRequest, "supportedSubjectTypes");
 			String tokenEndpoint = ParamUtil.getString(
-				actionRequest, OAuthClientWebKeys.TOKEN_ENDPOINT);
+				actionRequest, "tokenEndpoint");
 			String userInfoEndpoint = ParamUtil.getString(
-				actionRequest, OAuthClientWebKeys.USER_INFO_ENDPOINT);
+				actionRequest, "userInfoEndpoint");
 
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 				_oAuthClientASLocalMetadataService.

@@ -219,11 +219,13 @@ public class ViewHomeQuickActionsDisplayContext {
 				"icon", _icons.get("L_CMS_VOCABULARY")
 			).put(
 				"redirect",
-				PortalUtil.getLayoutFullURL(
-					LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-						_themeDisplay.getScopeGroupId(), false,
-						"/categorization/new-vocabulary"),
-					_themeDisplay)
+				StringBundler.concat(
+					PortalUtil.getLayoutFullURL(
+						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+							_themeDisplay.getScopeGroupId(), false,
+							"/categorization/new-vocabulary"),
+						_themeDisplay),
+					"?backURL=", _themeDisplay.getURLCurrent())
 			).put(
 				"title",
 				LanguageUtil.get(_themeDisplay.getLocale(), "vocabulary")

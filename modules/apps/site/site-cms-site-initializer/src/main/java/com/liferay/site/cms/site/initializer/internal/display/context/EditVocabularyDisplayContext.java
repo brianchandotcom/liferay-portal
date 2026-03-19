@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -34,6 +35,20 @@ public class EditVocabularyDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;
+	}
+
+	public String getBackURL() throws Exception {
+		String backURL = ParamUtil.getString(_httpServletRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
+		}
+
+		return PortalUtil.getLayoutFullURL(
+			LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+				_themeDisplay.getScopeGroupId(), false,
+				"/categorization/view-vocabularies"),
+			_themeDisplay);
 	}
 
 	public Map<String, Object> getReactData() throws Exception {
@@ -56,12 +71,7 @@ public class EditVocabularyDisplayContext {
 					PortalUtil.getClassNameId(objectDefinition.getClassName())
 				).build())
 		).put(
-			"backURL",
-			PortalUtil.getLayoutFullURL(
-				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-					_themeDisplay.getScopeGroupId(), false,
-					"/categorization/view-vocabularies"),
-				_themeDisplay)
+			"backURL", getBackURL()
 		).put(
 			"cmsGroupId", _themeDisplay.getScopeGroupId()
 		).put(

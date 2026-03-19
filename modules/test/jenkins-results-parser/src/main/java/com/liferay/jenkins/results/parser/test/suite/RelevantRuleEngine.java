@@ -5,10 +5,10 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
+import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalAcceptancePullRequestJob;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 
@@ -38,18 +38,56 @@ public class RelevantRuleEngine {
 	}
 
 	public static RelevantRuleEngine getInstance(
-		PortalAcceptancePullRequestJob portalAcceptancePullRequestJob) {
+		GitWorkingDirectory gitWorkingDirectory, String testSuiteName) {
 
 		if (_relevantRuleEngine == null) {
 			_relevantRuleEngine = new RelevantRuleEngine(
-				portalAcceptancePullRequestJob);
+				gitWorkingDirectory, null, testSuiteName);
 		}
 
 		return _relevantRuleEngine;
 	}
 
+	public static RelevantRuleEngine getInstance(
+		PortalAcceptancePullRequestJob portalAcceptancePullRequestJob) {
+
+		if (_relevantRuleEngine == null) {
+			_relevantRuleEngine = new RelevantRuleEngine(
+				portalAcceptancePullRequestJob.getPortalGitWorkingDirectory(),
+				portalAcceptancePullRequestJob,
+				portalAcceptancePullRequestJob.getTestSuiteName());
+		}
+
+		return _relevantRuleEngine;
+	}
+
+	public RelevantRuleEngine(
+		GitWorkingDirectory gitWorkingDirectory, Job job,
+		String testSuiteName) {
+
+		_gitWorkingDirectory = gitWorkingDirectory;
+		_job = job;
+		_testSuiteName = testSuiteName;
+
+		_baseDir = gitWorkingDirectory.getWorkingDirectory();
+
+		if (_relevantRuleEngine == null) {
+			_relevantRuleEngine = this;
+		}
+	}
+
+	public RelevantRuleEngine(
+		GitWorkingDirectory gitWorkingDirectory, String testSuiteName) {
+
+		this(gitWorkingDirectory, null, testSuiteName);
+	}
+
 	public File getBaseDir() {
 		return _baseDir;
+	}
+
+	public GitWorkingDirectory getGitWorkingDirectory() {
+		return _gitWorkingDirectory;
 	}
 
 	public Job getJob() {
@@ -134,7 +172,7 @@ public class RelevantRuleEngine {
 	}
 
 	private Properties _getRelevantRuleProperties(
-		String relevantRuleName, Properties properties) {
+		Properties properties, String relevantRuleName) {
 
 		Properties relevantRuleProperties = new Properties();
 
@@ -185,6 +223,10 @@ public class RelevantRuleEngine {
 
 		Map<String, Set<File>> testPropertiesModifiedFilesMap = new HashMap<>();
 
+		if (modifiedFiles == null) {
+			modifiedFiles = _gitWorkingDirectory.getModifiedFilesList(true);
+		}
+
 		for (File modifiedFile : modifiedFiles) {
 			for (String testPropertiesFilePath :
 					_getTestPropertiesFilePaths(modifiedFile, null)) {
@@ -220,7 +262,7 @@ public class RelevantRuleEngine {
 				testPropertiesFile);
 
 			String relevantRuleNames = JenkinsResultsParserUtil.getProperty(
-				properties, "relevant.rule.names");
+				properties, "relevant.rule.names", _testSuiteName);
 
 			if (relevantRuleNames == null) {
 				continue;
@@ -228,10 +270,11 @@ public class RelevantRuleEngine {
 
 			for (String relevantRuleName : relevantRuleNames.split(",")) {
 				_relevantRuleMap.put(
-					_getRelevantRule(
-						testPropertiesFilePath, _job, relevantRuleName,
+					getRelevantRule(
+						testPropertiesFilePath, _job,
 						_getRelevantRuleProperties(
-							relevantRuleName, properties)),
+							properties, relevantRuleName),
+						relevantRuleName),
 					entry.getValue());
 			}
 		}
@@ -240,6 +283,7 @@ public class RelevantRuleEngine {
 	private static RelevantRuleEngine _relevantRuleEngine;
 
 	private File _baseDir;
+	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Job _job;
 	private final Map<RelevantRule, Set<File>> _relevantRuleMap =
 		new HashMap<>();

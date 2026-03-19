@@ -138,7 +138,7 @@ public class DLFileEntryModelResourcePermissionWrapper
 
 					consumer.accept(
 						(permissionChecker, name, model, actionId) -> {
-							if (Validator.isNotNull(model.getClassName())) {
+							if (model.getClassNameId() > 0) {
 								return null;
 							}
 

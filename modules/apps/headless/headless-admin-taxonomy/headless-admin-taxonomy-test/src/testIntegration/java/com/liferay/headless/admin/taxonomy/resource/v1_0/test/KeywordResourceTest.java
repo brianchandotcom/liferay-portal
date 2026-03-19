@@ -25,13 +25,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -44,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,6 +59,23 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class KeywordResourceTest extends BaseKeywordResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_cmsAdministratorUser = UserTestUtil.addUser(
+			testCompany, RoleConstants.CMS_ADMINISTRATOR);
+
+		_userLocalService.updatePassword(
+			_cmsAdministratorUser.getUserId(), "test", "test", false, true);
+
+		_regularUser = UserTestUtil.addUser();
+
+		_userLocalService.updatePassword(
+			_regularUser.getUserId(), "test", "test", false, true);
+	}
 
 	@Override
 	@Test
@@ -382,6 +404,9 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		irrelevantGroup = originalIrrelevantGroup;
 		testGroup = originalTestGroup;
+
+		_testGetSiteKeywordsPageWithUser(_cmsAdministratorUser);
+		_testGetSiteKeywordsPageWithUser(_regularUser);
 	}
 
 	@Ignore
@@ -421,6 +446,29 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			assetTagGroupRels.toString(), 3, assetTagGroupRels.size());
 
 		testGroup = originalTestGroup;
+	}
+
+	@Override
+	@Test
+	public void testPostSiteKeyword() throws Exception {
+		super.testPostSiteKeyword();
+
+		Keyword randomKeyword = randomKeyword();
+
+		KeywordResource cmsAdminKeywordResource = KeywordResource.builder(
+		).authentication(
+			_cmsAdministratorUser.getEmailAddress(), "test"
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		Keyword postKeyword = cmsAdminKeywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword);
+
+		assertEquals(randomKeyword, postKeyword);
+		assertValid(postKeyword);
 	}
 
 	@Override
@@ -682,13 +730,48 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		};
 	}
 
+	private void _testGetSiteKeywordsPageWithUser(User user) throws Exception {
+		KeywordResource userKeywordResource = KeywordResource.builder(
+		).authentication(
+			user.getEmailAddress(), "test"
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		Page<Keyword> page = userKeywordResource.getSiteKeywordsPage(
+			testGroup.getGroupId(), null, null, null, Pagination.of(1, 10),
+			null);
+
+		long originalTotalCount = page.getTotalCount();
+
+		keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+
+		page = userKeywordResource.getSiteKeywordsPage(
+			testGroup.getGroupId(), null, null, null, Pagination.of(1, 10),
+			null);
+
+		Assert.assertEquals(originalTotalCount + 1, page.getTotalCount());
+	}
+
 	@Inject
 	private AssetTagGroupRelLocalService _assetTagGroupRelLocalService;
+
+	@DeleteAfterTestRun
+	private User _cmsAdministratorUser;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
+	@DeleteAfterTestRun
+	private User _regularUser;
+
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

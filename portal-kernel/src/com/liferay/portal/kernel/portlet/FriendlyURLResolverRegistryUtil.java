@@ -94,6 +94,10 @@ public class FriendlyURLResolverRegistryUtil {
 		return urlSeparators;
 	}
 
+	public static void removeURLSeparators() {
+		_urlSeparators.remove();
+	}
+
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 	private static final ServiceTrackerList<FriendlyURLResolver>

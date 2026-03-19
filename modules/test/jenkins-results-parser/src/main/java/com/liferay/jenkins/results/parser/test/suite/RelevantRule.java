@@ -201,6 +201,30 @@ public class RelevantRule implements Comparable<RelevantRule> {
 			propertiesBaseDir, jobPropertyType, true);
 	}
 
+	public String getTestScriptCommand() {
+		return JenkinsResultsParserUtil.getProperty(
+			getProperties(), "test.script.command", getName(),
+			getTestSuiteName());
+	}
+
+	public String getTestScriptCommandDir() {
+		return JenkinsResultsParserUtil.getProperty(
+			getProperties(), "test.script.command.dir", getName(),
+			getTestSuiteName());
+	}
+
+	public List<TestScriptCommand> getTestScriptCommands() {
+		String testScriptCommand = getTestScriptCommand();
+
+		if (testScriptCommand == null) {
+			return Collections.emptyList();
+		}
+
+		return Collections.singletonList(
+			new TestScriptCommand(
+				testScriptCommand, getTestScriptCommandDir()));
+	}
+
 	public String getTestSuiteName() {
 		RelevantRuleEngine relevantRuleEngine =
 			RelevantRuleEngine.getInstance();
@@ -215,13 +239,26 @@ public class RelevantRule implements Comparable<RelevantRule> {
 	}
 
 	public void validate() throws RelevantRuleConfigurationException {
-		List<TestBatch> testBatches = getTestBatches();
+		if (_job != null) {
+			List<TestBatch> testBatches = getTestBatches();
 
-		if (testBatches.isEmpty()) {
-			throw new RelevantRuleConfigurationException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to find test.batch.names for relevant rule \"",
-					getName(), "\" in ", _filePath));
+			if (testBatches.isEmpty()) {
+				throw new RelevantRuleConfigurationException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to find test.batch.names for relevant rule \"",
+						getName(), "\" in ", _filePath));
+			}
+		}
+		else {
+			List<TestScriptCommand> testScriptCommands =
+				getTestScriptCommands();
+
+			if (testScriptCommands.isEmpty()) {
+				throw new RelevantRuleConfigurationException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to find test.script.command for relevant ",
+						"rule \"", getName(), "\" in ", _filePath));
+			}
 		}
 
 		List<PathMatcher> modifiedFilesIncludes =
@@ -233,6 +270,26 @@ public class RelevantRule implements Comparable<RelevantRule> {
 					"Unable to find modified.files.includes for relevant ",
 					"rule \"", getName(), "\" in ", _filePath));
 		}
+	}
+
+	public static class TestScriptCommand {
+
+		public TestScriptCommand(String command, String commandDir) {
+			_command = command;
+			_commandDir = commandDir;
+		}
+
+		public String getCommand() {
+			return _command;
+		}
+
+		public String getCommandDir() {
+			return _commandDir;
+		}
+
+		private final String _command;
+		private final String _commandDir;
+
 	}
 
 	private String _getBaseDirPath() {

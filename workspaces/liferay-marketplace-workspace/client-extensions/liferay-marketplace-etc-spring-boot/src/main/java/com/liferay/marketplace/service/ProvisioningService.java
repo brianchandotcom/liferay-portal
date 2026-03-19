@@ -7,6 +7,7 @@ package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLicenseKeyResource;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.time.ZonedDateTime;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,11 +59,19 @@ public class ProvisioningService extends BaseService {
 	public AppLicenseKey postAppLicenseKey(AppLicenseKey appLicenseKey, Jwt jwt)
 		throws Exception {
 
+		return postAppLicenseKey(
+			appLicenseKey, jwt,
+			_koroneikiService.getProductPurchase(
+				appLicenseKey.getProductPurchaseKey()));
+	}
+
+	public AppLicenseKey postAppLicenseKey(
+			AppLicenseKey appLicenseKey, Jwt jwt,
+			ProductPurchase productPurchase)
+		throws Exception {
+
 		appLicenseKey.setActive(true);
 		appLicenseKey.setCreateDate(new Date());
-
-		ProductPurchase productPurchase = _koroneikiService.getProductPurchase(
-			appLicenseKey.getProductPurchaseKey());
 
 		Date expirationDate = productPurchase.getEndDate();
 
@@ -75,10 +85,7 @@ public class ProvisioningService extends BaseService {
 
 		appLicenseKey.setExpirationDate(expirationDate);
 
-		AppLicenseKey.LicenseType licenseType =
-			AppLicenseKey.LicenseType.PRODUCTION;
-
-		appLicenseKey.setLicenseType(licenseType);
+		appLicenseKey.setLicenseType(AppLicenseKey.LicenseType.PRODUCTION);
 
 		appLicenseKey.setOwner((String)jwt.getClaim("username"));
 
@@ -86,9 +93,8 @@ public class ProvisioningService extends BaseService {
 			appLicenseKey.setProductId(productPurchase.getProductKey());
 		}
 
-		appLicenseKey.setProductName(
-			productPurchase.getProduct(
-			).getName());
+		appLicenseKey.setProductName(_getProductName(productPurchase));
+		appLicenseKey.setProductPurchaseKey(productPurchase.getKey());
 		appLicenseKey.setProductVersion("1");
 
 		Date startDate = productPurchase.getStartDate();
@@ -114,6 +120,15 @@ public class ProvisioningService extends BaseService {
 		}
 
 		return appLicenseKey;
+	}
+
+	private String _getProductName(ProductPurchase productPurchase) {
+		Product product = productPurchase.getProduct();
+
+		Map<String, String> propertiesMap = product.getProperties();
+
+		return propertiesMap.getOrDefault(
+			"display-group-name", product.getName());
 	}
 
 	private static final Log _log = LogFactory.getLog(

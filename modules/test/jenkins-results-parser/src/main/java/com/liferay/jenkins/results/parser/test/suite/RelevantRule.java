@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser.test.suite;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
@@ -290,6 +291,35 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		private final String _command;
 		private final String _commandDir;
 
+	}
+
+	protected String getGradlePackageName(File moduleDir) {
+		String moduleDirFilePath = JenkinsResultsParserUtil.getCanonicalPath(
+			moduleDir);
+
+		int index = moduleDirFilePath.indexOf("/modules/");
+
+		if (index == -1) {
+			return "";
+		}
+
+		String relativeModuleDirFilePath = moduleDirFilePath.substring(
+			index + 9);
+
+		return ":" + relativeModuleDirFilePath.replace('/', ':');
+	}
+
+	protected List<File> getModifiedDirsList(File rootDirectory) {
+		return _gitWorkingDirectory.getModifiedDirsList(
+			true, null, null, rootDirectory);
+	}
+
+	protected List<File> getModifiedFilesList() {
+		return _gitWorkingDirectory.getModifiedFilesList(true);
+	}
+
+	protected PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
+		return (PortalGitWorkingDirectory)_gitWorkingDirectory;
 	}
 
 	private String _getBaseDirPath() {

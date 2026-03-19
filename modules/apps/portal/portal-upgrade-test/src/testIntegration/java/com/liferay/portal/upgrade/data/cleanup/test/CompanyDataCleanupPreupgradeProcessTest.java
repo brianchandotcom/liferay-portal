@@ -33,6 +33,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.data.cleanup.CompanyDataCleanupPreupgradeProcess;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.Arrays;
 import java.util.List;
@@ -96,6 +98,63 @@ public class CompanyDataCleanupPreupgradeProcessTest
 
 		for (ResourceAction resourceAction : resourceActions) {
 			_resourceActionLocalService.deleteResourceAction(resourceAction);
+		}
+	}
+
+	@Test
+	public void testUpdateCompanyIdByGroupId() throws Exception {
+		long companyId = RandomTestUtil.nextLong();
+		long groupId = RandomTestUtil.nextLong();
+
+		runSQL(
+			StringBundler.concat(
+				"insert into Company (companyId, webId) values (", companyId,
+				", '", companyId, "')"));
+
+		runSQL(
+			StringBundler.concat(
+				"insert into Group_ (groupId, companyId, name) values (",
+				groupId, ", ", companyId, ", '", groupId, "')"));
+
+		String tableName = "test_cleanup_" + RandomTestUtil.randomString();
+
+		runSQL(
+			StringBundler.concat(
+				"create table ", tableName,
+				" (companyId LONG, groupId LONG, id_ LONG not null primary ",
+				"key)"));
+
+		runSQL(
+			StringBundler.concat(
+				"insert into ", tableName,
+				" (companyId, groupId, id_) values (0, ", groupId, ", 1)"));
+
+		runSQL(
+			StringBundler.concat(
+				"insert into ", tableName,
+				" (companyId, groupId, id_) values (null, ", groupId, ", 2)"));
+
+		try {
+			upgrade();
+
+			try (PreparedStatement preparedStatement =
+					_connection.prepareStatement(
+						"select companyId from " + tableName +
+							" where id_ in (1, 2) order by id_");
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				Assert.assertTrue(resultSet.next());
+				_assertCompanyId(companyId, resultSet);
+
+				Assert.assertTrue(resultSet.next());
+				_assertCompanyId(companyId, resultSet);
+			}
+		}
+		finally {
+			dropTable(_dbInspector.normalizeName(tableName));
+
+			runSQL("delete from Group_ where groupId = " + groupId);
+			runSQL("delete from Company where companyId = " + companyId);
 		}
 	}
 
@@ -173,6 +232,13 @@ public class CompanyDataCleanupPreupgradeProcessTest
 
 			runSQL("delete from SystemEvent where companyId = " + companyId);
 		}
+	}
+
+	private void _assertCompanyId(long expectedCompanyId, ResultSet resultSet)
+		throws Exception {
+
+		Assert.assertEquals(expectedCompanyId, resultSet.getLong("companyId"));
+		Assert.assertFalse(resultSet.wasNull());
 	}
 
 	private static List<ClassName> _classNames;

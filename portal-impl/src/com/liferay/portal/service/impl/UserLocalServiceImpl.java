@@ -6446,6 +6446,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			else if (!key.equals(Field.GROUP_ID) &&
 					 !key.equals("accountEntryIds") &&
 					 !key.equals("emailAddressDomains") &&
+					 !key.equals("inheritUsersGroups") &&
 					 !key.equals("types") && !key.equals("usersGroups") &&
 					 !key.equals("usersOrgs") &&
 					 !key.equals("usersOrgsCount") &&

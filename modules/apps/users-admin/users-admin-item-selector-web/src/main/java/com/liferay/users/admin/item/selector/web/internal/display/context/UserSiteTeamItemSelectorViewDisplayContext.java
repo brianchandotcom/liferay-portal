@@ -66,9 +66,7 @@ public class UserSiteTeamItemSelectorViewDisplayContext {
 
 		LinkedHashMap<String, Object> userParams =
 			LinkedHashMapBuilder.<String, Object>put(
-				"inherit", Boolean.TRUE
-			).put(
-				"usersGroups",
+				"inheritUsersGroups",
 				() -> {
 					Group group = GroupLocalServiceUtil.fetchGroup(
 						team.getGroupId());

@@ -228,4 +228,76 @@ describe('transformItemCardView', () => {
 
 		expect(cardView.title).toBe('untitled-asset');
 	});
+
+	describe('External Video Thumbnail', () => {
+		it('External Video should show a thumbnail if it is a YouTube video (Standard URL)', () => {
+			const result = transformItemCardView(
+				{
+					embedded: {
+						systemProperties: {
+							objectDefinitionBrief: {
+								externalReferenceCode: 'L_CMS_EXTERNAL_VIDEO',
+							},
+						},
+						videoURL: 'https://www.youtube.com/watch?v=IqCSx3omX4o',
+					},
+				},
+				mockFileMimeTypeCssClasses,
+				mockFileMimeTypeIcons,
+				mockObjectDefinitionCssClasses,
+				mockObjectDefinitionIcons,
+				baseMockProps
+			);
+
+			expect(result.imgProps).toBe(
+				'https://img.youtube.com/vi/IqCSx3omX4o/0.jpg'
+			);
+		});
+
+		it('External Video should show a thumbnail if it is a YouTube video (Short URL)', () => {
+			const result = transformItemCardView(
+				{
+					embedded: {
+						systemProperties: {
+							objectDefinitionBrief: {
+								externalReferenceCode: 'L_CMS_EXTERNAL_VIDEO',
+							},
+						},
+						videoURL: 'https://youtu.be/IqCSx3omX4o',
+					},
+				},
+				mockFileMimeTypeCssClasses,
+				mockFileMimeTypeIcons,
+				mockObjectDefinitionCssClasses,
+				mockObjectDefinitionIcons,
+				baseMockProps
+			);
+
+			expect(result.imgProps).toBe(
+				'https://img.youtube.com/vi/IqCSx3omX4o/0.jpg'
+			);
+		});
+
+		it('External Video should show a video icon if it is not a YouTube video', () => {
+			const result = transformItemCardView(
+				{
+					embedded: {
+						systemProperties: {
+							objectDefinitionBrief: {
+								externalReferenceCode: 'L_CMS_EXTERNAL_VIDEO',
+							},
+						},
+						videoURL: 'https://vimeo.com/483035084',
+					},
+				},
+				mockFileMimeTypeCssClasses,
+				mockFileMimeTypeIcons,
+				mockObjectDefinitionCssClasses,
+				mockObjectDefinitionIcons,
+				baseMockProps
+			);
+
+			expect(result.symbol).toBe('video');
+		});
+	});
 });

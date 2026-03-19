@@ -27,7 +27,6 @@ import com.liferay.petra.string.StringUtil;
 
 import java.net.URL;
 
-import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -183,38 +182,24 @@ public class KoroneikiService {
 			String licenseUsageType, OrderItem orderItem)
 		throws Exception {
 
-		ZonedDateTime zonedDateTime = ZonedDateTime.now();
-
 		ProductPurchase productPurchase = new ProductPurchase();
 
-		productPurchase.setPerpetual(Objects.equals(licenseType, "Perpetual"));
-
-		if (Objects.equals(licenseUsageType, "trial")) {
+		if (!Objects.equals(licenseType, "Perpetual")) {
 			productPurchase.setEndDate(
-				Date.from(
-					zonedDateTime.plusMonths(
-						1
-					).toInstant()));
-
-			productPurchase.setPerpetual(false);
-		}
-		else if (Objects.equals(licenseType, "Subscription")) {
-			Instant instant = zonedDateTime.plusYears(
-				1
-			).toInstant();
-
-			productPurchase.setEndDate(Date.from(instant));
+				MarketplaceUtil.getOrderPurchaseEndDate(
+					licenseType, licenseUsageType));
 		}
 
 		productPurchase.setExternalLinks(
 			MarketplaceUtil.appendExternalLink(
 				productPurchase.getExternalLinks(), "marketplace",
 				String.valueOf(orderItem.getOrderId()), "opportunity"));
+		productPurchase.setPerpetual(Objects.equals(licenseType, "Perpetual"));
 		productPurchase.setProductKey(orderItem.getSkuExternalReferenceCode());
 		productPurchase.setQuantity(
 			orderItem.getQuantity(
 			).intValue());
-		productPurchase.setStartDate(Date.from(zonedDateTime.toInstant()));
+		productPurchase.setStartDate(new Date());
 		productPurchase.setStatus(ProductPurchase.Status.APPROVED);
 
 		ProductPurchaseResource productPurchaseResource =

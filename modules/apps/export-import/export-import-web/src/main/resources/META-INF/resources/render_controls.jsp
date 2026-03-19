@@ -31,41 +31,51 @@ control:
 for (int i = 0; i < portletDataHandlerControls.length; i++) {
 %>
 
-	<li class="handler-control">
-		<c:choose>
-			<c:when test="<%= portletDataHandlerControls[i] instanceof PortletDataHandlerBoolean %>">
+	<c:choose>
+		<c:when test="<%= portletDataHandlerControls[i] instanceof PortletDataHandlerBoolean %>">
 
-				<%
-				PortletDataHandlerBoolean portletDataHandlerBoolean = (PortletDataHandlerBoolean)portletDataHandlerControls[i];
+			<%
+			PortletDataHandlerBoolean portletDataHandlerBoolean = (PortletDataHandlerBoolean)portletDataHandlerControls[i];
 
-				String className = portletDataHandlerBoolean.getClassName();
-				String label = LanguageUtil.get(request, resourceBundle, portletDataHandlerBoolean.getLabel());
+			String className = portletDataHandlerBoolean.getClassName();
+			String label = LanguageUtil.get(request, resourceBundle, portletDataHandlerBoolean.getLabel());
 
-				if (Validator.isNotNull(className) && (manifestSummary != null)) {
-					StagedModelType stagedModelType = new StagedModelType(className, portletDataHandlerBoolean.getReferrerClassName());
+			long modelAdditionCount = 0;
+			long modelDeletionCount = 0;
 
-					long modelAdditionCount = manifestSummary.getModelAdditionCount(stagedModelType);
+			if (Validator.isNotNull(className) && (manifestSummary != null)) {
+				StagedModelType stagedModelType = new StagedModelType(className, portletDataHandlerBoolean.getReferrerClassName());
 
-					if (modelAdditionCount != 0) {
-						label += (modelAdditionCount > 0) ? " (" + modelAdditionCount + ")" : StringPool.BLANK;
-					}
-					else {
-						continue control;
-					}
+				modelAdditionCount = manifestSummary.getModelAdditionCount(stagedModelType);
+				modelDeletionCount = manifestSummary.getModelDeletionCount(stagedModelType);
+
+				if ((modelAdditionCount <= 0) && (modelDeletionCount <= 0)) {
+					continue control;
 				}
+			}
 
-				Map<String, Object> data = HashMapBuilder.<String, Object>put(
-					"name", label
-				).build();
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"name", label
+			).build();
 
-				if (!childControl) {
-					data.put("root-control-id", liferayPortletResponse.getNamespace() + rootControlId);
-				}
+			if (!childControl) {
+				data.put("root-control-id", liferayPortletResponse.getNamespace() + rootControlId);
+			}
 
-				String name = Validator.isNotNull(portletDataHandlerBoolean.getNamespace()) ? portletDataHandlerBoolean.getNamespacedName() : (portletDataHandlerBoolean.getName() + StringPool.UNDERLINE + portletId);
-				%>
+			String name = Validator.isNotNull(portletDataHandlerBoolean.getNamespace()) ? portletDataHandlerBoolean.getNamespacedName() : (portletDataHandlerBoolean.getName() + StringPool.UNDERLINE + portletId);
+			%>
 
-				<aui:input data="<%= data %>" disabled="<%= portletDataHandlerBoolean.isDisabled() || disableInputs %>" helpMessage="<%= portletDataHandlerBoolean.getHelpMessage(locale, action) %>" label="<%= label %>" name="<%= name %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, name, portletDataHandlerBoolean.getDefaultState()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL) %>" />
+			<li class="handler-control <%= ((modelAdditionCount <= 0) && (modelDeletionCount > 0)) ? "deletions" : StringPool.BLANK %>">
+				<liferay-staging:checkbox
+					checked="<%= MapUtil.getBoolean(parameterMap, name, portletDataHandlerBoolean.getDefaultState()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL) %>"
+					data="<%= data %>"
+					deletions="<%= modelDeletionCount %>"
+					disabled="<%= portletDataHandlerBoolean.isDisabled() || disableInputs %>"
+					items="<%= modelAdditionCount %>"
+					label="<%= label %>"
+					name="<%= name %>"
+					popover="<%= portletDataHandlerBoolean.getHelpMessage(locale, action) %>"
+				/>
 
 				<c:if test="<%= portletDataHandlerBoolean.getChildrenPortletDataHandlerControls() != null %>">
 					<ul class="list-unstyled" id="<portlet:namespace /><%= name %>Controls">
@@ -87,8 +97,10 @@ for (int i = 0; i < portletDataHandlerControls.length; i++) {
 						);
 					</aui:script>
 				</c:if>
-			</c:when>
-			<c:when test="<%= portletDataHandlerControls[i] instanceof PortletDataHandlerChoice %>">
+			</li>
+		</c:when>
+		<c:when test="<%= portletDataHandlerControls[i] instanceof PortletDataHandlerChoice %>">
+			<li class="handler-control">
 				<label>
 					<liferay-ui:message key="<%= portletDataHandlerControls[i].getLabel() %>" />
 
@@ -122,9 +134,9 @@ for (int i = 0; i < portletDataHandlerControls.length; i++) {
 					%>
 
 				</label>
-			</c:when>
-		</c:choose>
-	</li>
+			</li>
+		</c:when>
+	</c:choose>
 
 <%
 }

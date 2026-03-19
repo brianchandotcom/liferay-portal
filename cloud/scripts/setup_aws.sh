@@ -229,10 +229,10 @@ function _set_up_aws_service_linked_roles {
 
 	echo "Setting up AWS Service-Linked Roles."
 
-	for slr in "${service_linked_roles[@]}"
+	for service_linked_role in "${service_linked_roles[@]}"
 	do
-		local role_name="${slr##*:}"
-		local service_name="${slr%%:*}"
+		local role_name="${service_linked_role##*:}"
+		local service_name="${service_linked_role%%:*}"
 
 		if ! aws iam get-role --role-name "${role_name}" >/dev/null 2>&1
 		then

@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser.test.suite;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.LocalGitBranch;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,16 +69,25 @@ public class TestScriptGenerator {
 		sb.append("function main {\n");
 		sb.append("\techo \"Running local tests...\"\n");
 		sb.append("\techo \"\"\n\n");
-		sb.append(
-			"\techo \"Note: This script was generated based on a branch ");
+		sb.append("\techo \"Note: This script was generated on branch ");
+		sb.append(_gitWorkingDirectory.getCurrentBranchName());
+		sb.append(" (");
 
-		sb.append("that is ");
+		LocalGitBranch localGitBranch =
+			_gitWorkingDirectory.getCurrentLocalGitBranch();
+
+		String sha = localGitBranch.getSHA();
+
+		sha = sha.substring(0, Math.min(sha.length(), 7));
+
+		sb.append(sha);
+
+		sb.append(") which is ");
 
 		String upstreamMasterAheadBehindDescription =
 			_gitWorkingDirectory.getUpstreamMasterAheadBehindDescription();
 
 		sb.append(upstreamMasterAheadBehindDescription);
-
 		sb.append(" upstream/master.\"\n");
 		sb.append("\techo \"\"\n");
 
@@ -92,9 +102,6 @@ public class TestScriptGenerator {
 			sb.append("\tthen\n");
 			sb.append("\t\texit 1\n");
 			sb.append("\tfi\n\n");
-		}
-		else {
-			sb.append("\techo \"\"\n");
 		}
 
 		sb.append("\tdurations=()\n");

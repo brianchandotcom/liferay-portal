@@ -274,10 +274,7 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 		return TempFileEntryUtil.addTempFileEntry(
 			groupId, TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			TempFileEntryUtil.getTempFileName("document.txt"),
-			FileUtil.createTempFile(
-				DLTestUtil.randomTextFileContent(
-					8
-				).getBytes()),
+			FileUtil.createTempFile(DLTestUtil.randomTextFileContent(8)),
 			ContentTypes.TEXT_PLAIN);
 	}
 

@@ -92,6 +92,27 @@ public class AssetLibrary implements Cloneable, Serializable {
 
 	protected ConnectedSite[] connectedSites;
 
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Creator creator;
+
 	public Long getCreatorUserId() {
 		return creatorUserId;
 	}

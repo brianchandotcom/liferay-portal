@@ -99,6 +99,16 @@ public class AssetLibrarySerDes {
 			sb.append("]");
 		}
 
+		if (assetLibrary.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(assetLibrary.getCreator()));
+		}
+
 		if (assetLibrary.getCreatorUserId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -380,6 +390,13 @@ public class AssetLibrarySerDes {
 				String.valueOf(assetLibrary.getConnectedSites()));
 		}
 
+		if (assetLibrary.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(assetLibrary.getCreator()));
+		}
+
 		if (assetLibrary.getCreatorUserId() == null) {
 			map.put("creatorUserId", null);
 		}
@@ -552,6 +569,9 @@ public class AssetLibrarySerDes {
 			else if (Objects.equals(jsonParserFieldName, "connectedSites")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "creatorUserId")) {
 				return false;
 			}
@@ -649,6 +669,12 @@ public class AssetLibrarySerDes {
 					}
 
 					assetLibrary.setConnectedSites(connectedSitesArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					assetLibrary.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creatorUserId")) {

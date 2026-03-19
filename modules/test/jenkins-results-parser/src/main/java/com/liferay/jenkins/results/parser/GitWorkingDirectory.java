@@ -1576,16 +1576,10 @@ public class GitWorkingDirectory {
 	}
 
 	public String getMergeBaseWithUpstreamMasterSHA() {
-		if (_mergeBaseWithUpstreamMasterSHA != null) {
-			return _mergeBaseWithUpstreamMasterSHA;
-		}
-
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		if (upstreamGitRemote == null) {
-			_mergeBaseWithUpstreamMasterSHA = "";
-
-			return _mergeBaseWithUpstreamMasterSHA;
+			return "";
 		}
 
 		executeBashCommands(
@@ -1594,14 +1588,10 @@ public class GitWorkingDirectory {
 			JenkinsResultsParserUtil.combine(
 				"git fetch ", upstreamGitRemote.getName(), " master"));
 
-		String mergeBaseSHA = getMergeBaseCommitSHA(
+		return getMergeBaseCommitSHA(
 			getCurrentBranchName(),
 			JenkinsResultsParserUtil.combine(
 				upstreamGitRemote.getName(), "/master"));
-
-		_mergeBaseWithUpstreamMasterSHA = mergeBaseSHA;
-
-		return mergeBaseSHA;
 	}
 
 	public List<File> getModifiedDirsList(
@@ -2129,16 +2119,10 @@ public class GitWorkingDirectory {
 	}
 
 	public String getUpstreamMasterAheadBehindDescription() {
-		if (_upstreamMasterAheadBehindDescription != null) {
-			return _upstreamMasterAheadBehindDescription;
-		}
-
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		if (upstreamGitRemote == null) {
-			_upstreamMasterAheadBehindDescription = "";
-
-			return _upstreamMasterAheadBehindDescription;
+			return "";
 		}
 
 		executeBashCommands(
@@ -2163,12 +2147,7 @@ public class GitWorkingDirectory {
 					executionResult.getStandardError()));
 		}
 
-		String aheadBehindDescription = _formatAheadBehindCount(
-			executionResult.getStandardOut());
-
-		_upstreamMasterAheadBehindDescription = aheadBehindDescription;
-
-		return aheadBehindDescription;
+		return _formatAheadBehindCount(executionResult.getStandardOut());
 	}
 
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {
@@ -3390,10 +3369,8 @@ public class GitWorkingDirectory {
 		new ConcurrentHashMap<>();
 	private final String _gitRepositoryName;
 	private final String _gitRepositoryUsername;
-	private String _mergeBaseWithUpstreamMasterSHA;
 	private List<File> _modifiedFilesList;
 	private final String _upstreamBranchName;
-	private String _upstreamMasterAheadBehindDescription;
 	private boolean _useUpstreamMasterDiffBase;
 	private File _workingDirectory;
 

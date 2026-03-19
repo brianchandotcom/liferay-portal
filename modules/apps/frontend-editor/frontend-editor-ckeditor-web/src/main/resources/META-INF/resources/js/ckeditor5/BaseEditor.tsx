@@ -88,7 +88,9 @@ const BaseEditor = ({
 	return loading ? (
 		<ClayLoadingIndicator />
 	) : (
-		<div className={`lfr-ck ${className ? className : ''}`}>
+		<div
+			className={`lfr-ck ${className ? className : ''} ${disabled ? 'lfr-ck-disabled' : ''}`}
+		>
 			<CKEditor
 				config={editorConfig}
 				data={data}

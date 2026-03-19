@@ -5,104 +5,121 @@
 	--ck-icon-font-size: 0.67em;
 }
 
-.lfr-ck .ck {
-	&.ck-balloon-panel.ck-tooltip {
-		background-color: $dark-d2;
-		border-radius: 0.25rem;
-		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
-		max-width: 230px;
-		padding: 0.75rem;
-		text-align: center;
-		white-space: pre-line;
+.lfr-ck {
+	position: relative;
+	z-index: 1;
 
-		& .ck-tooltip__text {
-			color: $light-l2;
-			font-size: 0.85rem;
+	&.lfr-ck-disabled,
+	.lfr-ck-disabled {
+		.ck-editor__main {
+			position: relative;
+			z-index: -1;
+		}
+
+		.ck-content {
+			opacity: 0.5;
 		}
 	}
 
-	&.ck-button {
-		&:active,
-		&.ck-on:focus,
-		&.ck-disabled:active {
-			border-color: transparent;
+	.ck {
+		&.ck-balloon-panel.ck-tooltip {
+			background-color: $dark-d2;
+			border-radius: 0.25rem;
+			box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+			max-width: 230px;
+			padding: 0.75rem;
+			text-align: center;
+			white-space: pre-line;
+
+			& .ck-tooltip__text {
+				color: $light-l2;
+				font-size: 0.85rem;
+			}
 		}
 
-		&:focus,
-		&.ck-disabled:active,
-		&.ck-disabled:focus {
-			box-shadow: none;
-		}
+		&.ck-button {
+			&:active,
+			&.ck-on:focus,
+			&.ck-disabled:active {
+				border-color: transparent;
+			}
 
-		&:focus-visible,
-		&.ck-on:focus-visible,
-		&.ck-disabled:focus-visible {
-			border: var(--ck-focus-ring);
-			box-shadow: $btn-focus-box-shadow;
-		}
-
-		&.ck-on,
-		&.ck-on:not(.ck-disabled):hover,
-		&:not(.ck-disabled):hover {
-			background: $gray-100;
-			color: $gray-900;
-		}
-	}
-
-	> .ck-source-editing-area,
-	> .ck-content[role='textbox'] {
-		min-height: 265px;
-	}
-
-	&.ck-dropdown {
-		.ck-button.ck-dropdown__button.ck-off:active:focus,
-		.ck-button.ck-dropdown__button.ck-on:active:focus {
-			box-shadow: none;
-		}
-	}
-
-	&.lfr-editor {
-		&-heading_paragraph .ck-button__label {
-			@include font-size($font-size-base);
-		}
-
-		&-heading_heading1 .ck-button__label {
-			@include font-size($h1-font-size);
-		}
-
-		&-heading_heading2 .ck-button__label {
-			@include font-size($h2-font-size);
-		}
-
-		&-heading_heading3 .ck-button__label {
-			@include font-size($h3-font-size);
-		}
-	}
-
-	&[class*='lfr-editor-heading_heading'] {
-		color: $headings-color;
-		font-family: $headings-font-family;
-		font-weight: $headings-font-weight;
-	}
-
-	&.ck-style-panel .ck-style-grid {
-		.ck-style-grid__button {
 			&:focus,
-			&:not(:focus) {
-				border: 1px solid var(--ck-color-base-border);
+			&.ck-disabled:active,
+			&.ck-disabled:focus {
+				box-shadow: none;
 			}
 
-			&:focus-visible {
+			&:focus-visible,
+			&.ck-on:focus-visible,
+			&.ck-disabled:focus-visible {
 				border: var(--ck-focus-ring);
+				box-shadow: $btn-focus-box-shadow;
+			}
+
+			&.ck-on,
+			&.ck-on:not(.ck-disabled):hover,
+			&:not(.ck-disabled):hover {
+				background: $gray-100;
+				color: $gray-900;
 			}
 		}
-	}
 
-	&.ck-toolbar {
-		& > .ck-toolbar__items > *:not(.ck-toolbar__line-break),
-		& > .ck.ck-toolbar__grouped-dropdown {
-			margin-bottom: 6px;
-			margin-top: 6px;
+		> .ck-source-editing-area,
+		> .ck-content[role='textbox'] {
+			min-height: 265px;
+		}
+
+		&.ck-dropdown {
+			.ck-button.ck-dropdown__button.ck-off:active:focus,
+			.ck-button.ck-dropdown__button.ck-on:active:focus {
+				box-shadow: none;
+			}
+		}
+
+		&.lfr-editor {
+			&-heading_paragraph .ck-button__label {
+				@include font-size($font-size-base);
+			}
+
+			&-heading_heading1 .ck-button__label {
+				@include font-size($h1-font-size);
+			}
+
+			&-heading_heading2 .ck-button__label {
+				@include font-size($h2-font-size);
+			}
+
+			&-heading_heading3 .ck-button__label {
+				@include font-size($h3-font-size);
+			}
+		}
+
+		&[class*='lfr-editor-heading_heading'] {
+			color: $headings-color;
+			font-family: $headings-font-family;
+			font-weight: $headings-font-weight;
+		}
+
+		&.ck-style-panel .ck-style-grid {
+			.ck-style-grid__button {
+				&:focus,
+				&:not(:focus) {
+					border: 1px solid var(--ck-color-base-border);
+				}
+
+				&:focus-visible {
+					border: var(--ck-focus-ring);
+				}
+			}
+		}
+
+		&.ck-toolbar {
+			& > .ck-toolbar__items > *:not(.ck-toolbar__line-break),
+			& > .ck.ck-toolbar__grouped-dropdown {
+				margin-bottom: 6px;
+				margin-top: 6px;
+			}
 		}
 	}
 }

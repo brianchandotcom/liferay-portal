@@ -58,7 +58,7 @@ public abstract class BaseStagingConfigurationUpgradeProcessTestCase {
 			_configurationProvider.saveCompanyConfiguration(
 				StagingConfiguration.class, companyId,
 				HashMapDictionaryBuilder.<String, Object>put(
-					getStagingConfigurationName(), true
+					getPropertyName(), true
 				).build());
 
 			Configuration configuration = _getConfiguration(companyId);
@@ -67,8 +67,7 @@ public abstract class BaseStagingConfigurationUpgradeProcessTestCase {
 				configuration.getProperties();
 
 			Assert.assertTrue(
-				GetterUtil.getBoolean(
-					properties.get(getStagingConfigurationName())));
+				GetterUtil.getBoolean(properties.get(getPropertyName())));
 
 			_runUpgrade();
 
@@ -76,7 +75,7 @@ public abstract class BaseStagingConfigurationUpgradeProcessTestCase {
 
 			properties = configuration.getProperties();
 
-			Assert.assertNull(properties.get(getStagingConfigurationName()));
+			Assert.assertNull(properties.get(getPropertyName()));
 		}
 		finally {
 			if (originalConfiguration != null) {
@@ -89,7 +88,7 @@ public abstract class BaseStagingConfigurationUpgradeProcessTestCase {
 		}
 	}
 
-	protected abstract String getStagingConfigurationName();
+	protected abstract String getPropertyName();
 
 	protected abstract Version getUpgradeStepVersion();
 

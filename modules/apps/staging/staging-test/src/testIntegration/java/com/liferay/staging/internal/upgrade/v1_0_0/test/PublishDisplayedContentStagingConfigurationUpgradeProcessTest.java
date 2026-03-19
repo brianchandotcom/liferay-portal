@@ -19,7 +19,7 @@ public class PublishDisplayedContentStagingConfigurationUpgradeProcessTest
 	extends BaseStagingConfigurationUpgradeProcessTestCase {
 
 	@Override
-	protected String getStagingConfigurationName() {
+	protected String getPropertyName() {
 		return "publishDisplayedContent";
 	}
 

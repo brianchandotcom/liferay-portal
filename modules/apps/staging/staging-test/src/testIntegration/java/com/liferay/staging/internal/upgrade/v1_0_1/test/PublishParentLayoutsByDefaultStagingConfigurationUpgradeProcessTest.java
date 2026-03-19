@@ -19,7 +19,7 @@ public class PublishParentLayoutsByDefaultStagingConfigurationUpgradeProcessTest
 	extends BaseStagingConfigurationUpgradeProcessTestCase {
 
 	@Override
-	protected String getStagingConfigurationName() {
+	protected String getPropertyName() {
 		return "publishParentLayoutsByDefault";
 	}
 

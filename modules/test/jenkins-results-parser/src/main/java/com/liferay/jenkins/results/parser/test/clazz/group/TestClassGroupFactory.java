@@ -349,7 +349,7 @@ public class TestClassGroupFactory {
 					batchTestClassGroup = new FunctionalBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
 				}
-				else if (testBatch != null) {
+				else if (testBatch instanceof PoshiTestBatch) {
 					batchTestClassGroup = new FunctionalBatchTestClassGroup(
 						batchName, portalTestClassJob,
 						(PoshiTestBatch)testBatch);
@@ -367,7 +367,7 @@ public class TestClassGroupFactory {
 					batchTestClassGroup = new JUnitBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
 				}
-				else if (testBatch != null) {
+				else if (testBatch instanceof JUnitTestBatch) {
 					batchTestClassGroup = new JUnitBatchTestClassGroup(
 						batchName, portalTestClassJob,
 						(JUnitTestBatch)testBatch);
@@ -437,7 +437,7 @@ public class TestClassGroupFactory {
 					batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
 				}
-				else if (testBatch != null) {
+				else if (testBatch instanceof JUnitTestBatch) {
 					batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
 						batchName, portalTestClassJob,
 						(JUnitTestBatch)testBatch);
@@ -474,7 +474,7 @@ public class TestClassGroupFactory {
 					batchTestClassGroup = new PlaywrightBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
 				}
-				else if (testBatch != null) {
+				else if (testBatch instanceof PlaywrightTestBatch) {
 					batchTestClassGroup = new PlaywrightBatchTestClassGroup(
 						batchName, (PlaywrightTestBatch)testBatch,
 						portalTestClassJob);

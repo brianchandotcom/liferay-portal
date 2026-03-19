@@ -11,6 +11,13 @@ resource "helm_release" "argo_workflows" {
 		yamlencode(
 			{
 				controller={
+					podSecurityContext={
+						runAsNonRoot=true
+						runAsUser=1000
+						seccompProfile={
+							type="RuntimeDefault"
+						}
+					}
 					resources={
 						limits={
 							memory="512Mi"
@@ -20,8 +27,22 @@ resource "helm_release" "argo_workflows" {
 							memory="128Mi"
 						}
 					}
+					securityContext={
+						allowPrivilegeEscalation=false
+						capabilities={
+							drop=["ALL"]
+						}
+						readOnlyRootFilesystem=true
+					}
 				}
 				server={
+					podSecurityContext={
+						runAsNonRoot=true
+						runAsUser=1000
+						seccompProfile={
+							type="RuntimeDefault"
+						}
+					}
 					resources={
 						limits={
 							memory="256Mi"
@@ -31,6 +52,13 @@ resource "helm_release" "argo_workflows" {
 							memory="128Mi"
 						}
 					}
+					securityContext={
+						allowPrivilegeEscalation=false
+						capabilities={
+							drop=["ALL"]
+						}
+						readOnlyRootFilesystem=true
+					}
 				}
 			}),
 	]
@@ -38,7 +66,12 @@ resource "helm_release" "argo_workflows" {
 }
 resource "kubernetes_namespace" "argo_workflows" {
 	metadata {
-		labels=local.common_labels
+		labels=merge(
+			local.common_labels,
+			{
+				"pod-security.kubernetes.io/enforce"="restricted"
+			}
+		)
 		name=var.argo_workflows_namespace
 	}
 }

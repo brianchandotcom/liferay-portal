@@ -60,170 +60,76 @@ test.beforeEach(async ({page}) => {
 });
 
 test(
-	'Verify floating icon enabled is visible and can be disabled',
-	{tag: '@LPD-78592'},
-	async ({systemSettingsPage}) => {
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
+	'Escape texts in Cookie Banner to avoid XSS injections',
+	{tag: '@LPD-69398'},
+	async ({page, systemSettingsPage}) => {
+		const script = '<script>alert("Hello world!")</script>';
 
-		const floatingIconButton = systemSettingsPage.page.getByLabel(
-			'Floating Icon Enabled'
-		);
-
-		await floatingIconButton.waitFor({state: 'visible'});
-
-		await expect(floatingIconButton).toBeChecked();
-
-		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
-			name: 'Accept All',
+		page.on('dialog', async (dialog) => {
+			if (dialog.type() === 'alert') {
+				throw new Error('XSS detected');
+			}
 		});
 
-		await acceptAllButton.click();
+		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Banner');
 
-		await expect(acceptAllButton).not.toBeVisible();
+		await page.getByLabel('Title', {exact: true}).fill(script);
+		await page.getByLabel('Content', {exact: true}).fill(script);
+		await page.getByLabel('Privacy Policy Link').fill(script);
+		await page.getByLabel('Link Display Text', {exact: true}).fill(script);
 
-		await floatingIconButton.uncheck();
+		await page.getByRole('button', {name: 'Save'}).dispatchEvent('click');
 
-		await systemSettingsPage.page
-			.getByRole('button', {name: 'Update'})
+		await waitForAlert(page);
+	}
+);
+
+test(
+	'Escape texts in Cookie Panel to avoid XSS injections',
+	{tag: '@LPD-69399'},
+	async ({page, systemSettingsPage}) => {
+		const script = '<script>alert("Hello world!")</script>';
+
+		page.on('dialog', async (dialog) => {
+			if (dialog.type() === 'alert') {
+				throw new Error('XSS detected');
+			}
+		});
+
+		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Panel');
+
+		await page.getByLabel('Title', {exact: true}).waitFor();
+
+		await page.getByLabel('Title', {exact: true}).fill(script);
+		await page.getByLabel('Description', {exact: true}).fill(script);
+		await page.getByLabel('Cookie Policy Link').fill(script);
+		await page.getByLabel('Link Display Text', {exact: true}).fill(script);
+		await page
+			.getByLabel('Strictly Necessary Cookies Description', {exact: true})
+			.fill(script);
+		await page
+			.getByLabel('Functional Cookies Description', {exact: true})
+			.fill(script);
+		await page
+			.getByLabel('Performance Cookies Description', {exact: true})
+			.fill(script);
+		await page
+			.getByLabel('Personalization Cookies Description', {exact: true})
+			.fill(script);
+
+		await page.getByRole('button', {name: 'Save'}).dispatchEvent('click');
+
+		await waitForAlert(page);
+
+		const cookiesBanner = await page.getByRole('dialog', {
+			name: 'banner cookies',
+		});
+
+		await cookiesBanner.waitFor();
+
+		await cookiesBanner
+			.getByRole('button', {name: 'Configuration'})
 			.click();
-
-		await expect(floatingIconButton).not.toBeChecked();
-	}
-);
-
-test(
-	'Floating icon can be selected',
-	{tag: '@LPD-78592'},
-	async ({page, systemSettingsPage}) => {
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
-
-		const controlPanelIcon = page.locator(
-			'label:has(svg.lexicon-icon-control-panel)'
-		);
-
-		await expect(controlPanelIcon).toBeVisible();
-
-		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
-			name: 'Accept All',
-		});
-
-		await acceptAllButton.click();
-
-		await expect(acceptAllButton).not.toBeVisible();
-
-		await controlPanelIcon.check();
-
-		await systemSettingsPage.page
-			.getByRole('button', {name: 'Update'})
-			.click();
-
-		await expect(controlPanelIcon).toBeChecked();
-	}
-);
-
-test(
-	'Floating icon use',
-	{tag: '@LPD-78593'},
-	async ({page, systemSettingsPage}) => {
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
-
-		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
-			name: 'Accept All',
-		});
-
-		await acceptAllButton.click();
-
-		await expect(acceptAllButton).not.toBeVisible();
-
-		const floatingIconButton = page.locator(
-			'#_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_floatingIconButton'
-		);
-
-		await expect(floatingIconButton).toBeVisible();
-
-		await floatingIconButton.click();
-
-		const dialog = page.getByRole('dialog', {name: 'Cookie Configuration'});
-
-		await expect(dialog).toBeVisible();
-
-		await page.getByRole('button', {name: 'Accept Selected'}).click();
-
-		await expect(dialog).not.toBeVisible();
-	}
-);
-
-test(
-	'selected floating icon appears in button',
-	{tag: '@LPD-78593'},
-	async ({page, systemSettingsPage}) => {
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
-
-		const controlPanelIcon = page.locator('label[for$="control-panel"]');
-
-		await expect(controlPanelIcon).toBeVisible();
-
-		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
-			name: 'Accept All',
-		});
-
-		await acceptAllButton.click();
-
-		await expect(acceptAllButton).not.toBeVisible();
-
-		await controlPanelIcon.click();
-
-		await saveOrUpdateConfiguration(true, systemSettingsPage.page);
-
-		await expect(controlPanelIcon).toBeChecked();
-
-		const floatingIconButton = page.locator(
-			'#_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_floatingIconButton svg'
-		);
-
-		await expect(floatingIconButton).toHaveClass(
-			/lexicon-icon-control-panel/
-		);
-	}
-);
-
-test(
-	'Verify Cookie Banner Consent Panel buttons',
-	{tag: '@LPD-67119'},
-	async ({page}) => {
-		await test.step('Open the Cookie Banner Consent Panel', async () => {
-			await page.goto('/');
-
-			const cookiesBanner = await page.getByRole('dialog', {
-				name: 'banner cookies',
-			});
-
-			await cookiesBanner.waitFor();
-
-			await cookiesBanner
-				.getByRole('button', {name: 'Configuration'})
-				.click();
-		});
-
-		await test.step('Verify all button names and ordering', async () => {
-			const consentPanelFooter = await page.locator(
-				'[class="modal-footer"]'
-			);
-
-			await expectCookieConsentPanelButtons(await consentPanelFooter);
-		});
 	}
 );
 
@@ -298,6 +204,34 @@ test(
 );
 
 test(
+	'Verify Cookie Banner Consent Panel buttons',
+	{tag: '@LPD-67119'},
+	async ({page}) => {
+		await test.step('Open the Cookie Banner Consent Panel', async () => {
+			await page.goto('/');
+
+			const cookiesBanner = await page.getByRole('dialog', {
+				name: 'banner cookies',
+			});
+
+			await cookiesBanner.waitFor();
+
+			await cookiesBanner
+				.getByRole('button', {name: 'Configuration'})
+				.click();
+		});
+
+		await test.step('Verify all button names and ordering', async () => {
+			const consentPanelFooter = await page.locator(
+				'[class="modal-footer"]'
+			);
+
+			await expectCookieConsentPanelButtons(await consentPanelFooter);
+		});
+	}
+);
+
+test(
 	'Verify Cookie Preferences can be saved from the new Consent Manager page',
 	{tag: '@LPD-60007'},
 	async ({accountSettingsPage, page}) => {
@@ -342,76 +276,142 @@ test(
 );
 
 test(
-	'Escape texts in Cookie Banner to avoid XSS injections',
-	{tag: '@LPD-69398'},
+	'Verify Floating Icon can be selected',
+	{tag: '@LPD-78592'},
 	async ({page, systemSettingsPage}) => {
-		const script = '<script>alert("Hello world!")</script>';
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
 
-		page.on('dialog', async (dialog) => {
-			if (dialog.type() === 'alert') {
-				throw new Error('XSS detected');
-			}
+		const controlPanelIcon = page.locator(
+			'label:has(svg.lexicon-icon-control-panel)'
+		);
+
+		await expect(controlPanelIcon).toBeVisible();
+
+		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
+			name: 'Accept All',
 		});
 
-		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Banner');
+		await acceptAllButton.click();
 
-		await page.getByLabel('Title', {exact: true}).fill(script);
-		await page.getByLabel('Content', {exact: true}).fill(script);
-		await page.getByLabel('Privacy Policy Link').fill(script);
-		await page.getByLabel('Link Display Text', {exact: true}).fill(script);
+		await expect(acceptAllButton).not.toBeVisible();
 
-		await page.getByRole('button', {name: 'Save'}).dispatchEvent('click');
+		await controlPanelIcon.check();
 
-		await waitForAlert(page);
+		await systemSettingsPage.page
+			.getByRole('button', {name: 'Update'})
+			.click();
+
+		await expect(controlPanelIcon).toBeChecked();
 	}
 );
 
 test(
-	'Escape texts in Cookie Panel to avoid XSS injections',
-	{tag: '@LPD-69399'},
-	async ({page, systemSettingsPage}) => {
-		const script = '<script>alert("Hello world!")</script>';
+	'Verify Floating Icon Enabled is visible and can be disabled',
+	{tag: '@LPD-78592'},
+	async ({systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
 
-		page.on('dialog', async (dialog) => {
-			if (dialog.type() === 'alert') {
-				throw new Error('XSS detected');
-			}
+		const floatingIconButton = systemSettingsPage.page.getByLabel(
+			'Floating Icon Enabled'
+		);
+
+		await floatingIconButton.waitFor({state: 'visible'});
+
+		await expect(floatingIconButton).toBeChecked();
+
+		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
+			name: 'Accept All',
 		});
 
-		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Panel');
+		await acceptAllButton.click();
 
-		await page.getByLabel('Title', {exact: true}).waitFor();
+		await expect(acceptAllButton).not.toBeVisible();
 
-		await page.getByLabel('Title', {exact: true}).fill(script);
-		await page.getByLabel('Description', {exact: true}).fill(script);
-		await page.getByLabel('Cookie Policy Link').fill(script);
-		await page.getByLabel('Link Display Text', {exact: true}).fill(script);
-		await page
-			.getByLabel('Strictly Necessary Cookies Description', {exact: true})
-			.fill(script);
-		await page
-			.getByLabel('Functional Cookies Description', {exact: true})
-			.fill(script);
-		await page
-			.getByLabel('Performance Cookies Description', {exact: true})
-			.fill(script);
-		await page
-			.getByLabel('Personalization Cookies Description', {exact: true})
-			.fill(script);
+		await floatingIconButton.uncheck();
 
-		await page.getByRole('button', {name: 'Save'}).dispatchEvent('click');
-
-		await waitForAlert(page);
-
-		const cookiesBanner = await page.getByRole('dialog', {
-			name: 'banner cookies',
-		});
-
-		await cookiesBanner.waitFor();
-
-		await cookiesBanner
-			.getByRole('button', {name: 'Configuration'})
+		await systemSettingsPage.page
+			.getByRole('button', {name: 'Update'})
 			.click();
+
+		await expect(floatingIconButton).not.toBeChecked();
+	}
+);
+
+test(
+	'Verify Floating Icon use',
+	{tag: '@LPD-78593'},
+	async ({page, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
+
+		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
+			name: 'Accept All',
+		});
+
+		await acceptAllButton.click();
+
+		await expect(acceptAllButton).not.toBeVisible();
+
+		const floatingIconButton = page.locator(
+			'#_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_floatingIconButton'
+		);
+
+		await expect(floatingIconButton).toBeVisible();
+
+		await floatingIconButton.click();
+
+		const dialog = page.getByRole('dialog', {name: 'Cookie Configuration'});
+
+		await expect(dialog).toBeVisible();
+
+		await page.getByRole('button', {name: 'Accept Selected'}).click();
+
+		await expect(dialog).not.toBeVisible();
+	}
+);
+
+test(
+	'Verify selected Floating Icon appears in button',
+	{tag: '@LPD-78593'},
+	async ({page, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
+
+		const controlPanelIcon = page.locator('label[for$="control-panel"]');
+
+		await expect(controlPanelIcon).toBeVisible();
+
+		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
+			name: 'Accept All',
+		});
+
+		await acceptAllButton.click();
+
+		await expect(acceptAllButton).not.toBeVisible();
+
+		await controlPanelIcon.click();
+
+		await saveOrUpdateConfiguration(true, systemSettingsPage.page);
+
+		await expect(controlPanelIcon).toBeChecked();
+
+		const floatingIconButton = page.locator(
+			'#_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_floatingIconButton svg'
+		);
+
+		await expect(floatingIconButton).toHaveClass(
+			/lexicon-icon-control-panel/
+		);
 	}
 );
 

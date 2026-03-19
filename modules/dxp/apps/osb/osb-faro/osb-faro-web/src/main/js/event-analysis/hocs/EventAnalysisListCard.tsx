@@ -46,9 +46,14 @@ const connector = connect(null, {addAlert, close, open});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const EventAnalysisListCard: React.FC<PropsFromRedux> = ({
+interface EventAnalysisListCardProps extends PropsFromRedux {
+	onItemsChange: () => void;
+}
+
+const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 	addAlert,
 	close,
+	onItemsChange,
 	open
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
@@ -136,6 +141,8 @@ const EventAnalysisListCard: React.FC<PropsFromRedux> = ({
 					});
 
 					refetch();
+
+					onItemsChange();
 				})
 				.catch(() => {
 					addAlert({

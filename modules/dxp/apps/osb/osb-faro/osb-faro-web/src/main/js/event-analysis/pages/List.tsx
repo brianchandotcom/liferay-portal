@@ -1,33 +1,53 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import EventAnalysisListCard from '../hocs/EventAnalysisListCard';
 import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
+import {fetchFeatureUsages} from 'shared/api/projects';
 import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSource} from 'shared/hooks/useDataSource';
 import {useParams} from 'react-router-dom';
+import {useRequest} from 'shared/hooks/useRequest';
 
 const List = () => {
 	const {selectedChannel} = useChannelContext();
-
 	const {channelId, groupId} = useParams();
 	const currentUser = useCurrentUser();
 
 	const {empty, error, loading} = useDataSource();
 
+	const {
+		data: usageData = [],
+		error: usageError,
+		loading: usageLoading,
+		refetch
+	} = useRequest({
+		dataSourceFn: fetchFeatureUsages,
+		variables: {groupId}
+	});
+
+	const eventAnalysisUsage = usageData?.find(
+		item => item.name === 'Event Analysis'
+	);
+
+	const hasReachedLimit =
+		eventAnalysisUsage && eventAnalysisUsage.limit !== -1
+			? eventAnalysisUsage.currentUsage >= eventAnalysisUsage.limit
+			: false;
+
 	const pageAction = [
 		{
 			button: true,
-			disabled: empty || error || loading,
+			disabled:
+				empty || error || usageLoading || usageError || hasReachedLimit,
 			displayType: 'primary',
-			href: toRoute(Routes.EVENT_ANALYSIS_CREATE, {
-				channelId,
-				groupId
-			}),
+			href: toRoute(Routes.EVENT_ANALYSIS_CREATE, {channelId, groupId}),
 			label: Liferay.Language.get('create-analysis')
 		}
 	];
@@ -53,6 +73,24 @@ const List = () => {
 
 					<BasePage.Header.Section>
 						<BasePage.Header.PageActions actions={pageAction} />
+
+						{hasReachedLimit && (
+							<ClayButton
+								borderless
+								className='ml-2'
+								data-tooltip-align='right'
+								displayType='unstyled'
+								size='sm'
+								title={Liferay.Language.get(
+									'a-maximum-number-of-event-analyses-has-been-reached-delete-an-existing-analysis-to-create-a-new-one'
+								)}
+							>
+								<ClayIcon
+									className='text-secondary'
+									symbol='exclamation-full'
+								/>
+							</ClayButton>
+						)}
 					</BasePage.Header.Section>
 				</BasePage.Row>
 			</BasePage.Header>
@@ -109,7 +147,7 @@ const List = () => {
 					/>
 
 					<StatesRenderer.Success>
-						<EventAnalysisListCard />
+						<EventAnalysisListCard onItemsChange={refetch} />
 					</StatesRenderer.Success>
 				</StatesRenderer>
 			</BasePage.Body>

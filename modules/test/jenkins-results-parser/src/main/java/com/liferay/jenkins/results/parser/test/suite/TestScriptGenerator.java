@@ -47,7 +47,7 @@ public class TestScriptGenerator {
 		scriptFile.setExecutable(true);
 
 		System.out.println(
-			"Generated script written to: " +
+			"Local test script generated at: " +
 				JenkinsResultsParserUtil.getCanonicalPath(scriptFile));
 	}
 
@@ -65,7 +65,7 @@ public class TestScriptGenerator {
 
 		sb.append("#!/bin/bash\n\n");
 		sb.append("function main {\n");
-		sb.append("\techo \"Starting relevant local tests...\"\n");
+		sb.append("\techo \"Running local tests...\"\n");
 		sb.append("\techo \"\"\n\n");
 		sb.append(
 			"\techo \"Note: This script was generated based on a branch ");
@@ -126,7 +126,7 @@ public class TestScriptGenerator {
 		int total = commands.size();
 
 		if (total == 0) {
-			return "echo \"No relevant commands to execute.\"\n";
+			return "echo \"No test commands to execute.\"\n";
 		}
 
 		int index = 0;

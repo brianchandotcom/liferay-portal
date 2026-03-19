@@ -19,7 +19,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,6 +41,7 @@ import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -72,6 +78,36 @@ public class CMSDefaultPermissionUtilTest {
 			).build(),
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test
+	public void testAddObjectEntryModelPermissions() throws Exception {
+		Group group = _depotEntry.getGroup();
+
+		ObjectEntry objectEntry =
+			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+				RandomTestUtil.randomString(), group.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				_depotEntry.getModelClassName(),
+				JSONUtil.put(
+					"L_CMS_BASIC_WEB_CONTENT",
+					JSONUtil.putAll(ActionKeys.VIEW)),
+				group.getGroupId(), StringPool.BLANK);
+
+		Role cmsAdministratorRole = _roleLocalService.getRole(
+			group.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+		for (String actionId :
+				List.of(
+					ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW)) {
+
+			Assert.assertTrue(
+				_resourcePermissionLocalService.hasResourcePermission(
+					group.getCompanyId(), objectEntry.getModelClassName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(objectEntry.getObjectEntryId()),
+					cmsAdministratorRole.getRoleId(), actionId));
+		}
 	}
 
 	@Test
@@ -191,5 +227,11 @@ public class CMSDefaultPermissionUtilTest {
 		filter = "filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 	)
 	private FilterFactory<Predicate> _filterFactory;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

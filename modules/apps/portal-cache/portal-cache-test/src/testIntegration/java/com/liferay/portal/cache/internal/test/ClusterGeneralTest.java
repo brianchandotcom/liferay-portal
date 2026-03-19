@@ -190,6 +190,7 @@ public class ClusterGeneralTest implements Serializable {
 						return LanguageUtil.get(locale, key);
 					}
 				}));
+
 		Assert.assertEquals(
 			key,
 			_tomcatNode1.syncExecute(

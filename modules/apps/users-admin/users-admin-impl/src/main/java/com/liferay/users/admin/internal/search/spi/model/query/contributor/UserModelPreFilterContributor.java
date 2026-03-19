@@ -88,7 +88,13 @@ public class UserModelPreFilterContributor
 	private void _addContextQueryParams(
 		BooleanFilter contextFilter, String key, Object value) {
 
-		if (key.equals("usersGroups")) {
+		if (key.equals("inheritUsersGroups") || key.equals("usersGroups")) {
+			String fieldName = "groupIds";
+
+			if (key.equals("inheritUsersGroups")) {
+				fieldName = "scopeGroupId";
+			}
+
 			if (value instanceof Long[]) {
 				Long[] values = (Long[])value;
 
@@ -96,7 +102,7 @@ public class UserModelPreFilterContributor
 					return;
 				}
 
-				TermsFilter userGroupsTermsFilter = new TermsFilter("groupIds");
+				TermsFilter userGroupsTermsFilter = new TermsFilter(fieldName);
 
 				userGroupsTermsFilter.addValues(
 					ArrayUtil.toStringArray(values));
@@ -105,8 +111,7 @@ public class UserModelPreFilterContributor
 					userGroupsTermsFilter, BooleanClauseOccur.MUST);
 			}
 			else {
-				contextFilter.addRequiredTerm(
-					"groupIds", String.valueOf(value));
+				contextFilter.addRequiredTerm(fieldName, String.valueOf(value));
 			}
 		}
 		else if (key.equals("usersOrgs")) {

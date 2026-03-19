@@ -21,6 +21,7 @@ import com.liferay.osb.provisioning.rest.client.dto.v1_0.LicenseKey;
 import com.liferay.osb.provisioning.rest.client.resource.v1_0.LicenseKeyResource;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.time.Instant;
 
@@ -194,16 +195,9 @@ public class ProvisioningRestController extends BaseRestController {
 		Order order = _marketplaceService.getOrder(
 			GetterUtil.getLong(appLicenseKey.getOrderId()));
 
-		Map<String, String> productSpecificationsMap =
-			_marketplaceService.getProductSpecificationsMap(
-				_marketplaceService.getOrderProductId(order));
-
-		_marketplaceService.updateOrder(
-			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
-
 		ProductPurchase[] productPurchases =
 			_koroneikiService.postAccountProductPurchases(
-				jwt, productSpecificationsMap.get("license-type"), order);
+				jwt, "3 Months Limited Beta", order);
 
 		ProductPurchase productPurchase = productPurchases[0];
 
@@ -211,41 +205,43 @@ public class ProvisioningRestController extends BaseRestController {
 			return null;
 		}
 
-		appLicenseKey.setProductPurchaseKey(productPurchase.getKey());
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				_marketplaceService.getOrderProductId(order));
+
+		if (Validator.isNotNull(
+				productSpecificationsMap.get("app-entry-uuid"))) {
+
+			appLicenseKey.setProductId(
+				productSpecificationsMap.get("app-entry-uuid"));
+		}
 
 		appLicenseKey = _provisioningService.postAppLicenseKey(
-			appLicenseKey, jwt);
+			appLicenseKey, jwt, productPurchase);
 
-		_marketplaceService.updateOrder(
-			null, order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
+		_marketplaceService.completeOrder(
+			order.getId(),
+			MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED);
 
 		return appLicenseKey;
-	}
-
-	@PostMapping("license-keys")
-	public AppLicenseKey postLicenseKeys(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
-		throws Exception {
-
-		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
-			new JSONObject(
-				json
-			).getJSONObject(
-				"licenseEntry"
-			).toString());
-
-		return _provisioningService.postAppLicenseKey(appLicenseKey, jwt);
 	}
 
 	@PostMapping("license-key-type-free")
 	public LicenseKey postLicenseKeyTypeFree(@RequestBody String json)
 		throws Exception {
 
+		LicenseKey licenseKey = LicenseKey.toDTO(json);
+
 		LicenseKeyResource licenseKeyResource =
 			_provisioningService.getLicenseKeyResource();
 
-		return licenseKeyResource.postLicenseKeyTypeFree(
-			LicenseKey.toDTO(json));
+		licenseKey = licenseKeyResource.postLicenseKeyTypeFree(licenseKey);
+
+		_marketplaceService.completeOrder(
+			GetterUtil.getLong(licenseKey.getAssetReceiptLicenseUuid()),
+			MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED);
+
+		return licenseKey;
 	}
 
 	@PostMapping("license-key-type-free/{id}/renew")

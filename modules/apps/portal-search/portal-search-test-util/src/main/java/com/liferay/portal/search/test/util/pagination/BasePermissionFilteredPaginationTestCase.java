@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.test.util.pagination;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilter;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
@@ -279,6 +281,9 @@ public abstract class BasePermissionFilteredPaginationTestCase
 			defaultSearchResultPermissionFilterConfiguration = Mockito.mock(
 				DefaultSearchResultPermissionFilterConfiguration.class);
 
+		ServiceTrackerMap<String, ModelResourcePermission<?>>
+			serviceTrackerMap = Mockito.mock(ServiceTrackerMap.class);
+
 		setUpSearchResultPermissionFilterMocks(
 			indexerRegistry, permissionChecker,
 			defaultSearchResultPermissionFilterConfiguration);
@@ -290,7 +295,8 @@ public abstract class BasePermissionFilteredPaginationTestCase
 			new FacetPostProcessorImpl(), indexerRegistry, permissionChecker,
 			relatedEntryIndexerRegistry, this::doSearch,
 			searchRequestBuilderFactory,
-			defaultSearchResultPermissionFilterConfiguration);
+			defaultSearchResultPermissionFilterConfiguration,
+			serviceTrackerMap);
 	}
 
 	protected void doAssertPagination(

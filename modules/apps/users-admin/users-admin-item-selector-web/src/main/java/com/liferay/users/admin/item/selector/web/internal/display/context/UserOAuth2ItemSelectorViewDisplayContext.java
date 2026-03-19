@@ -60,9 +60,6 @@ public class UserOAuth2ItemSelectorViewDisplayContext {
 
 		UserSearch userSearch = new UserSearch(_renderRequest, _portletURL);
 
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			themeDisplay.getSiteGroupIdOrLiveGroupId());
-
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
 
@@ -74,11 +71,19 @@ public class UserOAuth2ItemSelectorViewDisplayContext {
 					UserConstants.TYPE_REGULAR,
 					UserConstants.TYPE_SERVICE_ACCOUNT
 				}
-			).build();
+			).put(
+				"inheritUsersGroups",
+				() -> {
+					Group group = GroupLocalServiceUtil.fetchGroup(
+						themeDisplay.getSiteGroupIdOrLiveGroupId());
 
-		if (group.isLimitedToParentSiteMembers()) {
-			userParams.put("inheritUsersGroups", group.getParentGroupId());
-		}
+					if (group.isLimitedToParentSiteMembers()) {
+						return group.getParentGroupId();
+					}
+
+					return null;
+				}
+			).build();
 
 		List<User> users = UserLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),

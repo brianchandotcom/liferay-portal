@@ -27,6 +27,7 @@ task setUpLibs
 task setUpPortalTools
 task setUpYarnOfflineCache
 task updateYarnBinariesCache
+task validateBranch(type: JavaExec)
 task wrapperPortal(type: Wrapper)
 task wrapperProjectTemplates(type: Wrapper)
 task wrapperSubrepo(type: Wrapper)
@@ -65,6 +66,14 @@ appendHotfixQualifier {
 			}
 		}
 	}
+}
+
+configurations {
+	validateBranchConfiguration
+}
+
+dependencies {
+	validateBranchConfiguration group: "com.liferay", name: "com.liferay.jenkins.results.parser", version: "1.0.1763"
 }
 
 formatSourceCurrentBranch {
@@ -156,6 +165,47 @@ setUpYarnOfflineCache {
 updateYarnBinariesCache {
 	doFirst {
 		logger.lifecycle "Updating Yarn binaries cache directories"
+	}
+}
+
+validateBranch {
+	classpath = configurations.validateBranchConfiguration
+	mainClass = "com.liferay.jenkins.results.parser.test.suite.TestScriptGenerator"
+
+	File gitRoot = projectDir.parentFile
+
+	while (gitRoot != null) {
+		File gitDir = new File(gitRoot, ".git")
+
+		if (gitDir.exists()) {
+			break
+		}
+
+		gitRoot = gitRoot.parentFile
+	}
+
+	if (project.hasProperty("gitRepositoryDirPath")) {
+		Object gitRepositoryDirPath = project.property("gitRepositoryDirPath")
+
+		gitRoot = file(gitRepositoryDirPath)
+	}
+
+	if (gitRoot != null) {
+		String gitRootAbsolutePath = gitRoot.absolutePath
+
+		args gitRootAbsolutePath
+	}
+
+	doLast {
+		if (gitRoot != null) {
+			exec {
+				String gitRootAbsolutePath = gitRoot.absolutePath
+
+				commandLine "bash", "${gitRootAbsolutePath}/validate_branch.sh"
+				standardInput = System.in
+				workingDir gitRoot
+			}
+		}
 	}
 }
 

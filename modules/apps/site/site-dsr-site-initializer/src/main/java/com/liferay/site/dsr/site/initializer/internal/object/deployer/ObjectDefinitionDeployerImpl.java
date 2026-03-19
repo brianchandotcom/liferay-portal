@@ -12,13 +12,16 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -149,6 +152,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				layoutSetPrototype.getLayoutSetPrototypeId()),
 			role.getRoleId(), new String[] {ActionKeys.VIEW});
 
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			"L_" + GroupConstants.DSR, companyId);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			companyId, Layout.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(group.getGroupId()),
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
+
 		Map<String, String[]> permissionsMap = HashMapBuilder.put(
 			RoleConstants.OWNER,
 			new String[] {
@@ -158,6 +170,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		).put(
 			RoleConstants.SITE_MEMBER,
 			new String[] {ActionKeys.SUBSCRIBE, ActionKeys.VIEW}
+		).put(
+			RoleConstants.USER,
+			new String[] {ActionKeys.VIEW}
 		).put(
 			"DSR Contributor",
 			new String[] {
@@ -198,6 +213,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

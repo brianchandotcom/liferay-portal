@@ -4,6 +4,6 @@ helmCharts:
         namespace: elastic-system
         releaseName: eck-operator
         repo: https://helm.elastic.co
-        valuesFile: values.yaml
+        valuesFile: eck-operator.yaml
         version: 3.2.0
 kind: Kustomization

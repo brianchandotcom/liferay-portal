@@ -43,6 +43,7 @@ export {
 } from './contexts/StyleErrorsContext';
 export {default as useDragAndDrop} from './hooks/drag_and_drop/useDragAndDrop';
 export {default as useControlledState} from './hooks/useControlledState';
+export type {default as ConfigurationCustomComponentProps} from './types/ConfigurationCustomComponentProps';
 export {default as SegmentExperience} from './types/SegmentExperience';
 export {default as convertRGBtoHex} from './utils/convertRGBtoHex';
 export {default as isCtrlOrMeta} from './utils/isCtrlOrMeta';

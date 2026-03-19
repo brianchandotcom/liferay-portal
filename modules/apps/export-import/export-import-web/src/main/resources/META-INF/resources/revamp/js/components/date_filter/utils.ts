@@ -68,7 +68,7 @@ export function getAppliedFilterSummary(applied: DateFilterValues): string {
 			(opt) => opt.value === applied.modifiedLast
 		);
 
-		return `${Liferay.Language.get('modified-last')}: ${option?.label}`;
+		return `${Liferay.Language.get('modified-last')}: ${option?.label ?? ''}`;
 	}
 
 	if (applied.filterType === FilterType.Range) {

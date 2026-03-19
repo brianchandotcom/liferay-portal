@@ -67,7 +67,7 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					_buildUpdateLayoutPageTemplateStructureRelSQL(
+					_getUpdateLayoutPageTemplateStructureRelSQL(
 						hasLayoutPageTemplateStructureRelCTCollectionId,
 						layoutPageTemplateStructureColumnName));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
@@ -135,6 +135,7 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 
 				if (hasColumn("FragmentEntryLink", "segmentsExperienceId") &&
 					hasColumn("FragmentEntryLink", "ctCollectionId")) {
+
 					preparedStatement3.setLong(
 						1, draftLayoutSegmentsExperienceId);
 					preparedStatement3.setLong(2, ctCollectionId);
@@ -167,7 +168,29 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private String _buildUpdateLayoutPageTemplateStructureRelSQL(
+	private boolean _existDraftLayoutSegmentsExperience(
+			long ctCollectionId, long groupId, String segmentsExperienceKey,
+			long plid)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select 1 from SegmentsExperience where ctCollectionId = ",
+					"? and groupId = ? and segmentsExperienceKey = ? and plid ",
+					"= ?"))) {
+
+			preparedStatement.setLong(1, ctCollectionId);
+			preparedStatement.setLong(2, groupId);
+			preparedStatement.setString(3, segmentsExperienceKey);
+			preparedStatement.setLong(4, plid);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				return resultSet.next();
+			}
+		}
+	}
+
+	private String _getUpdateLayoutPageTemplateStructureRelSQL(
 		boolean hasLayoutPageTemplateStructureRelCTCollectionId,
 		String layoutPageTemplateStructureColumnName) {
 
@@ -188,28 +211,6 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 		sb.append(" = ?)");
 
 		return sb.toString();
-	}
-
-	private boolean _existDraftLayoutSegmentsExperience(
-			long ctCollectionId, long groupId, String segmentsExperienceKey,
-			long plid)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select 1 from SegmentsExperience where ",
-					"ctCollectionId = ? and groupId = ? and ",
-					"segmentsExperienceKey = ? and plid = ?"))) {
-
-			preparedStatement.setLong(1, ctCollectionId);
-			preparedStatement.setLong(2, groupId);
-			preparedStatement.setString(3, segmentsExperienceKey);
-			preparedStatement.setLong(4, plid);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				return resultSet.next();
-			}
-		}
 	}
 
 	private final LayoutLocalService _layoutLocalService;

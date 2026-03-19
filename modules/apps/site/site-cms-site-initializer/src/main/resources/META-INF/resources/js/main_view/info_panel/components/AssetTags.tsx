@@ -1,6 +1,6 @@
 /**
  * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
- * SPDX-License-nameentifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import Label from '@clayui/label';
@@ -8,8 +8,9 @@ import ClayPanel from '@clayui/panel';
 import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
+import ApiHelper from '../../../common/services/ApiHelper';
 import TagService from '../../../common/services/TagService';
 import {IAssetObjectEntry} from '../../../common/types/AssetType';
 import {EntryCategorizationDTO} from '../services/ObjectEntryService';
@@ -38,6 +39,7 @@ const AssetTags = ({
 	titleClassName?: string;
 	updateObjectEntry: (object: EntryCategorizationDTO) => void | Promise<void>;
 }) => {
+	const [canCreate, setCanCreate] = useState(false);
 	const [value, setValue] = useState('');
 
 	const scopeId = useMemo(
@@ -57,6 +59,18 @@ const AssetTags = ({
 
 		return `${baseURL}/${cmsGroupId}/keywords?filter=groupIds in ('${scopeId}')`;
 	}, [cmsGroupId, scopeId]);
+
+	useEffect(() => {
+		const checkPermission = async () => {
+			const {data} = await ApiHelper.get<{
+				actions: {create: {href: string}};
+			}>(apiURL);
+
+			setCanCreate(!!data?.actions?.create);
+		};
+
+		checkPermission();
+	}, [apiURL]);
 
 	const addKeyword = useCallback(
 		async (keyword: TKeyword) => {
@@ -154,6 +168,7 @@ const AssetTags = ({
 					}}
 					placeholder={Liferay.Language.get('add-tag')}
 					primaryAction={
+						canCreate &&
 						!!value.length &&
 						!(objectEntry?.keywords || []).includes(value) && {
 							label: sub(

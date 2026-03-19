@@ -666,7 +666,7 @@ export class DataApiHelpers extends ApiHelpers {
 				);
 			}
 			else if (item.type === 'site') {
-				await this.headlessSite.deleteSite(item.id);
+				await this.headlessAdminSite.deleteSite(item.id);
 			}
 			else if (item.type === 'skuUnitOfMeasure') {
 				await this.headlessCommerceAdminCatalog.deleteSkuUnitOfMeasure(

@@ -124,13 +124,13 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 
 	private int _getSamlSpSessionIdOffset() throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select min(samlSpSessionId) - 1 as samlSpSessionIdfrom " +
+				"select min(samlSpSessionId) - 1 as samlSpSessionId from " +
 					"SamlSpSession");
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				return resultSet.getInt("samlSpSessionIdfrom");
+				return resultSet.getInt("samlSpSessionId");
 			}
 		}
 

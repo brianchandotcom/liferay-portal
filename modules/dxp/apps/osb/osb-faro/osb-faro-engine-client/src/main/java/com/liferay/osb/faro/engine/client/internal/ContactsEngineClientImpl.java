@@ -975,14 +975,18 @@ public class ContactsEngineClientImpl
 	@Override
 	public Results<AssetSummary> getAssetSummaries(
 		FaroProject faroProject, long channelId, String keywords, int rangeKey,
-		int cur, int delta, List<OrderByField> orderByFields) {
+		int cur, int delta, String sort) {
 
 		Map<String, Object> uriVariables = getUriVariables(
-			faroProject, cur, delta, orderByFields);
+			faroProject, cur, delta, null);
 
 		uriVariables.put("channelId", channelId);
 		uriVariables.put("keywords", keywords);
 		uriVariables.put("rangeKey", rangeKey);
+		uriVariables.put(
+			"sort",
+			Arrays.asList(
+				StringUtil.replace(sort, CharPool.COLON, CharPool.COMMA)));
 
 		PagedModel<?, AssetSummary> pagedModel = get(
 			faroProject, Rels.ASSET_SUMMARIES,

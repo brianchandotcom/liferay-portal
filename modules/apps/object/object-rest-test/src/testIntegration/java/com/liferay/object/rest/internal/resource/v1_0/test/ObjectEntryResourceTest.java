@@ -7811,8 +7811,8 @@ public class ObjectEntryResourceTest {
 					"upload",
 					() -> {
 						FileEntry fileEntry = _addTempFileEntry(
-							DLTestUtil.randomTextFileBytes(),
-							objectDefinition, "New Testament");
+							DLTestUtil.randomTextFileBytes(), objectDefinition,
+							"New Testament");
 
 						return fileEntry.getFileEntryId();
 					}
@@ -18709,8 +18709,7 @@ public class ObjectEntryResourceTest {
 			),
 			_toFileEntry(
 				String::new,
-				ArrayUtil.append(
-					DLTestUtil.randomTextFileBytes(7), (byte)'$'),
+				ArrayUtil.append(DLTestUtil.randomTextFileBytes(7), (byte)'$'),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -19675,8 +19674,7 @@ public class ObjectEntryResourceTest {
 			),
 			_toFileEntry(
 				String::new,
-				ArrayUtil.append(
-					DLTestUtil.randomTextFileBytes(7), (byte)'$'),
+				ArrayUtil.append(DLTestUtil.randomTextFileBytes(7), (byte)'$'),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,

@@ -2576,7 +2576,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 			Assert.assertArrayEquals(
 				_OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER,
-				StringUtil.read(dlFileEntry.getContentStream()).getBytes());
+				StringUtil.read(
+					dlFileEntry.getContentStream()
+				).getBytes());
 		}
 	}
 

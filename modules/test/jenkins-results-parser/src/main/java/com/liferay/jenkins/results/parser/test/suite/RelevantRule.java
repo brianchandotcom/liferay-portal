@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
+import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
@@ -29,12 +30,21 @@ import java.util.Set;
 public class RelevantRule implements Comparable<RelevantRule> {
 
 	public RelevantRule(
-		String filePath, Job job, String name, Properties properties) {
+		String filePath, GitWorkingDirectory gitWorkingDirectory, Job job,
+		String name, Properties properties) {
 
 		_filePath = filePath;
+		_gitWorkingDirectory = gitWorkingDirectory;
 		_job = job;
 		_name = name;
 		_properties = properties;
+	}
+
+	public RelevantRule(
+		String filePath, GitWorkingDirectory gitWorkingDirectory, String name,
+		Properties properties) {
+
+		this(filePath, gitWorkingDirectory, null, name, properties);
 	}
 
 	@Override
@@ -44,6 +54,10 @@ public class RelevantRule implements Comparable<RelevantRule> {
 
 	public String getFilePath() {
 		return _filePath;
+	}
+
+	public GitWorkingDirectory getGitWorkingDirectory() {
+		return _gitWorkingDirectory;
 	}
 
 	public String getKey() {
@@ -129,6 +143,11 @@ public class RelevantRule implements Comparable<RelevantRule> {
 	}
 
 	public List<TestBatch> getTestBatches() {
+		if (_job == null) {
+			throw new IllegalStateException(
+				"Job object is required for getTestBatches");
+		}
+
 		if (_testBatches == null) {
 			JobProperty testBatchNamesJobProperty =
 				getTestBatchNamesJobProperty();
@@ -162,6 +181,11 @@ public class RelevantRule implements Comparable<RelevantRule> {
 	}
 
 	public JobProperty getTestBatchNamesJobProperty() {
+		if (_job == null) {
+			throw new IllegalStateException(
+				"Job object is required for getTestBatchNamesJobProperty");
+		}
+
 		File propertiesFile = new File(_filePath);
 
 		File propertiesBaseDir = propertiesFile.getParentFile();
@@ -242,6 +266,7 @@ public class RelevantRule implements Comparable<RelevantRule> {
 	}
 
 	private final String _filePath;
+	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Job _job;
 	private List<PathMatcher> _modifiedFilesExcludesPathMatchers;
 	private List<PathMatcher> _modifiedFilesIncludesPathMatchers;

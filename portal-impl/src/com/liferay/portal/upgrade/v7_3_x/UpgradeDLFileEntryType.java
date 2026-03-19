@@ -54,19 +54,24 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 				DLFileEntryMetadata.class);
 
 			while (resultSet1.next()) {
-				preparedStatement2.setLong(1, resultSet1.getLong(3));
+				preparedStatement2.setLong(1, resultSet1.getLong("groupId"));
 				preparedStatement2.setLong(2, classNameId);
 				preparedStatement2.setString(
-					3, DLUtil.getDDMStructureKey(resultSet1.getString(1)));
+					3,
+					DLUtil.getDDMStructureKey(resultSet1.getString("uuid_")));
 				preparedStatement2.setString(
 					4,
-					DLUtil.getDeprecatedDDMStructureKey(resultSet1.getLong(2)));
-				preparedStatement2.setString(5, resultSet1.getString(4));
+					DLUtil.getDeprecatedDDMStructureKey(
+						resultSet1.getLong("fileEntryTypeId")));
+				preparedStatement2.setString(
+					5, resultSet1.getString("fileEntryTypeKey"));
 
 				try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 					if (resultSet2.next()) {
-						preparedStatement3.setLong(1, resultSet2.getLong(1));
-						preparedStatement3.setLong(2, resultSet1.getLong(2));
+						preparedStatement3.setLong(
+							1, resultSet2.getLong("structureId"));
+						preparedStatement3.setLong(
+							2, resultSet1.getLong("fileEntryTypeId"));
 
 						preparedStatement3.addBatch();
 					}

@@ -63,9 +63,9 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 
 					do {
 						updatePreparedStatement.setString(
-							1, resultSet.getString(1));
+							1, resultSet.getString("treePath"));
 						updatePreparedStatement.setLong(
-							2, resultSet.getLong(2));
+							2, resultSet.getLong("categoryId"));
 
 						updatePreparedStatement.addBatch();
 					}

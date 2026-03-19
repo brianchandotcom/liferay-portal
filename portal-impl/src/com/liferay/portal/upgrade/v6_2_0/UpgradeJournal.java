@@ -1320,8 +1320,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from JournalArticle where groupId = ? and " +
-					"articleId != ? and urlTitle = ?")) {
+				"select count(*) as count from JournalArticle where groupId " +
+					"= ? and articleId != ? and urlTitle = ?")) {
 
 			preparedStatement.setLong(1, groupId);
 			preparedStatement.setString(2, articleId);
@@ -1329,9 +1329,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					int count = resultSet.getInt(1);
-
-					if (count > 0) {
+					if (resultSet.getInt("count") > 0) {
 						return false;
 					}
 				}

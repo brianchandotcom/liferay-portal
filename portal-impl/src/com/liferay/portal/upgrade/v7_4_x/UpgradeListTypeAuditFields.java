@@ -38,7 +38,7 @@ public class UpgradeListTypeAuditFields extends UpgradeProcess {
 				preparedStatement2.setTimestamp(
 					3, new Timestamp(System.currentTimeMillis()));
 				preparedStatement2.setLong(4, 0);
-				preparedStatement2.setLong(5, resultSet.getLong(1));
+				preparedStatement2.setLong(5, resultSet.getLong("listTypeId"));
 
 				preparedStatement2.addBatch();
 			}

@@ -137,9 +137,7 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
-					long companyId = resultSet.getLong(1);
-
-					companyIds.add(companyId);
+					companyIds.add(resultSet.getLong("companyId"));
 				}
 			}
 

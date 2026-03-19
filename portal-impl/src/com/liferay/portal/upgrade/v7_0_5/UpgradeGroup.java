@@ -54,9 +54,9 @@ public class UpgradeGroup extends UpgradeProcess {
 				ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 				while (resultSet1.next()) {
-					long groupId = resultSet1.getLong(1);
+					long groupId = resultSet1.getLong("groupId");
 
-					long parentGroupId = resultSet1.getLong(2);
+					long parentGroupId = resultSet1.getLong("parentGroupId");
 
 					preparedStatement2.setLong(1, parentGroupId);
 

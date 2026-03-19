@@ -52,7 +52,7 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 					new ResourceActionsImpl();
 
 				while (resultSet.next()) {
-					String name = resultSet.getString(1);
+					String name = resultSet.getString("name");
 
 					String[] classNames = StringUtil.split(
 						name,

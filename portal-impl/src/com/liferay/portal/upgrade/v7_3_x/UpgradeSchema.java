@@ -45,8 +45,8 @@ public class UpgradeSchema extends UpgradeProcess {
 
 			while (resultSet.next()) {
 				preparedStatement2.setLong(1, increment());
-				preparedStatement2.setLong(2, resultSet.getLong(1));
-				preparedStatement2.setString(3, resultSet.getString(2));
+				preparedStatement2.setLong(2, resultSet.getLong("companyId"));
+				preparedStatement2.setString(3, resultSet.getString("key_"));
 
 				preparedStatement2.addBatch();
 			}

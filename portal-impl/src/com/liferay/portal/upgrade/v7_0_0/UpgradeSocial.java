@@ -127,12 +127,16 @@ public class UpgradeSocial extends UpgradeProcess {
 				}
 			}
 
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"select max(activitySetId) from SocialActivitySet");
+			try (PreparedStatement preparedStatement2 =
+					connection.prepareStatement(
+						"select max(activitySetId) as activitySetId from " +
+							"SocialActivitySet");
 
-			try (ResultSet resultSet = preparedStatement2.executeQuery()) {
+				ResultSet resultSet = preparedStatement2.executeQuery()) {
+
 				if (resultSet.next()) {
-					return Math.max(0, resultSet.getLong(1) - counter);
+					return Math.max(
+						0, resultSet.getLong("activitySetId") - counter);
 				}
 
 				return 0;

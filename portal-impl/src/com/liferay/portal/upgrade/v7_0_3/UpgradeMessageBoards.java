@@ -75,8 +75,8 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement2.executeQuery()) {
 				while (resultSet.next()) {
-					long groupId = resultSet.getLong(1);
-					long discussionId = resultSet.getLong(2);
+					long groupId = resultSet.getLong("groupId");
+					long discussionId = resultSet.getLong("discussionId");
 
 					preparedStatement1.setLong(1, groupId);
 					preparedStatement1.setLong(2, discussionId);

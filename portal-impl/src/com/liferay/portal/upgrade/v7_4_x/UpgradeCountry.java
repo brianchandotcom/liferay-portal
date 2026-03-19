@@ -39,7 +39,8 @@ public class UpgradeCountry extends UpgradeProcess {
 
 				while (resultSet.next()) {
 					preparedStatement2.setString(1, PortalUUIDUtil.generate());
-					preparedStatement2.setLong(2, resultSet.getLong(1));
+					preparedStatement2.setLong(
+						2, resultSet.getLong("countryId"));
 
 					preparedStatement2.addBatch();
 				}

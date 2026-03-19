@@ -492,14 +492,14 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from Release_ where releaseId = ? and " +
-					"testString = ?")) {
+				"select count(*) as count from Release_ where releaseId = ? " +
+					"and testString = ?")) {
 
 			preparedStatement.setLong(1, ReleaseConstants.DEFAULT_ID);
 			preparedStatement.setString(2, testString);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next() && (resultSet.getInt(1) > 0)) {
+				if (resultSet.next() && (resultSet.getInt("count") > 0)) {
 					return true;
 				}
 			}

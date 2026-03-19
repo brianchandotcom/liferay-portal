@@ -7,6 +7,7 @@ package com.liferay.depot.internal.instance.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -15,6 +16,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -26,6 +29,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -71,6 +75,16 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 				"space-owners-are-super-users-of-their-space-and-can-assign-" +
 					"space-roles-to-users",
 				DepotRolesConstants.ASSET_LIBRARY_OWNER, "space-owner");
+
+			_assertRoleResourcePermissions(
+				company.getCompanyId(),
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+				ResourceActionsUtil.getResourceActions(
+					DepotEntry.class.getName()));
+			_assertRoleResourcePermissions(
+				company.getCompanyId(),
+				DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+				List.of(ActionKeys.VIEW));
 		}
 		finally {
 			if (company != null) {
@@ -112,6 +126,21 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 
 			throw new AssertionError(
 				noSuchResourcePermissionException.getMessage());
+		}
+	}
+
+	private void _assertRoleResourcePermissions(
+			long companyId, String roleName, List<String> actionIds)
+		throws PortalException {
+
+		Role role = _roleLocalService.getRole(companyId, roleName);
+
+		for (String actionId : actionIds) {
+			Assert.assertTrue(
+				_resourcePermissionLocalService.hasResourcePermission(
+					companyId, DepotEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					role.getRoleId(), actionId));
 		}
 	}
 

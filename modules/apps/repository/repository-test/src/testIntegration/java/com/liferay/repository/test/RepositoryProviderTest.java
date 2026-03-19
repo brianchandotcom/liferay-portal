@@ -97,6 +97,47 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getLocalRepository(dlFolder.getRepositoryId());
 	}
 
+	@Test
+	public void testCreateLocalRepositoryFromExistingRepositoryIdWithoutPermissions()
+		throws Exception {
+
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionChecker permissionChecker =
+				new SimplePermissionChecker() {
+
+					@Override
+					public boolean hasOwnerPermission(
+						long companyId, String name, String primKey,
+						long ownerId, String actionId) {
+
+						return false;
+					}
+
+					@Override
+					protected boolean hasPermission(String actionId) {
+						return false;
+					}
+
+				};
+
+			permissionChecker.init(originalPermissionChecker.getUser());
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+			RepositoryProviderUtil.getLocalRepository(
+				dlFolder.getRepositoryId());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+	}
+
 	@Test(expected = NoSuchFileEntryException.class)
 	public void testCreateLocalRepositoryFromNonexistentFileEntryId()
 		throws Exception {

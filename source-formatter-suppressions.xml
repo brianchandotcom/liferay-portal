@@ -158,11 +158,6 @@
 		<suppress checks="PropertiesWhitespaceCheck" files="build\.properties" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/resource/bundle/ClassResourceBundleLoader\.java" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ResourceBundleUtil\.java" />
-		<suppress checks="SHSubshellCheck" files="tools/commit_release\.sh" />
-		<suppress checks="SHSubshellCheck" files="tools/tag_release\.sh" />
-		<suppress checks="SHSubshellCheck" files="workspaces/refresh_liferay_sample_workspace\.sh" />
-		<suppress checks="SHSubshellCheck" files="workspaces/liferay-customer-workspace/quickstart/run\.sh" />
-		<suppress checks="SHSubshellCheck" files="workspaces/liferay-learn-workspace/client-extensions/liferay-learn-etc-cron-1/assets/liferay_jar_runner_set_up\.sh" />
 		<suppress checks="StringMethodsCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/StringUtil\.java" />
 		<suppress checks="StringMethodsCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringUtilTest\.java" />
 		<suppress checks="StringMethodsCheck" files="portal-test/src/com/liferay/portal/kernel/test/rule/CodeCoverageAssertor\.java" />

@@ -31,7 +31,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 	@BeforeClass
 	public static void setUpClass() {
 		_disableKeyValidatorResettableClassFileTransformer = disableValidate();
-		_setVersionResettableClassFileTransformer = setVersion("2026.Q1.0");
+		_setVersionResettableClassFileTransformer = setVersion("2026.Q1.0 LTS");
 	}
 
 	@AfterClass

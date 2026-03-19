@@ -1234,7 +1234,7 @@ public abstract class Base${schemaName}ResourceImpl
 					return LocaleUtil.fromLanguageId(languageId);
 				}
 
-				<#if generateBatch && freeMarkerTool.isVersionCompatible(configYAML, 15)>
+				<#if freeMarkerTool.isVersionCompatible(configYAML, 15)>
 					@Override
 					public boolean isAcceptAllLanguages() {
 						if (ExportImportThreadLocal.isExportInProcess()) {

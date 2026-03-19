@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -329,30 +330,17 @@ public class KaleoDefinitionVersionLocalServiceImpl
 			long companyId, String name, String version)
 		throws PortalException {
 
-		List<KaleoDefinitionVersion> list =
-			kaleoDefinitionVersionPersistence.findByC_N(
-				companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				KaleoDefinitionVersionIdComparator.getInstance(true));
-
 		KaleoDefinitionVersion[] kaleoDefinitionVersions =
-			new KaleoDefinitionVersion[3];
+			ListUtil.getPreviousAndNext(
+				kaleoDefinitionVersionPersistence.findByC_N(
+					companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					KaleoDefinitionVersionIdComparator.getInstance(true)),
+				kaleoDefinitionVersion -> Objects.equals(
+					version, kaleoDefinitionVersion.getVersion()),
+				KaleoDefinitionVersion[]::new);
 
-		for (int i = 0; i < list.size(); i++) {
-			KaleoDefinitionVersion kaleoDefinitionVersion = list.get(i);
-
-			if (Objects.equals(version, kaleoDefinitionVersion.getVersion())) {
-				if (i > 0) {
-					kaleoDefinitionVersions[0] = list.get(i - 1);
-				}
-
-				kaleoDefinitionVersions[1] = kaleoDefinitionVersion;
-
-				if (i < (list.size() - 1)) {
-					kaleoDefinitionVersions[2] = list.get(i + 1);
-				}
-
-				return kaleoDefinitionVersions;
-			}
+		if (kaleoDefinitionVersions[1] != null) {
+			return kaleoDefinitionVersions;
 		}
 
 		throw new NoSuchDefinitionVersionException(

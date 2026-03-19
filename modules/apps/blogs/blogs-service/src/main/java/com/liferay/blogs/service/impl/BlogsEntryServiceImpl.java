@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -297,30 +298,12 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		_blogsEntryModelResourcePermission.check(
 			getPermissionChecker(), entry, ActionKeys.VIEW);
 
-		List<BlogsEntry> list = blogsEntryPersistence.filterFindByG_D_S(
-			entry.getGroupId(), entry.getDisplayDate(),
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, EntryIdComparator.getInstance(true));
-
-		BlogsEntry[] entries = new BlogsEntry[3];
-
-		for (int i = 0; i < list.size(); i++) {
-			BlogsEntry curEntry = list.get(i);
-
-			if (curEntry.getEntryId() == entryId) {
-				if (i > 0) {
-					entries[0] = list.get(i - 1);
-				}
-
-				entries[1] = list.get(i);
-
-				if (i < (list.size() - 1)) {
-					entries[2] = list.get(i + 1);
-				}
-
-				break;
-			}
-		}
+		BlogsEntry[] entries = ListUtil.getPreviousAndNext(
+			blogsEntryPersistence.filterFindByG_D_S(
+				entry.getGroupId(), entry.getDisplayDate(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, EntryIdComparator.getInstance(true)),
+			entry::equals, BlogsEntry[]::new);
 
 		if (entries[0] == null) {
 			entries[0] = blogsEntryPersistence.fetchByG_LtD_S_Last(

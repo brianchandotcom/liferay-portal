@@ -117,7 +117,35 @@ public class ObjectDDMStorageAdapterTest {
 				).labelMap(
 					RandomTestUtil.randomLocaleStringMap()
 				).name(
-					"attachmentObjectField"
+					"attachmentObjectField1"
+				).objectFieldSettings(
+					ListUtil.fromArray(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
+							ObjectFieldSettingConstants.
+								VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							"100"
+						).build())
+				).build(),
+				new AttachmentObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"attachmentObjectField2"
 				).objectFieldSettings(
 					ListUtil.fromArray(
 						new ObjectFieldSettingBuilder(
@@ -187,12 +215,17 @@ public class ObjectDDMStorageAdapterTest {
 			_createDDMFormField(
 				"document-library", "uploadDDMFormField1",
 				DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
-				"attachmentObjectField"));
+				"attachmentObjectField1"));
 		ddmForm.addDDMFormField(
 			_createDDMFormField(
 				"document-library", "uploadDDMFormField2",
 				DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
-				"attachmentObjectField"));
+				"attachmentObjectField1"));
+		ddmForm.addDDMFormField(
+			_createDDMFormField(
+				"document-library", "uploadDDMFormField3",
+				DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
+				"attachmentObjectField2"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -223,6 +256,12 @@ public class ObjectDDMStorageAdapterTest {
 					"{\"fileEntryId\":" + fileEntry.getFileEntryId() + "}",
 					LocaleUtil.US)));
 
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"uploadDDMFormField3",
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"{}", LocaleUtil.US)));
+
 		DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
 			objectDDMStorageAdapter.save(
 				DDMStorageAdapterSaveRequest.Builder.newBuilder(
@@ -247,7 +286,7 @@ public class ObjectDDMStorageAdapterTest {
 			MapUtil.getString(objectEntry.getValues(), "picklistObjectField"));
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-			MapUtil.getLong(objectEntry.getValues(), "attachmentObjectField"));
+			MapUtil.getLong(objectEntry.getValues(), "attachmentObjectField1"));
 
 		Assert.assertEquals(
 			_objectDefinition.getClassName(), dlFileEntry.getClassName());

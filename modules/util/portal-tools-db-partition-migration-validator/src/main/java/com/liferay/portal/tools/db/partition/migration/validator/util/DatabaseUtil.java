@@ -108,7 +108,7 @@ public class DatabaseUtil {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				if (companyId == resultSet.getLong(1)) {
+				if (companyId == resultSet.getLong("companyId")) {
 					return companyId;
 				}
 			}
@@ -152,9 +152,11 @@ public class DatabaseUtil {
 			while (resultSet.next()) {
 				releases.add(
 					new Release(
-						Version.parseVersion(resultSet.getString(2)),
-						resultSet.getString(1), resultSet.getInt(3),
-						resultSet.getBoolean(4)));
+						Version.parseVersion(
+							resultSet.getString("schemaVersion")),
+						resultSet.getString("servletContextName"),
+						resultSet.getInt("state_"),
+						resultSet.getBoolean("verified")));
 			}
 		}
 

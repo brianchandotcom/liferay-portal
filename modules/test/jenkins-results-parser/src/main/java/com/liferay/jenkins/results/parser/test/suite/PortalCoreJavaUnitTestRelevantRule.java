@@ -6,7 +6,6 @@
 package com.liferay.jenkins.results.parser.test.suite;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 
 import java.io.File;
@@ -34,32 +33,16 @@ public class PortalCoreJavaUnitTestRelevantRule extends RelevantRule {
 	public List<TestScriptCommand> getTestScriptCommands() {
 		List<TestScriptCommand> testScriptCommands = new ArrayList<>();
 
+		List<File> modifiedDirsList = getModifiedDirsList(
+			getGitWorkingDirectory().getWorkingDirectory());
+
 		Set<String> modifiedDirNames = new HashSet<>();
 
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+		for (File modifiedDir : modifiedDirsList) {
+			String modifiedDirName = modifiedDir.getName();
 
-		String baseFilePath = JenkinsResultsParserUtil.getCanonicalPath(
-			gitWorkingDirectory.getWorkingDirectory());
-
-		for (File modifiedFile :
-				gitWorkingDirectory.getModifiedFilesList(true)) {
-
-			String modifiedFilePath = JenkinsResultsParserUtil.getCanonicalPath(
-				modifiedFile);
-
-			if (modifiedFilePath.startsWith(baseFilePath + "/")) {
-				String relativeFilePath = modifiedFilePath.substring(
-					baseFilePath.length() + 1);
-
-				int index = relativeFilePath.indexOf('/');
-
-				if (index != -1) {
-					String topLevelDirName = relativeFilePath.substring(0, index);
-
-					if (_portalCoreDirs.contains(topLevelDirName)) {
-						modifiedDirNames.add(topLevelDirName);
-					}
-				}
+			if (_portalCoreDirs.contains(modifiedDirName)) {
+				modifiedDirNames.add(modifiedDirName);
 			}
 		}
 

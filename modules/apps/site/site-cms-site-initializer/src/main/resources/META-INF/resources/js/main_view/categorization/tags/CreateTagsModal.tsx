@@ -198,8 +198,10 @@ export default function CreateTagsModalContent({
 					last={
 						<ClayButton.Group spaced>
 							<ClayButton
+								borderless
 								displayType="secondary"
 								onClick={closeModal}
+								outline
 								type="button"
 							>
 								{Liferay.Language.get('cancel')}

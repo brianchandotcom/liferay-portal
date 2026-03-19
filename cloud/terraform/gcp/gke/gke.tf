@@ -32,7 +32,7 @@ resource "google_container_cluster" "primary" {
 		cluster_secondary_range_name="${var.deployment_name}-pods"
 		services_secondary_range_name="${var.deployment_name}-services"
 	}
-	location=var.regional_cluster ? var.region : "${var.region}-a"
+	location=var.regional_cluster ? var.region : local.first_zone
 	master_auth {
 		client_certificate_config {
 			issue_client_certificate=false
@@ -46,7 +46,7 @@ resource "google_container_cluster" "primary" {
 			for_each=var.master_authorized_networks
 		}
 	}
-	name="${var.deployment_name}-gke"
+	name=local.cluster_name
 	network=google_compute_network.vpc.id
 	networking_mode="VPC_NATIVE"
 	node_pool_defaults {
@@ -77,7 +77,7 @@ resource "google_container_cluster" "primary" {
 	}
 	subnetwork=google_compute_subnetwork.subnet.id
 	workload_identity_config {
-		workload_pool="${var.project_id}.svc.id.goog"
+		workload_pool=local.workload_identity_pool
 	}
 }
 resource "google_container_node_pool" "general_purpose" {
@@ -86,7 +86,7 @@ resource "google_container_node_pool" "general_purpose" {
 		min_node_count=var.min_node_count
 	}
 	cluster=google_container_cluster.primary.name
-	location=var.regional_cluster ? var.region : "${var.region}-a"
+	location=var.regional_cluster ? var.region : local.first_zone
 	management {
 		auto_repair=true
 		auto_upgrade=true

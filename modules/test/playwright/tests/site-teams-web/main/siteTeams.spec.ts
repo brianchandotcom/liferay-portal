@@ -921,3 +921,138 @@ test(
 		});
 	}
 );
+
+test(
+	'Can search users who inherit membership based on user group membership',
+	{tag: ['@LPD-82822']},
+	async ({
+			   apiHelpers,
+			   page,
+			   selectUserGroupPage,
+			   selectUserPage,
+			   site,
+			   teamsPage,
+			   userGroupsPage,
+			   usersPage,
+		   }) => {
+		page.on('dialog', (dialog) => dialog.accept());
+
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount({
+			familyName: 'Parker',
+			givenName: 'Peter',
+		});
+
+		await apiHelpers.jsonWebServicesUser.assignUsersToSite(
+			site.id,
+			user1.id
+		);
+
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await apiHelpers.jsonWebServicesUserGroup.assignUserGroupsToGroup(
+			site.id,
+			String(userGroup.id)
+		);
+
+		const user2 = await apiHelpers.headlessAdminUser.postUserAccount({
+			familyName: 'Porker',
+			givenName: 'Pete',
+		});
+
+		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+			userGroup.id,
+			[user2.id]
+		);
+
+		const team = {
+			teamName: getRandomString(),
+		};
+
+		await teamsPage.goTo(site.friendlyUrlPath);
+
+		await teamsPage.newTeamButton.click();
+		await teamsPage.newTeam(team);
+
+		await expect(
+			await teamsPage.teamsTable.cellLink(team.teamName)
+		).toBeVisible();
+
+		await (await teamsPage.teamsTable.cellLink(team.teamName)).click();
+
+		await expect(usersPage.usersTable.searchInput).toBeEnabled();
+
+		const newTeam = await apiHelpers.jsonWebServicesTeam.getTeam(
+			site.id,
+			team.teamName
+		);
+
+		await apiHelpers.jsonWebServicesUser.addTeamUsers(newTeam.teamId, [
+			user1.id,
+		]);
+
+		await teamsPage.userGroupTab.click();
+
+		await expect(userGroupsPage.userGroupsTable.searchInput).toBeEnabled();
+
+		await userGroupsPage.userGroupsTable.changeView('Table');
+
+		await expect(userGroupsPage.noUserGroupsMessage).toBeVisible();
+
+		await expect(async () => {
+			await userGroupsPage.newButton.click();
+
+			await expect(selectUserGroupPage.addButton).toBeVisible({
+				timeout: 2000,
+			});
+		}).toPass({timeout: 5000});
+
+		await selectUserGroupPage.userGroupsTable.changeView('Table');
+
+		await (
+			await selectUserGroupPage.userGroupsTable.rowCheckbox(
+				userGroup.name
+			)
+		).check();
+
+		await selectUserGroupPage.addButton.click();
+
+		await expect(
+			userGroupsPage.userGroupsTable.cell(userGroup.name)
+		).toBeVisible();
+
+		await teamsPage.usersTab.click();
+
+		await usersPage.usersTable.changeView('Table');
+
+		await expect(usersPage.usersTable.cell(user1.name)).toBeVisible();
+		await expect(usersPage.usersTable.cell(user2.name)).toBeVisible();
+
+		await expect(async () => {
+			await usersPage.newButton.click();
+
+			await expect(selectUserPage.addButton).toBeVisible({timeout: 2000});
+		}).toPass({timeout: 5000});
+
+		await selectUserPage.usersTable.changeView('Table');
+
+		await selectUserPage.usersTable.search(`"${user1.name}"`);
+
+		await expect(selectUserPage.usersTable.cell(user1.name)).toBeVisible();
+		await expect(selectUserPage.usersTable.cell(user2.name)).toHaveCount(0);
+
+		await selectUserPage.usersTable.search(`"${user2.name}"`);
+
+		await expect(selectUserPage.usersTable.cell(user1.name)).toHaveCount(0);
+		await expect(selectUserPage.usersTable.cell(user2.name)).toBeVisible();
+
+		await selectUserPage.usersTable.search(`"${user2.name}a"`);
+
+		await expect(selectUserPage.usersTable.cell(user1.name)).toHaveCount(0);
+		await expect(selectUserPage.usersTable.cell(user2.name)).toHaveCount(0);
+
+		await selectUserPage.usersTable.search(`${user2.givenName}`);
+
+		await expect(selectUserPage.usersTable.cell(user1.name)).toBeVisible();
+		await expect(selectUserPage.usersTable.cell(user2.name)).toBeVisible();
+	}
+);

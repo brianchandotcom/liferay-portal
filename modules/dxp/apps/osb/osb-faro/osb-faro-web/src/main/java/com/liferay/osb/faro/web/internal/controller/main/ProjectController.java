@@ -974,7 +974,7 @@ public class ProjectController extends BaseFaroController {
 					OSBOfferingEntry osbOfferingEntry = new OSBOfferingEntry();
 
 					osbOfferingEntry.setProductEntryId(
-						ProductConstants.BASIC_PRODUCT_ENTRY_ID);
+						ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_ID);
 
 					osbOfferingEntry.setQuantity(1);
 					osbOfferingEntry.setStartDate(

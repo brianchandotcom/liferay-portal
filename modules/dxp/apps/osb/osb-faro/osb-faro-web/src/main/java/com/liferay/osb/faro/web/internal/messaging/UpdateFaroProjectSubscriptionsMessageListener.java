@@ -148,7 +148,7 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 							new OSBOfferingEntry();
 
 						osbOfferingEntry.setProductEntryId(
-							ProductConstants.BASIC_PRODUCT_ENTRY_ID);
+							ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_ID);
 						osbOfferingEntry.setQuantity(1);
 						osbOfferingEntry.setStartDate(createDate);
 

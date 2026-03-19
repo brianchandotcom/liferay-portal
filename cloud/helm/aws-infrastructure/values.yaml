@@ -14,8 +14,10 @@ database:
     engine: postgres
     engineVersion: "16.11"
     instanceClass: db.t3.medium
+    iops: 12000
     multiAz: false
     storageGB: 20
+    storageThroughput: 500
     username: liferay_database_admin
 enabled: true
 endpoints: {}

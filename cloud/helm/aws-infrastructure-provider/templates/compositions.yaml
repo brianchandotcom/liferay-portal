@@ -578,6 +578,7 @@ spec:
                         {{- $databaseSpec := $xr.spec.database -}}
 
                         {{- $databaseRegion := $databaseSpec.region | default $baseRegion }}
+                        {{- $isAboveAllocatedStorageThreshold := ge (int $databaseSpec.storageGB) 400 -}}
 
                         {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
 
@@ -631,6 +632,9 @@ spec:
                                 iamDatabaseAuthenticationEnabled: true
                                 identifier: {{ $baseName }}-database-{{ $dataPlane }}
                                 instanceClass: {{ $databaseSpec.instanceClass }}
+                                {{- if $isAboveAllocatedStorageThreshold }}
+                                iops: {{ int $databaseSpec.iops }}
+                                {{- end }}
                                 multiAz: {{ $databaseSpec.multiAz }}
                                 passwordSecretRef:
                                     key: password
@@ -641,6 +645,9 @@ spec:
                                 snapshotIdentifier: {{ $databaseSpec.snapshotIdentifier }}
                                 {{- end }}
                                 storageEncrypted: true
+                                {{- if $isAboveAllocatedStorageThreshold }}
+                                storageThroughput: {{ int $databaseSpec.storageThroughput }}
+                                {{- end }}
                                 storageType: gp3
                                 username: {{ $databaseSpec.username }}
                                 vpcSecurityGroupIdSelector:

@@ -78,6 +78,8 @@ spec:
                                             type: string
                                         instanceClass:
                                             type: string
+                                        iops:
+                                            type: integer
                                         multiAz:
                                             type: boolean
                                         region:
@@ -86,6 +88,8 @@ spec:
                                             nullable: true
                                             type: string
                                         storageGB:
+                                            type: integer
+                                        storageThroughput:
                                             type: integer
                                         username:
                                             type: string

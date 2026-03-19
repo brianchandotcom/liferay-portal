@@ -509,6 +509,24 @@ public class FriendlyURLServletTest {
 		testGetI18nRedirect("/en_US");
 	}
 
+	@Test
+	public void testGetRedirectWithInvalidLocaleAndQueryString()
+		throws Throwable {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+		String path = getPath(_group, _layout);
+
+		mockHttpServletRequest.setAttribute(WebKeys.I18N_LANGUAGE_ID, "ja_JP");
+		mockHttpServletRequest.setQueryString("p_p_id=123");
+		mockHttpServletRequest.setRequestURI(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING + path);
+
+		testGetRedirect(
+			mockHttpServletRequest, path,
+			_redirectConstructor1.newInstance(getURL(_layout)));
+	}
+
 	@Test(expected = NoSuchGroupException.class)
 	public void testGetRedirectWithNonexistentSite() throws Throwable {
 		MockHttpServletRequest mockHttpServletRequest =

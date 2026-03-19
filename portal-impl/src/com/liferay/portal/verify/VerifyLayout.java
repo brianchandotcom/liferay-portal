@@ -75,8 +75,8 @@ public class VerifyLayout extends VerifyProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long plid = resultSet.getLong(1);
-				String friendlyURL = resultSet.getString(2);
+				long plid = resultSet.getLong("plid");
+				String friendlyURL = resultSet.getString("friendlyURL");
 
 				_log.error(
 					StringBundler.concat(

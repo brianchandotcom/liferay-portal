@@ -168,6 +168,11 @@ public class CTSettingsConfigurationHelperImpl
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);
 		}
+		catch (IllegalStateException illegalStateException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(illegalStateException);
+			}
+		}
 
 		return _defaultCTSettingsConfiguration;
 	}

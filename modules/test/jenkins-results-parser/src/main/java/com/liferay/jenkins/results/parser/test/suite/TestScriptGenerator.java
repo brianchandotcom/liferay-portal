@@ -161,7 +161,7 @@ public class TestScriptGenerator {
 		sb.append("\techo \"Summary of results (Total time: ");
 		sb.append(
 			"$(_format_duration $((${SECONDS} - ${total_start_time})))):\"\n");
-		sb.append("\techo \"Branch is ");
+		sb.append("\techo \"Current branch is ");
 		sb.append(upstreamMasterAheadBehindCount);
 		sb.append(" upstream/master.\"\n");
 		sb.append("\techo \"");

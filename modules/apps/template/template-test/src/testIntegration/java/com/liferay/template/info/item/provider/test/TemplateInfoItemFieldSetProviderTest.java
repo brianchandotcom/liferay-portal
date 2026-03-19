@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -108,6 +109,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -142,6 +144,16 @@ public class TemplateInfoItemFieldSetProviderTest {
 		_group = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
+
+		_originalCompanyLanguageIds = _language.getAvailableLocales(
+			_company.getCompanyId());
+
+		CompanyTestUtil.resetCompanyLocales(
+			_company.getCompanyId(),
+			Arrays.asList(
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
+			LocaleUtil.US);
+
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -160,7 +172,11 @@ public class TemplateInfoItemFieldSetProviderTest {
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
+		CompanyTestUtil.resetCompanyLocales(
+			_company.getCompanyId(), _originalCompanyLanguageIds,
+			LocaleUtil.US);
+
 		ServiceContextThreadLocal.pushServiceContext(_originalServiceContext);
 		LocaleThreadLocal.setSiteDefaultLocale(_originalSiteDefaultLocale);
 		LocaleThreadLocal.setThemeDisplayLocale(_originalThemeDisplayLocale);
@@ -1412,6 +1428,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 	@Inject(filter = "mvc.command.name=/template/edit_ddm_template")
 	private MVCRenderCommand _mvcRenderCommand;
 
+	private Set<Locale> _originalCompanyLanguageIds;
 	private ServiceContext _originalServiceContext;
 	private Locale _originalSiteDefaultLocale;
 	private Locale _originalThemeDisplayLocale;

@@ -130,6 +130,7 @@ export default function FeatureIndicator({
 					dark={dark}
 					displayType={displayType}
 					label={label}
+					symbol={symbol}
 					translucent
 				/>
 			)}

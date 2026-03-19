@@ -49,6 +49,7 @@ import transformViewsItemsProps from './utils/transformViewsItemProps';
 import GalleryView from './views/GalleryView';
 
 export type AdditionalProps = {
+	assetLibraries: AssetLibrary[];
 	autocompleteURL: string;
 	availableExportFileFormats: any[];
 	availableLocales: any[];
@@ -295,7 +296,7 @@ export default function AssetsFDSPropsTransformer({
 			if (action?.data?.id === 'copy' || action?.data?.id === 'move') {
 				openFolderItemSelectorAction(
 					action?.data?.id,
-					additionalProps.candidateAssetLibraries,
+					additionalProps.assetLibraries,
 					itemData,
 					loadData,
 					'',

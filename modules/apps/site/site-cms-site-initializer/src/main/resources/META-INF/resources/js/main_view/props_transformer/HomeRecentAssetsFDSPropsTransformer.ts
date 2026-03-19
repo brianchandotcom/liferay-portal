@@ -105,7 +105,7 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 			if (action?.data?.id === 'copy' || action?.data?.id === 'move') {
 				openFolderItemSelectorAction(
 					action?.data?.id,
-					additionalProps.candidateAssetLibraries,
+					additionalProps.assetLibraries,
 					itemData,
 					loadData,
 					'',

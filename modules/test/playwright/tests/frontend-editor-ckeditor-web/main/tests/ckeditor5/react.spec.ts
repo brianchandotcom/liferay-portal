@@ -165,20 +165,22 @@ test(
 		await test.step('Click in the "Toggle editor ReadOnly mode" disables the editor: toolbar and content', async () => {
 			await toggleDisableEditorButton.click();
 
+			await page.waitForSelector('.lfr-ck-disabled');
+
 			await expect(imageButton).toBeDisabled();
 			await expect(videoButton).toBeDisabled();
 
-			await expect(page.locator('.lfr-ck-disabled')).toBeDefined();
 			await expect(page.locator('.lfr-ck-disabled')).toBeInViewport();
 		});
 
 		await test.step('Click in the "Toggle editor ReadOnly mode" enables the editor: toolbar and content', async () => {
 			await toggleDisableEditorButton.click();
 
+			await classicPage.toolbar.container.waitFor();
+
 			await expect(imageButton).toBeEnabled();
 			await expect(videoButton).toBeEnabled();
 
-			await expect(page.locator('.lfr-ck-disabled')).not.toBeDefined();
 			await expect(page.locator('.lfr-ck-disabled')).not.toBeInViewport();
 		});
 	}

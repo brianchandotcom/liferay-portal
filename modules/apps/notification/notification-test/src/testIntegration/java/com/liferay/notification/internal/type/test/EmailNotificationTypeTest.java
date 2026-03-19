@@ -2185,7 +2185,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			StringUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
 				StringUtil.randomString() + ".txt"),
-			FileUtil.createTempFile(DLTestUtil.randomTextFileContent(8)),
+			FileUtil.createTempFile(DLTestUtil.randomTextFileContent()),
 			ContentTypes.TEXT_PLAIN);
 
 		executeNotificationObjectAction(

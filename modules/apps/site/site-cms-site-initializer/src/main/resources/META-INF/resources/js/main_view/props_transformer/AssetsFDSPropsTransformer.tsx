@@ -49,12 +49,12 @@ import transformViewsItemsProps from './utils/transformViewsItemProps';
 import GalleryView from './views/GalleryView';
 
 export type AdditionalProps = {
-	assetLibraries: AssetLibrary[];
 	autocompleteURL: string;
 	availableExportFileFormats: any[];
 	availableLocales: any[];
 	baseFolderViewURL: string;
 	brokenLinksCheckerEnabled: boolean;
+	candidateAssetLibraries: AssetLibrary[];
 	cmsGroupId?: number;
 	collaboratorURLs: Record<string, string>;
 	contentViewURL: string;
@@ -295,7 +295,7 @@ export default function AssetsFDSPropsTransformer({
 			if (action?.data?.id === 'copy' || action?.data?.id === 'move') {
 				openFolderItemSelectorAction(
 					action?.data?.id,
-					additionalProps.assetLibraries,
+					additionalProps.candidateAssetLibraries,
 					itemData,
 					loadData,
 					'',
@@ -477,7 +477,8 @@ export default function AssetsFDSPropsTransformer({
 					}) =>
 						EditAssetCategoriesModalContent({
 							apiURL: otherProps.apiURL,
-							assetLibraries: additionalProps.assetLibraries,
+							assetLibraries:
+								additionalProps.candidateAssetLibraries,
 							closeModal,
 							cmsGroupId: additionalProps.cmsGroupId as number,
 							selectedData,
@@ -498,7 +499,8 @@ export default function AssetsFDSPropsTransformer({
 					}) =>
 						EditAssetTagsModalContent({
 							apiURL: otherProps?.apiURL,
-							assetLibraries: additionalProps.assetLibraries,
+							assetLibraries:
+								additionalProps.candidateAssetLibraries,
 							closeModal,
 							cmsGroupId: additionalProps.cmsGroupId as number,
 							selectedData,

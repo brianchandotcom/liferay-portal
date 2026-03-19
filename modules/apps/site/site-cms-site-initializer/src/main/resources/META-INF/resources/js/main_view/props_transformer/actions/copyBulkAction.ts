@@ -56,7 +56,7 @@ const copyBulkAction = ({
 		{
 			action: 'copy',
 			apiURL,
-			assetLibraries: additionalProps.assetLibraries,
+			assetLibraries: additionalProps.candidateAssetLibraries,
 			dataSetId,
 			isBulk: true,
 			itemData: {

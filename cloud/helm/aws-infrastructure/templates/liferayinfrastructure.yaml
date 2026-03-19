@@ -15,6 +15,7 @@ spec:
         ProjectId: {{ .Values.projectId }}
     database: {{ .Values.database | toYaml | nindent 8 }}
     environmentId: {{ .Values.environmentId }}
+    forceDestroy: {{ .Values.forceDestroy }}
     orphanOnDelete: {{ .Values.orphanOnDelete }}
     overlay: {{ .Values.overlay | toYaml | nindent 8 }}
     projectId: {{ .Values.projectId }}

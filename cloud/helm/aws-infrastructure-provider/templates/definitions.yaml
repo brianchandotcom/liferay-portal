@@ -92,6 +92,9 @@ spec:
                                     type: object
                                 environmentId:
                                     type: string
+                                forceDestroy:
+                                    default: false
+                                    type: boolean
                                 orphanOnDelete:
                                     type: boolean
                                 overlay:

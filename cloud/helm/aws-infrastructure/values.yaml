@@ -19,6 +19,7 @@ database:
     username: liferay_database_admin
 enabled: true
 endpoints: {}
+forceDestroy: false
 gateway: {}
 license: {}
 orphanOnDelete: false

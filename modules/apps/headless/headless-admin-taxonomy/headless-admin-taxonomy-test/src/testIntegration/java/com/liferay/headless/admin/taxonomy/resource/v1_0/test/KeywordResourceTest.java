@@ -24,10 +24,8 @@ import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -42,13 +40,13 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,23 +57,6 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class KeywordResourceTest extends BaseKeywordResourceTestCase {
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_cmsAdministratorUser = UserTestUtil.addUser(
-			testCompany, RoleConstants.CMS_ADMINISTRATOR);
-
-		_userLocalService.updatePassword(
-			_cmsAdministratorUser.getUserId(), "test", "test", false, true);
-
-		_regularUser = UserTestUtil.addUser();
-
-		_userLocalService.updatePassword(
-			_regularUser.getUserId(), "test", "test", false, true);
-	}
 
 	@Override
 	@Test
@@ -394,7 +375,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		Group originalIrrelevantGroup = irrelevantGroup;
 		Group originalTestGroup = testGroup;
 
-		_addCMSGroup();
+		testGroup = CMSTestUtil.getOrAddGroup(KeywordResourceTest.class);
 
 		irrelevantGroup = GroupTestUtil.addGroup(
 			testDepotEntryGroup.getCompanyId(), TestPropsValues.getUserId(),
@@ -404,6 +385,17 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		irrelevantGroup = originalIrrelevantGroup;
 		testGroup = originalTestGroup;
+
+		_cmsAdministratorUser = UserTestUtil.addUser(
+			testCompany, RoleConstants.CMS_ADMINISTRATOR);
+
+		_userLocalService.updatePassword(
+			_cmsAdministratorUser.getUserId(), "test", "test", false, true);
+
+		_regularUser = UserTestUtil.addUser();
+
+		_userLocalService.updatePassword(
+			_regularUser.getUserId(), "test", "test", false, true);
 
 		_testGetSiteKeywordsPageWithUser(_cmsAdministratorUser);
 		_testGetSiteKeywordsPageWithUser(_regularUser);
@@ -422,7 +414,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	public void testPatchSiteKeyword() throws Exception {
 		Group originalTestGroup = testGroup;
 
-		_addCMSGroup();
+		testGroup = CMSTestUtil.getOrAddGroup(KeywordResourceTest.class);
 
 		Keyword keyword = _postKeywordWithAssetLibraries(_randomAssetLibrary());
 
@@ -448,10 +440,21 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		testGroup = originalTestGroup;
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testPostSiteKeyword() throws Exception {
 		super.testPostSiteKeyword();
+
+		Group originalTestGroup = testGroup;
+
+		testGroup = CMSTestUtil.getOrAddGroup(KeywordResourceTest.class);
+
+		_cmsAdministratorUser = UserTestUtil.addUser(
+			testCompany, RoleConstants.CMS_ADMINISTRATOR);
+
+		_userLocalService.updatePassword(
+			_cmsAdministratorUser.getUserId(), "test", "test", false, true);
 
 		Keyword randomKeyword = randomKeyword();
 
@@ -469,6 +472,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		assertEquals(randomKeyword, postKeyword);
 		assertValid(postKeyword);
+
+		testGroup = originalTestGroup;
 	}
 
 	@Override
@@ -500,7 +505,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	public void testPutKeyword() throws Exception {
 		Group originalTestGroup = testGroup;
 
-		_addCMSGroup();
+		testGroup = CMSTestUtil.getOrAddGroup(KeywordResourceTest.class);
 
 		super.testPutKeyword();
 
@@ -525,7 +530,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	public void testPutKeywordMerge() throws Exception {
 		Group originalTestGroup = testGroup;
 
-		_addCMSGroup();
+		testGroup = CMSTestUtil.getOrAddGroup(KeywordResourceTest.class);
 
 		Keyword keyword1 = _postKeywordWithAssetLibraries(
 			_randomAssetLibrary());
@@ -670,29 +675,6 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		return testDepotEntry.getDepotEntryId();
 	}
 
-	private void _addCMSGroup() throws Exception {
-
-		// These tests require the instance to be created with the feature
-		// flag LPD-17564 enabled. On CI, feature flags are enabled on
-		// demand for each test, but not during instance initialization.
-		// Until the feature flag LPD-17564 is removed, we need an explicit CMS
-		// group creation.
-
-		Role role = _roleLocalService.fetchRole(
-			testDepotEntryGroup.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		if (role == null) {
-			_roleLocalService.addRole(
-				null, TestPropsValues.getUserId(), null, 0,
-				RoleConstants.SITE_MEMBER, null, null,
-				RoleConstants.TYPE_REGULAR, null, null);
-		}
-
-		testGroup = GroupTestUtil.addGroup(
-			testDepotEntryGroup.getCompanyId(), TestPropsValues.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
-	}
-
 	private Keyword _patchKeywordWithAssetLibraries(
 			Keyword keyword, AssetLibrary... assetLibraries)
 		throws Exception {
@@ -767,9 +749,6 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 	@DeleteAfterTestRun
 	private User _regularUser;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

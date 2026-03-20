@@ -91,7 +91,7 @@ const OnboardingPages: React.FC = () => {
 			subscriptionLiferayExperienceCloud &&
 			!liferayExperienceCloudActivationSubmittedStatus
 		) {
-			dispatch({
+			return dispatch({
 				payload:
 					ONBOARDING_STEP_TYPES.liferayExperienceCloud as unknown as ActionPayload,
 				type: actionTypes.CHANGE_STEP as keyof typeof actionTypes,

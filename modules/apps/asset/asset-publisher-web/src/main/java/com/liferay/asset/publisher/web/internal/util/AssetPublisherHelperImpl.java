@@ -37,6 +37,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -275,11 +277,19 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 			if (!missingAssetEntryUuids.isEmpty()) {
 				if (_log.isDebugEnabled()) {
+					long groupId = 0L;
+
+					if ((groupIds != null) && (groupIds.length > 0)) {
+						groupId = groupIds[0];
+					}
+
 					_log.debug(
-						StringBundler.concat(
-							"The selected asset(s) have been removed from the ",
-							"list because they do not belong in the scope of ",
-							"this widget. : ", missingAssetEntryUuids));
+						_language.get(
+							PortalUtil.getSiteDefaultLocale(groupId),
+							"the-selected-assets-have-been-removed-from-the-" +
+								"list-because-they-do-not-belong-in-the-" +
+									"scope-of-this-widget"));
+					_log.debug(missingAssetEntryUuids);
 				}
 
 				if (portletRequest != null) {
@@ -1510,6 +1520,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

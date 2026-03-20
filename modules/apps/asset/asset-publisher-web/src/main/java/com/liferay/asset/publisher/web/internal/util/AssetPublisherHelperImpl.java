@@ -275,11 +275,12 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 			if (!missingAssetEntryUuids.isEmpty()) {
 				if (_log.isDebugEnabled()) {
+					String deletedAssetEntries = ListUtil.toString(
+						missingAssetEntryUuids, StringPool.BLANK);
+
 					_log.debug(
-						StringBundler.concat(
-							"The selected asset(s) have been removed from the ",
-							"list because they do not belong in the scope of ",
-							"this widget. : ", missingAssetEntryUuids));
+						"Removing out of scope asset entries: " +
+							deletedAssetEntries);
 				}
 
 				if (portletRequest != null) {

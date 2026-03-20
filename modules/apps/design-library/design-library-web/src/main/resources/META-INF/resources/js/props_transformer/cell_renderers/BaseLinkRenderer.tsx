@@ -21,12 +21,12 @@ export interface BaseLinkRendererProps {
 
 export function BaseLinkRenderer({
 	actions,
-	className,
 	itemData,
 	options: {actionId},
+	stickerClassName,
 	symbol,
 	value,
-}: BaseLinkRendererProps & {className: string; symbol: string}) {
+}: BaseLinkRendererProps & {stickerClassName: string; symbol: string}) {
 	const selectedAction = findAction(actions, actionId);
 
 	if (!actions.length || !actionId || !selectedAction?.href) {
@@ -43,7 +43,7 @@ export function BaseLinkRenderer({
 					'flex-shrink-0',
 					'inline-item',
 					'inline-item-before',
-					className
+					stickerClassName
 				)}
 			>
 				<ClayIcon symbol={symbol} />

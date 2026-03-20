@@ -13,7 +13,7 @@ export default function DesignLibraryLinkRenderer(
 	return (
 		<BaseLinkRenderer
 			{...props}
-			className="design-library-fds-sticker-books"
+			stickerClassName="design-library-fds-sticker-designlibrary"
 			symbol="books"
 		/>
 	);

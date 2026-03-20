@@ -11,7 +11,7 @@ export default function StyleBookLinkRenderer(props: BaseLinkRendererProps) {
 	return (
 		<BaseLinkRenderer
 			{...props}
-			className="design-library-fds-sticker-stylebook"
+			stickerClassName="design-library-fds-sticker-stylebook"
 			symbol="book"
 		/>
 	);

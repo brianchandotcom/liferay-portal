@@ -105,6 +105,8 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
+			"analytics_cloud_enabled", _analyticsCloudEnabled
+		).put(
 			"minimum_slave_ram", _minimumSlaveRAM
 		).put(
 			"slave_label", _slaveLabel
@@ -156,15 +158,20 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			Properties testProperties = JenkinsResultsParserUtil.getProperties(
 				testPropertiesFile);
 
-			String analyticsCloudEnabled = JenkinsResultsParserUtil.getProperty(
-				testProperties, "analytics.cloud.enabled");
+			String analyticsCloudEnabledString =
+				JenkinsResultsParserUtil.getProperty(
+					testProperties, "analytics.cloud.enabled");
+
+			boolean analyticsCloudEnabled = false;
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(
-					analyticsCloudEnabled) &&
-				analyticsCloudEnabled.equals("true")) {
+					analyticsCloudEnabledString) &&
+				analyticsCloudEnabledString.equals("true")) {
 
-				_analyticsCloudEnabled = true;
+				analyticsCloudEnabled = true;
 			}
+
+			_analyticsCloudEnabled = analyticsCloudEnabled;
 
 			String minimumSlaveRAM = JenkinsResultsParserUtil.getProperty(
 				testProperties, "test.batch.minimum.slave.ram");
@@ -185,6 +192,7 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			_slaveLabel = slaveLabel;
 		}
 		else {
+			_analyticsCloudEnabled = false;
 			_minimumSlaveRAM = null;
 			_slaveLabel = null;
 		}
@@ -195,6 +203,8 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 		super(batchTestClassGroup, jsonObject);
 
+		_analyticsCloudEnabled = jsonObject.optBoolean(
+			"analytics_cloud_enabled");
 		_minimumSlaveRAM = jsonObject.optInt("minimum_slave_ram");
 		_slaveLabel = jsonObject.optString("slave_label");
 	}
@@ -235,7 +245,7 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 	private static final Pattern _testFilePathPattern = Pattern.compile(
 		".+/playwright/(setup|tests)/(?<specFilePath>.+)");
 
-	private boolean _analyticsCloudEnabled;
+	private final boolean _analyticsCloudEnabled;
 	private Long _averageDuration;
 	private Long _averageOverheadDuration;
 	private final Integer _minimumSlaveRAM;

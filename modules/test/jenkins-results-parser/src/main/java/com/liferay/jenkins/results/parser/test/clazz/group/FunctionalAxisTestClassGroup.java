@@ -69,8 +69,11 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
+			"test_analytics_cloud", _testAnalyticsCloud
+		).put(
 			"test_base_dir",
-			JenkinsResultsParserUtil.getCanonicalPath(_testBaseDir));
+			JenkinsResultsParserUtil.getCanonicalPath(_testBaseDir)
+		);
 
 		return jsonObject;
 	}
@@ -214,6 +217,7 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 
 		super(jsonObject, segmentTestClassGroup);
 
+		_testAnalyticsCloud = jsonObject.optBoolean("test_analytics_cloud");
 		_testBaseDir = new File(jsonObject.getString("test_base_dir"));
 	}
 

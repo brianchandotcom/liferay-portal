@@ -74,15 +74,15 @@ public class TestScriptGenerator {
 		sb.append("#!/bin/bash\n\n");
 		sb.append("function main {\n");
 		sb.append("\tlocal base_dir=$(git rev-parse --show-toplevel)\n\n");
-		sb.append("\tif [[ -z \"${base_dir}\" ]]\n");
+		sb.append("\tif [ -z \"${base_dir}\" ]\n");
 		sb.append("\tthen\n");
 		sb.append("\t\techo \"Error: Not inside a git repository.\"\n");
 		sb.append("\t\texit 1\n");
 		sb.append("\tfi\n\n");
 		sb.append("\tcd \"${base_dir}\" || exit 1\n\n");
-		sb.append("\techo \"Running local tests...\"\n");
+		sb.append("\techo \"Running local tests.\"\n");
 		sb.append("\techo \"\"\n\n");
-		sb.append("\techo \"Note: This script was generated on branch ");
+		sb.append("\techo \"This script was generated on branch ");
 		sb.append(_gitWorkingDirectory.getCurrentBranchName());
 		sb.append(" (");
 
@@ -110,9 +110,10 @@ public class TestScriptGenerator {
 			sb.append("upstream/master. It is recommended to rebase your ");
 			sb.append("branch before running tests.\"\n");
 			sb.append("\techo -n \"Do you want to continue anyway? (y/N) \"\n");
-			sb.append("\tread -n 1 -r REPLY\n");
+			sb.append("\tread -n 1 -r reply\n");
 			sb.append("\techo \"\"\n\n");
-			sb.append("\tif [[ ! ${REPLY} =~ ^[Yy]$ ]]\n");
+			sb.append("\tif [ \"${reply}\" != \"y\" ] && ");
+			sb.append("[ \"${reply}\" != \"Y\" ]\n");
 			sb.append("\tthen\n");
 			sb.append("\t\texit 1\n");
 			sb.append("\tfi\n\n");
@@ -121,10 +122,10 @@ public class TestScriptGenerator {
 			sb.append("\n");
 		}
 
-		sb.append("\tdurations=()\n");
-		sb.append("\tfailed_commands=0\n");
-		sb.append("\tresults=()\n");
-		sb.append("\ttotal_start_time=${SECONDS}\n\n");
+		sb.append("\tlocal durations=()\n");
+		sb.append("\tlocal failed_commands=0\n");
+		sb.append("\tlocal results=()\n");
+		sb.append("\tlocal total_start_time=${SECONDS}\n\n");
 
 		Set<String> commands = new LinkedHashSet<>();
 
@@ -177,26 +178,58 @@ public class TestScriptGenerator {
 		int index = 0;
 
 		for (String command : commands) {
-			sb.append("\tcmd_");
+			sb.append("\tlocal command_");
 			sb.append(index);
 			sb.append("=(\n");
 			sb.append(command);
-			sb.append("\n");
-			sb.append("\t)\n\n");
+			sb.append("\n\t)\n\n");
 
 			index++;
 		}
 
-		sb.append("\tcommands_list=(\n");
+		sb.append("\n\tlocal commands_list=(\n");
 
 		for (int i = 0; i < total; i++) {
-			sb.append("\t\t\"cmd_");
+			sb.append("\t\t\"command_");
 			sb.append(i);
 			sb.append("\"\n");
 		}
 
 		sb.append("\t)\n\n");
-		sb.append("\t_execute_commands\n\n");
+		sb.append("\tfor i in \"${!commands_list[@]}\"\n");
+		sb.append("\tdo\n");
+		sb.append("\t\tlocal command_name=\"${commands_list[${i}]}\"\n");
+		sb.append("\t\tlocal command_start_time=${SECONDS}\n");
+		sb.append("\t\tlocal exit_code=\"\"\n\n");
+		sb.append("\t\tlocal command=\"${command_name}[0]\"\n");
+		sb.append("\t\tlocal command_dir=\"${command_name}[1]\"\n\n");
+		sb.append("\t\techo \"");
+		sb.append(_SEPARATOR);
+		sb.append("\"\n");
+		sb.append("\t\techo \"Executing command [$((${i} + 1))/");
+		sb.append("${#commands_list[@]}]: [${!command_dir}] ${!command}\"\n");
+		sb.append("\t\techo \"");
+		sb.append(_SEPARATOR);
+		sb.append("\"\n\n");
+		sb.append("\t\t(\n");
+		sb.append("\t\t\tif [ \"${!command_dir}\" != \"./\" ]\n");
+		sb.append("\t\t\tthen\n");
+		sb.append("\t\t\t\tcd \"${!command_dir}\"\n");
+		sb.append("\t\t\tfi\n\n");
+		sb.append("\t\t\teval \"${!command}\"\n");
+		sb.append("\t\t)\n\n");
+		sb.append("\t\texit_code=${?}\n\n");
+		sb.append("\t\tdurations[${i}]=$(_format_duration ");
+		sb.append("$((${SECONDS} - ${command_start_time})))\n\n");
+		sb.append("\t\tif [ \"${exit_code}\" -eq 0 ]\n");
+		sb.append("\t\tthen\n");
+		sb.append("\t\t\tresults[${i}]=\"SUCCESS\"\n");
+		sb.append("\t\telse\n");
+		sb.append("\t\t\tresults[${i}]=\"FAILED\"\n\n");
+		sb.append("\t\t\tfailed_commands=$((${failed_commands} + 1))\n");
+		sb.append("\t\tfi\n\n");
+		sb.append("\t\techo \"\"\n");
+		sb.append("\tdone\n\n");
 		sb.append("\techo \"\"\n");
 		sb.append("\techo \"");
 		sb.append(_SEPARATOR);
@@ -212,25 +245,25 @@ public class TestScriptGenerator {
 		sb.append("\"\n\n");
 		sb.append("\tfor i in \"${!commands_list[@]}\"\n");
 		sb.append("\tdo\n");
-		sb.append("\t\tlocal cmd_name=\"${commands_list[${i}]}\"\n\n");
-		sb.append("\t\tlocal cmd_ref=\"${cmd_name}[0]\"\n");
-		sb.append("\t\tlocal dir_ref=\"${cmd_name}[1]\"\n\n");
-		sb.append("\t\tif [[ \"${results[${i}]}\" == \"SUCCESS\" ]]\n");
+		sb.append("\t\tlocal command_name=\"${commands_list[${i}]}\"\n\n");
+		sb.append("\t\tlocal command=\"${command_name}[0]\"\n");
+		sb.append("\t\tlocal command_dir=\"${command_name}[1]\"\n\n");
+		sb.append("\t\tif [ \"${results[${i}]}\" == \"SUCCESS\" ]\n");
 		sb.append("\t\tthen\n");
 		sb.append("\t\t\tlocal icon=\"✓\"\n");
 		sb.append("\t\telse\n");
 		sb.append("\t\t\tlocal icon=\"✗\"\n");
 		sb.append("\t\tfi\n\n");
 		sb.append("\t\tprintf \"[${icon}] %-7s (%s) - %s\\n\" ");
-		sb.append(
-			"\"${results[${i}]}\" \"${durations[${i}]}\" \"${!dir_ref}\"\n");
-		sb.append("\t\tprintf \"    Command: %s\\n\\n\" \"${!cmd_ref}\"\n");
+		sb.append("\"${results[${i}]}\" \"${durations[${i}]}\" ");
+		sb.append("\"${!command_dir}\"\n");
+		sb.append("\t\tprintf \"    Command: %s\\n\\n\" \"${!command}\"\n");
 		sb.append("\tdone\n\n");
 		sb.append("\techo \"");
 		sb.append(_SEPARATOR);
 		sb.append("\"\n\n");
 		sb.append("\techo \"\"\n\n");
-		sb.append("\tif [[ ${failed_commands} -eq 0 ]]\n");
+		sb.append("\tif [ \"${failed_commands}\" -eq 0 ]\n");
 		sb.append("\tthen\n");
 		sb.append("\t\techo \"All commands executed successfully.\"\n\n");
 		sb.append("\t\texit 0\n");
@@ -239,44 +272,8 @@ public class TestScriptGenerator {
 		sb.append("\t\texit 1\n");
 		sb.append("\tfi\n");
 		sb.append("}\n\n");
-		sb.append("function _execute_commands {\n");
-		sb.append("\tfor i in \"${!commands_list[@]}\"\n");
-		sb.append("\tdo\n");
-		sb.append("\t\tlocal cmd_name=\"${commands_list[${i}]}\"\n");
-		sb.append("\t\tlocal cmd_start_time=${SECONDS}\n");
-		sb.append("\t\tlocal exit_code\n\n");
-		sb.append("\t\tlocal cmd_ref=\"${cmd_name}[0]\"\n");
-		sb.append("\t\tlocal dir_ref=\"${cmd_name}[1]\"\n\n");
-		sb.append("\t\techo \"");
-		sb.append(_SEPARATOR);
-		sb.append("\"\n");
-		sb.append("\t\techo \"Executing command [$((${i} + 1))/");
-		sb.append("${#commands_list[@]}]: [${!dir_ref}] ${!cmd_ref}\"\n");
-		sb.append("\t\techo \"");
-		sb.append(_SEPARATOR);
-		sb.append("\"\n\n");
-		sb.append("\t\t(\n");
-		sb.append("\t\t\tif [[ \"${!dir_ref}\" != \"./\" ]]\n");
-		sb.append("\t\t\tthen\n");
-		sb.append("\t\t\t\tcd \"${!dir_ref}\"\n");
-		sb.append("\t\t\tfi\n\n");
-		sb.append("\t\t\teval \"${!cmd_ref}\"\n");
-		sb.append("\t\t)\n\n");
-		sb.append("\t\texit_code=${?}\n\n");
-		sb.append("\t\tdurations[${i}]=$(_format_duration ");
-		sb.append("$((${SECONDS} - ${cmd_start_time})))\n\n");
-		sb.append("\t\tif [[ ${exit_code} -eq 0 ]]\n");
-		sb.append("\t\tthen\n");
-		sb.append("\t\t\tresults[${i}]=\"SUCCESS\"\n");
-		sb.append("\t\telse\n");
-		sb.append("\t\t\tresults[${i}]=\"FAILED\"\n\n");
-		sb.append("\t\t\tfailed_commands=$((${failed_commands} + 1))\n");
-		sb.append("\t\tfi\n\n");
-		sb.append("\t\techo \"\"\n");
-		sb.append("\tdone\n");
-		sb.append("}\n\n");
 		sb.append("function _format_duration {\n");
-		sb.append("\tif [[ $((${1} / 60)) -gt 0 ]]\n");
+		sb.append("\tif [ \"$((${1} / 60))\" -gt 0 ]\n");
 		sb.append("\tthen\n");
 		sb.append("\t\techo \"$((${1} / 60))m $((${1} % 60))s\"\n");
 		sb.append("\telse\n");

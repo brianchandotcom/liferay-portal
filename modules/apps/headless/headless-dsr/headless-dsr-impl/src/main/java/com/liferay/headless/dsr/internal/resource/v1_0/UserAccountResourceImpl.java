@@ -20,7 +20,6 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -90,8 +89,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry =
-			_checkPermissionAndGetObjectEntry(roomId, ActionKeys.UPDATE);
+		ObjectEntry objectEntry = _checkPermissionAndGetObjectEntry(
+			roomId, ActionKeys.UPDATE);
 
 		Group group = _getGroup(objectEntry);
 
@@ -115,8 +114,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry =
-			_checkPermissionAndGetObjectEntry(roomId, ActionKeys.VIEW);
+		ObjectEntry objectEntry = _checkPermissionAndGetObjectEntry(
+			roomId, ActionKeys.VIEW);
 
 		Group group = _getGroup(objectEntry);
 
@@ -142,8 +141,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry =
-			_checkPermissionAndGetObjectEntry(roomId, ActionKeys.UPDATE);
+		ObjectEntry objectEntry = _checkPermissionAndGetObjectEntry(
+			roomId, ActionKeys.UPDATE);
 
 		User user = _userLocalService.getUser(userAccountId);
 		Group group = _getGroup(objectEntry);
@@ -185,8 +184,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new ValidationException("Email Address is null");
 		}
 
-		ObjectEntry objectEntry =
-			_checkPermissionAndGetObjectEntry(roomId, ActionKeys.UPDATE);
+		ObjectEntry objectEntry = _checkPermissionAndGetObjectEntry(
+			roomId, ActionKeys.UPDATE);
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -323,7 +322,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	private ObjectEntry _checkPermissionAndGetObjectEntry(
-		long roomId, String actionId) throws PortalException {
+			long roomId, String actionId)
+		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
 

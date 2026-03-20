@@ -215,8 +215,8 @@ public class ObjectEntryModelListenerTest {
 
 		ObjectEntry objectEntry;
 
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user)) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
 
 			objectEntry = _objectEntryService.addObjectEntry(
 				0, _objectDefinition.getObjectDefinitionId(), 0, null,

@@ -74,6 +74,25 @@ AUI().use(() => {
 				);
 			});
 		},
+		handleAutoFixCheckbox(autoFix, manualFixFieldset) {
+			if (autoFix.checked) {
+				manualFixFieldset.style.display = 'none';
+
+				manualFixFieldset.querySelectorAll('input').forEach((field) => {
+					if (field) {
+						if (field.type === 'checkbox') {
+							field.checked = false;
+						}
+						else {
+							field.value = '';
+						}
+					}
+				});
+			}
+			else {
+				manualFixFieldset.style.display = 'block';
+			}
+		},
 		populateProjectVersionField(productVersionId, select, map) {
 			while (select.firstChild) {
 				select.removeChild(select.firstChild);

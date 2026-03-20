@@ -15,5 +15,5 @@ securityContext:
     runAsNonRoot: true
     runAsUser: 2000
     seccompProfile:
-        type: "RuntimeDefault"
+        type: RuntimeDefault
 {{- end -}}

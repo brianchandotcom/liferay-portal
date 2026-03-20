@@ -13,6 +13,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import dev.langchain4j.agent.tool.ToolSpecification;
 import dev.langchain4j.mcp.McpToolProvider;
 import dev.langchain4j.mcp.client.DefaultMcpClient;
+import dev.langchain4j.mcp.client.McpClient;
 import dev.langchain4j.mcp.client.transport.McpTransport;
 import dev.langchain4j.mcp.client.transport.http.HttpMcpTransport;
 import dev.langchain4j.mcp.client.transport.http.StreamableHttpMcpTransport;
@@ -38,37 +41,61 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author João Victor Alves
  */
 public class MCPToolProviderUtil {
 
+	public static void close(String sseEventSinkKey) {
+		List<McpClient> mcpClients = _mcpClients.get(sseEventSinkKey);
+
+		if (mcpClients == null) {
+			return;
+		}
+
+		for (McpClient mcpClient : mcpClients) {
+			try {
+				mcpClient.close();
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+		}
+
+		_mcpClients.remove(sseEventSinkKey);
+	}
+
 	public static McpToolProvider create(
 		long companyId, DTOConverterRegistry dtoConverterRegistry, long groupId,
 		Locale locale, List<String> mcpServerExternalReferenceCodes,
-		ObjectEntryManager objectEntryManager, long userId) {
+		ObjectEntryManager objectEntryManager, String sseEventSinkKey,
+		long userId) {
 
 		if (ListUtil.isEmpty(mcpServerExternalReferenceCodes)) {
 			return null;
 		}
 
+		List<McpClient> mcpClients = TransformUtil.transform(
+			_getMCPServerObjectEntries(
+				companyId, dtoConverterRegistry, groupId, locale,
+				mcpServerExternalReferenceCodes, objectEntryManager, userId),
+			objectEntry -> {
+				McpTransport mcpTransport = _createMcpTransport(
+					objectEntry.getProperties());
+
+				return new DefaultMcpClient.Builder(
+				).transport(
+					mcpTransport
+				).build();
+			});
+
+		_mcpClients.put(sseEventSinkKey, mcpClients);
+
 		return McpToolProvider.builder(
 		).mcpClients(
-			TransformUtil.transform(
-				_getMCPServerObjectEntries(
-					companyId, dtoConverterRegistry, groupId, locale,
-					mcpServerExternalReferenceCodes, objectEntryManager,
-					userId),
-				objectEntry -> {
-					McpTransport mcpTransport = _createMcpTransport(
-						objectEntry.getProperties());
-
-					return new DefaultMcpClient.Builder(
-					).transport(
-						mcpTransport
-					).build();
-				})
+			mcpClients
 		).filter(
 			(mcpClient, toolSpecification) -> _filterToolSpecifications(
 				toolSpecification)
@@ -185,5 +212,11 @@ public class MCPToolProviderUtil {
 			throw new RuntimeException(exception);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MCPToolProviderUtil.class);
+
+	private static final Map<String, List<McpClient>> _mcpClients =
+		new ConcurrentHashMap<>();
 
 }

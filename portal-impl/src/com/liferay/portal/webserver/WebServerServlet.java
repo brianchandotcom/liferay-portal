@@ -20,10 +20,12 @@ import com.liferay.document.library.kernel.processor.VideoProcessorUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.image.ImageToolUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1558,10 +1560,16 @@ public class WebServerServlet extends HttpServlet {
 
 		User user = _getUser(httpServletRequest);
 
-		Group group = _getGroup(user.getCompanyId(), pathArray[1]);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ParamUtil.getLong(
+						httpServletRequest, "previewCTCollectionId"))) {
 
-		return fileEntryFriendlyURLResolver.resolveFriendlyURL(
-			group.getGroupId(), pathArray[2]);
+			Group group = _getGroup(user.getCompanyId(), pathArray[1]);
+
+			return fileEntryFriendlyURLResolver.resolveFriendlyURL(
+				group.getGroupId(), pathArray[2]);
+		}
 	}
 
 	private void _checkCompanyAndGroup(

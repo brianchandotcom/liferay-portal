@@ -61,7 +61,7 @@
 															"value": {
 																"html": {
 																	"value_i18n": {
-																		"en_US": "\n<h1>\nWelcome to AI Hub <mark>Beta</mark>\n</h1>\n"
+																		"en_US": "\n<h1 class=\"ai-hub-home-title\">\nWelcome to AI Hub <mark>Beta</mark>\n</h1>\n"
 																	}
 																}
 															}

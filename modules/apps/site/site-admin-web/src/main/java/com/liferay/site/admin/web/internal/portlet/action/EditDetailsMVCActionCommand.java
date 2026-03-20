@@ -120,9 +120,6 @@ public class EditDetailsMVCActionCommand
 		else {
 			typeSettingsUnicodeProperties.remove(
 				GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE);
-			typeSettingsUnicodeProperties.remove(
-				GroupConstants.
-					TYPE_SETTINGS_KEY_MAINTENANCE_UTILITY_PAGE_ENTRY_ID);
 		}
 
 		if (!liveGroup.isGuest() && !liveGroup.isOrganization()) {

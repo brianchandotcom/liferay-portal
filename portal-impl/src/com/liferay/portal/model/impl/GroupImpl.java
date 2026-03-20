@@ -502,14 +502,6 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public long getMaintenanceUtilityPageEntryId() {
-		return GetterUtil.getLong(
-			getTypeSettingsProperty(
-				GroupConstants.
-					TYPE_SETTINGS_KEY_MAINTENANCE_UTILITY_PAGE_ENTRY_ID));
-	}
-
-	@Override
 	public long getOrganizationId() {
 		if (isOrganization()) {
 			if (isStagingGroup()) {

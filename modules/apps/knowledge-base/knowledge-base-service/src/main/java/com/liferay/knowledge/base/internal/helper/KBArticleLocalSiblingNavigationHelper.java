@@ -36,11 +36,11 @@ public class KBArticleLocalSiblingNavigationHelper
 
 	@Override
 	protected KBArticle fetchLastChildKBArticle(KBArticle previousKBArticle) {
-		return _kbArticlePersistence.fetchByG_P_M_S_Last(
+		return _kbArticlePersistence.fetchByG_P_M_S_First(
 			previousKBArticle.getGroupId(),
 			previousKBArticle.getResourcePrimKey(), true,
 			WorkflowConstants.STATUS_APPROVED,
-			KBArticlePriorityComparator.getInstance(true));
+			KBArticlePriorityComparator.getInstance(false));
 	}
 
 	@Override

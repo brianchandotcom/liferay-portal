@@ -306,10 +306,10 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			entry::equals, BlogsEntry[]::new);
 
 		if (entries[0] == null) {
-			entries[0] = blogsEntryPersistence.fetchByG_LtD_S_Last(
+			entries[0] = blogsEntryPersistence.fetchByG_LtD_S_First(
 				entry.getGroupId(), entry.getDisplayDate(),
 				WorkflowConstants.STATUS_APPROVED,
-				EntryDisplayDateComparator.getInstance(true));
+				EntryDisplayDateComparator.getInstance(false));
 
 			if ((entries[0] != null) &&
 				!_blogsEntryModelResourcePermission.contains(

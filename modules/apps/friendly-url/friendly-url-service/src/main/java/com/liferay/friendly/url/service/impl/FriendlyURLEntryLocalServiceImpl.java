@@ -211,11 +211,11 @@ public class FriendlyURLEntryLocalServiceImpl
 			(friendlyURLEntryMapping.getFriendlyURLEntryId() ==
 				friendlyURLEntry.getFriendlyURLEntryId())) {
 
-			friendlyURLEntry = friendlyURLEntryPersistence.fetchByG_C_C_Last(
+			friendlyURLEntry = friendlyURLEntryPersistence.fetchByG_C_C_First(
 				friendlyURLEntry.getGroupId(),
 				friendlyURLEntry.getClassNameId(),
 				friendlyURLEntry.getClassPK(),
-				FriendlyURLEntryCreateDateComparator.getInstance(true));
+				FriendlyURLEntryCreateDateComparator.getInstance(false));
 
 			if (friendlyURLEntry == null) {
 				_friendlyURLEntryMappingPersistence.remove(

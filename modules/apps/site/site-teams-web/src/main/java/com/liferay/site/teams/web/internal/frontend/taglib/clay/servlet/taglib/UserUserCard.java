@@ -47,8 +47,13 @@ public class UserUserCard extends BaseUserCard {
 	}
 
 	@Override
+	public boolean isDisabled() {
+		return rowChecker.isDisabled(user);
+	}
+
+	@Override
 	public boolean isSelectable() {
-		return !rowChecker.isDisabled(user);
+		return !isDisabled();
 	}
 
 	private final RenderResponse _renderResponse;

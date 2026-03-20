@@ -631,19 +631,15 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public AssetEntry getWorkflowAssetEntry(
-			AssetRenderer<?> assetRenderer, WorkflowHandler<?> workflowHandler,
-			long classPK)
+			String className, long classPK, long fallbackClassPK)
 		throws PortalException {
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			workflowHandler.getClassName(), classPK);
+			className, classPK);
 
-		AssetRendererFactory<?> assetRendererFactory =
-			assetRenderer.getAssetRendererFactory();
-
-		if ((assetRendererFactory != null) && (assetEntry == null)) {
-			assetEntry = assetRendererFactory.getAssetEntry(
-				workflowHandler.getClassName(), assetRenderer.getClassPK());
+		if (assetEntry == null) {
+			assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				className, fallbackClassPK);
 		}
 
 		return assetEntry;

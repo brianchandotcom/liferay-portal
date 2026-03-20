@@ -11,9 +11,9 @@ describe('Account Membership', () => {
 		accountType: 'Customer',
 		annualRevenue: '1000000',
 		country: 'United States',
-		createDate: '2020-01-01T00:00:00.000Z',
+		createdDate: '2020-01-01T00:00:00.000Z',
 		currencyCode: 'USD',
-		customerSince: '2015-06-15T00:00:00.000Z',
+		customerSince: 2015,
 		id: '001xx000003DGbYAAW',
 		industry: 'Manufacturing',
 		lastActivityDate: '2021-12-01T00:00:00.000Z',
@@ -44,7 +44,7 @@ describe('Account Membership', () => {
 			<AccountMembership accountData={fromJS(mockData)} />
 		);
 
-		expect(getByText('2015-06-15')).toBeTruthy();
+		expect(getByText('2015')).toBeTruthy();
 		expect(getByText('2021-12-01')).toBeTruthy();
 		expect(getByText('2020-01-01')).toBeTruthy();
 	});

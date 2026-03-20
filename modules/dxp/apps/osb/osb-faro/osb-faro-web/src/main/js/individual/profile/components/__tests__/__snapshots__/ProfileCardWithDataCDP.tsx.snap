@@ -21,7 +21,7 @@ exports[`IndividualProfileCard should render 1`] = `
           <div
             class="text-4 text-secondary"
           >
-            The individual performed the events during December 9, 2021 - December 10, 2021.
+            The individual performed the events during December 9, 2021 - December 10, 2021
           </div>
           <span
             class="events-count-circle ml-auto"

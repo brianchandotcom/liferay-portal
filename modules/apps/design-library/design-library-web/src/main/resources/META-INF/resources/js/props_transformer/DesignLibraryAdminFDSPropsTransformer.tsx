@@ -5,12 +5,10 @@
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 import {dateUtils} from 'frontend-js-web';
+import React from 'react';
 
 import {ActionItem, DesignLibraryItem} from '../types';
-import {
-	DesignLibraryLinkRenderer,
-	FromNowDateTimeRenderer,
-} from './cell_renderers';
+import {FromNowDateTimeRenderer, LinkRenderer} from './cell_renderers';
 import {TableCellContentType} from './constants';
 
 export default function DesignLibraryAdminFDSPropsTransformer(
@@ -30,7 +28,13 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 		customRenderers: {
 			tableCell: [
 				{
-					component: DesignLibraryLinkRenderer,
+					component: (props) => (
+						<LinkRenderer
+							{...props}
+							stickerClassName="design-library-fds-sticker-designlibrary"
+							symbol="books"
+						/>
+					),
 					name: TableCellContentType.DESIGN_LIBRARY_LINK,
 					type: 'internal',
 				},

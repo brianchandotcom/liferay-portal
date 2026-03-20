@@ -6,34 +6,30 @@
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
-import {findAction, replaceTokens} from '@liferay/frontend-data-set-web';
+import {IItemsActions, replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
-import {ActionItem, DesignLibraryItem} from '../../types';
+import {DesignLibraryItem} from '../../types';
 
 export interface BaseLinkRendererProps {
-	actions: ActionItem[];
+	action?: IItemsActions;
 	itemData: DesignLibraryItem;
-	options: {actionId: string};
 	value: string;
 }
 
 export function BaseLinkRenderer({
-	actions,
+	action,
 	itemData,
-	options: {actionId},
 	stickerClassName,
 	symbol,
 	value,
 }: BaseLinkRendererProps & {stickerClassName: string; symbol: string}) {
-	const selectedAction = findAction(actions, actionId);
-
-	if (!actions.length || !actionId || !selectedAction?.href) {
+	if (!action || !action?.href) {
 		return <>{value}</>;
 	}
 
-	const formattedHref = replaceTokens(selectedAction.href, itemData);
+	const formattedHref = replaceTokens(action.href, itemData);
 
 	return (
 		<div className="align-items-center d-flex table-list-title">

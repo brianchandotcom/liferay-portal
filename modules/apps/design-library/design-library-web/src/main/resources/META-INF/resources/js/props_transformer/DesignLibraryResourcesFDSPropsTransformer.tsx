@@ -8,7 +8,7 @@ import {dateUtils} from 'frontend-js-web';
 import React from 'react';
 
 import {ActionItem, DesignLibraryItem} from '../types';
-import {FromNowDateTimeRenderer, StyleBookLinkRenderer} from './cell_renderers';
+import {FromNowDateTimeRenderer, LinkRenderer} from './cell_renderers';
 import {TableCellContentType} from './constants';
 
 export default function DesignLibraryResourcesFDSPropsTransformer(
@@ -28,7 +28,13 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 		customRenderers: {
 			tableCell: [
 				{
-					component: StyleBookLinkRenderer,
+					component: (props) => (
+						<LinkRenderer
+							{...props}
+							stickerClassName="design-library-fds-sticker-stylebook"
+							symbol="book"
+						/>
+					),
 					name: TableCellContentType.DESIGN_LIBRARY_LINK,
 					type: 'internal',
 				},

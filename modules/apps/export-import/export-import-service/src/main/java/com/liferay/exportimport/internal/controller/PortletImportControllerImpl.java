@@ -162,15 +162,16 @@ public class PortletImportControllerImpl implements PortletImportController {
 				portletDataContext.getPlid(),
 				portletDataContext.getPortletId());
 
-		jakarta.portlet.PortletPreferences portletPreferences =
+		jakarta.portlet.PortletPreferences jxPortletPreferences =
 			_portletPreferencesLocalService.fetchPreferences(
 				portletPreferencesIds);
 
-		if (portletPreferences == null) {
-			portletPreferences = new PortletPreferencesImpl();
+		if (jxPortletPreferences == null) {
+			jxPortletPreferences = new PortletPreferencesImpl();
 		}
 
-		String xml = deletePortletData(portletDataContext, portletPreferences);
+		String xml = deletePortletData(
+			portletDataContext, jxPortletPreferences);
 
 		if (xml != null) {
 			_portletPreferencesLocalService.updatePreferences(
@@ -339,7 +340,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 			portlet.getPortletDataHandlerInstance();
 
 		PortletPreferencesIds portletPreferencesIds = null;
-		jakarta.portlet.PortletPreferences portletPreferences = null;
+		jakarta.portlet.PortletPreferences jxPortletPreferences = null;
 
 		if (!portletDataHandler.isBatch() &&
 			(!portlet.isPreferencesUniquePerLayout() ||
@@ -352,17 +353,17 @@ public class PortletImportControllerImpl implements PortletImportController {
 					portletDataContext.getPlid(),
 					portletDataContext.getPortletId());
 
-			portletPreferences =
+			jxPortletPreferences =
 				_portletPreferencesLocalService.fetchPreferences(
 					portletPreferencesIds);
 		}
 
-		if (portletPreferences == null) {
-			portletPreferences = new PortletPreferencesImpl();
+		if (jxPortletPreferences == null) {
+			jxPortletPreferences = new PortletPreferencesImpl();
 		}
 
 		String xml = importPortletData(
-			portletDataContext, portletPreferences, portletDataElement);
+			portletDataContext, jxPortletPreferences, portletDataElement);
 
 		if ((portletPreferencesIds != null) && Validator.isNotNull(xml)) {
 			_portletPreferencesLocalService.updatePreferences(
@@ -1460,35 +1461,35 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 		// Current portlet preferences
 
-		jakarta.portlet.PortletPreferences portletPreferences =
+		jakarta.portlet.PortletPreferences jxPortletPreferences =
 			_portletPreferencesLocalService.getPreferences(
 				portletDataContext.getCompanyId(), ownerId, ownerType, plid,
 				portletId);
 
 		// New portlet preferences
 
-		jakarta.portlet.PortletPreferences jxPortletPreferences =
+		jakarta.portlet.PortletPreferences newJXPortletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
 				portletDataContext.getCompanyId(), ownerId, ownerType, plid,
 				portletId, xml);
 
 		if (importData || !MergeLayoutPrototypesThreadLocal.isInProgress()) {
-			String currentLastPublishDate = portletPreferences.getValue(
+			String currentLastPublishDate = jxPortletPreferences.getValue(
 				"last-publish-date", null);
-			String newLastPublishDate = jxPortletPreferences.getValue(
+			String newLastPublishDate = newJXPortletPreferences.getValue(
 				"last-publish-date", null);
 
 			if (Validator.isNotNull(currentLastPublishDate)) {
-				jxPortletPreferences.setValue(
+				newJXPortletPreferences.setValue(
 					"last-publish-date", currentLastPublishDate);
 			}
 			else if (Validator.isNotNull(newLastPublishDate)) {
-				jxPortletPreferences.reset("last-publish-date");
+				newJXPortletPreferences.reset("last-publish-date");
 			}
 
 			_portletPreferencesLocalService.updatePreferences(
 				ownerId, ownerType, plid, portletId,
-				PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+				PortletPreferencesFactoryUtil.toXML(newJXPortletPreferences));
 
 			return;
 		}
@@ -1498,7 +1499,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 		String[] dataPortletPreferences =
 			portletDataHandler.getDataPortletPreferences();
 
-		Enumeration<String> enumeration = jxPortletPreferences.getNames();
+		Enumeration<String> enumeration = newJXPortletPreferences.getNames();
 
 		while (enumeration.hasMoreElements()) {
 			String name = enumeration.nextElement();
@@ -1509,13 +1510,13 @@ public class PortletImportControllerImpl implements PortletImportController {
 				(Validator.isNull(portletDataContext.getScopeLayoutUuid()) &&
 				 scopeType.equals("company"))) {
 
-				portletPreferences.setValues(
-					name, jxPortletPreferences.getValues(name, null));
+				jxPortletPreferences.setValues(
+					name, newJXPortletPreferences.getValues(name, null));
 			}
 		}
 
 		_portletPreferencesLocalService.updatePreferences(
-			ownerId, ownerType, plid, portletId, portletPreferences);
+			ownerId, ownerType, plid, portletId, jxPortletPreferences);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -148,18 +148,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_resourcePermissionLocalService.setResourcePermissions(
 			companyId, LayoutSetPrototype.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(
-				layoutSetPrototype.getLayoutSetPrototypeId()),
+			String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()),
 			role.getRoleId(), new String[] {ActionKeys.VIEW});
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			"L_" + GroupConstants.DSR, companyId);
 
 		_resourcePermissionLocalService.setResourcePermissions(
-			companyId, Layout.class.getName(),
-			ResourceConstants.SCOPE_GROUP,
-			String.valueOf(group.getGroupId()),
-			role.getRoleId(), new String[] {ActionKeys.VIEW});
+			companyId, Layout.class.getName(), ResourceConstants.SCOPE_GROUP,
+			String.valueOf(group.getGroupId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
 
 		Map<String, String[]> permissionsMap = HashMapBuilder.put(
 			RoleConstants.OWNER,
@@ -171,8 +169,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			RoleConstants.SITE_MEMBER,
 			new String[] {ActionKeys.SUBSCRIBE, ActionKeys.VIEW}
 		).put(
-			RoleConstants.USER,
-			new String[] {ActionKeys.VIEW}
+			RoleConstants.USER, new String[] {ActionKeys.VIEW}
 		).put(
 			"DSR Contributor",
 			new String[] {
@@ -209,13 +206,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectDefinitionDeployerImpl.class);
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

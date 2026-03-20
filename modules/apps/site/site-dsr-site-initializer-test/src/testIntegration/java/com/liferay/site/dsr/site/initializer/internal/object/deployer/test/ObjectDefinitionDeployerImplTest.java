@@ -127,8 +127,7 @@ public class ObjectDefinitionDeployerImplTest {
 				TestPropsValues.getCompanyId(),
 				LayoutSetPrototype.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(
-					layoutSetPrototype.getLayoutSetPrototypeId()),
+				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()),
 				role.getRoleId(), ActionKeys.VIEW));
 
 		String[] actionIds = TransformUtil.transformToArray(
@@ -159,8 +158,7 @@ public class ObjectDefinitionDeployerImplTest {
 
 		_assertHasResourcePermissions(
 			actionIds, layoutSetPrototype.getGroupId(),
-			List.of(ActionKeys.VIEW),
-			role.getRoleId());
+			List.of(ActionKeys.VIEW), role.getRoleId());
 
 		role = _roleLocalService.fetchRole(
 			TestPropsValues.getCompanyId(), "DSR Contributor");
@@ -177,8 +175,7 @@ public class ObjectDefinitionDeployerImplTest {
 
 		_assertHasResourcePermissions(
 			actionIds, layoutSetPrototype.getGroupId(),
-			Arrays.asList(ActionKeys.VIEW),
-			role.getRoleId());
+			Arrays.asList(ActionKeys.VIEW), role.getRoleId());
 	}
 
 	private void _assertHasResourcePermissions(

@@ -10,7 +10,6 @@ import com.liferay.headless.dsr.resource.v1_0.InvitedMemberResource;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Ticket;

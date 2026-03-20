@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.Objects;
 
 /**
  * @author Stefano Motta
@@ -46,10 +46,11 @@ public class ViewRoomStrutsAction implements StrutsAction {
 			ParamUtil.getLong(httpServletRequest, "siteId"));
 
 		if (!GroupPermissionUtil.contains(
-			PermissionThreadLocal.getPermissionChecker(), group,
-			ActionKeys.VIEW)){
+				PermissionThreadLocal.getPermissionChecker(), group,
+				ActionKeys.VIEW)) {
 
-			SessionErrors.add(httpServletRequest,
+			SessionErrors.add(
+				httpServletRequest,
 				PrincipalException.MustHavePermission.class);
 
 			httpServletResponse.sendRedirect(
@@ -100,4 +101,5 @@ public class ViewRoomStrutsAction implements StrutsAction {
 
 	@Reference
 	private Portal _portal;
+
 }

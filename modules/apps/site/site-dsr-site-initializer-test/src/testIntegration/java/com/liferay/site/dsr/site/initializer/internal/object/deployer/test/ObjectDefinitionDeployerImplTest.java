@@ -105,6 +105,13 @@ public class ObjectDefinitionDeployerImplTest {
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				LayoutSetPrototype.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()),
+				role.getRoleId(), ActionKeys.VIEW));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
 				TestPropsValues.getCompanyId(), PortletKeys.PORTAL,
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(TestPropsValues.getCompanyId()),
@@ -121,14 +128,6 @@ public class ObjectDefinitionDeployerImplTest {
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(TestPropsValues.getCompanyId()),
 				role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY));
-
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(),
-				LayoutSetPrototype.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()),
-				role.getRoleId(), ActionKeys.VIEW));
 
 		String[] actionIds = TransformUtil.transformToArray(
 			_resourceActionLocalService.getResourceActions(

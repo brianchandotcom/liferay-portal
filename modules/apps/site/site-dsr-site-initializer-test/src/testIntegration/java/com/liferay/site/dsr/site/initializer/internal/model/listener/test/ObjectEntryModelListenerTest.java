@@ -91,6 +91,54 @@ public class ObjectEntryModelListenerTest {
 
 	@Test
 	public void testOnAfterCreate() throws Exception {
+		_testOnAfterCreate();
+		_testOnAfterCreateWithDSRSellerRole();
+	}
+
+	@Test
+	public void testOnAfterRemove() throws Exception {
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), 0, null,
+			HashMapBuilder.<String, Serializable>put(
+				"name", "A" + RandomTestUtil.randomString()
+			).put(
+				"r_accountToDSRRooms_accountEntryId",
+				_accountEntry.getAccountEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertNotNull(
+			_groupLocalService.fetchGroup(
+				TestPropsValues.getCompanyId(),
+				_classNameLocalService.getClassNameId(
+					_objectDefinition.getClassName()),
+				objectEntry.getObjectEntryId()));
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertNull(
+			_groupLocalService.fetchGroup(
+				TestPropsValues.getCompanyId(),
+				_classNameLocalService.getClassNameId(
+					_objectDefinition.getClassName()),
+				objectEntry.getObjectEntryId()));
+	}
+
+	private void _assertHasResourcePermission(
+			String actionId, ObjectEntry objectEntry, long roleId)
+		throws Exception {
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				objectEntry.getCompanyId(), objectEntry.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry.getObjectEntryId()), roleId,
+				actionId));
+	}
+
+	private void _testOnAfterCreate() throws Exception {
 		String name = StringUtil.toLowerCase(
 			"A" + RandomTestUtil.randomString());
 
@@ -201,8 +249,7 @@ public class ObjectEntryModelListenerTest {
 			ActionKeys.VIEW, objectEntry, role.getRoleId());
 	}
 
-	@Test
-	public void testOnAfterCreateWithDSRSellerRole() throws Exception {
+	private void _testOnAfterCreateWithDSRSellerRole() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		Role dsrSellerRole = _roleLocalService.fetchRoleByExternalReferenceCode(
@@ -211,7 +258,7 @@ public class ObjectEntryModelListenerTest {
 		_userLocalService.addRoleUser(dsrSellerRole.getRoleId(), user);
 
 		String roomName = StringUtil.toLowerCase(
-			"A" + RandomTestUtil.randomString());
+			"B" + RandomTestUtil.randomString());
 
 		ObjectEntry objectEntry;
 
@@ -267,49 +314,6 @@ public class ObjectEntryModelListenerTest {
 			_userGroupRoleLocalService.hasUserGroupRole(
 				user.getUserId(), group.getGroupId(),
 				RoleConstants.SITE_OWNER));
-	}
-
-	@Test
-	public void testOnAfterRemove() throws Exception {
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), 0, null,
-			HashMapBuilder.<String, Serializable>put(
-				"name", "A" + RandomTestUtil.randomString()
-			).put(
-				"r_accountToDSRRooms_accountEntryId",
-				_accountEntry.getAccountEntryId()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertNotNull(
-			_groupLocalService.fetchGroup(
-				TestPropsValues.getCompanyId(),
-				_classNameLocalService.getClassNameId(
-					_objectDefinition.getClassName()),
-				objectEntry.getObjectEntryId()));
-
-		_objectEntryLocalService.deleteObjectEntry(
-			objectEntry.getObjectEntryId());
-
-		Assert.assertNull(
-			_groupLocalService.fetchGroup(
-				TestPropsValues.getCompanyId(),
-				_classNameLocalService.getClassNameId(
-					_objectDefinition.getClassName()),
-				objectEntry.getObjectEntryId()));
-	}
-
-	private void _assertHasResourcePermission(
-			String actionId, ObjectEntry objectEntry, long roleId)
-		throws Exception {
-
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				objectEntry.getCompanyId(), objectEntry.getModelClassName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(objectEntry.getObjectEntryId()), roleId,
-				actionId));
 	}
 
 	private AccountEntry _accountEntry;

@@ -28,27 +28,31 @@ public class TestScriptGenerator {
 			gitRepositoryDirPath = args[0];
 		}
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(gitRepositoryDirPath)) {
+			throw new IllegalArgumentException(
+				"Git repository directory is null or empty");
+		}
+
+		String outputDirPath = null;
+
+		if (args.length > 1) {
+			outputDirPath = args[1];
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(outputDirPath)) {
+			throw new IllegalArgumentException(
+				"Output directory is null or empty");
+		}
+
 		TestScriptGenerator testScriptGenerator = new TestScriptGenerator(
-			gitRepositoryDirPath);
+			gitRepositoryDirPath, outputDirPath);
 
-		String generatedScript = testScriptGenerator.generate();
-
-		GitWorkingDirectory gitWorkingDirectory =
-			testScriptGenerator.getGitWorkingDirectory();
-
-		File scriptFile = new File(
-			gitWorkingDirectory.getWorkingDirectory(), "validate_branch.sh");
-
-		JenkinsResultsParserUtil.write(scriptFile, generatedScript);
-
-		scriptFile.setExecutable(true);
-
-		System.out.println(
-			"Local test script generated at: " +
-				JenkinsResultsParserUtil.getCanonicalPath(scriptFile));
+		testScriptGenerator.generate();
 	}
 
-	public TestScriptGenerator(String gitRepositoryDirPath) {
+	public TestScriptGenerator(
+		String gitRepositoryDirPath, String outputDirPath) {
+
 		if (JenkinsResultsParserUtil.isNullOrEmpty(gitRepositoryDirPath)) {
 			throw new IllegalArgumentException(
 				"Git repository directory is not set");
@@ -57,9 +61,11 @@ public class TestScriptGenerator {
 		_gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				"master", gitRepositoryDirPath);
+
+		_outputDir = new File(outputDirPath);
 	}
 
-	public String generate() {
+	public void generate() throws IOException {
 		RelevantRuleEngine relevantRuleEngine = new RelevantRuleEngine(
 			_gitWorkingDirectory, _TEST_SUITE_NAME);
 
@@ -67,6 +73,13 @@ public class TestScriptGenerator {
 
 		sb.append("#!/bin/bash\n\n");
 		sb.append("function main {\n");
+		sb.append("\tlocal base_dir=$(git rev-parse --show-toplevel)\n\n");
+		sb.append("\tif [[ -z \"${base_dir}\" ]]\n");
+		sb.append("\tthen\n");
+		sb.append("\t\techo \"Error: Not inside a git repository.\"\n");
+		sb.append("\t\texit 1\n");
+		sb.append("\tfi\n\n");
+		sb.append("\tcd \"${base_dir}\" || exit 1\n\n");
 		sb.append("\techo \"Running local tests...\"\n");
 		sb.append("\techo \"\"\n\n");
 		sb.append("\techo \"Note: This script was generated on branch ");
@@ -156,7 +169,9 @@ public class TestScriptGenerator {
 		int total = commands.size();
 
 		if (total == 0) {
-			return "echo \"No test commands to execute.\"\n";
+			System.out.println("No test commands to execute.");
+
+			return;
 		}
 
 		int index = 0;
@@ -270,7 +285,13 @@ public class TestScriptGenerator {
 		sb.append("}\n\n");
 		sb.append("main\n");
 
-		return sb.toString();
+		String generatedScript = sb.toString();
+
+		File scriptFile = new File(_outputDir, "validate_branch.sh");
+
+		JenkinsResultsParserUtil.write(scriptFile, generatedScript);
+
+		scriptFile.setExecutable(true);
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
@@ -292,5 +313,6 @@ public class TestScriptGenerator {
 	private static final String _TEST_SUITE_NAME = "relevant-local";
 
 	private final GitWorkingDirectory _gitWorkingDirectory;
+	private final File _outputDir;
 
 }

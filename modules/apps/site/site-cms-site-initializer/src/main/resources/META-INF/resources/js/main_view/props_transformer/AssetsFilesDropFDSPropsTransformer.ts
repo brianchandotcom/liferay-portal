@@ -33,17 +33,28 @@ export default function AssetsFilesDropFDSPropsTransformer({
 		views,
 	});
 
+	const isCreationMenuEmpty = !creationMenu?.primaryItems?.length;
+
 	return {
 		...assetsData,
 		fileDropSettings: {
-			enabled: true,
+			enabled: !isCreationMenuEmpty,
 			isDropTarget: ({item}: {item: any}) => {
 				return item.entryClassName.includes(
 					OBJECT_ENTRY_FOLDER_CLASS_NAME
 				);
 			},
-			onFileDrop: (droppedFiles: any, dropTarget?: any) =>
-				fileDropAction(additionalProps, droppedFiles, dropTarget),
+			onFileDrop: (droppedFiles: any, dropTarget?: any) => {
+				if (isCreationMenuEmpty) {
+					return;
+				}
+
+				return fileDropAction(
+					additionalProps,
+					droppedFiles,
+					dropTarget
+				);
+			},
 		},
 		hideManagementBarInEmptyState: true,
 		snapshotsEnabled: true,

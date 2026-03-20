@@ -8,6 +8,7 @@ package com.liferay.portal.store.file.system;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -25,10 +26,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,13 +168,21 @@ public class FileSystemStore implements Store {
 		File fileNameVersionFile = getFileNameVersionFile(
 			companyId, repositoryId, fileName, versionLabel);
 
+		Path path = fileNameVersionFile.toPath();
+
 		try {
-			return new FileInputStream(fileNameVersionFile);
+			BasicFileAttributes basicFileAttributes = Files.readAttributes(
+				path, BasicFileAttributes.class);
+
+			if (basicFileAttributes.size() == 0) {
+				return _emptyUnsyncByteArrayInputStream;
+			}
+
+			return Files.newInputStream(path);
 		}
-		catch (FileNotFoundException fileNotFoundException) {
+		catch (IOException ioException) {
 			throw new NoSuchFileException(
-				companyId, repositoryId, fileName, versionLabel,
-				fileNotFoundException);
+				companyId, repositoryId, fileName, versionLabel, ioException);
 		}
 	}
 
@@ -377,6 +388,10 @@ public class FileSystemStore implements Store {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileSystemStore.class);
+
+	private static final UnsyncByteArrayInputStream
+		_emptyUnsyncByteArrayInputStream = new UnsyncByteArrayInputStream(
+			new byte[0]);
 
 	private final File _rootDir;
 

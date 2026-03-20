@@ -21,13 +21,13 @@ task appendHotfixQualifier
 task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
+task generateBranchValidationScript(type: JavaExec)
 task printDependencyPath
 task removeHotfixQualifier
 task setUpLibs
 task setUpPortalTools
 task setUpYarnOfflineCache
 task updateYarnBinariesCache
-task generateBranchValidationScript(type: JavaExec)
 task validateBranch(type: Exec)
 task wrapperPortal(type: Wrapper)
 task wrapperProjectTemplates(type: Wrapper)
@@ -181,9 +181,13 @@ generateBranchValidationScript {
 	classpath = configurations.generateBranchValidationScriptConfiguration
 	mainClass = "com.liferay.jenkins.results.parser.test.suite.TestScriptGenerator"
 
-	outputs.file provider { file "${outputDir}/validate_branch.sh" }
+	outputs.file provider {
+		file "${outputDir}/validate_branch.sh"
+	}
 
-	outputs.upToDateWhen { false }
+	outputs.upToDateWhen {
+		false
+	}
 
 	doLast {
 		println

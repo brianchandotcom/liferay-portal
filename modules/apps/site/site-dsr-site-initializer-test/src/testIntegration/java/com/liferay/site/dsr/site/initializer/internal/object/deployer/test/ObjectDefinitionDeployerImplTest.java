@@ -122,6 +122,15 @@ public class ObjectDefinitionDeployerImplTest {
 				String.valueOf(TestPropsValues.getCompanyId()),
 				role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY));
 
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				LayoutSetPrototype.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(
+					layoutSetPrototype.getLayoutSetPrototypeId()),
+				role.getRoleId(), ActionKeys.VIEW));
+
 		String[] actionIds = TransformUtil.transformToArray(
 			_resourceActionLocalService.getResourceActions(
 				"com.liferay.document.library"),
@@ -153,6 +162,14 @@ public class ObjectDefinitionDeployerImplTest {
 			Arrays.asList(
 				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
 				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW),
+			role.getRoleId());
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), "DSR Seller");
+
+		_assertHasResourcePermissions(
+			actionIds, layoutSetPrototype.getGroupId(),
+			Arrays.asList(ActionKeys.VIEW),
 			role.getRoleId());
 	}
 

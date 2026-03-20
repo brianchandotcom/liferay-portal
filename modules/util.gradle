@@ -41,6 +41,8 @@ Map<File, Properties> libDependenciesMap = libDependenciesFileTree.collectEntrie
 	[it.parentFile, properties]
 }
 
+File repoRootDir = project.rootDir.parentFile
+
 appendHotfixQualifier {
 	doLast {
 		String dirs = System.getProperty("patcher.hotfix.dirs", "")
@@ -90,6 +92,30 @@ formatSourceLatestAuthor {
 formatSourceLocalChanges {
 	description = "Runs Liferay Source Formatter to format the unstaged project files."
 	formatLocalChanges = true
+}
+
+generateBranchValidationScript {
+	Task task ->
+
+	File outputDir = file "${buildDir}/${task.name}"
+
+	args repoRootDir, outputDir
+
+	classpath = configurations.generateBranchValidationScriptConfiguration
+	mainClass = "com.liferay.jenkins.results.parser.test.suite.TestScriptGenerator"
+
+	outputs.file provider {
+		file "${outputDir}/validate_branch.sh"
+	}
+
+	outputs.upToDateWhen {
+		false
+	}
+
+	doLast {
+		println ""
+		println "Script generated at: file://${outputs.files.singleFile}"
+	}
 }
 
 printDependencyPath {
@@ -166,32 +192,6 @@ setUpYarnOfflineCache {
 updateYarnBinariesCache {
 	doFirst {
 		logger.lifecycle "Updating Yarn binaries cache directories"
-	}
-}
-
-File repoRootDir = project.rootDir.parentFile
-
-generateBranchValidationScript {
-	Task task ->
-
-	File outputDir = file "${buildDir}/${task.name}"
-
-	args repoRootDir, outputDir
-
-	classpath = configurations.generateBranchValidationScriptConfiguration
-	mainClass = "com.liferay.jenkins.results.parser.test.suite.TestScriptGenerator"
-
-	outputs.file provider {
-		file "${outputDir}/validate_branch.sh"
-	}
-
-	outputs.upToDateWhen {
-		false
-	}
-
-	doLast {
-		println ""
-		println "Script generated at: file://${outputs.files.singleFile}"
 	}
 }
 

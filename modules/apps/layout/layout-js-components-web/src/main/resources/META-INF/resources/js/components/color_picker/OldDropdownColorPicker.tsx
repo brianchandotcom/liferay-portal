@@ -19,7 +19,7 @@ import React, {
 
 import {Color, ColorCategoryMap} from '../../types/ColorPicker';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
-import ColorPalette from './ColorPalette';
+import OldColorPalette from './OldColorPalette';
 
 const noop = () => {};
 
@@ -182,7 +182,7 @@ export function DropdownColorPicker({
 			<DropDown.Menu
 				active={active}
 				alignElementRef={triggerElementRef}
-				className="clay-color-dropdown-menu px-0"
+				className="clay-color-dropdown-menu old px-0"
 				containerProps={{
 					className: 'cadmin',
 				}}
@@ -190,7 +190,7 @@ export function DropdownColorPicker({
 				ref={dropdownContainerRef}
 			>
 				{active ? (
-					<ColorPalette
+					<OldColorPalette
 						active={active}
 						colors={filteredColors}
 						dropdownContainerRef={dropdownContainerRef}

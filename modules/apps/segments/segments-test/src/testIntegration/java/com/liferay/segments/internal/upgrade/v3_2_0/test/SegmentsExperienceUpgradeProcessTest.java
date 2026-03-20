@@ -241,7 +241,7 @@ public class SegmentsExperienceUpgradeProcessTest
 				"LONG default 0 not null");
 		}
 
-		_assertSegmentsExperiences();
+		_assertSegmentsExperiences(0);
 	}
 
 	@Test
@@ -350,11 +350,18 @@ public class SegmentsExperienceUpgradeProcessTest
 	}
 
 	private void _assertSegmentsExperiences() {
+		_assertSegmentsExperiences(1);
+	}
+
+	private void _assertSegmentsExperiences(
+		int fragmentEntryLinksExpectedCount) {
+
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
 				_group.getGroupId(), _draftLayout.getPlid());
 
-		_assertFragmentEntryLinks(1, segmentsExperiences);
+		_assertFragmentEntryLinks(
+			fragmentEntryLinksExpectedCount, segmentsExperiences);
 
 		_assertLayoutPageTemplateStructureRels(_draftLayout.getPlid());
 		_assertSegmentsExperiences(2, segmentsExperiences);

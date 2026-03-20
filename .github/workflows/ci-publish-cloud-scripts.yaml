@@ -63,10 +63,8 @@ on:
             -   master
         paths:
             -   .github/workflows/ci-publish-cloud-scripts.yaml
-            -   cloud/scripts/*
-            -   cloud/terraform/aws/eks/*
-            -   cloud/terraform/aws/gitops/platform/*
-            -   cloud/terraform/aws/gitops/resources/*
-            -   cloud/terraform/aws/grafana/*
+            -   cloud/scripts/bootstrap.sh
+            -   cloud/scripts/versions.tfvars
+            -   cloud/scripts/versions.json
 permissions:
     id-token: write

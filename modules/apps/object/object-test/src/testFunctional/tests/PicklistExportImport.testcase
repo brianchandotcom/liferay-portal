@@ -1,0 +1,313 @@
+@component-name = "portal-bpm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		Picklist.deleteAllPicklistsViaAPI();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-167536 - It's possible to add an object entry with a picklist field as mandatory of a  previously picklist imported "
+	@priority = 4
+	test CanAddEntryWithMandatoryPicklistFieldImported {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-167536 - It's possible to add an object entry with a picklist and a object previously imported"
+	@priority = 4
+	test CanAddEntryWithPicklistAndCustomObjectImported {
+		task ("Given a picklist and an object imported") {
+			Picklist.gotoPicklists();
+
+			Picklist.importPicklist(
+				picklistFileName = "simple_picklist",
+				picklistName = "ImportedPicklist175691");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectExportImport.importObject(
+				objectFileName = "ImportedSimpleObject",
+				objectName = "ImportedSimpleObject175691");
+		}
+
+		task ("When add a picklist field") {
+			ObjectPortlet.selectCustomObject(label = "Imported Simple Object");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "ImportedPicklist175691",
+				fieldType = "Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "ImportedSimpleObject175691");
+		}
+
+		task ("Then the user can add an object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "ImportedSimpleObject175691");
+
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				labelName = "Field Picklist",
+				picklistOption = "Picklist Item 1");
+
+			ObjectAdmin.goToCustomObject(objectName = "ImportedSimpleObject175691");
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item 1");
+		}
+	}
+
+	@description = "LPS-175645 - It's possible to add an object entry with a picklist previously imported"
+	@priority = 5
+	test CanAddEntryWithPicklistImported {
+		task ("Given a picklist imported and an object created") {
+			Picklist.gotoPicklists();
+
+			Picklist.importPicklist(
+				picklistFileName = "simple_picklist",
+				picklistName = "ImportedPicklist175679");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175679",
+				objectName = "CustomObject175679",
+				pluralLabelName = "Custom Objects 175679");
+		}
+
+		task ("When add a picklist field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175679");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "ImportedPicklist175679",
+				fieldType = "Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175679");
+		}
+
+		task ("Then the user can add an object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175679");
+
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				labelName = "Field Picklist",
+				picklistOption = "Picklist Item 1");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175679");
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item 1");
+		}
+	}
+
+	@description = "LPS-167536 - It's possible to add an object entry with a picklist field as state of a picklist previously imported "
+	@priority = 4
+	test CanAddEntryWithStateOfPicklistImported {
+		task ("Given a picklist imported and an object created") {
+			Picklist.gotoPicklists();
+
+			Picklist.importPicklist(
+				picklistFileName = "simple_picklist",
+				picklistName = "ImportedPicklist175681");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175681",
+				objectName = "CustomObject175681",
+				pluralLabelName = "Custom Objects 175681");
+		}
+
+		task ("When a picklist field is marked as state") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175681");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "ImportedPicklist175681",
+				fieldType = "Picklist",
+				itemName = "Picklist Item 1",
+				markAsState = "true");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175681");
+		}
+
+		task ("Then the user can add an object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175681");
+
+			LexiconEntry.gotoAdd();
+
+			Button.clickSave();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175681");
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item 1");
+		}
+	}
+
+	@description = "LPS-167536 - It's possible to add an object entry of a picklist with a translation of a previously picklist imported "
+	@priority = 3
+	test CanAddEntryWithTranslationPicklistImported {
+		task ("Given a picklist imported and an object created with a picklist field") {
+			Picklist.gotoPicklists();
+
+			Picklist.importPicklist(
+				picklistFileName = "simple_picklist",
+				picklistName = "ImportedPicklist175689");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175689",
+				objectName = "CustomObject175689",
+				pluralLabelName = "Custom Objects 175689");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175689");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "ImportedPicklist175689",
+				fieldType = "Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175689");
+		}
+
+		task ("When add new language for picklist item") {
+			Picklist.gotoPicklists();
+
+			Picklist.gotoPicklistView(picklistName = "ImportedPicklist175689");
+
+			Picklist.optionsPicklistItem(
+				itemKey = "picklistItem1",
+				menuItem = "View");
+
+			Picklist.addLanguageOnPicklistItem(
+				itemName = "Item da lista de seleção 1",
+				newLanguage = "pt_BR");
+
+			PortletEntry.save();
+		}
+
+		task ("And when change the language") {
+			User.openUsersAdmin();
+
+			User.editDisplaySettingsCP(
+				languageName = "português (Brasil)",
+				userScreenName = "test");
+		}
+
+		task ("Then the user can add an object entry with an item translated") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175689");
+
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				labelName = "Field Picklist",
+				picklistOption = "Item da lista de seleção 1",
+				saveName = "Salvar");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175689");
+
+			ObjectPortlet.viewEntry(entry = "Item da lista de seleção 1");
+		}
+	}
+
+	@description = "LPS-167536 - It's possible to export Picklist (download)"
+	@priority = 5
+	test CanExportPicklist {
+		property portal.acceptance = "true";
+
+		task ("Given a Picklist created") {
+			Picklist.addPicklistViaAPI(picklistName = "Export Picklist");
+		}
+
+		task ("When a Picklist is exported") {
+			Picklist.gotoPicklists();
+
+			Picklist.optionsPicklist(
+				menuItem = "Export as JSON",
+				picklistName = "Export Picklist");
+
+			DownloadTempFile();
+		}
+
+		task ("Then Picklist is exported successfully") {
+			ImportExport.assertDownloadedFileName(downloadedFile = "ListType_Export*");
+		}
+	}
+
+	@description = "LPS-167536 - It's possible to see an error importing incorrect JSON"
+	@priority = 4
+	test CannotImportWrongPicklist {
+		task ("Given a Power User with access to Picklist") {
+			Picklist.gotoPicklists();
+		}
+
+		task ("When incorrect JSON file is imported") {
+			Picklist.importPicklist(
+				picklistFileName = "ImportedSimpleObject",
+				picklistName = "ImportedPicklist167536");
+		}
+
+		task ("Then an error is displayed") {
+			Alert.viewErrorMessage(errorMessage = "The Picklist failed to import.");
+		}
+	}
+
+	@description = "LPS-167536 - It's possible to overwrite Picklist when ERC is duplicated (Update Existing Picklist)"
+	@priority = 5
+	test CanOverwritePicklistWhenERCisDuplicated {
+		property custom.properties = "feature.flag.LPS-167536=true";
+		property portal.acceptance = "true";
+
+		task ("Given a picklist with its ERC edited") {
+			JSONObject.addPicklist(
+				externalReferenceCode = "testoverwrite001",
+				picklistName = "Picklist Test");
+
+			Picklist.gotoPicklists();
+		}
+
+		task ("When a picklist is imported with the same ERC as an existing picklist") {
+			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+
+			Click(locator1 = "Picklist#IMPORT_PICKLIST");
+
+			Picklist.selectPicklistImportFile(
+				picklistFileName = "ListType_New_Picklist_44198_20230322182913922",
+				picklistName = "Updated Picklist");
+
+			IFrame.selectTopFrame();
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Then the existing Picklist is updated") {
+			AssertElementPresent(
+				key_picklistName = "Updated Picklist",
+				locator1 = "Picklist#ASSERT_PICKLIST");
+		}
+	}
+
+}

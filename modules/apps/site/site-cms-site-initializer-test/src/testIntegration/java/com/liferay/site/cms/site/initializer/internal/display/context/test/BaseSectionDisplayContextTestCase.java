@@ -141,7 +141,7 @@ public abstract class BaseSectionDisplayContextTestCase
 					getTranslationInfoItemFieldValuesExporters(),
 				this::_getExportFileFormatJSONObject)
 		).put(
-			"availableTargetLocales",
+			"availableLocales",
 			_getLocalesJSONArray(
 				themeDisplay.getLocale(),
 				LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
@@ -1132,13 +1132,26 @@ public abstract class BaseSectionDisplayContextTestCase
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		locales.forEach(
-			currentLocale -> jsonArray.put(
-				JSONUtil.put(
-					"displayName",
-					LocaleUtil.getLocaleDisplayName(currentLocale, locale)
-				).put(
-					"languageId", LocaleUtil.toLanguageId(currentLocale)
-				)));
+			currentLocale -> {
+				String w3cLanguageId = LocaleUtil.toW3cLanguageId(
+					currentLocale);
+
+				jsonArray.put(
+					JSONUtil.put(
+						"displayName",
+						LocaleUtil.getLocaleDisplayName(currentLocale, locale)
+					).put(
+						"id", LocaleUtil.toLanguageId(currentLocale)
+					).put(
+						"label", w3cLanguageId
+					).put(
+						"languageId", LocaleUtil.toLanguageId(currentLocale)
+					).put(
+						"name", currentLocale.getDisplayName()
+					).put(
+						"symbol", StringUtil.toLowerCase(w3cLanguageId)
+					));
+			});
 
 		return jsonArray;
 	}

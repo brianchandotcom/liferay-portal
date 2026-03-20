@@ -324,6 +324,15 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		return _gitWorkingDirectory.getModifiedFilesList(true);
 	}
 
+	protected List<File> getModifiedModuleProjectDirsList() throws IOException {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			getPortalGitWorkingDirectory();
+
+		return _getModifiedModuleProjectDirsList(
+			portalGitWorkingDirectory.getModifiedFilesList(),
+			portalGitWorkingDirectory.getModifiedModuleDirsList());
+	}
+
 	protected PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		return (PortalGitWorkingDirectory)_gitWorkingDirectory;
 	}
@@ -350,6 +359,33 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		return JenkinsResultsParserUtil.getProperty(
 			JenkinsResultsParserUtil.getProperties(baseTestPropertiesFile),
 			propertyName, getTestSuiteName());
+	}
+
+	private List<File> _getModifiedModuleProjectDirsList(
+		List<File> modifiedFilesList, List<File> modifiedModuleDirsList) {
+
+		List<File> modifiedModuleProjectDirsList = new ArrayList<>();
+
+		for (File modifiedModuleDir : modifiedModuleDirsList) {
+			List<File> moduleProjectDirs = _getModuleProjectDirs(
+				modifiedModuleDir);
+
+			List<File> modifiedModuleProjectDirs =
+				JenkinsResultsParserUtil.getDirectoriesContainingFiles(
+					moduleProjectDirs, modifiedFilesList);
+
+			if (!modifiedModuleProjectDirs.isEmpty()) {
+				modifiedModuleProjectDirsList.addAll(modifiedModuleProjectDirs);
+			}
+			else if (!moduleProjectDirs.isEmpty()) {
+				modifiedModuleProjectDirsList.addAll(moduleProjectDirs);
+			}
+			else {
+				modifiedModuleProjectDirsList.add(modifiedModuleDir);
+			}
+		}
+
+		return modifiedModuleProjectDirsList;
 	}
 
 	private List<File> _getModuleProjectDirs(File moduleDir) {

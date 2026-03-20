@@ -7,7 +7,6 @@ package com.liferay.jenkins.results.parser.test.suite;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,14 +29,11 @@ public class ModulesJavaUnitTestRelevantRule extends RelevantRule {
 
 	@Override
 	public List<TestScriptCommand> getTestScriptCommands() {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			getPortalGitWorkingDirectory();
-
 		try {
-			List<File> modifiedModuleDirsList =
-				portalGitWorkingDirectory.getModifiedModuleDirsList();
+			List<File> modifiedModuleProjectDirsList =
+				getModifiedModuleProjectDirsList();
 
-			if (modifiedModuleDirsList.isEmpty()) {
+			if (modifiedModuleProjectDirsList.isEmpty()) {
 				return new ArrayList<>();
 			}
 
@@ -47,9 +43,11 @@ public class ModulesJavaUnitTestRelevantRule extends RelevantRule {
 
 			sb.append("../gradlew");
 
-			for (File modifiedModuleDir : modifiedModuleDirsList) {
+			for (File modifiedModuleProjectDir :
+					modifiedModuleProjectDirsList) {
+
 				sb.append(" ");
-				sb.append(getGradlePackageName(modifiedModuleDir));
+				sb.append(getGradlePackageName(modifiedModuleProjectDir));
 				sb.append(":test");
 			}
 

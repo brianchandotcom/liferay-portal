@@ -5,6 +5,8 @@
 
 package com.liferay.fragment.entry.processor.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
@@ -24,16 +26,19 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -159,26 +164,45 @@ public class AnalyticsAttributesUtil {
 				element.attr("data-analytics-asset-action", ACTION_VIEW);
 			}
 
-			String[] categoryNames =
-				AssetCategoryLocalServiceUtil.getCategoryNames(
+			List<AssetCategory> assetCategories =
+				AssetCategoryLocalServiceUtil.getCategories(
 					objectEntry.getModelClassName(),
 					objectEntry.getObjectEntryId());
 
-			if (ArrayUtil.isNotEmpty(categoryNames)) {
+			if (ListUtil.isNotEmpty(assetCategories)) {
+				JSONArray jsonArray = JSONUtil.toJSONArray(
+					assetCategories,
+					assetCategory -> JSONUtil.put(
+						"id", assetCategory.getCategoryId()
+					).put(
+						"name",
+						assetCategory.getTitle(
+							fragmentEntryProcessorContext.getLocale())
+					),
+					_log);
+
 				element.attr(
-					"data-analytics-asset-categories",
-					StringUtil.merge(
-						categoryNames, StringPool.COMMA_AND_SPACE));
+					"data-analytics-object-definition-categories",
+					jsonArray.toString());
 			}
 
-			String[] tagNames = AssetTagLocalServiceUtil.getTagNames(
+			List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
 				objectEntry.getModelClassName(),
 				objectEntry.getObjectEntryId());
 
-			if (ArrayUtil.isNotEmpty(tagNames)) {
+			if (ListUtil.isNotEmpty(assetTags)) {
+				JSONArray jsonArray = JSONUtil.toJSONArray(
+					assetTags,
+					assetTag -> JSONUtil.put(
+						"id", assetTag.getTagId()
+					).put(
+						"name", assetTag.getName()
+					),
+					_log);
+
 				element.attr(
-					"data-analytics-asset-tags",
-					StringUtil.merge(tagNames, StringPool.COMMA_AND_SPACE));
+					"data-analytics-object-definition-tags",
+					jsonArray.toString());
 			}
 
 			element.attr(

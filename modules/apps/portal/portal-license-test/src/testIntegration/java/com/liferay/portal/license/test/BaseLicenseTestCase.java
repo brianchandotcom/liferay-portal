@@ -98,18 +98,6 @@ public abstract class BaseLicenseTestCase {
 			bundleSymbolicNames.containsAll(SetUtil.fromArray(bundleNames)));
 	}
 
-	public void assertLicenseInvalid() throws Exception {
-		String response = _hitHomePage("localhost", 8080);
-
-		Assert.assertTrue(response.contains(_INVALID_LICENSE_KEY));
-	}
-
-	public void assertLicenseNotRegistered() throws Exception {
-		String response = _hitHomePage("localhost", 8080);
-
-		Assert.assertTrue(response.contains(_NOT_REGISTERED_LICENSE_KEY));
-	}
-
 	public void assertLicensePropertiesExisted(String productId) {
 		Map<String, String> licenseProperties =
 			LicenseManagerUtil.getLicenseProperties(productId);
@@ -126,7 +114,19 @@ public abstract class BaseLicenseTestCase {
 			licenseProperties.toString(), licenseProperties.isEmpty());
 	}
 
-	public void assertLicenseRegistered() throws Exception {
+	public void assertPortalLicenseInvalid() throws Exception {
+		String response = _hitHomePage("localhost", 8080);
+
+		Assert.assertTrue(response.contains(_INVALID_LICENSE_KEY));
+	}
+
+	public void assertPortalLicenseNotRegistered() throws Exception {
+		String response = _hitHomePage("localhost", 8080);
+
+		Assert.assertTrue(response.contains(_NOT_REGISTERED_LICENSE_KEY));
+	}
+
+	public void assertPortalLicenseRegistered() throws Exception {
 		String response = _hitHomePage("localhost", 8080);
 
 		Assert.assertFalse(response.contains(_LICENSE_PAGE_KEY));
@@ -179,7 +179,9 @@ public abstract class BaseLicenseTestCase {
 			_CMP_LICENSE_TYPE);
 	}
 
-	public File deployEnterpriseLicense(long validityPeriod) throws Exception {
+	public File deployEnterprisePortalLicense(long validityPeriod)
+		throws Exception {
+
 		long currentTimeMillis = System.currentTimeMillis();
 
 		StringBundler sb = new StringBundler(20);
@@ -214,7 +216,9 @@ public abstract class BaseLicenseTestCase {
 			_ENTERPRISE_PRODUCT_NAME, _ENTERPRISE_LICENSE_TYPE);
 	}
 
-	public File deployFreeTierLicense(long validityPeriod) throws Exception {
+	public File deployFreeTierPortalLicense(long validityPeriod)
+		throws Exception {
+
 		long currentTimeMillis = System.currentTimeMillis();
 
 		StringBundler sb = new StringBundler(20);

@@ -89,11 +89,11 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 			});
 
 		try {
-			assertLicenseNotRegistered();
+			assertPortalLicenseNotRegistered();
 
-			deployFreeTierLicense(Time.HOUR);
+			deployFreeTierPortalLicense(Time.HOUR);
 
-			assertLicenseInvalid();
+			assertPortalLicenseInvalid();
 		}
 		finally {
 			PortalClassLoaderUtil.setClassLoader(classLoader);
@@ -107,16 +107,16 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 		assertBundlesExisted(
 			_getDxpOnlyModuleSymbolicName(), _getEnterpriseAppSymbolicName());
 
-		assertLicenseNotRegistered();
+		assertPortalLicenseNotRegistered();
 
 		assertBundlesExisted(
 			_getDxpOnlyModuleSymbolicName(), _getEnterpriseAppSymbolicName());
 
-		File binaryFile = deployFreeTierLicense(Time.HOUR);
+		File binaryFile = deployFreeTierPortalLicense(Time.HOUR);
 
 		assertLicensePropertiesExisted(getPortalProductId());
 
-		assertLicenseRegistered();
+		assertPortalLicenseRegistered();
 
 		assertBundlesNotExisted(
 			_getDxpOnlyModuleSymbolicName(), _getEnterpriseAppSymbolicName());
@@ -132,7 +132,7 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 		assertBundlesExisted(
 			_getDxpOnlyModuleSymbolicName(), _getEnterpriseAppSymbolicName());
 
-		assertLicenseNotRegistered();
+		assertPortalLicenseNotRegistered();
 	}
 
 	@Test
@@ -168,16 +168,16 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 		Assert.assertEquals(Bundle.ACTIVE, dxpOnlyBundle.getState());
 		Assert.assertEquals(Bundle.ACTIVE, enterpriseAppBundle.getState());
 
-		assertLicenseNotRegistered();
+		assertPortalLicenseNotRegistered();
 
 		Assert.assertEquals(Bundle.ACTIVE, dxpOnlyBundle.getState());
 		Assert.assertEquals(Bundle.ACTIVE, enterpriseAppBundle.getState());
 
-		deployFreeTierLicense(Time.HOUR);
+		deployFreeTierPortalLicense(Time.HOUR);
 
 		assertLicensePropertiesExisted(getPortalProductId());
 
-		assertLicenseRegistered();
+		assertPortalLicenseRegistered();
 
 		Assert.assertEquals(Bundle.UNINSTALLED, dxpOnlyBundle.getState());
 		Assert.assertEquals(Bundle.UNINSTALLED, enterpriseAppBundle.getState());
@@ -196,7 +196,7 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 
 			resetCheckInterval();
 
-			assertLicenseInvalid();
+			assertPortalLicenseInvalid();
 		}
 		finally {
 			dxpOnlyBundle.uninstall();
@@ -223,11 +223,11 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 			});
 
 		try {
-			assertLicenseNotRegistered();
+			assertPortalLicenseNotRegistered();
 
-			deployFreeTierLicense(Time.HOUR);
+			deployFreeTierPortalLicense(Time.HOUR);
 
-			assertLicenseInvalid();
+			assertPortalLicenseInvalid();
 		}
 		finally {
 			PortalClassLoaderUtil.setClassLoader(classLoader);

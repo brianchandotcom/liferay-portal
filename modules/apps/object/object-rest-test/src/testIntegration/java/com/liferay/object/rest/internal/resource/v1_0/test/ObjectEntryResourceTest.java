@@ -18709,7 +18709,7 @@ public class ObjectEntryResourceTest {
 			),
 			_toFileEntry(
 				String::new,
-				ArrayUtil.append(DLTestUtil.randomTextFileBytes(7), (byte)'$'),
+				ArrayUtil.append(DLTestUtil.randomTextFileBytes(), (byte)'$'),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -19674,7 +19674,7 @@ public class ObjectEntryResourceTest {
 			),
 			_toFileEntry(
 				String::new,
-				ArrayUtil.append(DLTestUtil.randomTextFileBytes(7), (byte)'$'),
+				ArrayUtil.append(DLTestUtil.randomTextFileBytes(), (byte)'$'),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,

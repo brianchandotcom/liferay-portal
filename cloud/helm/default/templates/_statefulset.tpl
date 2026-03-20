@@ -243,8 +243,8 @@ spec:
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
-    name: liferay-hash-policy
-    namespace: {{ .Release.Namespace }}
+    name: {{ include "liferay.name" .root }}-hash-policy
+    namespace: {{ include "liferay.namespace" .root }}
 spec:
     hashPolicies:
         -   cookie:

@@ -84,7 +84,7 @@ interface ColorPaletteProps {
 	triggerElementRef?: RefObject<HTMLDivElement | HTMLButtonElement>;
 }
 
-export default function ColorPalette({
+export default function OldColorPalette({
 	active,
 	colors,
 	dropdownContainerRef,
@@ -108,17 +108,17 @@ export default function ColorPalette({
 	return (
 		<>
 			<SearchForm
-				className="flex-grow-1 layout__color-picker__search-form mb-2 px-3"
+				className="flex-grow-1 layout__dropdown-color-picker__search-form mb-2 px-3"
 				onChange={onSetSearchValue}
 			/>
 
 			{Object.keys(colors).length ? (
 				Object.keys(colors).map((category) => (
 					<div
-						className="layout__color-picker__color-palette"
+						className="layout__dropdown-color-picker__color-palette"
 						key={category}
 					>
-						<span className="mb-0 p-3 sheet-subtitle text-2">
+						<span className="mb-0 p-3 sheet-subtitle">
 							{category}
 						</span>
 

@@ -115,7 +115,7 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 			kaleoDefinitionVersion =
 				_kaleoDefinitionVersionLocalService.
 					fetchLatestKaleoDefinitionVersion(
-						themeDisplay.getCompanyId(), name, null);
+						themeDisplay.getCompanyId(), name);
 		}
 		else {
 			kaleoDefinitionVersion =

@@ -261,16 +261,6 @@ public class KaleoDefinitionVersionLocalServiceImpl
 	}
 
 	@Override
-	public KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
-			long companyId, String name,
-			OrderByComparator<KaleoDefinitionVersion> orderByComparator)
-		throws PortalException {
-
-		return kaleoDefinitionVersionPersistence.fetchByC_N_Last(
-			companyId, name, orderByComparator);
-	}
-
-	@Override
 	public KaleoDefinitionVersion getFirstKaleoDefinitionVersion(
 			long companyId, String name)
 		throws PortalException {

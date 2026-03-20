@@ -315,67 +315,6 @@ public class SamlSpMessagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last saml sp message in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp message
-	 * @throws NoSuchSpMessageException if a matching saml sp message could not be found
-	 */
-	@Override
-	public SamlSpMessage findByLtExpirationDate_Last(
-			Date expirationDate,
-			OrderByComparator<SamlSpMessage> orderByComparator)
-		throws NoSuchSpMessageException {
-
-		SamlSpMessage samlSpMessage = fetchByLtExpirationDate_Last(
-			expirationDate, orderByComparator);
-
-		if (samlSpMessage != null) {
-			return samlSpMessage;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchSpMessageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml sp message in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
-	 */
-	@Override
-	public SamlSpMessage fetchByLtExpirationDate_Last(
-		Date expirationDate,
-		OrderByComparator<SamlSpMessage> orderByComparator) {
-
-		int count = countByLtExpirationDate(expirationDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlSpMessage> list = findByLtExpirationDate(
-			expirationDate, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saml sp messages where expirationDate &lt; &#63; from the database.
 	 *
 	 * @param expirationDate the expiration date
@@ -1353,4 +1292,4 @@ public class SamlSpMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1887219753
+// LIFERAY-SERVICE-BUILDER-HASH:-884829549

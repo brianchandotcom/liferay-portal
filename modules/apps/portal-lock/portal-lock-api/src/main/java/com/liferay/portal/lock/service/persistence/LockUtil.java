@@ -204,34 +204,6 @@ public class LockUtil {
 	}
 
 	/**
-	 * Returns the last lock in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	public static Lock findByUuid_Last(
-			String uuid, OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.lock.exception.NoSuchLockException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	public static Lock fetchByUuid_Last(
-		String uuid, OrderByComparator<Lock> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the locks where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -360,40 +332,6 @@ public class LockUtil {
 	}
 
 	/**
-	 * Returns the last lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	public static Lock findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.lock.exception.NoSuchLockException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	public static Lock fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Lock> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the locks where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -516,36 +454,6 @@ public class LockUtil {
 	}
 
 	/**
-	 * Returns the last lock in the ordered set where className = &#63;.
-	 *
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	public static Lock findByClassName_Last(
-			String className, OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.lock.exception.NoSuchLockException {
-
-		return getPersistence().findByClassName_Last(
-			className, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where className = &#63;.
-	 *
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	public static Lock fetchByClassName_Last(
-		String className, OrderByComparator<Lock> orderByComparator) {
-
-		return getPersistence().fetchByClassName_Last(
-			className, orderByComparator);
-	}
-
-	/**
 	 * Removes all the locks where className = &#63; from the database.
 	 *
 	 * @param className the class name
@@ -663,36 +571,6 @@ public class LockUtil {
 		Date expirationDate, OrderByComparator<Lock> orderByComparator) {
 
 		return getPersistence().fetchByLtExpirationDate_First(
-			expirationDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	public static Lock findByLtExpirationDate_Last(
-			Date expirationDate, OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.lock.exception.NoSuchLockException {
-
-		return getPersistence().findByLtExpirationDate_Last(
-			expirationDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	public static Lock fetchByLtExpirationDate_Last(
-		Date expirationDate, OrderByComparator<Lock> orderByComparator) {
-
-		return getPersistence().fetchByLtExpirationDate_Last(
 			expirationDate, orderByComparator);
 	}
 
@@ -822,40 +700,6 @@ public class LockUtil {
 		OrderByComparator<Lock> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			companyId, className, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where companyId = &#63; and className = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	public static Lock findByC_C_Last(
-			long companyId, String className,
-			OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.lock.exception.NoSuchLockException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, className, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where companyId = &#63; and className = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	public static Lock fetchByC_C_Last(
-		long companyId, String className,
-		OrderByComparator<Lock> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			companyId, className, orderByComparator);
 	}
 
@@ -1063,42 +907,6 @@ public class LockUtil {
 	}
 
 	/**
-	 * Returns the last lock in the ordered set where companyId = &#63; and userId = &#63; and className = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	public static Lock findByC_U_C_Last(
-			long companyId, long userId, String className,
-			OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.lock.exception.NoSuchLockException {
-
-		return getPersistence().findByC_U_C_Last(
-			companyId, userId, className, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where companyId = &#63; and userId = &#63; and className = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	public static Lock fetchByC_U_C_Last(
-		long companyId, long userId, String className,
-		OrderByComparator<Lock> orderByComparator) {
-
-		return getPersistence().fetchByC_U_C_Last(
-			companyId, userId, className, orderByComparator);
-	}
-
-	/**
 	 * Removes all the locks where companyId = &#63; and userId = &#63; and className = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1283,4 +1091,4 @@ public class LockUtil {
 	private static volatile LockPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1956868462
+// LIFERAY-SERVICE-BUILDER-HASH:-1707079640

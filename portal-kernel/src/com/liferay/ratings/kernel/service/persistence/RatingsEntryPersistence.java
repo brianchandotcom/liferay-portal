@@ -121,32 +121,6 @@ public interface RatingsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	public RatingsEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	public RatingsEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the ratings entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -251,34 +225,6 @@ public interface RatingsEntryPersistence
 	 * @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	 */
 	public RatingsEntry fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	public RatingsEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	public RatingsEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
 			orderByComparator);
@@ -390,34 +336,6 @@ public interface RatingsEntryPersistence
 	 * @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	 */
 	public RatingsEntry fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	public RatingsEntry findByC_C_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	public RatingsEntry fetchByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
 			orderByComparator);
@@ -681,36 +599,6 @@ public interface RatingsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param score the score
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	public RatingsEntry findByC_C_S_Last(
-			long classNameId, long classPK, double score,
-			com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param score the score
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	public RatingsEntry fetchByC_C_S_Last(
-		long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -849,4 +737,4 @@ public interface RatingsEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:279744107
+// LIFERAY-SERVICE-BUILDER-HASH:1761663997

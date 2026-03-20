@@ -307,65 +307,6 @@ public class ExpandoValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value
-	 * @throws NoSuchValueException if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue findByTableId_Last(
-			long tableId, OrderByComparator<ExpandoValue> orderByComparator)
-		throws NoSuchValueException {
-
-		ExpandoValue expandoValue = fetchByTableId_Last(
-			tableId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByTableId_Last(
-		long tableId, OrderByComparator<ExpandoValue> orderByComparator) {
-
-		int count = countByTableId(tableId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoValue> list = findByTableId(
-			tableId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the expando values where tableId = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -664,65 +605,6 @@ public class ExpandoValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last expando value in the ordered set where columnId = &#63;.
-	 *
-	 * @param columnId the column ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value
-	 * @throws NoSuchValueException if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue findByColumnId_Last(
-			long columnId, OrderByComparator<ExpandoValue> orderByComparator)
-		throws NoSuchValueException {
-
-		ExpandoValue expandoValue = fetchByColumnId_Last(
-			columnId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("columnId=");
-		sb.append(columnId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where columnId = &#63;.
-	 *
-	 * @param columnId the column ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByColumnId_Last(
-		long columnId, OrderByComparator<ExpandoValue> orderByComparator) {
-
-		int count = countByColumnId(columnId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoValue> list = findByColumnId(
-			columnId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the expando values where columnId = &#63; from the database.
 	 *
 	 * @param columnId the column ID
@@ -1008,64 +890,6 @@ public class ExpandoValuePersistenceImpl
 		long rowId, OrderByComparator<ExpandoValue> orderByComparator) {
 
 		List<ExpandoValue> list = findByRowId(rowId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where rowId = &#63;.
-	 *
-	 * @param rowId the row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value
-	 * @throws NoSuchValueException if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue findByRowId_Last(
-			long rowId, OrderByComparator<ExpandoValue> orderByComparator)
-		throws NoSuchValueException {
-
-		ExpandoValue expandoValue = fetchByRowId_Last(rowId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("rowId=");
-		sb.append(rowId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where rowId = &#63;.
-	 *
-	 * @param rowId the row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByRowId_Last(
-		long rowId, OrderByComparator<ExpandoValue> orderByComparator) {
-
-		int count = countByRowId(rowId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoValue> list = findByRowId(
-			rowId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1382,72 +1206,6 @@ public class ExpandoValuePersistenceImpl
 
 		List<ExpandoValue> list = findByT_C(
 			tableId, columnId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value
-	 * @throws NoSuchValueException if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue findByT_C_Last(
-			long tableId, long columnId,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws NoSuchValueException {
-
-		ExpandoValue expandoValue = fetchByT_C_Last(
-			tableId, columnId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append(", columnId=");
-		sb.append(columnId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByT_C_Last(
-		long tableId, long columnId,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		int count = countByT_C(tableId, columnId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoValue> list = findByT_C(
-			tableId, columnId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1782,72 +1540,6 @@ public class ExpandoValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63; and rowId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param rowId the row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value
-	 * @throws NoSuchValueException if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue findByT_R_Last(
-			long tableId, long rowId,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws NoSuchValueException {
-
-		ExpandoValue expandoValue = fetchByT_R_Last(
-			tableId, rowId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append(", rowId=");
-		sb.append(rowId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63; and rowId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param rowId the row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByT_R_Last(
-		long tableId, long rowId,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		int count = countByT_R(tableId, rowId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoValue> list = findByT_R(
-			tableId, rowId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the expando values where tableId = &#63; and rowId = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -2165,72 +1857,6 @@ public class ExpandoValuePersistenceImpl
 
 		List<ExpandoValue> list = findByT_CPK(
 			tableId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63; and classPK = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value
-	 * @throws NoSuchValueException if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue findByT_CPK_Last(
-			long tableId, long classPK,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws NoSuchValueException {
-
-		ExpandoValue expandoValue = fetchByT_CPK_Last(
-			tableId, classPK, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63; and classPK = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByT_CPK_Last(
-		long tableId, long classPK,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		int count = countByT_CPK(tableId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoValue> list = findByT_CPK(
-			tableId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2744,72 +2370,6 @@ public class ExpandoValuePersistenceImpl
 
 		List<ExpandoValue> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value
-	 * @throws NoSuchValueException if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws NoSuchValueException {
-
-		ExpandoValue expandoValue = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoValue> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3371,77 +2931,6 @@ public class ExpandoValuePersistenceImpl
 
 		List<ExpandoValue> list = findByT_C_D(
 			tableId, columnId, data, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param data the data
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value
-	 * @throws NoSuchValueException if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue findByT_C_D_Last(
-			long tableId, long columnId, String data,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws NoSuchValueException {
-
-		ExpandoValue expandoValue = fetchByT_C_D_Last(
-			tableId, columnId, data, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append(", columnId=");
-		sb.append(columnId);
-
-		sb.append(", data=");
-		sb.append(data);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param data the data
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByT_C_D_Last(
-		long tableId, long columnId, String data,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		int count = countByT_C_D(tableId, columnId, data);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoValue> list = findByT_C_D(
-			tableId, columnId, data, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4593,4 +4082,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-769670334
+// LIFERAY-SERVICE-BUILDER-HASH:2695307

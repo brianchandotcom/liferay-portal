@@ -215,37 +215,6 @@ public class AkismetEntryUtil {
 	}
 
 	/**
-	 * Returns the last akismet entry in the ordered set where modifiedDate &lt; &#63;.
-	 *
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching akismet entry
-	 * @throws NoSuchAkismetEntryException if a matching akismet entry could not be found
-	 */
-	public static AkismetEntry findByLtModifiedDate_Last(
-			Date modifiedDate,
-			OrderByComparator<AkismetEntry> orderByComparator)
-		throws com.liferay.akismet.exception.NoSuchAkismetEntryException {
-
-		return getPersistence().findByLtModifiedDate_Last(
-			modifiedDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last akismet entry in the ordered set where modifiedDate &lt; &#63;.
-	 *
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching akismet entry, or <code>null</code> if a matching akismet entry could not be found
-	 */
-	public static AkismetEntry fetchByLtModifiedDate_Last(
-		Date modifiedDate, OrderByComparator<AkismetEntry> orderByComparator) {
-
-		return getPersistence().fetchByLtModifiedDate_Last(
-			modifiedDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the akismet entries where modifiedDate &lt; &#63; from the database.
 	 *
 	 * @param modifiedDate the modified date
@@ -486,4 +455,4 @@ public class AkismetEntryUtil {
 	private static volatile AkismetEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2102148069
+// LIFERAY-SERVICE-BUILDER-HASH:1957733866

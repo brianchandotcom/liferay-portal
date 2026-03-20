@@ -317,64 +317,6 @@ public class AssetLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink findByEntryId1_Last(
-			long entryId1, OrderByComparator<AssetLink> orderByComparator)
-		throws NoSuchLinkException {
-
-		AssetLink assetLink = fetchByEntryId1_Last(entryId1, orderByComparator);
-
-		if (assetLink != null) {
-			return assetLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId1=");
-		sb.append(entryId1);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink fetchByEntryId1_Last(
-		long entryId1, OrderByComparator<AssetLink> orderByComparator) {
-
-		int count = countByEntryId1(entryId1);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetLink> list = findByEntryId1(
-			entryId1, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset links where entryId1 = &#63; from the database.
 	 *
 	 * @param entryId1 the entry id1
@@ -662,64 +604,6 @@ public class AssetLinkPersistenceImpl
 
 		List<AssetLink> list = findByEntryId2(
 			entryId2, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId2 = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink findByEntryId2_Last(
-			long entryId2, OrderByComparator<AssetLink> orderByComparator)
-		throws NoSuchLinkException {
-
-		AssetLink assetLink = fetchByEntryId2_Last(entryId2, orderByComparator);
-
-		if (assetLink != null) {
-			return assetLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId2=");
-		sb.append(entryId2);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId2 = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink fetchByEntryId2_Last(
-		long entryId2, OrderByComparator<AssetLink> orderByComparator) {
-
-		int count = countByEntryId2(entryId2);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetLink> list = findByEntryId2(
-			entryId2, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1036,72 +920,6 @@ public class AssetLinkPersistenceImpl
 
 		List<AssetLink> list = findByE_E(
 			entryId1, entryId2, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63; and entryId2 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param entryId2 the entry id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink findByE_E_Last(
-			long entryId1, long entryId2,
-			OrderByComparator<AssetLink> orderByComparator)
-		throws NoSuchLinkException {
-
-		AssetLink assetLink = fetchByE_E_Last(
-			entryId1, entryId2, orderByComparator);
-
-		if (assetLink != null) {
-			return assetLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId1=");
-		sb.append(entryId1);
-
-		sb.append(", entryId2=");
-		sb.append(entryId2);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63; and entryId2 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param entryId2 the entry id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink fetchByE_E_Last(
-		long entryId1, long entryId2,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		int count = countByE_E(entryId1, entryId2);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetLink> list = findByE_E(
-			entryId1, entryId2, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1436,72 +1254,6 @@ public class AssetLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63; and type = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink findByE1_T_Last(
-			long entryId1, int type,
-			OrderByComparator<AssetLink> orderByComparator)
-		throws NoSuchLinkException {
-
-		AssetLink assetLink = fetchByE1_T_Last(
-			entryId1, type, orderByComparator);
-
-		if (assetLink != null) {
-			return assetLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId1=");
-		sb.append(entryId1);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63; and type = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink fetchByE1_T_Last(
-		long entryId1, int type,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		int count = countByE1_T(entryId1, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetLink> list = findByE1_T(
-			entryId1, type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset links where entryId1 = &#63; and type = &#63; from the database.
 	 *
 	 * @param entryId1 the entry id1
@@ -1818,72 +1570,6 @@ public class AssetLinkPersistenceImpl
 
 		List<AssetLink> list = findByE2_T(
 			entryId2, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId2 = &#63; and type = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink findByE2_T_Last(
-			long entryId2, int type,
-			OrderByComparator<AssetLink> orderByComparator)
-		throws NoSuchLinkException {
-
-		AssetLink assetLink = fetchByE2_T_Last(
-			entryId2, type, orderByComparator);
-
-		if (assetLink != null) {
-			return assetLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId2=");
-		sb.append(entryId2);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId2 = &#63; and type = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	@Override
-	public AssetLink fetchByE2_T_Last(
-		long entryId2, int type,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		int count = countByE2_T(entryId2, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetLink> list = findByE2_T(
-			entryId2, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3171,4 +2857,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1139941534
+// LIFERAY-SERVICE-BUILDER-HASH:274883362

@@ -330,64 +330,6 @@ public class KBCommentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kb comment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment findByUuid_Last(
-			String uuid, OrderByComparator<KBComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		KBComment kbComment = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment fetchByUuid_Last(
-		String uuid, OrderByComparator<KBComment> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBComment> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kb comments where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -935,72 +877,6 @@ public class KBCommentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kb comment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<KBComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		KBComment kbComment = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<KBComment> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBComment> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kb comments where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1321,64 +1197,6 @@ public class KBCommentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment findByGroupId_Last(
-			long groupId, OrderByComparator<KBComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		KBComment kbComment = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment fetchByGroupId_Last(
-		long groupId, OrderByComparator<KBComment> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBComment> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kb comments where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1686,72 +1504,6 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = findByG_C(
 			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment findByG_C_Last(
-			long groupId, long classNameId,
-			OrderByComparator<KBComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		KBComment kbComment = fetchByG_C_Last(
-			groupId, classNameId, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment fetchByG_C_Last(
-		long groupId, long classNameId,
-		OrderByComparator<KBComment> orderByComparator) {
-
-		int count = countByG_C(groupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBComment> list = findByG_C(
-			groupId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2086,72 +1838,6 @@ public class KBCommentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<KBComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		KBComment kbComment = fetchByG_S_Last(
-			groupId, status, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<KBComment> orderByComparator) {
-
-		int count = countByG_S(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBComment> list = findByG_S(
-			groupId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kb comments where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2469,72 +2155,6 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<KBComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		KBComment kbComment = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<KBComment> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBComment> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2878,77 +2498,6 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = findByU_C_C(
 			userId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment findByU_C_C_Last(
-			long userId, long classNameId, long classPK,
-			OrderByComparator<KBComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		KBComment kbComment = fetchByU_C_C_Last(
-			userId, classNameId, classPK, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment fetchByU_C_C_Last(
-		long userId, long classNameId, long classPK,
-		OrderByComparator<KBComment> orderByComparator) {
-
-		int count = countByU_C_C(userId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBComment> list = findByU_C_C(
-			userId, classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3302,77 +2851,6 @@ public class KBCommentPersistenceImpl
 
 		List<KBComment> list = findByC_C_S(
 			classNameId, classPK, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment findByC_C_S_Last(
-			long classNameId, long classPK, int status,
-			OrderByComparator<KBComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		KBComment kbComment = fetchByC_C_S_Last(
-			classNameId, classPK, status, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb comment in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	@Override
-	public KBComment fetchByC_C_S_Last(
-		long classNameId, long classPK, int status,
-		OrderByComparator<KBComment> orderByComparator) {
-
-		int count = countByC_C_S(classNameId, classPK, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBComment> list = findByC_C_S(
-			classNameId, classPK, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4867,4 +4345,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:411265844
+// LIFERAY-SERVICE-BUILDER-HASH:1013075102

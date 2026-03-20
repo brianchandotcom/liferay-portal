@@ -309,64 +309,6 @@ public class PLOEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry
-	 * @throws NoSuchPLOEntryException if a matching plo entry could not be found
-	 */
-	@Override
-	public PLOEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<PLOEntry> orderByComparator)
-		throws NoSuchPLOEntryException {
-
-		PLOEntry ploEntry = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (ploEntry != null) {
-			return ploEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPLOEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	@Override
-	public PLOEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<PLOEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PLOEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the plo entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -673,71 +615,6 @@ public class PLOEntryPersistenceImpl
 
 		List<PLOEntry> list = findByC_K(
 			companyId, key, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry
-	 * @throws NoSuchPLOEntryException if a matching plo entry could not be found
-	 */
-	@Override
-	public PLOEntry findByC_K_Last(
-			long companyId, String key,
-			OrderByComparator<PLOEntry> orderByComparator)
-		throws NoSuchPLOEntryException {
-
-		PLOEntry ploEntry = fetchByC_K_Last(companyId, key, orderByComparator);
-
-		if (ploEntry != null) {
-			return ploEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append("}");
-
-		throw new NoSuchPLOEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	@Override
-	public PLOEntry fetchByC_K_Last(
-		long companyId, String key,
-		OrderByComparator<PLOEntry> orderByComparator) {
-
-		int count = countByC_K(companyId, key);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PLOEntry> list = findByC_K(
-			companyId, key, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1080,72 +957,6 @@ public class PLOEntryPersistenceImpl
 
 		List<PLOEntry> list = findByC_L(
 			companyId, languageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and languageId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry
-	 * @throws NoSuchPLOEntryException if a matching plo entry could not be found
-	 */
-	@Override
-	public PLOEntry findByC_L_Last(
-			long companyId, String languageId,
-			OrderByComparator<PLOEntry> orderByComparator)
-		throws NoSuchPLOEntryException {
-
-		PLOEntry ploEntry = fetchByC_L_Last(
-			companyId, languageId, orderByComparator);
-
-		if (ploEntry != null) {
-			return ploEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", languageId=");
-		sb.append(languageId);
-
-		sb.append("}");
-
-		throw new NoSuchPLOEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and languageId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	@Override
-	public PLOEntry fetchByC_L_Last(
-		long companyId, String languageId,
-		OrderByComparator<PLOEntry> orderByComparator) {
-
-		int count = countByC_L(companyId, languageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PLOEntry> list = findByC_L(
-			companyId, languageId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2206,4 +2017,4 @@ public class PLOEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1505046001
+// LIFERAY-SERVICE-BUILDER-HASH:130568114

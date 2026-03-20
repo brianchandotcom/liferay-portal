@@ -326,67 +326,6 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm structure version in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure version
-	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
-	 */
-	@Override
-	public DDMStructureVersion findByStructureId_Last(
-			long structureId,
-			OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws NoSuchStructureVersionException {
-
-		DDMStructureVersion ddmStructureVersion = fetchByStructureId_Last(
-			structureId, orderByComparator);
-
-		if (ddmStructureVersion != null) {
-			return ddmStructureVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure version in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
-	 */
-	@Override
-	public DDMStructureVersion fetchByStructureId_Last(
-		long structureId,
-		OrderByComparator<DDMStructureVersion> orderByComparator) {
-
-		int count = countByStructureId(structureId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructureVersion> list = findByStructureId(
-			structureId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm structure versions where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -903,72 +842,6 @@ public class DDMStructureVersionPersistenceImpl
 
 		List<DDMStructureVersion> list = findByS_S(
 			structureId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure version
-	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
-	 */
-	@Override
-	public DDMStructureVersion findByS_S_Last(
-			long structureId, int status,
-			OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws NoSuchStructureVersionException {
-
-		DDMStructureVersion ddmStructureVersion = fetchByS_S_Last(
-			structureId, status, orderByComparator);
-
-		if (ddmStructureVersion != null) {
-			return ddmStructureVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchStructureVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
-	 */
-	@Override
-	public DDMStructureVersion fetchByS_S_Last(
-		long structureId, int status,
-		OrderByComparator<DDMStructureVersion> orderByComparator) {
-
-		int count = countByS_S(structureId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructureVersion> list = findByS_S(
-			structureId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2050,4 +1923,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1590546109
+// LIFERAY-SERVICE-BUILDER-HASH:346612526

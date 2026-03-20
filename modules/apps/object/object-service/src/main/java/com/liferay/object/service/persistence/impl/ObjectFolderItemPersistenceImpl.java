@@ -316,65 +316,6 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	@Override
-	public ObjectFolderItem findByUuid_Last(
-			String uuid, OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws NoSuchObjectFolderItemException {
-
-		ObjectFolderItem objectFolderItem = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectFolderItem != null) {
-			return objectFolderItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	@Override
-	public ObjectFolderItem fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectFolderItem> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFolderItem> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object folder items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -708,72 +649,6 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	@Override
-	public ObjectFolderItem findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws NoSuchObjectFolderItemException {
-
-		ObjectFolderItem objectFolderItem = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectFolderItem != null) {
-			return objectFolderItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	@Override
-	public ObjectFolderItem fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectFolderItem> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFolderItem> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object folder items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1095,67 +970,6 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object folder item in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	@Override
-	public ObjectFolderItem findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws NoSuchObjectFolderItemException {
-
-		ObjectFolderItem objectFolderItem = fetchByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-
-		if (objectFolderItem != null) {
-			return objectFolderItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	@Override
-	public ObjectFolderItem fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectFolderItem> orderByComparator) {
-
-		int count = countByObjectDefinitionId(objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFolderItem> list = findByObjectDefinitionId(
-			objectDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object folder items where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1441,67 +1255,6 @@ public class ObjectFolderItemPersistenceImpl
 
 		List<ObjectFolderItem> list = findByObjectFolderId(
 			objectFolderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	@Override
-	public ObjectFolderItem findByObjectFolderId_Last(
-			long objectFolderId,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws NoSuchObjectFolderItemException {
-
-		ObjectFolderItem objectFolderItem = fetchByObjectFolderId_Last(
-			objectFolderId, orderByComparator);
-
-		if (objectFolderItem != null) {
-			return objectFolderItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectFolderId=");
-		sb.append(objectFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	@Override
-	public ObjectFolderItem fetchByObjectFolderId_Last(
-		long objectFolderId,
-		OrderByComparator<ObjectFolderItem> orderByComparator) {
-
-		int count = countByObjectFolderId(objectFolderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFolderItem> list = findByObjectFolderId(
-			objectFolderId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2510,4 +2263,4 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-205753916
+// LIFERAY-SERVICE-BUILDER-HASH:-993877188

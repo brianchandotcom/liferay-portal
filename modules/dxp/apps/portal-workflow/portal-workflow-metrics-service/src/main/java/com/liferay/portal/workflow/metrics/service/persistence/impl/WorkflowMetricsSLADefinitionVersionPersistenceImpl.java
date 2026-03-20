@@ -335,70 +335,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a matching workflow metrics sla definition version could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinitionVersion findByUuid_Last(
-			String uuid,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator)
-		throws NoSuchSLADefinitionVersionException {
-
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion = fetchByUuid_Last(
-				uuid, orderByComparator);
-
-		if (workflowMetricsSLADefinitionVersion != null) {
-			return workflowMetricsSLADefinitionVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinitionVersion fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WorkflowMetricsSLADefinitionVersion> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the workflow metrics sla definition versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -958,75 +894,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a matching workflow metrics sla definition version could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinitionVersion findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator)
-		throws NoSuchSLADefinitionVersionException {
-
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion = fetchByUuid_C_Last(
-				uuid, companyId, orderByComparator);
-
-		if (workflowMetricsSLADefinitionVersion != null) {
-			return workflowMetricsSLADefinitionVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinitionVersion fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WorkflowMetricsSLADefinitionVersion> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1366,76 +1233,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		List<WorkflowMetricsSLADefinitionVersion> list =
 			findByWorkflowMetricsSLADefinitionId(
 				workflowMetricsSLADefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where workflowMetricsSLADefinitionId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a matching workflow metrics sla definition version could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinitionVersion
-			findByWorkflowMetricsSLADefinitionId_Last(
-				long workflowMetricsSLADefinitionId,
-				OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-					orderByComparator)
-		throws NoSuchSLADefinitionVersionException {
-
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion =
-				fetchByWorkflowMetricsSLADefinitionId_Last(
-					workflowMetricsSLADefinitionId, orderByComparator);
-
-		if (workflowMetricsSLADefinitionVersion != null) {
-			return workflowMetricsSLADefinitionVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("workflowMetricsSLADefinitionId=");
-		sb.append(workflowMetricsSLADefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where workflowMetricsSLADefinitionId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinitionVersion
-		fetchByWorkflowMetricsSLADefinitionId_Last(
-			long workflowMetricsSLADefinitionId,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator) {
-
-		int count = countByWorkflowMetricsSLADefinitionId(
-			workflowMetricsSLADefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WorkflowMetricsSLADefinitionVersion> list =
-			findByWorkflowMetricsSLADefinitionId(
-				workflowMetricsSLADefinitionId, count - 1, count,
-				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2595,4 +2392,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-143973202
+// LIFERAY-SERVICE-BUILDER-HASH:-1189145394

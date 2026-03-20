@@ -122,32 +122,6 @@ public interface CommerceDiscountPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-				orderByComparator)
-		throws NoSuchDiscountException;
-
-	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -301,34 +275,6 @@ public interface CommerceDiscountPersistence
 	 * @return the first matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	 */
 	public CommerceDiscount fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-				orderByComparator)
-		throws NoSuchDiscountException;
-
-	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
 			orderByComparator);
@@ -492,32 +438,6 @@ public interface CommerceDiscountPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-				orderByComparator)
-		throws NoSuchDiscountException;
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -672,34 +592,6 @@ public interface CommerceDiscountPersistence
 	 * @return the first matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	 */
 	public CommerceDiscount fetchByC_C_First(
-		long companyId, String couponCode,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and couponCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param couponCode the coupon code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount findByC_C_Last(
-			long companyId, String couponCode,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-				orderByComparator)
-		throws NoSuchDiscountException;
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and couponCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param couponCode the coupon code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount fetchByC_C_Last(
 		long companyId, String couponCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
 			orderByComparator);
@@ -870,34 +762,6 @@ public interface CommerceDiscountPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce discount in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount findByLtD_S_Last(
-			Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-				orderByComparator)
-		throws NoSuchDiscountException;
-
-	/**
-	 * Returns the last commerce discount in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount fetchByLtD_S_Last(
-		Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -1058,34 +922,6 @@ public interface CommerceDiscountPersistence
 	 * @return the first matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	 */
 	public CommerceDiscount fetchByLtE_S_First(
-		Date expirationDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce discount in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount findByLtE_S_Last(
-			Date expirationDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-				orderByComparator)
-		throws NoSuchDiscountException;
-
-	/**
-	 * Returns the last commerce discount in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount fetchByLtE_S_Last(
 		Date expirationDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
 			orderByComparator);
@@ -1325,38 +1161,6 @@ public interface CommerceDiscountPersistence
 	 * @return the first matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	 */
 	public CommerceDiscount fetchByC_L_A_S_First(
-		long companyId, String level, boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and level = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param level the level
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount findByC_L_A_S_Last(
-			long companyId, String level, boolean active, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
-				orderByComparator)
-		throws NoSuchDiscountException;
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and level = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param level the level
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public CommerceDiscount fetchByC_L_A_S_Last(
 		long companyId, String level, boolean active, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscount>
 			orderByComparator);
@@ -1623,4 +1427,4 @@ public interface CommerceDiscountPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1536635092
+// LIFERAY-SERVICE-BUILDER-HASH:-238183958

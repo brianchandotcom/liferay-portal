@@ -212,34 +212,6 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
-	 * Returns the last commerce order note in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note
-	 * @throws NoSuchOrderNoteException if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote findByUuid_Last(
-			String uuid, OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order notes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,40 +406,6 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
-	 * Returns the last commerce order note in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note
-	 * @throws NoSuchOrderNoteException if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order notes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -592,38 +530,6 @@ public class CommerceOrderNoteUtil {
 		OrderByComparator<CommerceOrderNote> orderByComparator) {
 
 		return getPersistence().fetchByCommerceOrderId_First(
-			commerceOrderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note
-	 * @throws NoSuchOrderNoteException if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote findByCommerceOrderId_Last(
-			long commerceOrderId,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
-
-		return getPersistence().findByCommerceOrderId_Last(
-			commerceOrderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote fetchByCommerceOrderId_Last(
-		long commerceOrderId,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		return getPersistence().fetchByCommerceOrderId_Last(
 			commerceOrderId, orderByComparator);
 	}
 
@@ -757,40 +663,6 @@ public class CommerceOrderNoteUtil {
 		OrderByComparator<CommerceOrderNote> orderByComparator) {
 
 		return getPersistence().fetchByC_R_First(
-			commerceOrderId, restricted, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note
-	 * @throws NoSuchOrderNoteException if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote findByC_R_Last(
-			long commerceOrderId, boolean restricted,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
-
-		return getPersistence().findByC_R_Last(
-			commerceOrderId, restricted, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote fetchByC_R_Last(
-		long commerceOrderId, boolean restricted,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		return getPersistence().fetchByC_R_Last(
 			commerceOrderId, restricted, orderByComparator);
 	}
 
@@ -1051,4 +923,4 @@ public class CommerceOrderNoteUtil {
 	private static volatile CommerceOrderNotePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1462462981
+// LIFERAY-SERVICE-BUILDER-HASH:-1718005597

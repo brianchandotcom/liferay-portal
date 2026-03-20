@@ -210,34 +210,6 @@ public class ObjectActionUtil {
 	}
 
 	/**
-	 * Returns the last object action in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	public static ObjectAction findByUuid_Last(
-			String uuid, OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	public static ObjectAction fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectAction> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object actions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -367,40 +339,6 @@ public class ObjectActionUtil {
 	}
 
 	/**
-	 * Returns the last object action in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	public static ObjectAction findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	public static ObjectAction fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object actions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -525,38 +463,6 @@ public class ObjectActionUtil {
 		OrderByComparator<ObjectAction> orderByComparator) {
 
 		return getPersistence().fetchByObjectDefinitionId_First(
-			objectDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	public static ObjectAction findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	public static ObjectAction fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		return getPersistence().fetchByObjectDefinitionId_Last(
 			objectDefinitionId, orderByComparator);
 	}
 
@@ -757,40 +663,6 @@ public class ObjectActionUtil {
 		OrderByComparator<ObjectAction> orderByComparator) {
 
 		return getPersistence().fetchByA_OAEK_First(
-			active, objectActionExecutorKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
-	 *
-	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	public static ObjectAction findByA_OAEK_Last(
-			boolean active, String objectActionExecutorKey,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByA_OAEK_Last(
-			active, objectActionExecutorKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
-	 *
-	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	public static ObjectAction fetchByA_OAEK_Last(
-		boolean active, String objectActionExecutorKey,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		return getPersistence().fetchByA_OAEK_Last(
 			active, objectActionExecutorKey, orderByComparator);
 	}
 
@@ -1026,42 +898,6 @@ public class ObjectActionUtil {
 	}
 
 	/**
-	 * Returns the last object action in the ordered set where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	public static ObjectAction findByC_A_OATK_Last(
-			long companyId, boolean active, String objectActionTriggerKey,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByC_A_OATK_Last(
-			companyId, active, objectActionTriggerKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	public static ObjectAction fetchByC_A_OATK_Last(
-		long companyId, boolean active, String objectActionTriggerKey,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		return getPersistence().fetchByC_A_OATK_Last(
-			companyId, active, objectActionTriggerKey, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object actions where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1213,45 +1049,6 @@ public class ObjectActionUtil {
 		OrderByComparator<ObjectAction> orderByComparator) {
 
 		return getPersistence().fetchByO_A_OATK_First(
-			objectDefinitionId, active, objectActionTriggerKey,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	public static ObjectAction findByO_A_OATK_Last(
-			long objectDefinitionId, boolean active,
-			String objectActionTriggerKey,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByO_A_OATK_Last(
-			objectDefinitionId, active, objectActionTriggerKey,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	public static ObjectAction fetchByO_A_OATK_Last(
-		long objectDefinitionId, boolean active, String objectActionTriggerKey,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		return getPersistence().fetchByO_A_OATK_Last(
 			objectDefinitionId, active, objectActionTriggerKey,
 			orderByComparator);
 	}
@@ -1535,4 +1332,4 @@ public class ObjectActionUtil {
 	private static volatile ObjectActionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:763187579
+// LIFERAY-SERVICE-BUILDER-HASH:-57110737

@@ -122,32 +122,6 @@ public interface SiteNavigationMenuPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last site navigation menu in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-				orderByComparator)
-		throws NoSuchMenuException;
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-			orderByComparator);
-
-	/**
 	 * Removes all the site navigation menus where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface SiteNavigationMenuPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last site navigation menu in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-				orderByComparator)
-		throws NoSuchMenuException;
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-			orderByComparator);
-
-	/**
 	 * Removes all the site navigation menus where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface SiteNavigationMenuPersistence
 	 * @return the first matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	 */
 	public SiteNavigationMenu fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-			orderByComparator);
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-				orderByComparator)
-		throws NoSuchMenuException;
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
 			orderByComparator);
@@ -739,32 +659,6 @@ public interface SiteNavigationMenuPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last site navigation menu in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-				orderByComparator)
-		throws NoSuchMenuException;
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-			orderByComparator);
-
-	/**
 	 * Removes all the site navigation menus where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -919,34 +813,6 @@ public interface SiteNavigationMenuPersistence
 	 * @return the first matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	 */
 	public SiteNavigationMenu fetchByG_LikeN_First(
-		long groupId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-			orderByComparator);
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu findByG_LikeN_Last(
-			long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-				orderByComparator)
-		throws NoSuchMenuException;
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu fetchByG_LikeN_Last(
 		long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
 			orderByComparator);
@@ -1249,34 +1115,6 @@ public interface SiteNavigationMenuPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu findByG_T_Last(
-			long groupId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-				orderByComparator)
-		throws NoSuchMenuException;
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu fetchByG_T_Last(
-		long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-			orderByComparator);
-
-	/**
 	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1437,34 +1275,6 @@ public interface SiteNavigationMenuPersistence
 	 * @return the first matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	 */
 	public SiteNavigationMenu fetchByG_A_First(
-		long groupId, boolean auto,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-			orderByComparator);
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and auto = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu findByG_A_Last(
-			long groupId, boolean auto,
-			com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-				orderByComparator)
-		throws NoSuchMenuException;
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and auto = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public SiteNavigationMenu fetchByG_A_Last(
 		long groupId, boolean auto,
 		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
 			orderByComparator);
@@ -1715,4 +1525,4 @@ public interface SiteNavigationMenuPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1725102479
+// LIFERAY-SERVICE-BUILDER-HASH:1899948378

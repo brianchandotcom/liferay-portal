@@ -335,67 +335,6 @@ public class CPDefinitionInventoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition inventory in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition inventory
-	 * @throws NoSuchCPDefinitionInventoryException if a matching cp definition inventory could not be found
-	 */
-	@Override
-	public CPDefinitionInventory findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPDefinitionInventory> orderByComparator)
-		throws NoSuchCPDefinitionInventoryException {
-
-		CPDefinitionInventory cpDefinitionInventory = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpDefinitionInventory != null) {
-			return cpDefinitionInventory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionInventoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition inventory in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
-	 */
-	@Override
-	public CPDefinitionInventory fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPDefinitionInventory> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionInventory> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition inventories where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -942,72 +881,6 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		List<CPDefinitionInventory> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition inventory in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition inventory
-	 * @throws NoSuchCPDefinitionInventoryException if a matching cp definition inventory could not be found
-	 */
-	@Override
-	public CPDefinitionInventory findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDefinitionInventory> orderByComparator)
-		throws NoSuchCPDefinitionInventoryException {
-
-		CPDefinitionInventory cpDefinitionInventory = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpDefinitionInventory != null) {
-			return cpDefinitionInventory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionInventoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition inventory in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
-	 */
-	@Override
-	public CPDefinitionInventory fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDefinitionInventory> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionInventory> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2330,4 +2203,4 @@ public class CPDefinitionInventoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1813921023
+// LIFERAY-SERVICE-BUILDER-HASH:-2125969723

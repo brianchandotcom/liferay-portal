@@ -209,35 +209,6 @@ public class DefinitionUtil {
 	}
 
 	/**
-	 * Returns the last definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition
-	 * @throws NoSuchDefinitionException if a matching definition could not be found
-	 */
-	public static Definition findByUuid_Last(
-			String uuid, OrderByComparator<Definition> orderByComparator)
-		throws com.liferay.portal.reports.engine.console.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
-	 */
-	public static Definition fetchByUuid_Last(
-		String uuid, OrderByComparator<Definition> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,41 +404,6 @@ public class DefinitionUtil {
 	}
 
 	/**
-	 * Returns the last definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition
-	 * @throws NoSuchDefinitionException if a matching definition could not be found
-	 */
-	public static Definition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Definition> orderByComparator)
-		throws com.liferay.portal.reports.engine.console.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
-	 */
-	public static Definition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Definition> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -588,35 +524,6 @@ public class DefinitionUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition
-	 * @throws NoSuchDefinitionException if a matching definition could not be found
-	 */
-	public static Definition findByGroupId_Last(
-			long groupId, OrderByComparator<Definition> orderByComparator)
-		throws com.liferay.portal.reports.engine.console.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
-	 */
-	public static Definition fetchByGroupId_Last(
-		long groupId, OrderByComparator<Definition> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -801,37 +708,6 @@ public class DefinitionUtil {
 	}
 
 	/**
-	 * Returns the last definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition
-	 * @throws NoSuchDefinitionException if a matching definition could not be found
-	 */
-	public static Definition findByCompanyId_Last(
-			long companyId, OrderByComparator<Definition> orderByComparator)
-		throws com.liferay.portal.reports.engine.console.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
-	 */
-	public static Definition fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Definition> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the definitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1010,4 +886,4 @@ public class DefinitionUtil {
 	private static volatile DefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:647734508
+// LIFERAY-SERVICE-BUILDER-HASH:1468028682

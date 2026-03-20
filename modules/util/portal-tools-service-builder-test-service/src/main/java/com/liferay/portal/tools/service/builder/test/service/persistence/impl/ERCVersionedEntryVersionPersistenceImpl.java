@@ -310,68 +310,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last erc versioned entry version in the ordered set where ercVersionedEntryId = &#63;.
-	 *
-	 * @param ercVersionedEntryId the erc versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion findByErcVersionedEntryId_Last(
-			long ercVersionedEntryId,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws NoSuchERCVersionedEntryVersionException {
-
-		ERCVersionedEntryVersion ercVersionedEntryVersion =
-			fetchByErcVersionedEntryId_Last(
-				ercVersionedEntryId, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ercVersionedEntryId=");
-		sb.append(ercVersionedEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last erc versioned entry version in the ordered set where ercVersionedEntryId = &#63;.
-	 *
-	 * @param ercVersionedEntryId the erc versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version, or <code>null</code> if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion fetchByErcVersionedEntryId_Last(
-		long ercVersionedEntryId,
-		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
-
-		int count = countByErcVersionedEntryId(ercVersionedEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ERCVersionedEntryVersion> list = findByErcVersionedEntryId(
-			ercVersionedEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the erc versioned entry versions where ercVersionedEntryId = &#63; from the database.
 	 *
 	 * @param ercVersionedEntryId the erc versioned entry ID
@@ -873,67 +811,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion findByUuid_Last(
-			String uuid,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws NoSuchERCVersionedEntryVersionException {
-
-		ERCVersionedEntryVersion ercVersionedEntryVersion = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version, or <code>null</code> if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ERCVersionedEntryVersion> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the erc versioned entry versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1260,72 +1137,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 
 		List<ERCVersionedEntryVersion> list = findByUuid_Version(
 			uuid, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion findByUuid_Version_Last(
-			String uuid, int version,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws NoSuchERCVersionedEntryVersionException {
-
-		ERCVersionedEntryVersion ercVersionedEntryVersion =
-			fetchByUuid_Version_Last(uuid, version, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version, or <code>null</code> if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion fetchByUuid_Version_Last(
-		String uuid, int version,
-		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
-
-		int count = countByUuid_Version(uuid, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ERCVersionedEntryVersion> list = findByUuid_Version(
-			uuid, version, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1671,72 +1482,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 
 		List<ERCVersionedEntryVersion> list = findByUUID_G(
 			uuid, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion findByUUID_G_Last(
-			String uuid, long groupId,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws NoSuchERCVersionedEntryVersionException {
-
-		ERCVersionedEntryVersion ercVersionedEntryVersion = fetchByUUID_G_Last(
-			uuid, groupId, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version, or <code>null</code> if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion fetchByUUID_G_Last(
-		String uuid, long groupId,
-		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
-
-		int count = countByUUID_G(uuid, groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ERCVersionedEntryVersion> list = findByUUID_G(
-			uuid, groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2316,72 +2061,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws NoSuchERCVersionedEntryVersionException {
-
-		ERCVersionedEntryVersion ercVersionedEntryVersion = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version, or <code>null</code> if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ERCVersionedEntryVersion> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the erc versioned entry versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -2736,78 +2415,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 
 		List<ERCVersionedEntryVersion> list = findByUuid_C_Version(
 			uuid, companyId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion findByUuid_C_Version_Last(
-			String uuid, long companyId, int version,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws NoSuchERCVersionedEntryVersionException {
-
-		ERCVersionedEntryVersion ercVersionedEntryVersion =
-			fetchByUuid_C_Version_Last(
-				uuid, companyId, version, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last erc versioned entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry version, or <code>null</code> if a matching erc versioned entry version could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion fetchByUuid_C_Version_Last(
-		String uuid, long companyId, int version,
-		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
-
-		int count = countByUuid_C_Version(uuid, companyId, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ERCVersionedEntryVersion> list = findByUuid_C_Version(
-			uuid, companyId, version, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3744,4 +3351,4 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1860925429
+// LIFERAY-SERVICE-BUILDER-HASH:416411299

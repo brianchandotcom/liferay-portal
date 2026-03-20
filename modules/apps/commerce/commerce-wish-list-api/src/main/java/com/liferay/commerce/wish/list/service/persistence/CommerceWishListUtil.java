@@ -212,35 +212,6 @@ public class CommerceWishListUtil {
 	}
 
 	/**
-	 * Returns the last commerce wish list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list
-	 * @throws NoSuchWishListException if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList findByUuid_Last(
-			String uuid, OrderByComparator<CommerceWishList> orderByComparator)
-		throws com.liferay.commerce.wish.list.exception.
-			NoSuchWishListException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceWishList> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce wish lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -438,41 +409,6 @@ public class CommerceWishListUtil {
 	}
 
 	/**
-	 * Returns the last commerce wish list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list
-	 * @throws NoSuchWishListException if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceWishList> orderByComparator)
-		throws com.liferay.commerce.wish.list.exception.
-			NoSuchWishListException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceWishList> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce wish lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -596,35 +532,6 @@ public class CommerceWishListUtil {
 	}
 
 	/**
-	 * Returns the last commerce wish list in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list
-	 * @throws NoSuchWishListException if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList findByGroupId_Last(
-			long groupId, OrderByComparator<CommerceWishList> orderByComparator)
-		throws com.liferay.commerce.wish.list.exception.
-			NoSuchWishListException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList fetchByGroupId_Last(
-		long groupId, OrderByComparator<CommerceWishList> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce wish lists where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -742,35 +649,6 @@ public class CommerceWishListUtil {
 		long userId, OrderByComparator<CommerceWishList> orderByComparator) {
 
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list
-	 * @throws NoSuchWishListException if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList findByUserId_Last(
-			long userId, OrderByComparator<CommerceWishList> orderByComparator)
-		throws com.liferay.commerce.wish.list.exception.
-			NoSuchWishListException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList fetchByUserId_Last(
-		long userId, OrderByComparator<CommerceWishList> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -900,41 +778,6 @@ public class CommerceWishListUtil {
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
 		return getPersistence().fetchByG_U_First(
-			groupId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list
-	 * @throws NoSuchWishListException if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<CommerceWishList> orderByComparator)
-		throws com.liferay.commerce.wish.list.exception.
-			NoSuchWishListException {
-
-		return getPersistence().findByG_U_Last(
-			groupId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<CommerceWishList> orderByComparator) {
-
-		return getPersistence().fetchByG_U_Last(
 			groupId, userId, orderByComparator);
 	}
 
@@ -1069,41 +912,6 @@ public class CommerceWishListUtil {
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
 		return getPersistence().fetchByU_LtC_First(
-			userId, createDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list
-	 * @throws NoSuchWishListException if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList findByU_LtC_Last(
-			long userId, Date createDate,
-			OrderByComparator<CommerceWishList> orderByComparator)
-		throws com.liferay.commerce.wish.list.exception.
-			NoSuchWishListException {
-
-		return getPersistence().findByU_LtC_Last(
-			userId, createDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList fetchByU_LtC_Last(
-		long userId, Date createDate,
-		OrderByComparator<CommerceWishList> orderByComparator) {
-
-		return getPersistence().fetchByU_LtC_Last(
 			userId, createDate, orderByComparator);
 	}
 
@@ -1247,43 +1055,6 @@ public class CommerceWishListUtil {
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
 		return getPersistence().fetchByG_U_D_First(
-			groupId, userId, defaultWishList, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where groupId = &#63; and userId = &#63; and defaultWishList = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param defaultWishList the default wish list
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list
-	 * @throws NoSuchWishListException if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList findByG_U_D_Last(
-			long groupId, long userId, boolean defaultWishList,
-			OrderByComparator<CommerceWishList> orderByComparator)
-		throws com.liferay.commerce.wish.list.exception.
-			NoSuchWishListException {
-
-		return getPersistence().findByG_U_D_Last(
-			groupId, userId, defaultWishList, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce wish list in the ordered set where groupId = &#63; and userId = &#63; and defaultWishList = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param defaultWishList the default wish list
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
-	 */
-	public static CommerceWishList fetchByG_U_D_Last(
-		long groupId, long userId, boolean defaultWishList,
-		OrderByComparator<CommerceWishList> orderByComparator) {
-
-		return getPersistence().fetchByG_U_D_Last(
 			groupId, userId, defaultWishList, orderByComparator);
 	}
 
@@ -1478,4 +1249,4 @@ public class CommerceWishListUtil {
 	private static volatile CommerceWishListPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-764663519
+// LIFERAY-SERVICE-BUILDER-HASH:1088996000

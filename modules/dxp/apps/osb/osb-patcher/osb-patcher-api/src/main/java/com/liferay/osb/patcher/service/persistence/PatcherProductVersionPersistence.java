@@ -121,32 +121,6 @@ public interface PatcherProductVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last patcher product version in the ordered set where fixDeliveryMethod = &#63;.
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher product version
-	 * @throws NoSuchPatcherProductVersionException if a matching patcher product version could not be found
-	 */
-	public PatcherProductVersion findByFixDeliveryMethod_Last(
-			int fixDeliveryMethod,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PatcherProductVersion> orderByComparator)
-		throws NoSuchPatcherProductVersionException;
-
-	/**
-	 * Returns the last patcher product version in the ordered set where fixDeliveryMethod = &#63;.
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher product version, or <code>null</code> if a matching patcher product version could not be found
-	 */
-	public PatcherProductVersion fetchByFixDeliveryMethod_Last(
-		int fixDeliveryMethod,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherProductVersion>
-			orderByComparator);
-
-	/**
 	 * Returns all the patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
 	 *
 	 * @param fixDeliveryMethod the fix delivery method
@@ -380,4 +354,4 @@ public interface PatcherProductVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-71800931
+// LIFERAY-SERVICE-BUILDER-HASH:-1665722478

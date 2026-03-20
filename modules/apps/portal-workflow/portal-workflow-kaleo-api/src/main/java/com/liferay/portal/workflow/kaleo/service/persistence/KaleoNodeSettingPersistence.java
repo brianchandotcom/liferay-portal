@@ -121,32 +121,6 @@ public interface KaleoNodeSettingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo node setting in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node setting
-	 * @throws NoSuchNodeSettingException if a matching kaleo node setting could not be found
-	 */
-	public KaleoNodeSetting findByKaleoNodeId_Last(
-			long kaleoNodeId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoNodeSetting>
-				orderByComparator)
-		throws NoSuchNodeSettingException;
-
-	/**
-	 * Returns the last kaleo node setting in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node setting, or <code>null</code> if a matching kaleo node setting could not be found
-	 */
-	public KaleoNodeSetting fetchByKaleoNodeId_Last(
-		long kaleoNodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoNodeSetting>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo node settings where kaleoNodeId = &#63; from the database.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
@@ -332,4 +306,4 @@ public interface KaleoNodeSettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:857214089
+// LIFERAY-SERVICE-BUILDER-HASH:-2131315376

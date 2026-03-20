@@ -216,37 +216,6 @@ public class NotificationRecipientUtil {
 	}
 
 	/**
-	 * Returns the last notification recipient in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient
-	 * @throws NoSuchNotificationRecipientException if a matching notification recipient could not be found
-	 */
-	public static NotificationRecipient findByUuid_Last(
-			String uuid,
-			OrderByComparator<NotificationRecipient> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification recipient in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient, or <code>null</code> if a matching notification recipient could not be found
-	 */
-	public static NotificationRecipient fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<NotificationRecipient> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the notification recipients where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -375,41 +344,6 @@ public class NotificationRecipientUtil {
 		OrderByComparator<NotificationRecipient> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification recipient in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient
-	 * @throws NoSuchNotificationRecipientException if a matching notification recipient could not be found
-	 */
-	public static NotificationRecipient findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<NotificationRecipient> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification recipient in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient, or <code>null</code> if a matching notification recipient could not be found
-	 */
-	public static NotificationRecipient fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<NotificationRecipient> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -667,4 +601,4 @@ public class NotificationRecipientUtil {
 	private static volatile NotificationRecipientPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1286861598
+// LIFERAY-SERVICE-BUILDER-HASH:46989108

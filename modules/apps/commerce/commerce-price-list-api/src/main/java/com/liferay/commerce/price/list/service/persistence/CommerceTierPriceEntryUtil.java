@@ -221,37 +221,6 @@ public class CommerceTierPriceEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce tier price entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchTierPriceEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce tier price entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -384,41 +353,6 @@ public class CommerceTierPriceEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce tier price entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchTierPriceEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce tier price entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -541,39 +475,6 @@ public class CommerceTierPriceEntryUtil {
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchTierPriceEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -703,39 +604,6 @@ public class CommerceTierPriceEntryUtil {
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 
 		return getPersistence().fetchByCommercePriceEntryId_First(
-			commercePriceEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry findByCommercePriceEntryId_Last(
-			long commercePriceEntryId,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchTierPriceEntryException {
-
-		return getPersistence().findByCommercePriceEntryId_Last(
-			commercePriceEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry fetchByCommercePriceEntryId_Last(
-		long commercePriceEntryId,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return getPersistence().fetchByCommercePriceEntryId_Last(
 			commercePriceEntryId, orderByComparator);
 	}
 
@@ -948,41 +816,6 @@ public class CommerceTierPriceEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param minQuantity the min quantity
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry findByC_LteM_Last(
-			long commercePriceEntryId, BigDecimal minQuantity,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchTierPriceEntryException {
-
-		return getPersistence().findByC_LteM_Last(
-			commercePriceEntryId, minQuantity, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param minQuantity the min quantity
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry fetchByC_LteM_Last(
-		long commercePriceEntryId, BigDecimal minQuantity,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_LteM_Last(
-			commercePriceEntryId, minQuantity, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63; from the database.
 	 *
 	 * @param commercePriceEntryId the commerce price entry ID
@@ -1124,41 +957,6 @@ public class CommerceTierPriceEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry findByC_S_Last(
-			long commercePriceEntryId, int status,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchTierPriceEntryException {
-
-		return getPersistence().findByC_S_Last(
-			commercePriceEntryId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry fetchByC_S_Last(
-		long commercePriceEntryId, int status,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_S_Last(
-			commercePriceEntryId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63; from the database.
 	 *
 	 * @param commercePriceEntryId the commerce price entry ID
@@ -1289,41 +1087,6 @@ public class CommerceTierPriceEntryUtil {
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 
 		return getPersistence().fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchTierPriceEntryException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
 			displayDate, status, orderByComparator);
 	}
 
@@ -1459,41 +1222,6 @@ public class CommerceTierPriceEntryUtil {
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 
 		return getPersistence().fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchTierPriceEntryException {
-
-		return getPersistence().findByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return getPersistence().fetchByLtE_S_Last(
 			expirationDate, status, orderByComparator);
 	}
 
@@ -1641,43 +1369,6 @@ public class CommerceTierPriceEntryUtil {
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_LteM_S_First(
-			commercePriceEntryId, minQuantity, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param minQuantity the min quantity
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry findByC_LteM_S_Last(
-			long commercePriceEntryId, BigDecimal minQuantity, int status,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchTierPriceEntryException {
-
-		return getPersistence().findByC_LteM_S_Last(
-			commercePriceEntryId, minQuantity, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param minQuantity the min quantity
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	public static CommerceTierPriceEntry fetchByC_LteM_S_Last(
-		long commercePriceEntryId, BigDecimal minQuantity, int status,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_LteM_S_Last(
 			commercePriceEntryId, minQuantity, status, orderByComparator);
 	}
 
@@ -1955,4 +1646,4 @@ public class CommerceTierPriceEntryUtil {
 	private static volatile CommerceTierPriceEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1481359300
+// LIFERAY-SERVICE-BUILDER-HASH:847772411

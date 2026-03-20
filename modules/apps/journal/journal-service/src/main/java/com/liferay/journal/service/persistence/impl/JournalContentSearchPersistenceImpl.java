@@ -319,67 +319,6 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal content search in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException {
-
-		JournalContentSearch journalContentSearch = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (journalContentSearch != null) {
-			return journalContentSearch;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalContentSearch> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal content searches where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -686,67 +625,6 @@ public class JournalContentSearchPersistenceImpl
 
 		List<JournalContentSearch> list = findByPortletId(
 			portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch findByPortletId_Last(
-			String portletId,
-			OrderByComparator<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException {
-
-		JournalContentSearch journalContentSearch = fetchByPortletId_Last(
-			portletId, orderByComparator);
-
-		if (journalContentSearch != null) {
-			return journalContentSearch;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByPortletId_Last(
-		String portletId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-
-		int count = countByPortletId(portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalContentSearch> list = findByPortletId(
-			portletId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1078,67 +956,6 @@ public class JournalContentSearchPersistenceImpl
 
 		List<JournalContentSearch> list = findByArticleId(
 			articleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where articleId = &#63;.
-	 *
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch findByArticleId_Last(
-			String articleId,
-			OrderByComparator<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException {
-
-		JournalContentSearch journalContentSearch = fetchByArticleId_Last(
-			articleId, orderByComparator);
-
-		if (journalContentSearch != null) {
-			return journalContentSearch;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("articleId=");
-		sb.append(articleId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where articleId = &#63;.
-	 *
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByArticleId_Last(
-		String articleId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-
-		int count = countByArticleId(articleId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalContentSearch> list = findByArticleId(
-			articleId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1483,72 +1300,6 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch findByG_P_Last(
-			long groupId, boolean privateLayout,
-			OrderByComparator<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException {
-
-		JournalContentSearch journalContentSearch = fetchByG_P_Last(
-			groupId, privateLayout, orderByComparator);
-
-		if (journalContentSearch != null) {
-			return journalContentSearch;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByG_P_Last(
-		long groupId, boolean privateLayout,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-
-		int count = countByG_P(groupId, privateLayout);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalContentSearch> list = findByG_P(
-			groupId, privateLayout, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal content searches where groupId = &#63; and privateLayout = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1882,72 +1633,6 @@ public class JournalContentSearchPersistenceImpl
 
 		List<JournalContentSearch> list = findByG_A(
 			groupId, articleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch findByG_A_Last(
-			long groupId, String articleId,
-			OrderByComparator<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException {
-
-		JournalContentSearch journalContentSearch = fetchByG_A_Last(
-			groupId, articleId, orderByComparator);
-
-		if (journalContentSearch != null) {
-			return journalContentSearch;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", articleId=");
-		sb.append(articleId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByG_A_Last(
-		long groupId, String articleId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-
-		int count = countByG_A(groupId, articleId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalContentSearch> list = findByG_A(
-			groupId, articleId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2313,78 +1998,6 @@ public class JournalContentSearchPersistenceImpl
 
 		List<JournalContentSearch> list = findByG_P_L(
 			groupId, privateLayout, layoutId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutId the layout ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch findByG_P_L_Last(
-			long groupId, boolean privateLayout, long layoutId,
-			OrderByComparator<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException {
-
-		JournalContentSearch journalContentSearch = fetchByG_P_L_Last(
-			groupId, privateLayout, layoutId, orderByComparator);
-
-		if (journalContentSearch != null) {
-			return journalContentSearch;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", layoutId=");
-		sb.append(layoutId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutId the layout ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByG_P_L_Last(
-		long groupId, boolean privateLayout, long layoutId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-
-		int count = countByG_P_L(groupId, privateLayout, layoutId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalContentSearch> list = findByG_P_L(
-			groupId, privateLayout, layoutId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2763,78 +2376,6 @@ public class JournalContentSearchPersistenceImpl
 
 		List<JournalContentSearch> list = findByG_P_A(
 			groupId, privateLayout, articleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch findByG_P_A_Last(
-			long groupId, boolean privateLayout, String articleId,
-			OrderByComparator<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException {
-
-		JournalContentSearch journalContentSearch = fetchByG_P_A_Last(
-			groupId, privateLayout, articleId, orderByComparator);
-
-		if (journalContentSearch != null) {
-			return journalContentSearch;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", articleId=");
-		sb.append(articleId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByG_P_A_Last(
-		long groupId, boolean privateLayout, String articleId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-
-		int count = countByG_P_A(groupId, privateLayout, articleId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalContentSearch> list = findByG_P_A(
-			groupId, privateLayout, articleId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3247,84 +2788,6 @@ public class JournalContentSearchPersistenceImpl
 
 		List<JournalContentSearch> list = findByG_P_L_P(
 			groupId, privateLayout, layoutId, portletId, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutId the layout ID
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch findByG_P_L_P_Last(
-			long groupId, boolean privateLayout, long layoutId,
-			String portletId,
-			OrderByComparator<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException {
-
-		JournalContentSearch journalContentSearch = fetchByG_P_L_P_Last(
-			groupId, privateLayout, layoutId, portletId, orderByComparator);
-
-		if (journalContentSearch != null) {
-			return journalContentSearch;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", layoutId=");
-		sb.append(layoutId);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutId the layout ID
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByG_P_L_P_Last(
-		long groupId, boolean privateLayout, long layoutId, String portletId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-
-		int count = countByG_P_L_P(groupId, privateLayout, layoutId, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalContentSearch> list = findByG_P_L_P(
-			groupId, privateLayout, layoutId, portletId, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4839,4 +4302,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:986551147
+// LIFERAY-SERVICE-BUILDER-HASH:-467096639

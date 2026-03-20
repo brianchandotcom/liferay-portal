@@ -329,64 +329,6 @@ public class MBThreadFlagPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards thread flag in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread flag
-	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
-	 */
-	@Override
-	public MBThreadFlag findByUuid_Last(
-			String uuid, OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException {
-
-		MBThreadFlag mbThreadFlag = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (mbThreadFlag != null) {
-			return mbThreadFlag;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchThreadFlagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards thread flag in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
-	 */
-	@Override
-	public MBThreadFlag fetchByUuid_Last(
-		String uuid, OrderByComparator<MBThreadFlag> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBThreadFlag> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards thread flags where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -934,72 +876,6 @@ public class MBThreadFlagPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread flag
-	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
-	 */
-	@Override
-	public MBThreadFlag findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException {
-
-		MBThreadFlag mbThreadFlag = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (mbThreadFlag != null) {
-			return mbThreadFlag;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchThreadFlagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
-	 */
-	@Override
-	public MBThreadFlag fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<MBThreadFlag> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBThreadFlag> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards thread flags where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1320,65 +1196,6 @@ public class MBThreadFlagPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards thread flag in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread flag
-	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
-	 */
-	@Override
-	public MBThreadFlag findByUserId_Last(
-			long userId, OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException {
-
-		MBThreadFlag mbThreadFlag = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (mbThreadFlag != null) {
-			return mbThreadFlag;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchThreadFlagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards thread flag in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
-	 */
-	@Override
-	public MBThreadFlag fetchByUserId_Last(
-		long userId, OrderByComparator<MBThreadFlag> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBThreadFlag> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards thread flags where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1668,65 +1485,6 @@ public class MBThreadFlagPersistenceImpl
 
 		List<MBThreadFlag> list = findByThreadId(
 			threadId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards thread flag in the ordered set where threadId = &#63;.
-	 *
-	 * @param threadId the thread ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread flag
-	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
-	 */
-	@Override
-	public MBThreadFlag findByThreadId_Last(
-			long threadId, OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException {
-
-		MBThreadFlag mbThreadFlag = fetchByThreadId_Last(
-			threadId, orderByComparator);
-
-		if (mbThreadFlag != null) {
-			return mbThreadFlag;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("threadId=");
-		sb.append(threadId);
-
-		sb.append("}");
-
-		throw new NoSuchThreadFlagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards thread flag in the ordered set where threadId = &#63;.
-	 *
-	 * @param threadId the thread ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
-	 */
-	@Override
-	public MBThreadFlag fetchByThreadId_Last(
-		long threadId, OrderByComparator<MBThreadFlag> orderByComparator) {
-
-		int count = countByThreadId(threadId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBThreadFlag> list = findByThreadId(
-			threadId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3019,4 +2777,4 @@ public class MBThreadFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1127591289
+// LIFERAY-SERVICE-BUILDER-HASH:352859755

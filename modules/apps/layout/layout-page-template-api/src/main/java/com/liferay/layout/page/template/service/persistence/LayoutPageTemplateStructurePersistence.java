@@ -122,32 +122,6 @@ public interface LayoutPageTemplateStructurePersistence
 			<LayoutPageTemplateStructure> orderByComparator);
 
 	/**
-	 * Returns the last layout page template structure in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure
-	 * @throws NoSuchPageTemplateStructureException if a matching layout page template structure could not be found
-	 */
-	public LayoutPageTemplateStructure findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructure> orderByComparator)
-		throws NoSuchPageTemplateStructureException;
-
-	/**
-	 * Returns the last layout page template structure in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure, or <code>null</code> if a matching layout page template structure could not be found
-	 */
-	public LayoutPageTemplateStructure fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructure> orderByComparator);
-
-	/**
 	 * Removes all the layout page template structures where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface LayoutPageTemplateStructurePersistence
 			<LayoutPageTemplateStructure> orderByComparator);
 
 	/**
-	 * Returns the last layout page template structure in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure
-	 * @throws NoSuchPageTemplateStructureException if a matching layout page template structure could not be found
-	 */
-	public LayoutPageTemplateStructure findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructure> orderByComparator)
-		throws NoSuchPageTemplateStructureException;
-
-	/**
-	 * Returns the last layout page template structure in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure, or <code>null</code> if a matching layout page template structure could not be found
-	 */
-	public LayoutPageTemplateStructure fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructure> orderByComparator);
-
-	/**
 	 * Removes all the layout page template structures where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,32 +381,6 @@ public interface LayoutPageTemplateStructurePersistence
 	 * @return the first matching layout page template structure, or <code>null</code> if a matching layout page template structure could not be found
 	 */
 	public LayoutPageTemplateStructure fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructure> orderByComparator);
-
-	/**
-	 * Returns the last layout page template structure in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure
-	 * @throws NoSuchPageTemplateStructureException if a matching layout page template structure could not be found
-	 */
-	public LayoutPageTemplateStructure findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructure> orderByComparator)
-		throws NoSuchPageTemplateStructureException;
-
-	/**
-	 * Returns the last layout page template structure in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure, or <code>null</code> if a matching layout page template structure could not be found
-	 */
-	public LayoutPageTemplateStructure fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateStructure> orderByComparator);
@@ -660,4 +580,4 @@ public interface LayoutPageTemplateStructurePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:150104373
+// LIFERAY-SERVICE-BUILDER-HASH:-111156304

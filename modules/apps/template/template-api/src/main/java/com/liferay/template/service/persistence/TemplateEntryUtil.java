@@ -210,34 +210,6 @@ public class TemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last template entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	public static TemplateEntry findByUuid_Last(
-			String uuid, OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	public static TemplateEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<TemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the template entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,40 +404,6 @@ public class TemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last template entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	public static TemplateEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	public static TemplateEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<TemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the template entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -585,34 +523,6 @@ public class TemplateEntryUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	public static TemplateEntry findByGroupId_Last(
-			long groupId, OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	public static TemplateEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<TemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -894,40 +804,6 @@ public class TemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	public static TemplateEntry findByG_IICN_Last(
-			long groupId, String infoItemClassName,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByG_IICN_Last(
-			groupId, infoItemClassName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	public static TemplateEntry fetchByG_IICN_Last(
-		long groupId, String infoItemClassName,
-		OrderByComparator<TemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_IICN_Last(
-			groupId, infoItemClassName, orderByComparator);
-	}
-
-	/**
 	 * Removes all the template entries where groupId = &#63; and infoItemClassName = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1072,45 +948,6 @@ public class TemplateEntryUtil {
 		OrderByComparator<TemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_IICN_IIFVK_First(
-			groupId, infoItemClassName, infoItemFormVariationKey,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63; and infoItemFormVariationKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param infoItemFormVariationKey the info item form variation key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	public static TemplateEntry findByG_IICN_IIFVK_Last(
-			long groupId, String infoItemClassName,
-			String infoItemFormVariationKey,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByG_IICN_IIFVK_Last(
-			groupId, infoItemClassName, infoItemFormVariationKey,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63; and infoItemFormVariationKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param infoItemFormVariationKey the info item form variation key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	public static TemplateEntry fetchByG_IICN_IIFVK_Last(
-		long groupId, String infoItemClassName, String infoItemFormVariationKey,
-		OrderByComparator<TemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_IICN_IIFVK_Last(
 			groupId, infoItemClassName, infoItemFormVariationKey,
 			orderByComparator);
 	}
@@ -1483,4 +1320,4 @@ public class TemplateEntryUtil {
 	private static volatile TemplateEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:247753044
+// LIFERAY-SERVICE-BUILDER-HASH:961947155

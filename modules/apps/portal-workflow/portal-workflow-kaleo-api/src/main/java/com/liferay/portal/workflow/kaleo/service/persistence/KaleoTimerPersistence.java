@@ -128,34 +128,6 @@ public interface KaleoTimerPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer
-	 * @throws NoSuchTimerException if a matching kaleo timer could not be found
-	 */
-	public KaleoTimer findByKCN_KCPK_Last(
-			String kaleoClassName, long kaleoClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
-				orderByComparator)
-		throws NoSuchTimerException;
-
-	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
-	 */
-	public KaleoTimer fetchByKCN_KCPK_Last(
-		String kaleoClassName, long kaleoClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
 	 *
 	 * @param kaleoClassName the kaleo class name
@@ -271,36 +243,6 @@ public interface KaleoTimerPersistence
 	 * @return the first matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
 	 */
 	public KaleoTimer fetchByKCN_KCPK_Blocking_First(
-		String kaleoClassName, long kaleoClassPK, boolean blocking,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param blocking the blocking
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer
-	 * @throws NoSuchTimerException if a matching kaleo timer could not be found
-	 */
-	public KaleoTimer findByKCN_KCPK_Blocking_Last(
-			String kaleoClassName, long kaleoClassPK, boolean blocking,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
-				orderByComparator)
-		throws NoSuchTimerException;
-
-	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param blocking the blocking
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
-	 */
-	public KaleoTimer fetchByKCN_KCPK_Blocking_Last(
 		String kaleoClassName, long kaleoClassPK, boolean blocking,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
 			orderByComparator);
@@ -446,4 +388,4 @@ public interface KaleoTimerPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1688261002
+// LIFERAY-SERVICE-BUILDER-HASH:-1514299402

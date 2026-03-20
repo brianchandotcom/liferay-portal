@@ -226,37 +226,6 @@ public class CommerceNotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce notification queue entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce notification queue entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -395,43 +364,6 @@ public class CommerceNotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce notification queue entry in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry
-			findByCommerceNotificationTemplateId_Last(
-				long commerceNotificationTemplateId,
-				OrderByComparator<CommerceNotificationQueueEntry>
-					orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByCommerceNotificationTemplateId_Last(
-			commerceNotificationTemplateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry
-		fetchByCommerceNotificationTemplateId_Last(
-			long commerceNotificationTemplateId,
-			OrderByComparator<CommerceNotificationQueueEntry>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommerceNotificationTemplateId_Last(
-			commerceNotificationTemplateId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce notification queue entries where commerceNotificationTemplateId = &#63; from the database.
 	 *
 	 * @param commerceNotificationTemplateId the commerce notification template ID
@@ -561,37 +493,6 @@ public class CommerceNotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce notification queue entry in the ordered set where sent = &#63;.
-	 *
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry findBySent_Last(
-			boolean sent,
-			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findBySent_Last(sent, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where sent = &#63;.
-	 *
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry fetchBySent_Last(
-		boolean sent,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		return getPersistence().fetchBySent_Last(sent, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce notification queue entries where sent = &#63; from the database.
 	 *
 	 * @param sent the sent
@@ -714,39 +615,6 @@ public class CommerceNotificationQueueEntryUtil {
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
 
 		return getPersistence().fetchByLtSentDate_First(
-			sentDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry findByLtSentDate_Last(
-			Date sentDate,
-			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByLtSentDate_Last(
-			sentDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry fetchByLtSentDate_Last(
-		Date sentDate,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		return getPersistence().fetchByLtSentDate_Last(
 			sentDate, orderByComparator);
 	}
 
@@ -897,45 +765,6 @@ public class CommerceNotificationQueueEntryUtil {
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_S_First(
-			groupId, classNameId, classPK, sent, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry findByG_C_C_S_Last(
-			long groupId, long classNameId, long classPK, boolean sent,
-			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByG_C_C_S_Last(
-			groupId, classNameId, classPK, sent, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	public static CommerceNotificationQueueEntry fetchByG_C_C_S_Last(
-		long groupId, long classNameId, long classPK, boolean sent,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_S_Last(
 			groupId, classNameId, classPK, sent, orderByComparator);
 	}
 
@@ -1150,4 +979,4 @@ public class CommerceNotificationQueueEntryUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2103819871
+// LIFERAY-SERVICE-BUILDER-HASH:-869775070

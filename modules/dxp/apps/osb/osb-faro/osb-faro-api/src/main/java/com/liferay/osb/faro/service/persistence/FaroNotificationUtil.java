@@ -215,38 +215,6 @@ public class FaroNotificationUtil {
 	}
 
 	/**
-	 * Returns the last faro notification in the ordered set where createTime &lt; &#63;.
-	 *
-	 * @param createTime the create time
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro notification
-	 * @throws NoSuchFaroNotificationException if a matching faro notification could not be found
-	 */
-	public static FaroNotification findByLtCreateTime_Last(
-			long createTime,
-			OrderByComparator<FaroNotification> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroNotificationException {
-
-		return getPersistence().findByLtCreateTime_Last(
-			createTime, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro notification in the ordered set where createTime &lt; &#63;.
-	 *
-	 * @param createTime the create time
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro notification, or <code>null</code> if a matching faro notification could not be found
-	 */
-	public static FaroNotification fetchByLtCreateTime_Last(
-		long createTime,
-		OrderByComparator<FaroNotification> orderByComparator) {
-
-		return getPersistence().fetchByLtCreateTime_Last(
-			createTime, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro notifications where createTime &lt; &#63; from the database.
 	 *
 	 * @param createTime the create time
@@ -390,44 +358,6 @@ public class FaroNotificationUtil {
 		OrderByComparator<FaroNotification> orderByComparator) {
 
 		return getPersistence().fetchByG_GtC_O_T_First(
-			groupId, createTime, ownerId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro notification in the ordered set where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createTime the create time
-	 * @param ownerId the owner ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro notification
-	 * @throws NoSuchFaroNotificationException if a matching faro notification could not be found
-	 */
-	public static FaroNotification findByG_GtC_O_T_Last(
-			long groupId, long createTime, long ownerId, String type,
-			OrderByComparator<FaroNotification> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroNotificationException {
-
-		return getPersistence().findByG_GtC_O_T_Last(
-			groupId, createTime, ownerId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro notification in the ordered set where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createTime the create time
-	 * @param ownerId the owner ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro notification, or <code>null</code> if a matching faro notification could not be found
-	 */
-	public static FaroNotification fetchByG_GtC_O_T_Last(
-		long groupId, long createTime, long ownerId, String type,
-		OrderByComparator<FaroNotification> orderByComparator) {
-
-		return getPersistence().fetchByG_GtC_O_T_Last(
 			groupId, createTime, ownerId, type, orderByComparator);
 	}
 
@@ -707,47 +637,6 @@ public class FaroNotificationUtil {
 		String subtype, OrderByComparator<FaroNotification> orderByComparator) {
 
 		return getPersistence().fetchByG_GtC_O_T_S_First(
-			groupId, createTime, ownerId, type, subtype, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro notification in the ordered set where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63; and subtype = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createTime the create time
-	 * @param ownerId the owner ID
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro notification
-	 * @throws NoSuchFaroNotificationException if a matching faro notification could not be found
-	 */
-	public static FaroNotification findByG_GtC_O_T_S_Last(
-			long groupId, long createTime, long ownerId, String type,
-			String subtype,
-			OrderByComparator<FaroNotification> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroNotificationException {
-
-		return getPersistence().findByG_GtC_O_T_S_Last(
-			groupId, createTime, ownerId, type, subtype, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro notification in the ordered set where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63; and subtype = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createTime the create time
-	 * @param ownerId the owner ID
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro notification, or <code>null</code> if a matching faro notification could not be found
-	 */
-	public static FaroNotification fetchByG_GtC_O_T_S_Last(
-		long groupId, long createTime, long ownerId, String type,
-		String subtype, OrderByComparator<FaroNotification> orderByComparator) {
-
-		return getPersistence().fetchByG_GtC_O_T_S_Last(
 			groupId, createTime, ownerId, type, subtype, orderByComparator);
 	}
 
@@ -1049,51 +938,6 @@ public class FaroNotificationUtil {
 		String subtype, OrderByComparator<FaroNotification> orderByComparator) {
 
 		return getPersistence().fetchByG_GtC_O_R_T_S_First(
-			groupId, createTime, ownerId, read, type, subtype,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro notification in the ordered set where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and read = &#63; and type = &#63; and subtype = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createTime the create time
-	 * @param ownerId the owner ID
-	 * @param read the read
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro notification
-	 * @throws NoSuchFaroNotificationException if a matching faro notification could not be found
-	 */
-	public static FaroNotification findByG_GtC_O_R_T_S_Last(
-			long groupId, long createTime, long ownerId, boolean read,
-			String type, String subtype,
-			OrderByComparator<FaroNotification> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroNotificationException {
-
-		return getPersistence().findByG_GtC_O_R_T_S_Last(
-			groupId, createTime, ownerId, read, type, subtype,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro notification in the ordered set where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and read = &#63; and type = &#63; and subtype = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createTime the create time
-	 * @param ownerId the owner ID
-	 * @param read the read
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro notification, or <code>null</code> if a matching faro notification could not be found
-	 */
-	public static FaroNotification fetchByG_GtC_O_R_T_S_Last(
-		long groupId, long createTime, long ownerId, boolean read, String type,
-		String subtype, OrderByComparator<FaroNotification> orderByComparator) {
-
-		return getPersistence().fetchByG_GtC_O_R_T_S_Last(
 			groupId, createTime, ownerId, read, type, subtype,
 			orderByComparator);
 	}
@@ -1422,4 +1266,4 @@ public class FaroNotificationUtil {
 	private static volatile FaroNotificationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:947023911
+// LIFERAY-SERVICE-BUILDER-HASH:-834899897

@@ -120,32 +120,6 @@ public interface ObjectFolderItemPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	public ObjectFolderItem findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-				orderByComparator)
-		throws NoSuchObjectFolderItemException;
-
-	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	public ObjectFolderItem fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-			orderByComparator);
-
-	/**
 	 * Removes all the object folder items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -250,34 +224,6 @@ public interface ObjectFolderItemPersistence
 	 * @return the first matching object folder item, or <code>null</code> if a matching object folder item could not be found
 	 */
 	public ObjectFolderItem fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-			orderByComparator);
-
-	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	public ObjectFolderItem findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-				orderByComparator)
-		throws NoSuchObjectFolderItemException;
-
-	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	public ObjectFolderItem fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
 			orderByComparator);
@@ -388,32 +334,6 @@ public interface ObjectFolderItemPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object folder item in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	public ObjectFolderItem findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-				orderByComparator)
-		throws NoSuchObjectFolderItemException;
-
-	/**
-	 * Returns the last object folder item in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	public ObjectFolderItem fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-			orderByComparator);
-
-	/**
 	 * Removes all the object folder items where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -512,32 +432,6 @@ public interface ObjectFolderItemPersistence
 	 * @return the first matching object folder item, or <code>null</code> if a matching object folder item could not be found
 	 */
 	public ObjectFolderItem fetchByObjectFolderId_First(
-		long objectFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-			orderByComparator);
-
-	/**
-	 * Returns the last object folder item in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	public ObjectFolderItem findByObjectFolderId_Last(
-			long objectFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-				orderByComparator)
-		throws NoSuchObjectFolderItemException;
-
-	/**
-	 * Returns the last object folder item in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	public ObjectFolderItem fetchByObjectFolderId_Last(
 		long objectFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
 			orderByComparator);
@@ -731,4 +625,4 @@ public interface ObjectFolderItemPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1500611931
+// LIFERAY-SERVICE-BUILDER-HASH:-1161212653

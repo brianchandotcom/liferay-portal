@@ -334,65 +334,6 @@ public class CalendarResourcePersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource
-	 * @throws NoSuchResourceException if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource findByUuid_Last(
-			String uuid, OrderByComparator<CalendarResource> orderByComparator)
-		throws NoSuchResourceException {
-
-		CalendarResource calendarResource = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource fetchByUuid_Last(
-		String uuid, OrderByComparator<CalendarResource> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarResource> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendar resources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -940,72 +881,6 @@ public class CalendarResourcePersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource
-	 * @throws NoSuchResourceException if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CalendarResource> orderByComparator)
-		throws NoSuchResourceException {
-
-		CalendarResource calendarResource = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CalendarResource> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarResource> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendar resources where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1321,65 +1196,6 @@ public class CalendarResourcePersistenceImpl
 
 		List<CalendarResource> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource
-	 * @throws NoSuchResourceException if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource findByGroupId_Last(
-			long groupId, OrderByComparator<CalendarResource> orderByComparator)
-		throws NoSuchResourceException {
-
-		CalendarResource calendarResource = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource fetchByGroupId_Last(
-		long groupId, OrderByComparator<CalendarResource> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarResource> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1887,66 +1703,6 @@ public class CalendarResourcePersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar resource in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource
-	 * @throws NoSuchResourceException if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource findByActive_Last(
-			boolean active,
-			OrderByComparator<CalendarResource> orderByComparator)
-		throws NoSuchResourceException {
-
-		CalendarResource calendarResource = fetchByActive_Last(
-			active, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource fetchByActive_Last(
-		boolean active, OrderByComparator<CalendarResource> orderByComparator) {
-
-		int count = countByActive(active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarResource> list = findByActive(
-			active, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendar resources where active = &#63; from the database.
 	 *
 	 * @param active the active
@@ -2267,72 +2023,6 @@ public class CalendarResourcePersistenceImpl
 
 		List<CalendarResource> list = findByG_C(
 			groupId, code, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where groupId = &#63; and code = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param code the code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource
-	 * @throws NoSuchResourceException if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource findByG_C_Last(
-			long groupId, String code,
-			OrderByComparator<CalendarResource> orderByComparator)
-		throws NoSuchResourceException {
-
-		CalendarResource calendarResource = fetchByG_C_Last(
-			groupId, code, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", code=");
-		sb.append(code);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where groupId = &#63; and code = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param code the code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource fetchByG_C_Last(
-		long groupId, String code,
-		OrderByComparator<CalendarResource> orderByComparator) {
-
-		int count = countByG_C(groupId, code);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarResource> list = findByG_C(
-			groupId, code, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3510,72 +3200,6 @@ public class CalendarResourcePersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar resource in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource
-	 * @throws NoSuchResourceException if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource findByG_A_Last(
-			long groupId, boolean active,
-			OrderByComparator<CalendarResource> orderByComparator)
-		throws NoSuchResourceException {
-
-		CalendarResource calendarResource = fetchByG_A_Last(
-			groupId, active, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource fetchByG_A_Last(
-		long groupId, boolean active,
-		OrderByComparator<CalendarResource> orderByComparator) {
-
-		int count = countByG_A(groupId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarResource> list = findByG_A(
-			groupId, active, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the calendar resources that the user has permission to view where groupId = &#63; and active = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4319,77 +3943,6 @@ public class CalendarResourcePersistenceImpl
 
 		List<CalendarResource> list = findByC_LikeC_A(
 			companyId, code, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where companyId = &#63; and code LIKE &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param code the code
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource
-	 * @throws NoSuchResourceException if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource findByC_LikeC_A_Last(
-			long companyId, String code, boolean active,
-			OrderByComparator<CalendarResource> orderByComparator)
-		throws NoSuchResourceException {
-
-		CalendarResource calendarResource = fetchByC_LikeC_A_Last(
-			companyId, code, active, orderByComparator);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", codeLIKE");
-		sb.append(code);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar resource in the ordered set where companyId = &#63; and code LIKE &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param code the code
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
-	 */
-	@Override
-	public CalendarResource fetchByC_LikeC_A_Last(
-		long companyId, String code, boolean active,
-		OrderByComparator<CalendarResource> orderByComparator) {
-
-		int count = countByC_LikeC_A(companyId, code, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarResource> list = findByC_LikeC_A(
-			companyId, code, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5636,4 +5189,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:30057932
+// LIFERAY-SERVICE-BUILDER-HASH:1226461622

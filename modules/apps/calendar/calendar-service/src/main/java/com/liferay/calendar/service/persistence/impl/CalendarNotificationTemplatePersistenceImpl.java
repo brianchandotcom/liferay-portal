@@ -342,67 +342,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar notification template
-	 * @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
-	 */
-	@Override
-	public CalendarNotificationTemplate findByUuid_Last(
-			String uuid,
-			OrderByComparator<CalendarNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		CalendarNotificationTemplate calendarNotificationTemplate =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (calendarNotificationTemplate != null) {
-			return calendarNotificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
-	 */
-	@Override
-	public CalendarNotificationTemplate fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CalendarNotificationTemplate> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarNotificationTemplate> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendar notification templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -967,72 +906,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar notification template
-	 * @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
-	 */
-	@Override
-	public CalendarNotificationTemplate findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CalendarNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		CalendarNotificationTemplate calendarNotificationTemplate =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (calendarNotificationTemplate != null) {
-			return calendarNotificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
-	 */
-	@Override
-	public CalendarNotificationTemplate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CalendarNotificationTemplate> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarNotificationTemplate> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendar notification templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1359,67 +1232,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		List<CalendarNotificationTemplate> list = findByCalendarId(
 			calendarId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last calendar notification template in the ordered set where calendarId = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar notification template
-	 * @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
-	 */
-	@Override
-	public CalendarNotificationTemplate findByCalendarId_Last(
-			long calendarId,
-			OrderByComparator<CalendarNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		CalendarNotificationTemplate calendarNotificationTemplate =
-			fetchByCalendarId_Last(calendarId, orderByComparator);
-
-		if (calendarNotificationTemplate != null) {
-			return calendarNotificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("calendarId=");
-		sb.append(calendarId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar notification template in the ordered set where calendarId = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
-	 */
-	@Override
-	public CalendarNotificationTemplate fetchByCalendarId_Last(
-		long calendarId,
-		OrderByComparator<CalendarNotificationTemplate> orderByComparator) {
-
-		int count = countByCalendarId(calendarId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarNotificationTemplate> list = findByCalendarId(
-			calendarId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2880,4 +2692,4 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1984909159
+// LIFERAY-SERVICE-BUILDER-HASH:-1504042139

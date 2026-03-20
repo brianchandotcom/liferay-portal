@@ -121,32 +121,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 			<CommercePaymentMethodGroupRel> orderByComparator);
 
 	/**
-	 * Returns the last commerce payment method group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a matching commerce payment method group rel could not be found
-	 */
-	public CommercePaymentMethodGroupRel findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentMethodGroupRel> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelException;
-
-	/**
-	 * Returns the last commerce payment method group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
-	 */
-	public CommercePaymentMethodGroupRel fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommercePaymentMethodGroupRel> orderByComparator);
-
-	/**
 	 * Returns all the commerce payment method group rels that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -301,34 +275,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 	 * @return the first matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
 	 */
 	public CommercePaymentMethodGroupRel fetchByG_A_First(
-		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommercePaymentMethodGroupRel> orderByComparator);
-
-	/**
-	 * Returns the last commerce payment method group rel in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a matching commerce payment method group rel could not be found
-	 */
-	public CommercePaymentMethodGroupRel findByG_A_Last(
-			long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentMethodGroupRel> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelException;
-
-	/**
-	 * Returns the last commerce payment method group rel in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
-	 */
-	public CommercePaymentMethodGroupRel fetchByG_A_Last(
 		long groupId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommercePaymentMethodGroupRel> orderByComparator);
@@ -587,4 +533,4 @@ public interface CommercePaymentMethodGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1431326640
+// LIFERAY-SERVICE-BUILDER-HASH:410556472

@@ -211,34 +211,6 @@ public class FaroUserUtil {
 	}
 
 	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	public static FaroUser findByGroupId_Last(
-			long groupId, OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	public static FaroUser fetchByGroupId_Last(
-		long groupId, OrderByComparator<FaroUser> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro users where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -355,36 +327,6 @@ public class FaroUserUtil {
 		long liveUserId, OrderByComparator<FaroUser> orderByComparator) {
 
 		return getPersistence().fetchByLiveUserId_First(
-			liveUserId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where liveUserId = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	public static FaroUser findByLiveUserId_Last(
-			long liveUserId, OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByLiveUserId_Last(
-			liveUserId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where liveUserId = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	public static FaroUser fetchByLiveUserId_Last(
-		long liveUserId, OrderByComparator<FaroUser> orderByComparator) {
-
-		return getPersistence().fetchByLiveUserId_Last(
 			liveUserId, orderByComparator);
 	}
 
@@ -636,40 +578,6 @@ public class FaroUserUtil {
 	}
 
 	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	public static FaroUser findByG_R_Last(
-			long groupId, long roleId,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByG_R_Last(
-			groupId, roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	public static FaroUser fetchByG_R_Last(
-		long groupId, long roleId,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return getPersistence().fetchByG_R_Last(
-			groupId, roleId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro users where groupId = &#63; and roleId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -864,40 +772,6 @@ public class FaroUserUtil {
 	}
 
 	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	public static FaroUser findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByG_S_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	public static FaroUser fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return getPersistence().fetchByG_S_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro users where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1024,40 +898,6 @@ public class FaroUserUtil {
 		OrderByComparator<FaroUser> orderByComparator) {
 
 		return getPersistence().fetchByL_S_First(
-			liveUserId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where liveUserId = &#63; and status = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	public static FaroUser findByL_S_Last(
-			long liveUserId, int status,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByL_S_Last(
-			liveUserId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where liveUserId = &#63; and status = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	public static FaroUser fetchByL_S_Last(
-		long liveUserId, int status,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return getPersistence().fetchByL_S_Last(
 			liveUserId, status, orderByComparator);
 	}
 
@@ -1189,40 +1029,6 @@ public class FaroUserUtil {
 		OrderByComparator<FaroUser> orderByComparator) {
 
 		return getPersistence().fetchByE_S_First(
-			emailAddress, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where emailAddress = &#63; and status = &#63;.
-	 *
-	 * @param emailAddress the email address
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	public static FaroUser findByE_S_Last(
-			String emailAddress, int status,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByE_S_Last(
-			emailAddress, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where emailAddress = &#63; and status = &#63;.
-	 *
-	 * @param emailAddress the email address
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	public static FaroUser fetchByE_S_Last(
-		String emailAddress, int status,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return getPersistence().fetchByE_S_Last(
 			emailAddress, status, orderByComparator);
 	}
 
@@ -1405,4 +1211,4 @@ public class FaroUserUtil {
 	private static volatile FaroUserPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1630100818
+// LIFERAY-SERVICE-BUILDER-HASH:1565740272

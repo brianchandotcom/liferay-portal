@@ -211,35 +211,6 @@ public class ResourceActionUtil {
 	}
 
 	/**
-	 * Returns the last resource action in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource action
-	 * @throws NoSuchResourceActionException if a matching resource action could not be found
-	 */
-	public static ResourceAction findByName_Last(
-			String name, OrderByComparator<ResourceAction> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourceActionException {
-
-		return getPersistence().findByName_Last(name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource action in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource action, or <code>null</code> if a matching resource action could not be found
-	 */
-	public static ResourceAction fetchByName_Last(
-		String name, OrderByComparator<ResourceAction> orderByComparator) {
-
-		return getPersistence().fetchByName_Last(name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the resource actions where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -484,4 +455,4 @@ public class ResourceActionUtil {
 	private static volatile ResourceActionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-601581676
+// LIFERAY-SERVICE-BUILDER-HASH:-697269888

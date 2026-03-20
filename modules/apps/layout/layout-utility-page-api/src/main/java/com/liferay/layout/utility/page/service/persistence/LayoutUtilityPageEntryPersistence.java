@@ -122,32 +122,6 @@ public interface LayoutUtilityPageEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last layout utility page entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException;
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the layout utility page entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface LayoutUtilityPageEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last layout utility page entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException;
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the layout utility page entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @return the first matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException;
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
 			orderByComparator);
@@ -664,34 +584,6 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @return the first matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry fetchByG_T_First(
-		long groupId, String type,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry findByG_T_Last(
-			long groupId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException;
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry fetchByG_T_Last(
 		long groupId, String type,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
 			orderByComparator);
@@ -1004,36 +896,6 @@ public interface LayoutUtilityPageEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry findByG_D_T_Last(
-			long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException;
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry fetchByG_D_T_Last(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1269,36 +1131,6 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @return the first matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry fetchByG_LikeN_T_First(
-		long groupId, String name, String type,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry findByG_LikeN_T_Last(
-			long groupId, String name, String type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException;
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public LayoutUtilityPageEntry fetchByG_LikeN_T_Last(
 		long groupId, String name, String type,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
 			orderByComparator);
@@ -1701,4 +1533,4 @@ public interface LayoutUtilityPageEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-451356448
+// LIFERAY-SERVICE-BUILDER-HASH:-1817559746

@@ -323,64 +323,6 @@ public class SXPElementPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sxp element in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement findByUuid_Last(
-			String uuid, OrderByComparator<SXPElement> orderByComparator)
-		throws NoSuchSXPElementException {
-
-		SXPElement sxpElement = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSXPElementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement fetchByUuid_Last(
-		String uuid, OrderByComparator<SXPElement> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SXPElement> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -928,72 +870,6 @@ public class SXPElementPersistenceImpl
 
 		List<SXPElement> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws NoSuchSXPElementException {
-
-		SXPElement sxpElement = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSXPElementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SXPElement> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SXPElement> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1553,65 +1429,6 @@ public class SXPElementPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement findByCompanyId_Last(
-			long companyId, OrderByComparator<SXPElement> orderByComparator)
-		throws NoSuchSXPElementException {
-
-		SXPElement sxpElement = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSXPElementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement fetchByCompanyId_Last(
-		long companyId, OrderByComparator<SXPElement> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SXPElement> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2101,72 +1918,6 @@ public class SXPElementPersistenceImpl
 
 		List<SXPElement> list = findByC_R(
 			companyId, readOnly, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and readOnly = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param readOnly the read only
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement findByC_R_Last(
-			long companyId, boolean readOnly,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws NoSuchSXPElementException {
-
-		SXPElement sxpElement = fetchByC_R_Last(
-			companyId, readOnly, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", readOnly=");
-		sb.append(readOnly);
-
-		sb.append("}");
-
-		throw new NoSuchSXPElementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and readOnly = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param readOnly the read only
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement fetchByC_R_Last(
-		long companyId, boolean readOnly,
-		OrderByComparator<SXPElement> orderByComparator) {
-
-		int count = countByC_R(companyId, readOnly);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SXPElement> list = findByC_R(
-			companyId, readOnly, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2687,72 +2438,6 @@ public class SXPElementPersistenceImpl
 
 		List<SXPElement> list = findByC_T(
 			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement findByC_T_Last(
-			long companyId, int type,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws NoSuchSXPElementException {
-
-		SXPElement sxpElement = fetchByC_T_Last(
-			companyId, type, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchSXPElementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement fetchByC_T_Last(
-		long companyId, int type,
-		OrderByComparator<SXPElement> orderByComparator) {
-
-		int count = countByC_T(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SXPElement> list = findByC_T(
-			companyId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3291,77 +2976,6 @@ public class SXPElementPersistenceImpl
 
 		List<SXPElement> list = findByC_T_S(
 			companyId, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement findByC_T_S_Last(
-			long companyId, int type, int status,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws NoSuchSXPElementException {
-
-		SXPElement sxpElement = fetchByC_T_S_Last(
-			companyId, type, status, orderByComparator);
-
-		if (sxpElement != null) {
-			return sxpElement;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchSXPElementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	@Override
-	public SXPElement fetchByC_T_S_Last(
-		long companyId, int type, int status,
-		OrderByComparator<SXPElement> orderByComparator) {
-
-		int count = countByC_T_S(companyId, type, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SXPElement> list = findByC_T_S(
-			companyId, type, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4771,4 +4385,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1719433939
+// LIFERAY-SERVICE-BUILDER-HASH:945675211

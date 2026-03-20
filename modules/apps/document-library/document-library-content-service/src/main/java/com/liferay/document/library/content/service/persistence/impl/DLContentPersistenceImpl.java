@@ -337,72 +337,6 @@ public class DLContentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content
-	 * @throws NoSuchContentException if a matching document library content could not be found
-	 */
-	@Override
-	public DLContent findByC_R_Last(
-			long companyId, long repositoryId,
-			OrderByComparator<DLContent> orderByComparator)
-		throws NoSuchContentException {
-
-		DLContent dlContent = fetchByC_R_Last(
-			companyId, repositoryId, orderByComparator);
-
-		if (dlContent != null) {
-			return dlContent;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content, or <code>null</code> if a matching document library content could not be found
-	 */
-	@Override
-	public DLContent fetchByC_R_Last(
-		long companyId, long repositoryId,
-		OrderByComparator<DLContent> orderByComparator) {
-
-		int count = countByC_R(companyId, repositoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLContent> list = findByC_R(
-			companyId, repositoryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library contents where companyId = &#63; and repositoryId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -750,77 +684,6 @@ public class DLContentPersistenceImpl
 
 		List<DLContent> list = findByC_R_P(
 			companyId, repositoryId, path, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content
-	 * @throws NoSuchContentException if a matching document library content could not be found
-	 */
-	@Override
-	public DLContent findByC_R_P_Last(
-			long companyId, long repositoryId, String path,
-			OrderByComparator<DLContent> orderByComparator)
-		throws NoSuchContentException {
-
-		DLContent dlContent = fetchByC_R_P_Last(
-			companyId, repositoryId, path, orderByComparator);
-
-		if (dlContent != null) {
-			return dlContent;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", path=");
-		sb.append(path);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content, or <code>null</code> if a matching document library content could not be found
-	 */
-	@Override
-	public DLContent fetchByC_R_P_Last(
-		long companyId, long repositoryId, String path,
-		OrderByComparator<DLContent> orderByComparator) {
-
-		int count = countByC_R_P(companyId, repositoryId, path);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLContent> list = findByC_R_P(
-			companyId, repositoryId, path, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1193,77 +1056,6 @@ public class DLContentPersistenceImpl
 
 		List<DLContent> list = findByC_R_LikeP(
 			companyId, repositoryId, path, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content
-	 * @throws NoSuchContentException if a matching document library content could not be found
-	 */
-	@Override
-	public DLContent findByC_R_LikeP_Last(
-			long companyId, long repositoryId, String path,
-			OrderByComparator<DLContent> orderByComparator)
-		throws NoSuchContentException {
-
-		DLContent dlContent = fetchByC_R_LikeP_Last(
-			companyId, repositoryId, path, orderByComparator);
-
-		if (dlContent != null) {
-			return dlContent;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", pathLIKE");
-		sb.append(path);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content, or <code>null</code> if a matching document library content could not be found
-	 */
-	@Override
-	public DLContent fetchByC_R_LikeP_Last(
-		long companyId, long repositoryId, String path,
-		OrderByComparator<DLContent> orderByComparator) {
-
-		int count = countByC_R_LikeP(companyId, repositoryId, path);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLContent> list = findByC_R_LikeP(
-			companyId, repositoryId, path, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2604,4 +2396,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-219044721
+// LIFERAY-SERVICE-BUILDER-HASH:-1520768987

@@ -216,37 +216,6 @@ public class CPSpecificationOptionUtil {
 	}
 
 	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	public static CPSpecificationOption findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPSpecificationOption> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPSpecificationOptionException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	public static CPSpecificationOption fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPSpecificationOption> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -434,41 +403,6 @@ public class CPSpecificationOptionUtil {
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	public static CPSpecificationOption findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPSpecificationOption> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPSpecificationOptionException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	public static CPSpecificationOption fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPSpecificationOption> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -664,39 +598,6 @@ public class CPSpecificationOptionUtil {
 	}
 
 	/**
-	 * Returns the last cp specification option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	public static CPSpecificationOption findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPSpecificationOption> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPSpecificationOptionException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	public static CPSpecificationOption fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CPSpecificationOption> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -881,39 +782,6 @@ public class CPSpecificationOptionUtil {
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 
 		return getPersistence().fetchByCPOptionCategoryId_First(
-			CPOptionCategoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	public static CPSpecificationOption findByCPOptionCategoryId_Last(
-			long CPOptionCategoryId,
-			OrderByComparator<CPSpecificationOption> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPSpecificationOptionException {
-
-		return getPersistence().findByCPOptionCategoryId_Last(
-			CPOptionCategoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	public static CPSpecificationOption fetchByCPOptionCategoryId_Last(
-		long CPOptionCategoryId,
-		OrderByComparator<CPSpecificationOption> orderByComparator) {
-
-		return getPersistence().fetchByCPOptionCategoryId_Last(
 			CPOptionCategoryId, orderByComparator);
 	}
 
@@ -1310,4 +1178,4 @@ public class CPSpecificationOptionUtil {
 	private static volatile CPSpecificationOptionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:146778466
+// LIFERAY-SERVICE-BUILDER-HASH:-1989129348

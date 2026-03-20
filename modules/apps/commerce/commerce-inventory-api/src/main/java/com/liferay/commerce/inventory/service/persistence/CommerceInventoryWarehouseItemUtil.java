@@ -219,37 +219,6 @@ public class CommerceInventoryWarehouseItemUtil {
 	}
 
 	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce inventory warehouse items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -382,41 +351,6 @@ public class CommerceInventoryWarehouseItemUtil {
 	}
 
 	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce inventory warehouse items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -541,39 +475,6 @@ public class CommerceInventoryWarehouseItemUtil {
 		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -711,43 +612,6 @@ public class CommerceInventoryWarehouseItemUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchByCommerceInventoryWarehouseId_First(
-			commerceInventoryWarehouseId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem
-			findByCommerceInventoryWarehouseId_Last(
-				long commerceInventoryWarehouseId,
-				OrderByComparator<CommerceInventoryWarehouseItem>
-					orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByCommerceInventoryWarehouseId_Last(
-			commerceInventoryWarehouseId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem
-		fetchByCommerceInventoryWarehouseId_Last(
-			long commerceInventoryWarehouseId,
-			OrderByComparator<CommerceInventoryWarehouseItem>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommerceInventoryWarehouseId_Last(
 			commerceInventoryWarehouseId, orderByComparator);
 	}
 
@@ -895,43 +759,6 @@ public class CommerceInventoryWarehouseItemUtil {
 		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
 
 		return getPersistence().fetchByC_S_U_First(
-			companyId, sku, unitOfMeasureKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem findByC_S_U_Last(
-			long companyId, String sku, String unitOfMeasureKey,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByC_S_U_Last(
-			companyId, sku, unitOfMeasureKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	public static CommerceInventoryWarehouseItem fetchByC_S_U_Last(
-		long companyId, String sku, String unitOfMeasureKey,
-		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
-
-		return getPersistence().fetchByC_S_U_Last(
 			companyId, sku, unitOfMeasureKey, orderByComparator);
 	}
 
@@ -1302,4 +1129,4 @@ public class CommerceInventoryWarehouseItemUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:855373421
+// LIFERAY-SERVICE-BUILDER-HASH:-1396161287

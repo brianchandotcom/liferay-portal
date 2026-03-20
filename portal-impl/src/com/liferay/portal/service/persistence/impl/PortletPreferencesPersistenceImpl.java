@@ -310,66 +310,6 @@ public class PortletPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Returns the last portlet preferences in the ordered set where ownerId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences findByOwnerId_Last(
-			long ownerId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws NoSuchPortletPreferencesException {
-
-		PortletPreferences portletPreferences = fetchByOwnerId_Last(
-			ownerId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByOwnerId_Last(
-		long ownerId, OrderByComparator<PortletPreferences> orderByComparator) {
-
-		int count = countByOwnerId(ownerId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferences> list = findByOwnerId(
-			ownerId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the portlet preferenceses where ownerId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -654,65 +594,6 @@ public class PortletPreferencesPersistenceImpl
 
 		List<PortletPreferences> list = findByPlid(
 			plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences findByPlid_Last(
-			long plid, OrderByComparator<PortletPreferences> orderByComparator)
-		throws NoSuchPortletPreferencesException {
-
-		PortletPreferences portletPreferences = fetchByPlid_Last(
-			plid, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByPlid_Last(
-		long plid, OrderByComparator<PortletPreferences> orderByComparator) {
-
-		int count = countByPlid(plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferences> list = findByPlid(
-			plid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1027,67 +908,6 @@ public class PortletPreferencesPersistenceImpl
 
 		List<PortletPreferences> list = findByPortletId(
 			portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences findByPortletId_Last(
-			String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws NoSuchPortletPreferencesException {
-
-		PortletPreferences portletPreferences = fetchByPortletId_Last(
-			portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByPortletId_Last(
-		String portletId,
-		OrderByComparator<PortletPreferences> orderByComparator) {
-
-		int count = countByPortletId(portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferences> list = findByPortletId(
-			portletId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1443,72 +1263,6 @@ public class PortletPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences findByO_P_Last(
-			int ownerType, String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws NoSuchPortletPreferencesException {
-
-		PortletPreferences portletPreferences = fetchByO_P_Last(
-			ownerType, portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByO_P_Last(
-		int ownerType, String portletId,
-		OrderByComparator<PortletPreferences> orderByComparator) {
-
-		int count = countByO_P(ownerType, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferences> list = findByO_P(
-			ownerType, portletId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the portlet preferenceses where ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerType the owner type
@@ -1855,72 +1609,6 @@ public class PortletPreferencesPersistenceImpl
 
 		List<PortletPreferences> list = findByP_P(
 			plid, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences findByP_P_Last(
-			long plid, String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws NoSuchPortletPreferencesException {
-
-		PortletPreferences portletPreferences = fetchByP_P_Last(
-			plid, portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByP_P_Last(
-		long plid, String portletId,
-		OrderByComparator<PortletPreferences> orderByComparator) {
-
-		int count = countByP_P(plid, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferences> list = findByP_P(
-			plid, portletId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2289,77 +1977,6 @@ public class PortletPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences findByO_O_P_Last(
-			long ownerId, int ownerType, long plid,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws NoSuchPortletPreferencesException {
-
-		PortletPreferences portletPreferences = fetchByO_O_P_Last(
-			ownerId, ownerType, plid, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByO_O_P_Last(
-		long ownerId, int ownerType, long plid,
-		OrderByComparator<PortletPreferences> orderByComparator) {
-
-		int count = countByO_O_P(ownerId, ownerType, plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferences> list = findByO_O_P(
-			ownerId, ownerType, plid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -2717,77 +2334,6 @@ public class PortletPreferencesPersistenceImpl
 
 		List<PortletPreferences> list = findByO_O_PI(
 			ownerId, ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences findByO_O_PI_Last(
-			long ownerId, int ownerType, String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws NoSuchPortletPreferencesException {
-
-		PortletPreferences portletPreferences = fetchByO_O_PI_Last(
-			ownerId, ownerType, portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByO_O_PI_Last(
-		long ownerId, int ownerType, String portletId,
-		OrderByComparator<PortletPreferences> orderByComparator) {
-
-		int count = countByO_O_PI(ownerId, ownerType, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferences> list = findByO_O_PI(
-			ownerId, ownerType, portletId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3170,77 +2716,6 @@ public class PortletPreferencesPersistenceImpl
 
 		List<PortletPreferences> list = findByO_P_P(
 			ownerType, plid, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences findByO_P_P_Last(
-			int ownerType, long plid, String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws NoSuchPortletPreferencesException {
-
-		PortletPreferences portletPreferences = fetchByO_P_P_Last(
-			ownerType, plid, portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByO_P_P_Last(
-		int ownerType, long plid, String portletId,
-		OrderByComparator<PortletPreferences> orderByComparator) {
-
-		int count = countByO_P_P(ownerType, plid, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferences> list = findByO_P_P(
-			ownerType, plid, portletId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3633,84 +3108,6 @@ public class PortletPreferencesPersistenceImpl
 
 		List<PortletPreferences> list = findByC_O_O_LikeP(
 			companyId, ownerId, ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences findByC_O_O_LikeP_Last(
-			long companyId, long ownerId, int ownerType, String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws NoSuchPortletPreferencesException {
-
-		PortletPreferences portletPreferences = fetchByC_O_O_LikeP_Last(
-			companyId, ownerId, ownerType, portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletIdLIKE");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByC_O_O_LikeP_Last(
-		long companyId, long ownerId, int ownerType, String portletId,
-		OrderByComparator<PortletPreferences> orderByComparator) {
-
-		int count = countByC_O_O_LikeP(
-			companyId, ownerId, ownerType, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferences> list = findByC_O_O_LikeP(
-			companyId, ownerId, ownerType, portletId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5145,4 +4542,4 @@ public class PortletPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1675839873
+// LIFERAY-SERVICE-BUILDER-HASH:696065367

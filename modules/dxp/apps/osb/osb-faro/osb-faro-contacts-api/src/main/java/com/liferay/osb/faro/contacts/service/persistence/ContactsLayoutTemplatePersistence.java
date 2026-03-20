@@ -120,32 +120,6 @@ public interface ContactsLayoutTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template
-	 * @throws NoSuchContactsLayoutTemplateException if a matching contacts layout template could not be found
-	 */
-	public ContactsLayoutTemplate findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ContactsLayoutTemplate> orderByComparator)
-		throws NoSuchContactsLayoutTemplateException;
-
-	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template, or <code>null</code> if a matching contacts layout template could not be found
-	 */
-	public ContactsLayoutTemplate fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ContactsLayoutTemplate>
-			orderByComparator);
-
-	/**
 	 * Removes all the contacts layout templates where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -250,34 +224,6 @@ public interface ContactsLayoutTemplatePersistence
 	 * @return the first matching contacts layout template, or <code>null</code> if a matching contacts layout template could not be found
 	 */
 	public ContactsLayoutTemplate fetchByG_T_First(
-		long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<ContactsLayoutTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template
-	 * @throws NoSuchContactsLayoutTemplateException if a matching contacts layout template could not be found
-	 */
-	public ContactsLayoutTemplate findByG_T_Last(
-			long groupId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ContactsLayoutTemplate> orderByComparator)
-		throws NoSuchContactsLayoutTemplateException;
-
-	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template, or <code>null</code> if a matching contacts layout template could not be found
-	 */
-	public ContactsLayoutTemplate fetchByG_T_Last(
 		long groupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactsLayoutTemplate>
 			orderByComparator);
@@ -424,4 +370,4 @@ public interface ContactsLayoutTemplatePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1714328160
+// LIFERAY-SERVICE-BUILDER-HASH:1076998816

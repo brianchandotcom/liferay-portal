@@ -122,32 +122,6 @@ public interface DDMFieldAttributePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
-	 */
-	public DDMFieldAttribute findByStorageId_Last(
-			long storageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-				orderByComparator)
-		throws NoSuchFieldAttributeException;
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	public DDMFieldAttribute fetchByStorageId_Last(
-		long storageId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm field attributes where storageId = &#63; from the database.
 	 *
 	 * @param storageId the storage ID
@@ -252,34 +226,6 @@ public interface DDMFieldAttributePersistence
 	 * @return the first matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
 	 */
 	public DDMFieldAttribute fetchByS_AN_First(
-		long storageId, String attributeName,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
-	 */
-	public DDMFieldAttribute findByS_AN_Last(
-			long storageId, String attributeName,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-				orderByComparator)
-		throws NoSuchFieldAttributeException;
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	public DDMFieldAttribute fetchByS_AN_Last(
 		long storageId, String attributeName,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
 			orderByComparator);
@@ -391,34 +337,6 @@ public interface DDMFieldAttributePersistence
 	 * @return the first matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
 	 */
 	public DDMFieldAttribute fetchByS_L_First(
-		long storageId, String languageId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and languageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
-	 */
-	public DDMFieldAttribute findByS_L_Last(
-			long storageId, String languageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-				orderByComparator)
-		throws NoSuchFieldAttributeException;
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and languageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	public DDMFieldAttribute fetchByS_L_Last(
 		long storageId, String languageId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
 			orderByComparator);
@@ -609,34 +527,6 @@ public interface DDMFieldAttributePersistence
 	 * @return the first matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
 	 */
 	public DDMFieldAttribute fetchByAN_SAV_First(
-		String attributeName, String smallAttributeValue,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
-	 */
-	public DDMFieldAttribute findByAN_SAV_Last(
-			String attributeName, String smallAttributeValue,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-				orderByComparator)
-		throws NoSuchFieldAttributeException;
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	public DDMFieldAttribute fetchByAN_SAV_Last(
 		String attributeName, String smallAttributeValue,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
 			orderByComparator);
@@ -841,4 +731,4 @@ public interface DDMFieldAttributePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:734419331
+// LIFERAY-SERVICE-BUILDER-HASH:1002269597

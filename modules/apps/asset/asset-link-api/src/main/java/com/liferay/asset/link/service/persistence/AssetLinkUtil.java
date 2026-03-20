@@ -213,36 +213,6 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	public static AssetLink findByEntryId1_Last(
-			long entryId1, OrderByComparator<AssetLink> orderByComparator)
-		throws com.liferay.asset.link.exception.NoSuchLinkException {
-
-		return getPersistence().findByEntryId1_Last(
-			entryId1, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	public static AssetLink fetchByEntryId1_Last(
-		long entryId1, OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().fetchByEntryId1_Last(
-			entryId1, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset links where entryId1 = &#63; from the database.
 	 *
 	 * @param entryId1 the entry id1
@@ -360,36 +330,6 @@ public class AssetLinkUtil {
 		long entryId2, OrderByComparator<AssetLink> orderByComparator) {
 
 		return getPersistence().fetchByEntryId2_First(
-			entryId2, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId2 = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	public static AssetLink findByEntryId2_Last(
-			long entryId2, OrderByComparator<AssetLink> orderByComparator)
-		throws com.liferay.asset.link.exception.NoSuchLinkException {
-
-		return getPersistence().findByEntryId2_Last(
-			entryId2, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId2 = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	public static AssetLink fetchByEntryId2_Last(
-		long entryId2, OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().fetchByEntryId2_Last(
 			entryId2, orderByComparator);
 	}
 
@@ -519,40 +459,6 @@ public class AssetLinkUtil {
 		OrderByComparator<AssetLink> orderByComparator) {
 
 		return getPersistence().fetchByE_E_First(
-			entryId1, entryId2, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63; and entryId2 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param entryId2 the entry id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	public static AssetLink findByE_E_Last(
-			long entryId1, long entryId2,
-			OrderByComparator<AssetLink> orderByComparator)
-		throws com.liferay.asset.link.exception.NoSuchLinkException {
-
-		return getPersistence().findByE_E_Last(
-			entryId1, entryId2, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63; and entryId2 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param entryId2 the entry id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	public static AssetLink fetchByE_E_Last(
-		long entryId1, long entryId2,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().fetchByE_E_Last(
 			entryId1, entryId2, orderByComparator);
 	}
 
@@ -688,40 +594,6 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63; and type = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	public static AssetLink findByE1_T_Last(
-			long entryId1, int type,
-			OrderByComparator<AssetLink> orderByComparator)
-		throws com.liferay.asset.link.exception.NoSuchLinkException {
-
-		return getPersistence().findByE1_T_Last(
-			entryId1, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId1 = &#63; and type = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	public static AssetLink fetchByE1_T_Last(
-		long entryId1, int type,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().fetchByE1_T_Last(
-			entryId1, type, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset links where entryId1 = &#63; and type = &#63; from the database.
 	 *
 	 * @param entryId1 the entry id1
@@ -849,40 +721,6 @@ public class AssetLinkUtil {
 		OrderByComparator<AssetLink> orderByComparator) {
 
 		return getPersistence().fetchByE2_T_First(
-			entryId2, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId2 = &#63; and type = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link
-	 * @throws NoSuchLinkException if a matching asset link could not be found
-	 */
-	public static AssetLink findByE2_T_Last(
-			long entryId2, int type,
-			OrderByComparator<AssetLink> orderByComparator)
-		throws com.liferay.asset.link.exception.NoSuchLinkException {
-
-		return getPersistence().findByE2_T_Last(
-			entryId2, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset link in the ordered set where entryId2 = &#63; and type = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	public static AssetLink fetchByE2_T_Last(
-		long entryId2, int type,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().fetchByE2_T_Last(
 			entryId2, type, orderByComparator);
 	}
 
@@ -1137,4 +975,4 @@ public class AssetLinkUtil {
 	private static volatile AssetLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1397118303
+// LIFERAY-SERVICE-BUILDER-HASH:126803758

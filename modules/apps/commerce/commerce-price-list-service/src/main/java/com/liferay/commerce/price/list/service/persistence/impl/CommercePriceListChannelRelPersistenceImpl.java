@@ -340,67 +340,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price list channel rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel
-	 * @throws NoSuchPriceListChannelRelException if a matching commerce price list channel rel could not be found
-	 */
-	@Override
-	public CommercePriceListChannelRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommercePriceListChannelRel> orderByComparator)
-		throws NoSuchPriceListChannelRelException {
-
-		CommercePriceListChannelRel commercePriceListChannelRel =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (commercePriceListChannelRel != null) {
-			return commercePriceListChannelRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceListChannelRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price list channel rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
-	 */
-	@Override
-	public CommercePriceListChannelRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommercePriceListChannelRel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceListChannelRel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price list channel rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -752,72 +691,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price list channel rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel
-	 * @throws NoSuchPriceListChannelRelException if a matching commerce price list channel rel could not be found
-	 */
-	@Override
-	public CommercePriceListChannelRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommercePriceListChannelRel> orderByComparator)
-		throws NoSuchPriceListChannelRelException {
-
-		CommercePriceListChannelRel commercePriceListChannelRel =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (commercePriceListChannelRel != null) {
-			return commercePriceListChannelRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceListChannelRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price list channel rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
-	 */
-	@Override
-	public CommercePriceListChannelRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommercePriceListChannelRel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceListChannelRel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price list channel rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1147,68 +1020,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 
 		List<CommercePriceListChannelRel> list = findByCommercePriceListId(
 			commercePriceListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price list channel rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel
-	 * @throws NoSuchPriceListChannelRelException if a matching commerce price list channel rel could not be found
-	 */
-	@Override
-	public CommercePriceListChannelRel findByCommercePriceListId_Last(
-			long commercePriceListId,
-			OrderByComparator<CommercePriceListChannelRel> orderByComparator)
-		throws NoSuchPriceListChannelRelException {
-
-		CommercePriceListChannelRel commercePriceListChannelRel =
-			fetchByCommercePriceListId_Last(
-				commercePriceListId, orderByComparator);
-
-		if (commercePriceListChannelRel != null) {
-			return commercePriceListChannelRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceListChannelRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price list channel rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
-	 */
-	@Override
-	public CommercePriceListChannelRel fetchByCommercePriceListId_Last(
-		long commercePriceListId,
-		OrderByComparator<CommercePriceListChannelRel> orderByComparator) {
-
-		int count = countByCommercePriceListId(commercePriceListId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceListChannelRel> list = findByCommercePriceListId(
-			commercePriceListId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2553,4 +2364,4 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1843127288
+// LIFERAY-SERVICE-BUILDER-HASH:2016147561

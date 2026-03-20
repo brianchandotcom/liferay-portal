@@ -122,32 +122,6 @@ public interface SocialActivitySetPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last social activity set in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set
-	 * @throws NoSuchActivitySetException if a matching social activity set could not be found
-	 */
-	public SocialActivitySet findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
-
-	/**
-	 * Returns the last social activity set in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set, or <code>null</code> if a matching social activity set could not be found
-	 */
-	public SocialActivitySet fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-			orderByComparator);
-
-	/**
 	 * Removes all the social activity sets where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -245,32 +219,6 @@ public interface SocialActivitySetPersistence
 	 * @return the first matching social activity set, or <code>null</code> if a matching social activity set could not be found
 	 */
 	public SocialActivitySet fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-			orderByComparator);
-
-	/**
-	 * Returns the last social activity set in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set
-	 * @throws NoSuchActivitySetException if a matching social activity set could not be found
-	 */
-	public SocialActivitySet findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
-
-	/**
-	 * Returns the last social activity set in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set, or <code>null</code> if a matching social activity set could not be found
-	 */
-	public SocialActivitySet fetchByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
 			orderByComparator);
@@ -391,36 +339,6 @@ public interface SocialActivitySetPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last social activity set in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set
-	 * @throws NoSuchActivitySetException if a matching social activity set could not be found
-	 */
-	public SocialActivitySet findByG_U_T_Last(
-			long groupId, long userId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
-
-	/**
-	 * Returns the last social activity set in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set, or <code>null</code> if a matching social activity set could not be found
-	 */
-	public SocialActivitySet fetchByG_U_T_Last(
-		long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-			orderByComparator);
-
-	/**
 	 * Removes all the social activity sets where groupId = &#63; and userId = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -535,36 +453,6 @@ public interface SocialActivitySetPersistence
 	 * @return the first matching social activity set, or <code>null</code> if a matching social activity set could not be found
 	 */
 	public SocialActivitySet fetchByC_C_T_First(
-		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-			orderByComparator);
-
-	/**
-	 * Returns the last social activity set in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set
-	 * @throws NoSuchActivitySetException if a matching social activity set could not be found
-	 */
-	public SocialActivitySet findByC_C_T_Last(
-			long classNameId, long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
-
-	/**
-	 * Returns the last social activity set in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set, or <code>null</code> if a matching social activity set could not be found
-	 */
-	public SocialActivitySet fetchByC_C_T_Last(
 		long classNameId, long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
 			orderByComparator);
@@ -698,38 +586,6 @@ public interface SocialActivitySetPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set
-	 * @throws NoSuchActivitySetException if a matching social activity set could not be found
-	 */
-	public SocialActivitySet findByG_U_C_T_Last(
-			long groupId, long userId, long classNameId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
-
-	/**
-	 * Returns the last social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set, or <code>null</code> if a matching social activity set could not be found
-	 */
-	public SocialActivitySet fetchByG_U_C_T_Last(
-		long groupId, long userId, long classNameId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-			orderByComparator);
-
-	/**
 	 * Removes all the social activity sets where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -857,38 +713,6 @@ public interface SocialActivitySetPersistence
 	 * @return the first matching social activity set, or <code>null</code> if a matching social activity set could not be found
 	 */
 	public SocialActivitySet fetchByU_C_C_T_First(
-		long userId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-			orderByComparator);
-
-	/**
-	 * Returns the last social activity set in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set
-	 * @throws NoSuchActivitySetException if a matching social activity set could not be found
-	 */
-	public SocialActivitySet findByU_C_C_T_Last(
-			long userId, long classNameId, long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
-
-	/**
-	 * Returns the last social activity set in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity set, or <code>null</code> if a matching social activity set could not be found
-	 */
-	public SocialActivitySet fetchByU_C_C_T_Last(
 		long userId, long classNameId, long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
 			orderByComparator);
@@ -1038,4 +862,4 @@ public interface SocialActivitySetPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1617893186
+// LIFERAY-SERVICE-BUILDER-HASH:1503855276

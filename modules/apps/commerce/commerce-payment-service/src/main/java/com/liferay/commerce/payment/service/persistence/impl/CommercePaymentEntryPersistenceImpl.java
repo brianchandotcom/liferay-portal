@@ -319,67 +319,6 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce payment entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a matching commerce payment entry could not be found
-	 */
-	@Override
-	public CommercePaymentEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException {
-
-		CommercePaymentEntry commercePaymentEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commercePaymentEntry != null) {
-			return commercePaymentEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce payment entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry, or <code>null</code> if a matching commerce payment entry could not be found
-	 */
-	@Override
-	public CommercePaymentEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommercePaymentEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePaymentEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -895,78 +834,6 @@ public class CommercePaymentEntryPersistenceImpl
 
 		List<CommercePaymentEntry> list = findByC_C_C(
 			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a matching commerce payment entry could not be found
-	 */
-	@Override
-	public CommercePaymentEntry findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException {
-
-		CommercePaymentEntry commercePaymentEntry = fetchByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (commercePaymentEntry != null) {
-			return commercePaymentEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry, or <code>null</code> if a matching commerce payment entry could not be found
-	 */
-	@Override
-	public CommercePaymentEntry fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<CommercePaymentEntry> orderByComparator) {
-
-		int count = countByC_C_C(companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePaymentEntry> list = findByC_C_C(
-			companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1560,83 +1427,6 @@ public class CommercePaymentEntryPersistenceImpl
 
 		List<CommercePaymentEntry> list = findByC_C_C_T(
 			companyId, classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a matching commerce payment entry could not be found
-	 */
-	@Override
-	public CommercePaymentEntry findByC_C_C_T_Last(
-			long companyId, long classNameId, long classPK, int type,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException {
-
-		CommercePaymentEntry commercePaymentEntry = fetchByC_C_C_T_Last(
-			companyId, classNameId, classPK, type, orderByComparator);
-
-		if (commercePaymentEntry != null) {
-			return commercePaymentEntry;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry, or <code>null</code> if a matching commerce payment entry could not be found
-	 */
-	@Override
-	public CommercePaymentEntry fetchByC_C_C_T_Last(
-		long companyId, long classNameId, long classPK, int type,
-		OrderByComparator<CommercePaymentEntry> orderByComparator) {
-
-		int count = countByC_C_C_T(companyId, classNameId, classPK, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePaymentEntry> list = findByC_C_C_T(
-			companyId, classNameId, classPK, type, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2283,90 +2073,6 @@ public class CommercePaymentEntryPersistenceImpl
 		List<CommercePaymentEntry> list = findByC_C_C_P_T(
 			companyId, classNameId, classPK, paymentStatus, type, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param paymentStatus the payment status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a matching commerce payment entry could not be found
-	 */
-	@Override
-	public CommercePaymentEntry findByC_C_C_P_T_Last(
-			long companyId, long classNameId, long classPK, int paymentStatus,
-			int type, OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException {
-
-		CommercePaymentEntry commercePaymentEntry = fetchByC_C_C_P_T_Last(
-			companyId, classNameId, classPK, paymentStatus, type,
-			orderByComparator);
-
-		if (commercePaymentEntry != null) {
-			return commercePaymentEntry;
-		}
-
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", paymentStatus=");
-		sb.append(paymentStatus);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param paymentStatus the payment status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry, or <code>null</code> if a matching commerce payment entry could not be found
-	 */
-	@Override
-	public CommercePaymentEntry fetchByC_C_C_P_T_Last(
-		long companyId, long classNameId, long classPK, int paymentStatus,
-		int type, OrderByComparator<CommercePaymentEntry> orderByComparator) {
-
-		int count = countByC_C_C_P_T(
-			companyId, classNameId, classPK, paymentStatus, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePaymentEntry> list = findByC_C_C_P_T(
-			companyId, classNameId, classPK, paymentStatus, type, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3832,4 +3538,4 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:561799941
+// LIFERAY-SERVICE-BUILDER-HASH:521801968

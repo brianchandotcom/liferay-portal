@@ -332,65 +332,6 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByUuid_Last(
-			String uuid, OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByUuid_Last(
-		String uuid, OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -938,72 +879,6 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition links where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1334,67 +1209,6 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByCPDefinitionId_Last(
-			CPDefinitionId, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByCPDefinitionId(CPDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByCPDefinitionId(
-			CPDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition links where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -1688,67 +1502,6 @@ public class CPDefinitionLinkPersistenceImpl
 
 		List<CPDefinitionLink> list = findByCProductId(
 			CProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByCProductId_Last(
-			long CProductId,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByCProductId_Last(
-			CProductId, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByCProductId_Last(
-		long CProductId,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByCProductId(CProductId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByCProductId(
-			CProductId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2081,72 +1834,6 @@ public class CPDefinitionLinkPersistenceImpl
 
 		List<CPDefinitionLink> list = findByCPD_T(
 			CPDefinitionId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and type = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByCPD_T_Last(
-			long CPDefinitionId, String type,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByCPD_T_Last(
-			CPDefinitionId, type, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and type = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByCPD_T_Last(
-		long CPDefinitionId, String type,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByCPD_T(CPDefinitionId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByCPD_T(
-			CPDefinitionId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2499,72 +2186,6 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByCPD_S_Last(
-			long CPDefinitionId, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByCPD_S_Last(
-			CPDefinitionId, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByCPD_S_Last(
-		long CPDefinitionId, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByCPD_S(CPDefinitionId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByCPD_S(
-			CPDefinitionId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition links where CPDefinitionId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -2895,72 +2516,6 @@ public class CPDefinitionLinkPersistenceImpl
 
 		List<CPDefinitionLink> list = findByCP_T(
 			CProductId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and type = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByCP_T_Last(
-			long CProductId, String type,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByCP_T_Last(
-			CProductId, type, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and type = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByCP_T_Last(
-		long CProductId, String type,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByCP_T(CProductId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByCP_T(
-			CProductId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3312,72 +2867,6 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByCP_S_Last(
-			long CProductId, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByCP_S_Last(
-			CProductId, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByCP_S_Last(
-		long CProductId, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByCP_S(CProductId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByCP_S(
-			CProductId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition links where CProductId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CProductId the c product ID
@@ -3697,72 +3186,6 @@ public class CPDefinitionLinkPersistenceImpl
 
 		List<CPDefinitionLink> list = findByLtD_S(
 			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4105,72 +3528,6 @@ public class CPDefinitionLinkPersistenceImpl
 
 		List<CPDefinitionLink> list = findByLtE_S(
 			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByLtE_S(expirationDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByLtE_S(
-			expirationDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4780,77 +4137,6 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByCPD_T_S_Last(
-			long CPDefinitionId, String type, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByCPD_T_S_Last(
-			CPDefinitionId, type, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByCPD_T_S_Last(
-		long CPDefinitionId, String type, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByCPD_T_S(CPDefinitionId, type, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByCPD_T_S(
-			CPDefinitionId, type, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition links where CPDefinitionId = &#63; and type = &#63; and status = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -5223,77 +4509,6 @@ public class CPDefinitionLinkPersistenceImpl
 
 		List<CPDefinitionLink> list = findByCP_T_S(
 			CProductId, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByCP_T_S_Last(
-			long CProductId, String type, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByCP_T_S_Last(
-			CProductId, type, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	@Override
-	public CPDefinitionLink fetchByCP_T_S_Last(
-		long CProductId, String type, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		int count = countByCP_T_S(CProductId, type, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLink> list = findByCP_T_S(
-			CProductId, type, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6626,4 +5841,4 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2089393240
+// LIFERAY-SERVICE-BUILDER-HASH:507305056

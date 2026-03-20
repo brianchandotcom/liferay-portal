@@ -232,40 +232,6 @@ public class BatchEngineImportTaskErrorUtil {
 	}
 
 	/**
-	 * Returns the last batch engine import task error in the ordered set where batchEngineImportTaskId = &#63;.
-	 *
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine import task error
-	 * @throws NoSuchImportTaskErrorException if a matching batch engine import task error could not be found
-	 */
-	public static BatchEngineImportTaskError findByBatchEngineImportTaskId_Last(
-			long batchEngineImportTaskId,
-			OrderByComparator<BatchEngineImportTaskError> orderByComparator)
-		throws com.liferay.batch.engine.exception.
-			NoSuchImportTaskErrorException {
-
-		return getPersistence().findByBatchEngineImportTaskId_Last(
-			batchEngineImportTaskId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last batch engine import task error in the ordered set where batchEngineImportTaskId = &#63;.
-	 *
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine import task error, or <code>null</code> if a matching batch engine import task error could not be found
-	 */
-	public static BatchEngineImportTaskError
-		fetchByBatchEngineImportTaskId_Last(
-			long batchEngineImportTaskId,
-			OrderByComparator<BatchEngineImportTaskError> orderByComparator) {
-
-		return getPersistence().fetchByBatchEngineImportTaskId_Last(
-			batchEngineImportTaskId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the batch engine import task errors where batchEngineImportTaskId = &#63; from the database.
 	 *
 	 * @param batchEngineImportTaskId the batch engine import task ID
@@ -466,4 +432,4 @@ public class BatchEngineImportTaskErrorUtil {
 	private static volatile BatchEngineImportTaskErrorPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1469479491
+// LIFERAY-SERVICE-BUILDER-HASH:1939453808

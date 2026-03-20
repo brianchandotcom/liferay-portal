@@ -328,65 +328,6 @@ public class CommerceDiscountPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount findByUuid_Last(
-			String uuid, OrderByComparator<CommerceDiscount> orderByComparator)
-		throws NoSuchDiscountException {
-
-		CommerceDiscount commerceDiscount = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceDiscount != null) {
-			return commerceDiscount;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscount> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -941,72 +882,6 @@ public class CommerceDiscountPersistenceImpl
 
 		List<CommerceDiscount> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws NoSuchDiscountException {
-
-		CommerceDiscount commerceDiscount = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceDiscount != null) {
-			return commerceDiscount;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscount> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1575,66 +1450,6 @@ public class CommerceDiscountPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws NoSuchDiscountException {
-
-		CommerceDiscount commerceDiscount = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commerceDiscount != null) {
-			return commerceDiscount;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscount> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2143,72 +1958,6 @@ public class CommerceDiscountPersistenceImpl
 
 		List<CommerceDiscount> list = findByC_C(
 			companyId, couponCode, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and couponCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param couponCode the coupon code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount findByC_C_Last(
-			long companyId, String couponCode,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws NoSuchDiscountException {
-
-		CommerceDiscount commerceDiscount = fetchByC_C_Last(
-			companyId, couponCode, orderByComparator);
-
-		if (commerceDiscount != null) {
-			return commerceDiscount;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", couponCode=");
-		sb.append(couponCode);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and couponCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param couponCode the coupon code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount fetchByC_C_Last(
-		long companyId, String couponCode,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		int count = countByC_C(companyId, couponCode);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscount> list = findByC_C(
-			companyId, couponCode, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2791,72 +2540,6 @@ public class CommerceDiscountPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce discount in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws NoSuchDiscountException {
-
-		CommerceDiscount commerceDiscount = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (commerceDiscount != null) {
-			return commerceDiscount;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscount> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -3415,72 +3098,6 @@ public class CommerceDiscountPersistenceImpl
 
 		List<CommerceDiscount> list = findByLtE_S(
 			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws NoSuchDiscountException {
-
-		CommerceDiscount commerceDiscount = fetchByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-
-		if (commerceDiscount != null) {
-			return commerceDiscount;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		int count = countByLtE_S(expirationDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscount> list = findByLtE_S(
-			expirationDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4315,83 +3932,6 @@ public class CommerceDiscountPersistenceImpl
 
 		List<CommerceDiscount> list = findByC_L_A_S(
 			companyId, level, active, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and level = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param level the level
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount findByC_L_A_S_Last(
-			long companyId, String level, boolean active, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws NoSuchDiscountException {
-
-		CommerceDiscount commerceDiscount = fetchByC_L_A_S_Last(
-			companyId, level, active, status, orderByComparator);
-
-		if (commerceDiscount != null) {
-			return commerceDiscount;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", level=");
-		sb.append(level);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and level = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param level the level
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	@Override
-	public CommerceDiscount fetchByC_L_A_S_Last(
-		long companyId, String level, boolean active, int status,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		int count = countByC_L_A_S(companyId, level, active, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscount> list = findByC_L_A_S(
-			companyId, level, active, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5923,4 +5463,4 @@ public class CommerceDiscountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-739372522
+// LIFERAY-SERVICE-BUILDER-HASH:1934938672

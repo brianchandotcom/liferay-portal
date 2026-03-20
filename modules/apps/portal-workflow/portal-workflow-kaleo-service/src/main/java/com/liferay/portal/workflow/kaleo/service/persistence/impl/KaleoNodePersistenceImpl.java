@@ -317,65 +317,6 @@ public class KaleoNodePersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
-	 */
-	@Override
-	public KaleoNode findByCompanyId_Last(
-			long companyId, OrderByComparator<KaleoNode> orderByComparator)
-		throws NoSuchNodeException {
-
-		KaleoNode kaleoNode = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoNode != null) {
-			return kaleoNode;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node, or <code>null</code> if a matching kaleo node could not be found
-	 */
-	@Override
-	public KaleoNode fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KaleoNode> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoNode> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo nodes where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -678,67 +619,6 @@ public class KaleoNodePersistenceImpl
 
 		List<KaleoNode> list = findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
-	 */
-	@Override
-	public KaleoNode findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
-		throws NoSuchNodeException {
-
-		KaleoNode kaleoNode = fetchByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoNode != null) {
-			return kaleoNode;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node, or <code>null</code> if a matching kaleo node could not be found
-	 */
-	@Override
-	public KaleoNode fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNode> orderByComparator) {
-
-		int count = countByKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoNode> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1069,73 +949,6 @@ public class KaleoNodePersistenceImpl
 
 		List<KaleoNode> list = findByC_KDVI(
 			companyId, kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where companyId = &#63; and kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
-	 */
-	@Override
-	public KaleoNode findByC_KDVI_Last(
-			long companyId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
-		throws NoSuchNodeException {
-
-		KaleoNode kaleoNode = fetchByC_KDVI_Last(
-			companyId, kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoNode != null) {
-			return kaleoNode;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where companyId = &#63; and kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node, or <code>null</code> if a matching kaleo node could not be found
-	 */
-	@Override
-	public KaleoNode fetchByC_KDVI_Last(
-		long companyId, long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNode> orderByComparator) {
-
-		int count = countByC_KDVI(companyId, kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoNode> list = findByC_KDVI(
-			companyId, kaleoDefinitionVersionId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2174,4 +1987,4 @@ public class KaleoNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1414159880
+// LIFERAY-SERVICE-BUILDER-HASH:-613552012

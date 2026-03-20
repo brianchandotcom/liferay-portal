@@ -234,43 +234,6 @@ public class SamlPeerBindingUtil {
 	}
 
 	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding
-	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
-	 */
-	public static SamlPeerBinding findByC_D_SNIV_Last(
-			long companyId, boolean deleted, String samlNameIdValue,
-			OrderByComparator<SamlPeerBinding> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchPeerBindingException {
-
-		return getPersistence().findByC_D_SNIV_Last(
-			companyId, deleted, samlNameIdValue, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
-	 */
-	public static SamlPeerBinding fetchByC_D_SNIV_Last(
-		long companyId, boolean deleted, String samlNameIdValue,
-		OrderByComparator<SamlPeerBinding> orderByComparator) {
-
-		return getPersistence().fetchByC_D_SNIV_Last(
-			companyId, deleted, samlNameIdValue, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -428,46 +391,6 @@ public class SamlPeerBindingUtil {
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
 		return getPersistence().fetchByC_U_SPEI_D_First(
-			companyId, userId, samlPeerEntityId, deleted, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding
-	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
-	 */
-	public static SamlPeerBinding findByC_U_SPEI_D_Last(
-			long companyId, long userId, String samlPeerEntityId,
-			boolean deleted,
-			OrderByComparator<SamlPeerBinding> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchPeerBindingException {
-
-		return getPersistence().findByC_U_SPEI_D_Last(
-			companyId, userId, samlPeerEntityId, deleted, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
-	 */
-	public static SamlPeerBinding fetchByC_U_SPEI_D_Last(
-		long companyId, long userId, String samlPeerEntityId, boolean deleted,
-		OrderByComparator<SamlPeerBinding> orderByComparator) {
-
-		return getPersistence().fetchByC_U_SPEI_D_Last(
 			companyId, userId, samlPeerEntityId, deleted, orderByComparator);
 	}
 
@@ -664,4 +587,4 @@ public class SamlPeerBindingUtil {
 	private static volatile SamlPeerBindingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1110298132
+// LIFERAY-SERVICE-BUILDER-HASH:-1043107674

@@ -313,68 +313,6 @@ public class CommerceTermEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce term entry rel in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry rel
-	 * @throws NoSuchTermEntryRelException if a matching commerce term entry rel could not be found
-	 */
-	@Override
-	public CommerceTermEntryRel findByCommerceTermEntryId_Last(
-			long commerceTermEntryId,
-			OrderByComparator<CommerceTermEntryRel> orderByComparator)
-		throws NoSuchTermEntryRelException {
-
-		CommerceTermEntryRel commerceTermEntryRel =
-			fetchByCommerceTermEntryId_Last(
-				commerceTermEntryId, orderByComparator);
-
-		if (commerceTermEntryRel != null) {
-			return commerceTermEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceTermEntryId=");
-		sb.append(commerceTermEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce term entry rel in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry rel, or <code>null</code> if a matching commerce term entry rel could not be found
-	 */
-	@Override
-	public CommerceTermEntryRel fetchByCommerceTermEntryId_Last(
-		long commerceTermEntryId,
-		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
-
-		int count = countByCommerceTermEntryId(commerceTermEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTermEntryRel> list = findByCommerceTermEntryId(
-			commerceTermEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce term entry rels where commerceTermEntryId = &#63; from the database.
 	 *
 	 * @param commerceTermEntryId the commerce term entry ID
@@ -679,73 +617,6 @@ public class CommerceTermEntryRelPersistenceImpl
 
 		List<CommerceTermEntryRel> list = findByC_C(
 			classNameId, commerceTermEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce term entry rel in the ordered set where classNameId = &#63; and commerceTermEntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry rel
-	 * @throws NoSuchTermEntryRelException if a matching commerce term entry rel could not be found
-	 */
-	@Override
-	public CommerceTermEntryRel findByC_C_Last(
-			long classNameId, long commerceTermEntryId,
-			OrderByComparator<CommerceTermEntryRel> orderByComparator)
-		throws NoSuchTermEntryRelException {
-
-		CommerceTermEntryRel commerceTermEntryRel = fetchByC_C_Last(
-			classNameId, commerceTermEntryId, orderByComparator);
-
-		if (commerceTermEntryRel != null) {
-			return commerceTermEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", commerceTermEntryId=");
-		sb.append(commerceTermEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce term entry rel in the ordered set where classNameId = &#63; and commerceTermEntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry rel, or <code>null</code> if a matching commerce term entry rel could not be found
-	 */
-	@Override
-	public CommerceTermEntryRel fetchByC_C_Last(
-		long classNameId, long commerceTermEntryId,
-		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
-
-		int count = countByC_C(classNameId, commerceTermEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTermEntryRel> list = findByC_C(
-			classNameId, commerceTermEntryId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1746,4 +1617,4 @@ public class CommerceTermEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:206543399
+// LIFERAY-SERVICE-BUILDER-HASH:1080293772

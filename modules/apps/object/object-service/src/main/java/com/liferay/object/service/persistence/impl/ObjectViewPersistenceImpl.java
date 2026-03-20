@@ -314,64 +314,6 @@ public class ObjectViewPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	@Override
-	public ObjectView findByUuid_Last(
-			String uuid, OrderByComparator<ObjectView> orderByComparator)
-		throws NoSuchObjectViewException {
-
-		ObjectView objectView = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (objectView != null) {
-			return objectView;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectViewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	@Override
-	public ObjectView fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectView> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectView> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object views where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -705,72 +647,6 @@ public class ObjectViewPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	@Override
-	public ObjectView findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectView> orderByComparator)
-		throws NoSuchObjectViewException {
-
-		ObjectView objectView = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectView != null) {
-			return objectView;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectViewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	@Override
-	public ObjectView fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectView> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object views where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1090,67 +966,6 @@ public class ObjectViewPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	@Override
-	public ObjectView findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectView> orderByComparator)
-		throws NoSuchObjectViewException {
-
-		ObjectView objectView = fetchByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-
-		if (objectView != null) {
-			return objectView;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectViewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	@Override
-	public ObjectView fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		int count = countByObjectDefinitionId(objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectView> list = findByObjectDefinitionId(
-			objectDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object views where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1460,73 +1275,6 @@ public class ObjectViewPersistenceImpl
 
 		List<ObjectView> list = findByODI_DOV(
 			objectDefinitionId, defaultObjectView, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	@Override
-	public ObjectView findByODI_DOV_Last(
-			long objectDefinitionId, boolean defaultObjectView,
-			OrderByComparator<ObjectView> orderByComparator)
-		throws NoSuchObjectViewException {
-
-		ObjectView objectView = fetchByODI_DOV_Last(
-			objectDefinitionId, defaultObjectView, orderByComparator);
-
-		if (objectView != null) {
-			return objectView;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", defaultObjectView=");
-		sb.append(defaultObjectView);
-
-		sb.append("}");
-
-		throw new NoSuchObjectViewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	@Override
-	public ObjectView fetchByODI_DOV_Last(
-		long objectDefinitionId, boolean defaultObjectView,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		int count = countByODI_DOV(objectDefinitionId, defaultObjectView);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectView> list = findByODI_DOV(
-			objectDefinitionId, defaultObjectView, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2324,4 +2072,4 @@ public class ObjectViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1576325227
+// LIFERAY-SERVICE-BUILDER-HASH:761055391

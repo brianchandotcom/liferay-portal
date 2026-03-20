@@ -324,64 +324,6 @@ public class ObjectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByUuid_Last(
-			String uuid, OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -913,72 +855,6 @@ public class ObjectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1480,67 +1356,6 @@ public class ObjectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByObjectDefinitionId(objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByObjectDefinitionId(
-			objectDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entries where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1843,72 +1658,6 @@ public class ObjectEntryPersistenceImpl
 
 		List<ObjectEntry> list = findByG_ODI(
 			groupId, objectDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where groupId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByG_ODI_Last(
-			long groupId, long objectDefinitionId,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByG_ODI_Last(
-			groupId, objectDefinitionId, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where groupId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByG_ODI_Last(
-		long groupId, long objectDefinitionId,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByG_ODI(groupId, objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByG_ODI(
-			groupId, objectDefinitionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2237,72 +1986,6 @@ public class ObjectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry in the ordered set where groupId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByG_OEFI_Last(
-			long groupId, long objectEntryFolderId,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByG_OEFI_Last(
-			groupId, objectEntryFolderId, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", objectEntryFolderId=");
-		sb.append(objectEntryFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where groupId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByG_OEFI_Last(
-		long groupId, long objectEntryFolderId,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByG_OEFI(groupId, objectEntryFolderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByG_OEFI(
-			groupId, objectEntryFolderId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entries where groupId = &#63; and objectEntryFolderId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2620,72 +2303,6 @@ public class ObjectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry in the ordered set where userId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByU_ODI_Last(
-			long userId, long objectDefinitionId,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByU_ODI_Last(
-			userId, objectDefinitionId, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where userId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByU_ODI_Last(
-		long userId, long objectDefinitionId,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByU_ODI(userId, objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByU_ODI(
-			userId, objectDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entries where userId = &#63; and objectDefinitionId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -2994,72 +2611,6 @@ public class ObjectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry in the ordered set where objectDefinitionId = &#63; and status &ne; &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByODI_NotS_Last(
-			long objectDefinitionId, int status,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByODI_NotS_Last(
-			objectDefinitionId, status, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where objectDefinitionId = &#63; and status &ne; &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByODI_NotS_Last(
-		long objectDefinitionId, int status,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByODI_NotS(objectDefinitionId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByODI_NotS(
-			objectDefinitionId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entries where objectDefinitionId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -3359,72 +2910,6 @@ public class ObjectEntryPersistenceImpl
 
 		List<ObjectEntry> list = findByROEI_NotS(
 			rootObjectEntryId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where rootObjectEntryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param rootObjectEntryId the root object entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByROEI_NotS_Last(
-			long rootObjectEntryId, int status,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByROEI_NotS_Last(
-			rootObjectEntryId, status, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("rootObjectEntryId=");
-		sb.append(rootObjectEntryId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where rootObjectEntryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param rootObjectEntryId the root object entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByROEI_NotS_Last(
-		long rootObjectEntryId, int status,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByROEI_NotS(rootObjectEntryId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByROEI_NotS(
-			rootObjectEntryId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3764,78 +3249,6 @@ public class ObjectEntryPersistenceImpl
 
 		List<ObjectEntry> list = findByG_C_OEFI(
 			groupId, companyId, objectEntryFolderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where groupId = &#63; and companyId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByG_C_OEFI_Last(
-			long groupId, long companyId, long objectEntryFolderId,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByG_C_OEFI_Last(
-			groupId, companyId, objectEntryFolderId, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", objectEntryFolderId=");
-		sb.append(objectEntryFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where groupId = &#63; and companyId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByG_C_OEFI_Last(
-		long groupId, long companyId, long objectEntryFolderId,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByG_C_OEFI(groupId, companyId, objectEntryFolderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByG_C_OEFI(
-			groupId, companyId, objectEntryFolderId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4196,78 +3609,6 @@ public class ObjectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry in the ordered set where groupId = &#63; and objectDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByG_ODI_S_Last(
-			long groupId, long objectDefinitionId, int status,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByG_ODI_S_Last(
-			groupId, objectDefinitionId, status, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where groupId = &#63; and objectDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByG_ODI_S_Last(
-		long groupId, long objectDefinitionId, int status,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByG_ODI_S(groupId, objectDefinitionId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByG_ODI_S(
-			groupId, objectDefinitionId, status, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entries where groupId = &#63; and objectDefinitionId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -4612,78 +3953,6 @@ public class ObjectEntryPersistenceImpl
 
 		List<ObjectEntry> list = findByU_GtCD_ODI(
 			userId, createDate, objectDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry findByU_GtCD_ODI_Last(
-			long userId, Date createDate, long objectDefinitionId,
-			OrderByComparator<ObjectEntry> orderByComparator)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByU_GtCD_ODI_Last(
-			userId, createDate, objectDefinitionId, orderByComparator);
-
-		if (objectEntry != null) {
-			return objectEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", createDate>");
-		sb.append(createDate);
-
-		sb.append(", objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry in the ordered set where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByU_GtCD_ODI_Last(
-		long userId, Date createDate, long objectDefinitionId,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		int count = countByU_GtCD_ODI(userId, createDate, objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntry> list = findByU_GtCD_ODI(
-			userId, createDate, objectDefinitionId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6003,4 +5272,4 @@ public class ObjectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1627421177
+// LIFERAY-SERVICE-BUILDER-HASH:1033600275

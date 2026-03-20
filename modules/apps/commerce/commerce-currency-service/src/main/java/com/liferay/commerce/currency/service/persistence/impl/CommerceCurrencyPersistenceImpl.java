@@ -323,65 +323,6 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce currency in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency
-	 * @throws NoSuchCurrencyException if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency findByUuid_Last(
-			String uuid, OrderByComparator<CommerceCurrency> orderByComparator)
-		throws NoSuchCurrencyException {
-
-		CommerceCurrency commerceCurrency = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceCurrency != null) {
-			return commerceCurrency;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce currency in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCurrency> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce currencies where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -715,72 +656,6 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce currency in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency
-	 * @throws NoSuchCurrencyException if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceCurrency> orderByComparator)
-		throws NoSuchCurrencyException {
-
-		CommerceCurrency commerceCurrency = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceCurrency != null) {
-			return commerceCurrency;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce currency in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCurrency> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce currencies where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1086,66 +961,6 @@ public class CommerceCurrencyPersistenceImpl
 
 		List<CommerceCurrency> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce currency in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency
-	 * @throws NoSuchCurrencyException if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceCurrency> orderByComparator)
-		throws NoSuchCurrencyException {
-
-		CommerceCurrency commerceCurrency = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commerceCurrency != null) {
-			return commerceCurrency;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce currency in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCurrency> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1658,72 +1473,6 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce currency in the ordered set where companyId = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency
-	 * @throws NoSuchCurrencyException if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency findByC_P_Last(
-			long companyId, boolean primary,
-			OrderByComparator<CommerceCurrency> orderByComparator)
-		throws NoSuchCurrencyException {
-
-		CommerceCurrency commerceCurrency = fetchByC_P_Last(
-			companyId, primary, orderByComparator);
-
-		if (commerceCurrency != null) {
-			return commerceCurrency;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce currency in the ordered set where companyId = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency fetchByC_P_Last(
-		long companyId, boolean primary,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		int count = countByC_P(companyId, primary);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCurrency> list = findByC_P(
-			companyId, primary, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce currencies where companyId = &#63; and primary = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2030,72 +1779,6 @@ public class CommerceCurrencyPersistenceImpl
 
 		List<CommerceCurrency> list = findByC_A(
 			companyId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce currency in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency
-	 * @throws NoSuchCurrencyException if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<CommerceCurrency> orderByComparator)
-		throws NoSuchCurrencyException {
-
-		CommerceCurrency commerceCurrency = fetchByC_A_Last(
-			companyId, active, orderByComparator);
-
-		if (commerceCurrency != null) {
-			return commerceCurrency;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce currency in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		int count = countByC_A(companyId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCurrency> list = findByC_A(
-			companyId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2428,77 +2111,6 @@ public class CommerceCurrencyPersistenceImpl
 
 		List<CommerceCurrency> list = findByC_P_A(
 			companyId, primary, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce currency in the ordered set where companyId = &#63; and primary = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency
-	 * @throws NoSuchCurrencyException if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency findByC_P_A_Last(
-			long companyId, boolean primary, boolean active,
-			OrderByComparator<CommerceCurrency> orderByComparator)
-		throws NoSuchCurrencyException {
-
-		CommerceCurrency commerceCurrency = fetchByC_P_A_Last(
-			companyId, primary, active, orderByComparator);
-
-		if (commerceCurrency != null) {
-			return commerceCurrency;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce currency in the ordered set where companyId = &#63; and primary = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency fetchByC_P_A_Last(
-		long companyId, boolean primary, boolean active,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		int count = countByC_P_A(companyId, primary, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCurrency> list = findByC_P_A(
-			companyId, primary, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3676,4 +3288,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-938814066
+// LIFERAY-SERVICE-BUILDER-HASH:611047623

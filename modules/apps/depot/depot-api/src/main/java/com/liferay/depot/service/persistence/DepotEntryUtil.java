@@ -208,34 +208,6 @@ public class DepotEntryUtil {
 	}
 
 	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	public static DepotEntry findByUuid_Last(
-			String uuid, OrderByComparator<DepotEntry> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	public static DepotEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<DepotEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the depot entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -424,40 +396,6 @@ public class DepotEntryUtil {
 		OrderByComparator<DepotEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	public static DepotEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DepotEntry> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	public static DepotEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DepotEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -651,40 +589,6 @@ public class DepotEntryUtil {
 	}
 
 	/**
-	 * Returns the last depot entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	public static DepotEntry findByC_T_Last(
-			long companyId, int type,
-			OrderByComparator<DepotEntry> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_T_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	public static DepotEntry fetchByC_T_Last(
-		long companyId, int type,
-		OrderByComparator<DepotEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_T_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
 	 * Removes all the depot entries where companyId = &#63; and type = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -863,4 +767,4 @@ public class DepotEntryUtil {
 	private static volatile DepotEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1034369956
+// LIFERAY-SERVICE-BUILDER-HASH:1628066703

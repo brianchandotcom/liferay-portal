@@ -121,32 +121,6 @@ public interface CPTaxCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
-	 */
-	public CPTaxCategory findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-				orderByComparator)
-		throws NoSuchCPTaxCategoryException;
-
-	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
-	 */
-	public CPTaxCategory fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-			orderByComparator);
-
-	/**
 	 * Returns all the cp tax categories that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface CPTaxCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
-	 */
-	public CPTaxCategory findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-				orderByComparator)
-		throws NoSuchCPTaxCategoryException;
-
-	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
-	 */
-	public CPTaxCategory fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-			orderByComparator);
-
-	/**
 	 * Returns all the cp tax categories that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -486,32 +432,6 @@ public interface CPTaxCategoryPersistence
 	 * @return the first matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
 	 */
 	public CPTaxCategory fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp tax category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
-	 */
-	public CPTaxCategory findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-				orderByComparator)
-		throws NoSuchCPTaxCategoryException;
-
-	/**
-	 * Returns the last cp tax category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
-	 */
-	public CPTaxCategory fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
 			orderByComparator);
@@ -754,4 +674,4 @@ public interface CPTaxCategoryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-985559932
+// LIFERAY-SERVICE-BUILDER-HASH:1421839242

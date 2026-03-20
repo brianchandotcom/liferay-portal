@@ -121,32 +121,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -251,34 +225,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByUuid_Head_First(
-		String uuid, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByUuid_Head_Last(
-			String uuid, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByUuid_Head_Last(
 		String uuid, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -390,34 +336,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByUUID_G_First(
-		String uuid, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByUUID_G_Last(
-			String uuid, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByUUID_G_Last(
 		String uuid, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -592,34 +510,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -737,36 +627,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByUuid_C_Head_Last(
-			String uuid, long companyId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByUuid_C_Head_Last(
-		String uuid, long companyId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where uuid = &#63; and companyId = &#63; and head = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -868,32 +728,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -1008,34 +842,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByGroupId_Head_Last(
-			long groupId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByGroupId_Head_Last(
-		long groupId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1136,32 +942,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByFragmentCollectionId_First(
-		long fragmentCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where fragmentCollectionId = &#63;.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByFragmentCollectionId_Last(
-			long fragmentCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where fragmentCollectionId = &#63;.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByFragmentCollectionId_Last(
 		long fragmentCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -1276,34 +1056,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where fragmentCollectionId = &#63; and head = &#63;.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByFragmentCollectionId_Head_Last(
-			long fragmentCollectionId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where fragmentCollectionId = &#63; and head = &#63;.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByFragmentCollectionId_Head_Last(
-		long fragmentCollectionId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where fragmentCollectionId = &#63; and head = &#63; from the database.
 	 *
 	 * @param fragmentCollectionId the fragment collection ID
@@ -1405,32 +1157,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByType_First(
-		int type,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByType_Last(
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByType_Last(
 		int type,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -1545,34 +1271,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where type = &#63; and head = &#63;.
-	 *
-	 * @param type the type
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByType_Head_Last(
-			int type, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where type = &#63; and head = &#63;.
-	 *
-	 * @param type the type
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByType_Head_Last(
-		int type, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where type = &#63; and head = &#63; from the database.
 	 *
 	 * @param type the type
@@ -1679,34 +1377,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByG_FCI_First(
-		long groupId, long fragmentCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_Last(
-			long groupId, long fragmentCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_Last(
 		long groupId, long fragmentCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -1832,36 +1502,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_Head_Last(
-			long groupId, long fragmentCollectionId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_Head_Last(
-		long groupId, long fragmentCollectionId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1972,34 +1612,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByG_FEK_First(
-		long groupId, String fragmentEntryKey,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentEntryKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryKey the fragment entry key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FEK_Last(
-			long groupId, String fragmentEntryKey,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentEntryKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryKey the fragment entry key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FEK_Last(
 		long groupId, String fragmentEntryKey,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -2185,36 +1797,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_LikeN_Last(
-			long groupId, long fragmentCollectionId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_LikeN_Last(
-		long groupId, long fragmentCollectionId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2345,38 +1927,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_LikeN_Head_Last(
-			long groupId, long fragmentCollectionId, String name, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_LikeN_Head_Last(
-		long groupId, long fragmentCollectionId, String name, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2495,36 +2045,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByG_FCI_T_First(
-		long groupId, long fragmentCollectionId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_T_Last(
-			long groupId, long fragmentCollectionId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_T_Last(
 		long groupId, long fragmentCollectionId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -2660,38 +2180,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_T_Head_Last(
-			long groupId, long fragmentCollectionId, int type, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_T_Head_Last(
-		long groupId, long fragmentCollectionId, int type, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2811,36 +2299,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByG_FCI_S_First(
-		long groupId, long fragmentCollectionId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_S_Last(
-			long groupId, long fragmentCollectionId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_S_Last(
 		long groupId, long fragmentCollectionId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -2976,38 +2434,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_S_Head_Last(
-			long groupId, long fragmentCollectionId, int status, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_S_Head_Last(
-		long groupId, long fragmentCollectionId, int status, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3135,38 +2561,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByG_FCI_LikeN_S_First(
-		long groupId, long fragmentCollectionId, String name, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_LikeN_S_Last(
-			long groupId, long fragmentCollectionId, String name, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_LikeN_S_Last(
 		long groupId, long fragmentCollectionId, String name, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -3313,42 +2707,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_LikeN_S_Head_Last(
-			long groupId, long fragmentCollectionId, String name, int status,
-			boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_LikeN_S_Head_Last(
-		long groupId, long fragmentCollectionId, String name, int status,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3480,38 +2838,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByG_FCI_T_S_First(
-		long groupId, long fragmentCollectionId, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_T_S_Last(
-			long groupId, long fragmentCollectionId, int type, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_T_S_Last(
 		long groupId, long fragmentCollectionId, int type, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -3658,42 +2984,6 @@ public interface FragmentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param status the status
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByG_FCI_T_S_Head_Last(
-			long groupId, long fragmentCollectionId, int type, int status,
-			boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param status the status
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByG_FCI_T_S_Head_Last(
-		long groupId, long fragmentCollectionId, int type, int status,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63; and head = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3810,34 +3100,6 @@ public interface FragmentEntryPersistence
 	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	public FragmentEntry fetchByERC_G_First(
-		String externalReferenceCode, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment entry in the ordered set where externalReferenceCode = &#63; and groupId = &#63;.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry
-	 * @throws NoSuchEntryException if a matching fragment entry could not be found
-	 */
-	public FragmentEntry findByERC_G_Last(
-			String externalReferenceCode, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last fragment entry in the ordered set where externalReferenceCode = &#63; and groupId = &#63;.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	public FragmentEntry fetchByERC_G_Last(
 		String externalReferenceCode, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator);
@@ -4083,4 +3345,4 @@ public interface FragmentEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-791732186
+// LIFERAY-SERVICE-BUILDER-HASH:1344214016

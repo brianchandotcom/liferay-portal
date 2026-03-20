@@ -309,67 +309,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saml sp idp connection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp idp connection
-	 * @throws NoSuchSpIdpConnectionException if a matching saml sp idp connection could not be found
-	 */
-	@Override
-	public SamlSpIdpConnection findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<SamlSpIdpConnection> orderByComparator)
-		throws NoSuchSpIdpConnectionException {
-
-		SamlSpIdpConnection samlSpIdpConnection = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (samlSpIdpConnection != null) {
-			return samlSpIdpConnection;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSpIdpConnectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml sp idp connection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
-	 */
-	@Override
-	public SamlSpIdpConnection fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<SamlSpIdpConnection> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlSpIdpConnection> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saml sp idp connections where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1332,4 +1271,4 @@ public class SamlSpIdpConnectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:942720919
+// LIFERAY-SERVICE-BUILDER-HASH:-665151346

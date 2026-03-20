@@ -343,67 +343,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last site navigation menu item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem findByUuid_Last(
-			String uuid,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchMenuItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SiteNavigationMenuItem> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the site navigation menu items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -959,72 +898,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last site navigation menu item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchMenuItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SiteNavigationMenuItem> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the site navigation menu items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1353,67 +1226,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last site navigation menu item in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchMenuItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SiteNavigationMenuItem> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the site navigation menu items where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1716,68 +1528,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 		List<SiteNavigationMenuItem> list = findBySiteNavigationMenuId(
 			siteNavigationMenuId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where siteNavigationMenuId = &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem findBySiteNavigationMenuId_Last(
-			long siteNavigationMenuId,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			fetchBySiteNavigationMenuId_Last(
-				siteNavigationMenuId, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("siteNavigationMenuId=");
-		sb.append(siteNavigationMenuId);
-
-		sb.append("}");
-
-		throw new NoSuchMenuItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where siteNavigationMenuId = &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchBySiteNavigationMenuId_Last(
-		long siteNavigationMenuId,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		int count = countBySiteNavigationMenuId(siteNavigationMenuId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SiteNavigationMenuItem> list = findBySiteNavigationMenuId(
-			siteNavigationMenuId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2107,71 +1857,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last site navigation menu item in the ordered set where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem findByParentSiteNavigationMenuItemId_Last(
-			long parentSiteNavigationMenuItemId,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			fetchByParentSiteNavigationMenuItemId_Last(
-				parentSiteNavigationMenuItemId, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentSiteNavigationMenuItemId=");
-		sb.append(parentSiteNavigationMenuItemId);
-
-		sb.append("}");
-
-		throw new NoSuchMenuItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByParentSiteNavigationMenuItemId_Last(
-		long parentSiteNavigationMenuItemId,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		int count = countByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SiteNavigationMenuItem> list =
-			findByParentSiteNavigationMenuItemId(
-				parentSiteNavigationMenuItemId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the site navigation menu items where parentSiteNavigationMenuItemId = &#63; from the database.
 	 *
 	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
@@ -2481,67 +2166,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 		List<SiteNavigationMenuItem> list = findByType(
 			type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem findByType_Last(
-			String type,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByType_Last(
-			type, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchMenuItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByType_Last(
-		String type,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		int count = countByType(type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SiteNavigationMenuItem> list = findByType(
-			type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2900,75 +2524,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem findByS_P_Last(
-			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByS_P_Last(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId,
-			orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("siteNavigationMenuId=");
-		sb.append(siteNavigationMenuId);
-
-		sb.append(", parentSiteNavigationMenuItemId=");
-		sb.append(parentSiteNavigationMenuItemId);
-
-		sb.append("}");
-
-		throw new NoSuchMenuItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByS_P_Last(
-		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		int count = countByS_P(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SiteNavigationMenuItem> list = findByS_P(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId, count - 1,
-			count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63; from the database.
 	 *
 	 * @param siteNavigationMenuId the site navigation menu ID
@@ -3302,72 +2857,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 		List<SiteNavigationMenuItem> list = findByS_LikeN(
 			siteNavigationMenuId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem findByS_LikeN_Last(
-			long siteNavigationMenuId, String name,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByS_LikeN_Last(
-			siteNavigationMenuId, name, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("siteNavigationMenuId=");
-		sb.append(siteNavigationMenuId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchMenuItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByS_LikeN_Last(
-		long siteNavigationMenuId, String name,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		int count = countByS_LikeN(siteNavigationMenuId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SiteNavigationMenuItem> list = findByS_LikeN(
-			siteNavigationMenuId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4923,4 +4412,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-150234645
+// LIFERAY-SERVICE-BUILDER-HASH:2010344109

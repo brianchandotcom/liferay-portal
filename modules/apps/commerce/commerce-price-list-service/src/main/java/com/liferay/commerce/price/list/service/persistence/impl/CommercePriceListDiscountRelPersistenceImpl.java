@@ -341,67 +341,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price list discount rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list discount rel
-	 * @throws NoSuchPriceListDiscountRelException if a matching commerce price list discount rel could not be found
-	 */
-	@Override
-	public CommercePriceListDiscountRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommercePriceListDiscountRel> orderByComparator)
-		throws NoSuchPriceListDiscountRelException {
-
-		CommercePriceListDiscountRel commercePriceListDiscountRel =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (commercePriceListDiscountRel != null) {
-			return commercePriceListDiscountRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceListDiscountRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price list discount rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list discount rel, or <code>null</code> if a matching commerce price list discount rel could not be found
-	 */
-	@Override
-	public CommercePriceListDiscountRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommercePriceListDiscountRel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceListDiscountRel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price list discount rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -754,72 +693,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price list discount rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list discount rel
-	 * @throws NoSuchPriceListDiscountRelException if a matching commerce price list discount rel could not be found
-	 */
-	@Override
-	public CommercePriceListDiscountRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommercePriceListDiscountRel> orderByComparator)
-		throws NoSuchPriceListDiscountRelException {
-
-		CommercePriceListDiscountRel commercePriceListDiscountRel =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (commercePriceListDiscountRel != null) {
-			return commercePriceListDiscountRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceListDiscountRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price list discount rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list discount rel, or <code>null</code> if a matching commerce price list discount rel could not be found
-	 */
-	@Override
-	public CommercePriceListDiscountRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommercePriceListDiscountRel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceListDiscountRel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price list discount rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1150,68 +1023,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 
 		List<CommercePriceListDiscountRel> list = findByCommercePriceListId(
 			commercePriceListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price list discount rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list discount rel
-	 * @throws NoSuchPriceListDiscountRelException if a matching commerce price list discount rel could not be found
-	 */
-	@Override
-	public CommercePriceListDiscountRel findByCommercePriceListId_Last(
-			long commercePriceListId,
-			OrderByComparator<CommercePriceListDiscountRel> orderByComparator)
-		throws NoSuchPriceListDiscountRelException {
-
-		CommercePriceListDiscountRel commercePriceListDiscountRel =
-			fetchByCommercePriceListId_Last(
-				commercePriceListId, orderByComparator);
-
-		if (commercePriceListDiscountRel != null) {
-			return commercePriceListDiscountRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceListDiscountRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price list discount rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list discount rel, or <code>null</code> if a matching commerce price list discount rel could not be found
-	 */
-	@Override
-	public CommercePriceListDiscountRel fetchByCommercePriceListId_Last(
-		long commercePriceListId,
-		OrderByComparator<CommercePriceListDiscountRel> orderByComparator) {
-
-		int count = countByCommercePriceListId(commercePriceListId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceListDiscountRel> list = findByCommercePriceListId(
-			commercePriceListId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2561,4 +2372,4 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-473180870
+// LIFERAY-SERVICE-BUILDER-HASH:606773231

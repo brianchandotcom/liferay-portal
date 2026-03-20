@@ -213,37 +213,6 @@ public class PLOEntryUtil {
 	}
 
 	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry
-	 * @throws NoSuchPLOEntryException if a matching plo entry could not be found
-	 */
-	public static PLOEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<PLOEntry> orderByComparator)
-		throws com.liferay.portal.language.override.exception.
-			NoSuchPLOEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	public static PLOEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<PLOEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the plo entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -369,41 +338,6 @@ public class PLOEntryUtil {
 		OrderByComparator<PLOEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_K_First(
-			companyId, key, orderByComparator);
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry
-	 * @throws NoSuchPLOEntryException if a matching plo entry could not be found
-	 */
-	public static PLOEntry findByC_K_Last(
-			long companyId, String key,
-			OrderByComparator<PLOEntry> orderByComparator)
-		throws com.liferay.portal.language.override.exception.
-			NoSuchPLOEntryException {
-
-		return getPersistence().findByC_K_Last(
-			companyId, key, orderByComparator);
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	public static PLOEntry fetchByC_K_Last(
-		long companyId, String key,
-		OrderByComparator<PLOEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_K_Last(
 			companyId, key, orderByComparator);
 	}
 
@@ -536,41 +470,6 @@ public class PLOEntryUtil {
 		OrderByComparator<PLOEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_L_First(
-			companyId, languageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and languageId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry
-	 * @throws NoSuchPLOEntryException if a matching plo entry could not be found
-	 */
-	public static PLOEntry findByC_L_Last(
-			long companyId, String languageId,
-			OrderByComparator<PLOEntry> orderByComparator)
-		throws com.liferay.portal.language.override.exception.
-			NoSuchPLOEntryException {
-
-		return getPersistence().findByC_L_Last(
-			companyId, languageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and languageId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	public static PLOEntry fetchByC_L_Last(
-		long companyId, String languageId,
-		OrderByComparator<PLOEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_L_Last(
 			companyId, languageId, orderByComparator);
 	}
 
@@ -832,4 +731,4 @@ public class PLOEntryUtil {
 	private static volatile PLOEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:959142158
+// LIFERAY-SERVICE-BUILDER-HASH:-81798831

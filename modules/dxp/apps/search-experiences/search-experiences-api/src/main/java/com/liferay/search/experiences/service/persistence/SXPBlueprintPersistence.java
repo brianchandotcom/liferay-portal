@@ -119,32 +119,6 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 			orderByComparator);
 
 	/**
-	 * Returns the last sxp blueprint in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp blueprint
-	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
-	 */
-	public SXPBlueprint findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SXPBlueprint>
-				orderByComparator)
-		throws NoSuchSXPBlueprintException;
-
-	/**
-	 * Returns the last sxp blueprint in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
-	 */
-	public SXPBlueprint fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<SXPBlueprint>
-			orderByComparator);
-
-	/**
 	 * Returns all the sxp blueprints that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -303,34 +277,6 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 			orderByComparator);
 
 	/**
-	 * Returns the last sxp blueprint in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp blueprint
-	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
-	 */
-	public SXPBlueprint findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SXPBlueprint>
-				orderByComparator)
-		throws NoSuchSXPBlueprintException;
-
-	/**
-	 * Returns the last sxp blueprint in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
-	 */
-	public SXPBlueprint fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SXPBlueprint>
-			orderByComparator);
-
-	/**
 	 * Returns all the sxp blueprints that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -484,32 +430,6 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	 * @return the first matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
 	 */
 	public SXPBlueprint fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SXPBlueprint>
-			orderByComparator);
-
-	/**
-	 * Returns the last sxp blueprint in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp blueprint
-	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
-	 */
-	public SXPBlueprint findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SXPBlueprint>
-				orderByComparator)
-		throws NoSuchSXPBlueprintException;
-
-	/**
-	 * Returns the last sxp blueprint in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
-	 */
-	public SXPBlueprint fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SXPBlueprint>
 			orderByComparator);
@@ -752,4 +672,4 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1110308702
+// LIFERAY-SERVICE-BUILDER-HASH:1951326457

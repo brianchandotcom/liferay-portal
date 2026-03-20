@@ -295,65 +295,6 @@ public class SubscriptionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last subscription in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	@Override
-	public Subscription findByUserId_Last(
-			long userId, OrderByComparator<Subscription> orderByComparator)
-		throws NoSuchSubscriptionException {
-
-		Subscription subscription = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last subscription in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	@Override
-	public Subscription fetchByUserId_Last(
-		long userId, OrderByComparator<Subscription> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Subscription> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the subscriptions where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -650,72 +591,6 @@ public class SubscriptionPersistenceImpl
 
 		List<Subscription> list = findByG_U(
 			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last subscription in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	@Override
-	public Subscription findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<Subscription> orderByComparator)
-		throws NoSuchSubscriptionException {
-
-		Subscription subscription = fetchByG_U_Last(
-			groupId, userId, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last subscription in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	@Override
-	public Subscription fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<Subscription> orderByComparator) {
-
-		int count = countByG_U(groupId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Subscription> list = findByG_U(
-			groupId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1032,72 +907,6 @@ public class SubscriptionPersistenceImpl
 
 		List<Subscription> list = findByU_C(
 			userId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last subscription in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	@Override
-	public Subscription findByU_C_Last(
-			long userId, long classNameId,
-			OrderByComparator<Subscription> orderByComparator)
-		throws NoSuchSubscriptionException {
-
-		Subscription subscription = fetchByU_C_Last(
-			userId, classNameId, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last subscription in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	@Override
-	public Subscription fetchByU_C_Last(
-		long userId, long classNameId,
-		OrderByComparator<Subscription> orderByComparator) {
-
-		int count = countByU_C(userId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Subscription> list = findByU_C(
-			userId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1432,78 +1241,6 @@ public class SubscriptionPersistenceImpl
 
 		List<Subscription> list = findByC_C_C(
 			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	@Override
-	public Subscription findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<Subscription> orderByComparator)
-		throws NoSuchSubscriptionException {
-
-		Subscription subscription = fetchByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (subscription != null) {
-			return subscription;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	@Override
-	public Subscription fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<Subscription> orderByComparator) {
-
-		int count = countByC_C_C(companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Subscription> list = findByC_C_C(
-			companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2918,4 +2655,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:459921746
+// LIFERAY-SERVICE-BUILDER-HASH:780046992

@@ -208,35 +208,6 @@ public class LVEntryUtil {
 	}
 
 	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	public static LVEntry findByUuid_Last(
-			String uuid, OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	public static LVEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<LVEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -362,41 +333,6 @@ public class LVEntryUtil {
 		OrderByComparator<LVEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_Head_First(
-			uuid, head, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	public static LVEntry findByUuid_Head_Last(
-			String uuid, boolean head,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUuid_Head_Last(
-			uuid, head, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	public static LVEntry fetchByUuid_Head_Last(
-		String uuid, boolean head,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Head_Last(
 			uuid, head, orderByComparator);
 	}
 
@@ -528,41 +464,6 @@ public class LVEntryUtil {
 		OrderByComparator<LVEntry> orderByComparator) {
 
 		return getPersistence().fetchByUUID_G_First(
-			uuid, groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	public static LVEntry findByUUID_G_Last(
-			String uuid, long groupId,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUUID_G_Last(
-			uuid, groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	public static LVEntry fetchByUUID_G_Last(
-		String uuid, long groupId,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		return getPersistence().fetchByUUID_G_Last(
 			uuid, groupId, orderByComparator);
 	}
 
@@ -775,41 +676,6 @@ public class LVEntryUtil {
 	}
 
 	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	public static LVEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	public static LVEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -951,43 +817,6 @@ public class LVEntryUtil {
 	}
 
 	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	public static LVEntry findByUuid_C_Head_Last(
-			String uuid, long companyId, boolean head,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUuid_C_Head_Last(
-			uuid, companyId, head, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	public static LVEntry fetchByUuid_C_Head_Last(
-		String uuid, long companyId, boolean head,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Head_Last(
-			uuid, companyId, head, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entries where uuid = &#63; and companyId = &#63; and head = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1113,35 +942,6 @@ public class LVEntryUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	public static LVEntry findByGroupId_Last(
-			long groupId, OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	public static LVEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<LVEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -1355,41 +1155,6 @@ public class LVEntryUtil {
 		OrderByComparator<LVEntry> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Head_First(
-			groupId, head, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	public static LVEntry findByGroupId_Head_Last(
-			long groupId, boolean head,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByGroupId_Head_Last(
-			groupId, head, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	public static LVEntry fetchByGroupId_Head_Last(
-		long groupId, boolean head,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Head_Last(
 			groupId, head, orderByComparator);
 	}
 
@@ -1617,41 +1382,6 @@ public class LVEntryUtil {
 		OrderByComparator<LVEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_UGK_First(
-			groupId, uniqueGroupKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	public static LVEntry findByG_UGK_Last(
-			long groupId, String uniqueGroupKey,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByG_UGK_Last(
-			groupId, uniqueGroupKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	public static LVEntry fetchByG_UGK_Last(
-		long groupId, String uniqueGroupKey,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_UGK_Last(
 			groupId, uniqueGroupKey, orderByComparator);
 	}
 
@@ -2217,4 +1947,4 @@ public class LVEntryUtil {
 	private static volatile LVEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1192612511
+// LIFERAY-SERVICE-BUILDER-HASH:2138043905

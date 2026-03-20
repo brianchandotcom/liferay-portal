@@ -358,71 +358,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPDefinitionSpecificationOptionValue>
-				orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue = fetchByUuid_Last(
-				uuid, orderByComparator);
-
-		if (cpDefinitionSpecificationOptionValue != null) {
-			return cpDefinitionSpecificationOptionValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPDefinitionSpecificationOptionValue>
-			orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionSpecificationOptionValue> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition specification option values where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1007,76 +942,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDefinitionSpecificationOptionValue>
-				orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue = fetchByUuid_C_Last(
-				uuid, companyId, orderByComparator);
-
-		if (cpDefinitionSpecificationOptionValue != null) {
-			return cpDefinitionSpecificationOptionValue;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDefinitionSpecificationOptionValue>
-			orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionSpecificationOptionValue> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition specification option values where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1423,71 +1288,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CPDefinitionSpecificationOptionValue>
-				orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue = fetchByGroupId_Last(
-				groupId, orderByComparator);
-
-		if (cpDefinitionSpecificationOptionValue != null) {
-			return cpDefinitionSpecificationOptionValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CPDefinitionSpecificationOptionValue>
-			orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionSpecificationOptionValue> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition specification option values where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1801,71 +1601,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		List<CPDefinitionSpecificationOptionValue> list = findByCPDefinitionId(
 			CPDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CPDefinitionSpecificationOptionValue>
-				orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue = fetchByCPDefinitionId_Last(
-				CPDefinitionId, orderByComparator);
-
-		if (cpDefinitionSpecificationOptionValue != null) {
-			return cpDefinitionSpecificationOptionValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		OrderByComparator<CPDefinitionSpecificationOptionValue>
-			orderByComparator) {
-
-		int count = countByCPDefinitionId(CPDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionSpecificationOptionValue> list = findByCPDefinitionId(
-			CPDefinitionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2210,75 +1945,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue
-			findByCPSpecificationOptionId_Last(
-				long CPSpecificationOptionId,
-				OrderByComparator<CPDefinitionSpecificationOptionValue>
-					orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue =
-				fetchByCPSpecificationOptionId_Last(
-					CPSpecificationOptionId, orderByComparator);
-
-		if (cpDefinitionSpecificationOptionValue != null) {
-			return cpDefinitionSpecificationOptionValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPSpecificationOptionId=");
-		sb.append(CPSpecificationOptionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue
-		fetchByCPSpecificationOptionId_Last(
-			long CPSpecificationOptionId,
-			OrderByComparator<CPDefinitionSpecificationOptionValue>
-				orderByComparator) {
-
-		int count = countByCPSpecificationOptionId(CPSpecificationOptionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionSpecificationOptionValue> list =
-			findByCPSpecificationOptionId(
-				CPSpecificationOptionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition specification option values where CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPSpecificationOptionId the cp specification option ID
@@ -2598,73 +2264,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		List<CPDefinitionSpecificationOptionValue> list =
 			findByCPOptionCategoryId(
 				CPOptionCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue findByCPOptionCategoryId_Last(
-			long CPOptionCategoryId,
-			OrderByComparator<CPDefinitionSpecificationOptionValue>
-				orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue =
-				fetchByCPOptionCategoryId_Last(
-					CPOptionCategoryId, orderByComparator);
-
-		if (cpDefinitionSpecificationOptionValue != null) {
-			return cpDefinitionSpecificationOptionValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPOptionCategoryId=");
-		sb.append(CPOptionCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue fetchByCPOptionCategoryId_Last(
-		long CPOptionCategoryId,
-		OrderByComparator<CPDefinitionSpecificationOptionValue>
-			orderByComparator) {
-
-		int count = countByCPOptionCategoryId(CPOptionCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionSpecificationOptionValue> list =
-			findByCPOptionCategoryId(
-				CPOptionCategoryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3235,77 +2834,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue findByC_CSO_Last(
-			long CPDefinitionId, long CPSpecificationOptionId,
-			OrderByComparator<CPDefinitionSpecificationOptionValue>
-				orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue = fetchByC_CSO_Last(
-				CPDefinitionId, CPSpecificationOptionId, orderByComparator);
-
-		if (cpDefinitionSpecificationOptionValue != null) {
-			return cpDefinitionSpecificationOptionValue;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", CPSpecificationOptionId=");
-		sb.append(CPSpecificationOptionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue fetchByC_CSO_Last(
-		long CPDefinitionId, long CPSpecificationOptionId,
-		OrderByComparator<CPDefinitionSpecificationOptionValue>
-			orderByComparator) {
-
-		int count = countByC_CSO(CPDefinitionId, CPSpecificationOptionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionSpecificationOptionValue> list = findByC_CSO(
-			CPDefinitionId, CPSpecificationOptionId, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition specification option values where CPDefinitionId = &#63; and CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -3654,77 +3182,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		List<CPDefinitionSpecificationOptionValue> list = findByC_COC(
 			CPDefinitionId, CPOptionCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue findByC_COC_Last(
-			long CPDefinitionId, long CPOptionCategoryId,
-			OrderByComparator<CPDefinitionSpecificationOptionValue>
-				orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue = fetchByC_COC_Last(
-				CPDefinitionId, CPOptionCategoryId, orderByComparator);
-
-		if (cpDefinitionSpecificationOptionValue != null) {
-			return cpDefinitionSpecificationOptionValue;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", CPOptionCategoryId=");
-		sb.append(CPOptionCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue fetchByC_COC_Last(
-		long CPDefinitionId, long CPOptionCategoryId,
-		OrderByComparator<CPDefinitionSpecificationOptionValue>
-			orderByComparator) {
-
-		int count = countByC_COC(CPDefinitionId, CPOptionCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionSpecificationOptionValue> list = findByC_COC(
-			CPDefinitionId, CPOptionCategoryId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5640,4 +5097,4 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:5938933
+// LIFERAY-SERVICE-BUILDER-HASH:1702620860

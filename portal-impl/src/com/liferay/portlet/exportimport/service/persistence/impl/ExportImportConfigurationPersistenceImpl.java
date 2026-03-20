@@ -299,67 +299,6 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration findByGroupId_Last(
-			long groupId,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException {
-
-		ExportImportConfiguration exportImportConfiguration =
-			fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExportImportConfiguration> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the export import configurations where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -643,67 +582,6 @@ public class ExportImportConfigurationPersistenceImpl
 
 		List<ExportImportConfiguration> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException {
-
-		ExportImportConfiguration exportImportConfiguration =
-			fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExportImportConfiguration> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1011,72 +889,6 @@ public class ExportImportConfigurationPersistenceImpl
 
 		List<ExportImportConfiguration> list = findByG_T(
 			groupId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration findByG_T_Last(
-			long groupId, int type,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException {
-
-		ExportImportConfiguration exportImportConfiguration = fetchByG_T_Last(
-			groupId, type, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration fetchByG_T_Last(
-		long groupId, int type,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		int count = countByG_T(groupId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExportImportConfiguration> list = findByG_T(
-			groupId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1394,72 +1206,6 @@ public class ExportImportConfigurationPersistenceImpl
 
 		List<ExportImportConfiguration> list = findByG_S(
 			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException {
-
-		ExportImportConfiguration exportImportConfiguration = fetchByG_S_Last(
-			groupId, status, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		int count = countByG_S(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExportImportConfiguration> list = findByG_S(
-			groupId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1794,77 +1540,6 @@ public class ExportImportConfigurationPersistenceImpl
 
 		List<ExportImportConfiguration> list = findByG_T_S(
 			groupId, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration findByG_T_S_Last(
-			long groupId, int type, int status,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException {
-
-		ExportImportConfiguration exportImportConfiguration = fetchByG_T_S_Last(
-			groupId, type, status, orderByComparator);
-
-		if (exportImportConfiguration != null) {
-			return exportImportConfiguration;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	@Override
-	public ExportImportConfiguration fetchByG_T_S_Last(
-		long groupId, int type, int status,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		int count = countByG_T_S(groupId, type, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExportImportConfiguration> list = findByG_T_S(
-			groupId, type, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2693,4 +2368,4 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1780255501
+// LIFERAY-SERVICE-BUILDER-HASH:1437166093

@@ -214,35 +214,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the last commerce price list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByUuid_Last(
-			String uuid, OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByUuid_Last(
-		String uuid, OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -440,41 +411,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the last commerce price list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -597,39 +533,6 @@ public class CommercePriceListUtil {
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -759,39 +662,6 @@ public class CommercePriceListUtil {
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getPersistence().fetchByParentCommercePriceListId_First(
-			parentCommercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where parentCommercePriceListId = &#63;.
-	 *
-	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByParentCommercePriceListId_Last(
-			long parentCommercePriceListId,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByParentCommercePriceListId_Last(
-			parentCommercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where parentCommercePriceListId = &#63;.
-	 *
-	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByParentCommercePriceListId_Last(
-		long parentCommercePriceListId,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByParentCommercePriceListId_Last(
 			parentCommercePriceListId, orderByComparator);
 	}
 
@@ -930,41 +800,6 @@ public class CommercePriceListUtil {
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getPersistence().fetchByG_C_First(
-			groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByG_C_Last(
-			long groupId, long companyId,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_Last(
-			groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByG_C_Last(
-		long groupId, long companyId,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByG_C_Last(
 			groupId, companyId, orderByComparator);
 	}
 
@@ -1329,41 +1164,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByG_CBPL_Last(
-			long groupId, boolean catalogBasePriceList,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_CBPL_Last(
-			groupId, catalogBasePriceList, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByG_CBPL_Last(
-		long groupId, boolean catalogBasePriceList,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByG_CBPL_Last(
-			groupId, catalogBasePriceList, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1574,41 +1374,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the last commerce price list in the ordered set where companyId = &#63; and commerceCurrencyCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param commerceCurrencyCode the commerce currency code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByC_C_Last(
-			long companyId, String commerceCurrencyCode,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, commerceCurrencyCode, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where companyId = &#63; and commerceCurrencyCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param commerceCurrencyCode the commerce currency code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByC_C_Last(
-		long companyId, String commerceCurrencyCode,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
-			companyId, commerceCurrencyCode, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price lists where companyId = &#63; and commerceCurrencyCode = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1741,41 +1506,6 @@ public class CommercePriceListUtil {
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getPersistence().fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
 			displayDate, status, orderByComparator);
 	}
 
@@ -1918,43 +1648,6 @@ public class CommercePriceListUtil {
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getPersistence().fetchByG_C_S_First(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByG_C_S_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_S_Last(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByG_C_S_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByG_C_S_Last(
 			groupId, companyId, status, orderByComparator);
 	}
 
@@ -2345,43 +2038,6 @@ public class CommercePriceListUtil {
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getPersistence().fetchByG_C_NotS_First(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByG_C_NotS_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_NotS_Last(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByG_C_NotS_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByG_C_NotS_Last(
 			groupId, companyId, status, orderByComparator);
 	}
 
@@ -2786,43 +2442,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByG_CBPL_T_Last(
-			long groupId, boolean catalogBasePriceList, String type,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_CBPL_T_Last(
-			groupId, catalogBasePriceList, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByG_CBPL_T_Last(
-		long groupId, boolean catalogBasePriceList, String type,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByG_CBPL_T_Last(
-			groupId, catalogBasePriceList, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3050,45 +2669,6 @@ public class CommercePriceListUtil {
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getPersistence().fetchByG_C_T_S_First(
-			groupId, companyId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByG_C_T_S_Last(
-			long groupId, long companyId, String type, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_T_S_Last(
-			groupId, companyId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByG_C_T_S_Last(
-		long groupId, long companyId, String type, int status,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByG_C_T_S_Last(
 			groupId, companyId, type, status, orderByComparator);
 	}
 
@@ -3516,45 +3096,6 @@ public class CommercePriceListUtil {
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getPersistence().fetchByG_C_T_NotS_First(
-			groupId, companyId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and type = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list
-	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList findByG_C_T_NotS_Last(
-			long groupId, long companyId, String type, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_T_NotS_Last(
-			groupId, companyId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and type = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
-	 */
-	public static CommercePriceList fetchByG_C_T_NotS_Last(
-		long groupId, long companyId, String type, int status,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		return getPersistence().fetchByG_C_T_NotS_Last(
 			groupId, companyId, type, status, orderByComparator);
 	}
 
@@ -4096,4 +3637,4 @@ public class CommercePriceListUtil {
 	private static volatile CommercePriceListPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:519638320
+// LIFERAY-SERVICE-BUILDER-HASH:-1290520427

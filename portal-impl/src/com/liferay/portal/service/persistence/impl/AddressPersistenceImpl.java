@@ -327,64 +327,6 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last address in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByUuid_Last(
-			String uuid, OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByUuid_Last(
-		String uuid, OrderByComparator<Address> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the addresses where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -727,72 +669,6 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last address in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Address> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the addresses where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1113,64 +989,6 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last address in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByCompanyId_Last(
-			long companyId, OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Address> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the addresses where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1454,64 +1272,6 @@ public class AddressPersistenceImpl
 		long userId, OrderByComparator<Address> orderByComparator) {
 
 		List<Address> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last address in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByUserId_Last(
-			long userId, OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByUserId_Last(userId, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByUserId_Last(
-		long userId, OrderByComparator<Address> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1815,64 +1575,6 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last address in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByCountryId_Last(
-			long countryId, OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByCountryId_Last(countryId, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByCountryId_Last(
-		long countryId, OrderByComparator<Address> orderByComparator) {
-
-		int count = countByCountryId(countryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByCountryId(
-			countryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the addresses where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -2157,64 +1859,6 @@ public class AddressPersistenceImpl
 		long regionId, OrderByComparator<Address> orderByComparator) {
 
 		List<Address> list = findByRegionId(regionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last address in the ordered set where regionId = &#63;.
-	 *
-	 * @param regionId the region ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByRegionId_Last(
-			long regionId, OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByRegionId_Last(regionId, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("regionId=");
-		sb.append(regionId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where regionId = &#63;.
-	 *
-	 * @param regionId the region ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByRegionId_Last(
-		long regionId, OrderByComparator<Address> orderByComparator) {
-
-		int count = countByRegionId(regionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByRegionId(
-			regionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2530,72 +2174,6 @@ public class AddressPersistenceImpl
 
 		List<Address> list = findByC_C(
 			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByC_C_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<Address> orderByComparator) {
-
-		int count = countByC_C(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByC_C(
-			companyId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2921,72 +2499,6 @@ public class AddressPersistenceImpl
 
 		List<Address> list = findByCN_CPK(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last address in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByCN_CPK_Last(
-			long classNameId, long classPK,
-			OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByCN_CPK_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByCN_CPK_Last(
-		long classNameId, long classPK,
-		OrderByComparator<Address> orderByComparator) {
-
-		int count = countByCN_CPK(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByCN_CPK(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3331,78 +2843,6 @@ public class AddressPersistenceImpl
 
 		List<Address> list = findByC_C_C(
 			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<Address> orderByComparator) {
-
-		int count = countByC_C_C(companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByC_C_C(
-			companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3778,83 +3218,6 @@ public class AddressPersistenceImpl
 
 		List<Address> list = findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param listTypeId the list type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByC_C_C_L_Last(
-			long companyId, long classNameId, long classPK, long listTypeId,
-			OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByC_C_C_L_Last(
-			companyId, classNameId, classPK, listTypeId, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", listTypeId=");
-		sb.append(listTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param listTypeId the list type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByC_C_C_L_Last(
-		long companyId, long classNameId, long classPK, long listTypeId,
-		OrderByComparator<Address> orderByComparator) {
-
-		int count = countByC_C_C_L(companyId, classNameId, classPK, listTypeId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByC_C_C_L(
-			companyId, classNameId, classPK, listTypeId, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4576,83 +3939,6 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param mailing the mailing
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByC_C_C_M_Last(
-			long companyId, long classNameId, long classPK, boolean mailing,
-			OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByC_C_C_M_Last(
-			companyId, classNameId, classPK, mailing, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", mailing=");
-		sb.append(mailing);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param mailing the mailing
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByC_C_C_M_Last(
-		long companyId, long classNameId, long classPK, boolean mailing,
-		OrderByComparator<Address> orderByComparator) {
-
-		int count = countByC_C_C_M(companyId, classNameId, classPK, mailing);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByC_C_C_M(
-			companyId, classNameId, classPK, mailing, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -5031,83 +4317,6 @@ public class AddressPersistenceImpl
 
 		List<Address> list = findByC_C_C_P(
 			companyId, classNameId, classPK, primary, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	@Override
-	public Address findByC_C_C_P_Last(
-			long companyId, long classNameId, long classPK, boolean primary,
-			OrderByComparator<Address> orderByComparator)
-		throws NoSuchAddressException {
-
-		Address address = fetchByC_C_C_P_Last(
-			companyId, classNameId, classPK, primary, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Override
-	public Address fetchByC_C_C_P_Last(
-		long companyId, long classNameId, long classPK, boolean primary,
-		OrderByComparator<Address> orderByComparator) {
-
-		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Address> list = findByC_C_C_P(
-			companyId, classNameId, classPK, primary, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6654,4 +5863,4 @@ public class AddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:402148770
+// LIFERAY-SERVICE-BUILDER-HASH:246408083

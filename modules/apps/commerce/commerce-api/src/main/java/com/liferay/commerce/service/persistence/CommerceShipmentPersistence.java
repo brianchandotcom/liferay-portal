@@ -120,32 +120,6 @@ public interface CommerceShipmentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce shipment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment
-	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-				orderByComparator)
-		throws NoSuchShipmentException;
-
-	/**
-	 * Returns the last commerce shipment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-			orderByComparator);
-
-	/**
 	 * Removes all the commerce shipments where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface CommerceShipmentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce shipment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment
-	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-				orderByComparator)
-		throws NoSuchShipmentException;
-
-	/**
-	 * Returns the last commerce shipment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-			orderByComparator);
-
-	/**
 	 * Removes all the commerce shipments where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,32 +378,6 @@ public interface CommerceShipmentPersistence
 	 * @return the first matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
 	 */
 	public CommerceShipment fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce shipment in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment
-	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-				orderByComparator)
-		throws NoSuchShipmentException;
-
-	/**
-	 * Returns the last commerce shipment in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 			orderByComparator);
@@ -640,34 +560,6 @@ public interface CommerceShipmentPersistence
 	 * @return the first matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
 	 */
 	public CommerceShipment fetchByG_C_First(
-		long groupId, long commerceAddressId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce shipment in the ordered set where groupId = &#63; and commerceAddressId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param commerceAddressId the commerce address ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment
-	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment findByG_C_Last(
-			long groupId, long commerceAddressId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-				orderByComparator)
-		throws NoSuchShipmentException;
-
-	/**
-	 * Returns the last commerce shipment in the ordered set where groupId = &#63; and commerceAddressId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param commerceAddressId the commerce address ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment fetchByG_C_Last(
 		long groupId, long commerceAddressId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 			orderByComparator);
@@ -857,34 +749,6 @@ public interface CommerceShipmentPersistence
 	 * @return the first matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
 	 */
 	public CommerceShipment fetchByG_S_First(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce shipment in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment
-	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment findByG_S_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
-				orderByComparator)
-		throws NoSuchShipmentException;
-
-	/**
-	 * Returns the last commerce shipment in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
-	 */
-	public CommerceShipment fetchByG_S_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 			orderByComparator);
@@ -1159,4 +1023,4 @@ public interface CommerceShipmentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1596288256
+// LIFERAY-SERVICE-BUILDER-HASH:1293678701

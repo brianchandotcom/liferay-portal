@@ -226,41 +226,6 @@ public class OpenIdConnectUserUtil {
 	}
 
 	/**
-	 * Returns the last open ID connect user in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect user
-	 * @throws NoSuchUserException if a matching open ID connect user could not be found
-	 */
-	public static OpenIdConnectUser findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<OpenIdConnectUser> orderByComparator)
-		throws com.liferay.portal.security.sso.openid.connect.persistence.
-			exception.NoSuchUserException {
-
-		return getPersistence().findByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last open ID connect user in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect user, or <code>null</code> if a matching open ID connect user could not be found
-	 */
-	public static OpenIdConnectUser fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<OpenIdConnectUser> orderByComparator) {
-
-		return getPersistence().fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the open ID connect users where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -526,4 +491,4 @@ public class OpenIdConnectUserUtil {
 	private static volatile OpenIdConnectUserPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:817342121
+// LIFERAY-SERVICE-BUILDER-HASH:-1213380755

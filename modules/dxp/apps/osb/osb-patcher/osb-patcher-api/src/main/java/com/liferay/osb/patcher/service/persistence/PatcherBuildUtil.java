@@ -215,37 +215,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns the last patcher build in the ordered set where patcherFixId = &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByPatcherFixId_Last(
-			long patcherFixId,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByPatcherFixId_Last(
-			patcherFixId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where patcherFixId = &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByPatcherFixId_Last(
-		long patcherFixId, OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByPatcherFixId_Last(
-			patcherFixId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where patcherFixId = &#63;.
 	 *
 	 * @param patcherFixId the patcher fix ID
@@ -436,38 +405,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns the last patcher build in the ordered set where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByPatcherProjectVersionId_Last(
-			long patcherProjectVersionId,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByPatcherProjectVersionId_Last(
-			patcherProjectVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByPatcherProjectVersionId_Last(
-		long patcherProjectVersionId,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByPatcherProjectVersionId_Last(
-			patcherProjectVersionId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -653,34 +590,6 @@ public class PatcherBuildUtil {
 		String key, OrderByComparator<PatcherBuild> orderByComparator) {
 
 		return getPersistence().fetchByKey_First(key, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where key = &#63;.
-	 *
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByKey_Last(
-			String key, OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByKey_Last(key, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where key = &#63;.
-	 *
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByKey_Last(
-		String key, OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByKey_Last(key, orderByComparator);
 	}
 
 	/**
@@ -875,40 +784,6 @@ public class PatcherBuildUtil {
 		OrderByComparator<PatcherBuild> orderByComparator) {
 
 		return getPersistence().fetchByP_P_First(
-			patcherAccountId, patcherProductVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherAccountId the patcher account ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByP_P_Last(
-			long patcherAccountId, long patcherProductVersionId,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByP_P_Last(
-			patcherAccountId, patcherProductVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherAccountId the patcher account ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByP_P_Last(
-		long patcherAccountId, long patcherProductVersionId,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByP_P_Last(
 			patcherAccountId, patcherProductVersionId, orderByComparator);
 	}
 
@@ -1120,40 +995,6 @@ public class PatcherBuildUtil {
 		OrderByComparator<PatcherBuild> orderByComparator) {
 
 		return getPersistence().fetchByP_C_First(
-			patcherFixId, childBuild, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where patcherFixId = &#63; and childBuild = &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param childBuild the child build
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByP_C_Last(
-			long patcherFixId, boolean childBuild,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByP_C_Last(
-			patcherFixId, childBuild, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where patcherFixId = &#63; and childBuild = &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param childBuild the child build
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByP_C_Last(
-		long patcherFixId, boolean childBuild,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByP_C_Last(
 			patcherFixId, childBuild, orderByComparator);
 	}
 
@@ -1420,40 +1261,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns the last patcher build in the ordered set where key = &#63; and keyVersion &gt; &#63;.
-	 *
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByK_GtKV_Last(
-			String key, double keyVersion,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByK_GtKV_Last(
-			key, keyVersion, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where key = &#63; and keyVersion &gt; &#63;.
-	 *
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByK_GtKV_Last(
-		String key, double keyVersion,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByK_GtKV_Last(
-			key, keyVersion, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where key = &#63; and keyVersion &gt; &#63;.
 	 *
 	 * @param key the key
@@ -1652,40 +1459,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns the last patcher build in the ordered set where key = &#63; and keyVersion &lt; &#63;.
-	 *
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByK_LtKV_Last(
-			String key, double keyVersion,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByK_LtKV_Last(
-			key, keyVersion, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where key = &#63; and keyVersion &lt; &#63;.
-	 *
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByK_LtKV_Last(
-		String key, double keyVersion,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByK_LtKV_Last(
-			key, keyVersion, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where key = &#63; and keyVersion &lt; &#63;.
 	 *
 	 * @param key the key
@@ -1880,40 +1653,6 @@ public class PatcherBuildUtil {
 		OrderByComparator<PatcherBuild> orderByComparator) {
 
 		return getPersistence().fetchByK_L_First(
-			key, latestKeyBuild, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where key = &#63; and latestKeyBuild = &#63;.
-	 *
-	 * @param key the key
-	 * @param latestKeyBuild the latest key build
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByK_L_Last(
-			String key, boolean latestKeyBuild,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByK_L_Last(
-			key, latestKeyBuild, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where key = &#63; and latestKeyBuild = &#63;.
-	 *
-	 * @param key the key
-	 * @param latestKeyBuild the latest key build
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByK_L_Last(
-		String key, boolean latestKeyBuild,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByK_L_Last(
 			key, latestKeyBuild, orderByComparator);
 	}
 
@@ -2118,40 +1857,6 @@ public class PatcherBuildUtil {
 		OrderByComparator<PatcherBuild> orderByComparator) {
 
 		return getPersistence().fetchByL_S_First(
-			latestSupportTicketBuild, supportTicket, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
-	 *
-	 * @param latestSupportTicketBuild the latest support ticket build
-	 * @param supportTicket the support ticket
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByL_S_Last(
-			boolean latestSupportTicketBuild, String supportTicket,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByL_S_Last(
-			latestSupportTicketBuild, supportTicket, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
-	 *
-	 * @param latestSupportTicketBuild the latest support ticket build
-	 * @param supportTicket the support ticket
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByL_S_Last(
-		boolean latestSupportTicketBuild, String supportTicket,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByL_S_Last(
 			latestSupportTicketBuild, supportTicket, orderByComparator);
 	}
 
@@ -2369,40 +2074,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns the last patcher build in the ordered set where supportTicket = &#63; and supportTicketVersion &gt; &#63;.
-	 *
-	 * @param supportTicket the support ticket
-	 * @param supportTicketVersion the support ticket version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByS_GtS_Last(
-			String supportTicket, double supportTicketVersion,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByS_GtS_Last(
-			supportTicket, supportTicketVersion, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where supportTicket = &#63; and supportTicketVersion &gt; &#63;.
-	 *
-	 * @param supportTicket the support ticket
-	 * @param supportTicketVersion the support ticket version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByS_GtS_Last(
-		String supportTicket, double supportTicketVersion,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByS_GtS_Last(
-			supportTicket, supportTicketVersion, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where supportTicket = &#63; and supportTicketVersion &gt; &#63;.
 	 *
 	 * @param supportTicket the support ticket
@@ -2610,40 +2281,6 @@ public class PatcherBuildUtil {
 		OrderByComparator<PatcherBuild> orderByComparator) {
 
 		return getPersistence().fetchByS_LtS_First(
-			supportTicket, supportTicketVersion, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where supportTicket = &#63; and supportTicketVersion &lt; &#63;.
-	 *
-	 * @param supportTicket the support ticket
-	 * @param supportTicketVersion the support ticket version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByS_LtS_Last(
-			String supportTicket, double supportTicketVersion,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByS_LtS_Last(
-			supportTicket, supportTicketVersion, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where supportTicket = &#63; and supportTicketVersion &lt; &#63;.
-	 *
-	 * @param supportTicket the support ticket
-	 * @param supportTicketVersion the support ticket version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByS_LtS_Last(
-		String supportTicket, double supportTicketVersion,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByS_LtS_Last(
 			supportTicket, supportTicketVersion, orderByComparator);
 	}
 
@@ -2860,42 +2497,6 @@ public class PatcherBuildUtil {
 		OrderByComparator<PatcherBuild> orderByComparator) {
 
 		return getPersistence().fetchByLtM_N_S_First(
-			modifiedDate, notified, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where modifiedDate &lt; &#63; and notified = &#63; and status = &#63;.
-	 *
-	 * @param modifiedDate the modified date
-	 * @param notified the notified
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByLtM_N_S_Last(
-			Date modifiedDate, boolean notified, int status,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByLtM_N_S_Last(
-			modifiedDate, notified, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where modifiedDate &lt; &#63; and notified = &#63; and status = &#63;.
-	 *
-	 * @param modifiedDate the modified date
-	 * @param notified the notified
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByLtM_N_S_Last(
-		Date modifiedDate, boolean notified, int status,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByLtM_N_S_Last(
 			modifiedDate, notified, status, orderByComparator);
 	}
 
@@ -3315,46 +2916,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns the last patcher build in the ordered set where patcherFixId = &#63; and patcherProductVersionId &ne; &#63; and childBuild = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param childBuild the child build
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByP_NotP_C_NotT_Last(
-			long patcherFixId, long patcherProductVersionId, boolean childBuild,
-			int type, OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByP_NotP_C_NotT_Last(
-			patcherFixId, patcherProductVersionId, childBuild, type,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where patcherFixId = &#63; and patcherProductVersionId &ne; &#63; and childBuild = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param childBuild the child build
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByP_NotP_C_NotT_Last(
-		long patcherFixId, long patcherProductVersionId, boolean childBuild,
-		int type, OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByP_NotP_C_NotT_Last(
-			patcherFixId, patcherProductVersionId, childBuild, type,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where patcherFixId = &#63; and patcherProductVersionId &ne; &#63; and childBuild = &#63; and type &ne; &#63;.
 	 *
 	 * @param patcherFixId the patcher fix ID
@@ -3604,48 +3165,6 @@ public class PatcherBuildUtil {
 		OrderByComparator<PatcherBuild> orderByComparator) {
 
 		return getPersistence().fetchByP_N_L_A_First(
-			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param accountEntryCode the account entry code
-	 * @param latestKeyBuild the latest key build
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build
-	 * @throws NoSuchPatcherBuildException if a matching patcher build could not be found
-	 */
-	public static PatcherBuild findByP_N_L_A_Last(
-			long patcherProjectVersionId, String accountEntryCode,
-			boolean latestKeyBuild, String name,
-			OrderByComparator<PatcherBuild> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
-
-		return getPersistence().findByP_N_L_A_Last(
-			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher build in the ordered set where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param accountEntryCode the account entry code
-	 * @param latestKeyBuild the latest key build
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByP_N_L_A_Last(
-		long patcherProjectVersionId, String accountEntryCode,
-		boolean latestKeyBuild, String name,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().fetchByP_N_L_A_Last(
 			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
 			orderByComparator);
 	}
@@ -4360,4 +3879,4 @@ public class PatcherBuildUtil {
 	private static volatile PatcherBuildPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:683851624
+// LIFERAY-SERVICE-BUILDER-HASH:1070576352

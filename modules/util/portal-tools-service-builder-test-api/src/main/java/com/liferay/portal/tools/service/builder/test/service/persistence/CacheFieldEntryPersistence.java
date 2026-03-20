@@ -120,32 +120,6 @@ public interface CacheFieldEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cache field entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cache field entry
-	 * @throws NoSuchCacheFieldEntryException if a matching cache field entry could not be found
-	 */
-	public CacheFieldEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CacheFieldEntry>
-				orderByComparator)
-		throws NoSuchCacheFieldEntryException;
-
-	/**
-	 * Returns the last cache field entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cache field entry, or <code>null</code> if a matching cache field entry could not be found
-	 */
-	public CacheFieldEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CacheFieldEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the cache field entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -281,4 +255,4 @@ public interface CacheFieldEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1972983805
+// LIFERAY-SERVICE-BUILDER-HASH:536095818

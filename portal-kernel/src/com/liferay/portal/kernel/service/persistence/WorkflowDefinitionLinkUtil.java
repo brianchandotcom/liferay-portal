@@ -218,37 +218,6 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	 * Returns the last workflow definition link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink findByUuid_Last(
-			String uuid,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowDefinitionLinkException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the workflow definition links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -449,41 +418,6 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	 * Returns the last workflow definition link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowDefinitionLinkException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the workflow definition links where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -606,39 +540,6 @@ public class WorkflowDefinitionLinkUtil {
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowDefinitionLinkException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -772,41 +673,6 @@ public class WorkflowDefinitionLinkUtil {
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowDefinitionLinkException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			companyId, classNameId, orderByComparator);
 	}
 
@@ -949,43 +815,6 @@ public class WorkflowDefinitionLinkUtil {
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_First(
-			groupId, companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink findByG_C_C_Last(
-			long groupId, long companyId, long classNameId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowDefinitionLinkException {
-
-		return getPersistence().findByG_C_C_Last(
-			groupId, companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink fetchByG_C_C_Last(
-		long groupId, long companyId, long classNameId,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_Last(
 			groupId, companyId, classNameId, orderByComparator);
 	}
 
@@ -1134,43 +963,6 @@ public class WorkflowDefinitionLinkUtil {
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByG_C_CPK_First(
-			groupId, companyId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink findByG_C_CPK_Last(
-			long groupId, long companyId, long classPK,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowDefinitionLinkException {
-
-		return getPersistence().findByG_C_CPK_Last(
-			groupId, companyId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink fetchByG_C_CPK_Last(
-		long groupId, long companyId, long classPK,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByG_C_CPK_Last(
 			groupId, companyId, classPK, orderByComparator);
 	}
 
@@ -1334,47 +1126,6 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	 * Returns the last workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param workflowDefinitionName the workflow definition name
-	 * @param workflowDefinitionVersion the workflow definition version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink findByC_W_W_Last(
-			long companyId, String workflowDefinitionName,
-			int workflowDefinitionVersion,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowDefinitionLinkException {
-
-		return getPersistence().findByC_W_W_Last(
-			companyId, workflowDefinitionName, workflowDefinitionVersion,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param workflowDefinitionName the workflow definition name
-	 * @param workflowDefinitionVersion the workflow definition version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink fetchByC_W_W_Last(
-		long companyId, String workflowDefinitionName,
-		int workflowDefinitionVersion,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByC_W_W_Last(
-			companyId, workflowDefinitionName, workflowDefinitionVersion,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the workflow definition links where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1532,45 +1283,6 @@ public class WorkflowDefinitionLinkUtil {
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_C_First(
-			groupId, companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink findByG_C_C_C_Last(
-			long groupId, long companyId, long classNameId, long classPK,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowDefinitionLinkException {
-
-		return getPersistence().findByG_C_C_C_Last(
-			groupId, companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink fetchByG_C_C_C_Last(
-		long groupId, long companyId, long classNameId, long classPK,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_C_Last(
 			groupId, companyId, classNameId, classPK, orderByComparator);
 	}
 
@@ -1744,51 +1456,6 @@ public class WorkflowDefinitionLinkUtil {
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_C_T_First(
-			groupId, companyId, classNameId, classPK, typePK,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typePK the type pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink findByG_C_C_C_T_Last(
-			long groupId, long companyId, long classNameId, long classPK,
-			long typePK,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowDefinitionLinkException {
-
-		return getPersistence().findByG_C_C_C_T_Last(
-			groupId, companyId, classNameId, classPK, typePK,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typePK the type pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public static WorkflowDefinitionLink fetchByG_C_C_C_T_Last(
-		long groupId, long companyId, long classNameId, long classPK,
-		long typePK,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_C_T_Last(
 			groupId, companyId, classNameId, classPK, typePK,
 			orderByComparator);
 	}
@@ -2071,4 +1738,4 @@ public class WorkflowDefinitionLinkUtil {
 	private static volatile WorkflowDefinitionLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1903950125
+// LIFERAY-SERVICE-BUILDER-HASH:-1743109073

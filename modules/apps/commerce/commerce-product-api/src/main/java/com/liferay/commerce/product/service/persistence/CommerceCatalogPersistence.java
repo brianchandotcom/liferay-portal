@@ -121,32 +121,6 @@ public interface CommerceCatalogPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce catalog in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-				orderByComparator)
-		throws NoSuchCatalogException;
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce catalogs that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -300,34 +274,6 @@ public interface CommerceCatalogPersistence
 	 * @return the first matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
 	 */
 	public CommerceCatalog fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-				orderByComparator)
-		throws NoSuchCatalogException;
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
 			orderByComparator);
@@ -491,32 +437,6 @@ public interface CommerceCatalogPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce catalog in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-				orderByComparator)
-		throws NoSuchCatalogException;
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce catalogs that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -665,32 +585,6 @@ public interface CommerceCatalogPersistence
 	 * @return the first matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
 	 */
 	public CommerceCatalog fetchByAccountEntryId_First(
-		long accountEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog findByAccountEntryId_Last(
-			long accountEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-				orderByComparator)
-		throws NoSuchCatalogException;
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog fetchByAccountEntryId_Last(
 		long accountEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
 			orderByComparator);
@@ -850,34 +744,6 @@ public interface CommerceCatalogPersistence
 	 * @return the first matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
 	 */
 	public CommerceCatalog fetchByC_S_First(
-		long companyId, boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where companyId = &#63; and system = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog findByC_S_Last(
-			long companyId, boolean system,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
-				orderByComparator)
-		throws NoSuchCatalogException;
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where companyId = &#63; and system = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	public CommerceCatalog fetchByC_S_Last(
 		long companyId, boolean system,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
 			orderByComparator);
@@ -1127,4 +993,4 @@ public interface CommerceCatalogPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1358678972
+// LIFERAY-SERVICE-BUILDER-HASH:-754280572

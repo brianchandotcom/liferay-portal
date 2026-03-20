@@ -321,67 +321,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition grouped entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a matching cp definition grouped entry could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException {
-
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpDefinitionGroupedEntry != null) {
-			return cpDefinitionGroupedEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionGroupedEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionGroupedEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition grouped entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -921,72 +860,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition grouped entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a matching cp definition grouped entry could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException {
-
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpDefinitionGroupedEntry != null) {
-			return cpDefinitionGroupedEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionGroupedEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionGroupedEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition grouped entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1307,67 +1180,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition grouped entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a matching cp definition grouped entry could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException {
-
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-			fetchByCPDefinitionId_Last(CPDefinitionId, orderByComparator);
-
-		if (cpDefinitionGroupedEntry != null) {
-			return cpDefinitionGroupedEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionGroupedEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator) {
-
-		int count = countByCPDefinitionId(CPDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionGroupedEntry> list = findByCPDefinitionId(
-			CPDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition grouped entries where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -1654,67 +1466,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 
 		List<CPDefinitionGroupedEntry> list = findByEntryCProductId(
 			entryCProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where entryCProductId = &#63;.
-	 *
-	 * @param entryCProductId the entry c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a matching cp definition grouped entry could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry findByEntryCProductId_Last(
-			long entryCProductId,
-			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException {
-
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-			fetchByEntryCProductId_Last(entryCProductId, orderByComparator);
-
-		if (cpDefinitionGroupedEntry != null) {
-			return cpDefinitionGroupedEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryCProductId=");
-		sb.append(entryCProductId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionGroupedEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where entryCProductId = &#63;.
-	 *
-	 * @param entryCProductId the entry c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry fetchByEntryCProductId_Last(
-		long entryCProductId,
-		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator) {
-
-		int count = countByEntryCProductId(entryCProductId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionGroupedEntry> list = findByEntryCProductId(
-			entryCProductId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2777,4 +2528,4 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-522422409
+// LIFERAY-SERVICE-BUILDER-HASH:29212979

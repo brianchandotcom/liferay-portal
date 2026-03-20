@@ -121,32 +121,6 @@ public interface KaleoConditionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo condition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo condition
-	 * @throws NoSuchConditionException if a matching kaleo condition could not be found
-	 */
-	public KaleoCondition findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
-				orderByComparator)
-		throws NoSuchConditionException;
-
-	/**
-	 * Returns the last kaleo condition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo condition, or <code>null</code> if a matching kaleo condition could not be found
-	 */
-	public KaleoCondition fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo conditions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -245,32 +219,6 @@ public interface KaleoConditionPersistence
 	 * @return the first matching kaleo condition, or <code>null</code> if a matching kaleo condition could not be found
 	 */
 	public KaleoCondition fetchByKaleoDefinitionVersionId_First(
-		long kaleoDefinitionVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo condition in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo condition
-	 * @throws NoSuchConditionException if a matching kaleo condition could not be found
-	 */
-	public KaleoCondition findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
-				orderByComparator)
-		throws NoSuchConditionException;
-
-	/**
-	 * Returns the last kaleo condition in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo condition, or <code>null</code> if a matching kaleo condition could not be found
-	 */
-	public KaleoCondition fetchByKaleoDefinitionVersionId_Last(
 		long kaleoDefinitionVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
 			orderByComparator);
@@ -456,4 +404,4 @@ public interface KaleoConditionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1023095270
+// LIFERAY-SERVICE-BUILDER-HASH:-32804224

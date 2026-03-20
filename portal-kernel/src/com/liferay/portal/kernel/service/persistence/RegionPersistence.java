@@ -119,32 +119,6 @@ public interface RegionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last region in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	public Region findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
-
-	/**
-	 * Returns the last region in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	public Region fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Region>
-			orderByComparator);
-
-	/**
 	 * Removes all the regions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -248,34 +222,6 @@ public interface RegionPersistence
 	 * @return the first matching region, or <code>null</code> if a matching region could not be found
 	 */
 	public Region fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Region>
-			orderByComparator);
-
-	/**
-	 * Returns the last region in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	public Region findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
-
-	/**
-	 * Returns the last region in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	public Region fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Region>
 			orderByComparator);
@@ -385,32 +331,6 @@ public interface RegionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last region in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	public Region findByCountryId_Last(
-			long countryId,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
-
-	/**
-	 * Returns the last region in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	public Region fetchByCountryId_Last(
-		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<Region>
-			orderByComparator);
-
-	/**
 	 * Removes all the regions where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -508,32 +428,6 @@ public interface RegionPersistence
 	 * @return the first matching region, or <code>null</code> if a matching region could not be found
 	 */
 	public Region fetchByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<Region>
-			orderByComparator);
-
-	/**
-	 * Returns the last region in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	public Region findByActive_Last(
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
-
-	/**
-	 * Returns the last region in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	public Region fetchByActive_Last(
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region>
 			orderByComparator);
@@ -642,34 +536,6 @@ public interface RegionPersistence
 	 * @return the first matching region, or <code>null</code> if a matching region could not be found
 	 */
 	public Region fetchByC_A_First(
-		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<Region>
-			orderByComparator);
-
-	/**
-	 * Returns the last region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	public Region findByC_A_Last(
-			long countryId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
-
-	/**
-	 * Returns the last region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	public Region fetchByC_A_Last(
 		long countryId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region>
 			orderByComparator);
@@ -860,4 +726,4 @@ public interface RegionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1179589537
+// LIFERAY-SERVICE-BUILDER-HASH:-715831114

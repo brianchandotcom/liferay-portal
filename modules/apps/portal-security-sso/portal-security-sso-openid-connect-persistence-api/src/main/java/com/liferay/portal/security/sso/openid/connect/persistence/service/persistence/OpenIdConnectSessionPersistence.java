@@ -122,32 +122,6 @@ public interface OpenIdConnectSessionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last open ID connect session in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session
-	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
-	 */
-	public OpenIdConnectSession findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OpenIdConnectSession> orderByComparator)
-		throws NoSuchSessionException;
-
-	/**
-	 * Returns the last open ID connect session in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
-	 */
-	public OpenIdConnectSession fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<OpenIdConnectSession>
-			orderByComparator);
-
-	/**
 	 * Removes all the open ID connect sessions where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -249,32 +223,6 @@ public interface OpenIdConnectSessionPersistence
 	 * @return the first matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
 	 */
 	public OpenIdConnectSession fetchByLtAccessTokenExpirationDate_First(
-		Date accessTokenExpirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<OpenIdConnectSession>
-			orderByComparator);
-
-	/**
-	 * Returns the last open ID connect session in the ordered set where accessTokenExpirationDate &lt; &#63;.
-	 *
-	 * @param accessTokenExpirationDate the access token expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session
-	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
-	 */
-	public OpenIdConnectSession findByLtAccessTokenExpirationDate_Last(
-			Date accessTokenExpirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OpenIdConnectSession> orderByComparator)
-		throws NoSuchSessionException;
-
-	/**
-	 * Returns the last open ID connect session in the ordered set where accessTokenExpirationDate &lt; &#63;.
-	 *
-	 * @param accessTokenExpirationDate the access token expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
-	 */
-	public OpenIdConnectSession fetchByLtAccessTokenExpirationDate_Last(
 		Date accessTokenExpirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<OpenIdConnectSession>
 			orderByComparator);
@@ -500,36 +448,6 @@ public interface OpenIdConnectSessionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param clientId the client ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session
-	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
-	 */
-	public OpenIdConnectSession findByC_A_C_Last(
-			long companyId, String authServerWellKnownURI, String clientId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OpenIdConnectSession> orderByComparator)
-		throws NoSuchSessionException;
-
-	/**
-	 * Returns the last open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param clientId the client ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
-	 */
-	public OpenIdConnectSession fetchByC_A_C_Last(
-		long companyId, String authServerWellKnownURI, String clientId,
-		com.liferay.portal.kernel.util.OrderByComparator<OpenIdConnectSession>
-			orderByComparator);
-
-	/**
 	 * Removes all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -733,4 +651,4 @@ public interface OpenIdConnectSessionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1254840871
+// LIFERAY-SERVICE-BUILDER-HASH:412893494

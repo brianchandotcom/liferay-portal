@@ -303,67 +303,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last mfafido2 credential entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching mfafido2 credential entry
-	 * @throws NoSuchMFAFIDO2CredentialEntryException if a matching mfafido2 credential entry could not be found
-	 */
-	@Override
-	public MFAFIDO2CredentialEntry findByUserId_Last(
-			long userId,
-			OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator)
-		throws NoSuchMFAFIDO2CredentialEntryException {
-
-		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (mfaFIDO2CredentialEntry != null) {
-			return mfaFIDO2CredentialEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchMFAFIDO2CredentialEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last mfafido2 credential entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching mfafido2 credential entry, or <code>null</code> if a matching mfafido2 credential entry could not be found
-	 */
-	@Override
-	public MFAFIDO2CredentialEntry fetchByUserId_Last(
-		long userId,
-		OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MFAFIDO2CredentialEntry> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the mfafido2 credential entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -651,67 +590,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 
 		List<MFAFIDO2CredentialEntry> list = findByCredentialKeyHash(
 			credentialKeyHash, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last mfafido2 credential entry in the ordered set where credentialKeyHash = &#63;.
-	 *
-	 * @param credentialKeyHash the credential key hash
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching mfafido2 credential entry
-	 * @throws NoSuchMFAFIDO2CredentialEntryException if a matching mfafido2 credential entry could not be found
-	 */
-	@Override
-	public MFAFIDO2CredentialEntry findByCredentialKeyHash_Last(
-			long credentialKeyHash,
-			OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator)
-		throws NoSuchMFAFIDO2CredentialEntryException {
-
-		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry =
-			fetchByCredentialKeyHash_Last(credentialKeyHash, orderByComparator);
-
-		if (mfaFIDO2CredentialEntry != null) {
-			return mfaFIDO2CredentialEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("credentialKeyHash=");
-		sb.append(credentialKeyHash);
-
-		sb.append("}");
-
-		throw new NoSuchMFAFIDO2CredentialEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last mfafido2 credential entry in the ordered set where credentialKeyHash = &#63;.
-	 *
-	 * @param credentialKeyHash the credential key hash
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching mfafido2 credential entry, or <code>null</code> if a matching mfafido2 credential entry could not be found
-	 */
-	@Override
-	public MFAFIDO2CredentialEntry fetchByCredentialKeyHash_Last(
-		long credentialKeyHash,
-		OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator) {
-
-		int count = countByCredentialKeyHash(credentialKeyHash);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MFAFIDO2CredentialEntry> list = findByCredentialKeyHash(
-			credentialKeyHash, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1688,4 +1566,4 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1410849217
+// LIFERAY-SERVICE-BUILDER-HASH:-390495207

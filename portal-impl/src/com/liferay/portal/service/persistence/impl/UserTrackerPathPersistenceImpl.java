@@ -297,67 +297,6 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user tracker path in the ordered set where userTrackerId = &#63;.
-	 *
-	 * @param userTrackerId the user tracker ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker path
-	 * @throws NoSuchUserTrackerPathException if a matching user tracker path could not be found
-	 */
-	@Override
-	public UserTrackerPath findByUserTrackerId_Last(
-			long userTrackerId,
-			OrderByComparator<UserTrackerPath> orderByComparator)
-		throws NoSuchUserTrackerPathException {
-
-		UserTrackerPath userTrackerPath = fetchByUserTrackerId_Last(
-			userTrackerId, orderByComparator);
-
-		if (userTrackerPath != null) {
-			return userTrackerPath;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userTrackerId=");
-		sb.append(userTrackerId);
-
-		sb.append("}");
-
-		throw new NoSuchUserTrackerPathException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user tracker path in the ordered set where userTrackerId = &#63;.
-	 *
-	 * @param userTrackerId the user tracker ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker path, or <code>null</code> if a matching user tracker path could not be found
-	 */
-	@Override
-	public UserTrackerPath fetchByUserTrackerId_Last(
-		long userTrackerId,
-		OrderByComparator<UserTrackerPath> orderByComparator) {
-
-		int count = countByUserTrackerId(userTrackerId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserTrackerPath> list = findByUserTrackerId(
-			userTrackerId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the user tracker paths where userTrackerId = &#63; from the database.
 	 *
 	 * @param userTrackerId the user tracker ID
@@ -1018,4 +957,4 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-43896659
+// LIFERAY-SERVICE-BUILDER-HASH:140424711

@@ -312,67 +312,6 @@ public class UserGroupGroupRolePersistenceImpl
 	}
 
 	/**
-	 * Returns the last user group group role in the ordered set where userGroupId = &#63;.
-	 *
-	 * @param userGroupId the user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole findByUserGroupId_Last(
-			long userGroupId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws NoSuchUserGroupGroupRoleException {
-
-		UserGroupGroupRole userGroupGroupRole = fetchByUserGroupId_Last(
-			userGroupId, orderByComparator);
-
-		if (userGroupGroupRole != null) {
-			return userGroupGroupRole;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userGroupId=");
-		sb.append(userGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupGroupRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group group role in the ordered set where userGroupId = &#63;.
-	 *
-	 * @param userGroupId the user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole fetchByUserGroupId_Last(
-		long userGroupId,
-		OrderByComparator<UserGroupGroupRole> orderByComparator) {
-
-		int count = countByUserGroupId(userGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroupGroupRole> list = findByUserGroupId(
-			userGroupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the user group group roles where userGroupId = &#63; from the database.
 	 *
 	 * @param userGroupId the user group ID
@@ -672,66 +611,6 @@ public class UserGroupGroupRolePersistenceImpl
 	}
 
 	/**
-	 * Returns the last user group group role in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole findByGroupId_Last(
-			long groupId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws NoSuchUserGroupGroupRoleException {
-
-		UserGroupGroupRole userGroupGroupRole = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (userGroupGroupRole != null) {
-			return userGroupGroupRole;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupGroupRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group group role in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole fetchByGroupId_Last(
-		long groupId, OrderByComparator<UserGroupGroupRole> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroupGroupRole> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the user group group roles where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1021,66 +900,6 @@ public class UserGroupGroupRolePersistenceImpl
 
 		List<UserGroupGroupRole> list = findByRoleId(
 			roleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user group group role in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole findByRoleId_Last(
-			long roleId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws NoSuchUserGroupGroupRoleException {
-
-		UserGroupGroupRole userGroupGroupRole = fetchByRoleId_Last(
-			roleId, orderByComparator);
-
-		if (userGroupGroupRole != null) {
-			return userGroupGroupRole;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("roleId=");
-		sb.append(roleId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupGroupRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group group role in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole fetchByRoleId_Last(
-		long roleId, OrderByComparator<UserGroupGroupRole> orderByComparator) {
-
-		int count = countByRoleId(roleId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroupGroupRole> list = findByRoleId(
-			roleId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1407,72 +1226,6 @@ public class UserGroupGroupRolePersistenceImpl
 	}
 
 	/**
-	 * Returns the last user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
-	 *
-	 * @param userGroupId the user group ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole findByU_G_Last(
-			long userGroupId, long groupId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws NoSuchUserGroupGroupRoleException {
-
-		UserGroupGroupRole userGroupGroupRole = fetchByU_G_Last(
-			userGroupId, groupId, orderByComparator);
-
-		if (userGroupGroupRole != null) {
-			return userGroupGroupRole;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userGroupId=");
-		sb.append(userGroupId);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupGroupRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
-	 *
-	 * @param userGroupId the user group ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole fetchByU_G_Last(
-		long userGroupId, long groupId,
-		OrderByComparator<UserGroupGroupRole> orderByComparator) {
-
-		int count = countByU_G(userGroupId, groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroupGroupRole> list = findByU_G(
-			userGroupId, groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the user group group roles where userGroupId = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param userGroupId the user group ID
@@ -1789,72 +1542,6 @@ public class UserGroupGroupRolePersistenceImpl
 
 		List<UserGroupGroupRole> list = findByG_R(
 			groupId, roleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole findByG_R_Last(
-			long groupId, long roleId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws NoSuchUserGroupGroupRoleException {
-
-		UserGroupGroupRole userGroupGroupRole = fetchByG_R_Last(
-			groupId, roleId, orderByComparator);
-
-		if (userGroupGroupRole != null) {
-			return userGroupGroupRole;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", roleId=");
-		sb.append(roleId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupGroupRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group group role, or <code>null</code> if a matching user group group role could not be found
-	 */
-	@Override
-	public UserGroupGroupRole fetchByG_R_Last(
-		long groupId, long roleId,
-		OrderByComparator<UserGroupGroupRole> orderByComparator) {
-
-		int count = countByG_R(groupId, roleId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroupGroupRole> list = findByG_R(
-			groupId, roleId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3115,4 +2802,4 @@ public class UserGroupGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-905782534
+// LIFERAY-SERVICE-BUILDER-HASH:-1075084509

@@ -123,32 +123,6 @@ public interface SocialActivityAchievementPersistence
 			<SocialActivityAchievement> orderByComparator);
 
 	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException;
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<SocialActivityAchievement> orderByComparator);
-
-	/**
 	 * Removes all the social activity achievements where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -253,34 +227,6 @@ public interface SocialActivityAchievementPersistence
 	 * @return the first matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	 */
 	public SocialActivityAchievement fetchByG_U_First(
-		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<SocialActivityAchievement> orderByComparator);
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement findByG_U_Last(
-			long groupId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException;
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement fetchByG_U_Last(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SocialActivityAchievement> orderByComparator);
@@ -397,34 +343,6 @@ public interface SocialActivityAchievementPersistence
 			<SocialActivityAchievement> orderByComparator);
 
 	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement findByG_N_Last(
-			long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException;
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement fetchByG_N_Last(
-		long groupId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<SocialActivityAchievement> orderByComparator);
-
-	/**
 	 * Removes all the social activity achievements where groupId = &#63; and name = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -531,34 +449,6 @@ public interface SocialActivityAchievementPersistence
 	 * @return the first matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	 */
 	public SocialActivityAchievement fetchByG_F_First(
-		long groupId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<SocialActivityAchievement> orderByComparator);
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement findByG_F_Last(
-			long groupId, boolean firstInGroup,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException;
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement fetchByG_F_Last(
 		long groupId, boolean firstInGroup,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<SocialActivityAchievement> orderByComparator);
@@ -739,36 +629,6 @@ public interface SocialActivityAchievementPersistence
 			<SocialActivityAchievement> orderByComparator);
 
 	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement findByG_U_F_Last(
-			long groupId, long userId, boolean firstInGroup,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException;
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	public SocialActivityAchievement fetchByG_U_F_Last(
-		long groupId, long userId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<SocialActivityAchievement> orderByComparator);
-
-	/**
 	 * Removes all the social activity achievements where groupId = &#63; and userId = &#63; and firstInGroup = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -914,4 +774,4 @@ public interface SocialActivityAchievementPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:433259179
+// LIFERAY-SERVICE-BUILDER-HASH:-545967035

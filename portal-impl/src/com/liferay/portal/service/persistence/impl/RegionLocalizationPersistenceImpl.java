@@ -310,67 +310,6 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last region localization in the ordered set where regionId = &#63;.
-	 *
-	 * @param regionId the region ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region localization
-	 * @throws NoSuchRegionLocalizationException if a matching region localization could not be found
-	 */
-	@Override
-	public RegionLocalization findByRegionId_Last(
-			long regionId,
-			OrderByComparator<RegionLocalization> orderByComparator)
-		throws NoSuchRegionLocalizationException {
-
-		RegionLocalization regionLocalization = fetchByRegionId_Last(
-			regionId, orderByComparator);
-
-		if (regionLocalization != null) {
-			return regionLocalization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("regionId=");
-		sb.append(regionId);
-
-		sb.append("}");
-
-		throw new NoSuchRegionLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last region localization in the ordered set where regionId = &#63;.
-	 *
-	 * @param regionId the region ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region localization, or <code>null</code> if a matching region localization could not be found
-	 */
-	@Override
-	public RegionLocalization fetchByRegionId_Last(
-		long regionId,
-		OrderByComparator<RegionLocalization> orderByComparator) {
-
-		int count = countByRegionId(regionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RegionLocalization> list = findByRegionId(
-			regionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the region localizations where regionId = &#63; from the database.
 	 *
 	 * @param regionId the region ID
@@ -1539,4 +1478,4 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1648734487
+// LIFERAY-SERVICE-BUILDER-HASH:-2033518175

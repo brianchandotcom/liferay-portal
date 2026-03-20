@@ -330,67 +330,6 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template
-	 * @throws NoSuchNotificationTemplateException if a matching notification template could not be found
-	 */
-	@Override
-	public NotificationTemplate findByUuid_Last(
-			String uuid,
-			OrderByComparator<NotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		NotificationTemplate notificationTemplate = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (notificationTemplate != null) {
-			return notificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template, or <code>null</code> if a matching notification template could not be found
-	 */
-	@Override
-	public NotificationTemplate fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationTemplate> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the notification templates that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -957,72 +896,6 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template
-	 * @throws NoSuchNotificationTemplateException if a matching notification template could not be found
-	 */
-	@Override
-	public NotificationTemplate findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<NotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		NotificationTemplate notificationTemplate = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (notificationTemplate != null) {
-			return notificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template, or <code>null</code> if a matching notification template could not be found
-	 */
-	@Override
-	public NotificationTemplate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationTemplate> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the notification templates that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1575,67 +1448,6 @@ public class NotificationTemplatePersistenceImpl
 
 		List<NotificationTemplate> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last notification template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template
-	 * @throws NoSuchNotificationTemplateException if a matching notification template could not be found
-	 */
-	@Override
-	public NotificationTemplate findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<NotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		NotificationTemplate notificationTemplate = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (notificationTemplate != null) {
-			return notificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template, or <code>null</code> if a matching notification template could not be found
-	 */
-	@Override
-	public NotificationTemplate fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationTemplate> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2951,4 +2763,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1748604953
+// LIFERAY-SERVICE-BUILDER-HASH:1170101623

@@ -463,64 +463,6 @@ public class CompanyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last company in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching company
-	 * @throws NoSuchCompanyException if a matching company could not be found
-	 */
-	@Override
-	public Company findByLogoId_Last(
-			long logoId, OrderByComparator<Company> orderByComparator)
-		throws NoSuchCompanyException {
-
-		Company company = fetchByLogoId_Last(logoId, orderByComparator);
-
-		if (company != null) {
-			return company;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("logoId=");
-		sb.append(logoId);
-
-		sb.append("}");
-
-		throw new NoSuchCompanyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last company in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching company, or <code>null</code> if a matching company could not be found
-	 */
-	@Override
-	public Company fetchByLogoId_Last(
-		long logoId, OrderByComparator<Company> orderByComparator) {
-
-		int count = countByLogoId(logoId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Company> list = findByLogoId(
-			logoId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the companies where logoId = &#63; from the database.
 	 *
 	 * @param logoId the logo ID
@@ -1219,4 +1161,4 @@ public class CompanyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1630150833
+// LIFERAY-SERVICE-BUILDER-HASH:-1451198161

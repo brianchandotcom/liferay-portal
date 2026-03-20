@@ -119,32 +119,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object field in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
 	 * Removes all the object fields where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -254,34 +228,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object field in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
 	 * Removes all the object fields where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -381,32 +327,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	public ObjectField fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
 			orderByComparator);
@@ -515,32 +435,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByListTypeDefinitionId_Last(
-			long listTypeDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByListTypeDefinitionId_Last(
-		long listTypeDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
 	 * Removes all the object fields where listTypeDefinitionId = &#63; from the database.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -639,32 +533,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	public ObjectField fetchByObjectDefinitionId_First(
-		long objectDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByObjectDefinitionId_Last(
 		long objectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
 			orderByComparator);
@@ -773,34 +641,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	public ObjectField fetchByC_U_First(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByC_U_Last(
-			long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByC_U_Last(
 		long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
 			orderByComparator);
@@ -917,34 +757,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object field in the ordered set where companyId = &#63; and businessType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByC_BT_Last(
-			long companyId, String businessType,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63; and businessType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByC_BT_Last(
-		long companyId, String businessType,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
 	 * Removes all the object fields where companyId = &#63; and businessType = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1051,34 +863,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	public ObjectField fetchByLTDI_S_First(
-		long listTypeDefinitionId, boolean state,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
-	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param state the state
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByLTDI_S_Last(
-			long listTypeDefinitionId, boolean state,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param state the state
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByLTDI_S_Last(
 		long listTypeDefinitionId, boolean state,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
 			orderByComparator);
@@ -1195,34 +979,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByODI_BT_Last(
-			long objectDefinitionId, String businessType,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByODI_BT_Last(
-		long objectDefinitionId, String businessType,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and businessType = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1329,34 +1085,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	public ObjectField fetchByODI_DTN_First(
-		long objectDefinitionId, String dbTableName,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and dbTableName = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbTableName the db table name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByODI_DTN_Last(
-			long objectDefinitionId, String dbTableName,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and dbTableName = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbTableName the db table name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByODI_DTN_Last(
 		long objectDefinitionId, String dbTableName,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
 			orderByComparator);
@@ -1473,34 +1201,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByODI_I_Last(
-			long objectDefinitionId, boolean indexed,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByODI_I_Last(
-		long objectDefinitionId, boolean indexed,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and indexed = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1607,34 +1307,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	public ObjectField fetchByODI_L_First(
-		long objectDefinitionId, boolean localized,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and localized = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByODI_L_Last(
-			long objectDefinitionId, boolean localized,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and localized = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByODI_L_Last(
 		long objectDefinitionId, boolean localized,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
 			orderByComparator);
@@ -1796,34 +1468,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	public ObjectField fetchByODI_S_First(
-		long objectDefinitionId, boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByODI_S_Last(
-			long objectDefinitionId, boolean system,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByODI_S_Last(
 		long objectDefinitionId, boolean system,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
 			orderByComparator);
@@ -2011,36 +1655,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbType the db type
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByODI_DBT_I_Last(
-			long objectDefinitionId, String dbType, boolean indexed,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbType the db type
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByODI_DBT_I_Last(
-		long objectDefinitionId, String dbType, boolean indexed,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -2160,36 +1774,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	public ObjectField fetchByODI_L_S_First(
-		long objectDefinitionId, boolean localized, boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-			orderByComparator);
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and localized = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	public ObjectField findByODI_L_S_Last(
-			long objectDefinitionId, boolean localized, boolean system,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
-				orderByComparator)
-		throws NoSuchObjectFieldException;
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and localized = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	public ObjectField fetchByODI_L_S_Last(
 		long objectDefinitionId, boolean localized, boolean system,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
 			orderByComparator);
@@ -2336,4 +1920,4 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1380277699
+// LIFERAY-SERVICE-BUILDER-HASH:-2004315164

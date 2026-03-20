@@ -121,32 +121,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm structure in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm structures where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm structures where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface DDMStructurePersistence
 	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	public DDMStructure fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
@@ -738,32 +658,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm structure in the ordered set where parentStructureId = &#63;.
-	 *
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByParentStructureId_Last(
-			long parentStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where parentStructureId = &#63;.
-	 *
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByParentStructureId_Last(
-		long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm structures where parentStructureId = &#63; from the database.
 	 *
 	 * @param parentStructureId the parent structure ID
@@ -861,32 +755,6 @@ public interface DDMStructurePersistence
 	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	public DDMStructure fetchByStructureKey_First(
-		String structureKey,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm structure in the ordered set where structureKey = &#63;.
-	 *
-	 * @param structureKey the structure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByStructureKey_Last(
-			String structureKey,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where structureKey = &#63;.
-	 *
-	 * @param structureKey the structure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByStructureKey_Last(
 		String structureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
@@ -996,34 +864,6 @@ public interface DDMStructurePersistence
 	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	public DDMStructure fetchByG_P_First(
-		long groupId, long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByG_P_Last(
-			long groupId, long parentStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByG_P_Last(
 		long groupId, long parentStructureId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
@@ -1189,34 +1029,6 @@ public interface DDMStructurePersistence
 	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	public DDMStructure fetchByG_C_First(
-		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByG_C_Last(
-			long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByG_C_Last(
 		long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
@@ -1520,34 +1332,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByC_C_Last(
-			long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByC_C_Last(
-		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm structures where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1785,36 +1569,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByG_N_D_Last(
-			long groupId, String name, String description,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByG_N_D_Last(
-		long groupId, String name, String description,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1997,38 +1751,6 @@ public interface DDMStructurePersistence
 	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	public DDMStructure fetchByG_C_N_D_First(
-		long groupId, long classNameId, String name, String description,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	public DDMStructure findByG_C_N_D_Last(
-			long groupId, long classNameId, String name, String description,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	public DDMStructure fetchByG_C_N_D_Last(
 		long groupId, long classNameId, String name, String description,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
@@ -2400,4 +2122,4 @@ public interface DDMStructurePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:790036559
+// LIFERAY-SERVICE-BUILDER-HASH:397474785

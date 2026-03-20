@@ -120,32 +120,6 @@ public interface SharepointOAuth2TokenEntryPersistence
 			<SharepointOAuth2TokenEntry> orderByComparator);
 
 	/**
-	 * Returns the last sharepoint o auth2 token entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharepoint o auth2 token entry
-	 * @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
-	 */
-	public SharepointOAuth2TokenEntry findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SharepointOAuth2TokenEntry> orderByComparator)
-		throws NoSuch2TokenEntryException;
-
-	/**
-	 * Returns the last sharepoint o auth2 token entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
-	 */
-	public SharepointOAuth2TokenEntry fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<SharepointOAuth2TokenEntry> orderByComparator);
-
-	/**
 	 * Removes all the sharepoint o auth2 token entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -341,4 +315,4 @@ public interface SharepointOAuth2TokenEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:669446430
+// LIFERAY-SERVICE-BUILDER-HASH:-1490231300

@@ -122,32 +122,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards thread in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards threads where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards thread in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards threads where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface MBThreadPersistence
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 */
 	public MBThread fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -661,34 +581,6 @@ public interface MBThreadPersistence
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 */
 	public MBThread fetchByG_C_First(
-		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByG_C_Last(
-			long groupId, long categoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByG_C_Last(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -990,34 +882,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByG_NotC_Last(
-			long groupId, long categoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByG_NotC_Last(
-		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1177,34 +1041,6 @@ public interface MBThreadPersistence
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 */
 	public MBThread fetchByG_S_First(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByG_S_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByG_S_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -1373,34 +1209,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards thread in the ordered set where categoryId = &#63; and priority = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByC_P_Last(
-			long categoryId, double priority,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where categoryId = &#63; and priority = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByC_P_Last(
-		long categoryId, double priority,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards threads where categoryId = &#63; and priority = &#63; from the database.
 	 *
 	 * @param categoryId the category ID
@@ -1507,34 +1315,6 @@ public interface MBThreadPersistence
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 */
 	public MBThread fetchByL_P_First(
-		Date lastPostDate, double priority,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards thread in the ordered set where lastPostDate = &#63; and priority = &#63;.
-	 *
-	 * @param lastPostDate the last post date
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByL_P_Last(
-			Date lastPostDate, double priority,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where lastPostDate = &#63; and priority = &#63;.
-	 *
-	 * @param lastPostDate the last post date
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByL_P_Last(
 		Date lastPostDate, double priority,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -1652,36 +1432,6 @@ public interface MBThreadPersistence
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 */
 	public MBThread fetchByG_C_L_First(
-		long groupId, long categoryId, Date lastPostDate,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByG_C_L_Last(
-			long groupId, long categoryId, Date lastPostDate,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByG_C_L_Last(
 		long groupId, long categoryId, Date lastPostDate,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -1860,36 +1610,6 @@ public interface MBThreadPersistence
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 */
 	public MBThread fetchByG_C_S_First(
-		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByG_C_S_Last(
-			long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByG_C_S_Last(
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -2209,36 +1929,6 @@ public interface MBThreadPersistence
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 */
 	public MBThread fetchByG_C_NotS_First(
-		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByG_C_NotS_Last(
-			long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByG_C_NotS_Last(
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -2564,36 +2254,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByG_NotC_S_Last(
-			long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByG_NotC_S_Last(
-		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2766,36 +2426,6 @@ public interface MBThreadPersistence
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 */
 	public MBThread fetchByG_NotC_NotS_First(
-		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread
-	 * @throws NoSuchThreadException if a matching message boards thread could not be found
-	 */
-	public MBThread findByG_NotC_NotS_Last(
-			long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
-	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByG_NotC_NotS_Last(
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -2998,4 +2628,4 @@ public interface MBThreadPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1339581522
+// LIFERAY-SERVICE-BUILDER-HASH:-861305978

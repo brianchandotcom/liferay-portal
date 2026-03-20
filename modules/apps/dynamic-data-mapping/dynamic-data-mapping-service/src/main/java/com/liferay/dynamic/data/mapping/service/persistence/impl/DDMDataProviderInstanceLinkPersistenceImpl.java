@@ -332,68 +332,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a matching ddm data provider instance link could not be found
-	 */
-	@Override
-	public DDMDataProviderInstanceLink findByDataProviderInstanceId_Last(
-			long dataProviderInstanceId,
-			OrderByComparator<DDMDataProviderInstanceLink> orderByComparator)
-		throws NoSuchDataProviderInstanceLinkException {
-
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
-			fetchByDataProviderInstanceId_Last(
-				dataProviderInstanceId, orderByComparator);
-
-		if (ddmDataProviderInstanceLink != null) {
-			return ddmDataProviderInstanceLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("dataProviderInstanceId=");
-		sb.append(dataProviderInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
-	 */
-	@Override
-	public DDMDataProviderInstanceLink fetchByDataProviderInstanceId_Last(
-		long dataProviderInstanceId,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
-
-		int count = countByDataProviderInstanceId(dataProviderInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMDataProviderInstanceLink> list = findByDataProviderInstanceId(
-			dataProviderInstanceId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm data provider instance links where dataProviderInstanceId = &#63; from the database.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
@@ -696,67 +634,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 		List<DDMDataProviderInstanceLink> list = findByStructureId(
 			structureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm data provider instance link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a matching ddm data provider instance link could not be found
-	 */
-	@Override
-	public DDMDataProviderInstanceLink findByStructureId_Last(
-			long structureId,
-			OrderByComparator<DDMDataProviderInstanceLink> orderByComparator)
-		throws NoSuchDataProviderInstanceLinkException {
-
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
-			fetchByStructureId_Last(structureId, orderByComparator);
-
-		if (ddmDataProviderInstanceLink != null) {
-			return ddmDataProviderInstanceLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm data provider instance link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
-	 */
-	@Override
-	public DDMDataProviderInstanceLink fetchByStructureId_Last(
-		long structureId,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
-
-		int count = countByStructureId(structureId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMDataProviderInstanceLink> list = findByStructureId(
-			structureId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2016,4 +1893,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1493385544
+// LIFERAY-SERVICE-BUILDER-HASH:-15933858

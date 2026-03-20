@@ -119,32 +119,6 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	public ObjectView findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-				orderByComparator)
-		throws NoSuchObjectViewException;
-
-	/**
-	 * Returns the last object view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	public ObjectView fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-			orderByComparator);
-
-	/**
 	 * Removes all the object views where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -248,34 +222,6 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 	 * @return the first matching object view, or <code>null</code> if a matching object view could not be found
 	 */
 	public ObjectView fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-			orderByComparator);
-
-	/**
-	 * Returns the last object view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	public ObjectView findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-				orderByComparator)
-		throws NoSuchObjectViewException;
-
-	/**
-	 * Returns the last object view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	public ObjectView fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
 			orderByComparator);
@@ -386,32 +332,6 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	public ObjectView findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-				orderByComparator)
-		throws NoSuchObjectViewException;
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	public ObjectView fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-			orderByComparator);
-
-	/**
 	 * Removes all the object views where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -516,34 +436,6 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 	 * @return the first matching object view, or <code>null</code> if a matching object view could not be found
 	 */
 	public ObjectView fetchByODI_DOV_First(
-		long objectDefinitionId, boolean defaultObjectView,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-			orderByComparator);
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	public ObjectView findByODI_DOV_Last(
-			long objectDefinitionId, boolean defaultObjectView,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-				orderByComparator)
-		throws NoSuchObjectViewException;
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	public ObjectView fetchByODI_DOV_Last(
 		long objectDefinitionId, boolean defaultObjectView,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
 			orderByComparator);
@@ -688,4 +580,4 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-816572484
+// LIFERAY-SERVICE-BUILDER-HASH:-2117672176

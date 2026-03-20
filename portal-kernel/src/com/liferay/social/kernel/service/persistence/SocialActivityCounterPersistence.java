@@ -122,32 +122,6 @@ public interface SocialActivityCounterPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter
-	 * @throws NoSuchActivityCounterException if a matching social activity counter could not be found
-	 */
-	public SocialActivityCounter findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityCounter> orderByComparator)
-		throws NoSuchActivityCounterException;
-
-	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 */
-	public SocialActivityCounter fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityCounter>
-			orderByComparator);
-
-	/**
 	 * Removes all the social activity counters where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -252,34 +226,6 @@ public interface SocialActivityCounterPersistence
 	 * @return the first matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	 */
 	public SocialActivityCounter fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityCounter>
-			orderByComparator);
-
-	/**
-	 * Returns the last social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter
-	 * @throws NoSuchActivityCounterException if a matching social activity counter could not be found
-	 */
-	public SocialActivityCounter findByC_C_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityCounter> orderByComparator)
-		throws NoSuchActivityCounterException;
-
-	/**
-	 * Returns the last social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 */
-	public SocialActivityCounter fetchByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityCounter>
 			orderByComparator);
@@ -406,38 +352,6 @@ public interface SocialActivityCounterPersistence
 	 * @return the first matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	 */
 	public SocialActivityCounter fetchByG_C_C_O_First(
-		long groupId, long classNameId, long classPK, int ownerType,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityCounter>
-			orderByComparator);
-
-	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter
-	 * @throws NoSuchActivityCounterException if a matching social activity counter could not be found
-	 */
-	public SocialActivityCounter findByG_C_C_O_Last(
-			long groupId, long classNameId, long classPK, int ownerType,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityCounter> orderByComparator)
-		throws NoSuchActivityCounterException;
-
-	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 */
-	public SocialActivityCounter fetchByG_C_C_O_Last(
 		long groupId, long classNameId, long classPK, int ownerType,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityCounter>
 			orderByComparator);
@@ -746,4 +660,4 @@ public interface SocialActivityCounterPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:938988576
+// LIFERAY-SERVICE-BUILDER-HASH:-48323162

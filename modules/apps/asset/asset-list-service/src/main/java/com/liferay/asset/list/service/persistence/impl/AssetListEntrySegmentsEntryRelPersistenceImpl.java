@@ -343,67 +343,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws NoSuchEntrySegmentsEntryRelException {
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntrySegmentsEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntrySegmentsEntryRel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset list entry segments entry rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -970,72 +909,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws NoSuchEntrySegmentsEntryRelException {
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntrySegmentsEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntrySegmentsEntryRel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset list entry segments entry rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1373,67 +1246,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where assetListEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel findByAssetListEntryId_Last(
-			long assetListEntryId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws NoSuchEntrySegmentsEntryRelException {
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByAssetListEntryId_Last(assetListEntryId, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetListEntryId=");
-		sb.append(assetListEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntrySegmentsEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where assetListEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel fetchByAssetListEntryId_Last(
-		long assetListEntryId,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		int count = countByAssetListEntryId(assetListEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntrySegmentsEntryRel> list = findByAssetListEntryId(
-			assetListEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset list entry segments entry rels where assetListEntryId = &#63; from the database.
 	 *
 	 * @param assetListEntryId the asset list entry ID
@@ -1738,67 +1550,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 
 		List<AssetListEntrySegmentsEntryRel> list = findBySegmentsEntryId(
 			segmentsEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel findBySegmentsEntryId_Last(
-			long segmentsEntryId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws NoSuchEntrySegmentsEntryRelException {
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchBySegmentsEntryId_Last(segmentsEntryId, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntrySegmentsEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel fetchBySegmentsEntryId_Last(
-		long segmentsEntryId,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		int count = countBySegmentsEntryId(segmentsEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntrySegmentsEntryRel> list = findBySegmentsEntryId(
-			segmentsEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2332,74 +2083,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 
 		List<AssetListEntrySegmentsEntryRel> list = findByA_S_C(
 			assetListEntryId, segmentsEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel findByA_S_C_Last(
-			long assetListEntryId, long segmentsEntryId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws NoSuchEntrySegmentsEntryRelException {
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByA_S_C_Last(
-				assetListEntryId, segmentsEntryId, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetListEntryId=");
-		sb.append(assetListEntryId);
-
-		sb.append(", segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntrySegmentsEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel fetchByA_S_C_Last(
-		long assetListEntryId, long segmentsEntryId,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		int count = countByA_S_C(assetListEntryId, segmentsEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntrySegmentsEntryRel> list = findByA_S_C(
-			assetListEntryId, segmentsEntryId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3927,4 +3610,4 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-75529116
+// LIFERAY-SERVICE-BUILDER-HASH:-65136405

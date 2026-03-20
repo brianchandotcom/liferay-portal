@@ -121,32 +121,6 @@ public interface KaleoDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-				orderByComparator)
-		throws NoSuchDefinitionException;
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface KaleoDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-				orderByComparator)
-		throws NoSuchDefinitionException;
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -438,32 +384,6 @@ public interface KaleoDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-				orderByComparator)
-		throws NoSuchDefinitionException;
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo definitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -561,32 +481,6 @@ public interface KaleoDefinitionPersistence
 	 * @return the first matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	 */
 	public KaleoDefinition fetchByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition findByActive_Last(
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-				orderByComparator)
-		throws NoSuchDefinitionException;
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition fetchByActive_Last(
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
 			orderByComparator);
@@ -751,34 +645,6 @@ public interface KaleoDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo definition in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition findByC_A_Last(
-			long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-				orderByComparator)
-		throws NoSuchDefinitionException;
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition fetchByC_A_Last(
-		long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo definitions where companyId = &#63; and active = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -891,36 +757,6 @@ public interface KaleoDefinitionPersistence
 	 * @return the first matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
 	 */
 	public KaleoDefinition fetchByG_C_S_First(
-		long groupId, long companyId, String scope,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition findByG_C_S_Last(
-			long groupId, long companyId, String scope,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-				orderByComparator)
-		throws NoSuchDefinitionException;
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition fetchByG_C_S_Last(
 		long groupId, long companyId, String scope,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
 			orderByComparator);
@@ -1169,38 +1005,6 @@ public interface KaleoDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition findByG_C_S_A_Last(
-			long groupId, long companyId, String scope, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-				orderByComparator)
-		throws NoSuchDefinitionException;
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	public KaleoDefinition fetchByG_C_S_A_Last(
-		long groupId, long companyId, String scope, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo definitions where groupId = &#63; and companyId = &#63; and scope = &#63; and active = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1397,4 +1201,4 @@ public interface KaleoDefinitionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1027516172
+// LIFERAY-SERVICE-BUILDER-HASH:-1518567941

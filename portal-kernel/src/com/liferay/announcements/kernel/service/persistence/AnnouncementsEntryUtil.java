@@ -213,35 +213,6 @@ public class AnnouncementsEntryUtil {
 	}
 
 	/**
-	 * Returns the last announcements entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -428,40 +399,6 @@ public class AnnouncementsEntryUtil {
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -656,38 +593,6 @@ public class AnnouncementsEntryUtil {
 	}
 
 	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -866,35 +771,6 @@ public class AnnouncementsEntryUtil {
 		long userId, OrderByComparator<AnnouncementsEntry> orderByComparator) {
 
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry findByUserId_Last(
-			long userId,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry fetchByUserId_Last(
-		long userId, OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -1085,40 +961,6 @@ public class AnnouncementsEntryUtil {
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
 	}
 
@@ -1326,42 +1168,6 @@ public class AnnouncementsEntryUtil {
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_C_C_First(
-			companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_C_Last(
 			companyId, classNameId, classPK, orderByComparator);
 	}
 
@@ -1583,42 +1389,6 @@ public class AnnouncementsEntryUtil {
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_C_A_First(
-			classNameId, classPK, alert, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry findByC_C_A_Last(
-			long classNameId, long classPK, boolean alert,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_A_Last(
-			classNameId, classPK, alert, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry fetchByC_C_A_Last(
-		long classNameId, long classPK, boolean alert,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_A_Last(
 			classNameId, classPK, alert, orderByComparator);
 	}
 
@@ -1849,44 +1619,6 @@ public class AnnouncementsEntryUtil {
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_C_C_A_First(
-			companyId, classNameId, classPK, alert, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry findByC_C_C_A_Last(
-			long companyId, long classNameId, long classPK, boolean alert,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_C_A_Last(
-			companyId, classNameId, classPK, alert, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	public static AnnouncementsEntry fetchByC_C_C_A_Last(
-		long companyId, long classNameId, long classPK, boolean alert,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_C_A_Last(
 			companyId, classNameId, classPK, alert, orderByComparator);
 	}
 
@@ -2168,4 +1900,4 @@ public class AnnouncementsEntryUtil {
 	private static volatile AnnouncementsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1016877452
+// LIFERAY-SERVICE-BUILDER-HASH:-964056352

@@ -327,63 +327,6 @@ public class TeamPersistenceImpl
 	}
 
 	/**
-	 * Returns the last team in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team
-	 * @throws NoSuchTeamException if a matching team could not be found
-	 */
-	@Override
-	public Team findByUuid_Last(
-			String uuid, OrderByComparator<Team> orderByComparator)
-		throws NoSuchTeamException {
-
-		Team team = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (team != null) {
-			return team;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTeamException(sb.toString());
-	}
-
-	/**
-	 * Returns the last team in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team, or <code>null</code> if a matching team could not be found
-	 */
-	@Override
-	public Team fetchByUuid_Last(
-		String uuid, OrderByComparator<Team> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Team> list = findByUuid(uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the teams where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -928,71 +871,6 @@ public class TeamPersistenceImpl
 	}
 
 	/**
-	 * Returns the last team in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team
-	 * @throws NoSuchTeamException if a matching team could not be found
-	 */
-	@Override
-	public Team findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Team> orderByComparator)
-		throws NoSuchTeamException {
-
-		Team team = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (team != null) {
-			return team;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTeamException(sb.toString());
-	}
-
-	/**
-	 * Returns the last team in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team, or <code>null</code> if a matching team could not be found
-	 */
-	@Override
-	public Team fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Team> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Team> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the teams where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1312,64 +1190,6 @@ public class TeamPersistenceImpl
 	}
 
 	/**
-	 * Returns the last team in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team
-	 * @throws NoSuchTeamException if a matching team could not be found
-	 */
-	@Override
-	public Team findByCompanyId_Last(
-			long companyId, OrderByComparator<Team> orderByComparator)
-		throws NoSuchTeamException {
-
-		Team team = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (team != null) {
-			return team;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTeamException(sb.toString());
-	}
-
-	/**
-	 * Returns the last team in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team, or <code>null</code> if a matching team could not be found
-	 */
-	@Override
-	public Team fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Team> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Team> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the teams where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1654,64 +1474,6 @@ public class TeamPersistenceImpl
 		long groupId, OrderByComparator<Team> orderByComparator) {
 
 		List<Team> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last team in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team
-	 * @throws NoSuchTeamException if a matching team could not be found
-	 */
-	@Override
-	public Team findByGroupId_Last(
-			long groupId, OrderByComparator<Team> orderByComparator)
-		throws NoSuchTeamException {
-
-		Team team = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (team != null) {
-			return team;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchTeamException(sb.toString());
-	}
-
-	/**
-	 * Returns the last team in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team, or <code>null</code> if a matching team could not be found
-	 */
-	@Override
-	public Team fetchByGroupId_Last(
-		long groupId, OrderByComparator<Team> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Team> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3845,4 +3607,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:432964302
+// LIFERAY-SERVICE-BUILDER-HASH:375289448

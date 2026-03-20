@@ -122,32 +122,6 @@ public interface CommerceNotificationTemplatePersistence
 			<CommerceNotificationTemplate> orderByComparator);
 
 	/**
-	 * Returns the last commerce notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceNotificationTemplate> orderByComparator);
-
-	/**
 	 * Removes all the commerce notification templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -309,34 +283,6 @@ public interface CommerceNotificationTemplatePersistence
 			<CommerceNotificationTemplate> orderByComparator);
 
 	/**
-	 * Returns the last commerce notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceNotificationTemplate> orderByComparator);
-
-	/**
 	 * Removes all the commerce notification templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -437,32 +383,6 @@ public interface CommerceNotificationTemplatePersistence
 	 * @return the first matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
 	 */
 	public CommerceNotificationTemplate fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceNotificationTemplate> orderByComparator);
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationTemplate> orderByComparator);
@@ -622,34 +542,6 @@ public interface CommerceNotificationTemplatePersistence
 	 * @return the first matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
 	 */
 	public CommerceNotificationTemplate fetchByG_E_First(
-		long groupId, boolean enabled,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceNotificationTemplate> orderByComparator);
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate findByG_E_Last(
-			long groupId, boolean enabled,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate fetchByG_E_Last(
 		long groupId, boolean enabled,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationTemplate> orderByComparator);
@@ -821,36 +713,6 @@ public interface CommerceNotificationTemplatePersistence
 	 * @return the first matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
 	 */
 	public CommerceNotificationTemplate fetchByG_T_E_First(
-		long groupId, String type, boolean enabled,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceNotificationTemplate> orderByComparator);
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and type = &#63; and enabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate findByG_T_E_Last(
-			long groupId, String type, boolean enabled,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and type = &#63; and enabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	public CommerceNotificationTemplate fetchByG_T_E_Last(
 		long groupId, String type, boolean enabled,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationTemplate> orderByComparator);
@@ -1062,4 +924,4 @@ public interface CommerceNotificationTemplatePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2138570575
+// LIFERAY-SERVICE-BUILDER-HASH:786603805

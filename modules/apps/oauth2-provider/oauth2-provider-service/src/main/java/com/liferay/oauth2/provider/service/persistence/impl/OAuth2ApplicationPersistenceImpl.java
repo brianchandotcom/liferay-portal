@@ -328,65 +328,6 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	@Override
-	public OAuth2Application findByUuid_Last(
-			String uuid, OrderByComparator<OAuth2Application> orderByComparator)
-		throws NoSuchOAuth2ApplicationException {
-
-		OAuth2Application oAuth2Application = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (oAuth2Application != null) {
-			return oAuth2Application;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	@Override
-	public OAuth2Application fetchByUuid_Last(
-		String uuid, OrderByComparator<OAuth2Application> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2Application> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -950,72 +891,6 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	@Override
-	public OAuth2Application findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws NoSuchOAuth2ApplicationException {
-
-		OAuth2Application oAuth2Application = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (oAuth2Application != null) {
-			return oAuth2Application;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	@Override
-	public OAuth2Application fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2Application> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1567,67 +1442,6 @@ public class OAuth2ApplicationPersistenceImpl
 
 		List<OAuth2Application> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	@Override
-	public OAuth2Application findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws NoSuchOAuth2ApplicationException {
-
-		OAuth2Application oAuth2Application = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (oAuth2Application != null) {
-			return oAuth2Application;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	@Override
-	public OAuth2Application fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2Application> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2349,72 +2163,6 @@ public class OAuth2ApplicationPersistenceImpl
 
 		List<OAuth2Application> list = findByC_CP(
 			companyId, clientProfile, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	@Override
-	public OAuth2Application findByC_CP_Last(
-			long companyId, int clientProfile,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws NoSuchOAuth2ApplicationException {
-
-		OAuth2Application oAuth2Application = fetchByC_CP_Last(
-			companyId, clientProfile, orderByComparator);
-
-		if (oAuth2Application != null) {
-			return oAuth2Application;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", clientProfile=");
-		sb.append(clientProfile);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	@Override
-	public OAuth2Application fetchByC_CP_Last(
-		long companyId, int clientProfile,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		int count = countByC_CP(companyId, clientProfile);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2Application> list = findByC_CP(
-			companyId, clientProfile, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3782,4 +3530,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:16813290
+// LIFERAY-SERVICE-BUILDER-HASH:-718103119

@@ -213,34 +213,6 @@ public class TrashEntryUtil {
 	}
 
 	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public static TrashEntry findByGroupId_Last(
-			long groupId, OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.trash.exception.NoSuchEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public static TrashEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<TrashEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the trash entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -358,36 +330,6 @@ public class TrashEntryUtil {
 		long companyId, OrderByComparator<TrashEntry> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public static TrashEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.trash.exception.NoSuchEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public static TrashEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<TrashEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -517,40 +459,6 @@ public class TrashEntryUtil {
 		OrderByComparator<TrashEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_LtCD_First(
-			groupId, createDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public static TrashEntry findByG_LtCD_Last(
-			long groupId, Date createDate,
-			OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.trash.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_LtCD_Last(
-			groupId, createDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public static TrashEntry fetchByG_LtCD_Last(
-		long groupId, Date createDate,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_LtCD_Last(
 			groupId, createDate, orderByComparator);
 	}
 
@@ -687,40 +595,6 @@ public class TrashEntryUtil {
 	}
 
 	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public static TrashEntry findByG_CN_Last(
-			long groupId, long classNameId,
-			OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.trash.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_CN_Last(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public static TrashEntry fetchByG_CN_Last(
-		long groupId, long classNameId,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_CN_Last(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the trash entries where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -851,40 +725,6 @@ public class TrashEntryUtil {
 		OrderByComparator<TrashEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_CN_First(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public static TrashEntry findByC_CN_Last(
-			long companyId, long classNameId,
-			OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.trash.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public static TrashEntry fetchByC_CN_Last(
-		long companyId, long classNameId,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_CN_Last(
 			companyId, classNameId, orderByComparator);
 	}
 
@@ -1131,4 +971,4 @@ public class TrashEntryUtil {
 	private static volatile TrashEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1532512038
+// LIFERAY-SERVICE-BUILDER-HASH:46348401

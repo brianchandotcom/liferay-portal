@@ -334,66 +334,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot entry group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<DepotEntryGroupRel> orderByComparator)
-		throws NoSuchEntryGroupRelException {
-
-		DepotEntryGroupRel depotEntryGroupRel = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel fetchByUuid_Last(
-		String uuid, OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryGroupRel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot entry group rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -942,72 +882,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot entry group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DepotEntryGroupRel> orderByComparator)
-		throws NoSuchEntryGroupRelException {
-
-		DepotEntryGroupRel depotEntryGroupRel = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryGroupRel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot entry group rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1337,67 +1211,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot entry group rel in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel findByDepotEntryId_Last(
-			long depotEntryId,
-			OrderByComparator<DepotEntryGroupRel> orderByComparator)
-		throws NoSuchEntryGroupRelException {
-
-		DepotEntryGroupRel depotEntryGroupRel = fetchByDepotEntryId_Last(
-			depotEntryId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("depotEntryId=");
-		sb.append(depotEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel fetchByDepotEntryId_Last(
-		long depotEntryId,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		int count = countByDepotEntryId(depotEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryGroupRel> list = findByDepotEntryId(
-			depotEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot entry group rels where depotEntryId = &#63; from the database.
 	 *
 	 * @param depotEntryId the depot entry ID
@@ -1689,67 +1502,6 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		List<DepotEntryGroupRel> list = findByToGroupId(
 			toGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where toGroupId = &#63;.
-	 *
-	 * @param toGroupId the to group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel findByToGroupId_Last(
-			long toGroupId,
-			OrderByComparator<DepotEntryGroupRel> orderByComparator)
-		throws NoSuchEntryGroupRelException {
-
-		DepotEntryGroupRel depotEntryGroupRel = fetchByToGroupId_Last(
-			toGroupId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("toGroupId=");
-		sb.append(toGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where toGroupId = &#63;.
-	 *
-	 * @param toGroupId the to group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel fetchByToGroupId_Last(
-		long toGroupId,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		int count = countByToGroupId(toGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryGroupRel> list = findByToGroupId(
-			toGroupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2076,73 +1828,6 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		List<DepotEntryGroupRel> list = findByDDMSA_TGI(
 			ddmStructuresAvailable, toGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where ddmStructuresAvailable = &#63; and toGroupId = &#63;.
-	 *
-	 * @param ddmStructuresAvailable the ddm structures available
-	 * @param toGroupId the to group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel findByDDMSA_TGI_Last(
-			boolean ddmStructuresAvailable, long toGroupId,
-			OrderByComparator<DepotEntryGroupRel> orderByComparator)
-		throws NoSuchEntryGroupRelException {
-
-		DepotEntryGroupRel depotEntryGroupRel = fetchByDDMSA_TGI_Last(
-			ddmStructuresAvailable, toGroupId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ddmStructuresAvailable=");
-		sb.append(ddmStructuresAvailable);
-
-		sb.append(", toGroupId=");
-		sb.append(toGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where ddmStructuresAvailable = &#63; and toGroupId = &#63;.
-	 *
-	 * @param ddmStructuresAvailable the ddm structures available
-	 * @param toGroupId the to group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel fetchByDDMSA_TGI_Last(
-		boolean ddmStructuresAvailable, long toGroupId,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		int count = countByDDMSA_TGI(ddmStructuresAvailable, toGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryGroupRel> list = findByDDMSA_TGI(
-			ddmStructuresAvailable, toGroupId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2678,72 +2363,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot entry group rel in the ordered set where searchable = &#63; and toGroupId = &#63;.
-	 *
-	 * @param searchable the searchable
-	 * @param toGroupId the to group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel findByS_TGI_Last(
-			boolean searchable, long toGroupId,
-			OrderByComparator<DepotEntryGroupRel> orderByComparator)
-		throws NoSuchEntryGroupRelException {
-
-		DepotEntryGroupRel depotEntryGroupRel = fetchByS_TGI_Last(
-			searchable, toGroupId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("searchable=");
-		sb.append(searchable);
-
-		sb.append(", toGroupId=");
-		sb.append(toGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where searchable = &#63; and toGroupId = &#63;.
-	 *
-	 * @param searchable the searchable
-	 * @param toGroupId the to group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel fetchByS_TGI_Last(
-		boolean searchable, long toGroupId,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		int count = countByS_TGI(searchable, toGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryGroupRel> list = findByS_TGI(
-			searchable, toGroupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot entry group rels where searchable = &#63; and toGroupId = &#63; from the database.
 	 *
 	 * @param searchable the searchable
@@ -3061,72 +2680,6 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		List<DepotEntryGroupRel> list = findByTGI_T(
 			toGroupId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where toGroupId = &#63; and type = &#63;.
-	 *
-	 * @param toGroupId the to group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel findByTGI_T_Last(
-			long toGroupId, int type,
-			OrderByComparator<DepotEntryGroupRel> orderByComparator)
-		throws NoSuchEntryGroupRelException {
-
-		DepotEntryGroupRel depotEntryGroupRel = fetchByTGI_T_Last(
-			toGroupId, type, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("toGroupId=");
-		sb.append(toGroupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry group rel in the ordered set where toGroupId = &#63; and type = &#63;.
-	 *
-	 * @param toGroupId the to group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel fetchByTGI_T_Last(
-		long toGroupId, int type,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		int count = countByTGI_T(toGroupId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryGroupRel> list = findByTGI_T(
-			toGroupId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4329,4 +3882,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:783741763
+// LIFERAY-SERVICE-BUILDER-HASH:-418896469

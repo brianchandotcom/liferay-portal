@@ -122,32 +122,6 @@ public interface AssetVocabularyGroupRelPersistence
 			<AssetVocabularyGroupRel> orderByComparator);
 
 	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	public AssetVocabularyGroupRel findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException;
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	public AssetVocabularyGroupRel fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AssetVocabularyGroupRel> orderByComparator);
-
-	/**
 	 * Removes all the asset vocabulary group rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface AssetVocabularyGroupRelPersistence
 			<AssetVocabularyGroupRel> orderByComparator);
 
 	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	public AssetVocabularyGroupRel findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException;
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	public AssetVocabularyGroupRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AssetVocabularyGroupRel> orderByComparator);
-
-	/**
 	 * Removes all the asset vocabulary group rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -439,32 +385,6 @@ public interface AssetVocabularyGroupRelPersistence
 			<AssetVocabularyGroupRel> orderByComparator);
 
 	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	public AssetVocabularyGroupRel findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException;
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	public AssetVocabularyGroupRel fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AssetVocabularyGroupRel> orderByComparator);
-
-	/**
 	 * Removes all the asset vocabulary group rels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -563,32 +483,6 @@ public interface AssetVocabularyGroupRelPersistence
 	 * @return the first matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
 	 */
 	public AssetVocabularyGroupRel fetchByVocabularyId_First(
-		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AssetVocabularyGroupRel> orderByComparator);
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where vocabularyId = &#63;.
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	public AssetVocabularyGroupRel findByVocabularyId_Last(
-			long vocabularyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException;
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where vocabularyId = &#63;.
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	public AssetVocabularyGroupRel fetchByVocabularyId_Last(
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetVocabularyGroupRel> orderByComparator);
@@ -783,4 +677,4 @@ public interface AssetVocabularyGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1372714124
+// LIFERAY-SERVICE-BUILDER-HASH:-513751402

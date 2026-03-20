@@ -314,68 +314,6 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce wish list item in the ordered set where commerceWishListId = &#63;.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item
-	 * @throws NoSuchWishListItemException if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem findByCommerceWishListId_Last(
-			long commerceWishListId,
-			OrderByComparator<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException {
-
-		CommerceWishListItem commerceWishListItem =
-			fetchByCommerceWishListId_Last(
-				commerceWishListId, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceWishListId=");
-		sb.append(commerceWishListId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce wish list item in the ordered set where commerceWishListId = &#63;.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item, or <code>null</code> if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem fetchByCommerceWishListId_Last(
-		long commerceWishListId,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		int count = countByCommerceWishListId(commerceWishListId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceWishListItem> list = findByCommerceWishListId(
-			commerceWishListId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce wish list items where commerceWishListId = &#63; from the database.
 	 *
 	 * @param commerceWishListId the commerce wish list ID
@@ -685,67 +623,6 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce wish list item in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item
-	 * @throws NoSuchWishListItemException if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem findByCPInstanceUuid_Last(
-			String CPInstanceUuid,
-			OrderByComparator<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException {
-
-		CommerceWishListItem commerceWishListItem = fetchByCPInstanceUuid_Last(
-			CPInstanceUuid, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce wish list item in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item, or <code>null</code> if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem fetchByCPInstanceUuid_Last(
-		String CPInstanceUuid,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		int count = countByCPInstanceUuid(CPInstanceUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceWishListItem> list = findByCPInstanceUuid(
-			CPInstanceUuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce wish list items where CPInstanceUuid = &#63; from the database.
 	 *
 	 * @param CPInstanceUuid the cp instance uuid
@@ -1044,67 +921,6 @@ public class CommerceWishListItemPersistenceImpl
 
 		List<CommerceWishListItem> list = findByCProductId(
 			CProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce wish list item in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item
-	 * @throws NoSuchWishListItemException if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem findByCProductId_Last(
-			long CProductId,
-			OrderByComparator<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException {
-
-		CommerceWishListItem commerceWishListItem = fetchByCProductId_Last(
-			CProductId, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce wish list item in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item, or <code>null</code> if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem fetchByCProductId_Last(
-		long CProductId,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		int count = countByCProductId(CProductId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceWishListItem> list = findByCProductId(
-			CProductId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1431,73 +1247,6 @@ public class CommerceWishListItemPersistenceImpl
 
 		List<CommerceWishListItem> list = findByCW_CPI(
 			commerceWishListId, CPInstanceUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce wish list item in the ordered set where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item
-	 * @throws NoSuchWishListItemException if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem findByCW_CPI_Last(
-			long commerceWishListId, String CPInstanceUuid,
-			OrderByComparator<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException {
-
-		CommerceWishListItem commerceWishListItem = fetchByCW_CPI_Last(
-			commerceWishListId, CPInstanceUuid, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceWishListId=");
-		sb.append(commerceWishListId);
-
-		sb.append(", CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce wish list item in the ordered set where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item, or <code>null</code> if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem fetchByCW_CPI_Last(
-		long commerceWishListId, String CPInstanceUuid,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		int count = countByCW_CPI(commerceWishListId, CPInstanceUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceWishListItem> list = findByCW_CPI(
-			commerceWishListId, CPInstanceUuid, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1834,73 +1583,6 @@ public class CommerceWishListItemPersistenceImpl
 
 		List<CommerceWishListItem> list = findByCW_CP(
 			commerceWishListId, CProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce wish list item in the ordered set where commerceWishListId = &#63; and CProductId = &#63;.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item
-	 * @throws NoSuchWishListItemException if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem findByCW_CP_Last(
-			long commerceWishListId, long CProductId,
-			OrderByComparator<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException {
-
-		CommerceWishListItem commerceWishListItem = fetchByCW_CP_Last(
-			commerceWishListId, CProductId, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceWishListId=");
-		sb.append(commerceWishListId);
-
-		sb.append(", CProductId=");
-		sb.append(CProductId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce wish list item in the ordered set where commerceWishListId = &#63; and CProductId = &#63;.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce wish list item, or <code>null</code> if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem fetchByCW_CP_Last(
-		long commerceWishListId, long CProductId,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		int count = countByCW_CP(commerceWishListId, CProductId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceWishListItem> list = findByCW_CP(
-			commerceWishListId, CProductId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2975,4 +2657,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:915777744
+// LIFERAY-SERVICE-BUILDER-HASH:-1400750896

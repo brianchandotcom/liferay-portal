@@ -325,67 +325,6 @@ public class NotificationRecipientSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last notification recipient setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient setting
-	 * @throws NoSuchNotificationRecipientSettingException if a matching notification recipient setting could not be found
-	 */
-	@Override
-	public NotificationRecipientSetting findByUuid_Last(
-			String uuid,
-			OrderByComparator<NotificationRecipientSetting> orderByComparator)
-		throws NoSuchNotificationRecipientSettingException {
-
-		NotificationRecipientSetting notificationRecipientSetting =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (notificationRecipientSetting != null) {
-			return notificationRecipientSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationRecipientSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification recipient setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient setting, or <code>null</code> if a matching notification recipient setting could not be found
-	 */
-	@Override
-	public NotificationRecipientSetting fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<NotificationRecipientSetting> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationRecipientSetting> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the notification recipient settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -724,72 +663,6 @@ public class NotificationRecipientSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last notification recipient setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient setting
-	 * @throws NoSuchNotificationRecipientSettingException if a matching notification recipient setting could not be found
-	 */
-	@Override
-	public NotificationRecipientSetting findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<NotificationRecipientSetting> orderByComparator)
-		throws NoSuchNotificationRecipientSettingException {
-
-		NotificationRecipientSetting notificationRecipientSetting =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (notificationRecipientSetting != null) {
-			return notificationRecipientSetting;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationRecipientSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification recipient setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient setting, or <code>null</code> if a matching notification recipient setting could not be found
-	 */
-	@Override
-	public NotificationRecipientSetting fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<NotificationRecipientSetting> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationRecipientSetting> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the notification recipient settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1110,68 +983,6 @@ public class NotificationRecipientSettingPersistenceImpl
 
 		List<NotificationRecipientSetting> list = findByNotificationRecipientId(
 			notificationRecipientId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last notification recipient setting in the ordered set where notificationRecipientId = &#63;.
-	 *
-	 * @param notificationRecipientId the notification recipient ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient setting
-	 * @throws NoSuchNotificationRecipientSettingException if a matching notification recipient setting could not be found
-	 */
-	@Override
-	public NotificationRecipientSetting findByNotificationRecipientId_Last(
-			long notificationRecipientId,
-			OrderByComparator<NotificationRecipientSetting> orderByComparator)
-		throws NoSuchNotificationRecipientSettingException {
-
-		NotificationRecipientSetting notificationRecipientSetting =
-			fetchByNotificationRecipientId_Last(
-				notificationRecipientId, orderByComparator);
-
-		if (notificationRecipientSetting != null) {
-			return notificationRecipientSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("notificationRecipientId=");
-		sb.append(notificationRecipientId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationRecipientSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification recipient setting in the ordered set where notificationRecipientId = &#63;.
-	 *
-	 * @param notificationRecipientId the notification recipient ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient setting, or <code>null</code> if a matching notification recipient setting could not be found
-	 */
-	@Override
-	public NotificationRecipientSetting fetchByNotificationRecipientId_Last(
-		long notificationRecipientId,
-		OrderByComparator<NotificationRecipientSetting> orderByComparator) {
-
-		int count = countByNotificationRecipientId(notificationRecipientId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationRecipientSetting> list = findByNotificationRecipientId(
-			notificationRecipientId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2257,4 +2068,4 @@ public class NotificationRecipientSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1542782136
+// LIFERAY-SERVICE-BUILDER-HASH:1756173622

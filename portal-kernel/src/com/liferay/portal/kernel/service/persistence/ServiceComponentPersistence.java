@@ -120,32 +120,6 @@ public interface ServiceComponentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last service component in the ordered set where buildNamespace = &#63;.
-	 *
-	 * @param buildNamespace the build namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching service component
-	 * @throws NoSuchServiceComponentException if a matching service component could not be found
-	 */
-	public ServiceComponent findByBuildNamespace_Last(
-			String buildNamespace,
-			com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent>
-				orderByComparator)
-		throws NoSuchServiceComponentException;
-
-	/**
-	 * Returns the last service component in the ordered set where buildNamespace = &#63;.
-	 *
-	 * @param buildNamespace the build namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching service component, or <code>null</code> if a matching service component could not be found
-	 */
-	public ServiceComponent fetchByBuildNamespace_Last(
-		String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<ServiceComponent>
-			orderByComparator);
-
-	/**
 	 * Removes all the service components where buildNamespace = &#63; from the database.
 	 *
 	 * @param buildNamespace the build namespace
@@ -334,4 +308,4 @@ public interface ServiceComponentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1115118694
+// LIFERAY-SERVICE-BUILDER-HASH:-174093779

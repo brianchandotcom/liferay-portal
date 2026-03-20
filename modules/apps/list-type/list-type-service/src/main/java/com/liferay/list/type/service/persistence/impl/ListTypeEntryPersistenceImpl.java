@@ -325,64 +325,6 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last list type entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry findByUuid_Last(
-			String uuid, OrderByComparator<ListTypeEntry> orderByComparator)
-		throws NoSuchListTypeEntryException {
-
-		ListTypeEntry listTypeEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (listTypeEntry != null) {
-			return listTypeEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ListTypeEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the list type entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -716,72 +658,6 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last list type entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ListTypeEntry> orderByComparator)
-		throws NoSuchListTypeEntryException {
-
-		ListTypeEntry listTypeEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (listTypeEntry != null) {
-			return listTypeEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ListTypeEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the list type entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1090,67 +966,6 @@ public class ListTypeEntryPersistenceImpl
 
 		List<ListTypeEntry> list = findByListTypeEntryId(
 			listTypeEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry findByListTypeEntryId_Last(
-			long listTypeEntryId,
-			OrderByComparator<ListTypeEntry> orderByComparator)
-		throws NoSuchListTypeEntryException {
-
-		ListTypeEntry listTypeEntry = fetchByListTypeEntryId_Last(
-			listTypeEntryId, orderByComparator);
-
-		if (listTypeEntry != null) {
-			return listTypeEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeEntryId=");
-		sb.append(listTypeEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry fetchByListTypeEntryId_Last(
-		long listTypeEntryId,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		int count = countByListTypeEntryId(listTypeEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ListTypeEntry> list = findByListTypeEntryId(
-			listTypeEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1706,67 +1521,6 @@ public class ListTypeEntryPersistenceImpl
 
 		List<ListTypeEntry> list = findByListTypeDefinitionId(
 			listTypeDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry findByListTypeDefinitionId_Last(
-			long listTypeDefinitionId,
-			OrderByComparator<ListTypeEntry> orderByComparator)
-		throws NoSuchListTypeEntryException {
-
-		ListTypeEntry listTypeEntry = fetchByListTypeDefinitionId_Last(
-			listTypeDefinitionId, orderByComparator);
-
-		if (listTypeEntry != null) {
-			return listTypeEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeDefinitionId=");
-		sb.append(listTypeDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry fetchByListTypeDefinitionId_Last(
-		long listTypeDefinitionId,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		int count = countByListTypeDefinitionId(listTypeDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ListTypeEntry> list = findByListTypeDefinitionId(
-			listTypeDefinitionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2342,72 +2096,6 @@ public class ListTypeEntryPersistenceImpl
 
 		List<ListTypeEntry> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<ListTypeEntry> orderByComparator)
-		throws NoSuchListTypeEntryException {
-
-		ListTypeEntry listTypeEntry = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (listTypeEntry != null) {
-			return listTypeEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ListTypeEntry> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3800,4 +3488,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1638847958
+// LIFERAY-SERVICE-BUILDER-HASH:1402599041

@@ -321,65 +321,6 @@ public class KaleoTaskFormPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo task form in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form
-	 * @throws NoSuchTaskFormException if a matching kaleo task form could not be found
-	 */
-	@Override
-	public KaleoTaskForm findByCompanyId_Last(
-			long companyId, OrderByComparator<KaleoTaskForm> orderByComparator)
-		throws NoSuchTaskFormException {
-
-		KaleoTaskForm kaleoTaskForm = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoTaskForm != null) {
-			return kaleoTaskForm;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskFormException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task form in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
-	 */
-	@Override
-	public KaleoTaskForm fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KaleoTaskForm> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskForm> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo task forms where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -682,67 +623,6 @@ public class KaleoTaskFormPersistenceImpl
 
 		List<KaleoTaskForm> list = findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task form in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form
-	 * @throws NoSuchTaskFormException if a matching kaleo task form could not be found
-	 */
-	@Override
-	public KaleoTaskForm findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTaskForm> orderByComparator)
-		throws NoSuchTaskFormException {
-
-		KaleoTaskForm kaleoTaskForm = fetchByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoTaskForm != null) {
-			return kaleoTaskForm;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskFormException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task form in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
-	 */
-	@Override
-	public KaleoTaskForm fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoTaskForm> orderByComparator) {
-
-		int count = countByKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskForm> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1057,66 +937,6 @@ public class KaleoTaskFormPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo task form in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form
-	 * @throws NoSuchTaskFormException if a matching kaleo task form could not be found
-	 */
-	@Override
-	public KaleoTaskForm findByKaleoNodeId_Last(
-			long kaleoNodeId,
-			OrderByComparator<KaleoTaskForm> orderByComparator)
-		throws NoSuchTaskFormException {
-
-		KaleoTaskForm kaleoTaskForm = fetchByKaleoNodeId_Last(
-			kaleoNodeId, orderByComparator);
-
-		if (kaleoTaskForm != null) {
-			return kaleoTaskForm;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoNodeId=");
-		sb.append(kaleoNodeId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskFormException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task form in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
-	 */
-	@Override
-	public KaleoTaskForm fetchByKaleoNodeId_Last(
-		long kaleoNodeId, OrderByComparator<KaleoTaskForm> orderByComparator) {
-
-		int count = countByKaleoNodeId(kaleoNodeId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskForm> list = findByKaleoNodeId(
-			kaleoNodeId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo task forms where kaleoNodeId = &#63; from the database.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
@@ -1408,66 +1228,6 @@ public class KaleoTaskFormPersistenceImpl
 
 		List<KaleoTaskForm> list = findByKaleoTaskId(
 			kaleoTaskId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task form in the ordered set where kaleoTaskId = &#63;.
-	 *
-	 * @param kaleoTaskId the kaleo task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form
-	 * @throws NoSuchTaskFormException if a matching kaleo task form could not be found
-	 */
-	@Override
-	public KaleoTaskForm findByKaleoTaskId_Last(
-			long kaleoTaskId,
-			OrderByComparator<KaleoTaskForm> orderByComparator)
-		throws NoSuchTaskFormException {
-
-		KaleoTaskForm kaleoTaskForm = fetchByKaleoTaskId_Last(
-			kaleoTaskId, orderByComparator);
-
-		if (kaleoTaskForm != null) {
-			return kaleoTaskForm;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoTaskId=");
-		sb.append(kaleoTaskId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskFormException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task form in the ordered set where kaleoTaskId = &#63;.
-	 *
-	 * @param kaleoTaskId the kaleo task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form, or <code>null</code> if a matching kaleo task form could not be found
-	 */
-	@Override
-	public KaleoTaskForm fetchByKaleoTaskId_Last(
-		long kaleoTaskId, OrderByComparator<KaleoTaskForm> orderByComparator) {
-
-		int count = countByKaleoTaskId(kaleoTaskId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskForm> list = findByKaleoTaskId(
-			kaleoTaskId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2771,4 +2531,4 @@ public class KaleoTaskFormPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-671557671
+// LIFERAY-SERVICE-BUILDER-HASH:-2002933297

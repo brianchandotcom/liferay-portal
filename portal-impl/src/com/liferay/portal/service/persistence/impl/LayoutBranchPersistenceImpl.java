@@ -299,67 +299,6 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch
-	 * @throws NoSuchLayoutBranchException if a matching layout branch could not be found
-	 */
-	@Override
-	public LayoutBranch findByLayoutSetBranchId_Last(
-			long layoutSetBranchId,
-			OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
-
-		LayoutBranch layoutBranch = fetchByLayoutSetBranchId_Last(
-			layoutSetBranchId, orderByComparator);
-
-		if (layoutBranch != null) {
-			return layoutBranch;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutSetBranchId=");
-		sb.append(layoutSetBranchId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch, or <code>null</code> if a matching layout branch could not be found
-	 */
-	@Override
-	public LayoutBranch fetchByLayoutSetBranchId_Last(
-		long layoutSetBranchId,
-		OrderByComparator<LayoutBranch> orderByComparator) {
-
-		int count = countByLayoutSetBranchId(layoutSetBranchId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutBranch> list = findByLayoutSetBranchId(
-			layoutSetBranchId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout branches where layoutSetBranchId = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
@@ -634,64 +573,6 @@ public class LayoutBranchPersistenceImpl
 		long plid, OrderByComparator<LayoutBranch> orderByComparator) {
 
 		List<LayoutBranch> list = findByPlid(plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout branch in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch
-	 * @throws NoSuchLayoutBranchException if a matching layout branch could not be found
-	 */
-	@Override
-	public LayoutBranch findByPlid_Last(
-			long plid, OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
-
-		LayoutBranch layoutBranch = fetchByPlid_Last(plid, orderByComparator);
-
-		if (layoutBranch != null) {
-			return layoutBranch;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout branch in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch, or <code>null</code> if a matching layout branch could not be found
-	 */
-	@Override
-	public LayoutBranch fetchByPlid_Last(
-		long plid, OrderByComparator<LayoutBranch> orderByComparator) {
-
-		int count = countByPlid(plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutBranch> list = findByPlid(
-			plid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -999,72 +880,6 @@ public class LayoutBranchPersistenceImpl
 
 		List<LayoutBranch> list = findByL_P(
 			layoutSetBranchId, plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch
-	 * @throws NoSuchLayoutBranchException if a matching layout branch could not be found
-	 */
-	@Override
-	public LayoutBranch findByL_P_Last(
-			long layoutSetBranchId, long plid,
-			OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
-
-		LayoutBranch layoutBranch = fetchByL_P_Last(
-			layoutSetBranchId, plid, orderByComparator);
-
-		if (layoutBranch != null) {
-			return layoutBranch;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutSetBranchId=");
-		sb.append(layoutSetBranchId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch, or <code>null</code> if a matching layout branch could not be found
-	 */
-	@Override
-	public LayoutBranch fetchByL_P_Last(
-		long layoutSetBranchId, long plid,
-		OrderByComparator<LayoutBranch> orderByComparator) {
-
-		int count = countByL_P(layoutSetBranchId, plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutBranch> list = findByL_P(
-			layoutSetBranchId, plid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1619,78 +1434,6 @@ public class LayoutBranchPersistenceImpl
 
 		List<LayoutBranch> list = findByL_P_M(
 			layoutSetBranchId, plid, master, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch
-	 * @throws NoSuchLayoutBranchException if a matching layout branch could not be found
-	 */
-	@Override
-	public LayoutBranch findByL_P_M_Last(
-			long layoutSetBranchId, long plid, boolean master,
-			OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
-
-		LayoutBranch layoutBranch = fetchByL_P_M_Last(
-			layoutSetBranchId, plid, master, orderByComparator);
-
-		if (layoutBranch != null) {
-			return layoutBranch;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutSetBranchId=");
-		sb.append(layoutSetBranchId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", master=");
-		sb.append(master);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch, or <code>null</code> if a matching layout branch could not be found
-	 */
-	@Override
-	public LayoutBranch fetchByL_P_M_Last(
-		long layoutSetBranchId, long plid, boolean master,
-		OrderByComparator<LayoutBranch> orderByComparator) {
-
-		int count = countByL_P_M(layoutSetBranchId, plid, master);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutBranch> list = findByL_P_M(
-			layoutSetBranchId, plid, master, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2448,4 +2191,4 @@ public class LayoutBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1749795361
+// LIFERAY-SERVICE-BUILDER-HASH:982201527

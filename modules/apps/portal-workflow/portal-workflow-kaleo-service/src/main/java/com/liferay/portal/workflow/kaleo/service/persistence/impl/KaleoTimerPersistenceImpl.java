@@ -354,72 +354,6 @@ public class KaleoTimerPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer
-	 * @throws NoSuchTimerException if a matching kaleo timer could not be found
-	 */
-	@Override
-	public KaleoTimer findByKCN_KCPK_Last(
-			String kaleoClassName, long kaleoClassPK,
-			OrderByComparator<KaleoTimer> orderByComparator)
-		throws NoSuchTimerException {
-
-		KaleoTimer kaleoTimer = fetchByKCN_KCPK_Last(
-			kaleoClassName, kaleoClassPK, orderByComparator);
-
-		if (kaleoTimer != null) {
-			return kaleoTimer;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchTimerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
-	 */
-	@Override
-	public KaleoTimer fetchByKCN_KCPK_Last(
-		String kaleoClassName, long kaleoClassPK,
-		OrderByComparator<KaleoTimer> orderByComparator) {
-
-		int count = countByKCN_KCPK(kaleoClassName, kaleoClassPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTimer> list = findByKCN_KCPK(
-			kaleoClassName, kaleoClassPK, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
 	 *
 	 * @param kaleoClassName the kaleo class name
@@ -793,79 +727,6 @@ public class KaleoTimerPersistenceImpl
 
 		List<KaleoTimer> list = findByKCN_KCPK_Blocking(
 			kaleoClassName, kaleoClassPK, blocking, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param blocking the blocking
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer
-	 * @throws NoSuchTimerException if a matching kaleo timer could not be found
-	 */
-	@Override
-	public KaleoTimer findByKCN_KCPK_Blocking_Last(
-			String kaleoClassName, long kaleoClassPK, boolean blocking,
-			OrderByComparator<KaleoTimer> orderByComparator)
-		throws NoSuchTimerException {
-
-		KaleoTimer kaleoTimer = fetchByKCN_KCPK_Blocking_Last(
-			kaleoClassName, kaleoClassPK, blocking, orderByComparator);
-
-		if (kaleoTimer != null) {
-			return kaleoTimer;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append(", blocking=");
-		sb.append(blocking);
-
-		sb.append("}");
-
-		throw new NoSuchTimerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param blocking the blocking
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
-	 */
-	@Override
-	public KaleoTimer fetchByKCN_KCPK_Blocking_Last(
-		String kaleoClassName, long kaleoClassPK, boolean blocking,
-		OrderByComparator<KaleoTimer> orderByComparator) {
-
-		int count = countByKCN_KCPK_Blocking(
-			kaleoClassName, kaleoClassPK, blocking);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTimer> list = findByKCN_KCPK_Blocking(
-			kaleoClassName, kaleoClassPK, blocking, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1915,4 +1776,4 @@ public class KaleoTimerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-656794317
+// LIFERAY-SERVICE-BUILDER-HASH:461885664

@@ -326,64 +326,6 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the last account group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup findByUuid_Last(
-			String uuid, OrderByComparator<AccountGroup> orderByComparator)
-		throws NoSuchGroupException {
-
-		AccountGroup accountGroup = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (accountGroup != null) {
-			return accountGroup;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup fetchByUuid_Last(
-		String uuid, OrderByComparator<AccountGroup> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroup> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the account groups that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -946,72 +888,6 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the last account group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws NoSuchGroupException {
-
-		AccountGroup accountGroup = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (accountGroup != null) {
-			return accountGroup;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroup> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the account groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1561,67 +1437,6 @@ public class AccountGroupPersistenceImpl
 
 		List<AccountGroup> list = findByAccountGroupId(
 			accountGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup findByAccountGroupId_Last(
-			long accountGroupId,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws NoSuchGroupException {
-
-		AccountGroup accountGroup = fetchByAccountGroupId_Last(
-			accountGroupId, orderByComparator);
-
-		if (accountGroup != null) {
-			return accountGroup;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountGroupId=");
-		sb.append(accountGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup fetchByAccountGroupId_Last(
-		long accountGroupId,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		int count = countByAccountGroupId(accountGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroup> list = findByAccountGroupId(
-			accountGroupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2594,65 +2409,6 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the last account group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup findByCompanyId_Last(
-			long companyId, OrderByComparator<AccountGroup> orderByComparator)
-		throws NoSuchGroupException {
-
-		AccountGroup accountGroup = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (accountGroup != null) {
-			return accountGroup;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AccountGroup> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroup> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the account groups that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -3151,73 +2907,6 @@ public class AccountGroupPersistenceImpl
 
 		List<AccountGroup> list = findByC_D(
 			companyId, defaultAccountGroup, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup findByC_D_Last(
-			long companyId, boolean defaultAccountGroup,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws NoSuchGroupException {
-
-		AccountGroup accountGroup = fetchByC_D_Last(
-			companyId, defaultAccountGroup, orderByComparator);
-
-		if (accountGroup != null) {
-			return accountGroup;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", defaultAccountGroup=");
-		sb.append(defaultAccountGroup);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup fetchByC_D_Last(
-		long companyId, boolean defaultAccountGroup,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		int count = countByC_D(companyId, defaultAccountGroup);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroup> list = findByC_D(
-			companyId, defaultAccountGroup, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3752,72 +3441,6 @@ public class AccountGroupPersistenceImpl
 
 		List<AccountGroup> list = findByC_LikeN(
 			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup findByC_LikeN_Last(
-			long companyId, String name,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws NoSuchGroupException {
-
-		AccountGroup accountGroup = fetchByC_LikeN_Last(
-			companyId, name, orderByComparator);
-
-		if (accountGroup != null) {
-			return accountGroup;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup fetchByC_LikeN_Last(
-		long companyId, String name,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		int count = countByC_LikeN(companyId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroup> list = findByC_LikeN(
-			companyId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4397,72 +4020,6 @@ public class AccountGroupPersistenceImpl
 
 		List<AccountGroup> list = findByC_T(
 			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup findByC_T_Last(
-			long companyId, String type,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws NoSuchGroupException {
-
-		AccountGroup accountGroup = fetchByC_T_Last(
-			companyId, type, orderByComparator);
-
-		if (accountGroup != null) {
-			return accountGroup;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup fetchByC_T_Last(
-		long companyId, String type,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		int count = countByC_T(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroup> list = findByC_T(
-			companyId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5889,4 +5446,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:146873069
+// LIFERAY-SERVICE-BUILDER-HASH:643375519

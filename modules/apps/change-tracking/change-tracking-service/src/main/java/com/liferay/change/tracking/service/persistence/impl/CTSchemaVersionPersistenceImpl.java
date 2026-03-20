@@ -302,66 +302,6 @@ public class CTSchemaVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct schema version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct schema version
-	 * @throws NoSuchSchemaVersionException if a matching ct schema version could not be found
-	 */
-	@Override
-	public CTSchemaVersion findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CTSchemaVersion> orderByComparator)
-		throws NoSuchSchemaVersionException {
-
-		CTSchemaVersion ctSchemaVersion = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ctSchemaVersion != null) {
-			return ctSchemaVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSchemaVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct schema version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct schema version, or <code>null</code> if a matching ct schema version could not be found
-	 */
-	@Override
-	public CTSchemaVersion fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTSchemaVersion> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTSchemaVersion> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ct schema versions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1039,4 +979,4 @@ public class CTSchemaVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1390438557
+// LIFERAY-SERVICE-BUILDER-HASH:857631846

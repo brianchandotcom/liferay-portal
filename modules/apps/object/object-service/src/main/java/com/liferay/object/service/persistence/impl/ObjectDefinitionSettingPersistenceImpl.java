@@ -321,67 +321,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object definition setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException {
-
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object definition setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting, or <code>null</code> if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectDefinitionSetting> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object definition settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -717,72 +656,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object definition setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException {
-
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object definition setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting, or <code>null</code> if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectDefinitionSetting> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object definition settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1105,68 +978,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object definition setting in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException {
-
-		ObjectDefinitionSetting objectDefinitionSetting =
-			fetchByObjectDefinitionId_Last(
-				objectDefinitionId, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object definition setting in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting, or <code>null</code> if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
-
-		int count = countByObjectDefinitionId(objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectDefinitionSetting> list = findByObjectDefinitionId(
-			objectDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object definition settings where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1479,72 +1290,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 
 		List<ObjectDefinitionSetting> list = findByC_N(
 			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object definition setting in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting findByC_N_Last(
-			long companyId, String name,
-			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException {
-
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByC_N_Last(
-			companyId, name, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object definition setting in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting, or <code>null</code> if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting fetchByC_N_Last(
-		long companyId, String name,
-		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
-
-		int count = countByC_N(companyId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectDefinitionSetting> list = findByC_N(
-			companyId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2125,77 +1870,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 
 		List<ObjectDefinitionSetting> list = findByC_N_V(
 			companyId, name, value, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object definition setting in the ordered set where companyId = &#63; and name = &#63; and value = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param value the value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting findByC_N_V_Last(
-			long companyId, String name, String value,
-			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException {
-
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByC_N_V_Last(
-			companyId, name, value, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", value=");
-		sb.append(value);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object definition setting in the ordered set where companyId = &#63; and name = &#63; and value = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param value the value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition setting, or <code>null</code> if a matching object definition setting could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting fetchByC_N_V_Last(
-		long companyId, String name, String value,
-		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
-
-		int count = countByC_N_V(companyId, name, value);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectDefinitionSetting> list = findByC_N_V(
-			companyId, name, value, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3116,4 +2790,4 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-489120976
+// LIFERAY-SERVICE-BUILDER-HASH:1244421024

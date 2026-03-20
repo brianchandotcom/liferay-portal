@@ -210,34 +210,6 @@ public class AssetListEntryUtil {
 	}
 
 	/**
-	 * Returns the last asset list entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry findByUuid_Last(
-			String uuid, OrderByComparator<AssetListEntry> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<AssetListEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,40 +404,6 @@ public class AssetListEntryUtil {
 	}
 
 	/**
-	 * Returns the last asset list entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -585,34 +523,6 @@ public class AssetListEntryUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry findByGroupId_Last(
-			long groupId, OrderByComparator<AssetListEntry> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<AssetListEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -1082,40 +992,6 @@ public class AssetListEntryUtil {
 	}
 
 	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry findByG_LikeT_Last(
-			long groupId, String title,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_LikeT_Last(
-			groupId, title, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry fetchByG_LikeT_Last(
-		long groupId, String title,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_LikeT_Last(
-			groupId, title, orderByComparator);
-	}
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1471,40 +1347,6 @@ public class AssetListEntryUtil {
 	}
 
 	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry findByG_TY_Last(
-			long groupId, int type,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_TY_Last(
-			groupId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry fetchByG_TY_Last(
-		long groupId, int type,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_TY_Last(
-			groupId, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1701,40 +1543,6 @@ public class AssetListEntryUtil {
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_AET_First(
-			groupId, assetEntryType, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry findByG_AET_Last(
-			long groupId, String assetEntryType,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_AET_Last(
-			groupId, assetEntryType, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry fetchByG_AET_Last(
-		long groupId, String assetEntryType,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_AET_Last(
 			groupId, assetEntryType, orderByComparator);
 	}
 
@@ -2106,42 +1914,6 @@ public class AssetListEntryUtil {
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_LikeT_AET_First(
-			groupId, title, assetEntryType, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry findByG_LikeT_AET_Last(
-			long groupId, String title, String assetEntryType,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_LikeT_AET_Last(
-			groupId, title, assetEntryType, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry fetchByG_LikeT_AET_Last(
-		long groupId, String title, String assetEntryType,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_LikeT_AET_Last(
 			groupId, title, assetEntryType, orderByComparator);
 	}
 
@@ -2548,42 +2320,6 @@ public class AssetListEntryUtil {
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_AES_AET_First(
-			groupId, assetEntrySubtype, assetEntryType, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry findByG_AES_AET_Last(
-			long groupId, String assetEntrySubtype, String assetEntryType,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_AES_AET_Last(
-			groupId, assetEntrySubtype, assetEntryType, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry fetchByG_AES_AET_Last(
-		long groupId, String assetEntrySubtype, String assetEntryType,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_AES_AET_Last(
 			groupId, assetEntrySubtype, assetEntryType, orderByComparator);
 	}
 
@@ -3009,48 +2745,6 @@ public class AssetListEntryUtil {
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_LikeT_AES_AET_First(
-			groupId, title, assetEntrySubtype, assetEntryType,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry findByG_LikeT_AES_AET_Last(
-			long groupId, String title, String assetEntrySubtype,
-			String assetEntryType,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_LikeT_AES_AET_Last(
-			groupId, title, assetEntrySubtype, assetEntryType,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	public static AssetListEntry fetchByG_LikeT_AES_AET_Last(
-		long groupId, String title, String assetEntrySubtype,
-		String assetEntryType,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_LikeT_AES_AET_Last(
 			groupId, title, assetEntrySubtype, assetEntryType,
 			orderByComparator);
 	}
@@ -3596,4 +3290,4 @@ public class AssetListEntryUtil {
 	private static volatile AssetListEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1033238205
+// LIFERAY-SERVICE-BUILDER-HASH:730086192

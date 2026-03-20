@@ -317,64 +317,6 @@ public class TrashEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry findByGroupId_Last(
-			long groupId, OrderByComparator<TrashEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		TrashEntry trashEntry = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<TrashEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TrashEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the trash entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -664,65 +606,6 @@ public class TrashEntryPersistenceImpl
 
 		List<TrashEntry> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<TrashEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		TrashEntry trashEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<TrashEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TrashEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1040,72 +923,6 @@ public class TrashEntryPersistenceImpl
 
 		List<TrashEntry> list = findByG_LtCD(
 			groupId, createDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry findByG_LtCD_Last(
-			long groupId, Date createDate,
-			OrderByComparator<TrashEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		TrashEntry trashEntry = fetchByG_LtCD_Last(
-			groupId, createDate, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry fetchByG_LtCD_Last(
-		long groupId, Date createDate,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		int count = countByG_LtCD(groupId, createDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TrashEntry> list = findByG_LtCD(
-			groupId, createDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1455,72 +1272,6 @@ public class TrashEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry findByG_CN_Last(
-			long groupId, long classNameId,
-			OrderByComparator<TrashEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		TrashEntry trashEntry = fetchByG_CN_Last(
-			groupId, classNameId, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry fetchByG_CN_Last(
-		long groupId, long classNameId,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		int count = countByG_CN(groupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TrashEntry> list = findByG_CN(
-			groupId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the trash entries where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1838,72 +1589,6 @@ public class TrashEntryPersistenceImpl
 
 		List<TrashEntry> list = findByC_CN(
 			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry findByC_CN_Last(
-			long companyId, long classNameId,
-			OrderByComparator<TrashEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		TrashEntry trashEntry = fetchByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry fetchByC_CN_Last(
-		long companyId, long classNameId,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		int count = countByC_CN(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TrashEntry> list = findByC_CN(
-			companyId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3167,4 +2852,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1319530958
+// LIFERAY-SERVICE-BUILDER-HASH:222920538

@@ -120,32 +120,6 @@ public interface RedirectNotFoundEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last redirect not found entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect not found entry
-	 * @throws NoSuchNotFoundEntryException if a matching redirect not found entry could not be found
-	 */
-	public RedirectNotFoundEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<RedirectNotFoundEntry> orderByComparator)
-		throws NoSuchNotFoundEntryException;
-
-	/**
-	 * Returns the last redirect not found entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect not found entry, or <code>null</code> if a matching redirect not found entry could not be found
-	 */
-	public RedirectNotFoundEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<RedirectNotFoundEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the redirect not found entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -334,4 +308,4 @@ public interface RedirectNotFoundEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1649101626
+// LIFERAY-SERVICE-BUILDER-HASH:-12653528

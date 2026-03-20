@@ -122,32 +122,6 @@ public interface SegmentsExperiencePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last segments experience in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
 	 * Removes all the segments experiences where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface SegmentsExperiencePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last segments experience in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
 	 * Removes all the segments experiences where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface SegmentsExperiencePersistence
 	 * @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
 	public SegmentsExperience fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
 			orderByComparator);
@@ -618,34 +538,6 @@ public interface SegmentsExperiencePersistence
 	 * @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
 	public SegmentsExperience fetchByG_P_First(
-		long groupId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByG_P_Last(
-			long groupId, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_P_Last(
 		long groupId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
 			orderByComparator);
@@ -811,34 +703,6 @@ public interface SegmentsExperiencePersistence
 	 * @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
 	public SegmentsExperience fetchByG_A_First(
-		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByG_A_Last(
-			long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_A_Last(
 		long groupId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
 			orderByComparator);
@@ -1145,34 +1009,6 @@ public interface SegmentsExperiencePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last segments experience in the ordered set where segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findBySEERC_SESERC_Last(
-			String segmentsEntryERC, String segmentsEntryScopeERC,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchBySEERC_SESERC_Last(
-		String segmentsEntryERC, String segmentsEntryScopeERC,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
 	 * Removes all the segments experiences where segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; from the database.
 	 *
 	 * @param segmentsEntryERC the segments entry erc
@@ -1290,36 +1126,6 @@ public interface SegmentsExperiencePersistence
 	 * @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
 	public SegmentsExperience fetchByG_SEERC_SESERC_First(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByG_SEERC_SESERC_Last(
-			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_SEERC_SESERC_Last(
 		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
 			orderByComparator);
@@ -1624,36 +1430,6 @@ public interface SegmentsExperiencePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and plid = &#63; and priority &gt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByG_P_GtP_Last(
-			long groupId, long plid, int priority,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and plid = &#63; and priority &gt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_P_GtP_Last(
-		long groupId, long plid, int priority,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
 	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and plid = &#63; and priority &gt; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1831,36 +1607,6 @@ public interface SegmentsExperiencePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and plid = &#63; and priority &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByG_P_LtP_Last(
-			long groupId, long plid, int priority,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and plid = &#63; and priority &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_P_LtP_Last(
-		long groupId, long plid, int priority,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
 	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and plid = &#63; and priority &lt; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2033,36 +1779,6 @@ public interface SegmentsExperiencePersistence
 	 * @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
 	public SegmentsExperience fetchByG_P_A_First(
-		long groupId, long plid, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByG_P_A_Last(
-			long groupId, long plid, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_P_A_Last(
 		long groupId, long plid, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
 			orderByComparator);
@@ -2251,40 +1967,6 @@ public interface SegmentsExperiencePersistence
 	 * @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
 	public SegmentsExperience fetchByG_SEERC_SESERC_P_First(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByG_SEERC_SESERC_P_Last(
-			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-			long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_SEERC_SESERC_P_Last(
 		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
 		long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
@@ -2495,42 +2177,6 @@ public interface SegmentsExperiencePersistence
 	 * @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
 	public SegmentsExperience fetchByG_SEERC_SESERC_P_A_First(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	public SegmentsExperience findByG_SEERC_SESERC_P_A_Last(
-			long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-			long plid, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
-				orderByComparator)
-		throws NoSuchExperienceException;
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	public SegmentsExperience fetchByG_SEERC_SESERC_P_A_Last(
 		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
 		long plid, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
@@ -2980,4 +2626,4 @@ public interface SegmentsExperiencePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-533633212
+// LIFERAY-SERVICE-BUILDER-HASH:503207302

@@ -332,68 +332,6 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp configuration list rel in the ordered set where CPConfigurationListId = &#63;.
-	 *
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list rel
-	 * @throws NoSuchCPConfigurationListRelException if a matching cp configuration list rel could not be found
-	 */
-	@Override
-	public CPConfigurationListRel findByCPConfigurationListId_Last(
-			long CPConfigurationListId,
-			OrderByComparator<CPConfigurationListRel> orderByComparator)
-		throws NoSuchCPConfigurationListRelException {
-
-		CPConfigurationListRel cpConfigurationListRel =
-			fetchByCPConfigurationListId_Last(
-				CPConfigurationListId, orderByComparator);
-
-		if (cpConfigurationListRel != null) {
-			return cpConfigurationListRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPConfigurationListId=");
-		sb.append(CPConfigurationListId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list rel in the ordered set where CPConfigurationListId = &#63;.
-	 *
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list rel, or <code>null</code> if a matching cp configuration list rel could not be found
-	 */
-	@Override
-	public CPConfigurationListRel fetchByCPConfigurationListId_Last(
-		long CPConfigurationListId,
-		OrderByComparator<CPConfigurationListRel> orderByComparator) {
-
-		int count = countByCPConfigurationListId(CPConfigurationListId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationListRel> list = findByCPConfigurationListId(
-			CPConfigurationListId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp configuration list rels where CPConfigurationListId = &#63; from the database.
 	 *
 	 * @param CPConfigurationListId the cp configuration list ID
@@ -714,73 +652,6 @@ public class CPConfigurationListRelPersistenceImpl
 
 		List<CPConfigurationListRel> list = findByC_C(
 			classNameId, CPConfigurationListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp configuration list rel in the ordered set where classNameId = &#63; and CPConfigurationListId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list rel
-	 * @throws NoSuchCPConfigurationListRelException if a matching cp configuration list rel could not be found
-	 */
-	@Override
-	public CPConfigurationListRel findByC_C_Last(
-			long classNameId, long CPConfigurationListId,
-			OrderByComparator<CPConfigurationListRel> orderByComparator)
-		throws NoSuchCPConfigurationListRelException {
-
-		CPConfigurationListRel cpConfigurationListRel = fetchByC_C_Last(
-			classNameId, CPConfigurationListId, orderByComparator);
-
-		if (cpConfigurationListRel != null) {
-			return cpConfigurationListRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", CPConfigurationListId=");
-		sb.append(CPConfigurationListId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list rel in the ordered set where classNameId = &#63; and CPConfigurationListId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list rel, or <code>null</code> if a matching cp configuration list rel could not be found
-	 */
-	@Override
-	public CPConfigurationListRel fetchByC_C_Last(
-		long classNameId, long CPConfigurationListId,
-		OrderByComparator<CPConfigurationListRel> orderByComparator) {
-
-		int count = countByC_C(classNameId, CPConfigurationListId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationListRel> list = findByC_C(
-			classNameId, CPConfigurationListId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2087,4 +1958,4 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-283199421
+// LIFERAY-SERVICE-BUILDER-HASH:-1903142454

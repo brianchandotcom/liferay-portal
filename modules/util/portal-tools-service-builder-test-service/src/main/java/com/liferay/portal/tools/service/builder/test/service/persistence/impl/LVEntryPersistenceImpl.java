@@ -311,64 +311,6 @@ public class LVEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry findByUuid_Last(
-			String uuid, OrderByComparator<LVEntry> orderByComparator)
-		throws NoSuchLVEntryException {
-
-		LVEntry lvEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<LVEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -689,71 +631,6 @@ public class LVEntryPersistenceImpl
 
 		List<LVEntry> list = findByUuid_Head(
 			uuid, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry findByUuid_Head_Last(
-			String uuid, boolean head,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws NoSuchLVEntryException {
-
-		LVEntry lvEntry = fetchByUuid_Head_Last(uuid, head, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry fetchByUuid_Head_Last(
-		String uuid, boolean head,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		int count = countByUuid_Head(uuid, head);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntry> list = findByUuid_Head(
-			uuid, head, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1094,71 +971,6 @@ public class LVEntryPersistenceImpl
 
 		List<LVEntry> list = findByUUID_G(
 			uuid, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry findByUUID_G_Last(
-			String uuid, long groupId,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws NoSuchLVEntryException {
-
-		LVEntry lvEntry = fetchByUUID_G_Last(uuid, groupId, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry fetchByUUID_G_Last(
-		String uuid, long groupId,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		int count = countByUUID_G(uuid, groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntry> list = findByUUID_G(
-			uuid, groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1725,72 +1537,6 @@ public class LVEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws NoSuchLVEntryException {
-
-		LVEntry lvEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -2150,77 +1896,6 @@ public class LVEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry findByUuid_C_Head_Last(
-			String uuid, long companyId, boolean head,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws NoSuchLVEntryException {
-
-		LVEntry lvEntry = fetchByUuid_C_Head_Last(
-			uuid, companyId, head, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry fetchByUuid_C_Head_Last(
-		String uuid, long companyId, boolean head,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		int count = countByUuid_C_Head(uuid, companyId, head);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntry> list = findByUuid_C_Head(
-			uuid, companyId, head, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entries where uuid = &#63; and companyId = &#63; and head = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -2528,64 +2203,6 @@ public class LVEntryPersistenceImpl
 		long groupId, OrderByComparator<LVEntry> orderByComparator) {
 
 		List<LVEntry> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry findByGroupId_Last(
-			long groupId, OrderByComparator<LVEntry> orderByComparator)
-		throws NoSuchLVEntryException {
-
-		LVEntry lvEntry = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<LVEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3204,72 +2821,6 @@ public class LVEntryPersistenceImpl
 
 		List<LVEntry> list = findByGroupId_Head(
 			groupId, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry findByGroupId_Head_Last(
-			long groupId, boolean head,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws NoSuchLVEntryException {
-
-		LVEntry lvEntry = fetchByGroupId_Head_Last(
-			groupId, head, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry fetchByGroupId_Head_Last(
-		long groupId, boolean head,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		int count = countByGroupId_Head(groupId, head);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntry> list = findByGroupId_Head(
-			groupId, head, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3941,72 +3492,6 @@ public class LVEntryPersistenceImpl
 
 		List<LVEntry> list = findByG_UGK(
 			groupId, uniqueGroupKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry
-	 * @throws NoSuchLVEntryException if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry findByG_UGK_Last(
-			long groupId, String uniqueGroupKey,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws NoSuchLVEntryException {
-
-		LVEntry lvEntry = fetchByG_UGK_Last(
-			groupId, uniqueGroupKey, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", uniqueGroupKey=");
-		sb.append(uniqueGroupKey);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry, or <code>null</code> if a matching lv entry could not be found
-	 */
-	@Override
-	public LVEntry fetchByG_UGK_Last(
-		long groupId, String uniqueGroupKey,
-		OrderByComparator<LVEntry> orderByComparator) {
-
-		int count = countByG_UGK(groupId, uniqueGroupKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntry> list = findByG_UGK(
-			groupId, uniqueGroupKey, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5672,4 +5157,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-44749604
+// LIFERAY-SERVICE-BUILDER-HASH:2083627047

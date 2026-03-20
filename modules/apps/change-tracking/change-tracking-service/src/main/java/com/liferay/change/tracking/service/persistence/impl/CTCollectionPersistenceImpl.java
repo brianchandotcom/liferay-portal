@@ -326,64 +326,6 @@ public class CTCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection findByUuid_Last(
-			String uuid, OrderByComparator<CTCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		CTCollection ctCollection = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (ctCollection != null) {
-			return ctCollection;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection fetchByUuid_Last(
-		String uuid, OrderByComparator<CTCollection> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTCollection> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -937,72 +879,6 @@ public class CTCollectionPersistenceImpl
 
 		List<CTCollection> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CTCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		CTCollection ctCollection = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ctCollection != null) {
-			return ctCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CTCollection> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTCollection> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1566,65 +1442,6 @@ public class CTCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection findByCompanyId_Last(
-			long companyId, OrderByComparator<CTCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		CTCollection ctCollection = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ctCollection != null) {
-			return ctCollection;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTCollection> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTCollection> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2118,72 +1935,6 @@ public class CTCollectionPersistenceImpl
 
 		List<CTCollection> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<CTCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		CTCollection ctCollection = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (ctCollection != null) {
-			return ctCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<CTCollection> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTCollection> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2721,72 +2472,6 @@ public class CTCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and schemaVersionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param schemaVersionId the schema version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection findByC_SVI_Last(
-			long companyId, long schemaVersionId,
-			OrderByComparator<CTCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		CTCollection ctCollection = fetchByC_SVI_Last(
-			companyId, schemaVersionId, orderByComparator);
-
-		if (ctCollection != null) {
-			return ctCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", schemaVersionId=");
-		sb.append(schemaVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and schemaVersionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param schemaVersionId the schema version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection fetchByC_SVI_Last(
-		long companyId, long schemaVersionId,
-		OrderByComparator<CTCollection> orderByComparator) {
-
-		int count = countByC_SVI(companyId, schemaVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTCollection> list = findByC_SVI(
-			companyId, schemaVersionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where companyId = &#63; and schemaVersionId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -3308,72 +2993,6 @@ public class CTCollectionPersistenceImpl
 
 		List<CTCollection> list = findByC_S(
 			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<CTCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		CTCollection ctCollection = fetchByC_S_Last(
-			companyId, status, orderByComparator);
-
-		if (ctCollection != null) {
-			return ctCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	@Override
-	public CTCollection fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<CTCollection> orderByComparator) {
-
-		int count = countByC_S(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTCollection> list = findByC_S(
-			companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5247,4 +4866,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1326275806
+// LIFERAY-SERVICE-BUILDER-HASH:1515956140

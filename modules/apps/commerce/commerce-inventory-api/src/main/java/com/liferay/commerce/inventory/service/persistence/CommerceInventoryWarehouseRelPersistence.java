@@ -126,34 +126,6 @@ public interface CommerceInventoryWarehouseRelPersistence
 				<CommerceInventoryWarehouseRel> orderByComparator);
 
 	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel
-	 * @throws NoSuchInventoryWarehouseRelException if a matching commerce inventory warehouse rel could not be found
-	 */
-	public CommerceInventoryWarehouseRel
-			findByCommerceInventoryWarehouseId_Last(
-				long commerceInventoryWarehouseId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceInventoryWarehouseRel> orderByComparator)
-		throws NoSuchInventoryWarehouseRelException;
-
-	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
-	 */
-	public CommerceInventoryWarehouseRel
-		fetchByCommerceInventoryWarehouseId_Last(
-			long commerceInventoryWarehouseId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouseRel> orderByComparator);
-
-	/**
 	 * Removes all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63; from the database.
 	 *
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
@@ -261,34 +233,6 @@ public interface CommerceInventoryWarehouseRelPersistence
 	 * @return the first matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
 	 */
 	public CommerceInventoryWarehouseRel fetchByC_C_First(
-		long classNameId, long commerceInventoryWarehouseId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryWarehouseRel> orderByComparator);
-
-	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel
-	 * @throws NoSuchInventoryWarehouseRelException if a matching commerce inventory warehouse rel could not be found
-	 */
-	public CommerceInventoryWarehouseRel findByC_C_Last(
-			long classNameId, long commerceInventoryWarehouseId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouseRel> orderByComparator)
-		throws NoSuchInventoryWarehouseRelException;
-
-	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
-	 */
-	public CommerceInventoryWarehouseRel fetchByC_C_Last(
 		long classNameId, long commerceInventoryWarehouseId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryWarehouseRel> orderByComparator);
@@ -501,4 +445,4 @@ public interface CommerceInventoryWarehouseRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-194843879
+// LIFERAY-SERVICE-BUILDER-HASH:-1148038175

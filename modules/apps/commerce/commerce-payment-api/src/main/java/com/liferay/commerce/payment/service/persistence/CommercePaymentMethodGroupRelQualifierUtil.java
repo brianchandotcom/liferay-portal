@@ -242,43 +242,6 @@ public class CommercePaymentMethodGroupRelQualifierUtil {
 	}
 
 	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier
-	 * @throws NoSuchPaymentMethodGroupRelQualifierException if a matching commerce payment method group rel qualifier could not be found
-	 */
-	public static CommercePaymentMethodGroupRelQualifier
-			findByCommercePaymentMethodGroupRelId_Last(
-				long commercePaymentMethodGroupRelId,
-				OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-					orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentMethodGroupRelQualifierException {
-
-		return getPersistence().findByCommercePaymentMethodGroupRelId_Last(
-			commercePaymentMethodGroupRelId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier, or <code>null</code> if a matching commerce payment method group rel qualifier could not be found
-	 */
-	public static CommercePaymentMethodGroupRelQualifier
-		fetchByCommercePaymentMethodGroupRelId_Last(
-			long commercePaymentMethodGroupRelId,
-			OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommercePaymentMethodGroupRelId_Last(
-			commercePaymentMethodGroupRelId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce payment method group rel qualifiers where commercePaymentMethodGroupRelId = &#63; from the database.
 	 *
 	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
@@ -424,43 +387,6 @@ public class CommercePaymentMethodGroupRelQualifierUtil {
 			orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, commercePaymentMethodGroupRelId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where classNameId = &#63; and commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier
-	 * @throws NoSuchPaymentMethodGroupRelQualifierException if a matching commerce payment method group rel qualifier could not be found
-	 */
-	public static CommercePaymentMethodGroupRelQualifier findByC_C_Last(
-			long classNameId, long commercePaymentMethodGroupRelId,
-			OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-				orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentMethodGroupRelQualifierException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, commercePaymentMethodGroupRelId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where classNameId = &#63; and commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier, or <code>null</code> if a matching commerce payment method group rel qualifier could not be found
-	 */
-	public static CommercePaymentMethodGroupRelQualifier fetchByC_C_Last(
-		long classNameId, long commercePaymentMethodGroupRelId,
-		OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-			orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, commercePaymentMethodGroupRelId, orderByComparator);
 	}
 
@@ -767,4 +693,4 @@ public class CommercePaymentMethodGroupRelQualifierUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2058820958
+// LIFERAY-SERVICE-BUILDER-HASH:1346169376

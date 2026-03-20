@@ -219,37 +219,6 @@ public class CPDVirtualSettingFileEntryUtil {
 	}
 
 	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
-	 */
-	public static CPDVirtualSettingFileEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.exception.
-			NoSuchCPDVirtualSettingFileEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
-	 */
-	public static CPDVirtualSettingFileEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cpd virtual setting file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -451,41 +420,6 @@ public class CPDVirtualSettingFileEntryUtil {
 	}
 
 	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
-	 */
-	public static CPDVirtualSettingFileEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.exception.
-			NoSuchCPDVirtualSettingFileEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
-	 */
-	public static CPDVirtualSettingFileEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cpd virtual setting file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -622,41 +556,6 @@ public class CPDVirtualSettingFileEntryUtil {
 	}
 
 	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where CPDefinitionVirtualSettingId = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingId the cp definition virtual setting ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
-	 */
-	public static CPDVirtualSettingFileEntry
-			findByCPDefinitionVirtualSettingId_Last(
-				long CPDefinitionVirtualSettingId,
-				OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.exception.
-			NoSuchCPDVirtualSettingFileEntryException {
-
-		return getPersistence().findByCPDefinitionVirtualSettingId_Last(
-			CPDefinitionVirtualSettingId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where CPDefinitionVirtualSettingId = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingId the cp definition virtual setting ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
-	 */
-	public static CPDVirtualSettingFileEntry
-		fetchByCPDefinitionVirtualSettingId_Last(
-			long CPDefinitionVirtualSettingId,
-			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
-
-		return getPersistence().fetchByCPDefinitionVirtualSettingId_Last(
-			CPDefinitionVirtualSettingId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cpd virtual setting file entries where CPDefinitionVirtualSettingId = &#63; from the database.
 	 *
 	 * @param CPDefinitionVirtualSettingId the cp definition virtual setting ID
@@ -785,39 +684,6 @@ public class CPDVirtualSettingFileEntryUtil {
 		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
 
 		return getPersistence().fetchByFileEntryId_First(
-			fileEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
-	 */
-	public static CPDVirtualSettingFileEntry findByFileEntryId_Last(
-			long fileEntryId,
-			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.exception.
-			NoSuchCPDVirtualSettingFileEntryException {
-
-		return getPersistence().findByFileEntryId_Last(
-			fileEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
-	 */
-	public static CPDVirtualSettingFileEntry fetchByFileEntryId_Last(
-		long fileEntryId,
-		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
-
-		return getPersistence().fetchByFileEntryId_Last(
 			fileEntryId, orderByComparator);
 	}
 
@@ -1018,4 +884,4 @@ public class CPDVirtualSettingFileEntryUtil {
 	private static volatile CPDVirtualSettingFileEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-627317312
+// LIFERAY-SERVICE-BUILDER-HASH:-405164616

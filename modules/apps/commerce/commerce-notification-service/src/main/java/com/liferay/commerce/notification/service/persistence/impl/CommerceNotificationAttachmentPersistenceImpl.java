@@ -328,67 +328,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce notification attachment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification attachment
-	 * @throws NoSuchNotificationAttachmentException if a matching commerce notification attachment could not be found
-	 */
-	@Override
-	public CommerceNotificationAttachment findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceNotificationAttachment> orderByComparator)
-		throws NoSuchNotificationAttachmentException {
-
-		CommerceNotificationAttachment commerceNotificationAttachment =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (commerceNotificationAttachment != null) {
-			return commerceNotificationAttachment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationAttachmentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification attachment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification attachment, or <code>null</code> if a matching commerce notification attachment could not be found
-	 */
-	@Override
-	public CommerceNotificationAttachment fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceNotificationAttachment> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationAttachment> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce notification attachments where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -937,72 +876,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce notification attachment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification attachment
-	 * @throws NoSuchNotificationAttachmentException if a matching commerce notification attachment could not be found
-	 */
-	@Override
-	public CommerceNotificationAttachment findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceNotificationAttachment> orderByComparator)
-		throws NoSuchNotificationAttachmentException {
-
-		CommerceNotificationAttachment commerceNotificationAttachment =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (commerceNotificationAttachment != null) {
-			return commerceNotificationAttachment;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationAttachmentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification attachment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification attachment, or <code>null</code> if a matching commerce notification attachment could not be found
-	 */
-	@Override
-	public CommerceNotificationAttachment fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceNotificationAttachment> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationAttachment> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce notification attachments where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1337,75 +1210,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		List<CommerceNotificationAttachment> list =
 			findByCommerceNotificationQueueEntryId(
 				commerceNotificationQueueEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce notification attachment in the ordered set where commerceNotificationQueueEntryId = &#63;.
-	 *
-	 * @param commerceNotificationQueueEntryId the commerce notification queue entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification attachment
-	 * @throws NoSuchNotificationAttachmentException if a matching commerce notification attachment could not be found
-	 */
-	@Override
-	public CommerceNotificationAttachment
-			findByCommerceNotificationQueueEntryId_Last(
-				long commerceNotificationQueueEntryId,
-				OrderByComparator<CommerceNotificationAttachment>
-					orderByComparator)
-		throws NoSuchNotificationAttachmentException {
-
-		CommerceNotificationAttachment commerceNotificationAttachment =
-			fetchByCommerceNotificationQueueEntryId_Last(
-				commerceNotificationQueueEntryId, orderByComparator);
-
-		if (commerceNotificationAttachment != null) {
-			return commerceNotificationAttachment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceNotificationQueueEntryId=");
-		sb.append(commerceNotificationQueueEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationAttachmentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification attachment in the ordered set where commerceNotificationQueueEntryId = &#63;.
-	 *
-	 * @param commerceNotificationQueueEntryId the commerce notification queue entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification attachment, or <code>null</code> if a matching commerce notification attachment could not be found
-	 */
-	@Override
-	public CommerceNotificationAttachment
-		fetchByCommerceNotificationQueueEntryId_Last(
-			long commerceNotificationQueueEntryId,
-			OrderByComparator<CommerceNotificationAttachment>
-				orderByComparator) {
-
-		int count = countByCommerceNotificationQueueEntryId(
-			commerceNotificationQueueEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationAttachment> list =
-			findByCommerceNotificationQueueEntryId(
-				commerceNotificationQueueEntryId, count - 1, count,
-				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2278,4 +2082,4 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1001452821
+// LIFERAY-SERVICE-BUILDER-HASH:325216050

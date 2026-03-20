@@ -328,64 +328,6 @@ public class DDMContentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm content in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content
-	 * @throws NoSuchContentException if a matching ddm content could not be found
-	 */
-	@Override
-	public DDMContent findByUuid_Last(
-			String uuid, OrderByComparator<DDMContent> orderByComparator)
-		throws NoSuchContentException {
-
-		DDMContent ddmContent = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (ddmContent != null) {
-			return ddmContent;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm content in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
-	 */
-	@Override
-	public DDMContent fetchByUuid_Last(
-		String uuid, OrderByComparator<DDMContent> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMContent> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm contents where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -933,72 +875,6 @@ public class DDMContentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content
-	 * @throws NoSuchContentException if a matching ddm content could not be found
-	 */
-	@Override
-	public DDMContent findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDMContent> orderByComparator)
-		throws NoSuchContentException {
-
-		DDMContent ddmContent = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ddmContent != null) {
-			return ddmContent;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
-	 */
-	@Override
-	public DDMContent fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDMContent> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMContent> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm contents where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1320,64 +1196,6 @@ public class DDMContentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm content in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content
-	 * @throws NoSuchContentException if a matching ddm content could not be found
-	 */
-	@Override
-	public DDMContent findByGroupId_Last(
-			long groupId, OrderByComparator<DDMContent> orderByComparator)
-		throws NoSuchContentException {
-
-		DDMContent ddmContent = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (ddmContent != null) {
-			return ddmContent;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm content in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
-	 */
-	@Override
-	public DDMContent fetchByGroupId_Last(
-		long groupId, OrderByComparator<DDMContent> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMContent> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm contents where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1667,65 +1485,6 @@ public class DDMContentPersistenceImpl
 
 		List<DDMContent> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm content in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content
-	 * @throws NoSuchContentException if a matching ddm content could not be found
-	 */
-	@Override
-	public DDMContent findByCompanyId_Last(
-			long companyId, OrderByComparator<DDMContent> orderByComparator)
-		throws NoSuchContentException {
-
-		DDMContent ddmContent = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ddmContent != null) {
-			return ddmContent;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm content in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
-	 */
-	@Override
-	public DDMContent fetchByCompanyId_Last(
-		long companyId, OrderByComparator<DDMContent> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMContent> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2804,4 +2563,4 @@ public class DDMContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1841931537
+// LIFERAY-SERVICE-BUILDER-HASH:1373525875

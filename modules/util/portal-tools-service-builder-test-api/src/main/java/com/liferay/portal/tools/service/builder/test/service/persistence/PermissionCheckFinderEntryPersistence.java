@@ -121,32 +121,6 @@ public interface PermissionCheckFinderEntryPersistence
 			<PermissionCheckFinderEntry> orderByComparator);
 
 	/**
-	 * Returns the last permission check finder entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching permission check finder entry
-	 * @throws NoSuchPermissionCheckFinderEntryException if a matching permission check finder entry could not be found
-	 */
-	public PermissionCheckFinderEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PermissionCheckFinderEntry> orderByComparator)
-		throws NoSuchPermissionCheckFinderEntryException;
-
-	/**
-	 * Returns the last permission check finder entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching permission check finder entry, or <code>null</code> if a matching permission check finder entry could not be found
-	 */
-	public PermissionCheckFinderEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<PermissionCheckFinderEntry> orderByComparator);
-
-	/**
 	 * Returns all the permission check finder entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -463,4 +437,4 @@ public interface PermissionCheckFinderEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:546731565
+// LIFERAY-SERVICE-BUILDER-HASH:-1231209604

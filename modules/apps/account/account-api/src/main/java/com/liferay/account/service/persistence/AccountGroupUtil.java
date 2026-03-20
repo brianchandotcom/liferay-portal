@@ -210,34 +210,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns the last account group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public static AccountGroup findByUuid_Last(
-			String uuid, OrderByComparator<AccountGroup> orderByComparator)
-		throws com.liferay.account.exception.NoSuchGroupException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public static AccountGroup fetchByUuid_Last(
-		String uuid, OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the account groups that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -422,40 +394,6 @@ public class AccountGroupUtil {
 		OrderByComparator<AccountGroup> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public static AccountGroup findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws com.liferay.account.exception.NoSuchGroupException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public static AccountGroup fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -647,38 +585,6 @@ public class AccountGroupUtil {
 		OrderByComparator<AccountGroup> orderByComparator) {
 
 		return getPersistence().fetchByAccountGroupId_First(
-			accountGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public static AccountGroup findByAccountGroupId_Last(
-			long accountGroupId,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws com.liferay.account.exception.NoSuchGroupException {
-
-		return getPersistence().findByAccountGroupId_Last(
-			accountGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public static AccountGroup fetchByAccountGroupId_Last(
-		long accountGroupId,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().fetchByAccountGroupId_Last(
 			accountGroupId, orderByComparator);
 	}
 
@@ -1017,36 +923,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns the last account group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public static AccountGroup findByCompanyId_Last(
-			long companyId, OrderByComparator<AccountGroup> orderByComparator)
-		throws com.liferay.account.exception.NoSuchGroupException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public static AccountGroup fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the account groups that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1235,40 +1111,6 @@ public class AccountGroupUtil {
 		OrderByComparator<AccountGroup> orderByComparator) {
 
 		return getPersistence().fetchByC_D_First(
-			companyId, defaultAccountGroup, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public static AccountGroup findByC_D_Last(
-			long companyId, boolean defaultAccountGroup,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws com.liferay.account.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_D_Last(
-			companyId, defaultAccountGroup, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public static AccountGroup fetchByC_D_Last(
-		long companyId, boolean defaultAccountGroup,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().fetchByC_D_Last(
 			companyId, defaultAccountGroup, orderByComparator);
 	}
 
@@ -1477,40 +1319,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public static AccountGroup findByC_LikeN_Last(
-			long companyId, String name,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws com.liferay.account.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_LikeN_Last(
-			companyId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public static AccountGroup fetchByC_LikeN_Last(
-		long companyId, String name,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().fetchByC_LikeN_Last(
-			companyId, name, orderByComparator);
-	}
-
-	/**
 	 * Returns all the account groups that the user has permission to view where companyId = &#63; and name LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1704,40 +1512,6 @@ public class AccountGroupUtil {
 		OrderByComparator<AccountGroup> orderByComparator) {
 
 		return getPersistence().fetchByC_T_First(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public static AccountGroup findByC_T_Last(
-			long companyId, String type,
-			OrderByComparator<AccountGroup> orderByComparator)
-		throws com.liferay.account.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_T_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public static AccountGroup fetchByC_T_Last(
-		long companyId, String type,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().fetchByC_T_Last(
 			companyId, type, orderByComparator);
 	}
 
@@ -2055,4 +1829,4 @@ public class AccountGroupUtil {
 	private static volatile AccountGroupPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1800986435
+// LIFERAY-SERVICE-BUILDER-HASH:-1090630765

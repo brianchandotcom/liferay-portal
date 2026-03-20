@@ -332,68 +332,6 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
-	 *
-	 * @param segmentsExperimentId the segments experiment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel
-	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
-	 */
-	@Override
-	public SegmentsExperimentRel findBySegmentsExperimentId_Last(
-			long segmentsExperimentId,
-			OrderByComparator<SegmentsExperimentRel> orderByComparator)
-		throws NoSuchExperimentRelException {
-
-		SegmentsExperimentRel segmentsExperimentRel =
-			fetchBySegmentsExperimentId_Last(
-				segmentsExperimentId, orderByComparator);
-
-		if (segmentsExperimentRel != null) {
-			return segmentsExperimentRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsExperimentId=");
-		sb.append(segmentsExperimentId);
-
-		sb.append("}");
-
-		throw new NoSuchExperimentRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
-	 *
-	 * @param segmentsExperimentId the segments experiment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
-	 */
-	@Override
-	public SegmentsExperimentRel fetchBySegmentsExperimentId_Last(
-		long segmentsExperimentId,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
-
-		int count = countBySegmentsExperimentId(segmentsExperimentId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsExperimentRel> list = findBySegmentsExperimentId(
-			segmentsExperimentId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the segments experiment rels where segmentsExperimentId = &#63; from the database.
 	 *
 	 * @param segmentsExperimentId the segments experiment ID
@@ -699,68 +637,6 @@ public class SegmentsExperimentRelPersistenceImpl
 
 		List<SegmentsExperimentRel> list = findBySegmentsExperienceId(
 			segmentsExperienceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel
-	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
-	 */
-	@Override
-	public SegmentsExperimentRel findBySegmentsExperienceId_Last(
-			long segmentsExperienceId,
-			OrderByComparator<SegmentsExperimentRel> orderByComparator)
-		throws NoSuchExperimentRelException {
-
-		SegmentsExperimentRel segmentsExperimentRel =
-			fetchBySegmentsExperienceId_Last(
-				segmentsExperienceId, orderByComparator);
-
-		if (segmentsExperimentRel != null) {
-			return segmentsExperimentRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsExperienceId=");
-		sb.append(segmentsExperienceId);
-
-		sb.append("}");
-
-		throw new NoSuchExperimentRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
-	 */
-	@Override
-	public SegmentsExperimentRel fetchBySegmentsExperienceId_Last(
-		long segmentsExperienceId,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
-
-		int count = countBySegmentsExperienceId(segmentsExperienceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsExperimentRel> list = findBySegmentsExperienceId(
-			segmentsExperienceId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2033,4 +1909,4 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1095314412
+// LIFERAY-SERVICE-BUILDER-HASH:-63513518

@@ -219,39 +219,6 @@ public class CountryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the last country localization in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country localization
-	 * @throws NoSuchCountryLocalizationException if a matching country localization could not be found
-	 */
-	public static CountryLocalization findByCountryId_Last(
-			long countryId,
-			OrderByComparator<CountryLocalization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchCountryLocalizationException {
-
-		return getPersistence().findByCountryId_Last(
-			countryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last country localization in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country localization, or <code>null</code> if a matching country localization could not be found
-	 */
-	public static CountryLocalization fetchByCountryId_Last(
-		long countryId,
-		OrderByComparator<CountryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByCountryId_Last(
-			countryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the country localizations where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -517,4 +484,4 @@ public class CountryLocalizationUtil {
 	private static volatile CountryLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1634184061
+// LIFERAY-SERVICE-BUILDER-HASH:1153453721

@@ -120,32 +120,6 @@ public interface ListTypeDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last list type definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition
-	 * @throws NoSuchListTypeDefinitionException if a matching list type definition could not be found
-	 */
-	public ListTypeDefinition findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
-				orderByComparator)
-		throws NoSuchListTypeDefinitionException;
-
-	/**
-	 * Returns the last list type definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition, or <code>null</code> if a matching list type definition could not be found
-	 */
-	public ListTypeDefinition fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
-			orderByComparator);
-
-	/**
 	 * Returns all the list type definitions that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -299,34 +273,6 @@ public interface ListTypeDefinitionPersistence
 	 * @return the first matching list type definition, or <code>null</code> if a matching list type definition could not be found
 	 */
 	public ListTypeDefinition fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last list type definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition
-	 * @throws NoSuchListTypeDefinitionException if a matching list type definition could not be found
-	 */
-	public ListTypeDefinition findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
-				orderByComparator)
-		throws NoSuchListTypeDefinitionException;
-
-	/**
-	 * Returns the last list type definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition, or <code>null</code> if a matching list type definition could not be found
-	 */
-	public ListTypeDefinition fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
 			orderByComparator);
@@ -492,34 +438,6 @@ public interface ListTypeDefinitionPersistence
 	 * @return the first matching list type definition, or <code>null</code> if a matching list type definition could not be found
 	 */
 	public ListTypeDefinition fetchByC_U_First(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last list type definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition
-	 * @throws NoSuchListTypeDefinitionException if a matching list type definition could not be found
-	 */
-	public ListTypeDefinition findByC_U_Last(
-			long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
-				orderByComparator)
-		throws NoSuchListTypeDefinitionException;
-
-	/**
-	 * Returns the last list type definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition, or <code>null</code> if a matching list type definition could not be found
-	 */
-	public ListTypeDefinition fetchByC_U_Last(
 		long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
 			orderByComparator);
@@ -770,4 +688,4 @@ public interface ListTypeDefinitionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:615165261
+// LIFERAY-SERVICE-BUILDER-HASH:1339657737

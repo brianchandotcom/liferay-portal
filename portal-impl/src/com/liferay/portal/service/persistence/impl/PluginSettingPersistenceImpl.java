@@ -295,65 +295,6 @@ public class PluginSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last plugin setting in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plugin setting
-	 * @throws NoSuchPluginSettingException if a matching plugin setting could not be found
-	 */
-	@Override
-	public PluginSetting findByCompanyId_Last(
-			long companyId, OrderByComparator<PluginSetting> orderByComparator)
-		throws NoSuchPluginSettingException {
-
-		PluginSetting pluginSetting = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (pluginSetting != null) {
-			return pluginSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPluginSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last plugin setting in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
-	 */
-	@Override
-	public PluginSetting fetchByCompanyId_Last(
-		long companyId, OrderByComparator<PluginSetting> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PluginSetting> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the plugin settings where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1278,4 +1219,4 @@ public class PluginSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1460055476
+// LIFERAY-SERVICE-BUILDER-HASH:426525864

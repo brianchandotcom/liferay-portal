@@ -333,75 +333,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel
-	 * @throws NoSuchInventoryWarehouseRelException if a matching commerce inventory warehouse rel could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseRel
-			findByCommerceInventoryWarehouseId_Last(
-				long commerceInventoryWarehouseId,
-				OrderByComparator<CommerceInventoryWarehouseRel>
-					orderByComparator)
-		throws NoSuchInventoryWarehouseRelException {
-
-		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel =
-			fetchByCommerceInventoryWarehouseId_Last(
-				commerceInventoryWarehouseId, orderByComparator);
-
-		if (commerceInventoryWarehouseRel != null) {
-			return commerceInventoryWarehouseRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceInventoryWarehouseId=");
-		sb.append(commerceInventoryWarehouseId);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseRel
-		fetchByCommerceInventoryWarehouseId_Last(
-			long commerceInventoryWarehouseId,
-			OrderByComparator<CommerceInventoryWarehouseRel>
-				orderByComparator) {
-
-		int count = countByCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryWarehouseRel> list =
-			findByCommerceInventoryWarehouseId(
-				commerceInventoryWarehouseId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63; from the database.
 	 *
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
@@ -720,74 +651,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 
 		List<CommerceInventoryWarehouseRel> list = findByC_C(
 			classNameId, commerceInventoryWarehouseId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel
-	 * @throws NoSuchInventoryWarehouseRelException if a matching commerce inventory warehouse rel could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseRel findByC_C_Last(
-			long classNameId, long commerceInventoryWarehouseId,
-			OrderByComparator<CommerceInventoryWarehouseRel> orderByComparator)
-		throws NoSuchInventoryWarehouseRelException {
-
-		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel =
-			fetchByC_C_Last(
-				classNameId, commerceInventoryWarehouseId, orderByComparator);
-
-		if (commerceInventoryWarehouseRel != null) {
-			return commerceInventoryWarehouseRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", commerceInventoryWarehouseId=");
-		sb.append(commerceInventoryWarehouseId);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseRel fetchByC_C_Last(
-		long classNameId, long commerceInventoryWarehouseId,
-		OrderByComparator<CommerceInventoryWarehouseRel> orderByComparator) {
-
-		int count = countByC_C(classNameId, commerceInventoryWarehouseId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryWarehouseRel> list = findByC_C(
-			classNameId, commerceInventoryWarehouseId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1856,4 +1719,4 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1362660235
+// LIFERAY-SERVICE-BUILDER-HASH:-1749578793

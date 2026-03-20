@@ -295,65 +295,6 @@ public class UserTrackerPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker
-	 * @throws NoSuchUserTrackerException if a matching user tracker could not be found
-	 */
-	@Override
-	public UserTracker findByCompanyId_Last(
-			long companyId, OrderByComparator<UserTracker> orderByComparator)
-		throws NoSuchUserTrackerException {
-
-		UserTracker userTracker = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserTrackerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 */
-	@Override
-	public UserTracker fetchByCompanyId_Last(
-		long companyId, OrderByComparator<UserTracker> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserTracker> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the user trackers where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -627,64 +568,6 @@ public class UserTrackerPersistenceImpl
 		long userId, OrderByComparator<UserTracker> orderByComparator) {
 
 		List<UserTracker> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker
-	 * @throws NoSuchUserTrackerException if a matching user tracker could not be found
-	 */
-	@Override
-	public UserTracker findByUserId_Last(
-			long userId, OrderByComparator<UserTracker> orderByComparator)
-		throws NoSuchUserTrackerException {
-
-		UserTracker userTracker = fetchByUserId_Last(userId, orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchUserTrackerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 */
-	@Override
-	public UserTracker fetchByUserId_Last(
-		long userId, OrderByComparator<UserTracker> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserTracker> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -986,65 +869,6 @@ public class UserTrackerPersistenceImpl
 
 		List<UserTracker> list = findBySessionId(
 			sessionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker
-	 * @throws NoSuchUserTrackerException if a matching user tracker could not be found
-	 */
-	@Override
-	public UserTracker findBySessionId_Last(
-			String sessionId, OrderByComparator<UserTracker> orderByComparator)
-		throws NoSuchUserTrackerException {
-
-		UserTracker userTracker = fetchBySessionId_Last(
-			sessionId, orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sessionId=");
-		sb.append(sessionId);
-
-		sb.append("}");
-
-		throw new NoSuchUserTrackerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 */
-	@Override
-	public UserTracker fetchBySessionId_Last(
-		String sessionId, OrderByComparator<UserTracker> orderByComparator) {
-
-		int count = countBySessionId(sessionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserTracker> list = findBySessionId(
-			sessionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1756,4 +1580,4 @@ public class UserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1423236334
+// LIFERAY-SERVICE-BUILDER-HASH:-1372147268

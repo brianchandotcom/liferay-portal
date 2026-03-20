@@ -119,32 +119,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	public ObjectLayout findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
-
-	/**
-	 * Returns the last object layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	public ObjectLayout fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-			orderByComparator);
-
-	/**
 	 * Removes all the object layouts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -254,34 +228,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	public ObjectLayout findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
-
-	/**
-	 * Returns the last object layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	public ObjectLayout fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-			orderByComparator);
-
-	/**
 	 * Removes all the object layouts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -382,32 +328,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 	 * @return the first matching object layout, or <code>null</code> if a matching object layout could not be found
 	 */
 	public ObjectLayout fetchByObjectDefinitionId_First(
-		long objectDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-			orderByComparator);
-
-	/**
-	 * Returns the last object layout in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	public ObjectLayout findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
-
-	/**
-	 * Returns the last object layout in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	public ObjectLayout fetchByObjectDefinitionId_Last(
 		long objectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
 			orderByComparator);
@@ -522,34 +442,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object layout in the ordered set where companyId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	public ObjectLayout findByC_DOL_Last(
-			long companyId, boolean defaultObjectLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
-
-	/**
-	 * Returns the last object layout in the ordered set where companyId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	public ObjectLayout fetchByC_DOL_Last(
-		long companyId, boolean defaultObjectLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-			orderByComparator);
-
-	/**
 	 * Removes all the object layouts where companyId = &#63; and defaultObjectLayout = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -659,34 +551,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 	 * @return the first matching object layout, or <code>null</code> if a matching object layout could not be found
 	 */
 	public ObjectLayout fetchByODI_DOL_First(
-		long objectDefinitionId, boolean defaultObjectLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-			orderByComparator);
-
-	/**
-	 * Returns the last object layout in the ordered set where objectDefinitionId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	public ObjectLayout findByODI_DOL_Last(
-			long objectDefinitionId, boolean defaultObjectLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
-
-	/**
-	 * Returns the last object layout in the ordered set where objectDefinitionId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	public ObjectLayout fetchByODI_DOL_Last(
 		long objectDefinitionId, boolean defaultObjectLayout,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
 			orderByComparator);
@@ -831,4 +695,4 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2073400766
+// LIFERAY-SERVICE-BUILDER-HASH:42772487

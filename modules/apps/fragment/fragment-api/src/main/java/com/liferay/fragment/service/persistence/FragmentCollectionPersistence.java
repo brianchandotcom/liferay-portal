@@ -122,32 +122,6 @@ public interface FragmentCollectionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	public FragmentCollection findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last fragment collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	public FragmentCollection fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment collections where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface FragmentCollectionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	public FragmentCollection findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last fragment collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	public FragmentCollection fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
-
-	/**
 	 * Removes all the fragment collections where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface FragmentCollectionPersistence
 	 * @return the first matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
 	public FragmentCollection fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	public FragmentCollection findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	public FragmentCollection fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
 			orderByComparator);
@@ -700,34 +620,6 @@ public interface FragmentCollectionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	public FragmentCollection findByG_LikeN_Last(
-			long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	public FragmentCollection fetchByG_LikeN_Last(
-		long groupId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
-
-	/**
 	 * Returns all the fragment collections where groupId = any &#63; and name LIKE &#63;.
 	 *
 	 * <p>
@@ -913,34 +805,6 @@ public interface FragmentCollectionPersistence
 	 * @return the first matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
 	public FragmentCollection fetchByG_M_First(
-		long groupId, boolean marketplace,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	public FragmentCollection findByG_M_Last(
-			long groupId, boolean marketplace,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	public FragmentCollection fetchByG_M_Last(
 		long groupId, boolean marketplace,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
 			orderByComparator);
@@ -1137,36 +1001,6 @@ public interface FragmentCollectionPersistence
 	 * @return the first matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
 	public FragmentCollection fetchByG_LikeN_M_First(
-		long groupId, String name, boolean marketplace,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	public FragmentCollection findByG_LikeN_M_Last(
-			long groupId, String name, boolean marketplace,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	public FragmentCollection fetchByG_LikeN_M_Last(
 		long groupId, String name, boolean marketplace,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
 			orderByComparator);
@@ -1451,4 +1285,4 @@ public interface FragmentCollectionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1981422526
+// LIFERAY-SERVICE-BUILDER-HASH:1053306920

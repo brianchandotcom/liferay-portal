@@ -317,65 +317,6 @@ public class KaleoTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task
-	 * @throws NoSuchTaskException if a matching kaleo task could not be found
-	 */
-	@Override
-	public KaleoTask findByCompanyId_Last(
-			long companyId, OrderByComparator<KaleoTask> orderByComparator)
-		throws NoSuchTaskException {
-
-		KaleoTask kaleoTask = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoTask != null) {
-			return kaleoTask;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task, or <code>null</code> if a matching kaleo task could not be found
-	 */
-	@Override
-	public KaleoTask fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KaleoTask> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTask> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo tasks where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -678,67 +619,6 @@ public class KaleoTaskPersistenceImpl
 
 		List<KaleoTask> list = findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task
-	 * @throws NoSuchTaskException if a matching kaleo task could not be found
-	 */
-	@Override
-	public KaleoTask findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTask> orderByComparator)
-		throws NoSuchTaskException {
-
-		KaleoTask kaleoTask = fetchByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoTask != null) {
-			return kaleoTask;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task, or <code>null</code> if a matching kaleo task could not be found
-	 */
-	@Override
-	public KaleoTask fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoTask> orderByComparator) {
-
-		int count = countByKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTask> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1942,4 +1822,4 @@ public class KaleoTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:445873058
+// LIFERAY-SERVICE-BUILDER-HASH:-966338450

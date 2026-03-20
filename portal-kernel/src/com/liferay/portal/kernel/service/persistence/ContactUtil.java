@@ -212,36 +212,6 @@ public class ContactUtil {
 	}
 
 	/**
-	 * Returns the last contact in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	public static Contact findByCompanyId_Last(
-			long companyId, OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	public static Contact fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Contact> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the contacts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -355,34 +325,6 @@ public class ContactUtil {
 		long userId, OrderByComparator<Contact> orderByComparator) {
 
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	public static Contact findByUserId_Last(
-			long userId, OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	public static Contact fetchByUserId_Last(
-		long userId, OrderByComparator<Contact> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -514,40 +456,6 @@ public class ContactUtil {
 	}
 
 	/**
-	 * Returns the last contact in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	public static Contact findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException {
-
-		return getPersistence().findByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	public static Contact fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<Contact> orderByComparator) {
-
-		return getPersistence().fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the contacts where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -675,40 +583,6 @@ public class ContactUtil {
 		OrderByComparator<Contact> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	public static Contact findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	public static Contact fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<Contact> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
 	}
 
@@ -891,4 +765,4 @@ public class ContactUtil {
 	private static volatile ContactPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1187861820
+// LIFERAY-SERVICE-BUILDER-HASH:-1039120734

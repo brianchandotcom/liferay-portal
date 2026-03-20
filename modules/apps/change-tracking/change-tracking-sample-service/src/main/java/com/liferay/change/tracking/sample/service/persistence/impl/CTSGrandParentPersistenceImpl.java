@@ -301,65 +301,6 @@ public class CTSGrandParentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cts grand parent in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts grand parent
-	 * @throws NoSuchCTSGrandParentException if a matching cts grand parent could not be found
-	 */
-	@Override
-	public CTSGrandParent findByCompanyId_Last(
-			long companyId, OrderByComparator<CTSGrandParent> orderByComparator)
-		throws NoSuchCTSGrandParentException {
-
-		CTSGrandParent ctsGrandParent = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ctsGrandParent != null) {
-			return ctsGrandParent;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCTSGrandParentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cts grand parent in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts grand parent, or <code>null</code> if a matching cts grand parent could not be found
-	 */
-	@Override
-	public CTSGrandParent fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTSGrandParent> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTSGrandParent> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cts grand parents where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1033,4 +974,4 @@ public class CTSGrandParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1661113406
+// LIFERAY-SERVICE-BUILDER-HASH:1494195772

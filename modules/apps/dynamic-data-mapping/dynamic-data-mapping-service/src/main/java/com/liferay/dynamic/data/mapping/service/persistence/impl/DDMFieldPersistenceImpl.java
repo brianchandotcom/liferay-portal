@@ -313,64 +313,6 @@ public class DDMFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField findByStorageId_Last(
-			long storageId, OrderByComparator<DDMField> orderByComparator)
-		throws NoSuchFieldException {
-
-		DDMField ddmField = fetchByStorageId_Last(storageId, orderByComparator);
-
-		if (ddmField != null) {
-			return ddmField;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField fetchByStorageId_Last(
-		long storageId, OrderByComparator<DDMField> orderByComparator) {
-
-		int count = countByStorageId(storageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMField> list = findByStorageId(
-			storageId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm fields where storageId = &#63; from the database.
 	 *
 	 * @param storageId the storage ID
@@ -666,67 +608,6 @@ public class DDMFieldPersistenceImpl
 
 		List<DDMField> list = findByStructureVersionId(
 			structureVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField findByStructureVersionId_Last(
-			long structureVersionId,
-			OrderByComparator<DDMField> orderByComparator)
-		throws NoSuchFieldException {
-
-		DDMField ddmField = fetchByStructureVersionId_Last(
-			structureVersionId, orderByComparator);
-
-		if (ddmField != null) {
-			return ddmField;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureVersionId=");
-		sb.append(structureVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField fetchByStructureVersionId_Last(
-		long structureVersionId,
-		OrderByComparator<DDMField> orderByComparator) {
-
-		int count = countByStructureVersionId(structureVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMField> list = findByStructureVersionId(
-			structureVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1058,72 +939,6 @@ public class DDMFieldPersistenceImpl
 
 		List<DDMField> list = findByC_F(
 			companyId, fieldType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where companyId = &#63; and fieldType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param fieldType the field type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField findByC_F_Last(
-			long companyId, String fieldType,
-			OrderByComparator<DDMField> orderByComparator)
-		throws NoSuchFieldException {
-
-		DDMField ddmField = fetchByC_F_Last(
-			companyId, fieldType, orderByComparator);
-
-		if (ddmField != null) {
-			return ddmField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", fieldType=");
-		sb.append(fieldType);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where companyId = &#63; and fieldType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param fieldType the field type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField fetchByC_F_Last(
-		long companyId, String fieldType,
-		OrderByComparator<DDMField> orderByComparator) {
-
-		int count = countByC_F(companyId, fieldType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMField> list = findByC_F(
-			companyId, fieldType, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1478,72 +1293,6 @@ public class DDMFieldPersistenceImpl
 
 		List<DDMField> list = findByS_F(
 			storageId, fieldName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63; and fieldName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField findByS_F_Last(
-			long storageId, String fieldName,
-			OrderByComparator<DDMField> orderByComparator)
-		throws NoSuchFieldException {
-
-		DDMField ddmField = fetchByS_F_Last(
-			storageId, fieldName, orderByComparator);
-
-		if (ddmField != null) {
-			return ddmField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append(", fieldName=");
-		sb.append(fieldName);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63; and fieldName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField fetchByS_F_Last(
-		long storageId, String fieldName,
-		OrderByComparator<DDMField> orderByComparator) {
-
-		int count = countByS_F(storageId, fieldName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMField> list = findByS_F(
-			storageId, fieldName, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2792,4 +2541,4 @@ public class DDMFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-579429607
+// LIFERAY-SERVICE-BUILDER-HASH:686261940

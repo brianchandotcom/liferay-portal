@@ -330,65 +330,6 @@ public class DEDataListViewPersistenceImpl
 	}
 
 	/**
-	 * Returns the last de data list view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view
-	 * @throws NoSuchDataListViewException if a matching de data list view could not be found
-	 */
-	@Override
-	public DEDataListView findByUuid_Last(
-			String uuid, OrderByComparator<DEDataListView> orderByComparator)
-		throws NoSuchDataListViewException {
-
-		DEDataListView deDataListView = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (deDataListView != null) {
-			return deDataListView;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDataListViewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last de data list view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view, or <code>null</code> if a matching de data list view could not be found
-	 */
-	@Override
-	public DEDataListView fetchByUuid_Last(
-		String uuid, OrderByComparator<DEDataListView> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DEDataListView> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the de data list views where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -936,72 +877,6 @@ public class DEDataListViewPersistenceImpl
 	}
 
 	/**
-	 * Returns the last de data list view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view
-	 * @throws NoSuchDataListViewException if a matching de data list view could not be found
-	 */
-	@Override
-	public DEDataListView findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DEDataListView> orderByComparator)
-		throws NoSuchDataListViewException {
-
-		DEDataListView deDataListView = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (deDataListView != null) {
-			return deDataListView;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDataListViewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last de data list view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view, or <code>null</code> if a matching de data list view could not be found
-	 */
-	@Override
-	public DEDataListView fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DEDataListView> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DEDataListView> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the de data list views where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1323,67 +1198,6 @@ public class DEDataListViewPersistenceImpl
 
 		List<DEDataListView> list = findByDDMStructureId(
 			ddmStructureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last de data list view in the ordered set where ddmStructureId = &#63;.
-	 *
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view
-	 * @throws NoSuchDataListViewException if a matching de data list view could not be found
-	 */
-	@Override
-	public DEDataListView findByDDMStructureId_Last(
-			long ddmStructureId,
-			OrderByComparator<DEDataListView> orderByComparator)
-		throws NoSuchDataListViewException {
-
-		DEDataListView deDataListView = fetchByDDMStructureId_Last(
-			ddmStructureId, orderByComparator);
-
-		if (deDataListView != null) {
-			return deDataListView;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ddmStructureId=");
-		sb.append(ddmStructureId);
-
-		sb.append("}");
-
-		throw new NoSuchDataListViewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last de data list view in the ordered set where ddmStructureId = &#63;.
-	 *
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view, or <code>null</code> if a matching de data list view could not be found
-	 */
-	@Override
-	public DEDataListView fetchByDDMStructureId_Last(
-		long ddmStructureId,
-		OrderByComparator<DEDataListView> orderByComparator) {
-
-		int count = countByDDMStructureId(ddmStructureId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DEDataListView> list = findByDDMStructureId(
-			ddmStructureId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1724,78 +1538,6 @@ public class DEDataListViewPersistenceImpl
 
 		List<DEDataListView> list = findByG_C_DDMSI(
 			groupId, companyId, ddmStructureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last de data list view in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view
-	 * @throws NoSuchDataListViewException if a matching de data list view could not be found
-	 */
-	@Override
-	public DEDataListView findByG_C_DDMSI_Last(
-			long groupId, long companyId, long ddmStructureId,
-			OrderByComparator<DEDataListView> orderByComparator)
-		throws NoSuchDataListViewException {
-
-		DEDataListView deDataListView = fetchByG_C_DDMSI_Last(
-			groupId, companyId, ddmStructureId, orderByComparator);
-
-		if (deDataListView != null) {
-			return deDataListView;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", ddmStructureId=");
-		sb.append(ddmStructureId);
-
-		sb.append("}");
-
-		throw new NoSuchDataListViewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last de data list view in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view, or <code>null</code> if a matching de data list view could not be found
-	 */
-	@Override
-	public DEDataListView fetchByG_C_DDMSI_Last(
-		long groupId, long companyId, long ddmStructureId,
-		OrderByComparator<DEDataListView> orderByComparator) {
-
-		int count = countByG_C_DDMSI(groupId, companyId, ddmStructureId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DEDataListView> list = findByG_C_DDMSI(
-			groupId, companyId, ddmStructureId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2921,4 +2663,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1026916610
+// LIFERAY-SERVICE-BUILDER-HASH:1354251444

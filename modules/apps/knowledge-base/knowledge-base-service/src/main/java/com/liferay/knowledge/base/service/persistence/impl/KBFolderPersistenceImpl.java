@@ -337,64 +337,6 @@ public class KBFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kb folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder
-	 * @throws NoSuchFolderException if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder findByUuid_Last(
-			String uuid, OrderByComparator<KBFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		KBFolder kbFolder = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (kbFolder != null) {
-			return kbFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder fetchByUuid_Last(
-		String uuid, OrderByComparator<KBFolder> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBFolder> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kb folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -941,72 +883,6 @@ public class KBFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kb folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder
-	 * @throws NoSuchFolderException if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<KBFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		KBFolder kbFolder = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (kbFolder != null) {
-			return kbFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<KBFolder> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBFolder> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kb folders where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1328,64 +1204,6 @@ public class KBFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kb folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder
-	 * @throws NoSuchFolderException if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder findByCompanyId_Last(
-			long companyId, OrderByComparator<KBFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		KBFolder kbFolder = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (kbFolder != null) {
-			return kbFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KBFolder> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBFolder> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kb folders where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1694,72 +1512,6 @@ public class KBFolderPersistenceImpl
 
 		List<KBFolder> list = findByG_P(
 			groupId, parentKBFolderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kb folder in the ordered set where groupId = &#63; and parentKBFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder
-	 * @throws NoSuchFolderException if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder findByG_P_Last(
-			long groupId, long parentKBFolderId,
-			OrderByComparator<KBFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		KBFolder kbFolder = fetchByG_P_Last(
-			groupId, parentKBFolderId, orderByComparator);
-
-		if (kbFolder != null) {
-			return kbFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentKBFolderId=");
-		sb.append(parentKBFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb folder in the ordered set where groupId = &#63; and parentKBFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder fetchByG_P_Last(
-		long groupId, long parentKBFolderId,
-		OrderByComparator<KBFolder> orderByComparator) {
-
-		int count = countByG_P(groupId, parentKBFolderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBFolder> list = findByG_P(
-			groupId, parentKBFolderId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2799,78 +2551,6 @@ public class KBFolderPersistenceImpl
 
 		List<KBFolder> list = findByG_P_S(
 			groupId, parentKBFolderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kb folder in the ordered set where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder
-	 * @throws NoSuchFolderException if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder findByG_P_S_Last(
-			long groupId, long parentKBFolderId, int status,
-			OrderByComparator<KBFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		KBFolder kbFolder = fetchByG_P_S_Last(
-			groupId, parentKBFolderId, status, orderByComparator);
-
-		if (kbFolder != null) {
-			return kbFolder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentKBFolderId=");
-		sb.append(parentKBFolderId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb folder in the ordered set where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
-	@Override
-	public KBFolder fetchByG_P_S_Last(
-		long groupId, long parentKBFolderId, int status,
-		OrderByComparator<KBFolder> orderByComparator) {
-
-		int count = countByG_P_S(groupId, parentKBFolderId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBFolder> list = findByG_P_S(
-			groupId, parentKBFolderId, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4581,4 +4261,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1024186713
+// LIFERAY-SERVICE-BUILDER-HASH:-81023962

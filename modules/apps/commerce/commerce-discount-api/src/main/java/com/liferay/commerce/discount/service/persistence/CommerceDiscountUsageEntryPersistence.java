@@ -121,32 +121,6 @@ public interface CommerceDiscountUsageEntryPersistence
 			<CommerceDiscountUsageEntry> orderByComparator);
 
 	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
-	 */
-	public CommerceDiscountUsageEntry findByCommerceDiscountId_Last(
-			long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException;
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
-	 */
-	public CommerceDiscountUsageEntry fetchByCommerceDiscountId_Last(
-		long commerceDiscountId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceDiscountUsageEntry> orderByComparator);
-
-	/**
 	 * Removes all the commerce discount usage entries where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -251,34 +225,6 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
 	public CommerceDiscountUsageEntry fetchByCAI_CDI_First(
-		long commerceAccountId, long commerceDiscountId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceDiscountUsageEntry> orderByComparator);
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
-	 */
-	public CommerceDiscountUsageEntry findByCAI_CDI_Last(
-			long commerceAccountId, long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException;
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
-	 */
-	public CommerceDiscountUsageEntry fetchByCAI_CDI_Last(
 		long commerceAccountId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -391,34 +337,6 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
 	public CommerceDiscountUsageEntry fetchByCOI_CDI_First(
-		long commerceOrderId, long commerceDiscountId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceDiscountUsageEntry> orderByComparator);
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
-	 */
-	public CommerceDiscountUsageEntry findByCOI_CDI_Last(
-			long commerceOrderId, long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException;
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
-	 */
-	public CommerceDiscountUsageEntry fetchByCOI_CDI_Last(
 		long commerceOrderId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -540,37 +458,6 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
 	public CommerceDiscountUsageEntry fetchByCAI_COI_CDI_First(
-		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceDiscountUsageEntry> orderByComparator);
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
-	 */
-	public CommerceDiscountUsageEntry findByCAI_COI_CDI_Last(
-			long commerceAccountId, long commerceOrderId,
-			long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException;
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
-	 */
-	public CommerceDiscountUsageEntry fetchByCAI_COI_CDI_Last(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -724,4 +611,4 @@ public interface CommerceDiscountUsageEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-958539400
+// LIFERAY-SERVICE-BUILDER-HASH:-1749656412

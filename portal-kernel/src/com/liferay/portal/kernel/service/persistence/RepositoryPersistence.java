@@ -120,32 +120,6 @@ public interface RepositoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last repository in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository
-	 * @throws NoSuchRepositoryException if a matching repository could not be found
-	 */
-	public Repository findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Repository>
-				orderByComparator)
-		throws NoSuchRepositoryException;
-
-	/**
-	 * Returns the last repository in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository, or <code>null</code> if a matching repository could not be found
-	 */
-	public Repository fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Repository>
-			orderByComparator);
-
-	/**
 	 * Removes all the repositories where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -304,34 +278,6 @@ public interface RepositoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last repository in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository
-	 * @throws NoSuchRepositoryException if a matching repository could not be found
-	 */
-	public Repository findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Repository>
-				orderByComparator)
-		throws NoSuchRepositoryException;
-
-	/**
-	 * Returns the last repository in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository, or <code>null</code> if a matching repository could not be found
-	 */
-	public Repository fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Repository>
-			orderByComparator);
-
-	/**
 	 * Removes all the repositories where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -436,32 +382,6 @@ public interface RepositoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last repository in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository
-	 * @throws NoSuchRepositoryException if a matching repository could not be found
-	 */
-	public Repository findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Repository>
-				orderByComparator)
-		throws NoSuchRepositoryException;
-
-	/**
-	 * Returns the last repository in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository, or <code>null</code> if a matching repository could not be found
-	 */
-	public Repository fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Repository>
-			orderByComparator);
-
-	/**
 	 * Removes all the repositories where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -559,32 +479,6 @@ public interface RepositoryPersistence
 	 * @return the first matching repository, or <code>null</code> if a matching repository could not be found
 	 */
 	public Repository fetchByPortletId_First(
-		String portletId,
-		com.liferay.portal.kernel.util.OrderByComparator<Repository>
-			orderByComparator);
-
-	/**
-	 * Returns the last repository in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository
-	 * @throws NoSuchRepositoryException if a matching repository could not be found
-	 */
-	public Repository findByPortletId_Last(
-			String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<Repository>
-				orderByComparator)
-		throws NoSuchRepositoryException;
-
-	/**
-	 * Returns the last repository in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository, or <code>null</code> if a matching repository could not be found
-	 */
-	public Repository fetchByPortletId_Last(
 		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository>
 			orderByComparator);
@@ -830,4 +724,4 @@ public interface RepositoryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1110112392
+// LIFERAY-SERVICE-BUILDER-HASH:1603061134

@@ -313,63 +313,6 @@ public class AppPersistenceImpl
 	}
 
 	/**
-	 * Returns the last app in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	@Override
-	public App findByUuid_Last(
-			String uuid, OrderByComparator<App> orderByComparator)
-		throws NoSuchAppException {
-
-		App app = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (app != null) {
-			return app;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchAppException(sb.toString());
-	}
-
-	/**
-	 * Returns the last app in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	@Override
-	public App fetchByUuid_Last(
-		String uuid, OrderByComparator<App> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<App> list = findByUuid(uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the apps where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -698,70 +641,6 @@ public class AppPersistenceImpl
 	}
 
 	/**
-	 * Returns the last app in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	@Override
-	public App findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<App> orderByComparator)
-		throws NoSuchAppException {
-
-		App app = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (app != null) {
-			return app;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAppException(sb.toString());
-	}
-
-	/**
-	 * Returns the last app in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	@Override
-	public App fetchByUuid_C_Last(
-		String uuid, long companyId, OrderByComparator<App> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<App> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the apps where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1061,64 +940,6 @@ public class AppPersistenceImpl
 		long companyId, OrderByComparator<App> orderByComparator) {
 
 		List<App> list = findByCompanyId(companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last app in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	@Override
-	public App findByCompanyId_Last(
-			long companyId, OrderByComparator<App> orderByComparator)
-		throws NoSuchAppException {
-
-		App app = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (app != null) {
-			return app;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAppException(sb.toString());
-	}
-
-	/**
-	 * Returns the last app in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	@Override
-	public App fetchByCompanyId_Last(
-		long companyId, OrderByComparator<App> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<App> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1571,64 +1392,6 @@ public class AppPersistenceImpl
 		String category, OrderByComparator<App> orderByComparator) {
 
 		List<App> list = findByCategory(category, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last app in the ordered set where category = &#63;.
-	 *
-	 * @param category the category
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	@Override
-	public App findByCategory_Last(
-			String category, OrderByComparator<App> orderByComparator)
-		throws NoSuchAppException {
-
-		App app = fetchByCategory_Last(category, orderByComparator);
-
-		if (app != null) {
-			return app;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("category=");
-		sb.append(category);
-
-		sb.append("}");
-
-		throw new NoSuchAppException(sb.toString());
-	}
-
-	/**
-	 * Returns the last app in the ordered set where category = &#63;.
-	 *
-	 * @param category the category
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	@Override
-	public App fetchByCategory_Last(
-		String category, OrderByComparator<App> orderByComparator) {
-
-		int count = countByCategory(category);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<App> list = findByCategory(
-			category, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2430,4 +2193,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-788354593
+// LIFERAY-SERVICE-BUILDER-HASH:-1385329403

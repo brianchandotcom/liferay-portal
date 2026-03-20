@@ -311,67 +311,6 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order payment in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order payment
-	 * @throws NoSuchOrderPaymentException if a matching commerce order payment could not be found
-	 */
-	@Override
-	public CommerceOrderPayment findByCommerceOrderId_Last(
-			long commerceOrderId,
-			OrderByComparator<CommerceOrderPayment> orderByComparator)
-		throws NoSuchOrderPaymentException {
-
-		CommerceOrderPayment commerceOrderPayment = fetchByCommerceOrderId_Last(
-			commerceOrderId, orderByComparator);
-
-		if (commerceOrderPayment != null) {
-			return commerceOrderPayment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceOrderId=");
-		sb.append(commerceOrderId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderPaymentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order payment in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order payment, or <code>null</code> if a matching commerce order payment could not be found
-	 */
-	@Override
-	public CommerceOrderPayment fetchByCommerceOrderId_Last(
-		long commerceOrderId,
-		OrderByComparator<CommerceOrderPayment> orderByComparator) {
-
-		int count = countByCommerceOrderId(commerceOrderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderPayment> list = findByCommerceOrderId(
-			commerceOrderId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce order payments where commerceOrderId = &#63; from the database.
 	 *
 	 * @param commerceOrderId the commerce order ID
@@ -1092,4 +1031,4 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:310102162
+// LIFERAY-SERVICE-BUILDER-HASH:-1953606953

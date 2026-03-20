@@ -224,40 +224,6 @@ public class ExpandoTableUtil {
 	}
 
 	/**
-	 * Returns the last expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando table
-	 * @throws NoSuchTableException if a matching expando table could not be found
-	 */
-	public static ExpandoTable findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<ExpandoTable> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchTableException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando table, or <code>null</code> if a matching expando table could not be found
-	 */
-	public static ExpandoTable fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<ExpandoTable> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the expando tables where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -511,4 +477,4 @@ public class ExpandoTableUtil {
 	private static volatile ExpandoTablePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-720561844
+// LIFERAY-SERVICE-BUILDER-HASH:-1660977313

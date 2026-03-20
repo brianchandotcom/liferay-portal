@@ -120,32 +120,6 @@ public interface CProductPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last c product in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product
-	 * @throws NoSuchCProductException if a matching c product could not be found
-	 */
-	public CProduct findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CProduct>
-				orderByComparator)
-		throws NoSuchCProductException;
-
-	/**
-	 * Returns the last c product in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product, or <code>null</code> if a matching c product could not be found
-	 */
-	public CProduct fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CProduct>
-			orderByComparator);
-
-	/**
 	 * Removes all the c products where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -304,34 +278,6 @@ public interface CProductPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last c product in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product
-	 * @throws NoSuchCProductException if a matching c product could not be found
-	 */
-	public CProduct findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CProduct>
-				orderByComparator)
-		throws NoSuchCProductException;
-
-	/**
-	 * Returns the last c product in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product, or <code>null</code> if a matching c product could not be found
-	 */
-	public CProduct fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CProduct>
-			orderByComparator);
-
-	/**
 	 * Removes all the c products where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -431,32 +377,6 @@ public interface CProductPersistence
 	 * @return the first matching c product, or <code>null</code> if a matching c product could not be found
 	 */
 	public CProduct fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CProduct>
-			orderByComparator);
-
-	/**
-	 * Returns the last c product in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product
-	 * @throws NoSuchCProductException if a matching c product could not be found
-	 */
-	public CProduct findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CProduct>
-				orderByComparator)
-		throws NoSuchCProductException;
-
-	/**
-	 * Returns the last c product in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product, or <code>null</code> if a matching c product could not be found
-	 */
-	public CProduct fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CProduct>
 			orderByComparator);
@@ -646,4 +566,4 @@ public interface CProductPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1390296470
+// LIFERAY-SERVICE-BUILDER-HASH:331443838

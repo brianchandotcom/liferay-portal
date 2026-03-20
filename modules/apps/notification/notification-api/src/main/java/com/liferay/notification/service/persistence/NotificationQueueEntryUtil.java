@@ -222,39 +222,6 @@ public class NotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Returns the last notification queue entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
-	 */
-	public static NotificationQueueEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
-	 */
-	public static NotificationQueueEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the notification queue entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -441,39 +408,6 @@ public class NotificationQueueEntryUtil {
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
 		return getPersistence().fetchByNotificationTemplateId_First(
-			notificationTemplateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
-	 */
-	public static NotificationQueueEntry findByNotificationTemplateId_Last(
-			long notificationTemplateId,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByNotificationTemplateId_Last(
-			notificationTemplateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
-	 */
-	public static NotificationQueueEntry fetchByNotificationTemplateId_Last(
-		long notificationTemplateId,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		return getPersistence().fetchByNotificationTemplateId_Last(
 			notificationTemplateId, orderByComparator);
 	}
 
@@ -675,39 +609,6 @@ public class NotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Returns the last notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
-	 */
-	public static NotificationQueueEntry findByLtSentDate_Last(
-			Date sentDate,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByLtSentDate_Last(
-			sentDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
-	 */
-	public static NotificationQueueEntry fetchByLtSentDate_Last(
-		Date sentDate,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		return getPersistence().fetchByLtSentDate_Last(
-			sentDate, orderByComparator);
-	}
-
-	/**
 	 * Returns all the notification queue entries that the user has permission to view where sentDate &lt; &#63;.
 	 *
 	 * @param sentDate the sent date
@@ -897,40 +798,6 @@ public class NotificationQueueEntryUtil {
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
 		return getPersistence().fetchByT_S_First(
-			type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where type = &#63; and status = &#63;.
-	 *
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
-	 */
-	public static NotificationQueueEntry findByT_S_Last(
-			String type, int status,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByT_S_Last(type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where type = &#63; and status = &#63;.
-	 *
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
-	 */
-	public static NotificationQueueEntry fetchByT_S_Last(
-		String type, int status,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		return getPersistence().fetchByT_S_Last(
 			type, status, orderByComparator);
 	}
 
@@ -1193,4 +1060,4 @@ public class NotificationQueueEntryUtil {
 	private static volatile NotificationQueueEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-607089706
+// LIFERAY-SERVICE-BUILDER-HASH:1042255966

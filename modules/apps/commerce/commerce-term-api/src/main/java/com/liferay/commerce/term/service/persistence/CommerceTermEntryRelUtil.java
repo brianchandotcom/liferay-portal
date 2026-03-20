@@ -221,38 +221,6 @@ public class CommerceTermEntryRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce term entry rel in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry rel
-	 * @throws NoSuchTermEntryRelException if a matching commerce term entry rel could not be found
-	 */
-	public static CommerceTermEntryRel findByCommerceTermEntryId_Last(
-			long commerceTermEntryId,
-			OrderByComparator<CommerceTermEntryRel> orderByComparator)
-		throws com.liferay.commerce.term.exception.NoSuchTermEntryRelException {
-
-		return getPersistence().findByCommerceTermEntryId_Last(
-			commerceTermEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce term entry rel in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry rel, or <code>null</code> if a matching commerce term entry rel could not be found
-	 */
-	public static CommerceTermEntryRel fetchByCommerceTermEntryId_Last(
-		long commerceTermEntryId,
-		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
-
-		return getPersistence().fetchByCommerceTermEntryId_Last(
-			commerceTermEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce term entry rels where commerceTermEntryId = &#63; from the database.
 	 *
 	 * @param commerceTermEntryId the commerce term entry ID
@@ -382,40 +350,6 @@ public class CommerceTermEntryRelUtil {
 		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, commerceTermEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce term entry rel in the ordered set where classNameId = &#63; and commerceTermEntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry rel
-	 * @throws NoSuchTermEntryRelException if a matching commerce term entry rel could not be found
-	 */
-	public static CommerceTermEntryRel findByC_C_Last(
-			long classNameId, long commerceTermEntryId,
-			OrderByComparator<CommerceTermEntryRel> orderByComparator)
-		throws com.liferay.commerce.term.exception.NoSuchTermEntryRelException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, commerceTermEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce term entry rel in the ordered set where classNameId = &#63; and commerceTermEntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry rel, or <code>null</code> if a matching commerce term entry rel could not be found
-	 */
-	public static CommerceTermEntryRel fetchByC_C_Last(
-		long classNameId, long commerceTermEntryId,
-		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, commerceTermEntryId, orderByComparator);
 	}
 
@@ -689,4 +623,4 @@ public class CommerceTermEntryRelUtil {
 	private static volatile CommerceTermEntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1238829845
+// LIFERAY-SERVICE-BUILDER-HASH:419135631

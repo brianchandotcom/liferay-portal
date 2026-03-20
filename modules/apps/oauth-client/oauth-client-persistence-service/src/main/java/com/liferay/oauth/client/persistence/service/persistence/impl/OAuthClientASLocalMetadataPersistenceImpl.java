@@ -313,67 +313,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	}
 
 	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	@Override
-	public OAuthClientASLocalMetadata findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException {
-
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (oAuthClientASLocalMetadata != null) {
-			return oAuthClientASLocalMetadata;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	@Override
-	public OAuthClientASLocalMetadata fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuthClientASLocalMetadata> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the o auth client as local metadatas that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -856,67 +795,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 
 		List<OAuthClientASLocalMetadata> list = findByUserId(
 			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	@Override
-	public OAuthClientASLocalMetadata findByUserId_Last(
-			long userId,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException {
-
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			fetchByUserId_Last(userId, orderByComparator);
-
-		if (oAuthClientASLocalMetadata != null) {
-			return oAuthClientASLocalMetadata;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	@Override
-	public OAuthClientASLocalMetadata fetchByUserId_Last(
-		long userId,
-		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuthClientASLocalMetadata> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1835,73 +1713,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 
 		List<OAuthClientASLocalMetadata> list = findByC_L(
 			companyId, localWellKnownEnabled, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param localWellKnownEnabled the local well known enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	@Override
-	public OAuthClientASLocalMetadata findByC_L_Last(
-			long companyId, boolean localWellKnownEnabled,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException {
-
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByC_L_Last(
-			companyId, localWellKnownEnabled, orderByComparator);
-
-		if (oAuthClientASLocalMetadata != null) {
-			return oAuthClientASLocalMetadata;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", localWellKnownEnabled=");
-		sb.append(localWellKnownEnabled);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param localWellKnownEnabled the local well known enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	@Override
-	public OAuthClientASLocalMetadata fetchByC_L_Last(
-		long companyId, boolean localWellKnownEnabled,
-		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		int count = countByC_L(companyId, localWellKnownEnabled);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuthClientASLocalMetadata> list = findByC_L(
-			companyId, localWellKnownEnabled, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3226,4 +3037,4 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1700903074
+// LIFERAY-SERVICE-BUILDER-HASH:-2048000565

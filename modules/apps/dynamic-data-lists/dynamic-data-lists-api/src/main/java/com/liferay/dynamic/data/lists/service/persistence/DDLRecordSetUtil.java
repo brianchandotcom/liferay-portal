@@ -211,35 +211,6 @@ public class DDLRecordSetUtil {
 	}
 
 	/**
-	 * Returns the last ddl record set in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set
-	 * @throws NoSuchRecordSetException if a matching ddl record set could not be found
-	 */
-	public static DDLRecordSet findByUuid_Last(
-			String uuid, OrderByComparator<DDLRecordSet> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.
-			NoSuchRecordSetException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record set in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
-	 */
-	public static DDLRecordSet fetchByUuid_Last(
-		String uuid, OrderByComparator<DDLRecordSet> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl record sets where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,41 +406,6 @@ public class DDLRecordSetUtil {
 	}
 
 	/**
-	 * Returns the last ddl record set in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set
-	 * @throws NoSuchRecordSetException if a matching ddl record set could not be found
-	 */
-	public static DDLRecordSet findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDLRecordSet> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.
-			NoSuchRecordSetException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record set in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
-	 */
-	public static DDLRecordSet fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDLRecordSet> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl record sets where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -590,35 +526,6 @@ public class DDLRecordSetUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record set in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set
-	 * @throws NoSuchRecordSetException if a matching ddl record set could not be found
-	 */
-	public static DDLRecordSet findByGroupId_Last(
-			long groupId, OrderByComparator<DDLRecordSet> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.
-			NoSuchRecordSetException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record set in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
-	 */
-	public static DDLRecordSet fetchByGroupId_Last(
-		long groupId, OrderByComparator<DDLRecordSet> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -947,39 +854,6 @@ public class DDLRecordSetUtil {
 		OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		return getPersistence().fetchByDDMStructureId_First(
-			DDMStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record set in the ordered set where DDMStructureId = &#63;.
-	 *
-	 * @param DDMStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set
-	 * @throws NoSuchRecordSetException if a matching ddl record set could not be found
-	 */
-	public static DDLRecordSet findByDDMStructureId_Last(
-			long DDMStructureId,
-			OrderByComparator<DDLRecordSet> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.
-			NoSuchRecordSetException {
-
-		return getPersistence().findByDDMStructureId_Last(
-			DDMStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record set in the ordered set where DDMStructureId = &#63;.
-	 *
-	 * @param DDMStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
-	 */
-	public static DDLRecordSet fetchByDDMStructureId_Last(
-		long DDMStructureId,
-		OrderByComparator<DDLRecordSet> orderByComparator) {
-
-		return getPersistence().fetchByDDMStructureId_Last(
 			DDMStructureId, orderByComparator);
 	}
 
@@ -1317,4 +1191,4 @@ public class DDLRecordSetUtil {
 	private static volatile DDLRecordSetPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-42612656
+// LIFERAY-SERVICE-BUILDER-HASH:-1130209580

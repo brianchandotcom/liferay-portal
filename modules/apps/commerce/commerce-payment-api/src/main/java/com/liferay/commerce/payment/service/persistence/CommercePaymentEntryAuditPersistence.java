@@ -124,32 +124,6 @@ public interface CommercePaymentEntryAuditPersistence
 			<CommercePaymentEntryAudit> orderByComparator);
 
 	/**
-	 * Returns the last commerce payment entry audit in the ordered set where commercePaymentEntryId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the commerce payment entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry audit
-	 * @throws NoSuchPaymentEntryAuditException if a matching commerce payment entry audit could not be found
-	 */
-	public CommercePaymentEntryAudit findByCommercePaymentEntryId_Last(
-			long commercePaymentEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntryAudit> orderByComparator)
-		throws NoSuchPaymentEntryAuditException;
-
-	/**
-	 * Returns the last commerce payment entry audit in the ordered set where commercePaymentEntryId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the commerce payment entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry audit, or <code>null</code> if a matching commerce payment entry audit could not be found
-	 */
-	public CommercePaymentEntryAudit fetchByCommercePaymentEntryId_Last(
-		long commercePaymentEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommercePaymentEntryAudit> orderByComparator);
-
-	/**
 	 * Returns all the commerce payment entry audits that the user has permission to view where commercePaymentEntryId = &#63;.
 	 *
 	 * @param commercePaymentEntryId the commerce payment entry ID
@@ -343,4 +317,4 @@ public interface CommercePaymentEntryAuditPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1789765389
+// LIFERAY-SERVICE-BUILDER-HASH:1379383600

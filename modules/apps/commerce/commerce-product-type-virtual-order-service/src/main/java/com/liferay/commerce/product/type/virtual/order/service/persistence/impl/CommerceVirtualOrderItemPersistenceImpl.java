@@ -321,67 +321,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce virtual order item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item
-	 * @throws NoSuchVirtualOrderItemException if a matching commerce virtual order item could not be found
-	 */
-	@Override
-	public CommerceVirtualOrderItem findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceVirtualOrderItem> orderByComparator)
-		throws NoSuchVirtualOrderItemException {
-
-		CommerceVirtualOrderItem commerceVirtualOrderItem = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceVirtualOrderItem != null) {
-			return commerceVirtualOrderItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualOrderItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce virtual order item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item, or <code>null</code> if a matching commerce virtual order item could not be found
-	 */
-	@Override
-	public CommerceVirtualOrderItem fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceVirtualOrderItem> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceVirtualOrderItem> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce virtual order items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -912,72 +851,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 
 		List<CommerceVirtualOrderItem> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce virtual order item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item
-	 * @throws NoSuchVirtualOrderItemException if a matching commerce virtual order item could not be found
-	 */
-	@Override
-	public CommerceVirtualOrderItem findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceVirtualOrderItem> orderByComparator)
-		throws NoSuchVirtualOrderItemException {
-
-		CommerceVirtualOrderItem commerceVirtualOrderItem = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceVirtualOrderItem != null) {
-			return commerceVirtualOrderItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualOrderItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce virtual order item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item, or <code>null</code> if a matching commerce virtual order item could not be found
-	 */
-	@Override
-	public CommerceVirtualOrderItem fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceVirtualOrderItem> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceVirtualOrderItem> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2011,4 +1884,4 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-771126874
+// LIFERAY-SERVICE-BUILDER-HASH:1649560762

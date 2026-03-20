@@ -208,34 +208,6 @@ public class ObjectViewUtil {
 	}
 
 	/**
-	 * Returns the last object view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	public static ObjectView findByUuid_Last(
-			String uuid, OrderByComparator<ObjectView> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectViewException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	public static ObjectView fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectView> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object views where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -365,40 +337,6 @@ public class ObjectViewUtil {
 	}
 
 	/**
-	 * Returns the last object view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	public static ObjectView findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectView> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectViewException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	public static ObjectView fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object views where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -523,38 +461,6 @@ public class ObjectViewUtil {
 		OrderByComparator<ObjectView> orderByComparator) {
 
 		return getPersistence().fetchByObjectDefinitionId_First(
-			objectDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	public static ObjectView findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectView> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectViewException {
-
-		return getPersistence().findByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	public static ObjectView fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		return getPersistence().fetchByObjectDefinitionId_Last(
 			objectDefinitionId, orderByComparator);
 	}
 
@@ -691,40 +597,6 @@ public class ObjectViewUtil {
 		OrderByComparator<ObjectView> orderByComparator) {
 
 		return getPersistence().fetchByODI_DOV_First(
-			objectDefinitionId, defaultObjectView, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view
-	 * @throws NoSuchObjectViewException if a matching object view could not be found
-	 */
-	public static ObjectView findByODI_DOV_Last(
-			long objectDefinitionId, boolean defaultObjectView,
-			OrderByComparator<ObjectView> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectViewException {
-
-		return getPersistence().findByODI_DOV_Last(
-			objectDefinitionId, defaultObjectView, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view in the ordered set where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view, or <code>null</code> if a matching object view could not be found
-	 */
-	public static ObjectView fetchByODI_DOV_Last(
-		long objectDefinitionId, boolean defaultObjectView,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		return getPersistence().fetchByODI_DOV_Last(
 			objectDefinitionId, defaultObjectView, orderByComparator);
 	}
 
@@ -912,4 +784,4 @@ public class ObjectViewUtil {
 	private static volatile ObjectViewPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1680682266
+// LIFERAY-SERVICE-BUILDER-HASH:-394487480

@@ -123,32 +123,6 @@ public interface CommerceInventoryReplenishmentItemPersistence
 			<CommerceInventoryReplenishmentItem> orderByComparator);
 
 	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryReplenishmentItem> orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException;
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryReplenishmentItem> orderByComparator);
-
-	/**
 	 * Removes all the commerce inventory replenishment items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -253,34 +227,6 @@ public interface CommerceInventoryReplenishmentItemPersistence
 	 * @return the first matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
 	 */
 	public CommerceInventoryReplenishmentItem fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryReplenishmentItem> orderByComparator);
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryReplenishmentItem> orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException;
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryReplenishmentItem> orderByComparator);
@@ -396,34 +342,6 @@ public interface CommerceInventoryReplenishmentItemPersistence
 				<CommerceInventoryReplenishmentItem> orderByComparator);
 
 	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem
-			findByCommerceInventoryWarehouseId_Last(
-				long commerceInventoryWarehouseId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceInventoryReplenishmentItem> orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException;
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem
-		fetchByCommerceInventoryWarehouseId_Last(
-			long commerceInventoryWarehouseId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryReplenishmentItem> orderByComparator);
-
-	/**
 	 * Removes all the commerce inventory replenishment items where commerceInventoryWarehouseId = &#63; from the database.
 	 *
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
@@ -531,32 +449,6 @@ public interface CommerceInventoryReplenishmentItemPersistence
 			<CommerceInventoryReplenishmentItem> orderByComparator);
 
 	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where availabilityDate = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem findByAvailabilityDate_Last(
-			Date availabilityDate,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryReplenishmentItem> orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException;
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where availabilityDate = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem fetchByAvailabilityDate_Last(
-		Date availabilityDate,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryReplenishmentItem> orderByComparator);
-
-	/**
 	 * Removes all the commerce inventory replenishment items where availabilityDate = &#63; from the database.
 	 *
 	 * @param availabilityDate the availability date
@@ -655,32 +547,6 @@ public interface CommerceInventoryReplenishmentItemPersistence
 	 * @return the first matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
 	 */
 	public CommerceInventoryReplenishmentItem fetchBySku_First(
-		String sku,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryReplenishmentItem> orderByComparator);
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where sku = &#63;.
-	 *
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem findBySku_Last(
-			String sku,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryReplenishmentItem> orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException;
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where sku = &#63;.
-	 *
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem fetchBySku_Last(
 		String sku,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryReplenishmentItem> orderByComparator);
@@ -797,36 +663,6 @@ public interface CommerceInventoryReplenishmentItemPersistence
 	 * @return the first matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
 	 */
 	public CommerceInventoryReplenishmentItem fetchByC_S_U_First(
-		long companyId, String sku, String unitOfMeasureKey,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryReplenishmentItem> orderByComparator);
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem findByC_S_U_Last(
-			long companyId, String sku, String unitOfMeasureKey,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryReplenishmentItem> orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException;
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem fetchByC_S_U_Last(
 		long companyId, String sku, String unitOfMeasureKey,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryReplenishmentItem> orderByComparator);
@@ -951,36 +787,6 @@ public interface CommerceInventoryReplenishmentItemPersistence
 	 * @return the first matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
 	 */
 	public CommerceInventoryReplenishmentItem fetchByAD_S_U_First(
-		Date availabilityDate, String sku, String unitOfMeasureKey,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryReplenishmentItem> orderByComparator);
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem findByAD_S_U_Last(
-			Date availabilityDate, String sku, String unitOfMeasureKey,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryReplenishmentItem> orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException;
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	public CommerceInventoryReplenishmentItem fetchByAD_S_U_Last(
 		Date availabilityDate, String sku, String unitOfMeasureKey,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryReplenishmentItem> orderByComparator);
@@ -1189,4 +995,4 @@ public interface CommerceInventoryReplenishmentItemPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-370749602
+// LIFERAY-SERVICE-BUILDER-HASH:44554829

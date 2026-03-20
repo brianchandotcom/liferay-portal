@@ -336,64 +336,6 @@ public class CPOptionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option
-	 * @throws NoSuchCPOptionException if a matching cp option could not be found
-	 */
-	@Override
-	public CPOption findByUuid_Last(
-			String uuid, OrderByComparator<CPOption> orderByComparator)
-		throws NoSuchCPOptionException {
-
-		CPOption cpOption = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (cpOption != null) {
-			return cpOption;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPOptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option, or <code>null</code> if a matching cp option could not be found
-	 */
-	@Override
-	public CPOption fetchByUuid_Last(
-		String uuid, OrderByComparator<CPOption> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPOption> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cp options that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -960,72 +902,6 @@ public class CPOptionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option
-	 * @throws NoSuchCPOptionException if a matching cp option could not be found
-	 */
-	@Override
-	public CPOption findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPOption> orderByComparator)
-		throws NoSuchCPOptionException {
-
-		CPOption cpOption = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpOption != null) {
-			return cpOption;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPOptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option, or <code>null</code> if a matching cp option could not be found
-	 */
-	@Override
-	public CPOption fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPOption> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPOption> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cp options that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1575,64 +1451,6 @@ public class CPOptionPersistenceImpl
 
 		List<CPOption> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option
-	 * @throws NoSuchCPOptionException if a matching cp option could not be found
-	 */
-	@Override
-	public CPOption findByCompanyId_Last(
-			long companyId, OrderByComparator<CPOption> orderByComparator)
-		throws NoSuchCPOptionException {
-
-		CPOption cpOption = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (cpOption != null) {
-			return cpOption;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPOptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option, or <code>null</code> if a matching cp option could not be found
-	 */
-	@Override
-	public CPOption fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CPOption> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPOption> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3395,4 +3213,4 @@ public class CPOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-187632448
+// LIFERAY-SERVICE-BUILDER-HASH:411822978

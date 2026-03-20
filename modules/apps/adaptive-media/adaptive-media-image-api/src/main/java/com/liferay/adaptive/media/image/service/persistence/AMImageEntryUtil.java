@@ -211,35 +211,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns the last am image entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	public static AMImageEntry findByUuid_Last(
-			String uuid, OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	public static AMImageEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the am image entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,41 +406,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns the last am image entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	public static AMImageEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	public static AMImageEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the am image entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -593,35 +529,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns the last am image entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	public static AMImageEntry findByGroupId_Last(
-			long groupId, OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	public static AMImageEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the am image entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -740,37 +647,6 @@ public class AMImageEntryUtil {
 		long companyId, OrderByComparator<AMImageEntry> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	public static AMImageEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	public static AMImageEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -902,39 +778,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns the last am image entry in the ordered set where configurationUuid = &#63;.
-	 *
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	public static AMImageEntry findByConfigurationUuid_Last(
-			String configurationUuid,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByConfigurationUuid_Last(
-			configurationUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where configurationUuid = &#63;.
-	 *
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	public static AMImageEntry fetchByConfigurationUuid_Last(
-		String configurationUuid,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().fetchByConfigurationUuid_Last(
-			configurationUuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the am image entries where configurationUuid = &#63; from the database.
 	 *
 	 * @param configurationUuid the configuration uuid
@@ -1054,38 +897,6 @@ public class AMImageEntryUtil {
 		long fileVersionId, OrderByComparator<AMImageEntry> orderByComparator) {
 
 		return getPersistence().fetchByFileVersionId_First(
-			fileVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	public static AMImageEntry findByFileVersionId_Last(
-			long fileVersionId,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByFileVersionId_Last(
-			fileVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	public static AMImageEntry fetchByFileVersionId_Last(
-		long fileVersionId, OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().fetchByFileVersionId_Last(
 			fileVersionId, orderByComparator);
 	}
 
@@ -1220,41 +1031,6 @@ public class AMImageEntryUtil {
 		OrderByComparator<AMImageEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			companyId, configurationUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where companyId = &#63; and configurationUuid = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	public static AMImageEntry findByC_C_Last(
-			long companyId, String configurationUuid,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, configurationUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where companyId = &#63; and configurationUuid = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	public static AMImageEntry fetchByC_C_Last(
-		long companyId, String configurationUuid,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			companyId, configurationUuid, orderByComparator);
 	}
 
@@ -1509,4 +1285,4 @@ public class AMImageEntryUtil {
 	private static volatile AMImageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-235529313
+// LIFERAY-SERVICE-BUILDER-HASH:-1909937929

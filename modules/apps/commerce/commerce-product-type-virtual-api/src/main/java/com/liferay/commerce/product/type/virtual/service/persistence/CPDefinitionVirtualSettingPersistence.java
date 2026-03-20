@@ -120,32 +120,6 @@ public interface CPDefinitionVirtualSettingPersistence
 			<CPDefinitionVirtualSetting> orderByComparator);
 
 	/**
-	 * Returns the last cp definition virtual setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition virtual setting
-	 * @throws NoSuchCPDefinitionVirtualSettingException if a matching cp definition virtual setting could not be found
-	 */
-	public CPDefinitionVirtualSetting findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionVirtualSetting> orderByComparator)
-		throws NoSuchCPDefinitionVirtualSettingException;
-
-	/**
-	 * Returns the last cp definition virtual setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
-	 */
-	public CPDefinitionVirtualSetting fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionVirtualSetting> orderByComparator);
-
-	/**
 	 * Removes all the cp definition virtual settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -300,34 +274,6 @@ public interface CPDefinitionVirtualSettingPersistence
 	 * @return the first matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
 	 */
 	public CPDefinitionVirtualSetting fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionVirtualSetting> orderByComparator);
-
-	/**
-	 * Returns the last cp definition virtual setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition virtual setting
-	 * @throws NoSuchCPDefinitionVirtualSettingException if a matching cp definition virtual setting could not be found
-	 */
-	public CPDefinitionVirtualSetting findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionVirtualSetting> orderByComparator)
-		throws NoSuchCPDefinitionVirtualSettingException;
-
-	/**
-	 * Returns the last cp definition virtual setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
-	 */
-	public CPDefinitionVirtualSetting fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDefinitionVirtualSetting> orderByComparator);
@@ -528,4 +474,4 @@ public interface CPDefinitionVirtualSettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1764854356
+// LIFERAY-SERVICE-BUILDER-HASH:503541396

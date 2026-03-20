@@ -219,39 +219,6 @@ public class AssetCategoryPropertyUtil {
 	}
 
 	/**
-	 * Returns the last asset category property in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property
-	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
-	 */
-	public static AssetCategoryProperty findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.asset.category.property.exception.
-			NoSuchCategoryPropertyException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
-	 */
-	public static AssetCategoryProperty fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset category properties where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -374,39 +341,6 @@ public class AssetCategoryPropertyUtil {
 		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 
 		return getPersistence().fetchByCategoryId_First(
-			categoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where categoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property
-	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
-	 */
-	public static AssetCategoryProperty findByCategoryId_Last(
-			long categoryId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.asset.category.property.exception.
-			NoSuchCategoryPropertyException {
-
-		return getPersistence().findByCategoryId_Last(
-			categoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where categoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
-	 */
-	public static AssetCategoryProperty fetchByCategoryId_Last(
-		long categoryId,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
-
-		return getPersistence().fetchByCategoryId_Last(
 			categoryId, orderByComparator);
 	}
 
@@ -539,41 +473,6 @@ public class AssetCategoryPropertyUtil {
 		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 
 		return getPersistence().fetchByC_K_First(
-			companyId, key, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property
-	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
-	 */
-	public static AssetCategoryProperty findByC_K_Last(
-			long companyId, String key,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.asset.category.property.exception.
-			NoSuchCategoryPropertyException {
-
-		return getPersistence().findByC_K_Last(
-			companyId, key, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
-	 */
-	public static AssetCategoryProperty fetchByC_K_Last(
-		long companyId, String key,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
-
-		return getPersistence().fetchByC_K_Last(
 			companyId, key, orderByComparator);
 	}
 
@@ -911,4 +810,4 @@ public class AssetCategoryPropertyUtil {
 	private static volatile AssetCategoryPropertyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1972084327
+// LIFERAY-SERVICE-BUILDER-HASH:-89483965

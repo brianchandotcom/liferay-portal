@@ -121,32 +121,6 @@ public interface KaleoProcessLinkPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo process link in the ordered set where kaleoProcessId = &#63;.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process link
-	 * @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
-	 */
-	public KaleoProcessLink findByKaleoProcessId_Last(
-			long kaleoProcessId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoProcessLink>
-				orderByComparator)
-		throws NoSuchKaleoProcessLinkException;
-
-	/**
-	 * Returns the last kaleo process link in the ordered set where kaleoProcessId = &#63;.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
-	 */
-	public KaleoProcessLink fetchByKaleoProcessId_Last(
-		long kaleoProcessId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcessLink>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo process links where kaleoProcessId = &#63; from the database.
 	 *
 	 * @param kaleoProcessId the kaleo process ID
@@ -335,4 +309,4 @@ public interface KaleoProcessLinkPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-877700374
+// LIFERAY-SERVICE-BUILDER-HASH:-1001546806

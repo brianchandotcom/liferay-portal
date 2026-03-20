@@ -323,67 +323,6 @@ public class DDMTemplateVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version
-	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
-	 */
-	@Override
-	public DDMTemplateVersion findByTemplateId_Last(
-			long templateId,
-			OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws NoSuchTemplateVersionException {
-
-		DDMTemplateVersion ddmTemplateVersion = fetchByTemplateId_Last(
-			templateId, orderByComparator);
-
-		if (ddmTemplateVersion != null) {
-			return ddmTemplateVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("templateId=");
-		sb.append(templateId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
-	 */
-	@Override
-	public DDMTemplateVersion fetchByTemplateId_Last(
-		long templateId,
-		OrderByComparator<DDMTemplateVersion> orderByComparator) {
-
-		int count = countByTemplateId(templateId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplateVersion> list = findByTemplateId(
-			templateId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm template versions where templateId = &#63; from the database.
 	 *
 	 * @param templateId the template ID
@@ -896,72 +835,6 @@ public class DDMTemplateVersionPersistenceImpl
 
 		List<DDMTemplateVersion> list = findByT_S(
 			templateId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version
-	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
-	 */
-	@Override
-	public DDMTemplateVersion findByT_S_Last(
-			long templateId, int status,
-			OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws NoSuchTemplateVersionException {
-
-		DDMTemplateVersion ddmTemplateVersion = fetchByT_S_Last(
-			templateId, status, orderByComparator);
-
-		if (ddmTemplateVersion != null) {
-			return ddmTemplateVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("templateId=");
-		sb.append(templateId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
-	 */
-	@Override
-	public DDMTemplateVersion fetchByT_S_Last(
-		long templateId, int status,
-		OrderByComparator<DDMTemplateVersion> orderByComparator) {
-
-		int count = countByT_S(templateId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplateVersion> list = findByT_S(
-			templateId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2014,4 +1887,4 @@ public class DDMTemplateVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-272774148
+// LIFERAY-SERVICE-BUILDER-HASH:78190547

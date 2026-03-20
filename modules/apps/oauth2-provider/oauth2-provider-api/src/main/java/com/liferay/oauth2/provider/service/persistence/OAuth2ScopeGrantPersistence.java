@@ -125,32 +125,6 @@ public interface OAuth2ScopeGrantPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 scope grant
-	 * @throws NoSuchOAuth2ScopeGrantException if a matching o auth2 scope grant could not be found
-	 */
-	public OAuth2ScopeGrant findByOAuth2ApplicationScopeAliasesId_Last(
-			long oAuth2ApplicationScopeAliasesId,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuth2ScopeGrant>
-				orderByComparator)
-		throws NoSuchOAuth2ScopeGrantException;
-
-	/**
-	 * Returns the last o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
-	 */
-	public OAuth2ScopeGrant fetchByOAuth2ApplicationScopeAliasesId_Last(
-		long oAuth2ApplicationScopeAliasesId,
-		com.liferay.portal.kernel.util.OrderByComparator<OAuth2ScopeGrant>
-			orderByComparator);
-
-	/**
 	 * Removes all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63; from the database.
 	 *
 	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
@@ -548,4 +522,4 @@ public interface OAuth2ScopeGrantPersistence
 			oAuth2Authorizations);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1200494804
+// LIFERAY-SERVICE-BUILDER-HASH:-688131530

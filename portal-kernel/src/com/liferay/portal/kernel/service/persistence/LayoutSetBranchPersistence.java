@@ -119,32 +119,6 @@ public interface LayoutSetBranchPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
-	 */
-	public LayoutSetBranch findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
-				orderByComparator)
-		throws NoSuchLayoutSetBranchException;
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	public LayoutSetBranch fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
-			orderByComparator);
-
-	/**
 	 * Returns all the layout set branches that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -298,34 +272,6 @@ public interface LayoutSetBranchPersistence
 	 * @return the first matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
 	 */
 	public LayoutSetBranch fetchByG_P_First(
-		long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
-	 */
-	public LayoutSetBranch findByG_P_Last(
-			long groupId, boolean privateLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
-				orderByComparator)
-		throws NoSuchLayoutSetBranchException;
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	public LayoutSetBranch fetchByG_P_Last(
 		long groupId, boolean privateLayout,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
 			orderByComparator);
@@ -562,36 +508,6 @@ public interface LayoutSetBranchPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
-	 */
-	public LayoutSetBranch findByG_P_M_Last(
-			long groupId, boolean privateLayout, boolean master,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
-				orderByComparator)
-		throws NoSuchLayoutSetBranchException;
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	public LayoutSetBranch fetchByG_P_M_Last(
-		long groupId, boolean privateLayout, boolean master,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch>
-			orderByComparator);
-
-	/**
 	 * Returns all the layout set branches that the user has permission to view where groupId = &#63; and privateLayout = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -793,4 +709,4 @@ public interface LayoutSetBranchPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1892836288
+// LIFERAY-SERVICE-BUILDER-HASH:-22487093

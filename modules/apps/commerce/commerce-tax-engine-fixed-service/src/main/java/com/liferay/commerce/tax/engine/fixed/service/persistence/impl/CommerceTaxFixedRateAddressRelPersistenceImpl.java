@@ -319,68 +319,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tax fixed rate address rel in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a matching commerce tax fixed rate address rel could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRateAddressRel findByCommerceTaxMethodId_Last(
-			long commerceTaxMethodId,
-			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
-		throws NoSuchTaxFixedRateAddressRelException {
-
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			fetchByCommerceTaxMethodId_Last(
-				commerceTaxMethodId, orderByComparator);
-
-		if (commerceTaxFixedRateAddressRel != null) {
-			return commerceTaxFixedRateAddressRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceTaxMethodId=");
-		sb.append(commerceTaxMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxFixedRateAddressRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate address rel in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate address rel, or <code>null</code> if a matching commerce tax fixed rate address rel could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRateAddressRel fetchByCommerceTaxMethodId_Last(
-		long commerceTaxMethodId,
-		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator) {
-
-		int count = countByCommerceTaxMethodId(commerceTaxMethodId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxFixedRateAddressRel> list = findByCommerceTaxMethodId(
-			commerceTaxMethodId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tax fixed rate address rels where commerceTaxMethodId = &#63; from the database.
 	 *
 	 * @param commerceTaxMethodId the commerce tax method ID
@@ -681,67 +619,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tax fixed rate address rel in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a matching commerce tax fixed rate address rel could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRateAddressRel findByCPTaxCategoryId_Last(
-			long CPTaxCategoryId,
-			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
-		throws NoSuchTaxFixedRateAddressRelException {
-
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			fetchByCPTaxCategoryId_Last(CPTaxCategoryId, orderByComparator);
-
-		if (commerceTaxFixedRateAddressRel != null) {
-			return commerceTaxFixedRateAddressRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPTaxCategoryId=");
-		sb.append(CPTaxCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxFixedRateAddressRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate address rel in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate address rel, or <code>null</code> if a matching commerce tax fixed rate address rel could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRateAddressRel fetchByCPTaxCategoryId_Last(
-		long CPTaxCategoryId,
-		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator) {
-
-		int count = countByCPTaxCategoryId(CPTaxCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxFixedRateAddressRel> list = findByCPTaxCategoryId(
-			CPTaxCategoryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tax fixed rate address rels where CPTaxCategoryId = &#63; from the database.
 	 *
 	 * @param CPTaxCategoryId the cp tax category ID
@@ -1031,67 +908,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 
 		List<CommerceTaxFixedRateAddressRel> list = findByCountryId(
 			countryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate address rel in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a matching commerce tax fixed rate address rel could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRateAddressRel findByCountryId_Last(
-			long countryId,
-			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
-		throws NoSuchTaxFixedRateAddressRelException {
-
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			fetchByCountryId_Last(countryId, orderByComparator);
-
-		if (commerceTaxFixedRateAddressRel != null) {
-			return commerceTaxFixedRateAddressRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxFixedRateAddressRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate address rel in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate address rel, or <code>null</code> if a matching commerce tax fixed rate address rel could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRateAddressRel fetchByCountryId_Last(
-		long countryId,
-		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator) {
-
-		int count = countByCountryId(countryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxFixedRateAddressRel> list = findByCountryId(
-			countryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1905,4 +1721,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:767791622
+// LIFERAY-SERVICE-BUILDER-HASH:-598709433

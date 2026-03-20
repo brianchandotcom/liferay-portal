@@ -329,64 +329,6 @@ public class MBDiscussionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards discussion in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards discussion
-	 * @throws NoSuchDiscussionException if a matching message boards discussion could not be found
-	 */
-	@Override
-	public MBDiscussion findByUuid_Last(
-			String uuid, OrderByComparator<MBDiscussion> orderByComparator)
-		throws NoSuchDiscussionException {
-
-		MBDiscussion mbDiscussion = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (mbDiscussion != null) {
-			return mbDiscussion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDiscussionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards discussion in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	 */
-	@Override
-	public MBDiscussion fetchByUuid_Last(
-		String uuid, OrderByComparator<MBDiscussion> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBDiscussion> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards discussions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -925,72 +867,6 @@ public class MBDiscussionPersistenceImpl
 
 		List<MBDiscussion> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards discussion
-	 * @throws NoSuchDiscussionException if a matching message boards discussion could not be found
-	 */
-	@Override
-	public MBDiscussion findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<MBDiscussion> orderByComparator)
-		throws NoSuchDiscussionException {
-
-		MBDiscussion mbDiscussion = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (mbDiscussion != null) {
-			return mbDiscussion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscussionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	 */
-	@Override
-	public MBDiscussion fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<MBDiscussion> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBDiscussion> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2460,4 +2336,4 @@ public class MBDiscussionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1014445101
+// LIFERAY-SERVICE-BUILDER-HASH:-1858563953

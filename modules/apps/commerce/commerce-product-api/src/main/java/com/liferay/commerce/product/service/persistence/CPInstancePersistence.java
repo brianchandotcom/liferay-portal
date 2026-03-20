@@ -123,32 +123,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp instances where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp instances where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface CPInstancePersistence
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	public CPInstance fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
@@ -616,32 +536,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -739,32 +633,6 @@ public interface CPInstancePersistence
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	public CPInstance fetchByCPDefinitionId_First(
-		long CPDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByCPDefinitionId_Last(
 		long CPDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
@@ -873,32 +741,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp instance in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByCPInstanceUuid_Last(
-			String CPInstanceUuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByCPInstanceUuid_Last(
-		String CPInstanceUuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp instances where CPInstanceUuid = &#63; from the database.
 	 *
 	 * @param CPInstanceUuid the cp instance uuid
@@ -1002,34 +844,6 @@ public interface CPInstancePersistence
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	public CPInstance fetchByG_ST_First(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByG_ST_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByG_ST_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
@@ -1194,34 +1008,6 @@ public interface CPInstancePersistence
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	public CPInstance fetchByC_S_First(
-		long companyId, String sku,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp instance in the ordered set where companyId = &#63; and sku = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByC_S_Last(
-			long companyId, String sku,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where companyId = &#63; and sku = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByC_S_Last(
 		long companyId, String sku,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
@@ -1438,34 +1224,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByC_ST_Last(
-			long CPDefinitionId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByC_ST_Last(
-		long CPDefinitionId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp instances where CPDefinitionId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -1571,34 +1329,6 @@ public interface CPInstancePersistence
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	public CPInstance fetchByLtD_S_First(
-		Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp instance in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByLtD_S_Last(
-			Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByLtD_S_Last(
 		Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
@@ -1716,36 +1446,6 @@ public interface CPInstancePersistence
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	public CPInstance fetchByC_LtD_S_First(
-		long CPDefinitionId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByC_LtD_S_Last(
-			long CPDefinitionId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByC_LtD_S_Last(
 		long CPDefinitionId, Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
@@ -1872,38 +1572,6 @@ public interface CPInstancePersistence
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	public CPInstance fetchByR_R_S_First(
-		String replacementCPInstanceUuid, long replacementCProductId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
-	 *
-	 * @param replacementCPInstanceUuid the replacement cp instance uuid
-	 * @param replacementCProductId the replacement c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	public CPInstance findByR_R_S_Last(
-			String replacementCPInstanceUuid, long replacementCProductId,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
-	 * Returns the last cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
-	 *
-	 * @param replacementCPInstanceUuid the replacement cp instance uuid
-	 * @param replacementCProductId the replacement c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	public CPInstance fetchByR_R_S_Last(
 		String replacementCPInstanceUuid, long replacementCProductId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
@@ -2105,4 +1773,4 @@ public interface CPInstancePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1237834317
+// LIFERAY-SERVICE-BUILDER-HASH:-1969362853

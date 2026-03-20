@@ -219,39 +219,6 @@ public class LVEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
-	 */
-	public static LVEntryLocalization findByLvEntryId_Last(
-			long lvEntryId,
-			OrderByComparator<LVEntryLocalization> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
-		return getPersistence().findByLvEntryId_Last(
-			lvEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
-	 */
-	public static LVEntryLocalization fetchByLvEntryId_Last(
-		long lvEntryId,
-		OrderByComparator<LVEntryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByLvEntryId_Last(
-			lvEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entry localizations where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -577,4 +544,4 @@ public class LVEntryLocalizationUtil {
 	private static volatile LVEntryLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:106278973
+// LIFERAY-SERVICE-BUILDER-HASH:1315639153

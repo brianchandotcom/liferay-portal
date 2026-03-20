@@ -215,36 +215,6 @@ public class BatchEngineExportTaskUtil {
 	}
 
 	/**
-	 * Returns the last batch engine export task in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task
-	 * @throws NoSuchExportTaskException if a matching batch engine export task could not be found
-	 */
-	public static BatchEngineExportTask findByUuid_Last(
-			String uuid,
-			OrderByComparator<BatchEngineExportTask> orderByComparator)
-		throws com.liferay.batch.engine.exception.NoSuchExportTaskException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
-	public static BatchEngineExportTask fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<BatchEngineExportTask> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the batch engine export tasks where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -376,40 +346,6 @@ public class BatchEngineExportTaskUtil {
 	}
 
 	/**
-	 * Returns the last batch engine export task in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task
-	 * @throws NoSuchExportTaskException if a matching batch engine export task could not be found
-	 */
-	public static BatchEngineExportTask findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<BatchEngineExportTask> orderByComparator)
-		throws com.liferay.batch.engine.exception.NoSuchExportTaskException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
-	public static BatchEngineExportTask fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<BatchEngineExportTask> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the batch engine export tasks where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -535,38 +471,6 @@ public class BatchEngineExportTaskUtil {
 	}
 
 	/**
-	 * Returns the last batch engine export task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task
-	 * @throws NoSuchExportTaskException if a matching batch engine export task could not be found
-	 */
-	public static BatchEngineExportTask findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<BatchEngineExportTask> orderByComparator)
-		throws com.liferay.batch.engine.exception.NoSuchExportTaskException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
-	public static BatchEngineExportTask fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<BatchEngineExportTask> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the batch engine export tasks where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -688,38 +592,6 @@ public class BatchEngineExportTaskUtil {
 		OrderByComparator<BatchEngineExportTask> orderByComparator) {
 
 		return getPersistence().fetchByExecuteStatus_First(
-			executeStatus, orderByComparator);
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where executeStatus = &#63;.
-	 *
-	 * @param executeStatus the execute status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task
-	 * @throws NoSuchExportTaskException if a matching batch engine export task could not be found
-	 */
-	public static BatchEngineExportTask findByExecuteStatus_Last(
-			String executeStatus,
-			OrderByComparator<BatchEngineExportTask> orderByComparator)
-		throws com.liferay.batch.engine.exception.NoSuchExportTaskException {
-
-		return getPersistence().findByExecuteStatus_Last(
-			executeStatus, orderByComparator);
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where executeStatus = &#63;.
-	 *
-	 * @param executeStatus the execute status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
-	public static BatchEngineExportTask fetchByExecuteStatus_Last(
-		String executeStatus,
-		OrderByComparator<BatchEngineExportTask> orderByComparator) {
-
-		return getPersistence().fetchByExecuteStatus_Last(
 			executeStatus, orderByComparator);
 	}
 
@@ -983,4 +855,4 @@ public class BatchEngineExportTaskUtil {
 	private static volatile BatchEngineExportTaskPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1332815801
+// LIFERAY-SERVICE-BUILDER-HASH:-2111400189

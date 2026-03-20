@@ -322,66 +322,6 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws NoSuchObjectEntryVersionException {
-
-		ObjectEntryVersion objectEntryVersion = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectEntryVersion != null) {
-			return objectEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectEntryVersion> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryVersion> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entry versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -715,72 +655,6 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws NoSuchObjectEntryVersionException {
-
-		ObjectEntryVersion objectEntryVersion = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectEntryVersion != null) {
-			return objectEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectEntryVersion> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryVersion> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entry versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1102,67 +976,6 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry version in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws NoSuchObjectEntryVersionException {
-
-		ObjectEntryVersion objectEntryVersion = fetchByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-
-		if (objectEntryVersion != null) {
-			return objectEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry version in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectEntryVersion> orderByComparator) {
-
-		int count = countByObjectDefinitionId(objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryVersion> list = findByObjectDefinitionId(
-			objectDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entry versions where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1448,67 +1261,6 @@ public class ObjectEntryVersionPersistenceImpl
 
 		List<ObjectEntryVersion> list = findByObjectEntryId(
 			objectEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry version in the ordered set where objectEntryId = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion findByObjectEntryId_Last(
-			long objectEntryId,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws NoSuchObjectEntryVersionException {
-
-		ObjectEntryVersion objectEntryVersion = fetchByObjectEntryId_Last(
-			objectEntryId, orderByComparator);
-
-		if (objectEntryVersion != null) {
-			return objectEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectEntryId=");
-		sb.append(objectEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry version in the ordered set where objectEntryId = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion fetchByObjectEntryId_Last(
-		long objectEntryId,
-		OrderByComparator<ObjectEntryVersion> orderByComparator) {
-
-		int count = countByObjectEntryId(objectEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryVersion> list = findByObjectEntryId(
-			objectEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1829,72 +1581,6 @@ public class ObjectEntryVersionPersistenceImpl
 
 		List<ObjectEntryVersion> list = findByC_CD(
 			companyId, createDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion findByC_CD_Last(
-			long companyId, Date createDate,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws NoSuchObjectEntryVersionException {
-
-		ObjectEntryVersion objectEntryVersion = fetchByC_CD_Last(
-			companyId, createDate, orderByComparator);
-
-		if (objectEntryVersion != null) {
-			return objectEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", createDate=");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion fetchByC_CD_Last(
-		long companyId, Date createDate,
-		OrderByComparator<ObjectEntryVersion> orderByComparator) {
-
-		int count = countByC_CD(companyId, createDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryVersion> list = findByC_CD(
-			companyId, createDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2412,72 +2098,6 @@ public class ObjectEntryVersionPersistenceImpl
 
 		List<ObjectEntryVersion> list = findByOEI_S(
 			objectEntryId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry version in the ordered set where objectEntryId = &#63; and status = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion findByOEI_S_Last(
-			long objectEntryId, int status,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws NoSuchObjectEntryVersionException {
-
-		ObjectEntryVersion objectEntryVersion = fetchByOEI_S_Last(
-			objectEntryId, status, orderByComparator);
-
-		if (objectEntryVersion != null) {
-			return objectEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectEntryId=");
-		sb.append(objectEntryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry version in the ordered set where objectEntryId = &#63; and status = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	@Override
-	public ObjectEntryVersion fetchByOEI_S_Last(
-		long objectEntryId, int status,
-		OrderByComparator<ObjectEntryVersion> orderByComparator) {
-
-		int count = countByOEI_S(objectEntryId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryVersion> list = findByOEI_S(
-			objectEntryId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3359,4 +2979,4 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1356049324
+// LIFERAY-SERVICE-BUILDER-HASH:-679191688

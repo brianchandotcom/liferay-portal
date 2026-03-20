@@ -315,63 +315,6 @@ public class LockPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lock in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	@Override
-	public Lock findByUuid_Last(
-			String uuid, OrderByComparator<Lock> orderByComparator)
-		throws NoSuchLockException {
-
-		Lock lock = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (lock != null) {
-			return lock;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	@Override
-	public Lock fetchByUuid_Last(
-		String uuid, OrderByComparator<Lock> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Lock> list = findByUuid(uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the locks where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -702,71 +645,6 @@ public class LockPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	@Override
-	public Lock findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Lock> orderByComparator)
-		throws NoSuchLockException {
-
-		Lock lock = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (lock != null) {
-			return lock;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	@Override
-	public Lock fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Lock> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Lock> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the locks where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1088,64 +966,6 @@ public class LockPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lock in the ordered set where className = &#63;.
-	 *
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	@Override
-	public Lock findByClassName_Last(
-			String className, OrderByComparator<Lock> orderByComparator)
-		throws NoSuchLockException {
-
-		Lock lock = fetchByClassName_Last(className, orderByComparator);
-
-		if (lock != null) {
-			return lock;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("className=");
-		sb.append(className);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where className = &#63;.
-	 *
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	@Override
-	public Lock fetchByClassName_Last(
-		String className, OrderByComparator<Lock> orderByComparator) {
-
-		int count = countByClassName(className);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Lock> list = findByClassName(
-			className, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the locks where className = &#63; from the database.
 	 *
 	 * @param className the class name
@@ -1442,65 +1262,6 @@ public class LockPersistenceImpl
 
 		List<Lock> list = findByLtExpirationDate(
 			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	@Override
-	public Lock findByLtExpirationDate_Last(
-			Date expirationDate, OrderByComparator<Lock> orderByComparator)
-		throws NoSuchLockException {
-
-		Lock lock = fetchByLtExpirationDate_Last(
-			expirationDate, orderByComparator);
-
-		if (lock != null) {
-			return lock;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	@Override
-	public Lock fetchByLtExpirationDate_Last(
-		Date expirationDate, OrderByComparator<Lock> orderByComparator) {
-
-		int count = countByLtExpirationDate(expirationDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Lock> list = findByLtExpirationDate(
-			expirationDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1835,71 +1596,6 @@ public class LockPersistenceImpl
 
 		List<Lock> list = findByC_C(
 			companyId, className, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where companyId = &#63; and className = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	@Override
-	public Lock findByC_C_Last(
-			long companyId, String className,
-			OrderByComparator<Lock> orderByComparator)
-		throws NoSuchLockException {
-
-		Lock lock = fetchByC_C_Last(companyId, className, orderByComparator);
-
-		if (lock != null) {
-			return lock;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", className=");
-		sb.append(className);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where companyId = &#63; and className = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	@Override
-	public Lock fetchByC_C_Last(
-		long companyId, String className,
-		OrderByComparator<Lock> orderByComparator) {
-
-		int count = countByC_C(companyId, className);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Lock> list = findByC_C(
-			companyId, className, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2472,77 +2168,6 @@ public class LockPersistenceImpl
 
 		List<Lock> list = findByC_U_C(
 			companyId, userId, className, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where companyId = &#63; and userId = &#63; and className = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock
-	 * @throws NoSuchLockException if a matching lock could not be found
-	 */
-	@Override
-	public Lock findByC_U_C_Last(
-			long companyId, long userId, String className,
-			OrderByComparator<Lock> orderByComparator)
-		throws NoSuchLockException {
-
-		Lock lock = fetchByC_U_C_Last(
-			companyId, userId, className, orderByComparator);
-
-		if (lock != null) {
-			return lock;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", className=");
-		sb.append(className);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lock in the ordered set where companyId = &#63; and userId = &#63; and className = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	 */
-	@Override
-	public Lock fetchByC_U_C_Last(
-		long companyId, long userId, String className,
-		OrderByComparator<Lock> orderByComparator) {
-
-		int count = countByC_U_C(companyId, userId, className);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Lock> list = findByC_U_C(
-			companyId, userId, className, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3405,4 +3030,4 @@ public class LockPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-618569066
+// LIFERAY-SERVICE-BUILDER-HASH:72668947

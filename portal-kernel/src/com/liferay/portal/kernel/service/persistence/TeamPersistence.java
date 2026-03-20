@@ -119,32 +119,6 @@ public interface TeamPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last team in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team
-	 * @throws NoSuchTeamException if a matching team could not be found
-	 */
-	public Team findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
-		throws NoSuchTeamException;
-
-	/**
-	 * Returns the last team in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team, or <code>null</code> if a matching team could not be found
-	 */
-	public Team fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
-
-	/**
 	 * Removes all the teams where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -303,34 +277,6 @@ public interface TeamPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last team in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team
-	 * @throws NoSuchTeamException if a matching team could not be found
-	 */
-	public Team findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
-		throws NoSuchTeamException;
-
-	/**
-	 * Returns the last team in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team, or <code>null</code> if a matching team could not be found
-	 */
-	public Team fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
-
-	/**
 	 * Removes all the teams where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,32 +381,6 @@ public interface TeamPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last team in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team
-	 * @throws NoSuchTeamException if a matching team could not be found
-	 */
-	public Team findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
-		throws NoSuchTeamException;
-
-	/**
-	 * Returns the last team in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team, or <code>null</code> if a matching team could not be found
-	 */
-	public Team fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
-
-	/**
 	 * Removes all the teams where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -557,32 +477,6 @@ public interface TeamPersistence
 	 * @return the first matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public Team fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
-
-	/**
-	 * Returns the last team in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team
-	 * @throws NoSuchTeamException if a matching team could not be found
-	 */
-	public Team findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
-		throws NoSuchTeamException;
-
-	/**
-	 * Returns the last team in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching team, or <code>null</code> if a matching team could not be found
-	 */
-	public Team fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Team>
 			orderByComparator);
@@ -1162,4 +1056,4 @@ public interface TeamPersistence
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:363263279
+// LIFERAY-SERVICE-BUILDER-HASH:-329509999

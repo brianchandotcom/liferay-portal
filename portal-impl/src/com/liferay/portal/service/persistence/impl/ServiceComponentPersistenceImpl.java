@@ -312,67 +312,6 @@ public class ServiceComponentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last service component in the ordered set where buildNamespace = &#63;.
-	 *
-	 * @param buildNamespace the build namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching service component
-	 * @throws NoSuchServiceComponentException if a matching service component could not be found
-	 */
-	@Override
-	public ServiceComponent findByBuildNamespace_Last(
-			String buildNamespace,
-			OrderByComparator<ServiceComponent> orderByComparator)
-		throws NoSuchServiceComponentException {
-
-		ServiceComponent serviceComponent = fetchByBuildNamespace_Last(
-			buildNamespace, orderByComparator);
-
-		if (serviceComponent != null) {
-			return serviceComponent;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("buildNamespace=");
-		sb.append(buildNamespace);
-
-		sb.append("}");
-
-		throw new NoSuchServiceComponentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last service component in the ordered set where buildNamespace = &#63;.
-	 *
-	 * @param buildNamespace the build namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching service component, or <code>null</code> if a matching service component could not be found
-	 */
-	@Override
-	public ServiceComponent fetchByBuildNamespace_Last(
-		String buildNamespace,
-		OrderByComparator<ServiceComponent> orderByComparator) {
-
-		int count = countByBuildNamespace(buildNamespace);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ServiceComponent> list = findByBuildNamespace(
-			buildNamespace, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the service components where buildNamespace = &#63; from the database.
 	 *
 	 * @param buildNamespace the build namespace
@@ -1281,4 +1220,4 @@ public class ServiceComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1416988129
+// LIFERAY-SERVICE-BUILDER-HASH:1054502861

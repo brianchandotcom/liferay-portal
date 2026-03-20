@@ -315,67 +315,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce notification queue entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException {
-
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry =
-			fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (commerceNotificationQueueEntry != null) {
-			return commerceNotificationQueueEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationQueueEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce notification queue entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -693,75 +632,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce notification queue entry in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry
-			findByCommerceNotificationTemplateId_Last(
-				long commerceNotificationTemplateId,
-				OrderByComparator<CommerceNotificationQueueEntry>
-					orderByComparator)
-		throws NoSuchNotificationQueueEntryException {
-
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry =
-			fetchByCommerceNotificationTemplateId_Last(
-				commerceNotificationTemplateId, orderByComparator);
-
-		if (commerceNotificationQueueEntry != null) {
-			return commerceNotificationQueueEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceNotificationTemplateId=");
-		sb.append(commerceNotificationTemplateId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry
-		fetchByCommerceNotificationTemplateId_Last(
-			long commerceNotificationTemplateId,
-			OrderByComparator<CommerceNotificationQueueEntry>
-				orderByComparator) {
-
-		int count = countByCommerceNotificationTemplateId(
-			commerceNotificationTemplateId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationQueueEntry> list =
-			findByCommerceNotificationTemplateId(
-				commerceNotificationTemplateId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce notification queue entries where commerceNotificationTemplateId = &#63; from the database.
 	 *
 	 * @param commerceNotificationTemplateId the commerce notification template ID
@@ -1059,67 +929,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce notification queue entry in the ordered set where sent = &#63;.
-	 *
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry findBySent_Last(
-			boolean sent,
-			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException {
-
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry =
-			fetchBySent_Last(sent, orderByComparator);
-
-		if (commerceNotificationQueueEntry != null) {
-			return commerceNotificationQueueEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sent=");
-		sb.append(sent);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where sent = &#63;.
-	 *
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry fetchBySent_Last(
-		boolean sent,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		int count = countBySent(sent);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationQueueEntry> list = findBySent(
-			sent, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce notification queue entries where sent = &#63; from the database.
 	 *
 	 * @param sent the sent
@@ -1407,67 +1216,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 		List<CommerceNotificationQueueEntry> list = findByLtSentDate(
 			sentDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry findByLtSentDate_Last(
-			Date sentDate,
-			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException {
-
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry =
-			fetchByLtSentDate_Last(sentDate, orderByComparator);
-
-		if (commerceNotificationQueueEntry != null) {
-			return commerceNotificationQueueEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sentDate<");
-		sb.append(sentDate);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry fetchByLtSentDate_Last(
-		Date sentDate,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		int count = countByLtSentDate(sentDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationQueueEntry> list = findByLtSentDate(
-			sentDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1831,84 +1579,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 		List<CommerceNotificationQueueEntry> list = findByG_C_C_S(
 			groupId, classNameId, classPK, sent, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry findByG_C_C_S_Last(
-			long groupId, long classNameId, long classPK, boolean sent,
-			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException {
-
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry =
-			fetchByG_C_C_S_Last(
-				groupId, classNameId, classPK, sent, orderByComparator);
-
-		if (commerceNotificationQueueEntry != null) {
-			return commerceNotificationQueueEntry;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", sent=");
-		sb.append(sent);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification queue entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry fetchByG_C_C_S_Last(
-		long groupId, long classNameId, long classPK, boolean sent,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		int count = countByG_C_C_S(groupId, classNameId, classPK, sent);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationQueueEntry> list = findByG_C_C_S(
-			groupId, classNameId, classPK, sent, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2810,4 +2480,4 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2137123737
+// LIFERAY-SERVICE-BUILDER-HASH:1284075200

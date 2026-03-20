@@ -307,67 +307,6 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce shipping method in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping method
-	 * @throws NoSuchShippingMethodException if a matching commerce shipping method could not be found
-	 */
-	@Override
-	public CommerceShippingMethod findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CommerceShippingMethod> orderByComparator)
-		throws NoSuchShippingMethodException {
-
-		CommerceShippingMethod commerceShippingMethod = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (commerceShippingMethod != null) {
-			return commerceShippingMethod;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingMethodException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipping method in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping method, or <code>null</code> if a matching commerce shipping method could not be found
-	 */
-	@Override
-	public CommerceShippingMethod fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CommerceShippingMethod> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShippingMethod> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce shipping methods where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -665,72 +604,6 @@ public class CommerceShippingMethodPersistenceImpl
 
 		List<CommerceShippingMethod> list = findByG_A(
 			groupId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce shipping method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping method
-	 * @throws NoSuchShippingMethodException if a matching commerce shipping method could not be found
-	 */
-	@Override
-	public CommerceShippingMethod findByG_A_Last(
-			long groupId, boolean active,
-			OrderByComparator<CommerceShippingMethod> orderByComparator)
-		throws NoSuchShippingMethodException {
-
-		CommerceShippingMethod commerceShippingMethod = fetchByG_A_Last(
-			groupId, active, orderByComparator);
-
-		if (commerceShippingMethod != null) {
-			return commerceShippingMethod;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchShippingMethodException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipping method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping method, or <code>null</code> if a matching commerce shipping method could not be found
-	 */
-	@Override
-	public CommerceShippingMethod fetchByG_A_Last(
-		long groupId, boolean active,
-		OrderByComparator<CommerceShippingMethod> orderByComparator) {
-
-		int count = countByG_A(groupId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShippingMethod> list = findByG_A(
-			groupId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1740,4 +1613,4 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2115219018
+// LIFERAY-SERVICE-BUILDER-HASH:-1890794209

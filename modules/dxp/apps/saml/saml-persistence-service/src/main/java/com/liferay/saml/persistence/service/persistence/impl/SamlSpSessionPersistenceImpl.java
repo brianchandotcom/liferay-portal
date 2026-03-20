@@ -315,67 +315,6 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saml sp session in the ordered set where samlPeerBindingId = &#63;.
-	 *
-	 * @param samlPeerBindingId the saml peer binding ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp session
-	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
-	 */
-	@Override
-	public SamlSpSession findBySamlPeerBindingId_Last(
-			long samlPeerBindingId,
-			OrderByComparator<SamlSpSession> orderByComparator)
-		throws NoSuchSpSessionException {
-
-		SamlSpSession samlSpSession = fetchBySamlPeerBindingId_Last(
-			samlPeerBindingId, orderByComparator);
-
-		if (samlSpSession != null) {
-			return samlSpSession;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("samlPeerBindingId=");
-		sb.append(samlPeerBindingId);
-
-		sb.append("}");
-
-		throw new NoSuchSpSessionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml sp session in the ordered set where samlPeerBindingId = &#63;.
-	 *
-	 * @param samlPeerBindingId the saml peer binding ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
-	 */
-	@Override
-	public SamlSpSession fetchBySamlPeerBindingId_Last(
-		long samlPeerBindingId,
-		OrderByComparator<SamlSpSession> orderByComparator) {
-
-		int count = countBySamlPeerBindingId(samlPeerBindingId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlSpSession> list = findBySamlPeerBindingId(
-			samlPeerBindingId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saml sp sessions where samlPeerBindingId = &#63; from the database.
 	 *
 	 * @param samlPeerBindingId the saml peer binding ID
@@ -1070,72 +1009,6 @@ public class SamlSpSessionPersistenceImpl
 
 		List<SamlSpSession> list = findByC_SI(
 			companyId, sessionIndex, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sessionIndex the session index
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp session
-	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
-	 */
-	@Override
-	public SamlSpSession findByC_SI_Last(
-			long companyId, String sessionIndex,
-			OrderByComparator<SamlSpSession> orderByComparator)
-		throws NoSuchSpSessionException {
-
-		SamlSpSession samlSpSession = fetchByC_SI_Last(
-			companyId, sessionIndex, orderByComparator);
-
-		if (samlSpSession != null) {
-			return samlSpSession;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sessionIndex=");
-		sb.append(sessionIndex);
-
-		sb.append("}");
-
-		throw new NoSuchSpSessionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sessionIndex the session index
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
-	 */
-	@Override
-	public SamlSpSession fetchByC_SI_Last(
-		long companyId, String sessionIndex,
-		OrderByComparator<SamlSpSession> orderByComparator) {
-
-		int count = countByC_SI(companyId, sessionIndex);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlSpSession> list = findByC_SI(
-			companyId, sessionIndex, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1934,4 +1807,4 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-127454418
+// LIFERAY-SERVICE-BUILDER-HASH:1260216296

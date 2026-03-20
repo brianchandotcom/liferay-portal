@@ -121,32 +121,6 @@ public interface ExpandoRowPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last expando row in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando row
-	 * @throws NoSuchRowException if a matching expando row could not be found
-	 */
-	public ExpandoRow findByTableId_Last(
-			long tableId,
-			com.liferay.portal.kernel.util.OrderByComparator<ExpandoRow>
-				orderByComparator)
-		throws NoSuchRowException;
-
-	/**
-	 * Returns the last expando row in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando row, or <code>null</code> if a matching expando row could not be found
-	 */
-	public ExpandoRow fetchByTableId_Last(
-		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExpandoRow>
-			orderByComparator);
-
-	/**
 	 * Removes all the expando rows where tableId = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -244,32 +218,6 @@ public interface ExpandoRowPersistence
 	 * @return the first matching expando row, or <code>null</code> if a matching expando row could not be found
 	 */
 	public ExpandoRow fetchByClassPK_First(
-		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<ExpandoRow>
-			orderByComparator);
-
-	/**
-	 * Returns the last expando row in the ordered set where classPK = &#63;.
-	 *
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando row
-	 * @throws NoSuchRowException if a matching expando row could not be found
-	 */
-	public ExpandoRow findByClassPK_Last(
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<ExpandoRow>
-				orderByComparator)
-		throws NoSuchRowException;
-
-	/**
-	 * Returns the last expando row in the ordered set where classPK = &#63;.
-	 *
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando row, or <code>null</code> if a matching expando row could not be found
-	 */
-	public ExpandoRow fetchByClassPK_Last(
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoRow>
 			orderByComparator);
@@ -458,4 +406,4 @@ public interface ExpandoRowPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-104483825
+// LIFERAY-SERVICE-BUILDER-HASH:1832143119

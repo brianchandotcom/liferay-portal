@@ -328,67 +328,6 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch engine export task in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task
-	 * @throws NoSuchExportTaskException if a matching batch engine export task could not be found
-	 */
-	@Override
-	public BatchEngineExportTask findByUuid_Last(
-			String uuid,
-			OrderByComparator<BatchEngineExportTask> orderByComparator)
-		throws NoSuchExportTaskException {
-
-		BatchEngineExportTask batchEngineExportTask = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (batchEngineExportTask != null) {
-			return batchEngineExportTask;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchExportTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
-	@Override
-	public BatchEngineExportTask fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<BatchEngineExportTask> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchEngineExportTask> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the batch engine export tasks where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -724,72 +663,6 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch engine export task in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task
-	 * @throws NoSuchExportTaskException if a matching batch engine export task could not be found
-	 */
-	@Override
-	public BatchEngineExportTask findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<BatchEngineExportTask> orderByComparator)
-		throws NoSuchExportTaskException {
-
-		BatchEngineExportTask batchEngineExportTask = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (batchEngineExportTask != null) {
-			return batchEngineExportTask;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchExportTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
-	@Override
-	public BatchEngineExportTask fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<BatchEngineExportTask> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchEngineExportTask> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the batch engine export tasks where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1105,67 +978,6 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch engine export task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task
-	 * @throws NoSuchExportTaskException if a matching batch engine export task could not be found
-	 */
-	@Override
-	public BatchEngineExportTask findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<BatchEngineExportTask> orderByComparator)
-		throws NoSuchExportTaskException {
-
-		BatchEngineExportTask batchEngineExportTask = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (batchEngineExportTask != null) {
-			return batchEngineExportTask;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchExportTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
-	@Override
-	public BatchEngineExportTask fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<BatchEngineExportTask> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchEngineExportTask> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the batch engine export tasks where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1464,67 +1276,6 @@ public class BatchEngineExportTaskPersistenceImpl
 
 		List<BatchEngineExportTask> list = findByExecuteStatus(
 			executeStatus, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where executeStatus = &#63;.
-	 *
-	 * @param executeStatus the execute status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task
-	 * @throws NoSuchExportTaskException if a matching batch engine export task could not be found
-	 */
-	@Override
-	public BatchEngineExportTask findByExecuteStatus_Last(
-			String executeStatus,
-			OrderByComparator<BatchEngineExportTask> orderByComparator)
-		throws NoSuchExportTaskException {
-
-		BatchEngineExportTask batchEngineExportTask = fetchByExecuteStatus_Last(
-			executeStatus, orderByComparator);
-
-		if (batchEngineExportTask != null) {
-			return batchEngineExportTask;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("executeStatus=");
-		sb.append(executeStatus);
-
-		sb.append("}");
-
-		throw new NoSuchExportTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch engine export task in the ordered set where executeStatus = &#63;.
-	 *
-	 * @param executeStatus the execute status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
-	@Override
-	public BatchEngineExportTask fetchByExecuteStatus_Last(
-		String executeStatus,
-		OrderByComparator<BatchEngineExportTask> orderByComparator) {
-
-		int count = countByExecuteStatus(executeStatus);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchEngineExportTask> list = findByExecuteStatus(
-			executeStatus, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2665,4 +2416,4 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:516580104
+// LIFERAY-SERVICE-BUILDER-HASH:1606836940

@@ -313,67 +313,6 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 	/**
-	 * Returns the last announcements flag in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag
-	 * @throws NoSuchFlagException if a matching announcements flag could not be found
-	 */
-	@Override
-	public AnnouncementsFlag findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws NoSuchFlagException {
-
-		AnnouncementsFlag announcementsFlag = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (announcementsFlag != null) {
-			return announcementsFlag;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFlagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements flag in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	 */
-	@Override
-	public AnnouncementsFlag fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsFlag> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the announcements flags where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -664,66 +603,6 @@ public class AnnouncementsFlagPersistenceImpl
 
 		List<AnnouncementsFlag> list = findByEntryId(
 			entryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last announcements flag in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag
-	 * @throws NoSuchFlagException if a matching announcements flag could not be found
-	 */
-	@Override
-	public AnnouncementsFlag findByEntryId_Last(
-			long entryId,
-			OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws NoSuchFlagException {
-
-		AnnouncementsFlag announcementsFlag = fetchByEntryId_Last(
-			entryId, orderByComparator);
-
-		if (announcementsFlag != null) {
-			return announcementsFlag;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId=");
-		sb.append(entryId);
-
-		sb.append("}");
-
-		throw new NoSuchFlagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements flag in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	 */
-	@Override
-	public AnnouncementsFlag fetchByEntryId_Last(
-		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator) {
-
-		int count = countByEntryId(entryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsFlag> list = findByEntryId(
-			entryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1938,4 +1817,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-212246726
+// LIFERAY-SERVICE-BUILDER-HASH:-1970114700

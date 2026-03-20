@@ -326,65 +326,6 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder findByUuid_Last(
-			String uuid, OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws NoSuchObjectEntryFolderException {
-
-		ObjectEntryFolder objectEntryFolder = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectEntryFolder != null) {
-			return objectEntryFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectEntryFolder> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryFolder> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object entry folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -907,72 +848,6 @@ public class ObjectEntryFolderPersistenceImpl
 
 		List<ObjectEntryFolder> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws NoSuchObjectEntryFolderException {
-
-		ObjectEntryFolder objectEntryFolder = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectEntryFolder != null) {
-			return objectEntryFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectEntryFolder> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryFolder> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1566,78 +1441,6 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder findByG_C_P_Last(
-			long groupId, long companyId, long parentObjectEntryFolderId,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws NoSuchObjectEntryFolderException {
-
-		ObjectEntryFolder objectEntryFolder = fetchByG_C_P_Last(
-			groupId, companyId, parentObjectEntryFolderId, orderByComparator);
-
-		if (objectEntryFolder != null) {
-			return objectEntryFolder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentObjectEntryFolderId=");
-		sb.append(parentObjectEntryFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder fetchByG_C_P_Last(
-		long groupId, long companyId, long parentObjectEntryFolderId,
-		OrderByComparator<ObjectEntryFolder> orderByComparator) {
-
-		int count = countByG_C_P(groupId, companyId, parentObjectEntryFolderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryFolder> list = findByG_C_P(
-			groupId, companyId, parentObjectEntryFolderId, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2215,77 +2018,6 @@ public class ObjectEntryFolderPersistenceImpl
 
 		List<ObjectEntryFolder> list = findByG_C_LikeT(
 			groupId, companyId, treePath, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder findByG_C_LikeT_Last(
-			long groupId, long companyId, String treePath,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws NoSuchObjectEntryFolderException {
-
-		ObjectEntryFolder objectEntryFolder = fetchByG_C_LikeT_Last(
-			groupId, companyId, treePath, orderByComparator);
-
-		if (objectEntryFolder != null) {
-			return objectEntryFolder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", treePathLIKE");
-		sb.append(treePath);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder fetchByG_C_LikeT_Last(
-		long groupId, long companyId, String treePath,
-		OrderByComparator<ObjectEntryFolder> orderByComparator) {
-
-		int count = countByG_C_LikeT(groupId, companyId, treePath);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryFolder> list = findByG_C_LikeT(
-			groupId, companyId, treePath, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2946,92 +2678,6 @@ public class ObjectEntryFolderPersistenceImpl
 		List<ObjectEntryFolder> list = findByG_C_P_N_NotS(
 			groupId, companyId, parentObjectEntryFolderId, name, status, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63; and name = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder findByG_C_P_N_NotS_Last(
-			long groupId, long companyId, long parentObjectEntryFolderId,
-			String name, int status,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws NoSuchObjectEntryFolderException {
-
-		ObjectEntryFolder objectEntryFolder = fetchByG_C_P_N_NotS_Last(
-			groupId, companyId, parentObjectEntryFolderId, name, status,
-			orderByComparator);
-
-		if (objectEntryFolder != null) {
-			return objectEntryFolder;
-		}
-
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentObjectEntryFolderId=");
-		sb.append(parentObjectEntryFolderId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63; and name = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder fetchByG_C_P_N_NotS_Last(
-		long groupId, long companyId, long parentObjectEntryFolderId,
-		String name, int status,
-		OrderByComparator<ObjectEntryFolder> orderByComparator) {
-
-		int count = countByG_C_P_N_NotS(
-			groupId, companyId, parentObjectEntryFolderId, name, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectEntryFolder> list = findByG_C_P_N_NotS(
-			groupId, companyId, parentObjectEntryFolderId, name, status,
-			count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4327,4 +3973,4 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-864587958
+// LIFERAY-SERVICE-BUILDER-HASH:1130594709

@@ -128,34 +128,6 @@ public interface JSONStorageEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last json storage entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a matching json storage entry could not be found
-	 */
-	public JSONStorageEntry findByCN_CPK_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<JSONStorageEntry>
-				orderByComparator)
-		throws NoSuchJSONStorageEntryException;
-
-	/**
-	 * Returns the last json storage entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
-	 */
-	public JSONStorageEntry fetchByCN_CPK_Last(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<JSONStorageEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the json storage entries where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -284,41 +256,6 @@ public interface JSONStorageEntryPersistence
 	 * @return the first matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
 	 */
 	public JSONStorageEntry fetchByC_CN_I_T_VL_First(
-		long companyId, long classNameId, int index, int type, long valueLong,
-		com.liferay.portal.kernel.util.OrderByComparator<JSONStorageEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param index the index
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a matching json storage entry could not be found
-	 */
-	public JSONStorageEntry findByC_CN_I_T_VL_Last(
-			long companyId, long classNameId, int index, int type,
-			long valueLong,
-			com.liferay.portal.kernel.util.OrderByComparator<JSONStorageEntry>
-				orderByComparator)
-		throws NoSuchJSONStorageEntryException;
-
-	/**
-	 * Returns the last json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param index the index
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
-	 */
-	public JSONStorageEntry fetchByC_CN_I_T_VL_Last(
 		long companyId, long classNameId, int index, int type, long valueLong,
 		com.liferay.portal.kernel.util.OrderByComparator<JSONStorageEntry>
 			orderByComparator);
@@ -460,41 +397,6 @@ public interface JSONStorageEntryPersistence
 	 * @return the first matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
 	 */
 	public JSONStorageEntry fetchByC_CN_K_T_VL_First(
-		long companyId, long classNameId, String key, int type, long valueLong,
-		com.liferay.portal.kernel.util.OrderByComparator<JSONStorageEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a matching json storage entry could not be found
-	 */
-	public JSONStorageEntry findByC_CN_K_T_VL_Last(
-			long companyId, long classNameId, String key, int type,
-			long valueLong,
-			com.liferay.portal.kernel.util.OrderByComparator<JSONStorageEntry>
-				orderByComparator)
-		throws NoSuchJSONStorageEntryException;
-
-	/**
-	 * Returns the last json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
-	 */
-	public JSONStorageEntry fetchByC_CN_K_T_VL_Last(
 		long companyId, long classNameId, String key, int type, long valueLong,
 		com.liferay.portal.kernel.util.OrderByComparator<JSONStorageEntry>
 			orderByComparator);
@@ -720,4 +622,4 @@ public interface JSONStorageEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:484043351
+// LIFERAY-SERVICE-BUILDER-HASH:404661244

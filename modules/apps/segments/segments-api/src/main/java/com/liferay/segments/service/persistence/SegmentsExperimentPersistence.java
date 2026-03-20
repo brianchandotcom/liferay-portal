@@ -122,32 +122,6 @@ public interface SegmentsExperimentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last segments experiment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment
-	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
-	 */
-	public SegmentsExperiment findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
-				orderByComparator)
-		throws NoSuchExperimentException;
-
-	/**
-	 * Returns the last segments experiment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
-	 */
-	public SegmentsExperiment fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
-			orderByComparator);
-
-	/**
 	 * Removes all the segments experiments where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface SegmentsExperimentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last segments experiment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment
-	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
-	 */
-	public SegmentsExperiment findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
-				orderByComparator)
-		throws NoSuchExperimentException;
-
-	/**
-	 * Returns the last segments experiment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
-	 */
-	public SegmentsExperiment fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
-			orderByComparator);
-
-	/**
 	 * Removes all the segments experiments where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface SegmentsExperimentPersistence
 	 * @return the first matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	public SegmentsExperiment fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experiment in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment
-	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
-	 */
-	public SegmentsExperiment findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
-				orderByComparator)
-		throws NoSuchExperimentException;
-
-	/**
-	 * Returns the last segments experiment in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
-	 */
-	public SegmentsExperiment fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator);
@@ -612,32 +532,6 @@ public interface SegmentsExperimentPersistence
 	 * @return the first matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	public SegmentsExperiment fetchBySegmentsExperimentKey_First(
-		String segmentsExperimentKey,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experiment in the ordered set where segmentsExperimentKey = &#63;.
-	 *
-	 * @param segmentsExperimentKey the segments experiment key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment
-	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
-	 */
-	public SegmentsExperiment findBySegmentsExperimentKey_Last(
-			String segmentsExperimentKey,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
-				orderByComparator)
-		throws NoSuchExperimentException;
-
-	/**
-	 * Returns the last segments experiment in the ordered set where segmentsExperimentKey = &#63;.
-	 *
-	 * @param segmentsExperimentKey the segments experiment key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
-	 */
-	public SegmentsExperiment fetchBySegmentsExperimentKey_Last(
 		String segmentsExperimentKey,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
 			orderByComparator);
@@ -891,4 +785,4 @@ public interface SegmentsExperimentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1857966667
+// LIFERAY-SERVICE-BUILDER-HASH:-384337015

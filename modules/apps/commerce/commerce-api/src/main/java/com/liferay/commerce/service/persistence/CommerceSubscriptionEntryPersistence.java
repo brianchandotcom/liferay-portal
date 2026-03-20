@@ -120,32 +120,6 @@ public interface CommerceSubscriptionEntryPersistence
 			<CommerceSubscriptionEntry> orderByComparator);
 
 	/**
-	 * Returns the last commerce subscription entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
 	 * Removes all the commerce subscription entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface CommerceSubscriptionEntryPersistence
 			<CommerceSubscriptionEntry> orderByComparator);
 
 	/**
-	 * Returns the last commerce subscription entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
 	 * Removes all the commerce subscription entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -438,32 +384,6 @@ public interface CommerceSubscriptionEntryPersistence
 			<CommerceSubscriptionEntry> orderByComparator);
 
 	/**
-	 * Returns the last commerce subscription entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
 	 * Removes all the commerce subscription entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -562,32 +482,6 @@ public interface CommerceSubscriptionEntryPersistence
 	 * @return the first matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
 	 */
 	public CommerceSubscriptionEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceSubscriptionEntry> orderByComparator);
@@ -744,32 +638,6 @@ public interface CommerceSubscriptionEntryPersistence
 			<CommerceSubscriptionEntry> orderByComparator);
 
 	/**
-	 * Returns the last commerce subscription entry in the ordered set where subscriptionStatus = &#63;.
-	 *
-	 * @param subscriptionStatus the subscription status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry findBySubscriptionStatus_Last(
-			int subscriptionStatus,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where subscriptionStatus = &#63;.
-	 *
-	 * @param subscriptionStatus the subscription status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry fetchBySubscriptionStatus_Last(
-		int subscriptionStatus,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
 	 * Removes all the commerce subscription entries where subscriptionStatus = &#63; from the database.
 	 *
 	 * @param subscriptionStatus the subscription status
@@ -874,34 +742,6 @@ public interface CommerceSubscriptionEntryPersistence
 	 * @return the first matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
 	 */
 	public CommerceSubscriptionEntry fetchByC_U_First(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry findByC_U_Last(
-			long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry fetchByC_U_Last(
 		long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceSubscriptionEntry> orderByComparator);
@@ -1019,36 +859,6 @@ public interface CommerceSubscriptionEntryPersistence
 	 * @return the first matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
 	 */
 	public CommerceSubscriptionEntry fetchByG_C_U_First(
-		long groupId, long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where groupId = &#63; and companyId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry findByG_C_U_Last(
-			long groupId, long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where groupId = &#63; and companyId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public CommerceSubscriptionEntry fetchByG_C_U_Last(
 		long groupId, long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceSubscriptionEntry> orderByComparator);
@@ -1259,4 +1069,4 @@ public interface CommerceSubscriptionEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:252881749
+// LIFERAY-SERVICE-BUILDER-HASH:1248958014

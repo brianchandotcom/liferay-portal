@@ -313,67 +313,6 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last notification queue entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
-	 */
-	@Override
-	public NotificationQueueEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException {
-
-		NotificationQueueEntry notificationQueueEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (notificationQueueEntry != null) {
-			return notificationQueueEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
-	 */
-	@Override
-	public NotificationQueueEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationQueueEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the notification queue entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -865,68 +804,6 @@ public class NotificationQueueEntryPersistenceImpl
 
 		List<NotificationQueueEntry> list = findByNotificationTemplateId(
 			notificationTemplateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
-	 */
-	@Override
-	public NotificationQueueEntry findByNotificationTemplateId_Last(
-			long notificationTemplateId,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException {
-
-		NotificationQueueEntry notificationQueueEntry =
-			fetchByNotificationTemplateId_Last(
-				notificationTemplateId, orderByComparator);
-
-		if (notificationQueueEntry != null) {
-			return notificationQueueEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("notificationTemplateId=");
-		sb.append(notificationTemplateId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
-	 */
-	@Override
-	public NotificationQueueEntry fetchByNotificationTemplateId_Last(
-		long notificationTemplateId,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		int count = countByNotificationTemplateId(notificationTemplateId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationQueueEntry> list = findByNotificationTemplateId(
-			notificationTemplateId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1431,67 +1308,6 @@ public class NotificationQueueEntryPersistenceImpl
 
 		List<NotificationQueueEntry> list = findByLtSentDate(
 			sentDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
-	 */
-	@Override
-	public NotificationQueueEntry findByLtSentDate_Last(
-			Date sentDate,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException {
-
-		NotificationQueueEntry notificationQueueEntry = fetchByLtSentDate_Last(
-			sentDate, orderByComparator);
-
-		if (notificationQueueEntry != null) {
-			return notificationQueueEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sentDate<");
-		sb.append(sentDate);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
-	 */
-	@Override
-	public NotificationQueueEntry fetchByLtSentDate_Last(
-		Date sentDate,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		int count = countByLtSentDate(sentDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationQueueEntry> list = findByLtSentDate(
-			sentDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2046,72 +1862,6 @@ public class NotificationQueueEntryPersistenceImpl
 
 		List<NotificationQueueEntry> list = findByT_S(
 			type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where type = &#63; and status = &#63;.
-	 *
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
-	 */
-	@Override
-	public NotificationQueueEntry findByT_S_Last(
-			String type, int status,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException {
-
-		NotificationQueueEntry notificationQueueEntry = fetchByT_S_Last(
-			type, status, orderByComparator);
-
-		if (notificationQueueEntry != null) {
-			return notificationQueueEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification queue entry in the ordered set where type = &#63; and status = &#63;.
-	 *
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
-	 */
-	@Override
-	public NotificationQueueEntry fetchByT_S_Last(
-		String type, int status,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		int count = countByT_S(type, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationQueueEntry> list = findByT_S(
-			type, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3221,4 +2971,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1333833564
+// LIFERAY-SERVICE-BUILDER-HASH:614514729

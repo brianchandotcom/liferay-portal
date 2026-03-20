@@ -314,67 +314,6 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saml sp auth request in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp auth request
-	 * @throws NoSuchSpAuthRequestException if a matching saml sp auth request could not be found
-	 */
-	@Override
-	public SamlSpAuthRequest findByLtCreateDate_Last(
-			Date createDate,
-			OrderByComparator<SamlSpAuthRequest> orderByComparator)
-		throws NoSuchSpAuthRequestException {
-
-		SamlSpAuthRequest samlSpAuthRequest = fetchByLtCreateDate_Last(
-			createDate, orderByComparator);
-
-		if (samlSpAuthRequest != null) {
-			return samlSpAuthRequest;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchSpAuthRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml sp auth request in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
-	 */
-	@Override
-	public SamlSpAuthRequest fetchByLtCreateDate_Last(
-		Date createDate,
-		OrderByComparator<SamlSpAuthRequest> orderByComparator) {
-
-		int count = countByLtCreateDate(createDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlSpAuthRequest> list = findByLtCreateDate(
-			createDate, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saml sp auth requests where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -1361,4 +1300,4 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-590053814
+// LIFERAY-SERVICE-BUILDER-HASH:-2145182862

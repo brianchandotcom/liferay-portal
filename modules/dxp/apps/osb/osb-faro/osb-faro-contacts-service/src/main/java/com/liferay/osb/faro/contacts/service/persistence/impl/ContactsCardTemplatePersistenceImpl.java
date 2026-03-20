@@ -303,67 +303,6 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last contacts card template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts card template
-	 * @throws NoSuchContactsCardTemplateException if a matching contacts card template could not be found
-	 */
-	@Override
-	public ContactsCardTemplate findByGroupId_Last(
-			long groupId,
-			OrderByComparator<ContactsCardTemplate> orderByComparator)
-		throws NoSuchContactsCardTemplateException {
-
-		ContactsCardTemplate contactsCardTemplate = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (contactsCardTemplate != null) {
-			return contactsCardTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchContactsCardTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last contacts card template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts card template, or <code>null</code> if a matching contacts card template could not be found
-	 */
-	@Override
-	public ContactsCardTemplate fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<ContactsCardTemplate> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ContactsCardTemplate> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the contacts card templates where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1072,4 +1011,4 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:259400259
+// LIFERAY-SERVICE-BUILDER-HASH:943673855

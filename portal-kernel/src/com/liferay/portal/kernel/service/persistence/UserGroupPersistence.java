@@ -120,32 +120,6 @@ public interface UserGroupPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last user group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	public UserGroup findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-				orderByComparator)
-		throws NoSuchUserGroupException;
-
-	/**
-	 * Returns the last user group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	public UserGroup fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-			orderByComparator);
-
-	/**
 	 * Returns all the user groups that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -298,34 +272,6 @@ public interface UserGroupPersistence
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
 	 */
 	public UserGroup fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-			orderByComparator);
-
-	/**
-	 * Returns the last user group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	public UserGroup findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-				orderByComparator)
-		throws NoSuchUserGroupException;
-
-	/**
-	 * Returns the last user group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	public UserGroup fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
 			orderByComparator);
@@ -489,32 +435,6 @@ public interface UserGroupPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last user group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	public UserGroup findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-				orderByComparator)
-		throws NoSuchUserGroupException;
-
-	/**
-	 * Returns the last user group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	public UserGroup fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-			orderByComparator);
-
-	/**
 	 * Returns all the user groups that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -668,34 +588,6 @@ public interface UserGroupPersistence
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
 	 */
 	public UserGroup fetchByC_P_First(
-		long companyId, long parentUserGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-			orderByComparator);
-
-	/**
-	 * Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	public UserGroup findByC_P_Last(
-			long companyId, long parentUserGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-				orderByComparator)
-		throws NoSuchUserGroupException;
-
-	/**
-	 * Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	public UserGroup fetchByC_P_Last(
 		long companyId, long parentUserGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
 			orderByComparator);
@@ -915,34 +807,6 @@ public interface UserGroupPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last user group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	public UserGroup findByC_LikeN_Last(
-			long companyId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-				orderByComparator)
-		throws NoSuchUserGroupException;
-
-	/**
-	 * Returns the last user group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	public UserGroup fetchByC_LikeN_Last(
-		long companyId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-			orderByComparator);
-
-	/**
 	 * Returns all the user groups that the user has permission to view where companyId = &#63; and name LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1112,36 +976,6 @@ public interface UserGroupPersistence
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
 	 */
 	public UserGroup fetchByGtU_C_P_First(
-		long userGroupId, long companyId, long parentUserGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-			orderByComparator);
-
-	/**
-	 * Returns the last user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param userGroupId the user group ID
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	public UserGroup findByGtU_C_P_Last(
-			long userGroupId, long companyId, long parentUserGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-				orderByComparator)
-		throws NoSuchUserGroupException;
-
-	/**
-	 * Returns the last user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param userGroupId the user group ID
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	public UserGroup fetchByGtU_C_P_Last(
 		long userGroupId, long companyId, long parentUserGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
 			orderByComparator);
@@ -1907,4 +1741,4 @@ public interface UserGroupPersistence
 		long pk, java.util.List<com.liferay.portal.kernel.model.User> users);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1825969914
+// LIFERAY-SERVICE-BUILDER-HASH:-2060723998

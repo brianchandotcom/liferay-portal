@@ -121,32 +121,6 @@ public interface KaleoTransitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo transition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
-	 */
-	public KaleoTransition findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
-				orderByComparator)
-		throws NoSuchTransitionException;
-
-	/**
-	 * Returns the last kaleo transition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	 */
-	public KaleoTransition fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo transitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -250,32 +224,6 @@ public interface KaleoTransitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo transition in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
-	 */
-	public KaleoTransition findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
-				orderByComparator)
-		throws NoSuchTransitionException;
-
-	/**
-	 * Returns the last kaleo transition in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	 */
-	public KaleoTransition fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo transitions where kaleoDefinitionVersionId = &#63; from the database.
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -373,32 +321,6 @@ public interface KaleoTransitionPersistence
 	 * @return the first matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	 */
 	public KaleoTransition fetchByKaleoNodeId_First(
-		long kaleoNodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo transition in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
-	 */
-	public KaleoTransition findByKaleoNodeId_Last(
-			long kaleoNodeId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
-				orderByComparator)
-		throws NoSuchTransitionException;
-
-	/**
-	 * Returns the last kaleo transition in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	 */
-	public KaleoTransition fetchByKaleoNodeId_Last(
 		long kaleoNodeId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
 			orderByComparator);
@@ -642,4 +564,4 @@ public interface KaleoTransitionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1282321663
+// LIFERAY-SERVICE-BUILDER-HASH:-913874264

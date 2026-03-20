@@ -343,66 +343,6 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last fragment collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection findByUuid_Last(
-			String uuid,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		FragmentCollection fragmentCollection = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (fragmentCollection != null) {
-			return fragmentCollection;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection fetchByUuid_Last(
-		String uuid, OrderByComparator<FragmentCollection> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentCollection> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the fragment collections where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -951,72 +891,6 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last fragment collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		FragmentCollection fragmentCollection = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (fragmentCollection != null) {
-			return fragmentCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<FragmentCollection> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentCollection> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the fragment collections where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1334,66 +1208,6 @@ public class FragmentCollectionPersistenceImpl
 
 		List<FragmentCollection> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection findByGroupId_Last(
-			long groupId,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		FragmentCollection fragmentCollection = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (fragmentCollection != null) {
-			return fragmentCollection;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection fetchByGroupId_Last(
-		long groupId, OrderByComparator<FragmentCollection> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentCollection> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2197,72 +2011,6 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection findByG_LikeN_Last(
-			long groupId, String name,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		FragmentCollection fragmentCollection = fetchByG_LikeN_Last(
-			groupId, name, orderByComparator);
-
-		if (fragmentCollection != null) {
-			return fragmentCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection fetchByG_LikeN_Last(
-		long groupId, String name,
-		OrderByComparator<FragmentCollection> orderByComparator) {
-
-		int count = countByG_LikeN(groupId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentCollection> list = findByG_LikeN(
-			groupId, name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the fragment collections where groupId = any &#63; and name LIKE &#63;.
 	 *
 	 * <p>
@@ -2929,72 +2677,6 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection findByG_M_Last(
-			long groupId, boolean marketplace,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		FragmentCollection fragmentCollection = fetchByG_M_Last(
-			groupId, marketplace, orderByComparator);
-
-		if (fragmentCollection != null) {
-			return fragmentCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", marketplace=");
-		sb.append(marketplace);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection fetchByG_M_Last(
-		long groupId, boolean marketplace,
-		OrderByComparator<FragmentCollection> orderByComparator) {
-
-		int count = countByG_M(groupId, marketplace);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentCollection> list = findByG_M(
-			groupId, marketplace, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the fragment collections where groupId = any &#63; and marketplace = &#63;.
 	 *
 	 * <p>
@@ -3626,77 +3308,6 @@ public class FragmentCollectionPersistenceImpl
 
 		List<FragmentCollection> list = findByG_LikeN_M(
 			groupId, name, marketplace, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection
-	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection findByG_LikeN_M_Last(
-			long groupId, String name, boolean marketplace,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		FragmentCollection fragmentCollection = fetchByG_LikeN_M_Last(
-			groupId, name, marketplace, orderByComparator);
-
-		if (fragmentCollection != null) {
-			return fragmentCollection;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append(", marketplace=");
-		sb.append(marketplace);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
-	 */
-	@Override
-	public FragmentCollection fetchByG_LikeN_M_Last(
-		long groupId, String name, boolean marketplace,
-		OrderByComparator<FragmentCollection> orderByComparator) {
-
-		int count = countByG_LikeN_M(groupId, name, marketplace);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentCollection> list = findByG_LikeN_M(
-			groupId, name, marketplace, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5554,4 +5165,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1150104460
+// LIFERAY-SERVICE-BUILDER-HASH:1431319805

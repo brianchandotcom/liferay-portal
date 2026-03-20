@@ -342,72 +342,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal article localization in the ordered set where companyId = &#63; and articlePK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param articlePK the article pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article localization
-	 * @throws NoSuchArticleLocalizationException if a matching journal article localization could not be found
-	 */
-	@Override
-	public JournalArticleLocalization findByC_A_Last(
-			long companyId, long articlePK,
-			OrderByComparator<JournalArticleLocalization> orderByComparator)
-		throws NoSuchArticleLocalizationException {
-
-		JournalArticleLocalization journalArticleLocalization = fetchByC_A_Last(
-			companyId, articlePK, orderByComparator);
-
-		if (journalArticleLocalization != null) {
-			return journalArticleLocalization;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", articlePK=");
-		sb.append(articlePK);
-
-		sb.append("}");
-
-		throw new NoSuchArticleLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal article localization in the ordered set where companyId = &#63; and articlePK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param articlePK the article pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
-	 */
-	@Override
-	public JournalArticleLocalization fetchByC_A_Last(
-		long companyId, long articlePK,
-		OrderByComparator<JournalArticleLocalization> orderByComparator) {
-
-		int count = countByC_A(companyId, articlePK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalArticleLocalization> list = findByC_A(
-			companyId, articlePK, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal article localizations where companyId = &#63; and articlePK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1681,4 +1615,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-622909384
+// LIFERAY-SERVICE-BUILDER-HASH:1812943299

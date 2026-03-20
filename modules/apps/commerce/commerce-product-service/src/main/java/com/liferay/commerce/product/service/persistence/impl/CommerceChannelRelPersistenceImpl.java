@@ -327,67 +327,6 @@ public class CommerceChannelRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce channel rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel rel
-	 * @throws NoSuchChannelRelException if a matching commerce channel rel could not be found
-	 */
-	@Override
-	public CommerceChannelRel findByCommerceChannelId_Last(
-			long commerceChannelId,
-			OrderByComparator<CommerceChannelRel> orderByComparator)
-		throws NoSuchChannelRelException {
-
-		CommerceChannelRel commerceChannelRel = fetchByCommerceChannelId_Last(
-			commerceChannelId, orderByComparator);
-
-		if (commerceChannelRel != null) {
-			return commerceChannelRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceChannelId=");
-		sb.append(commerceChannelId);
-
-		sb.append("}");
-
-		throw new NoSuchChannelRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel rel, or <code>null</code> if a matching commerce channel rel could not be found
-	 */
-	@Override
-	public CommerceChannelRel fetchByCommerceChannelId_Last(
-		long commerceChannelId,
-		OrderByComparator<CommerceChannelRel> orderByComparator) {
-
-		int count = countByCommerceChannelId(commerceChannelId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannelRel> list = findByCommerceChannelId(
-			commerceChannelId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce channel rels where commerceChannelId = &#63; from the database.
 	 *
 	 * @param commerceChannelId the commerce channel ID
@@ -698,72 +637,6 @@ public class CommerceChannelRelPersistenceImpl
 
 		List<CommerceChannelRel> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce channel rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel rel
-	 * @throws NoSuchChannelRelException if a matching commerce channel rel could not be found
-	 */
-	@Override
-	public CommerceChannelRel findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<CommerceChannelRel> orderByComparator)
-		throws NoSuchChannelRelException {
-
-		CommerceChannelRel commerceChannelRel = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (commerceChannelRel != null) {
-			return commerceChannelRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchChannelRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel rel, or <code>null</code> if a matching commerce channel rel could not be found
-	 */
-	@Override
-	public CommerceChannelRel fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<CommerceChannelRel> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannelRel> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2042,4 +1915,4 @@ public class CommerceChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1668284410
+// LIFERAY-SERVICE-BUILDER-HASH:-265181202

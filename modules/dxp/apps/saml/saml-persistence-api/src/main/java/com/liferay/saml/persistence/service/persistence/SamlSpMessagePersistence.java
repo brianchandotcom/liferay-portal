@@ -123,32 +123,6 @@ public interface SamlSpMessagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last saml sp message in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp message
-	 * @throws NoSuchSpMessageException if a matching saml sp message could not be found
-	 */
-	public SamlSpMessage findByLtExpirationDate_Last(
-			Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-				orderByComparator)
-		throws NoSuchSpMessageException;
-
-	/**
-	 * Returns the last saml sp message in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
-	 */
-	public SamlSpMessage fetchByLtExpirationDate_Last(
-		Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-			orderByComparator);
-
-	/**
 	 * Removes all the saml sp messages where expirationDate &lt; &#63; from the database.
 	 *
 	 * @param expirationDate the expiration date
@@ -339,4 +313,4 @@ public interface SamlSpMessagePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1528227387
+// LIFERAY-SERVICE-BUILDER-HASH:431801617

@@ -209,34 +209,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByUuid_Last(
-			String uuid, OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the blogs entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -429,40 +401,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the blogs entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -582,34 +520,6 @@ public class BlogsEntryUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByGroupId_Last(
-			long groupId, OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -789,36 +699,6 @@ public class BlogsEntryUtil {
 		long companyId, OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -1012,40 +892,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_LtD_First(
-			groupId, displayDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_LtD_Last(
-			long groupId, Date displayDate,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_LtD_Last(
-			groupId, displayDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_LtD_Last(
-		long groupId, Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_LtD_Last(
 			groupId, displayDate, orderByComparator);
 	}
 
@@ -1247,40 +1093,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_S_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_S_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the blogs entries that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1471,40 +1283,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_NotS_First(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_NotS_Last(
-			long groupId, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_NotS_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_NotS_Last(
-		long groupId, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_NotS_Last(
 			groupId, status, orderByComparator);
 	}
 
@@ -1705,40 +1483,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1869,40 +1613,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_LtD_First(
-			companyId, displayDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByC_LtD_Last(
-			long companyId, Date displayDate,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_LtD_Last(
-			companyId, displayDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByC_LtD_Last(
-		long companyId, Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_LtD_Last(
 			companyId, displayDate, orderByComparator);
 	}
 
@@ -2038,40 +1748,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_S_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_S_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2203,40 +1879,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByC_NotS_Last(
-			long companyId, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_NotS_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByC_NotS_Last(
-		long companyId, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_NotS_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2364,40 +2006,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
 			displayDate, status, orderByComparator);
 	}
 
@@ -2539,42 +2147,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_U_LtD_First(
-			groupId, userId, displayDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_U_LtD_Last(
-			long groupId, long userId, Date displayDate,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_U_LtD_Last(
-			groupId, userId, displayDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_U_LtD_Last(
-		long groupId, long userId, Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_U_LtD_Last(
 			groupId, userId, displayDate, orderByComparator);
 	}
 
@@ -2796,42 +2368,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_U_S_First(
-			groupId, userId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_U_S_Last(
-			long groupId, long userId, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_U_S_Last(
-			groupId, userId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_U_S_Last(
-		long groupId, long userId, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_U_S_Last(
 			groupId, userId, status, orderByComparator);
 	}
 
@@ -3223,42 +2759,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_U_NotS_Last(
-			long groupId, long userId, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_U_NotS_Last(
-			groupId, userId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_U_NotS_Last(
-		long groupId, long userId, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_U_NotS_Last(
-			groupId, userId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the blogs entries that the user has permission to view where groupId = &#63; and userId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3470,42 +2970,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_D_S_First(
-			groupId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_D_S_Last(
-			long groupId, Date displayDate, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_D_S_Last(
-			groupId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_D_S_Last(
-		long groupId, Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_D_S_Last(
 			groupId, displayDate, status, orderByComparator);
 	}
 
@@ -3724,42 +3188,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_GtD_S_First(
-			groupId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_GtD_S_Last(
-			long groupId, Date displayDate, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_GtD_S_Last(
-			groupId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_GtD_S_Last(
-		long groupId, Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_GtD_S_Last(
 			groupId, displayDate, status, orderByComparator);
 	}
 
@@ -3985,42 +3413,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_LtD_S_Last(
-			long groupId, Date displayDate, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_LtD_S_Last(
-			groupId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_LtD_S_Last(
-		long groupId, Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_LtD_S_Last(
-			groupId, displayDate, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the blogs entries that the user has permission to view where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4238,42 +3630,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_LtD_NotS_First(
-			groupId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_LtD_NotS_Last(
-			long groupId, Date displayDate, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_LtD_NotS_Last(
-			groupId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_LtD_NotS_Last(
-		long groupId, Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_LtD_NotS_Last(
 			groupId, displayDate, status, orderByComparator);
 	}
 
@@ -4499,42 +3855,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByC_U_S_Last(
-			long companyId, long userId, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_U_S_Last(
-			companyId, userId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByC_U_S_Last(
-		long companyId, long userId, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_U_S_Last(
-			companyId, userId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -4674,42 +3994,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_U_NotS_First(
-			companyId, userId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByC_U_NotS_Last(
-			long companyId, long userId, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_U_NotS_Last(
-			companyId, userId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByC_U_NotS_Last(
-		long companyId, long userId, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_U_NotS_Last(
 			companyId, userId, status, orderByComparator);
 	}
 
@@ -4859,42 +4143,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByC_LtD_S_Last(
-			long companyId, Date displayDate, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_LtD_S_Last(
-			companyId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByC_LtD_S_Last(
-		long companyId, Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_LtD_S_Last(
-			companyId, displayDate, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -5039,42 +4287,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_LtD_NotS_First(
-			companyId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByC_LtD_NotS_Last(
-			long companyId, Date displayDate, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_LtD_NotS_Last(
-			companyId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByC_LtD_NotS_Last(
-		long companyId, Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_LtD_NotS_Last(
 			companyId, displayDate, status, orderByComparator);
 	}
 
@@ -5232,44 +4444,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_U_LtD_S_First(
-			groupId, userId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_U_LtD_S_Last(
-			long groupId, long userId, Date displayDate, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_U_LtD_S_Last(
-			groupId, userId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_U_LtD_S_Last(
-		long groupId, long userId, Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_U_LtD_S_Last(
 			groupId, userId, displayDate, status, orderByComparator);
 	}
 
@@ -5510,44 +4684,6 @@ public class BlogsEntryUtil {
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_U_LtD_NotS_First(
-			groupId, userId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry findByG_U_LtD_NotS_Last(
-			long groupId, long userId, Date displayDate, int status,
-			OrderByComparator<BlogsEntry> orderByComparator)
-		throws com.liferay.blogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_U_LtD_NotS_Last(
-			groupId, userId, displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public static BlogsEntry fetchByG_U_LtD_NotS_Last(
-		long groupId, long userId, Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_U_LtD_NotS_Last(
 			groupId, userId, displayDate, status, orderByComparator);
 	}
 
@@ -5888,4 +5024,4 @@ public class BlogsEntryUtil {
 	private static volatile BlogsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:258073682
+// LIFERAY-SERVICE-BUILDER-HASH:353094358

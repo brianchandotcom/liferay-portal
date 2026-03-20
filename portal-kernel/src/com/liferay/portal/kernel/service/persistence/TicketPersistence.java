@@ -173,36 +173,6 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 			orderByComparator);
 
 	/**
-	 * Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket
-	 * @throws NoSuchTicketException if a matching ticket could not be found
-	 */
-	public Ticket findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<Ticket>
-				orderByComparator)
-		throws NoSuchTicketException;
-
-	/**
-	 * Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket, or <code>null</code> if a matching ticket could not be found
-	 */
-	public Ticket fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<Ticket>
-			orderByComparator);
-
-	/**
 	 * Removes all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -317,36 +287,6 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	 * @return the first matching ticket, or <code>null</code> if a matching ticket could not be found
 	 */
 	public Ticket fetchByC_C_T_First(
-		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<Ticket>
-			orderByComparator);
-
-	/**
-	 * Returns the last ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket
-	 * @throws NoSuchTicketException if a matching ticket could not be found
-	 */
-	public Ticket findByC_C_T_Last(
-			long classNameId, long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<Ticket>
-				orderByComparator)
-		throws NoSuchTicketException;
-
-	/**
-	 * Returns the last ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket, or <code>null</code> if a matching ticket could not be found
-	 */
-	public Ticket fetchByC_C_T_Last(
 		long classNameId, long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Ticket>
 			orderByComparator);
@@ -475,38 +415,6 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	 * @return the first matching ticket, or <code>null</code> if a matching ticket could not be found
 	 */
 	public Ticket fetchByC_C_C_T_First(
-		long companyId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<Ticket>
-			orderByComparator);
-
-	/**
-	 * Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket
-	 * @throws NoSuchTicketException if a matching ticket could not be found
-	 */
-	public Ticket findByC_C_C_T_Last(
-			long companyId, long classNameId, long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<Ticket>
-				orderByComparator)
-		throws NoSuchTicketException;
-
-	/**
-	 * Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket, or <code>null</code> if a matching ticket could not be found
-	 */
-	public Ticket fetchByC_C_C_T_Last(
 		long companyId, long classNameId, long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Ticket>
 			orderByComparator);
@@ -653,4 +561,4 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1317916849
+// LIFERAY-SERVICE-BUILDER-HASH:-1301146322

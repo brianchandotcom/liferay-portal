@@ -120,32 +120,6 @@ public interface WhereClauseEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last where clause entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching where clause entry
-	 * @throws NoSuchWhereClauseEntryException if a matching where clause entry could not be found
-	 */
-	public WhereClauseEntry findByName_Nickname_Last(
-			String name,
-			com.liferay.portal.kernel.util.OrderByComparator<WhereClauseEntry>
-				orderByComparator)
-		throws NoSuchWhereClauseEntryException;
-
-	/**
-	 * Returns the last where clause entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching where clause entry, or <code>null</code> if a matching where clause entry could not be found
-	 */
-	public WhereClauseEntry fetchByName_Nickname_Last(
-		String name,
-		com.liferay.portal.kernel.util.OrderByComparator<WhereClauseEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the where clause entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -282,4 +256,4 @@ public interface WhereClauseEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2052850606
+// LIFERAY-SERVICE-BUILDER-HASH:-1819421144

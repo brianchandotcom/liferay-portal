@@ -121,32 +121,6 @@ public interface AssetVocabularyPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset vocabulary in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-				orderByComparator)
-		throws NoSuchVocabularyException;
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset vocabularies where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface AssetVocabularyPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-				orderByComparator)
-		throws NoSuchVocabularyException;
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset vocabularies where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface AssetVocabularyPersistence
 	 * @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
 	public AssetVocabulary fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-				orderByComparator)
-		throws NoSuchVocabularyException;
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator);
@@ -737,32 +657,6 @@ public interface AssetVocabularyPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset vocabulary in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-				orderByComparator)
-		throws NoSuchVocabularyException;
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset vocabularies where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -917,34 +811,6 @@ public interface AssetVocabularyPersistence
 	 * @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
 	public AssetVocabulary fetchByG_LikeN_First(
-		long groupId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary findByG_LikeN_Last(
-			long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-				orderByComparator)
-		throws NoSuchVocabularyException;
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary fetchByG_LikeN_Last(
 		long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator);
@@ -1110,34 +976,6 @@ public interface AssetVocabularyPersistence
 	 * @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
 	public AssetVocabulary fetchByG_V_First(
-		long groupId, int visibilityType,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary findByG_V_Last(
-			long groupId, int visibilityType,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-				orderByComparator)
-		throws NoSuchVocabularyException;
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	public AssetVocabulary fetchByG_V_Last(
 		long groupId, int visibilityType,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator);
@@ -1520,4 +1358,4 @@ public interface AssetVocabularyPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-412007955
+// LIFERAY-SERVICE-BUILDER-HASH:312040357

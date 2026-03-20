@@ -294,67 +294,6 @@ public class LVEntryLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
-	 */
-	@Override
-	public LVEntryLocalization findByLvEntryId_Last(
-			long lvEntryId,
-			OrderByComparator<LVEntryLocalization> orderByComparator)
-		throws NoSuchLVEntryLocalizationException {
-
-		LVEntryLocalization lvEntryLocalization = fetchByLvEntryId_Last(
-			lvEntryId, orderByComparator);
-
-		if (lvEntryLocalization != null) {
-			return lvEntryLocalization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("lvEntryId=");
-		sb.append(lvEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
-	 */
-	@Override
-	public LVEntryLocalization fetchByLvEntryId_Last(
-		long lvEntryId,
-		OrderByComparator<LVEntryLocalization> orderByComparator) {
-
-		int count = countByLvEntryId(lvEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryLocalization> list = findByLvEntryId(
-			lvEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entry localizations where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -1431,4 +1370,4 @@ public class LVEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-958452156
+// LIFERAY-SERVICE-BUILDER-HASH:313059414

@@ -119,32 +119,6 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 			orderByComparator);
 
 	/**
-	 * Returns the last sxp element in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	public SXPElement findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-				orderByComparator)
-		throws NoSuchSXPElementException;
-
-	/**
-	 * Returns the last sxp element in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	public SXPElement fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-			orderByComparator);
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -297,34 +271,6 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the first matching sxp element, or <code>null</code> if a matching sxp element could not be found
 	 */
 	public SXPElement fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-			orderByComparator);
-
-	/**
-	 * Returns the last sxp element in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	public SXPElement findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-				orderByComparator)
-		throws NoSuchSXPElementException;
-
-	/**
-	 * Returns the last sxp element in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	public SXPElement fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
 			orderByComparator);
@@ -488,32 +434,6 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 			orderByComparator);
 
 	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	public SXPElement findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-				orderByComparator)
-		throws NoSuchSXPElementException;
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	public SXPElement fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-			orderByComparator);
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -667,34 +587,6 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the first matching sxp element, or <code>null</code> if a matching sxp element could not be found
 	 */
 	public SXPElement fetchByC_R_First(
-		long companyId, boolean readOnly,
-		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-			orderByComparator);
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and readOnly = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param readOnly the read only
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	public SXPElement findByC_R_Last(
-			long companyId, boolean readOnly,
-			com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-				orderByComparator)
-		throws NoSuchSXPElementException;
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and readOnly = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param readOnly the read only
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	public SXPElement fetchByC_R_Last(
 		long companyId, boolean readOnly,
 		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
 			orderByComparator);
@@ -859,34 +751,6 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the first matching sxp element, or <code>null</code> if a matching sxp element could not be found
 	 */
 	public SXPElement fetchByC_T_First(
-		long companyId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-			orderByComparator);
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	public SXPElement findByC_T_Last(
-			long companyId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-				orderByComparator)
-		throws NoSuchSXPElementException;
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	public SXPElement fetchByC_T_Last(
 		long companyId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
 			orderByComparator);
@@ -1057,36 +921,6 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the first matching sxp element, or <code>null</code> if a matching sxp element could not be found
 	 */
 	public SXPElement fetchByC_T_S_First(
-		long companyId, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-			orderByComparator);
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element
-	 * @throws NoSuchSXPElementException if a matching sxp element could not be found
-	 */
-	public SXPElement findByC_T_S_Last(
-			long companyId, int type, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
-				orderByComparator)
-		throws NoSuchSXPElementException;
-
-	/**
-	 * Returns the last sxp element in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sxp element, or <code>null</code> if a matching sxp element could not be found
-	 */
-	public SXPElement fetchByC_T_S_Last(
 		long companyId, int type, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
 			orderByComparator);
@@ -1341,4 +1175,4 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1631997986
+// LIFERAY-SERVICE-BUILDER-HASH:696438568

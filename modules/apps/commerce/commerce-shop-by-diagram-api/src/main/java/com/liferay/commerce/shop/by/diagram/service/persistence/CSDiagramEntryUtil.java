@@ -219,39 +219,6 @@ public class CSDiagramEntryUtil {
 	}
 
 	/**
-	 * Returns the last cs diagram entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
-	 */
-	public static CSDiagramEntry findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CSDiagramEntry> orderByComparator)
-		throws com.liferay.commerce.shop.by.diagram.exception.
-			NoSuchCSDiagramEntryException {
-
-		return getPersistence().findByCPDefinitionId_Last(
-			CPDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	public static CSDiagramEntry fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		OrderByComparator<CSDiagramEntry> orderByComparator) {
-
-		return getPersistence().fetchByCPDefinitionId_Last(
-			CPDefinitionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cs diagram entries where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -376,39 +343,6 @@ public class CSDiagramEntryUtil {
 	}
 
 	/**
-	 * Returns the last cs diagram entry in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
-	 */
-	public static CSDiagramEntry findByCPInstanceId_Last(
-			long CPInstanceId,
-			OrderByComparator<CSDiagramEntry> orderByComparator)
-		throws com.liferay.commerce.shop.by.diagram.exception.
-			NoSuchCSDiagramEntryException {
-
-		return getPersistence().findByCPInstanceId_Last(
-			CPInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	public static CSDiagramEntry fetchByCPInstanceId_Last(
-		long CPInstanceId,
-		OrderByComparator<CSDiagramEntry> orderByComparator) {
-
-		return getPersistence().fetchByCPInstanceId_Last(
-			CPInstanceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cs diagram entries where CPInstanceId = &#63; from the database.
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -528,38 +462,6 @@ public class CSDiagramEntryUtil {
 		long CProductId, OrderByComparator<CSDiagramEntry> orderByComparator) {
 
 		return getPersistence().fetchByCProductId_First(
-			CProductId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
-	 */
-	public static CSDiagramEntry findByCProductId_Last(
-			long CProductId,
-			OrderByComparator<CSDiagramEntry> orderByComparator)
-		throws com.liferay.commerce.shop.by.diagram.exception.
-			NoSuchCSDiagramEntryException {
-
-		return getPersistence().findByCProductId_Last(
-			CProductId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	public static CSDiagramEntry fetchByCProductId_Last(
-		long CProductId, OrderByComparator<CSDiagramEntry> orderByComparator) {
-
-		return getPersistence().fetchByCProductId_Last(
 			CProductId, orderByComparator);
 	}
 
@@ -885,4 +787,4 @@ public class CSDiagramEntryUtil {
 	private static volatile CSDiagramEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1172261357
+// LIFERAY-SERVICE-BUILDER-HASH:-1801305363

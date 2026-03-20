@@ -309,67 +309,6 @@ public class PatcherBuildRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last patcher build rel in the ordered set where childPatcherBuildId = &#63;.
-	 *
-	 * @param childPatcherBuildId the child patcher build ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build rel
-	 * @throws NoSuchPatcherBuildRelException if a matching patcher build rel could not be found
-	 */
-	@Override
-	public PatcherBuildRel findByChildPatcherBuildId_Last(
-			long childPatcherBuildId,
-			OrderByComparator<PatcherBuildRel> orderByComparator)
-		throws NoSuchPatcherBuildRelException {
-
-		PatcherBuildRel patcherBuildRel = fetchByChildPatcherBuildId_Last(
-			childPatcherBuildId, orderByComparator);
-
-		if (patcherBuildRel != null) {
-			return patcherBuildRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("childPatcherBuildId=");
-		sb.append(childPatcherBuildId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherBuildRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher build rel in the ordered set where childPatcherBuildId = &#63;.
-	 *
-	 * @param childPatcherBuildId the child patcher build ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build rel, or <code>null</code> if a matching patcher build rel could not be found
-	 */
-	@Override
-	public PatcherBuildRel fetchByChildPatcherBuildId_Last(
-		long childPatcherBuildId,
-		OrderByComparator<PatcherBuildRel> orderByComparator) {
-
-		int count = countByChildPatcherBuildId(childPatcherBuildId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherBuildRel> list = findByChildPatcherBuildId(
-			childPatcherBuildId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the patcher build rels where childPatcherBuildId = &#63; from the database.
 	 *
 	 * @param childPatcherBuildId the child patcher build ID
@@ -660,67 +599,6 @@ public class PatcherBuildRelPersistenceImpl
 
 		List<PatcherBuildRel> list = findByParentPatcherBuildId(
 			parentPatcherBuildId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher build rel in the ordered set where parentPatcherBuildId = &#63;.
-	 *
-	 * @param parentPatcherBuildId the parent patcher build ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build rel
-	 * @throws NoSuchPatcherBuildRelException if a matching patcher build rel could not be found
-	 */
-	@Override
-	public PatcherBuildRel findByParentPatcherBuildId_Last(
-			long parentPatcherBuildId,
-			OrderByComparator<PatcherBuildRel> orderByComparator)
-		throws NoSuchPatcherBuildRelException {
-
-		PatcherBuildRel patcherBuildRel = fetchByParentPatcherBuildId_Last(
-			parentPatcherBuildId, orderByComparator);
-
-		if (patcherBuildRel != null) {
-			return patcherBuildRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentPatcherBuildId=");
-		sb.append(parentPatcherBuildId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherBuildRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher build rel in the ordered set where parentPatcherBuildId = &#63;.
-	 *
-	 * @param parentPatcherBuildId the parent patcher build ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher build rel, or <code>null</code> if a matching patcher build rel could not be found
-	 */
-	@Override
-	public PatcherBuildRel fetchByParentPatcherBuildId_Last(
-		long parentPatcherBuildId,
-		OrderByComparator<PatcherBuildRel> orderByComparator) {
-
-		int count = countByParentPatcherBuildId(parentPatcherBuildId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherBuildRel> list = findByParentPatcherBuildId(
-			parentPatcherBuildId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1429,4 +1307,4 @@ public class PatcherBuildRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-383555098
+// LIFERAY-SERVICE-BUILDER-HASH:-775141514

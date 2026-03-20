@@ -129,35 +129,6 @@ public interface CPSpecificationOptionListTypeDefinitionRelPersistence
 				<CPSpecificationOptionListTypeDefinitionRel> orderByComparator);
 
 	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a matching cp specification option list type definition rel could not be found
-	 */
-	public CPSpecificationOptionListTypeDefinitionRel
-			findByCPSpecificationOptionId_Last(
-				long CPSpecificationOptionId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CPSpecificationOptionListTypeDefinitionRel>
-						orderByComparator)
-		throws NoSuchCPSpecificationOptionListTypeDefinitionRelException;
-
-	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel, or <code>null</code> if a matching cp specification option list type definition rel could not be found
-	 */
-	public CPSpecificationOptionListTypeDefinitionRel
-		fetchByCPSpecificationOptionId_Last(
-			long CPSpecificationOptionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOptionListTypeDefinitionRel> orderByComparator);
-
-	/**
 	 * Removes all the cp specification option list type definition rels where CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPSpecificationOptionId the cp specification option ID
@@ -262,35 +233,6 @@ public interface CPSpecificationOptionListTypeDefinitionRelPersistence
 	 */
 	public CPSpecificationOptionListTypeDefinitionRel
 		fetchByListTypeDefinitionId_First(
-			long listTypeDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOptionListTypeDefinitionRel> orderByComparator);
-
-	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a matching cp specification option list type definition rel could not be found
-	 */
-	public CPSpecificationOptionListTypeDefinitionRel
-			findByListTypeDefinitionId_Last(
-				long listTypeDefinitionId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CPSpecificationOptionListTypeDefinitionRel>
-						orderByComparator)
-		throws NoSuchCPSpecificationOptionListTypeDefinitionRelException;
-
-	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel, or <code>null</code> if a matching cp specification option list type definition rel could not be found
-	 */
-	public CPSpecificationOptionListTypeDefinitionRel
-		fetchByListTypeDefinitionId_Last(
 			long listTypeDefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CPSpecificationOptionListTypeDefinitionRel> orderByComparator);
@@ -497,4 +439,4 @@ public interface CPSpecificationOptionListTypeDefinitionRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1555777542
+// LIFERAY-SERVICE-BUILDER-HASH:2107603556

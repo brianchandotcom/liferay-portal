@@ -214,37 +214,6 @@ public class AuditEventUtil {
 	}
 
 	/**
-	 * Returns the last audit event in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching audit event
-	 * @throws NoSuchEventException if a matching audit event could not be found
-	 */
-	public static AuditEvent findByCompanyId_Last(
-			long companyId, OrderByComparator<AuditEvent> orderByComparator)
-		throws com.liferay.portal.security.audit.storage.exception.
-			NoSuchEventException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last audit event in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching audit event, or <code>null</code> if a matching audit event could not be found
-	 */
-	public static AuditEvent fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AuditEvent> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the audit events where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -423,4 +392,4 @@ public class AuditEventUtil {
 	private static volatile AuditEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-519505697
+// LIFERAY-SERVICE-BUILDER-HASH:1991411454

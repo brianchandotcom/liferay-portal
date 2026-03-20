@@ -324,65 +324,6 @@ public class KaleoInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance
-	 * @throws NoSuchInstanceException if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance findByCompanyId_Last(
-			long companyId, OrderByComparator<KaleoInstance> orderByComparator)
-		throws NoSuchInstanceException {
-
-		KaleoInstance kaleoInstance = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoInstance != null) {
-			return kaleoInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KaleoInstance> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoInstance> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -685,67 +626,6 @@ public class KaleoInstancePersistenceImpl
 
 		List<KaleoInstance> list = findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance
-	 * @throws NoSuchInstanceException if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws NoSuchInstanceException {
-
-		KaleoInstance kaleoInstance = fetchByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoInstance != null) {
-			return kaleoInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoInstance> orderByComparator) {
-
-		int count = countByKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoInstance> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1076,72 +956,6 @@ public class KaleoInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo instance in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance
-	 * @throws NoSuchInstanceException if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws NoSuchInstanceException {
-
-		KaleoInstance kaleoInstance = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (kaleoInstance != null) {
-			return kaleoInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<KaleoInstance> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoInstance> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo instances where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1463,72 +1277,6 @@ public class KaleoInstancePersistenceImpl
 
 		List<KaleoInstance> list = findByKDI_C(
 			kaleoDefinitionId, completed, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where kaleoDefinitionId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoDefinitionId the kaleo definition ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance
-	 * @throws NoSuchInstanceException if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance findByKDI_C_Last(
-			long kaleoDefinitionId, boolean completed,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws NoSuchInstanceException {
-
-		KaleoInstance kaleoInstance = fetchByKDI_C_Last(
-			kaleoDefinitionId, completed, orderByComparator);
-
-		if (kaleoInstance != null) {
-			return kaleoInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionId=");
-		sb.append(kaleoDefinitionId);
-
-		sb.append(", completed=");
-		sb.append(completed);
-
-		sb.append("}");
-
-		throw new NoSuchInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where kaleoDefinitionId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoDefinitionId the kaleo definition ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance fetchByKDI_C_Last(
-		long kaleoDefinitionId, boolean completed,
-		OrderByComparator<KaleoInstance> orderByComparator) {
-
-		int count = countByKDI_C(kaleoDefinitionId, completed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoInstance> list = findByKDI_C(
-			kaleoDefinitionId, completed, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1873,73 +1621,6 @@ public class KaleoInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo instance in the ordered set where kaleoDefinitionVersionId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance
-	 * @throws NoSuchInstanceException if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance findByKDVI_C_Last(
-			long kaleoDefinitionVersionId, boolean completed,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws NoSuchInstanceException {
-
-		KaleoInstance kaleoInstance = fetchByKDVI_C_Last(
-			kaleoDefinitionVersionId, completed, orderByComparator);
-
-		if (kaleoInstance != null) {
-			return kaleoInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append(", completed=");
-		sb.append(completed);
-
-		sb.append("}");
-
-		throw new NoSuchInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where kaleoDefinitionVersionId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance fetchByKDVI_C_Last(
-		long kaleoDefinitionVersionId, boolean completed,
-		OrderByComparator<KaleoInstance> orderByComparator) {
-
-		int count = countByKDVI_C(kaleoDefinitionVersionId, completed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoInstance> list = findByKDVI_C(
-			kaleoDefinitionVersionId, completed, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo instances where kaleoDefinitionVersionId = &#63; and completed = &#63; from the database.
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -2275,72 +1956,6 @@ public class KaleoInstancePersistenceImpl
 
 		List<KaleoInstance> list = findByCN_CPK(
 			className, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance
-	 * @throws NoSuchInstanceException if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance findByCN_CPK_Last(
-			String className, long classPK,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws NoSuchInstanceException {
-
-		KaleoInstance kaleoInstance = fetchByCN_CPK_Last(
-			className, classPK, orderByComparator);
-
-		if (kaleoInstance != null) {
-			return kaleoInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("className=");
-		sb.append(className);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance fetchByCN_CPK_Last(
-		String className, long classPK,
-		OrderByComparator<KaleoInstance> orderByComparator) {
-
-		int count = countByCN_CPK(className, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoInstance> list = findByCN_CPK(
-			className, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2989,88 +2604,6 @@ public class KaleoInstancePersistenceImpl
 		List<KaleoInstance> list = findByC_KDN_KDV_CD(
 			companyId, kaleoDefinitionName, kaleoDefinitionVersion,
 			completionDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where companyId = &#63; and kaleoDefinitionName = &#63; and kaleoDefinitionVersion = &#63; and completionDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param kaleoDefinitionName the kaleo definition name
-	 * @param kaleoDefinitionVersion the kaleo definition version
-	 * @param completionDate the completion date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance
-	 * @throws NoSuchInstanceException if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance findByC_KDN_KDV_CD_Last(
-			long companyId, String kaleoDefinitionName,
-			int kaleoDefinitionVersion, Date completionDate,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws NoSuchInstanceException {
-
-		KaleoInstance kaleoInstance = fetchByC_KDN_KDV_CD_Last(
-			companyId, kaleoDefinitionName, kaleoDefinitionVersion,
-			completionDate, orderByComparator);
-
-		if (kaleoInstance != null) {
-			return kaleoInstance;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", kaleoDefinitionName=");
-		sb.append(kaleoDefinitionName);
-
-		sb.append(", kaleoDefinitionVersion=");
-		sb.append(kaleoDefinitionVersion);
-
-		sb.append(", completionDate=");
-		sb.append(completionDate);
-
-		sb.append("}");
-
-		throw new NoSuchInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo instance in the ordered set where companyId = &#63; and kaleoDefinitionName = &#63; and kaleoDefinitionVersion = &#63; and completionDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param kaleoDefinitionName the kaleo definition name
-	 * @param kaleoDefinitionVersion the kaleo definition version
-	 * @param completionDate the completion date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
-	 */
-	@Override
-	public KaleoInstance fetchByC_KDN_KDV_CD_Last(
-		long companyId, String kaleoDefinitionName, int kaleoDefinitionVersion,
-		Date completionDate,
-		OrderByComparator<KaleoInstance> orderByComparator) {
-
-		int count = countByC_KDN_KDV_CD(
-			companyId, kaleoDefinitionName, kaleoDefinitionVersion,
-			completionDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoInstance> list = findByC_KDN_KDV_CD(
-			companyId, kaleoDefinitionName, kaleoDefinitionVersion,
-			completionDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4323,4 +3856,4 @@ public class KaleoInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1045181846
+// LIFERAY-SERVICE-BUILDER-HASH:-2106038726

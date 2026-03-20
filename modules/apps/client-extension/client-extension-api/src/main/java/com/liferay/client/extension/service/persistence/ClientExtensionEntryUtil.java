@@ -216,37 +216,6 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the last client extension entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last client extension entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the client extension entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -434,41 +403,6 @@ public class ClientExtensionEntryUtil {
 		OrderByComparator<ClientExtensionEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last client extension entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last client extension entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -664,39 +598,6 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the last client extension entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last client extension entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the client extension entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -886,41 +787,6 @@ public class ClientExtensionEntryUtil {
 		OrderByComparator<ClientExtensionEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_T_First(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last client extension entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry findByC_T_Last(
-			long companyId, String type,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryException {
-
-		return getPersistence().findByC_T_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last client extension entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry fetchByC_T_Last(
-		long companyId, String type,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_T_Last(
 			companyId, type, orderByComparator);
 	}
 
@@ -1253,4 +1119,4 @@ public class ClientExtensionEntryUtil {
 	private static volatile ClientExtensionEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1932850101
+// LIFERAY-SERVICE-BUILDER-HASH:467202981

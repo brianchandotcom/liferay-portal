@@ -344,67 +344,6 @@ public class CommercePricingClassPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce pricing class in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class
-	 * @throws NoSuchPricingClassException if a matching commerce pricing class could not be found
-	 */
-	@Override
-	public CommercePricingClass findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommercePricingClass> orderByComparator)
-		throws NoSuchPricingClassException {
-
-		CommercePricingClass commercePricingClass = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commercePricingClass != null) {
-			return commercePricingClass;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPricingClassException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	@Override
-	public CommercePricingClass fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommercePricingClass> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePricingClass> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce pricing classes that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -984,72 +923,6 @@ public class CommercePricingClassPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce pricing class in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class
-	 * @throws NoSuchPricingClassException if a matching commerce pricing class could not be found
-	 */
-	@Override
-	public CommercePricingClass findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommercePricingClass> orderByComparator)
-		throws NoSuchPricingClassException {
-
-		CommercePricingClass commercePricingClass = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commercePricingClass != null) {
-			return commercePricingClass;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPricingClassException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	@Override
-	public CommercePricingClass fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommercePricingClass> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePricingClass> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce pricing classes that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1613,67 +1486,6 @@ public class CommercePricingClassPersistenceImpl
 
 		List<CommercePricingClass> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class
-	 * @throws NoSuchPricingClassException if a matching commerce pricing class could not be found
-	 */
-	@Override
-	public CommercePricingClass findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommercePricingClass> orderByComparator)
-		throws NoSuchPricingClassException {
-
-		CommercePricingClass commercePricingClass = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commercePricingClass != null) {
-			return commercePricingClass;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPricingClassException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	@Override
-	public CommercePricingClass fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommercePricingClass> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePricingClass> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3278,4 +3090,4 @@ public class CommercePricingClassPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1837925752
+// LIFERAY-SERVICE-BUILDER-HASH:-1502211101

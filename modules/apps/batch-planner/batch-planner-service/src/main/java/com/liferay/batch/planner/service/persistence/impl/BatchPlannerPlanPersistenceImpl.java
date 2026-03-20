@@ -310,66 +310,6 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<BatchPlannerPlan> orderByComparator)
-		throws NoSuchPlanException {
-
-		BatchPlannerPlan batchPlannerPlan = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan fetchByCompanyId_Last(
-		long companyId, OrderByComparator<BatchPlannerPlan> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchPlannerPlan> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the batch planner plans that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -865,72 +805,6 @@ public class BatchPlannerPlanPersistenceImpl
 
 		List<BatchPlannerPlan> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<BatchPlannerPlan> orderByComparator)
-		throws NoSuchPlanException {
-
-		BatchPlannerPlan batchPlannerPlan = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<BatchPlannerPlan> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchPlannerPlan> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1457,72 +1331,6 @@ public class BatchPlannerPlanPersistenceImpl
 
 		List<BatchPlannerPlan> list = findByC_E(
 			companyId, export, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and export = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param export the export
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan findByC_E_Last(
-			long companyId, boolean export,
-			OrderByComparator<BatchPlannerPlan> orderByComparator)
-		throws NoSuchPlanException {
-
-		BatchPlannerPlan batchPlannerPlan = fetchByC_E_Last(
-			companyId, export, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", export=");
-		sb.append(export);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and export = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param export the export
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan fetchByC_E_Last(
-		long companyId, boolean export,
-		OrderByComparator<BatchPlannerPlan> orderByComparator) {
-
-		int count = countByC_E(companyId, export);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchPlannerPlan> list = findByC_E(
-			companyId, export, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2063,72 +1871,6 @@ public class BatchPlannerPlanPersistenceImpl
 
 		List<BatchPlannerPlan> list = findByC_N(
 			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan findByC_N_Last(
-			long companyId, String name,
-			OrderByComparator<BatchPlannerPlan> orderByComparator)
-		throws NoSuchPlanException {
-
-		BatchPlannerPlan batchPlannerPlan = fetchByC_N_Last(
-			companyId, name, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan fetchByC_N_Last(
-		long companyId, String name,
-		OrderByComparator<BatchPlannerPlan> orderByComparator) {
-
-		int count = countByC_N(companyId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchPlannerPlan> list = findByC_N(
-			companyId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2706,72 +2448,6 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and template = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param template the template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan findByC_T_Last(
-			long companyId, boolean template,
-			OrderByComparator<BatchPlannerPlan> orderByComparator)
-		throws NoSuchPlanException {
-
-		BatchPlannerPlan batchPlannerPlan = fetchByC_T_Last(
-			companyId, template, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", template=");
-		sb.append(template);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and template = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param template the template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan fetchByC_T_Last(
-		long companyId, boolean template,
-		OrderByComparator<BatchPlannerPlan> orderByComparator) {
-
-		int count = countByC_T(companyId, template);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchPlannerPlan> list = findByC_T(
-			companyId, template, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the batch planner plans that the user has permission to view where companyId = &#63; and template = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -3309,77 +2985,6 @@ public class BatchPlannerPlanPersistenceImpl
 
 		List<BatchPlannerPlan> list = findByC_E_T(
 			companyId, export, template, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and export = &#63; and template = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param export the export
-	 * @param template the template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan findByC_E_T_Last(
-			long companyId, boolean export, boolean template,
-			OrderByComparator<BatchPlannerPlan> orderByComparator)
-		throws NoSuchPlanException {
-
-		BatchPlannerPlan batchPlannerPlan = fetchByC_E_T_Last(
-			companyId, export, template, orderByComparator);
-
-		if (batchPlannerPlan != null) {
-			return batchPlannerPlan;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", export=");
-		sb.append(export);
-
-		sb.append(", template=");
-		sb.append(template);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and export = &#63; and template = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param export the export
-	 * @param template the template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	@Override
-	public BatchPlannerPlan fetchByC_E_T_Last(
-		long companyId, boolean export, boolean template,
-		OrderByComparator<BatchPlannerPlan> orderByComparator) {
-
-		int count = countByC_E_T(companyId, export, template);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchPlannerPlan> list = findByC_E_T(
-			companyId, export, template, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4480,4 +4085,4 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-520283535
+// LIFERAY-SERVICE-BUILDER-HASH:2056277892

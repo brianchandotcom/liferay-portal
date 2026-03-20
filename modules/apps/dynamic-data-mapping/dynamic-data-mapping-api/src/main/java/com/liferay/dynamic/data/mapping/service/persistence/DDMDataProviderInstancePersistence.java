@@ -122,32 +122,6 @@ public interface DDMDataProviderInstancePersistence
 			<DDMDataProviderInstance> orderByComparator);
 
 	/**
-	 * Returns the last ddm data provider instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a matching ddm data provider instance could not be found
-	 */
-	public DDMDataProviderInstance findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException;
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
-	 */
-	public DDMDataProviderInstance fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstance> orderByComparator);
-
-	/**
 	 * Removes all the ddm data provider instances where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface DDMDataProviderInstancePersistence
 			<DDMDataProviderInstance> orderByComparator);
 
 	/**
-	 * Returns the last ddm data provider instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a matching ddm data provider instance could not be found
-	 */
-	public DDMDataProviderInstance findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException;
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
-	 */
-	public DDMDataProviderInstance fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstance> orderByComparator);
-
-	/**
 	 * Removes all the ddm data provider instances where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface DDMDataProviderInstancePersistence
 	 * @return the first matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
 	 */
 	public DDMDataProviderInstance fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstance> orderByComparator);
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a matching ddm data provider instance could not be found
-	 */
-	public DDMDataProviderInstance findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException;
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
-	 */
-	public DDMDataProviderInstance fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DDMDataProviderInstance> orderByComparator);
@@ -742,32 +662,6 @@ public interface DDMDataProviderInstancePersistence
 			<DDMDataProviderInstance> orderByComparator);
 
 	/**
-	 * Returns the last ddm data provider instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a matching ddm data provider instance could not be found
-	 */
-	public DDMDataProviderInstance findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException;
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
-	 */
-	public DDMDataProviderInstance fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstance> orderByComparator);
-
-	/**
 	 * Removes all the ddm data provider instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -906,4 +800,4 @@ public interface DDMDataProviderInstancePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-70253300
+// LIFERAY-SERVICE-BUILDER-HASH:1780735212

@@ -307,64 +307,6 @@ public class ExpandoRowPersistenceImpl
 	}
 
 	/**
-	 * Returns the last expando row in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando row
-	 * @throws NoSuchRowException if a matching expando row could not be found
-	 */
-	@Override
-	public ExpandoRow findByTableId_Last(
-			long tableId, OrderByComparator<ExpandoRow> orderByComparator)
-		throws NoSuchRowException {
-
-		ExpandoRow expandoRow = fetchByTableId_Last(tableId, orderByComparator);
-
-		if (expandoRow != null) {
-			return expandoRow;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append("}");
-
-		throw new NoSuchRowException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando row in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando row, or <code>null</code> if a matching expando row could not be found
-	 */
-	@Override
-	public ExpandoRow fetchByTableId_Last(
-		long tableId, OrderByComparator<ExpandoRow> orderByComparator) {
-
-		int count = countByTableId(tableId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoRow> list = findByTableId(
-			tableId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the expando rows where tableId = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -651,64 +593,6 @@ public class ExpandoRowPersistenceImpl
 		long classPK, OrderByComparator<ExpandoRow> orderByComparator) {
 
 		List<ExpandoRow> list = findByClassPK(classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last expando row in the ordered set where classPK = &#63;.
-	 *
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando row
-	 * @throws NoSuchRowException if a matching expando row could not be found
-	 */
-	@Override
-	public ExpandoRow findByClassPK_Last(
-			long classPK, OrderByComparator<ExpandoRow> orderByComparator)
-		throws NoSuchRowException {
-
-		ExpandoRow expandoRow = fetchByClassPK_Last(classPK, orderByComparator);
-
-		if (expandoRow != null) {
-			return expandoRow;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchRowException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando row in the ordered set where classPK = &#63;.
-	 *
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando row, or <code>null</code> if a matching expando row could not be found
-	 */
-	@Override
-	public ExpandoRow fetchByClassPK_Last(
-		long classPK, OrderByComparator<ExpandoRow> orderByComparator) {
-
-		int count = countByClassPK(classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoRow> list = findByClassPK(
-			classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1871,4 +1755,4 @@ public class ExpandoRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2134226153
+// LIFERAY-SERVICE-BUILDER-HASH:1749165227

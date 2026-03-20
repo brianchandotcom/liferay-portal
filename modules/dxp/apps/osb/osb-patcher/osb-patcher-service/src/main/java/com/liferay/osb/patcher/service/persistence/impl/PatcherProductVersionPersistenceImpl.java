@@ -316,67 +316,6 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last patcher product version in the ordered set where fixDeliveryMethod = &#63;.
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher product version
-	 * @throws NoSuchPatcherProductVersionException if a matching patcher product version could not be found
-	 */
-	@Override
-	public PatcherProductVersion findByFixDeliveryMethod_Last(
-			int fixDeliveryMethod,
-			OrderByComparator<PatcherProductVersion> orderByComparator)
-		throws NoSuchPatcherProductVersionException {
-
-		PatcherProductVersion patcherProductVersion =
-			fetchByFixDeliveryMethod_Last(fixDeliveryMethod, orderByComparator);
-
-		if (patcherProductVersion != null) {
-			return patcherProductVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fixDeliveryMethod=");
-		sb.append(fixDeliveryMethod);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProductVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher product version in the ordered set where fixDeliveryMethod = &#63;.
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher product version, or <code>null</code> if a matching patcher product version could not be found
-	 */
-	@Override
-	public PatcherProductVersion fetchByFixDeliveryMethod_Last(
-		int fixDeliveryMethod,
-		OrderByComparator<PatcherProductVersion> orderByComparator) {
-
-		int count = countByFixDeliveryMethod(fixDeliveryMethod);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherProductVersion> list = findByFixDeliveryMethod(
-			fixDeliveryMethod, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
 	 *
 	 * @param fixDeliveryMethod the fix delivery method
@@ -1535,4 +1474,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1146960176
+// LIFERAY-SERVICE-BUILDER-HASH:-21488990

@@ -207,34 +207,6 @@ public class AssetTagUtil {
 	}
 
 	/**
-	 * Returns the last asset tag in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	public static AssetTag findByUuid_Last(
-			String uuid, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchTagException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	public static AssetTag fetchByUuid_Last(
-		String uuid, OrderByComparator<AssetTag> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset tags where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -426,40 +398,6 @@ public class AssetTagUtil {
 	}
 
 	/**
-	 * Returns the last asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	public static AssetTag findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchTagException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	public static AssetTag fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetTag> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset tags where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -578,34 +516,6 @@ public class AssetTagUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	public static AssetTag findByGroupId_Last(
-			long groupId, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchTagException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	public static AssetTag fetchByGroupId_Last(
-		long groupId, OrderByComparator<AssetTag> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -806,34 +716,6 @@ public class AssetTagUtil {
 		String name, OrderByComparator<AssetTag> orderByComparator) {
 
 		return getPersistence().fetchByName_First(name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	public static AssetTag findByName_Last(
-			String name, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchTagException {
-
-		return getPersistence().findByName_Last(name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	public static AssetTag fetchByName_Last(
-		String name, OrderByComparator<AssetTag> orderByComparator) {
-
-		return getPersistence().fetchByName_Last(name, orderByComparator);
 	}
 
 	/**
@@ -1050,40 +932,6 @@ public class AssetTagUtil {
 	}
 
 	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	public static AssetTag findByG_N_Last(
-			long groupId, String name,
-			OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchTagException {
-
-		return getPersistence().findByG_N_Last(
-			groupId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	public static AssetTag fetchByG_N_Last(
-		long groupId, String name,
-		OrderByComparator<AssetTag> orderByComparator) {
-
-		return getPersistence().fetchByG_N_Last(
-			groupId, name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset tags where groupId = &#63; and name = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1210,40 +1058,6 @@ public class AssetTagUtil {
 		OrderByComparator<AssetTag> orderByComparator) {
 
 		return getPersistence().fetchByG_LikeN_First(
-			groupId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	public static AssetTag findByG_LikeN_Last(
-			long groupId, String name,
-			OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchTagException {
-
-		return getPersistence().findByG_LikeN_Last(
-			groupId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	public static AssetTag fetchByG_LikeN_Last(
-		long groupId, String name,
-		OrderByComparator<AssetTag> orderByComparator) {
-
-		return getPersistence().fetchByG_LikeN_Last(
 			groupId, name, orderByComparator);
 	}
 
@@ -1801,4 +1615,4 @@ public class AssetTagUtil {
 	private static volatile AssetTagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:746652439
+// LIFERAY-SERVICE-BUILDER-HASH:-1718368509

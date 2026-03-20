@@ -307,67 +307,6 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo process link in the ordered set where kaleoProcessId = &#63;.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process link
-	 * @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
-	 */
-	@Override
-	public KaleoProcessLink findByKaleoProcessId_Last(
-			long kaleoProcessId,
-			OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws NoSuchKaleoProcessLinkException {
-
-		KaleoProcessLink kaleoProcessLink = fetchByKaleoProcessId_Last(
-			kaleoProcessId, orderByComparator);
-
-		if (kaleoProcessLink != null) {
-			return kaleoProcessLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoProcessId=");
-		sb.append(kaleoProcessId);
-
-		sb.append("}");
-
-		throw new NoSuchKaleoProcessLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo process link in the ordered set where kaleoProcessId = &#63;.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
-	 */
-	@Override
-	public KaleoProcessLink fetchByKaleoProcessId_Last(
-		long kaleoProcessId,
-		OrderByComparator<KaleoProcessLink> orderByComparator) {
-
-		int count = countByKaleoProcessId(kaleoProcessId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoProcessLink> list = findByKaleoProcessId(
-			kaleoProcessId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo process links where kaleoProcessId = &#63; from the database.
 	 *
 	 * @param kaleoProcessId the kaleo process ID
@@ -1279,4 +1218,4 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-664940966
+// LIFERAY-SERVICE-BUILDER-HASH:1647837396

@@ -233,42 +233,6 @@ public class CommerceShippingFixedOptionUtil {
 	}
 
 	/**
-	 * Returns the last commerce shipping fixed option in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option
-	 * @throws NoSuchShippingFixedOptionException if a matching commerce shipping fixed option could not be found
-	 */
-	public static CommerceShippingFixedOption
-			findByCommerceShippingMethodId_Last(
-				long commerceShippingMethodId,
-				OrderByComparator<CommerceShippingFixedOption>
-					orderByComparator)
-		throws com.liferay.commerce.shipping.engine.fixed.exception.
-			NoSuchShippingFixedOptionException {
-
-		return getPersistence().findByCommerceShippingMethodId_Last(
-			commerceShippingMethodId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option, or <code>null</code> if a matching commerce shipping fixed option could not be found
-	 */
-	public static CommerceShippingFixedOption
-		fetchByCommerceShippingMethodId_Last(
-			long commerceShippingMethodId,
-			OrderByComparator<CommerceShippingFixedOption> orderByComparator) {
-
-		return getPersistence().fetchByCommerceShippingMethodId_Last(
-			commerceShippingMethodId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce shipping fixed options where commerceShippingMethodId = &#63; from the database.
 	 *
 	 * @param commerceShippingMethodId the commerce shipping method ID
@@ -541,4 +505,4 @@ public class CommerceShippingFixedOptionUtil {
 	private static volatile CommerceShippingFixedOptionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-176575458
+// LIFERAY-SERVICE-BUILDER-HASH:-161524194

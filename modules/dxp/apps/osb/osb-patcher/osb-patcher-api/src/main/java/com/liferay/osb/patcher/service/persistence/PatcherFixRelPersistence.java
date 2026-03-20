@@ -121,32 +121,6 @@ public interface PatcherFixRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last patcher fix rel in the ordered set where childPatcherFixId = &#63;.
-	 *
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel
-	 * @throws NoSuchPatcherFixRelException if a matching patcher fix rel could not be found
-	 */
-	public PatcherFixRel findByChildPatcherFixId_Last(
-			long childPatcherFixId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixRel>
-				orderByComparator)
-		throws NoSuchPatcherFixRelException;
-
-	/**
-	 * Returns the last patcher fix rel in the ordered set where childPatcherFixId = &#63;.
-	 *
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel, or <code>null</code> if a matching patcher fix rel could not be found
-	 */
-	public PatcherFixRel fetchByChildPatcherFixId_Last(
-		long childPatcherFixId,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixRel>
-			orderByComparator);
-
-	/**
 	 * Removes all the patcher fix rels where childPatcherFixId = &#63; from the database.
 	 *
 	 * @param childPatcherFixId the child patcher fix ID
@@ -245,32 +219,6 @@ public interface PatcherFixRelPersistence
 	 * @return the first matching patcher fix rel, or <code>null</code> if a matching patcher fix rel could not be found
 	 */
 	public PatcherFixRel fetchByParentPatcherFixId_First(
-		long parentPatcherFixId,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixRel>
-			orderByComparator);
-
-	/**
-	 * Returns the last patcher fix rel in the ordered set where parentPatcherFixId = &#63;.
-	 *
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel
-	 * @throws NoSuchPatcherFixRelException if a matching patcher fix rel could not be found
-	 */
-	public PatcherFixRel findByParentPatcherFixId_Last(
-			long parentPatcherFixId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixRel>
-				orderByComparator)
-		throws NoSuchPatcherFixRelException;
-
-	/**
-	 * Returns the last patcher fix rel in the ordered set where parentPatcherFixId = &#63;.
-	 *
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel, or <code>null</code> if a matching patcher fix rel could not be found
-	 */
-	public PatcherFixRel fetchByParentPatcherFixId_Last(
 		long parentPatcherFixId,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixRel>
 			orderByComparator);
@@ -411,4 +359,4 @@ public interface PatcherFixRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1804905560
+// LIFERAY-SERVICE-BUILDER-HASH:-209712550

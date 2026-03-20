@@ -313,66 +313,6 @@ public class AkismetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last akismet entry in the ordered set where modifiedDate &lt; &#63;.
-	 *
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching akismet entry
-	 * @throws NoSuchAkismetEntryException if a matching akismet entry could not be found
-	 */
-	@Override
-	public AkismetEntry findByLtModifiedDate_Last(
-			Date modifiedDate,
-			OrderByComparator<AkismetEntry> orderByComparator)
-		throws NoSuchAkismetEntryException {
-
-		AkismetEntry akismetEntry = fetchByLtModifiedDate_Last(
-			modifiedDate, orderByComparator);
-
-		if (akismetEntry != null) {
-			return akismetEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("modifiedDate<");
-		sb.append(modifiedDate);
-
-		sb.append("}");
-
-		throw new NoSuchAkismetEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last akismet entry in the ordered set where modifiedDate &lt; &#63;.
-	 *
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching akismet entry, or <code>null</code> if a matching akismet entry could not be found
-	 */
-	@Override
-	public AkismetEntry fetchByLtModifiedDate_Last(
-		Date modifiedDate, OrderByComparator<AkismetEntry> orderByComparator) {
-
-		int count = countByLtModifiedDate(modifiedDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AkismetEntry> list = findByLtModifiedDate(
-			modifiedDate, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the akismet entries where modifiedDate &lt; &#63; from the database.
 	 *
 	 * @param modifiedDate the modified date
@@ -1312,4 +1252,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1282888291
+// LIFERAY-SERVICE-BUILDER-HASH:-1305752148

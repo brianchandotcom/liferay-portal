@@ -308,67 +308,6 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct collection template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection template
-	 * @throws NoSuchCollectionTemplateException if a matching ct collection template could not be found
-	 */
-	@Override
-	public CTCollectionTemplate findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CTCollectionTemplate> orderByComparator)
-		throws NoSuchCollectionTemplateException {
-
-		CTCollectionTemplate ctCollectionTemplate = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ctCollectionTemplate != null) {
-			return ctCollectionTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct collection template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection template, or <code>null</code> if a matching ct collection template could not be found
-	 */
-	@Override
-	public CTCollectionTemplate fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CTCollectionTemplate> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTCollectionTemplate> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the ct collection templates that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1311,4 +1250,4 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-251981289
+// LIFERAY-SERVICE-BUILDER-HASH:1256987004

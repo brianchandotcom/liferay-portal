@@ -211,35 +211,6 @@ public class ERCCompanyEntryUtil {
 	}
 
 	/**
-	 * Returns the last erc company entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc company entry
-	 * @throws NoSuchERCCompanyEntryException if a matching erc company entry could not be found
-	 */
-	public static ERCCompanyEntry findByUuid_Last(
-			String uuid, OrderByComparator<ERCCompanyEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchERCCompanyEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last erc company entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc company entry, or <code>null</code> if a matching erc company entry could not be found
-	 */
-	public static ERCCompanyEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<ERCCompanyEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the erc company entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -368,41 +339,6 @@ public class ERCCompanyEntryUtil {
 		OrderByComparator<ERCCompanyEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last erc company entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc company entry
-	 * @throws NoSuchERCCompanyEntryException if a matching erc company entry could not be found
-	 */
-	public static ERCCompanyEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ERCCompanyEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchERCCompanyEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last erc company entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc company entry, or <code>null</code> if a matching erc company entry could not be found
-	 */
-	public static ERCCompanyEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ERCCompanyEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -661,4 +597,4 @@ public class ERCCompanyEntryUtil {
 	private static volatile ERCCompanyEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1976158476
+// LIFERAY-SERVICE-BUILDER-HASH:1091647326

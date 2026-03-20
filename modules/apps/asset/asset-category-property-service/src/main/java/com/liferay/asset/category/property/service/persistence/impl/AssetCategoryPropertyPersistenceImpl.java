@@ -331,67 +331,6 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset category property in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property
-	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
-	 */
-	@Override
-	public AssetCategoryProperty findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws NoSuchCategoryPropertyException {
-
-		AssetCategoryProperty assetCategoryProperty = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (assetCategoryProperty != null) {
-			return assetCategoryProperty;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryPropertyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
-	 */
-	@Override
-	public AssetCategoryProperty fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategoryProperty> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset category properties where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -686,67 +625,6 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		List<AssetCategoryProperty> list = findByCategoryId(
 			categoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where categoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property
-	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
-	 */
-	@Override
-	public AssetCategoryProperty findByCategoryId_Last(
-			long categoryId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws NoSuchCategoryPropertyException {
-
-		AssetCategoryProperty assetCategoryProperty = fetchByCategoryId_Last(
-			categoryId, orderByComparator);
-
-		if (assetCategoryProperty != null) {
-			return assetCategoryProperty;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("categoryId=");
-		sb.append(categoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryPropertyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where categoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
-	 */
-	@Override
-	public AssetCategoryProperty fetchByCategoryId_Last(
-		long categoryId,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
-
-		int count = countByCategoryId(categoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategoryProperty> list = findByCategoryId(
-			categoryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1076,72 +954,6 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		List<AssetCategoryProperty> list = findByC_K(
 			companyId, key, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property
-	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
-	 */
-	@Override
-	public AssetCategoryProperty findByC_K_Last(
-			long companyId, String key,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws NoSuchCategoryPropertyException {
-
-		AssetCategoryProperty assetCategoryProperty = fetchByC_K_Last(
-			companyId, key, orderByComparator);
-
-		if (assetCategoryProperty != null) {
-			return assetCategoryProperty;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryPropertyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category property in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category property, or <code>null</code> if a matching asset category property could not be found
-	 */
-	@Override
-	public AssetCategoryProperty fetchByC_K_Last(
-		long companyId, String key,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
-
-		int count = countByC_K(companyId, key);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategoryProperty> list = findByC_K(
-			companyId, key, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2778,4 +2590,4 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:525249132
+// LIFERAY-SERVICE-BUILDER-HASH:-10675348

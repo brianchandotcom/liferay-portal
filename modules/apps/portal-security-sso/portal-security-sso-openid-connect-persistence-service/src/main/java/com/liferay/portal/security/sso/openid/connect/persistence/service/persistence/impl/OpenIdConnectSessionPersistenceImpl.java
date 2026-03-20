@@ -306,67 +306,6 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last open ID connect session in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session
-	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
-	 */
-	@Override
-	public OpenIdConnectSession findByUserId_Last(
-			long userId,
-			OrderByComparator<OpenIdConnectSession> orderByComparator)
-		throws NoSuchSessionException {
-
-		OpenIdConnectSession openIdConnectSession = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (openIdConnectSession != null) {
-			return openIdConnectSession;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSessionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last open ID connect session in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
-	 */
-	@Override
-	public OpenIdConnectSession fetchByUserId_Last(
-		long userId,
-		OrderByComparator<OpenIdConnectSession> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OpenIdConnectSession> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the open ID connect sessions where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -661,69 +600,6 @@ public class OpenIdConnectSessionPersistenceImpl
 
 		List<OpenIdConnectSession> list = findByLtAccessTokenExpirationDate(
 			accessTokenExpirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last open ID connect session in the ordered set where accessTokenExpirationDate &lt; &#63;.
-	 *
-	 * @param accessTokenExpirationDate the access token expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session
-	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
-	 */
-	@Override
-	public OpenIdConnectSession findByLtAccessTokenExpirationDate_Last(
-			Date accessTokenExpirationDate,
-			OrderByComparator<OpenIdConnectSession> orderByComparator)
-		throws NoSuchSessionException {
-
-		OpenIdConnectSession openIdConnectSession =
-			fetchByLtAccessTokenExpirationDate_Last(
-				accessTokenExpirationDate, orderByComparator);
-
-		if (openIdConnectSession != null) {
-			return openIdConnectSession;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accessTokenExpirationDate<");
-		sb.append(accessTokenExpirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchSessionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last open ID connect session in the ordered set where accessTokenExpirationDate &lt; &#63;.
-	 *
-	 * @param accessTokenExpirationDate the access token expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
-	 */
-	@Override
-	public OpenIdConnectSession fetchByLtAccessTokenExpirationDate_Last(
-		Date accessTokenExpirationDate,
-		OrderByComparator<OpenIdConnectSession> orderByComparator) {
-
-		int count = countByLtAccessTokenExpirationDate(
-			accessTokenExpirationDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OpenIdConnectSession> list = findByLtAccessTokenExpirationDate(
-			accessTokenExpirationDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1524,78 +1400,6 @@ public class OpenIdConnectSessionPersistenceImpl
 
 		List<OpenIdConnectSession> list = findByC_A_C(
 			companyId, authServerWellKnownURI, clientId, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param clientId the client ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session
-	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
-	 */
-	@Override
-	public OpenIdConnectSession findByC_A_C_Last(
-			long companyId, String authServerWellKnownURI, String clientId,
-			OrderByComparator<OpenIdConnectSession> orderByComparator)
-		throws NoSuchSessionException {
-
-		OpenIdConnectSession openIdConnectSession = fetchByC_A_C_Last(
-			companyId, authServerWellKnownURI, clientId, orderByComparator);
-
-		if (openIdConnectSession != null) {
-			return openIdConnectSession;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", authServerWellKnownURI=");
-		sb.append(authServerWellKnownURI);
-
-		sb.append(", clientId=");
-		sb.append(clientId);
-
-		sb.append("}");
-
-		throw new NoSuchSessionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param clientId the client ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
-	 */
-	@Override
-	public OpenIdConnectSession fetchByC_A_C_Last(
-		long companyId, String authServerWellKnownURI, String clientId,
-		OrderByComparator<OpenIdConnectSession> orderByComparator) {
-
-		int count = countByC_A_C(companyId, authServerWellKnownURI, clientId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OpenIdConnectSession> list = findByC_A_C(
-			companyId, authServerWellKnownURI, clientId, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2741,4 +2545,4 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:4499188
+// LIFERAY-SERVICE-BUILDER-HASH:-1894233691

@@ -323,67 +323,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
-		throws NoSuchCPDVirtualSettingFileEntryException {
-
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (cpdVirtualSettingFileEntry != null) {
-			return cpdVirtualSettingFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDVirtualSettingFileEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cpd virtual setting file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -925,72 +864,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
-		throws NoSuchCPDVirtualSettingFileEntryException {
-
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (cpdVirtualSettingFileEntry != null) {
-			return cpdVirtualSettingFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDVirtualSettingFileEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cpd virtual setting file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1323,71 +1196,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where CPDefinitionVirtualSettingId = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingId the cp definition virtual setting ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry findByCPDefinitionVirtualSettingId_Last(
-			long CPDefinitionVirtualSettingId,
-			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
-		throws NoSuchCPDVirtualSettingFileEntryException {
-
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-			fetchByCPDefinitionVirtualSettingId_Last(
-				CPDefinitionVirtualSettingId, orderByComparator);
-
-		if (cpdVirtualSettingFileEntry != null) {
-			return cpdVirtualSettingFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionVirtualSettingId=");
-		sb.append(CPDefinitionVirtualSettingId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where CPDefinitionVirtualSettingId = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingId the cp definition virtual setting ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry fetchByCPDefinitionVirtualSettingId_Last(
-		long CPDefinitionVirtualSettingId,
-		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
-
-		int count = countByCPDefinitionVirtualSettingId(
-			CPDefinitionVirtualSettingId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDVirtualSettingFileEntry> list =
-			findByCPDefinitionVirtualSettingId(
-				CPDefinitionVirtualSettingId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cpd virtual setting file entries where CPDefinitionVirtualSettingId = &#63; from the database.
 	 *
 	 * @param CPDefinitionVirtualSettingId the cp definition virtual setting ID
@@ -1682,67 +1490,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 
 		List<CPDVirtualSettingFileEntry> list = findByFileEntryId(
 			fileEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry findByFileEntryId_Last(
-			long fileEntryId,
-			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
-		throws NoSuchCPDVirtualSettingFileEntryException {
-
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-			fetchByFileEntryId_Last(fileEntryId, orderByComparator);
-
-		if (cpdVirtualSettingFileEntry != null) {
-			return cpdVirtualSettingFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry fetchByFileEntryId_Last(
-		long fileEntryId,
-		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
-
-		int count = countByFileEntryId(fileEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDVirtualSettingFileEntry> list = findByFileEntryId(
-			fileEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2616,4 +2363,4 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1406301819
+// LIFERAY-SERVICE-BUILDER-HASH:1362870003

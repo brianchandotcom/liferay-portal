@@ -215,38 +215,6 @@ public class OAuthClientEntryUtil {
 	}
 
 	/**
-	 * Returns the last o auth client entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
-	 */
-	public static OAuthClientEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<OAuthClientEntry> orderByComparator)
-		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchOAuthClientEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
-	 */
-	public static OAuthClientEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<OAuthClientEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the o auth client entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -423,35 +391,6 @@ public class OAuthClientEntryUtil {
 		long userId, OrderByComparator<OAuthClientEntry> orderByComparator) {
 
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
-	 */
-	public static OAuthClientEntry findByUserId_Last(
-			long userId, OrderByComparator<OAuthClientEntry> orderByComparator)
-		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchOAuthClientEntryException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
-	 */
-	public static OAuthClientEntry fetchByUserId_Last(
-		long userId, OrderByComparator<OAuthClientEntry> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -644,41 +583,6 @@ public class OAuthClientEntryUtil {
 		OrderByComparator<OAuthClientEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_A_First(
-			companyId, authServerWellKnownURI, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
-	 */
-	public static OAuthClientEntry findByC_A_Last(
-			long companyId, String authServerWellKnownURI,
-			OrderByComparator<OAuthClientEntry> orderByComparator)
-		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchOAuthClientEntryException {
-
-		return getPersistence().findByC_A_Last(
-			companyId, authServerWellKnownURI, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
-	 */
-	public static OAuthClientEntry fetchByC_A_Last(
-		long companyId, String authServerWellKnownURI,
-		OrderByComparator<OAuthClientEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_A_Last(
 			companyId, authServerWellKnownURI, orderByComparator);
 	}
 
@@ -1023,4 +927,4 @@ public class OAuthClientEntryUtil {
 	private static volatile OAuthClientEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:873916927
+// LIFERAY-SERVICE-BUILDER-HASH:-856622111

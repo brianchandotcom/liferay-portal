@@ -219,37 +219,6 @@ public class LayoutPageTemplateStructureRelUtil {
 	}
 
 	/**
-	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel
-	 * @throws NoSuchPageTemplateStructureRelException if a matching layout page template structure rel could not be found
-	 */
-	public static LayoutPageTemplateStructureRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateStructureRelException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
-	 */
-	public static LayoutPageTemplateStructureRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout page template structure rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -451,41 +420,6 @@ public class LayoutPageTemplateStructureRelUtil {
 	}
 
 	/**
-	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel
-	 * @throws NoSuchPageTemplateStructureRelException if a matching layout page template structure rel could not be found
-	 */
-	public static LayoutPageTemplateStructureRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateStructureRelException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
-	 */
-	public static LayoutPageTemplateStructureRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout page template structure rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -622,43 +556,6 @@ public class LayoutPageTemplateStructureRelUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchByLayoutPageTemplateStructureId_First(
-			layoutPageTemplateStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where layoutPageTemplateStructureId = &#63;.
-	 *
-	 * @param layoutPageTemplateStructureId the layout page template structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel
-	 * @throws NoSuchPageTemplateStructureRelException if a matching layout page template structure rel could not be found
-	 */
-	public static LayoutPageTemplateStructureRel
-			findByLayoutPageTemplateStructureId_Last(
-				long layoutPageTemplateStructureId,
-				OrderByComparator<LayoutPageTemplateStructureRel>
-					orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateStructureRelException {
-
-		return getPersistence().findByLayoutPageTemplateStructureId_Last(
-			layoutPageTemplateStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where layoutPageTemplateStructureId = &#63;.
-	 *
-	 * @param layoutPageTemplateStructureId the layout page template structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
-	 */
-	public static LayoutPageTemplateStructureRel
-		fetchByLayoutPageTemplateStructureId_Last(
-			long layoutPageTemplateStructureId,
-			OrderByComparator<LayoutPageTemplateStructureRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByLayoutPageTemplateStructureId_Last(
 			layoutPageTemplateStructureId, orderByComparator);
 	}
 
@@ -802,43 +699,6 @@ public class LayoutPageTemplateStructureRelUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchBySegmentsExperienceId_First(
-			segmentsExperienceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel
-	 * @throws NoSuchPageTemplateStructureRelException if a matching layout page template structure rel could not be found
-	 */
-	public static LayoutPageTemplateStructureRel
-			findBySegmentsExperienceId_Last(
-				long segmentsExperienceId,
-				OrderByComparator<LayoutPageTemplateStructureRel>
-					orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateStructureRelException {
-
-		return getPersistence().findBySegmentsExperienceId_Last(
-			segmentsExperienceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
-	 */
-	public static LayoutPageTemplateStructureRel
-		fetchBySegmentsExperienceId_Last(
-			long segmentsExperienceId,
-			OrderByComparator<LayoutPageTemplateStructureRel>
-				orderByComparator) {
-
-		return getPersistence().fetchBySegmentsExperienceId_Last(
 			segmentsExperienceId, orderByComparator);
 	}
 
@@ -1121,4 +981,4 @@ public class LayoutPageTemplateStructureRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1696573724
+// LIFERAY-SERVICE-BUILDER-HASH:222997458

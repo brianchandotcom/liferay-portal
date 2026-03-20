@@ -311,67 +311,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last announcements delivery in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements delivery
-	 * @throws NoSuchDeliveryException if a matching announcements delivery could not be found
-	 */
-	@Override
-	public AnnouncementsDelivery findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws NoSuchDeliveryException {
-
-		AnnouncementsDelivery announcementsDelivery = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (announcementsDelivery != null) {
-			return announcementsDelivery;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDeliveryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements delivery in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
-	 */
-	@Override
-	public AnnouncementsDelivery fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsDelivery> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the announcements deliveries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -662,67 +601,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		List<AnnouncementsDelivery> list = findByUserId(
 			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last announcements delivery in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements delivery
-	 * @throws NoSuchDeliveryException if a matching announcements delivery could not be found
-	 */
-	@Override
-	public AnnouncementsDelivery findByUserId_Last(
-			long userId,
-			OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws NoSuchDeliveryException {
-
-		AnnouncementsDelivery announcementsDelivery = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (announcementsDelivery != null) {
-			return announcementsDelivery;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchDeliveryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements delivery in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
-	 */
-	@Override
-	public AnnouncementsDelivery fetchByUserId_Last(
-		long userId,
-		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsDelivery> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1936,4 +1814,4 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1469513608
+// LIFERAY-SERVICE-BUILDER-HASH:-1304903466

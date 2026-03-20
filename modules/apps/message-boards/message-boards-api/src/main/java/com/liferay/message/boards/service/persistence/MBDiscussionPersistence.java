@@ -121,32 +121,6 @@ public interface MBDiscussionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards discussion in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards discussion
-	 * @throws NoSuchDiscussionException if a matching message boards discussion could not be found
-	 */
-	public MBDiscussion findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
-				orderByComparator)
-		throws NoSuchDiscussionException;
-
-	/**
-	 * Returns the last message boards discussion in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	 */
-	public MBDiscussion fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards discussions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -301,34 +275,6 @@ public interface MBDiscussionPersistence
 	 * @return the first matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
 	public MBDiscussion fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards discussion
-	 * @throws NoSuchDiscussionException if a matching message boards discussion could not be found
-	 */
-	public MBDiscussion findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
-				orderByComparator)
-		throws NoSuchDiscussionException;
-
-	/**
-	 * Returns the last message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	 */
-	public MBDiscussion fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
 			orderByComparator);
@@ -565,4 +511,4 @@ public interface MBDiscussionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1703448626
+// LIFERAY-SERVICE-BUILDER-HASH:-2094552988

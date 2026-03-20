@@ -214,37 +214,6 @@ public class MVCCEntryUtil {
 	}
 
 	/**
-	 * Returns the last mvcc entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching mvcc entry
-	 * @throws NoSuchMVCCEntryException if a matching mvcc entry could not be found
-	 */
-	public static MVCCEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<MVCCEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchMVCCEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last mvcc entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
-	 */
-	public static MVCCEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<MVCCEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the mvcc entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -488,4 +457,4 @@ public class MVCCEntryUtil {
 	private static volatile MVCCEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1276016299
+// LIFERAY-SERVICE-BUILDER-HASH:-1912858198

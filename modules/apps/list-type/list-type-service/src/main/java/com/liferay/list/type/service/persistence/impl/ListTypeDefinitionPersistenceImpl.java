@@ -329,66 +329,6 @@ public class ListTypeDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last list type definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition
-	 * @throws NoSuchListTypeDefinitionException if a matching list type definition could not be found
-	 */
-	@Override
-	public ListTypeDefinition findByUuid_Last(
-			String uuid,
-			OrderByComparator<ListTypeDefinition> orderByComparator)
-		throws NoSuchListTypeDefinitionException {
-
-		ListTypeDefinition listTypeDefinition = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (listTypeDefinition != null) {
-			return listTypeDefinition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last list type definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition, or <code>null</code> if a matching list type definition could not be found
-	 */
-	@Override
-	public ListTypeDefinition fetchByUuid_Last(
-		String uuid, OrderByComparator<ListTypeDefinition> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ListTypeDefinition> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the list type definitions that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -944,72 +884,6 @@ public class ListTypeDefinitionPersistenceImpl
 
 		List<ListTypeDefinition> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last list type definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition
-	 * @throws NoSuchListTypeDefinitionException if a matching list type definition could not be found
-	 */
-	@Override
-	public ListTypeDefinition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ListTypeDefinition> orderByComparator)
-		throws NoSuchListTypeDefinitionException {
-
-		ListTypeDefinition listTypeDefinition = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (listTypeDefinition != null) {
-			return listTypeDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last list type definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition, or <code>null</code> if a matching list type definition could not be found
-	 */
-	@Override
-	public ListTypeDefinition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ListTypeDefinition> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ListTypeDefinition> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1587,72 +1461,6 @@ public class ListTypeDefinitionPersistenceImpl
 
 		List<ListTypeDefinition> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last list type definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition
-	 * @throws NoSuchListTypeDefinitionException if a matching list type definition could not be found
-	 */
-	@Override
-	public ListTypeDefinition findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<ListTypeDefinition> orderByComparator)
-		throws NoSuchListTypeDefinitionException {
-
-		ListTypeDefinition listTypeDefinition = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (listTypeDefinition != null) {
-			return listTypeDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last list type definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type definition, or <code>null</code> if a matching list type definition could not be found
-	 */
-	@Override
-	public ListTypeDefinition fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<ListTypeDefinition> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ListTypeDefinition> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2982,4 +2790,4 @@ public class ListTypeDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1422840469
+// LIFERAY-SERVICE-BUILDER-HASH:-411673836

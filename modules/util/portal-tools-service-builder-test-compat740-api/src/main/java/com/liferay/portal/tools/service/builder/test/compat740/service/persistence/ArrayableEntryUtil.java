@@ -213,35 +213,6 @@ public class ArrayableEntryUtil {
 	}
 
 	/**
-	 * Returns the last arrayable entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching arrayable entry
-	 * @throws NoSuchArrayableEntryException if a matching arrayable entry could not be found
-	 */
-	public static ArrayableEntry findByGroupId_Last(
-			long groupId, OrderByComparator<ArrayableEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchArrayableEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last arrayable entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching arrayable entry, or <code>null</code> if a matching arrayable entry could not be found
-	 */
-	public static ArrayableEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<ArrayableEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the arrayable entries where groupId = any &#63;.
 	 *
 	 * <p>
@@ -507,4 +478,4 @@ public class ArrayableEntryUtil {
 	private static volatile ArrayableEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1433211228
+// LIFERAY-SERVICE-BUILDER-HASH:-1464250747

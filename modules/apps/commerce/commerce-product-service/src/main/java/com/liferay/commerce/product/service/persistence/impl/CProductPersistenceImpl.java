@@ -334,64 +334,6 @@ public class CProductPersistenceImpl
 	}
 
 	/**
-	 * Returns the last c product in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product
-	 * @throws NoSuchCProductException if a matching c product could not be found
-	 */
-	@Override
-	public CProduct findByUuid_Last(
-			String uuid, OrderByComparator<CProduct> orderByComparator)
-		throws NoSuchCProductException {
-
-		CProduct cProduct = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (cProduct != null) {
-			return cProduct;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCProductException(sb.toString());
-	}
-
-	/**
-	 * Returns the last c product in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product, or <code>null</code> if a matching c product could not be found
-	 */
-	@Override
-	public CProduct fetchByUuid_Last(
-		String uuid, OrderByComparator<CProduct> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CProduct> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the c products where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -938,72 +880,6 @@ public class CProductPersistenceImpl
 	}
 
 	/**
-	 * Returns the last c product in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product
-	 * @throws NoSuchCProductException if a matching c product could not be found
-	 */
-	@Override
-	public CProduct findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CProduct> orderByComparator)
-		throws NoSuchCProductException {
-
-		CProduct cProduct = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cProduct != null) {
-			return cProduct;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCProductException(sb.toString());
-	}
-
-	/**
-	 * Returns the last c product in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product, or <code>null</code> if a matching c product could not be found
-	 */
-	@Override
-	public CProduct fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CProduct> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CProduct> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the c products where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1314,64 +1190,6 @@ public class CProductPersistenceImpl
 		long groupId, OrderByComparator<CProduct> orderByComparator) {
 
 		List<CProduct> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last c product in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product
-	 * @throws NoSuchCProductException if a matching c product could not be found
-	 */
-	@Override
-	public CProduct findByGroupId_Last(
-			long groupId, OrderByComparator<CProduct> orderByComparator)
-		throws NoSuchCProductException {
-
-		CProduct cProduct = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (cProduct != null) {
-			return cProduct;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCProductException(sb.toString());
-	}
-
-	/**
-	 * Returns the last c product in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product, or <code>null</code> if a matching c product could not be found
-	 */
-	@Override
-	public CProduct fetchByGroupId_Last(
-		long groupId, OrderByComparator<CProduct> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CProduct> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2710,4 +2528,4 @@ public class CProductPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1822181723
+// LIFERAY-SERVICE-BUILDER-HASH:1206252809

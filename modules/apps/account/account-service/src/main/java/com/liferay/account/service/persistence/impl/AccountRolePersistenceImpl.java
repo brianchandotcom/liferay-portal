@@ -313,65 +313,6 @@ public class AccountRolePersistenceImpl
 	}
 
 	/**
-	 * Returns the last account role in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role
-	 * @throws NoSuchRoleException if a matching account role could not be found
-	 */
-	@Override
-	public AccountRole findByCompanyId_Last(
-			long companyId, OrderByComparator<AccountRole> orderByComparator)
-		throws NoSuchRoleException {
-
-		AccountRole accountRole = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (accountRole != null) {
-			return accountRole;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account role in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role, or <code>null</code> if a matching account role could not be found
-	 */
-	@Override
-	public AccountRole fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AccountRole> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountRole> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the account roles that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -848,66 +789,6 @@ public class AccountRolePersistenceImpl
 
 		List<AccountRole> list = findByAccountEntryId(
 			accountEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account role in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role
-	 * @throws NoSuchRoleException if a matching account role could not be found
-	 */
-	@Override
-	public AccountRole findByAccountEntryId_Last(
-			long accountEntryId,
-			OrderByComparator<AccountRole> orderByComparator)
-		throws NoSuchRoleException {
-
-		AccountRole accountRole = fetchByAccountEntryId_Last(
-			accountEntryId, orderByComparator);
-
-		if (accountRole != null) {
-			return accountRole;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account role in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role, or <code>null</code> if a matching account role could not be found
-	 */
-	@Override
-	public AccountRole fetchByAccountEntryId_Last(
-		long accountEntryId, OrderByComparator<AccountRole> orderByComparator) {
-
-		int count = countByAccountEntryId(accountEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountRole> list = findByAccountEntryId(
-			accountEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2045,72 +1926,6 @@ public class AccountRolePersistenceImpl
 
 		List<AccountRole> list = findByC_A(
 			companyId, accountEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account role in the ordered set where companyId = &#63; and accountEntryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role
-	 * @throws NoSuchRoleException if a matching account role could not be found
-	 */
-	@Override
-	public AccountRole findByC_A_Last(
-			long companyId, long accountEntryId,
-			OrderByComparator<AccountRole> orderByComparator)
-		throws NoSuchRoleException {
-
-		AccountRole accountRole = fetchByC_A_Last(
-			companyId, accountEntryId, orderByComparator);
-
-		if (accountRole != null) {
-			return accountRole;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account role in the ordered set where companyId = &#63; and accountEntryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role, or <code>null</code> if a matching account role could not be found
-	 */
-	@Override
-	public AccountRole fetchByC_A_Last(
-		long companyId, long accountEntryId,
-		OrderByComparator<AccountRole> orderByComparator) {
-
-		int count = countByC_A(companyId, accountEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountRole> list = findByC_A(
-			companyId, accountEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3898,4 +3713,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1530036008
+// LIFERAY-SERVICE-BUILDER-HASH:-101863238

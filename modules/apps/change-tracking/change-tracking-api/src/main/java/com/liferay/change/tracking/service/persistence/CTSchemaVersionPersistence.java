@@ -120,32 +120,6 @@ public interface CTSchemaVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ct schema version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct schema version
-	 * @throws NoSuchSchemaVersionException if a matching ct schema version could not be found
-	 */
-	public CTSchemaVersion findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSchemaVersion>
-				orderByComparator)
-		throws NoSuchSchemaVersionException;
-
-	/**
-	 * Returns the last ct schema version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct schema version, or <code>null</code> if a matching ct schema version could not be found
-	 */
-	public CTSchemaVersion fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTSchemaVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the ct schema versions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -281,4 +255,4 @@ public interface CTSchemaVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2057236363
+// LIFERAY-SERVICE-BUILDER-HASH:1724648338

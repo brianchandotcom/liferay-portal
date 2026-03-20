@@ -323,67 +323,6 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot app customization in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot app customization
-	 * @throws NoSuchAppCustomizationException if a matching depot app customization could not be found
-	 */
-	@Override
-	public DepotAppCustomization findByDepotEntryId_Last(
-			long depotEntryId,
-			OrderByComparator<DepotAppCustomization> orderByComparator)
-		throws NoSuchAppCustomizationException {
-
-		DepotAppCustomization depotAppCustomization = fetchByDepotEntryId_Last(
-			depotEntryId, orderByComparator);
-
-		if (depotAppCustomization != null) {
-			return depotAppCustomization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("depotEntryId=");
-		sb.append(depotEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchAppCustomizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot app customization in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
-	 */
-	@Override
-	public DepotAppCustomization fetchByDepotEntryId_Last(
-		long depotEntryId,
-		OrderByComparator<DepotAppCustomization> orderByComparator) {
-
-		int count = countByDepotEntryId(depotEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotAppCustomization> list = findByDepotEntryId(
-			depotEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot app customizations where depotEntryId = &#63; from the database.
 	 *
 	 * @param depotEntryId the depot entry ID
@@ -1830,4 +1769,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2128480547
+// LIFERAY-SERVICE-BUILDER-HASH:97106267

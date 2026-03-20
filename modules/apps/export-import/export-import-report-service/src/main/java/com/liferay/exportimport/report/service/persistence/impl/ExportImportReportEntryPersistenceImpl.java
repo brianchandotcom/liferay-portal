@@ -335,73 +335,6 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last export import report entry in the ordered set where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import report entry
-	 * @throws NoSuchExportImportReportEntryException if a matching export import report entry could not be found
-	 */
-	@Override
-	public ExportImportReportEntry findByC_E_Last(
-			long companyId, long exportImportConfigurationId,
-			OrderByComparator<ExportImportReportEntry> orderByComparator)
-		throws NoSuchExportImportReportEntryException {
-
-		ExportImportReportEntry exportImportReportEntry = fetchByC_E_Last(
-			companyId, exportImportConfigurationId, orderByComparator);
-
-		if (exportImportReportEntry != null) {
-			return exportImportReportEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", exportImportConfigurationId=");
-		sb.append(exportImportConfigurationId);
-
-		sb.append("}");
-
-		throw new NoSuchExportImportReportEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last export import report entry in the ordered set where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import report entry, or <code>null</code> if a matching export import report entry could not be found
-	 */
-	@Override
-	public ExportImportReportEntry fetchByC_E_Last(
-		long companyId, long exportImportConfigurationId,
-		OrderByComparator<ExportImportReportEntry> orderByComparator) {
-
-		int count = countByC_E(companyId, exportImportConfigurationId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExportImportReportEntry> list = findByC_E(
-			companyId, exportImportConfigurationId, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1499,4 +1432,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1913364599
+// LIFERAY-SERVICE-BUILDER-HASH:-1107683078

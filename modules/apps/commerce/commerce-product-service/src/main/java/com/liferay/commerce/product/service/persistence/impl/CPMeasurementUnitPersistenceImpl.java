@@ -339,65 +339,6 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp measurement unit in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit findByUuid_Last(
-			String uuid, OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws NoSuchCPMeasurementUnitException {
-
-		CPMeasurementUnit cpMeasurementUnit = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPMeasurementUnitException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit fetchByUuid_Last(
-		String uuid, OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPMeasurementUnit> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp measurement units where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -945,72 +886,6 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp measurement unit in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws NoSuchCPMeasurementUnitException {
-
-		CPMeasurementUnit cpMeasurementUnit = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPMeasurementUnitException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPMeasurementUnit> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp measurement units where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1328,67 +1203,6 @@ public class CPMeasurementUnitPersistenceImpl
 
 		List<CPMeasurementUnit> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws NoSuchCPMeasurementUnitException {
-
-		CPMeasurementUnit cpMeasurementUnit = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPMeasurementUnitException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPMeasurementUnit> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1916,72 +1730,6 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit findByC_T_Last(
-			long companyId, int type,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws NoSuchCPMeasurementUnitException {
-
-		CPMeasurementUnit cpMeasurementUnit = fetchByC_T_Last(
-			companyId, type, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCPMeasurementUnitException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit fetchByC_T_Last(
-		long companyId, int type,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		int count = countByC_T(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPMeasurementUnit> list = findByC_T(
-			companyId, type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp measurement units where companyId = &#63; and type = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2316,77 +2064,6 @@ public class CPMeasurementUnitPersistenceImpl
 
 		List<CPMeasurementUnit> list = findByC_P_T(
 			companyId, primary, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63; and primary = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit findByC_P_T_Last(
-			long companyId, boolean primary, int type,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws NoSuchCPMeasurementUnitException {
-
-		CPMeasurementUnit cpMeasurementUnit = fetchByC_P_T_Last(
-			companyId, primary, type, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCPMeasurementUnitException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63; and primary = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	@Override
-	public CPMeasurementUnit fetchByC_P_T_Last(
-		long companyId, boolean primary, int type,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		int count = countByC_P_T(companyId, primary, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPMeasurementUnit> list = findByC_P_T(
-			companyId, primary, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3868,4 +3545,4 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2146906107
+// LIFERAY-SERVICE-BUILDER-HASH:-63707710

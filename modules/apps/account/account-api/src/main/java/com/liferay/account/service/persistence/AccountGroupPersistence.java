@@ -119,32 +119,6 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 			orderByComparator);
 
 	/**
-	 * Returns the last account group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public AccountGroup findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-				orderByComparator)
-		throws NoSuchGroupException;
-
-	/**
-	 * Returns the last account group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public AccountGroup fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-			orderByComparator);
-
-	/**
 	 * Returns all the account groups that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -298,34 +272,6 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 * @return the first matching account group, or <code>null</code> if a matching account group could not be found
 	 */
 	public AccountGroup fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-			orderByComparator);
-
-	/**
-	 * Returns the last account group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public AccountGroup findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-				orderByComparator)
-		throws NoSuchGroupException;
-
-	/**
-	 * Returns the last account group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public AccountGroup fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
 			orderByComparator);
@@ -485,32 +431,6 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 * @return the first matching account group, or <code>null</code> if a matching account group could not be found
 	 */
 	public AccountGroup fetchByAccountGroupId_First(
-		long accountGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-			orderByComparator);
-
-	/**
-	 * Returns the last account group in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public AccountGroup findByAccountGroupId_Last(
-			long accountGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-				orderByComparator)
-		throws NoSuchGroupException;
-
-	/**
-	 * Returns the last account group in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public AccountGroup fetchByAccountGroupId_Last(
 		long accountGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
 			orderByComparator);
@@ -792,32 +712,6 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 			orderByComparator);
 
 	/**
-	 * Returns the last account group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public AccountGroup findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-				orderByComparator)
-		throws NoSuchGroupException;
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public AccountGroup fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-			orderByComparator);
-
-	/**
 	 * Returns all the account groups that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -971,34 +865,6 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 * @return the first matching account group, or <code>null</code> if a matching account group could not be found
 	 */
 	public AccountGroup fetchByC_D_First(
-		long companyId, boolean defaultAccountGroup,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-			orderByComparator);
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public AccountGroup findByC_D_Last(
-			long companyId, boolean defaultAccountGroup,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-				orderByComparator)
-		throws NoSuchGroupException;
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public AccountGroup fetchByC_D_Last(
 		long companyId, boolean defaultAccountGroup,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
 			orderByComparator);
@@ -1169,34 +1035,6 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 			orderByComparator);
 
 	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public AccountGroup findByC_LikeN_Last(
-			long companyId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-				orderByComparator)
-		throws NoSuchGroupException;
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public AccountGroup fetchByC_LikeN_Last(
-		long companyId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-			orderByComparator);
-
-	/**
 	 * Returns all the account groups that the user has permission to view where companyId = &#63; and name LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1356,34 +1194,6 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 * @return the first matching account group, or <code>null</code> if a matching account group could not be found
 	 */
 	public AccountGroup fetchByC_T_First(
-		long companyId, String type,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-			orderByComparator);
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group
-	 * @throws NoSuchGroupException if a matching account group could not be found
-	 */
-	public AccountGroup findByC_T_Last(
-			long companyId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
-				orderByComparator)
-		throws NoSuchGroupException;
-
-	/**
-	 * Returns the last account group in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public AccountGroup fetchByC_T_Last(
 		long companyId, String type,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountGroup>
 			orderByComparator);
@@ -1632,4 +1442,4 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:297702574
+// LIFERAY-SERVICE-BUILDER-HASH:1500582165

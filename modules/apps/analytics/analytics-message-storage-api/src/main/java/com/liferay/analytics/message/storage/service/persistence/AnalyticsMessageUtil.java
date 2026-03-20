@@ -215,38 +215,6 @@ public class AnalyticsMessageUtil {
 	}
 
 	/**
-	 * Returns the last analytics message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics message
-	 * @throws NoSuchMessageException if a matching analytics message could not be found
-	 */
-	public static AnalyticsMessage findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AnalyticsMessage> orderByComparator)
-		throws com.liferay.analytics.message.storage.exception.
-			NoSuchMessageException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last analytics message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics message, or <code>null</code> if a matching analytics message could not be found
-	 */
-	public static AnalyticsMessage fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AnalyticsMessage> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the analytics messages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -429,4 +397,4 @@ public class AnalyticsMessageUtil {
 	private static volatile AnalyticsMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-798389726
+// LIFERAY-SERVICE-BUILDER-HASH:377702757

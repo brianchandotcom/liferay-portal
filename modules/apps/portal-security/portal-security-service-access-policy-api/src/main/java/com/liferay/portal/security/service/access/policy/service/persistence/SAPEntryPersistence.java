@@ -118,32 +118,6 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last sap entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry
-	 * @throws NoSuchEntryException if a matching sap entry could not be found
-	 */
-	public SAPEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last sap entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
-	 */
-	public SAPEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the sap entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -296,34 +270,6 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @return the first matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	 */
 	public SAPEntry fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last sap entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry
-	 * @throws NoSuchEntryException if a matching sap entry could not be found
-	 */
-	public SAPEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last sap entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
-	 */
-	public SAPEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
 			orderByComparator);
@@ -487,32 +433,6 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last sap entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry
-	 * @throws NoSuchEntryException if a matching sap entry could not be found
-	 */
-	public SAPEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last sap entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
-	 */
-	public SAPEntry fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the sap entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -666,34 +586,6 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @return the first matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	 */
 	public SAPEntry fetchByC_D_First(
-		long companyId, boolean defaultSAPEntry,
-		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last sap entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultSAPEntry the default sap entry
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry
-	 * @throws NoSuchEntryException if a matching sap entry could not be found
-	 */
-	public SAPEntry findByC_D_Last(
-			long companyId, boolean defaultSAPEntry,
-			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last sap entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultSAPEntry the default sap entry
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
-	 */
-	public SAPEntry fetchByC_D_Last(
 		long companyId, boolean defaultSAPEntry,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
 			orderByComparator);
@@ -939,4 +831,4 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2095719136
+// LIFERAY-SERVICE-BUILDER-HASH:-1353731778

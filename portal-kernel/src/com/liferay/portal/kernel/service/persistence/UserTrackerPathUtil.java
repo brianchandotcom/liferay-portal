@@ -218,39 +218,6 @@ public class UserTrackerPathUtil {
 	}
 
 	/**
-	 * Returns the last user tracker path in the ordered set where userTrackerId = &#63;.
-	 *
-	 * @param userTrackerId the user tracker ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker path
-	 * @throws NoSuchUserTrackerPathException if a matching user tracker path could not be found
-	 */
-	public static UserTrackerPath findByUserTrackerId_Last(
-			long userTrackerId,
-			OrderByComparator<UserTrackerPath> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserTrackerPathException {
-
-		return getPersistence().findByUserTrackerId_Last(
-			userTrackerId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user tracker path in the ordered set where userTrackerId = &#63;.
-	 *
-	 * @param userTrackerId the user tracker ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker path, or <code>null</code> if a matching user tracker path could not be found
-	 */
-	public static UserTrackerPath fetchByUserTrackerId_Last(
-		long userTrackerId,
-		OrderByComparator<UserTrackerPath> orderByComparator) {
-
-		return getPersistence().fetchByUserTrackerId_Last(
-			userTrackerId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user tracker paths where userTrackerId = &#63; from the database.
 	 *
 	 * @param userTrackerId the user tracker ID
@@ -431,4 +398,4 @@ public class UserTrackerPathUtil {
 	private static volatile UserTrackerPathPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1545714607
+// LIFERAY-SERVICE-BUILDER-HASH:711658223

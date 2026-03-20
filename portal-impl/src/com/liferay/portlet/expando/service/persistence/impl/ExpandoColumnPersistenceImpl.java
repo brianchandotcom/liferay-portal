@@ -315,65 +315,6 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 	/**
-	 * Returns the last expando column in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando column
-	 * @throws NoSuchColumnException if a matching expando column could not be found
-	 */
-	@Override
-	public ExpandoColumn findByTableId_Last(
-			long tableId, OrderByComparator<ExpandoColumn> orderByComparator)
-		throws NoSuchColumnException {
-
-		ExpandoColumn expandoColumn = fetchByTableId_Last(
-			tableId, orderByComparator);
-
-		if (expandoColumn != null) {
-			return expandoColumn;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append("}");
-
-		throw new NoSuchColumnException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando column in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando column, or <code>null</code> if a matching expando column could not be found
-	 */
-	@Override
-	public ExpandoColumn fetchByTableId_Last(
-		long tableId, OrderByComparator<ExpandoColumn> orderByComparator) {
-
-		int count = countByTableId(tableId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoColumn> list = findByTableId(
-			tableId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the expando columns that the user has permission to view where tableId = &#63;.
 	 *
 	 * @param tableId the table ID
@@ -2346,4 +2287,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1154045404
+// LIFERAY-SERVICE-BUILDER-HASH:-1185468141

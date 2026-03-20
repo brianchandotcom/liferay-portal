@@ -349,72 +349,6 @@ public class CTSContentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cts content in the ordered set where repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent findByR_P_Last(
-			long repositoryId, String path,
-			OrderByComparator<CTSContent> orderByComparator)
-		throws NoSuchContentException {
-
-		CTSContent ctsContent = fetchByR_P_Last(
-			repositoryId, path, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", path=");
-		sb.append(path);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cts content in the ordered set where repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent fetchByR_P_Last(
-		long repositoryId, String path,
-		OrderByComparator<CTSContent> orderByComparator) {
-
-		int count = countByR_P(repositoryId, path);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTSContent> list = findByR_P(
-			repositoryId, path, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cts contents where repositoryId = &#63; and path = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -784,78 +718,6 @@ public class CTSContentPersistenceImpl
 
 		List<CTSContent> list = findByC_R_S(
 			companyId, repositoryId, storeType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent findByC_R_S_Last(
-			long companyId, long repositoryId, String storeType,
-			OrderByComparator<CTSContent> orderByComparator)
-		throws NoSuchContentException {
-
-		CTSContent ctsContent = fetchByC_R_S_Last(
-			companyId, repositoryId, storeType, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", storeType=");
-		sb.append(storeType);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent fetchByC_R_S_Last(
-		long companyId, long repositoryId, String storeType,
-		OrderByComparator<CTSContent> orderByComparator) {
-
-		int count = countByC_R_S(companyId, repositoryId, storeType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTSContent> list = findByC_R_S(
-			companyId, repositoryId, storeType, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1275,83 +1137,6 @@ public class CTSContentPersistenceImpl
 
 		List<CTSContent> list = findByC_R_P_S(
 			companyId, repositoryId, path, storeType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent findByC_R_P_S_Last(
-			long companyId, long repositoryId, String path, String storeType,
-			OrderByComparator<CTSContent> orderByComparator)
-		throws NoSuchContentException {
-
-		CTSContent ctsContent = fetchByC_R_P_S_Last(
-			companyId, repositoryId, path, storeType, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", path=");
-		sb.append(path);
-
-		sb.append(", storeType=");
-		sb.append(storeType);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent fetchByC_R_P_S_Last(
-		long companyId, long repositoryId, String path, String storeType,
-		OrderByComparator<CTSContent> orderByComparator) {
-
-		int count = countByC_R_P_S(companyId, repositoryId, path, storeType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTSContent> list = findByC_R_P_S(
-			companyId, repositoryId, path, storeType, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1784,84 +1569,6 @@ public class CTSContentPersistenceImpl
 
 		List<CTSContent> list = findByC_R_LikeP_S(
 			companyId, repositoryId, path, storeType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent findByC_R_LikeP_S_Last(
-			long companyId, long repositoryId, String path, String storeType,
-			OrderByComparator<CTSContent> orderByComparator)
-		throws NoSuchContentException {
-
-		CTSContent ctsContent = fetchByC_R_LikeP_S_Last(
-			companyId, repositoryId, path, storeType, orderByComparator);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", pathLIKE");
-		sb.append(path);
-
-		sb.append(", storeType=");
-		sb.append(storeType);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent fetchByC_R_LikeP_S_Last(
-		long companyId, long repositoryId, String path, String storeType,
-		OrderByComparator<CTSContent> orderByComparator) {
-
-		int count = countByC_R_LikeP_S(
-			companyId, repositoryId, path, storeType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTSContent> list = findByC_R_LikeP_S(
-			companyId, repositoryId, path, storeType, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3307,4 +3014,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1893046666
+// LIFERAY-SERVICE-BUILDER-HASH:-237182154

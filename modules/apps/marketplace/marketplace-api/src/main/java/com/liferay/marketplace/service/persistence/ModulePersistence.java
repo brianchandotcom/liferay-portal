@@ -118,32 +118,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 			orderByComparator);
 
 	/**
-	 * Returns the last module in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public Module findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
-	 * Returns the last module in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public Module fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Module>
-			orderByComparator);
-
-	/**
 	 * Removes all the modules where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -252,34 +226,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 			orderByComparator);
 
 	/**
-	 * Returns the last module in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public Module findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
-	 * Returns the last module in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public Module fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Module>
-			orderByComparator);
-
-	/**
 	 * Removes all the modules where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -378,32 +324,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @return the first matching module, or <code>null</code> if a matching module could not be found
 	 */
 	public Module fetchByAppId_First(
-		long appId,
-		com.liferay.portal.kernel.util.OrderByComparator<Module>
-			orderByComparator);
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public Module findByAppId_Last(
-			long appId,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public Module fetchByAppId_Last(
 		long appId,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator);
@@ -512,32 +432,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 			orderByComparator);
 
 	/**
-	 * Returns the last module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public Module findByBundleSymbolicName_Last(
-			String bundleSymbolicName,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
-	 * Returns the last module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public Module fetchByBundleSymbolicName_Last(
-		String bundleSymbolicName,
-		com.liferay.portal.kernel.util.OrderByComparator<Module>
-			orderByComparator);
-
-	/**
 	 * Removes all the modules where bundleSymbolicName = &#63; from the database.
 	 *
 	 * @param bundleSymbolicName the bundle symbolic name
@@ -635,32 +529,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @return the first matching module, or <code>null</code> if a matching module could not be found
 	 */
 	public Module fetchByContextName_First(
-		String contextName,
-		com.liferay.portal.kernel.util.OrderByComparator<Module>
-			orderByComparator);
-
-	/**
-	 * Returns the last module in the ordered set where contextName = &#63;.
-	 *
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public Module findByContextName_Last(
-			String contextName,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
-	 * Returns the last module in the ordered set where contextName = &#63;.
-	 *
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public Module fetchByContextName_Last(
 		String contextName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator);
@@ -769,34 +637,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	 * @return the first matching module, or <code>null</code> if a matching module could not be found
 	 */
 	public Module fetchByA_CN_First(
-		long appId, String contextName,
-		com.liferay.portal.kernel.util.OrderByComparator<Module>
-			orderByComparator);
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63; and contextName = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public Module findByA_CN_Last(
-			long appId, String contextName,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63; and contextName = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public Module fetchByA_CN_Last(
 		long appId, String contextName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator);
@@ -997,4 +837,4 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-44121994
+// LIFERAY-SERVICE-BUILDER-HASH:-59367828

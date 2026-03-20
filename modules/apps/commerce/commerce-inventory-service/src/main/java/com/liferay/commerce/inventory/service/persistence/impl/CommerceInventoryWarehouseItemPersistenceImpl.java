@@ -333,67 +333,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws NoSuchInventoryWarehouseItemException {
-
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (commerceInventoryWarehouseItem != null) {
-			return commerceInventoryWarehouseItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryWarehouseItem> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce inventory warehouse items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -734,72 +673,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws NoSuchInventoryWarehouseItemException {
-
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (commerceInventoryWarehouseItem != null) {
-			return commerceInventoryWarehouseItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryWarehouseItem> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce inventory warehouse items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1122,67 +995,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws NoSuchInventoryWarehouseItemException {
-
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (commerceInventoryWarehouseItem != null) {
-			return commerceInventoryWarehouseItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryWarehouseItem> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce inventory warehouse items where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1489,75 +1301,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		List<CommerceInventoryWarehouseItem> list =
 			findByCommerceInventoryWarehouseId(
 				commerceInventoryWarehouseId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem
-			findByCommerceInventoryWarehouseId_Last(
-				long commerceInventoryWarehouseId,
-				OrderByComparator<CommerceInventoryWarehouseItem>
-					orderByComparator)
-		throws NoSuchInventoryWarehouseItemException {
-
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			fetchByCommerceInventoryWarehouseId_Last(
-				commerceInventoryWarehouseId, orderByComparator);
-
-		if (commerceInventoryWarehouseItem != null) {
-			return commerceInventoryWarehouseItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceInventoryWarehouseId=");
-		sb.append(commerceInventoryWarehouseId);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem
-		fetchByCommerceInventoryWarehouseId_Last(
-			long commerceInventoryWarehouseId,
-			OrderByComparator<CommerceInventoryWarehouseItem>
-				orderByComparator) {
-
-		int count = countByCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryWarehouseItem> list =
-			findByCommerceInventoryWarehouseId(
-				commerceInventoryWarehouseId, count - 1, count,
-				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1921,79 +1664,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 
 		List<CommerceInventoryWarehouseItem> list = findByC_S_U(
 			companyId, sku, unitOfMeasureKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem findByC_S_U_Last(
-			long companyId, String sku, String unitOfMeasureKey,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws NoSuchInventoryWarehouseItemException {
-
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			fetchByC_S_U_Last(
-				companyId, sku, unitOfMeasureKey, orderByComparator);
-
-		if (commerceInventoryWarehouseItem != null) {
-			return commerceInventoryWarehouseItem;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem fetchByC_S_U_Last(
-		long companyId, String sku, String unitOfMeasureKey,
-		OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator) {
-
-		int count = countByC_S_U(companyId, sku, unitOfMeasureKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryWarehouseItem> list = findByC_S_U(
-			companyId, sku, unitOfMeasureKey, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3525,4 +3195,4 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-618777249
+// LIFERAY-SERVICE-BUILDER-HASH:653745524

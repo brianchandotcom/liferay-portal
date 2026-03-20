@@ -313,65 +313,6 @@ public class CTSParentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cts parent in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts parent
-	 * @throws NoSuchCTSParentException if a matching cts parent could not be found
-	 */
-	@Override
-	public CTSParent findByCompanyId_Last(
-			long companyId, OrderByComparator<CTSParent> orderByComparator)
-		throws NoSuchCTSParentException {
-
-		CTSParent ctsParent = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ctsParent != null) {
-			return ctsParent;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCTSParentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cts parent in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts parent, or <code>null</code> if a matching cts parent could not be found
-	 */
-	@Override
-	public CTSParent fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTSParent> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTSParent> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cts parents where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -681,72 +622,6 @@ public class CTSParentPersistenceImpl
 
 		List<CTSParent> list = findByC_C(
 			companyId, ctsGrandParentId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cts parent in the ordered set where companyId = &#63; and ctsGrandParentId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ctsGrandParentId the cts grand parent ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts parent
-	 * @throws NoSuchCTSParentException if a matching cts parent could not be found
-	 */
-	@Override
-	public CTSParent findByC_C_Last(
-			long companyId, long ctsGrandParentId,
-			OrderByComparator<CTSParent> orderByComparator)
-		throws NoSuchCTSParentException {
-
-		CTSParent ctsParent = fetchByC_C_Last(
-			companyId, ctsGrandParentId, orderByComparator);
-
-		if (ctsParent != null) {
-			return ctsParent;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", ctsGrandParentId=");
-		sb.append(ctsGrandParentId);
-
-		sb.append("}");
-
-		throw new NoSuchCTSParentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cts parent in the ordered set where companyId = &#63; and ctsGrandParentId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ctsGrandParentId the cts grand parent ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts parent, or <code>null</code> if a matching cts parent could not be found
-	 */
-	@Override
-	public CTSParent fetchByC_C_Last(
-		long companyId, long ctsGrandParentId,
-		OrderByComparator<CTSParent> orderByComparator) {
-
-		int count = countByC_C(companyId, ctsGrandParentId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTSParent> list = findByC_C(
-			companyId, ctsGrandParentId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1706,4 +1581,4 @@ public class CTSParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:64910481
+// LIFERAY-SERVICE-BUILDER-HASH:411425125

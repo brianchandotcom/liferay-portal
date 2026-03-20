@@ -322,64 +322,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByUuid_Last(
-			String uuid, OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object fields where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -713,72 +655,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object fields where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1092,65 +968,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByCompanyId_Last(
-			long companyId, OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByCompanyId_Last(
-		long companyId, OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object fields where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1448,67 +1265,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByListTypeDefinitionId_Last(
-			long listTypeDefinitionId,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByListTypeDefinitionId_Last(
-			listTypeDefinitionId, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeDefinitionId=");
-		sb.append(listTypeDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByListTypeDefinitionId_Last(
-		long listTypeDefinitionId,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByListTypeDefinitionId(listTypeDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByListTypeDefinitionId(
-			listTypeDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object fields where listTypeDefinitionId = &#63; from the database.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -1796,67 +1552,6 @@ public class ObjectFieldPersistenceImpl
 
 		List<ObjectField> list = findByObjectDefinitionId(
 			objectDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByObjectDefinitionId(objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByObjectDefinitionId(
-			objectDefinitionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2164,72 +1859,6 @@ public class ObjectFieldPersistenceImpl
 
 		List<ObjectField> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2559,72 +2188,6 @@ public class ObjectFieldPersistenceImpl
 
 		List<ObjectField> list = findByC_BT(
 			companyId, businessType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63; and businessType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByC_BT_Last(
-			long companyId, String businessType,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByC_BT_Last(
-			companyId, businessType, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", businessType=");
-		sb.append(businessType);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where companyId = &#63; and businessType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByC_BT_Last(
-		long companyId, String businessType,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByC_BT(companyId, businessType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByC_BT(
-			companyId, businessType, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2969,72 +2532,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param state the state
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByLTDI_S_Last(
-			long listTypeDefinitionId, boolean state,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByLTDI_S_Last(
-			listTypeDefinitionId, state, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeDefinitionId=");
-		sb.append(listTypeDefinitionId);
-
-		sb.append(", state=");
-		sb.append(state);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param state the state
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByLTDI_S_Last(
-		long listTypeDefinitionId, boolean state,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByLTDI_S(listTypeDefinitionId, state);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByLTDI_S(
-			listTypeDefinitionId, state, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object fields where listTypeDefinitionId = &#63; and state = &#63; from the database.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -3359,73 +2856,6 @@ public class ObjectFieldPersistenceImpl
 
 		List<ObjectField> list = findByODI_BT(
 			objectDefinitionId, businessType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByODI_BT_Last(
-			long objectDefinitionId, String businessType,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByODI_BT_Last(
-			objectDefinitionId, businessType, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", businessType=");
-		sb.append(businessType);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByODI_BT_Last(
-		long objectDefinitionId, String businessType,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByODI_BT(objectDefinitionId, businessType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByODI_BT(
-			objectDefinitionId, businessType, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3784,73 +3214,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and dbTableName = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbTableName the db table name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByODI_DTN_Last(
-			long objectDefinitionId, String dbTableName,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByODI_DTN_Last(
-			objectDefinitionId, dbTableName, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", dbTableName=");
-		sb.append(dbTableName);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and dbTableName = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbTableName the db table name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByODI_DTN_Last(
-		long objectDefinitionId, String dbTableName,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByODI_DTN(objectDefinitionId, dbTableName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByODI_DTN(
-			objectDefinitionId, dbTableName, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and dbTableName = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -4186,72 +3549,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByODI_I_Last(
-			long objectDefinitionId, boolean indexed,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByODI_I_Last(
-			objectDefinitionId, indexed, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", indexed=");
-		sb.append(indexed);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByODI_I_Last(
-		long objectDefinitionId, boolean indexed,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByODI_I(objectDefinitionId, indexed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByODI_I(
-			objectDefinitionId, indexed, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and indexed = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -4562,72 +3859,6 @@ public class ObjectFieldPersistenceImpl
 
 		List<ObjectField> list = findByODI_L(
 			objectDefinitionId, localized, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and localized = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByODI_L_Last(
-			long objectDefinitionId, boolean localized,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByODI_L_Last(
-			objectDefinitionId, localized, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", localized=");
-		sb.append(localized);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and localized = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByODI_L_Last(
-		long objectDefinitionId, boolean localized,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByODI_L(objectDefinitionId, localized);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByODI_L(
-			objectDefinitionId, localized, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5162,72 +4393,6 @@ public class ObjectFieldPersistenceImpl
 
 		List<ObjectField> list = findByODI_S(
 			objectDefinitionId, system, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByODI_S_Last(
-			long objectDefinitionId, boolean system,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByODI_S_Last(
-			objectDefinitionId, system, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", system=");
-		sb.append(system);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByODI_S_Last(
-		long objectDefinitionId, boolean system,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByODI_S(objectDefinitionId, system);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByODI_S(
-			objectDefinitionId, system, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5820,78 +4985,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbType the db type
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByODI_DBT_I_Last(
-			long objectDefinitionId, String dbType, boolean indexed,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByODI_DBT_I_Last(
-			objectDefinitionId, dbType, indexed, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", dbType=");
-		sb.append(dbType);
-
-		sb.append(", indexed=");
-		sb.append(indexed);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbType the db type
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByODI_DBT_I_Last(
-		long objectDefinitionId, String dbType, boolean indexed,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByODI_DBT_I(objectDefinitionId, dbType, indexed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByODI_DBT_I(
-			objectDefinitionId, dbType, indexed, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -6253,78 +5346,6 @@ public class ObjectFieldPersistenceImpl
 
 		List<ObjectField> list = findByODI_L_S(
 			objectDefinitionId, localized, system, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and localized = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field
-	 * @throws NoSuchObjectFieldException if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField findByODI_L_S_Last(
-			long objectDefinitionId, boolean localized, boolean system,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByODI_L_S_Last(
-			objectDefinitionId, localized, system, orderByComparator);
-
-		if (objectField != null) {
-			return objectField;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", localized=");
-		sb.append(localized);
-
-		sb.append(", system=");
-		sb.append(system);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and localized = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByODI_L_S_Last(
-		long objectDefinitionId, boolean localized, boolean system,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		int count = countByODI_L_S(objectDefinitionId, localized, system);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectField> list = findByODI_L_S(
-			objectDefinitionId, localized, system, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7446,4 +6467,4 @@ public class ObjectFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2145248515
+// LIFERAY-SERVICE-BUILDER-HASH:-974136591

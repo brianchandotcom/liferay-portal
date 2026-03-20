@@ -333,67 +333,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition localization in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition localization
-	 * @throws NoSuchCPDefinitionLocalizationException if a matching cp definition localization could not be found
-	 */
-	@Override
-	public CPDefinitionLocalization findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CPDefinitionLocalization> orderByComparator)
-		throws NoSuchCPDefinitionLocalizationException {
-
-		CPDefinitionLocalization cpDefinitionLocalization =
-			fetchByCPDefinitionId_Last(CPDefinitionId, orderByComparator);
-
-		if (cpDefinitionLocalization != null) {
-			return cpDefinitionLocalization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition localization in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
-	 */
-	@Override
-	public CPDefinitionLocalization fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		OrderByComparator<CPDefinitionLocalization> orderByComparator) {
-
-		int count = countByCPDefinitionId(CPDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionLocalization> list = findByCPDefinitionId(
-			CPDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition localizations where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -1707,4 +1646,4 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-989870459
+// LIFERAY-SERVICE-BUILDER-HASH:650401293

@@ -212,34 +212,6 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	 * Returns the last social activity in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByGroupId_Last(
-			long groupId, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByGroupId_Last(
-		long groupId, OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activities where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -357,36 +329,6 @@ public class SocialActivityUtil {
 		long companyId, OrderByComparator<SocialActivity> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByCompanyId_Last(
-			long companyId, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByCompanyId_Last(
-		long companyId, OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -510,34 +452,6 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	 * Returns the last social activity in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByUserId_Last(
-			long userId, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByUserId_Last(
-		long userId, OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activities where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -657,38 +571,6 @@ public class SocialActivityUtil {
 		OrderByComparator<SocialActivity> orderByComparator) {
 
 		return getPersistence().fetchByActivitySetId_First(
-			activitySetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where activitySetId = &#63;.
-	 *
-	 * @param activitySetId the activity set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByActivitySetId_Last(
-			long activitySetId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByActivitySetId_Last(
-			activitySetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where activitySetId = &#63;.
-	 *
-	 * @param activitySetId the activity set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByActivitySetId_Last(
-		long activitySetId,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByActivitySetId_Last(
 			activitySetId, orderByComparator);
 	}
 
@@ -880,38 +762,6 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	 * Returns the last social activity in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByReceiverUserId_Last(
-			long receiverUserId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByReceiverUserId_Last(
-			receiverUserId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByReceiverUserId_Last(
-		long receiverUserId,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByReceiverUserId_Last(
-			receiverUserId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activities where receiverUserId = &#63; from the database.
 	 *
 	 * @param receiverUserId the receiver user ID
@@ -1040,40 +890,6 @@ public class SocialActivityUtil {
 		OrderByComparator<SocialActivity> orderByComparator) {
 
 		return getPersistence().fetchByC_CN_First(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByC_CN_Last(
-			long companyId, long classNameId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByC_CN_Last(
-		long companyId, long classNameId,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByC_CN_Last(
 			companyId, classNameId, orderByComparator);
 	}
 
@@ -1208,40 +1024,6 @@ public class SocialActivityUtil {
 		OrderByComparator<SocialActivity> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
 	}
 
@@ -1390,42 +1172,6 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	 * Returns the last social activity in the ordered set where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param mirrorActivityId the mirror activity ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByM_C_C_Last(
-			long mirrorActivityId, long classNameId, long classPK,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByM_C_C_Last(
-			mirrorActivityId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param mirrorActivityId the mirror activity ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByM_C_C_Last(
-		long mirrorActivityId, long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByM_C_C_Last(
-			mirrorActivityId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activities where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param mirrorActivityId the mirror activity ID
@@ -1570,42 +1316,6 @@ public class SocialActivityUtil {
 		OrderByComparator<SocialActivity> orderByComparator) {
 
 		return getPersistence().fetchByC_C_T_First(
-			classNameId, classPK, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByC_C_T_Last(
-			long classNameId, long classPK, int type,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByC_C_T_Last(
-			classNameId, classPK, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByC_C_T_Last(
-		long classNameId, long classPK, int type,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByC_C_T_Last(
 			classNameId, classPK, type, orderByComparator);
 	}
 
@@ -1777,52 +1487,6 @@ public class SocialActivityUtil {
 		OrderByComparator<SocialActivity> orderByComparator) {
 
 		return getPersistence().fetchByG_U_C_C_T_R_First(
-			groupId, userId, classNameId, classPK, type, receiverUserId,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	public static SocialActivity findByG_U_C_C_T_R_Last(
-			long groupId, long userId, long classNameId, long classPK, int type,
-			long receiverUserId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByG_U_C_C_T_R_Last(
-			groupId, userId, classNameId, classPK, type, receiverUserId,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	public static SocialActivity fetchByG_U_C_C_T_R_Last(
-		long groupId, long userId, long classNameId, long classPK, int type,
-		long receiverUserId,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		return getPersistence().fetchByG_U_C_C_T_R_Last(
 			groupId, userId, classNameId, classPK, type, receiverUserId,
 			orderByComparator);
 	}
@@ -2132,4 +1796,4 @@ public class SocialActivityUtil {
 	private static volatile SocialActivityPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1286551928
+// LIFERAY-SERVICE-BUILDER-HASH:-1170911366

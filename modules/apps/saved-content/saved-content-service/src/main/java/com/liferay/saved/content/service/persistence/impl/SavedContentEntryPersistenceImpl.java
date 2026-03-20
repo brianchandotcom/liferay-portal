@@ -335,65 +335,6 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saved content entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry findByUuid_Last(
-			String uuid, OrderByComparator<SavedContentEntry> orderByComparator)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (savedContentEntry != null) {
-			return savedContentEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SavedContentEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saved content entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -941,72 +882,6 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (savedContentEntry != null) {
-			return savedContentEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SavedContentEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saved content entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1323,66 +1198,6 @@ public class SavedContentEntryPersistenceImpl
 
 		List<SavedContentEntry> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (savedContentEntry != null) {
-			return savedContentEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SavedContentEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1890,65 +1705,6 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saved content entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry findByUserId_Last(
-			long userId, OrderByComparator<SavedContentEntry> orderByComparator)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (savedContentEntry != null) {
-			return savedContentEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry fetchByUserId_Last(
-		long userId, OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SavedContentEntry> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saved content entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -2255,72 +2011,6 @@ public class SavedContentEntryPersistenceImpl
 
 		List<SavedContentEntry> list = findByG_U(
 			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByG_U_Last(
-			groupId, userId, orderByComparator);
-
-		if (savedContentEntry != null) {
-			return savedContentEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		int count = countByG_U(groupId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SavedContentEntry> list = findByG_U(
-			groupId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2861,72 +2551,6 @@ public class SavedContentEntryPersistenceImpl
 
 		List<SavedContentEntry> list = findByG_CN(
 			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry findByG_CN_Last(
-			long groupId, long classNameId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByG_CN_Last(
-			groupId, classNameId, orderByComparator);
-
-		if (savedContentEntry != null) {
-			return savedContentEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry fetchByG_CN_Last(
-		long groupId, long classNameId,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		int count = countByG_CN(groupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SavedContentEntry> list = findByG_CN(
-			groupId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3479,72 +3103,6 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saved content entry in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry findByU_C_Last(
-			long userId, long classNameId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByU_C_Last(
-			userId, classNameId, orderByComparator);
-
-		if (savedContentEntry != null) {
-			return savedContentEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry fetchByU_C_Last(
-		long userId, long classNameId,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		int count = countByU_C(userId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SavedContentEntry> list = findByU_C(
-			userId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saved content entries where userId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -3880,77 +3438,6 @@ public class SavedContentEntryPersistenceImpl
 
 		List<SavedContentEntry> list = findByG_C_C(
 			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-
-		if (savedContentEntry != null) {
-			return savedContentEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry fetchByG_C_C_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		int count = countByG_C_C(groupId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SavedContentEntry> list = findByG_C_C(
-			groupId, classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4538,78 +4025,6 @@ public class SavedContentEntryPersistenceImpl
 
 		List<SavedContentEntry> list = findByC_C_C(
 			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (savedContentEntry != null) {
-			return savedContentEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	@Override
-	public SavedContentEntry fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		int count = countByC_C_C(companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SavedContentEntry> list = findByC_C_C(
-			companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6813,4 +6228,4 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-736971881
+// LIFERAY-SERVICE-BUILDER-HASH:984524922

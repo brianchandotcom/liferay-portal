@@ -337,64 +337,6 @@ public class UserGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup findByUuid_Last(
-			String uuid, OrderByComparator<UserGroup> orderByComparator)
-		throws NoSuchUserGroupException {
-
-		UserGroup userGroup = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup fetchByUuid_Last(
-		String uuid, OrderByComparator<UserGroup> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroup> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the user groups that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -953,72 +895,6 @@ public class UserGroupPersistenceImpl
 
 		List<UserGroup> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<UserGroup> orderByComparator)
-		throws NoSuchUserGroupException {
-
-		UserGroup userGroup = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<UserGroup> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroup> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1587,65 +1463,6 @@ public class UserGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup findByCompanyId_Last(
-			long companyId, OrderByComparator<UserGroup> orderByComparator)
-		throws NoSuchUserGroupException {
-
-		UserGroup userGroup = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup fetchByCompanyId_Last(
-		long companyId, OrderByComparator<UserGroup> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroup> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the user groups that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2148,72 +1965,6 @@ public class UserGroupPersistenceImpl
 
 		List<UserGroup> list = findByC_P(
 			companyId, parentUserGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup findByC_P_Last(
-			long companyId, long parentUserGroupId,
-			OrderByComparator<UserGroup> orderByComparator)
-		throws NoSuchUserGroupException {
-
-		UserGroup userGroup = fetchByC_P_Last(
-			companyId, parentUserGroupId, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentUserGroupId=");
-		sb.append(parentUserGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup fetchByC_P_Last(
-		long companyId, long parentUserGroupId,
-		OrderByComparator<UserGroup> orderByComparator) {
-
-		int count = countByC_P(companyId, parentUserGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroup> list = findByC_P(
-			companyId, parentUserGroupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2966,72 +2717,6 @@ public class UserGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup findByC_LikeN_Last(
-			long companyId, String name,
-			OrderByComparator<UserGroup> orderByComparator)
-		throws NoSuchUserGroupException {
-
-		UserGroup userGroup = fetchByC_LikeN_Last(
-			companyId, name, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup fetchByC_LikeN_Last(
-		long companyId, String name,
-		OrderByComparator<UserGroup> orderByComparator) {
-
-		int count = countByC_LikeN(companyId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroup> list = findByC_LikeN(
-			companyId, name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the user groups that the user has permission to view where companyId = &#63; and name LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -3608,78 +3293,6 @@ public class UserGroupPersistenceImpl
 
 		List<UserGroup> list = findByGtU_C_P(
 			userGroupId, companyId, parentUserGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param userGroupId the user group ID
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group
-	 * @throws NoSuchUserGroupException if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup findByGtU_C_P_Last(
-			long userGroupId, long companyId, long parentUserGroupId,
-			OrderByComparator<UserGroup> orderByComparator)
-		throws NoSuchUserGroupException {
-
-		UserGroup userGroup = fetchByGtU_C_P_Last(
-			userGroupId, companyId, parentUserGroupId, orderByComparator);
-
-		if (userGroup != null) {
-			return userGroup;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userGroupId>");
-		sb.append(userGroupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentUserGroupId=");
-		sb.append(parentUserGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param userGroupId the user group ID
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup fetchByGtU_C_P_Last(
-		long userGroupId, long companyId, long parentUserGroupId,
-		OrderByComparator<UserGroup> orderByComparator) {
-
-		int count = countByGtU_C_P(userGroupId, companyId, parentUserGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserGroup> list = findByGtU_C_P(
-			userGroupId, companyId, parentUserGroupId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6327,4 +5940,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:407747909
+// LIFERAY-SERVICE-BUILDER-HASH:1903446382

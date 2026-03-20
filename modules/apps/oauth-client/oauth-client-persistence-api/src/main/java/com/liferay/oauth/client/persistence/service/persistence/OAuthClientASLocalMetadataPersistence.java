@@ -121,32 +121,6 @@ public interface OAuthClientASLocalMetadataPersistence
 			<OAuthClientASLocalMetadata> orderByComparator);
 
 	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	public OAuthClientASLocalMetadata findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException;
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public OAuthClientASLocalMetadata fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<OAuthClientASLocalMetadata> orderByComparator);
-
-	/**
 	 * Returns all the o auth client as local metadatas that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -294,32 +268,6 @@ public interface OAuthClientASLocalMetadataPersistence
 	 * @return the first matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
 	 */
 	public OAuthClientASLocalMetadata fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<OAuthClientASLocalMetadata> orderByComparator);
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	public OAuthClientASLocalMetadata findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException;
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public OAuthClientASLocalMetadata fetchByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<OAuthClientASLocalMetadata> orderByComparator);
@@ -582,34 +530,6 @@ public interface OAuthClientASLocalMetadataPersistence
 			<OAuthClientASLocalMetadata> orderByComparator);
 
 	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param localWellKnownEnabled the local well known enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	public OAuthClientASLocalMetadata findByC_L_Last(
-			long companyId, boolean localWellKnownEnabled,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException;
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param localWellKnownEnabled the local well known enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public OAuthClientASLocalMetadata fetchByC_L_Last(
-		long companyId, boolean localWellKnownEnabled,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<OAuthClientASLocalMetadata> orderByComparator);
-
-	/**
 	 * Returns all the o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -861,4 +781,4 @@ public interface OAuthClientASLocalMetadataPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1205957891
+// LIFERAY-SERVICE-BUILDER-HASH:-834008500

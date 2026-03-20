@@ -210,34 +210,6 @@ public class LayoutSEOEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout seo entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry
-	 * @throws NoSuchEntryException if a matching layout seo entry could not be found
-	 */
-	public static LayoutSEOEntry findByUuid_Last(
-			String uuid, OrderByComparator<LayoutSEOEntry> orderByComparator)
-		throws com.liferay.layout.seo.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout seo entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry, or <code>null</code> if a matching layout seo entry could not be found
-	 */
-	public static LayoutSEOEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<LayoutSEOEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout seo entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -428,40 +400,6 @@ public class LayoutSEOEntryUtil {
 		OrderByComparator<LayoutSEOEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout seo entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry
-	 * @throws NoSuchEntryException if a matching layout seo entry could not be found
-	 */
-	public static LayoutSEOEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutSEOEntry> orderByComparator)
-		throws com.liferay.layout.seo.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout seo entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry, or <code>null</code> if a matching layout seo entry could not be found
-	 */
-	public static LayoutSEOEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutSEOEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -721,4 +659,4 @@ public class LayoutSEOEntryUtil {
 	private static volatile LayoutSEOEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1559380477
+// LIFERAY-SERVICE-BUILDER-HASH:-435592507

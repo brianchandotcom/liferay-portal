@@ -346,67 +346,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tier price entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceTierPriceEntry != null) {
-			return commerceTierPriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTierPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTierPriceEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tier price entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -754,72 +693,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tier price entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceTierPriceEntry != null) {
-			return commerceTierPriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTierPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTierPriceEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tier price entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1148,67 +1021,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tier price entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commerceTierPriceEntry != null) {
-			return commerceTierPriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTierPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTierPriceEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tier price entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1511,68 +1323,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 
 		List<CommerceTierPriceEntry> list = findByCommercePriceEntryId(
 			commercePriceEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByCommercePriceEntryId_Last(
-			long commercePriceEntryId,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry =
-			fetchByCommercePriceEntryId_Last(
-				commercePriceEntryId, orderByComparator);
-
-		if (commerceTierPriceEntry != null) {
-			return commerceTierPriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceEntryId=");
-		sb.append(commercePriceEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchTierPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByCommercePriceEntryId_Last(
-		long commercePriceEntryId,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		int count = countByCommercePriceEntryId(commercePriceEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTierPriceEntry> list = findByCommercePriceEntryId(
-			commercePriceEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2122,73 +1872,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param minQuantity the min quantity
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByC_LteM_Last(
-			long commercePriceEntryId, BigDecimal minQuantity,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_LteM_Last(
-			commercePriceEntryId, minQuantity, orderByComparator);
-
-		if (commerceTierPriceEntry != null) {
-			return commerceTierPriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceEntryId=");
-		sb.append(commercePriceEntryId);
-
-		sb.append(", minQuantity<=");
-		sb.append(minQuantity);
-
-		sb.append("}");
-
-		throw new NoSuchTierPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param minQuantity the min quantity
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByC_LteM_Last(
-		long commercePriceEntryId, BigDecimal minQuantity,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		int count = countByC_LteM(commercePriceEntryId, minQuantity);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTierPriceEntry> list = findByC_LteM(
-			commercePriceEntryId, minQuantity, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63; from the database.
 	 *
 	 * @param commercePriceEntryId the commerce price entry ID
@@ -2540,72 +2223,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByC_S_Last(
-			long commercePriceEntryId, int status,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_S_Last(
-			commercePriceEntryId, status, orderByComparator);
-
-		if (commerceTierPriceEntry != null) {
-			return commerceTierPriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceEntryId=");
-		sb.append(commercePriceEntryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchTierPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByC_S_Last(
-		long commercePriceEntryId, int status,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		int count = countByC_S(commercePriceEntryId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTierPriceEntry> list = findByC_S(
-			commercePriceEntryId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63; from the database.
 	 *
 	 * @param commercePriceEntryId the commerce price entry ID
@@ -2927,72 +2544,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 
 		List<CommerceTierPriceEntry> list = findByLtD_S(
 			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (commerceTierPriceEntry != null) {
-			return commerceTierPriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchTierPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTierPriceEntry> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3337,72 +2888,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 
 		List<CommerceTierPriceEntry> list = findByLtE_S(
 			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-
-		if (commerceTierPriceEntry != null) {
-			return commerceTierPriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchTierPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		int count = countByLtE_S(expirationDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTierPriceEntry> list = findByLtE_S(
-			expirationDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3771,78 +3256,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 
 		List<CommerceTierPriceEntry> list = findByC_LteM_S(
 			commercePriceEntryId, minQuantity, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param minQuantity the min quantity
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByC_LteM_S_Last(
-			long commercePriceEntryId, BigDecimal minQuantity, int status,
-			OrderByComparator<CommerceTierPriceEntry> orderByComparator)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_LteM_S_Last(
-			commercePriceEntryId, minQuantity, status, orderByComparator);
-
-		if (commerceTierPriceEntry != null) {
-			return commerceTierPriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceEntryId=");
-		sb.append(commercePriceEntryId);
-
-		sb.append(", minQuantity<=");
-		sb.append(minQuantity);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchTierPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param minQuantity the min quantity
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByC_LteM_S_Last(
-		long commercePriceEntryId, BigDecimal minQuantity, int status,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		int count = countByC_LteM_S(commercePriceEntryId, minQuantity, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTierPriceEntry> list = findByC_LteM_S(
-			commercePriceEntryId, minQuantity, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5422,4 +4835,4 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1475687673
+// LIFERAY-SERVICE-BUILDER-HASH:-2013272604

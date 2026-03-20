@@ -334,67 +334,6 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cs diagram entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
-	 */
-	@Override
-	public CSDiagramEntry findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CSDiagramEntry> orderByComparator)
-		throws NoSuchCSDiagramEntryException {
-
-		CSDiagramEntry csDiagramEntry = fetchByCPDefinitionId_Last(
-			CPDefinitionId, orderByComparator);
-
-		if (csDiagramEntry != null) {
-			return csDiagramEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	@Override
-	public CSDiagramEntry fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		OrderByComparator<CSDiagramEntry> orderByComparator) {
-
-		int count = countByCPDefinitionId(CPDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CSDiagramEntry> list = findByCPDefinitionId(
-			CPDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cs diagram entries where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -697,67 +636,6 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cs diagram entry in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
-	 */
-	@Override
-	public CSDiagramEntry findByCPInstanceId_Last(
-			long CPInstanceId,
-			OrderByComparator<CSDiagramEntry> orderByComparator)
-		throws NoSuchCSDiagramEntryException {
-
-		CSDiagramEntry csDiagramEntry = fetchByCPInstanceId_Last(
-			CPInstanceId, orderByComparator);
-
-		if (csDiagramEntry != null) {
-			return csDiagramEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceId=");
-		sb.append(CPInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	@Override
-	public CSDiagramEntry fetchByCPInstanceId_Last(
-		long CPInstanceId,
-		OrderByComparator<CSDiagramEntry> orderByComparator) {
-
-		int count = countByCPInstanceId(CPInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CSDiagramEntry> list = findByCPInstanceId(
-			CPInstanceId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cs diagram entries where CPInstanceId = &#63; from the database.
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -1049,66 +927,6 @@ public class CSDiagramEntryPersistenceImpl
 
 		List<CSDiagramEntry> list = findByCProductId(
 			CProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
-	 */
-	@Override
-	public CSDiagramEntry findByCProductId_Last(
-			long CProductId,
-			OrderByComparator<CSDiagramEntry> orderByComparator)
-		throws NoSuchCSDiagramEntryException {
-
-		CSDiagramEntry csDiagramEntry = fetchByCProductId_Last(
-			CProductId, orderByComparator);
-
-		if (csDiagramEntry != null) {
-			return csDiagramEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	@Override
-	public CSDiagramEntry fetchByCProductId_Last(
-		long CProductId, OrderByComparator<CSDiagramEntry> orderByComparator) {
-
-		int count = countByCProductId(CProductId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CSDiagramEntry> list = findByCProductId(
-			CProductId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2670,4 +2488,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-875635860
+// LIFERAY-SERVICE-BUILDER-HASH:403741516

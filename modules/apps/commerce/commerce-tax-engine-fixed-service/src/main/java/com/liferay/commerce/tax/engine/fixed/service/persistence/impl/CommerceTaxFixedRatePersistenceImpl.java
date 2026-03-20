@@ -311,67 +311,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tax fixed rate in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate
-	 * @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRate findByCPTaxCategoryId_Last(
-			long CPTaxCategoryId,
-			OrderByComparator<CommerceTaxFixedRate> orderByComparator)
-		throws NoSuchTaxFixedRateException {
-
-		CommerceTaxFixedRate commerceTaxFixedRate = fetchByCPTaxCategoryId_Last(
-			CPTaxCategoryId, orderByComparator);
-
-		if (commerceTaxFixedRate != null) {
-			return commerceTaxFixedRate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPTaxCategoryId=");
-		sb.append(CPTaxCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxFixedRateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRate fetchByCPTaxCategoryId_Last(
-		long CPTaxCategoryId,
-		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
-
-		int count = countByCPTaxCategoryId(CPTaxCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxFixedRate> list = findByCPTaxCategoryId(
-			CPTaxCategoryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tax fixed rates where CPTaxCategoryId = &#63; from the database.
 	 *
 	 * @param CPTaxCategoryId the cp tax category ID
@@ -661,68 +600,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 
 		List<CommerceTaxFixedRate> list = findByCommerceTaxMethodId(
 			commerceTaxMethodId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate
-	 * @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRate findByCommerceTaxMethodId_Last(
-			long commerceTaxMethodId,
-			OrderByComparator<CommerceTaxFixedRate> orderByComparator)
-		throws NoSuchTaxFixedRateException {
-
-		CommerceTaxFixedRate commerceTaxFixedRate =
-			fetchByCommerceTaxMethodId_Last(
-				commerceTaxMethodId, orderByComparator);
-
-		if (commerceTaxFixedRate != null) {
-			return commerceTaxFixedRate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceTaxMethodId=");
-		sb.append(commerceTaxMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxFixedRateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRate fetchByCommerceTaxMethodId_Last(
-		long commerceTaxMethodId,
-		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
-
-		int count = countByCommerceTaxMethodId(commerceTaxMethodId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxFixedRate> list = findByCommerceTaxMethodId(
-			commerceTaxMethodId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1690,4 +1567,4 @@ public class CommerceTaxFixedRatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-590682331
+// LIFERAY-SERVICE-BUILDER-HASH:1038848283

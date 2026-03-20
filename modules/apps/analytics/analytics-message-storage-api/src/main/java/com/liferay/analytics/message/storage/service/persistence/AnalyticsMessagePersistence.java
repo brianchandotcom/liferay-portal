@@ -121,32 +121,6 @@ public interface AnalyticsMessagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last analytics message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics message
-	 * @throws NoSuchMessageException if a matching analytics message could not be found
-	 */
-	public AnalyticsMessage findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnalyticsMessage>
-				orderByComparator)
-		throws NoSuchMessageException;
-
-	/**
-	 * Returns the last analytics message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics message, or <code>null</code> if a matching analytics message could not be found
-	 */
-	public AnalyticsMessage fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsMessage>
-			orderByComparator);
-
-	/**
 	 * Removes all the analytics messages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -282,4 +256,4 @@ public interface AnalyticsMessagePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-730189171
+// LIFERAY-SERVICE-BUILDER-HASH:-1775144977

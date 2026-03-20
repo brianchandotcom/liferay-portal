@@ -121,32 +121,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last journal folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	public JournalFolder findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
-	 * Returns the last journal folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	public JournalFolder fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-			orderByComparator);
-
-	/**
 	 * Removes all the journal folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	public JournalFolder findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
-	 * Returns the last journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	public JournalFolder fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-			orderByComparator);
-
-	/**
 	 * Removes all the journal folders where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface JournalFolderPersistence
 	 * @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	public JournalFolder fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	public JournalFolder findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	public JournalFolder fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
@@ -615,32 +535,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last journal folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	public JournalFolder findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
-	 * Returns the last journal folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	public JournalFolder fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-			orderByComparator);
-
-	/**
 	 * Removes all the journal folders where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -745,34 +639,6 @@ public interface JournalFolderPersistence
 	 * @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	public JournalFolder fetchByG_P_First(
-		long groupId, long parentFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	public JournalFolder findByG_P_Last(
-			long groupId, long parentFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	public JournalFolder fetchByG_P_Last(
 		long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
@@ -993,34 +859,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	public JournalFolder findByC_NotS_Last(
-			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
-	 * Returns the last journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	public JournalFolder fetchByC_NotS_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-			orderByComparator);
-
-	/**
 	 * Removes all the journal folders where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1191,36 +1029,6 @@ public interface JournalFolderPersistence
 	 * @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	public JournalFolder fetchByG_P_S_First(
-		long groupId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	public JournalFolder findByG_P_S_Last(
-			long groupId, long parentFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	public JournalFolder fetchByG_P_S_Last(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
@@ -1399,36 +1207,6 @@ public interface JournalFolderPersistence
 	 * @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	public JournalFolder fetchByG_P_NotS_First(
-		long groupId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	public JournalFolder findByG_P_NotS_Last(
-			long groupId, long parentFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	public JournalFolder fetchByG_P_NotS_Last(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
@@ -1616,38 +1394,6 @@ public interface JournalFolderPersistence
 	 * @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
 	public JournalFolder fetchByGtF_C_P_NotS_First(
-		long folderId, long companyId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param companyId the company ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	public JournalFolder findByGtF_C_P_NotS_Last(
-			long folderId, long companyId, long parentFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
-	 * Returns the last journal folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param companyId the company ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	public JournalFolder fetchByGtF_C_P_NotS_Last(
 		long folderId, long companyId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
@@ -1847,4 +1593,4 @@ public interface JournalFolderPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1271307797
+// LIFERAY-SERVICE-BUILDER-HASH:-127044710

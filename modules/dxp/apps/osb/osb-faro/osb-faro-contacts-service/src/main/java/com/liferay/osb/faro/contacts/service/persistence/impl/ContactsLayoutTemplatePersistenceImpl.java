@@ -303,67 +303,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template
-	 * @throws NoSuchContactsLayoutTemplateException if a matching contacts layout template could not be found
-	 */
-	@Override
-	public ContactsLayoutTemplate findByGroupId_Last(
-			long groupId,
-			OrderByComparator<ContactsLayoutTemplate> orderByComparator)
-		throws NoSuchContactsLayoutTemplateException {
-
-		ContactsLayoutTemplate contactsLayoutTemplate = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (contactsLayoutTemplate != null) {
-			return contactsLayoutTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchContactsLayoutTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template, or <code>null</code> if a matching contacts layout template could not be found
-	 */
-	@Override
-	public ContactsLayoutTemplate fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<ContactsLayoutTemplate> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ContactsLayoutTemplate> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the contacts layout templates where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -659,72 +598,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 
 		List<ContactsLayoutTemplate> list = findByG_T(
 			groupId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template
-	 * @throws NoSuchContactsLayoutTemplateException if a matching contacts layout template could not be found
-	 */
-	@Override
-	public ContactsLayoutTemplate findByG_T_Last(
-			long groupId, int type,
-			OrderByComparator<ContactsLayoutTemplate> orderByComparator)
-		throws NoSuchContactsLayoutTemplateException {
-
-		ContactsLayoutTemplate contactsLayoutTemplate = fetchByG_T_Last(
-			groupId, type, orderByComparator);
-
-		if (contactsLayoutTemplate != null) {
-			return contactsLayoutTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchContactsLayoutTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template, or <code>null</code> if a matching contacts layout template could not be found
-	 */
-	@Override
-	public ContactsLayoutTemplate fetchByG_T_Last(
-		long groupId, int type,
-		OrderByComparator<ContactsLayoutTemplate> orderByComparator) {
-
-		int count = countByG_T(groupId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ContactsLayoutTemplate> list = findByG_T(
-			groupId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1480,4 +1353,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1315401317
+// LIFERAY-SERVICE-BUILDER-HASH:750708907

@@ -213,36 +213,6 @@ public class VirtualHostUtil {
 	}
 
 	/**
-	 * Returns the last virtual host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host
-	 * @throws NoSuchVirtualHostException if a matching virtual host could not be found
-	 */
-	public static VirtualHost findByCompanyId_Last(
-			long companyId, OrderByComparator<VirtualHost> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchVirtualHostException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last virtual host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	public static VirtualHost fetchByCompanyId_Last(
-		long companyId, OrderByComparator<VirtualHost> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the virtual hosts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -433,40 +403,6 @@ public class VirtualHostUtil {
 	}
 
 	/**
-	 * Returns the last virtual host in the ordered set where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host
-	 * @throws NoSuchVirtualHostException if a matching virtual host could not be found
-	 */
-	public static VirtualHost findByC_L_Last(
-			long companyId, long layoutSetId,
-			OrderByComparator<VirtualHost> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchVirtualHostException {
-
-		return getPersistence().findByC_L_Last(
-			companyId, layoutSetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last virtual host in the ordered set where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	public static VirtualHost fetchByC_L_Last(
-		long companyId, long layoutSetId,
-		OrderByComparator<VirtualHost> orderByComparator) {
-
-		return getPersistence().fetchByC_L_Last(
-			companyId, layoutSetId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the virtual hosts where companyId = &#63; and layoutSetId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -597,40 +533,6 @@ public class VirtualHostUtil {
 		OrderByComparator<VirtualHost> orderByComparator) {
 
 		return getPersistence().fetchByNotL_H_First(
-			layoutSetId, hostname, orderByComparator);
-	}
-
-	/**
-	 * Returns the last virtual host in the ordered set where layoutSetId &ne; &#63; and hostname = &#63;.
-	 *
-	 * @param layoutSetId the layout set ID
-	 * @param hostname the hostname
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host
-	 * @throws NoSuchVirtualHostException if a matching virtual host could not be found
-	 */
-	public static VirtualHost findByNotL_H_Last(
-			long layoutSetId, String hostname,
-			OrderByComparator<VirtualHost> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchVirtualHostException {
-
-		return getPersistence().findByNotL_H_Last(
-			layoutSetId, hostname, orderByComparator);
-	}
-
-	/**
-	 * Returns the last virtual host in the ordered set where layoutSetId &ne; &#63; and hostname = &#63;.
-	 *
-	 * @param layoutSetId the layout set ID
-	 * @param hostname the hostname
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	public static VirtualHost fetchByNotL_H_Last(
-		long layoutSetId, String hostname,
-		OrderByComparator<VirtualHost> orderByComparator) {
-
-		return getPersistence().fetchByNotL_H_Last(
 			layoutSetId, hostname, orderByComparator);
 	}
 
@@ -908,4 +810,4 @@ public class VirtualHostUtil {
 	private static volatile VirtualHostPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-875066275
+// LIFERAY-SERVICE-BUILDER-HASH:1691742645

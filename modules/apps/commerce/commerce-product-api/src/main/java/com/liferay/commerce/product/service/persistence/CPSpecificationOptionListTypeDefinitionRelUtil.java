@@ -242,43 +242,6 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 	}
 
 	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a matching cp specification option list type definition rel could not be found
-	 */
-	public static CPSpecificationOptionListTypeDefinitionRel
-			findByCPSpecificationOptionId_Last(
-				long CPSpecificationOptionId,
-				OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPSpecificationOptionListTypeDefinitionRelException {
-
-		return getPersistence().findByCPSpecificationOptionId_Last(
-			CPSpecificationOptionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel, or <code>null</code> if a matching cp specification option list type definition rel could not be found
-	 */
-	public static CPSpecificationOptionListTypeDefinitionRel
-		fetchByCPSpecificationOptionId_Last(
-			long CPSpecificationOptionId,
-			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByCPSpecificationOptionId_Last(
-			CPSpecificationOptionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp specification option list type definition rels where CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPSpecificationOptionId the cp specification option ID
@@ -419,43 +382,6 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchByListTypeDefinitionId_First(
-			listTypeDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a matching cp specification option list type definition rel could not be found
-	 */
-	public static CPSpecificationOptionListTypeDefinitionRel
-			findByListTypeDefinitionId_Last(
-				long listTypeDefinitionId,
-				OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPSpecificationOptionListTypeDefinitionRelException {
-
-		return getPersistence().findByListTypeDefinitionId_Last(
-			listTypeDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel, or <code>null</code> if a matching cp specification option list type definition rel could not be found
-	 */
-	public static CPSpecificationOptionListTypeDefinitionRel
-		fetchByListTypeDefinitionId_Last(
-			long listTypeDefinitionId,
-			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByListTypeDefinitionId_Last(
 			listTypeDefinitionId, orderByComparator);
 	}
 
@@ -749,4 +675,4 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 		CPSpecificationOptionListTypeDefinitionRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:681205312
+// LIFERAY-SERVICE-BUILDER-HASH:144908762

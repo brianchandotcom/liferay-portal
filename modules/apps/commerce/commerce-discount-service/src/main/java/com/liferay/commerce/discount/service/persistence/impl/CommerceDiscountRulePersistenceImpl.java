@@ -315,68 +315,6 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce discount rule in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rule
-	 * @throws NoSuchDiscountRuleException if a matching commerce discount rule could not be found
-	 */
-	@Override
-	public CommerceDiscountRule findByCommerceDiscountId_Last(
-			long commerceDiscountId,
-			OrderByComparator<CommerceDiscountRule> orderByComparator)
-		throws NoSuchDiscountRuleException {
-
-		CommerceDiscountRule commerceDiscountRule =
-			fetchByCommerceDiscountId_Last(
-				commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountRule != null) {
-			return commerceDiscountRule;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceDiscountId=");
-		sb.append(commerceDiscountId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountRuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount rule in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rule, or <code>null</code> if a matching commerce discount rule could not be found
-	 */
-	@Override
-	public CommerceDiscountRule fetchByCommerceDiscountId_Last(
-		long commerceDiscountId,
-		OrderByComparator<CommerceDiscountRule> orderByComparator) {
-
-		int count = countByCommerceDiscountId(commerceDiscountId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountRule> list = findByCommerceDiscountId(
-			commerceDiscountId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce discount rules where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -1111,4 +1049,4 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1904731934
+// LIFERAY-SERVICE-BUILDER-HASH:-1131515627

@@ -316,65 +316,6 @@ public class ObjectLayoutBoxPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout box in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a matching object layout box could not be found
-	 */
-	@Override
-	public ObjectLayoutBox findByUuid_Last(
-			String uuid, OrderByComparator<ObjectLayoutBox> orderByComparator)
-		throws NoSuchObjectLayoutBoxException {
-
-		ObjectLayoutBox objectLayoutBox = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectLayoutBox != null) {
-			return objectLayoutBox;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutBoxException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout box in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box, or <code>null</code> if a matching object layout box could not be found
-	 */
-	@Override
-	public ObjectLayoutBox fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectLayoutBox> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutBox> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout boxes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -708,72 +649,6 @@ public class ObjectLayoutBoxPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout box in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a matching object layout box could not be found
-	 */
-	@Override
-	public ObjectLayoutBox findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectLayoutBox> orderByComparator)
-		throws NoSuchObjectLayoutBoxException {
-
-		ObjectLayoutBox objectLayoutBox = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectLayoutBox != null) {
-			return objectLayoutBox;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutBoxException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout box in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box, or <code>null</code> if a matching object layout box could not be found
-	 */
-	@Override
-	public ObjectLayoutBox fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectLayoutBox> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutBox> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout boxes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1086,67 +961,6 @@ public class ObjectLayoutBoxPersistenceImpl
 
 		List<ObjectLayoutBox> list = findByObjectLayoutTabId(
 			objectLayoutTabId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object layout box in the ordered set where objectLayoutTabId = &#63;.
-	 *
-	 * @param objectLayoutTabId the object layout tab ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a matching object layout box could not be found
-	 */
-	@Override
-	public ObjectLayoutBox findByObjectLayoutTabId_Last(
-			long objectLayoutTabId,
-			OrderByComparator<ObjectLayoutBox> orderByComparator)
-		throws NoSuchObjectLayoutBoxException {
-
-		ObjectLayoutBox objectLayoutBox = fetchByObjectLayoutTabId_Last(
-			objectLayoutTabId, orderByComparator);
-
-		if (objectLayoutBox != null) {
-			return objectLayoutBox;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectLayoutTabId=");
-		sb.append(objectLayoutTabId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutBoxException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout box in the ordered set where objectLayoutTabId = &#63;.
-	 *
-	 * @param objectLayoutTabId the object layout tab ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box, or <code>null</code> if a matching object layout box could not be found
-	 */
-	@Override
-	public ObjectLayoutBox fetchByObjectLayoutTabId_Last(
-		long objectLayoutTabId,
-		OrderByComparator<ObjectLayoutBox> orderByComparator) {
-
-		int count = countByObjectLayoutTabId(objectLayoutTabId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutBox> list = findByObjectLayoutTabId(
-			objectLayoutTabId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1922,4 +1736,4 @@ public class ObjectLayoutBoxPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1352269327
+// LIFERAY-SERVICE-BUILDER-HASH:-164050401

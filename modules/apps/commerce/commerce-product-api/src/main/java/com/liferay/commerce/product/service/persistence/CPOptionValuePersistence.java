@@ -121,32 +121,6 @@ public interface CPOptionValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp option value in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option value
-	 * @throws NoSuchCPOptionValueException if a matching cp option value could not be found
-	 */
-	public CPOptionValue findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-				orderByComparator)
-		throws NoSuchCPOptionValueException;
-
-	/**
-	 * Returns the last cp option value in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option value, or <code>null</code> if a matching cp option value could not be found
-	 */
-	public CPOptionValue fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp option values where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -256,34 +230,6 @@ public interface CPOptionValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp option value in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option value
-	 * @throws NoSuchCPOptionValueException if a matching cp option value could not be found
-	 */
-	public CPOptionValue findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-				orderByComparator)
-		throws NoSuchCPOptionValueException;
-
-	/**
-	 * Returns the last cp option value in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option value, or <code>null</code> if a matching cp option value could not be found
-	 */
-	public CPOptionValue fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp option values where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -388,32 +334,6 @@ public interface CPOptionValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp option value in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option value
-	 * @throws NoSuchCPOptionValueException if a matching cp option value could not be found
-	 */
-	public CPOptionValue findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-				orderByComparator)
-		throws NoSuchCPOptionValueException;
-
-	/**
-	 * Returns the last cp option value in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option value, or <code>null</code> if a matching cp option value could not be found
-	 */
-	public CPOptionValue fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp option values where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -511,32 +431,6 @@ public interface CPOptionValuePersistence
 	 * @return the first matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	 */
 	public CPOptionValue fetchByCPOptionId_First(
-		long CPOptionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp option value in the ordered set where CPOptionId = &#63;.
-	 *
-	 * @param CPOptionId the cp option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option value
-	 * @throws NoSuchCPOptionValueException if a matching cp option value could not be found
-	 */
-	public CPOptionValue findByCPOptionId_Last(
-			long CPOptionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-				orderByComparator)
-		throws NoSuchCPOptionValueException;
-
-	/**
-	 * Returns the last cp option value in the ordered set where CPOptionId = &#63;.
-	 *
-	 * @param CPOptionId the cp option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option value, or <code>null</code> if a matching cp option value could not be found
-	 */
-	public CPOptionValue fetchByCPOptionId_Last(
 		long CPOptionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
 			orderByComparator);
@@ -780,4 +674,4 @@ public interface CPOptionValuePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1326466297
+// LIFERAY-SERVICE-BUILDER-HASH:-1840526423

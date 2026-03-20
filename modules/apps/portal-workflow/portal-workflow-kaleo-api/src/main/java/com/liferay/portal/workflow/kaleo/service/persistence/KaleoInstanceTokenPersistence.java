@@ -124,32 +124,6 @@ public interface KaleoInstanceTokenPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-				orderByComparator)
-		throws NoSuchInstanceTokenException;
-
-	/**
-	 * Returns the last kaleo instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo instance tokens where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -253,32 +227,6 @@ public interface KaleoInstanceTokenPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo instance token in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-				orderByComparator)
-		throws NoSuchInstanceTokenException;
-
-	/**
-	 * Returns the last kaleo instance token in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo instance tokens where kaleoDefinitionVersionId = &#63; from the database.
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -377,32 +325,6 @@ public interface KaleoInstanceTokenPersistence
 	 * @return the first matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
 	 */
 	public KaleoInstanceToken fetchByKaleoInstanceId_First(
-		long kaleoInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken findByKaleoInstanceId_Last(
-			long kaleoInstanceId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-				orderByComparator)
-		throws NoSuchInstanceTokenException;
-
-	/**
-	 * Returns the last kaleo instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken fetchByKaleoInstanceId_Last(
 		long kaleoInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
 			orderByComparator);
@@ -512,34 +434,6 @@ public interface KaleoInstanceTokenPersistence
 	 * @return the first matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
 	 */
 	public KaleoInstanceToken fetchByC_PKITI_First(
-		long companyId, long parentKaleoInstanceTokenId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo instance token in the ordered set where companyId = &#63; and parentKaleoInstanceTokenId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken findByC_PKITI_Last(
-			long companyId, long parentKaleoInstanceTokenId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-				orderByComparator)
-		throws NoSuchInstanceTokenException;
-
-	/**
-	 * Returns the last kaleo instance token in the ordered set where companyId = &#63; and parentKaleoInstanceTokenId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken fetchByC_PKITI_Last(
 		long companyId, long parentKaleoInstanceTokenId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
 			orderByComparator);
@@ -662,37 +556,6 @@ public interface KaleoInstanceTokenPersistence
 	 * @return the first matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
 	 */
 	public KaleoInstanceToken fetchByC_PKITI_CD_First(
-		long companyId, long parentKaleoInstanceTokenId, Date completionDate,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo instance token in the ordered set where companyId = &#63; and parentKaleoInstanceTokenId = &#63; and completionDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param completionDate the completion date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken findByC_PKITI_CD_Last(
-			long companyId, long parentKaleoInstanceTokenId,
-			Date completionDate,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
-				orderByComparator)
-		throws NoSuchInstanceTokenException;
-
-	/**
-	 * Returns the last kaleo instance token in the ordered set where companyId = &#63; and parentKaleoInstanceTokenId = &#63; and completionDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param completionDate the completion date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
-	 */
-	public KaleoInstanceToken fetchByC_PKITI_CD_Last(
 		long companyId, long parentKaleoInstanceTokenId, Date completionDate,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoInstanceToken>
 			orderByComparator);
@@ -840,4 +703,4 @@ public interface KaleoInstanceTokenPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-54629419
+// LIFERAY-SERVICE-BUILDER-HASH:-1519568094

@@ -119,32 +119,6 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 			orderByComparator);
 
 	/**
-	 * Returns the last ct comment in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct comment
-	 * @throws NoSuchCommentException if a matching ct comment could not be found
-	 */
-	public CTComment findByCtCollectionId_Last(
-			long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last ct comment in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct comment, or <code>null</code> if a matching ct comment could not be found
-	 */
-	public CTComment fetchByCtCollectionId_Last(
-		long ctCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
-			orderByComparator);
-
-	/**
 	 * Removes all the ct comments where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -242,32 +216,6 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @return the first matching ct comment, or <code>null</code> if a matching ct comment could not be found
 	 */
 	public CTComment fetchByCtEntryId_First(
-		long ctEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct comment in the ordered set where ctEntryId = &#63;.
-	 *
-	 * @param ctEntryId the ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct comment
-	 * @throws NoSuchCommentException if a matching ct comment could not be found
-	 */
-	public CTComment findByCtEntryId_Last(
-			long ctEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last ct comment in the ordered set where ctEntryId = &#63;.
-	 *
-	 * @param ctEntryId the ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct comment, or <code>null</code> if a matching ct comment could not be found
-	 */
-	public CTComment fetchByCtEntryId_Last(
 		long ctEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator);
@@ -407,4 +355,4 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1370572065
+// LIFERAY-SERVICE-BUILDER-HASH:417733147

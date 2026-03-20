@@ -333,67 +333,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel
-	 * @throws NoSuchChannelAccountEntryRelException if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel findByAccountEntryId_Last(
-			long accountEntryId,
-			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
-		throws NoSuchChannelAccountEntryRelException {
-
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByAccountEntryId_Last(accountEntryId, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchChannelAccountEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel, or <code>null</code> if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel fetchByAccountEntryId_Last(
-		long accountEntryId,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		int count = countByAccountEntryId(accountEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannelAccountEntryRel> list = findByAccountEntryId(
-			accountEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce channel account entry rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -698,67 +637,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 		List<CommerceChannelAccountEntryRel> list = findByCommerceChannelId(
 			commerceChannelId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel
-	 * @throws NoSuchChannelAccountEntryRelException if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel findByCommerceChannelId_Last(
-			long commerceChannelId,
-			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
-		throws NoSuchChannelAccountEntryRelException {
-
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByCommerceChannelId_Last(commerceChannelId, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceChannelId=");
-		sb.append(commerceChannelId);
-
-		sb.append("}");
-
-		throw new NoSuchChannelAccountEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel, or <code>null</code> if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel fetchByCommerceChannelId_Last(
-		long commerceChannelId,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		int count = countByCommerceChannelId(commerceChannelId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannelAccountEntryRel> list = findByCommerceChannelId(
-			commerceChannelId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1086,72 +964,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 		List<CommerceChannelAccountEntryRel> list = findByA_T(
 			accountEntryId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where accountEntryId = &#63; and type = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel
-	 * @throws NoSuchChannelAccountEntryRelException if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel findByA_T_Last(
-			long accountEntryId, int type,
-			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
-		throws NoSuchChannelAccountEntryRelException {
-
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByA_T_Last(accountEntryId, type, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchChannelAccountEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where accountEntryId = &#63; and type = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel, or <code>null</code> if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel fetchByA_T_Last(
-		long accountEntryId, int type,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		int count = countByA_T(accountEntryId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannelAccountEntryRel> list = findByA_T(
-			accountEntryId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1496,72 +1308,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel
-	 * @throws NoSuchChannelAccountEntryRelException if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
-		throws NoSuchChannelAccountEntryRelException {
-
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByC_C_Last(classNameId, classPK, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchChannelAccountEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel, or <code>null</code> if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannelAccountEntryRel> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -1889,72 +1635,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 		List<CommerceChannelAccountEntryRel> list = findByC_T(
 			commerceChannelId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel
-	 * @throws NoSuchChannelAccountEntryRelException if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel findByC_T_Last(
-			long commerceChannelId, int type,
-			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
-		throws NoSuchChannelAccountEntryRelException {
-
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByC_T_Last(commerceChannelId, type, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceChannelId=");
-		sb.append(commerceChannelId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchChannelAccountEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel, or <code>null</code> if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel fetchByC_T_Last(
-		long commerceChannelId, int type,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		int count = countByC_T(commerceChannelId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannelAccountEntryRel> list = findByC_T(
-			commerceChannelId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2316,79 +1996,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 		List<CommerceChannelAccountEntryRel> list = findByA_C_T(
 			accountEntryId, commerceChannelId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel
-	 * @throws NoSuchChannelAccountEntryRelException if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel findByA_C_T_Last(
-			long accountEntryId, long commerceChannelId, int type,
-			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
-		throws NoSuchChannelAccountEntryRelException {
-
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByA_C_T_Last(
-				accountEntryId, commerceChannelId, type, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append(", commerceChannelId=");
-		sb.append(commerceChannelId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchChannelAccountEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel, or <code>null</code> if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel fetchByA_C_T_Last(
-		long accountEntryId, long commerceChannelId, int type,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		int count = countByA_C_T(accountEntryId, commerceChannelId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannelAccountEntryRel> list = findByA_C_T(
-			accountEntryId, commerceChannelId, type, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2781,86 +2388,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 		List<CommerceChannelAccountEntryRel> list = findByC_C_C_T(
 			classNameId, classPK, commerceChannelId, type, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel
-	 * @throws NoSuchChannelAccountEntryRelException if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel findByC_C_C_T_Last(
-			long classNameId, long classPK, long commerceChannelId, int type,
-			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
-		throws NoSuchChannelAccountEntryRelException {
-
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByC_C_C_T_Last(
-				classNameId, classPK, commerceChannelId, type,
-				orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", commerceChannelId=");
-		sb.append(commerceChannelId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchChannelAccountEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel account entry rel in the ordered set where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel account entry rel, or <code>null</code> if a matching commerce channel account entry rel could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel fetchByC_C_C_T_Last(
-		long classNameId, long classPK, long commerceChannelId, int type,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		int count = countByC_C_C_T(
-			classNameId, classPK, commerceChannelId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannelAccountEntryRel> list = findByC_C_C_T(
-			classNameId, classPK, commerceChannelId, type, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4416,4 +3943,4 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2128632327
+// LIFERAY-SERVICE-BUILDER-HASH:-1599946347

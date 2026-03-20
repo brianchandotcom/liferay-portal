@@ -341,67 +341,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel
-	 * @throws NoSuchPageTemplateStructureRelException if a matching layout page template structure rel could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
-		throws NoSuchPageTemplateStructureRelException {
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (layoutPageTemplateStructureRel != null) {
-			return layoutPageTemplateStructureRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateStructureRel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout page template structure rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -968,72 +907,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel
-	 * @throws NoSuchPageTemplateStructureRelException if a matching layout page template structure rel could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
-		throws NoSuchPageTemplateStructureRelException {
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (layoutPageTemplateStructureRel != null) {
-			return layoutPageTemplateStructureRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateStructureRel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout page template structure rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1388,75 +1261,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout page template structure rel in the ordered set where layoutPageTemplateStructureId = &#63;.
-	 *
-	 * @param layoutPageTemplateStructureId the layout page template structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel
-	 * @throws NoSuchPageTemplateStructureRelException if a matching layout page template structure rel could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel
-			findByLayoutPageTemplateStructureId_Last(
-				long layoutPageTemplateStructureId,
-				OrderByComparator<LayoutPageTemplateStructureRel>
-					orderByComparator)
-		throws NoSuchPageTemplateStructureRelException {
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			fetchByLayoutPageTemplateStructureId_Last(
-				layoutPageTemplateStructureId, orderByComparator);
-
-		if (layoutPageTemplateStructureRel != null) {
-			return layoutPageTemplateStructureRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutPageTemplateStructureId=");
-		sb.append(layoutPageTemplateStructureId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where layoutPageTemplateStructureId = &#63;.
-	 *
-	 * @param layoutPageTemplateStructureId the layout page template structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel
-		fetchByLayoutPageTemplateStructureId_Last(
-			long layoutPageTemplateStructureId,
-			OrderByComparator<LayoutPageTemplateStructureRel>
-				orderByComparator) {
-
-		int count = countByLayoutPageTemplateStructureId(
-			layoutPageTemplateStructureId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateStructureRel> list =
-			findByLayoutPageTemplateStructureId(
-				layoutPageTemplateStructureId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout page template structure rels where layoutPageTemplateStructureId = &#63; from the database.
 	 *
 	 * @param layoutPageTemplateStructureId the layout page template structure ID
@@ -1771,68 +1575,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 
 		List<LayoutPageTemplateStructureRel> list = findBySegmentsExperienceId(
 			segmentsExperienceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel
-	 * @throws NoSuchPageTemplateStructureRelException if a matching layout page template structure rel could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel findBySegmentsExperienceId_Last(
-			long segmentsExperienceId,
-			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
-		throws NoSuchPageTemplateStructureRelException {
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			fetchBySegmentsExperienceId_Last(
-				segmentsExperienceId, orderByComparator);
-
-		if (layoutPageTemplateStructureRel != null) {
-			return layoutPageTemplateStructureRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsExperienceId=");
-		sb.append(segmentsExperienceId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template structure rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel fetchBySegmentsExperienceId_Last(
-		long segmentsExperienceId,
-		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator) {
-
-		int count = countBySegmentsExperienceId(segmentsExperienceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateStructureRel> list = findBySegmentsExperienceId(
-			segmentsExperienceId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3268,4 +3010,4 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-790665206
+// LIFERAY-SERVICE-BUILDER-HASH:633299190

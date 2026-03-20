@@ -321,67 +321,6 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue = &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a matching big decimal entry could not be found
-	 */
-	@Override
-	public BigDecimalEntry findByBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
-		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
-
-		if (bigDecimalEntry != null) {
-			return bigDecimalEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("bigDecimalValue=");
-		sb.append(bigDecimalValue);
-
-		sb.append("}");
-
-		throw new NoSuchBigDecimalEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue = &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
-	 */
-	@Override
-	public BigDecimalEntry fetchByBigDecimalValue_Last(
-		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		int count = countByBigDecimalValue(bigDecimalValue);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BigDecimalEntry> list = findByBigDecimalValue(
-			bigDecimalValue, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the big decimal entries where bigDecimalValue = &#63; from the database.
 	 *
 	 * @param bigDecimalValue the big decimal value
@@ -684,67 +623,6 @@ public class BigDecimalEntryPersistenceImpl
 
 		List<BigDecimalEntry> list = findByGtBigDecimalValue(
 			bigDecimalValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a matching big decimal entry could not be found
-	 */
-	@Override
-	public BigDecimalEntry findByGtBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
-		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByGtBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
-
-		if (bigDecimalEntry != null) {
-			return bigDecimalEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("bigDecimalValue>");
-		sb.append(bigDecimalValue);
-
-		sb.append("}");
-
-		throw new NoSuchBigDecimalEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
-	 */
-	@Override
-	public BigDecimalEntry fetchByGtBigDecimalValue_Last(
-		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		int count = countByGtBigDecimalValue(bigDecimalValue);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BigDecimalEntry> list = findByGtBigDecimalValue(
-			bigDecimalValue, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1057,67 +935,6 @@ public class BigDecimalEntryPersistenceImpl
 
 		List<BigDecimalEntry> list = findByLtBigDecimalValue(
 			bigDecimalValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a matching big decimal entry could not be found
-	 */
-	@Override
-	public BigDecimalEntry findByLtBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
-		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByLtBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
-
-		if (bigDecimalEntry != null) {
-			return bigDecimalEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("bigDecimalValue<");
-		sb.append(bigDecimalValue);
-
-		sb.append("}");
-
-		throw new NoSuchBigDecimalEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
-	 */
-	@Override
-	public BigDecimalEntry fetchByLtBigDecimalValue_Last(
-		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		int count = countByLtBigDecimalValue(bigDecimalValue);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BigDecimalEntry> list = findByLtBigDecimalValue(
-			bigDecimalValue, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2180,4 +1997,4 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1535041053
+// LIFERAY-SERVICE-BUILDER-HASH:1997371548

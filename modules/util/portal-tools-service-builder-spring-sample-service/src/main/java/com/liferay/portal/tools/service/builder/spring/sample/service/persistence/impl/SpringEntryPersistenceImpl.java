@@ -304,64 +304,6 @@ public class SpringEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last spring entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry
-	 * @throws NoSuchSpringEntryException if a matching spring entry could not be found
-	 */
-	@Override
-	public SpringEntry findByUuid_Last(
-			String uuid, OrderByComparator<SpringEntry> orderByComparator)
-		throws NoSuchSpringEntryException {
-
-		SpringEntry springEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (springEntry != null) {
-			return springEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSpringEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last spring entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry, or <code>null</code> if a matching spring entry could not be found
-	 */
-	@Override
-	public SpringEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SpringEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SpringEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the spring entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -695,72 +637,6 @@ public class SpringEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last spring entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry
-	 * @throws NoSuchSpringEntryException if a matching spring entry could not be found
-	 */
-	@Override
-	public SpringEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SpringEntry> orderByComparator)
-		throws NoSuchSpringEntryException {
-
-		SpringEntry springEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (springEntry != null) {
-			return springEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSpringEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last spring entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry, or <code>null</code> if a matching spring entry could not be found
-	 */
-	@Override
-	public SpringEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SpringEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SpringEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the spring entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1065,65 +941,6 @@ public class SpringEntryPersistenceImpl
 
 		List<SpringEntry> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last spring entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry
-	 * @throws NoSuchSpringEntryException if a matching spring entry could not be found
-	 */
-	@Override
-	public SpringEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<SpringEntry> orderByComparator)
-		throws NoSuchSpringEntryException {
-
-		SpringEntry springEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (springEntry != null) {
-			return springEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSpringEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last spring entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry, or <code>null</code> if a matching spring entry could not be found
-	 */
-	@Override
-	public SpringEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<SpringEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SpringEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1849,4 +1666,4 @@ public class SpringEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-572591004
+// LIFERAY-SERVICE-BUILDER-HASH:980549516

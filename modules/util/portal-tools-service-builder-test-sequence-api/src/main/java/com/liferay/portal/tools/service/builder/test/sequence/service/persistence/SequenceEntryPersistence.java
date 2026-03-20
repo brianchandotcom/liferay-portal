@@ -120,32 +120,6 @@ public interface SequenceEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last sequence entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sequence entry
-	 * @throws NoSuchSequenceEntryException if a matching sequence entry could not be found
-	 */
-	public SequenceEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SequenceEntry>
-				orderByComparator)
-		throws NoSuchSequenceEntryException;
-
-	/**
-	 * Returns the last sequence entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sequence entry, or <code>null</code> if a matching sequence entry could not be found
-	 */
-	public SequenceEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<SequenceEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the sequence entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -250,34 +224,6 @@ public interface SequenceEntryPersistence
 	 * @return the first matching sequence entry, or <code>null</code> if a matching sequence entry could not be found
 	 */
 	public SequenceEntry fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SequenceEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last sequence entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sequence entry
-	 * @throws NoSuchSequenceEntryException if a matching sequence entry could not be found
-	 */
-	public SequenceEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SequenceEntry>
-				orderByComparator)
-		throws NoSuchSequenceEntryException;
-
-	/**
-	 * Returns the last sequence entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sequence entry, or <code>null</code> if a matching sequence entry could not be found
-	 */
-	public SequenceEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SequenceEntry>
 			orderByComparator);
@@ -420,4 +366,4 @@ public interface SequenceEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-94927713
+// LIFERAY-SERVICE-BUILDER-HASH:-1448260327

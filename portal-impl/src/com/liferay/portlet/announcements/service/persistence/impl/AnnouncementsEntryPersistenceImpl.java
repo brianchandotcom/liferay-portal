@@ -333,66 +333,6 @@ public class AnnouncementsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last announcements entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AnnouncementsEntry announcementsEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -959,72 +899,6 @@ public class AnnouncementsEntryPersistenceImpl
 
 		List<AnnouncementsEntry> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AnnouncementsEntry announcementsEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1606,67 +1480,6 @@ public class AnnouncementsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AnnouncementsEntry announcementsEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2156,66 +1969,6 @@ public class AnnouncementsEntryPersistenceImpl
 
 		List<AnnouncementsEntry> list = findByUserId(
 			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry findByUserId_Last(
-			long userId,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AnnouncementsEntry announcementsEntry = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry fetchByUserId_Last(
-		long userId, OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsEntry> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2733,72 +2486,6 @@ public class AnnouncementsEntryPersistenceImpl
 
 		List<AnnouncementsEntry> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AnnouncementsEntry announcementsEntry = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsEntry> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3360,78 +3047,6 @@ public class AnnouncementsEntryPersistenceImpl
 
 		List<AnnouncementsEntry> list = findByC_C_C(
 			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AnnouncementsEntry announcementsEntry = fetchByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		int count = countByC_C_C(companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsEntry> list = findByC_C_C(
-			companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4018,77 +3633,6 @@ public class AnnouncementsEntryPersistenceImpl
 
 		List<AnnouncementsEntry> list = findByC_C_A(
 			classNameId, classPK, alert, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry findByC_C_A_Last(
-			long classNameId, long classPK, boolean alert,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AnnouncementsEntry announcementsEntry = fetchByC_C_A_Last(
-			classNameId, classPK, alert, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", alert=");
-		sb.append(alert);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry fetchByC_C_A_Last(
-		long classNameId, long classPK, boolean alert,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		int count = countByC_C_A(classNameId, classPK, alert);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsEntry> list = findByC_C_A(
-			classNameId, classPK, alert, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4694,83 +4238,6 @@ public class AnnouncementsEntryPersistenceImpl
 
 		List<AnnouncementsEntry> list = findByC_C_C_A(
 			companyId, classNameId, classPK, alert, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry
-	 * @throws NoSuchEntryException if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry findByC_C_C_A_Last(
-			long companyId, long classNameId, long classPK, boolean alert,
-			OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AnnouncementsEntry announcementsEntry = fetchByC_C_C_A_Last(
-			companyId, classNameId, classPK, alert, orderByComparator);
-
-		if (announcementsEntry != null) {
-			return announcementsEntry;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", alert=");
-		sb.append(alert);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 */
-	@Override
-	public AnnouncementsEntry fetchByC_C_C_A_Last(
-		long companyId, long classNameId, long classPK, boolean alert,
-		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-
-		int count = countByC_C_C_A(companyId, classNameId, classPK, alert);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnnouncementsEntry> list = findByC_C_C_A(
-			companyId, classNameId, classPK, alert, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6239,4 +5706,4 @@ public class AnnouncementsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1205435575
+// LIFERAY-SERVICE-BUILDER-HASH:1200017700

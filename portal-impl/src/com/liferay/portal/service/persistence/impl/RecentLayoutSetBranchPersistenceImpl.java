@@ -292,67 +292,6 @@ public class RecentLayoutSetBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the last recent layout set branch in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout set branch
-	 * @throws NoSuchRecentLayoutSetBranchException if a matching recent layout set branch could not be found
-	 */
-	@Override
-	public RecentLayoutSetBranch findByGroupId_Last(
-			long groupId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws NoSuchRecentLayoutSetBranchException {
-
-		RecentLayoutSetBranch recentLayoutSetBranch = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (recentLayoutSetBranch != null) {
-			return recentLayoutSetBranch;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchRecentLayoutSetBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last recent layout set branch in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout set branch, or <code>null</code> if a matching recent layout set branch could not be found
-	 */
-	@Override
-	public RecentLayoutSetBranch fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RecentLayoutSetBranch> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the recent layout set branches where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -631,67 +570,6 @@ public class RecentLayoutSetBranchPersistenceImpl
 
 		List<RecentLayoutSetBranch> list = findByUserId(
 			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last recent layout set branch in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout set branch
-	 * @throws NoSuchRecentLayoutSetBranchException if a matching recent layout set branch could not be found
-	 */
-	@Override
-	public RecentLayoutSetBranch findByUserId_Last(
-			long userId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws NoSuchRecentLayoutSetBranchException {
-
-		RecentLayoutSetBranch recentLayoutSetBranch = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (recentLayoutSetBranch != null) {
-			return recentLayoutSetBranch;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchRecentLayoutSetBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last recent layout set branch in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout set branch, or <code>null</code> if a matching recent layout set branch could not be found
-	 */
-	@Override
-	public RecentLayoutSetBranch fetchByUserId_Last(
-		long userId,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RecentLayoutSetBranch> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -989,67 +867,6 @@ public class RecentLayoutSetBranchPersistenceImpl
 
 		List<RecentLayoutSetBranch> list = findByLayoutSetBranchId(
 			layoutSetBranchId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last recent layout set branch in the ordered set where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout set branch
-	 * @throws NoSuchRecentLayoutSetBranchException if a matching recent layout set branch could not be found
-	 */
-	@Override
-	public RecentLayoutSetBranch findByLayoutSetBranchId_Last(
-			long layoutSetBranchId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws NoSuchRecentLayoutSetBranchException {
-
-		RecentLayoutSetBranch recentLayoutSetBranch =
-			fetchByLayoutSetBranchId_Last(layoutSetBranchId, orderByComparator);
-
-		if (recentLayoutSetBranch != null) {
-			return recentLayoutSetBranch;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutSetBranchId=");
-		sb.append(layoutSetBranchId);
-
-		sb.append("}");
-
-		throw new NoSuchRecentLayoutSetBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last recent layout set branch in the ordered set where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout set branch, or <code>null</code> if a matching recent layout set branch could not be found
-	 */
-	@Override
-	public RecentLayoutSetBranch fetchByLayoutSetBranchId_Last(
-		long layoutSetBranchId,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
-
-		int count = countByLayoutSetBranchId(layoutSetBranchId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RecentLayoutSetBranch> list = findByLayoutSetBranchId(
-			layoutSetBranchId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1975,4 +1792,4 @@ public class RecentLayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-992291332
+// LIFERAY-SERVICE-BUILDER-HASH:1980653560

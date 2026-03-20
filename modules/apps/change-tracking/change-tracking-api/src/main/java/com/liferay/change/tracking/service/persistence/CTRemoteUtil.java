@@ -212,36 +212,6 @@ public class CTRemoteUtil {
 	}
 
 	/**
-	 * Returns the last ct remote in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct remote
-	 * @throws NoSuchRemoteException if a matching ct remote could not be found
-	 */
-	public static CTRemote findByCompanyId_Last(
-			long companyId, OrderByComparator<CTRemote> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchRemoteException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct remote in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct remote, or <code>null</code> if a matching ct remote could not be found
-	 */
-	public static CTRemote fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTRemote> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the ct remotes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -477,4 +447,4 @@ public class CTRemoteUtil {
 	private static volatile CTRemotePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1720970539
+// LIFERAY-SERVICE-BUILDER-HASH:-1271788179

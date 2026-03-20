@@ -308,65 +308,6 @@ public class SystemEventPersistenceImpl
 	}
 
 	/**
-	 * Returns the last system event in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event
-	 * @throws NoSuchSystemEventException if a matching system event could not be found
-	 */
-	@Override
-	public SystemEvent findByGroupId_Last(
-			long groupId, OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
-
-		SystemEvent systemEvent = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (systemEvent != null) {
-			return systemEvent;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchSystemEventException(sb.toString());
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 */
-	@Override
-	public SystemEvent fetchByGroupId_Last(
-		long groupId, OrderByComparator<SystemEvent> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SystemEvent> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the system events where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -676,72 +617,6 @@ public class SystemEventPersistenceImpl
 
 		List<SystemEvent> list = findByG_S(
 			groupId, systemEventSetKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and systemEventSetKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param systemEventSetKey the system event set key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event
-	 * @throws NoSuchSystemEventException if a matching system event could not be found
-	 */
-	@Override
-	public SystemEvent findByG_S_Last(
-			long groupId, long systemEventSetKey,
-			OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
-
-		SystemEvent systemEvent = fetchByG_S_Last(
-			groupId, systemEventSetKey, orderByComparator);
-
-		if (systemEvent != null) {
-			return systemEvent;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", systemEventSetKey=");
-		sb.append(systemEventSetKey);
-
-		sb.append("}");
-
-		throw new NoSuchSystemEventException(sb.toString());
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and systemEventSetKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param systemEventSetKey the system event set key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 */
-	@Override
-	public SystemEvent fetchByG_S_Last(
-		long groupId, long systemEventSetKey,
-		OrderByComparator<SystemEvent> orderByComparator) {
-
-		int count = countByG_S(groupId, systemEventSetKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SystemEvent> list = findByG_S(
-			groupId, systemEventSetKey, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1085,77 +960,6 @@ public class SystemEventPersistenceImpl
 
 		List<SystemEvent> list = findByG_C_C(
 			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event
-	 * @throws NoSuchSystemEventException if a matching system event could not be found
-	 */
-	@Override
-	public SystemEvent findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
-
-		SystemEvent systemEvent = fetchByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-
-		if (systemEvent != null) {
-			return systemEvent;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchSystemEventException(sb.toString());
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 */
-	@Override
-	public SystemEvent fetchByG_C_C_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<SystemEvent> orderByComparator) {
-
-		int count = countByG_C_C(groupId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SystemEvent> list = findByG_C_C(
-			groupId, classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1528,83 +1332,6 @@ public class SystemEventPersistenceImpl
 
 		List<SystemEvent> list = findByG_C_C_T(
 			groupId, classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event
-	 * @throws NoSuchSystemEventException if a matching system event could not be found
-	 */
-	@Override
-	public SystemEvent findByG_C_C_T_Last(
-			long groupId, long classNameId, long classPK, int type,
-			OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
-
-		SystemEvent systemEvent = fetchByG_C_C_T_Last(
-			groupId, classNameId, classPK, type, orderByComparator);
-
-		if (systemEvent != null) {
-			return systemEvent;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchSystemEventException(sb.toString());
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 */
-	@Override
-	public SystemEvent fetchByG_C_C_T_Last(
-		long groupId, long classNameId, long classPK, int type,
-		OrderByComparator<SystemEvent> orderByComparator) {
-
-		int count = countByG_C_C_T(groupId, classNameId, classPK, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SystemEvent> list = findByG_C_C_T(
-			groupId, classNameId, classPK, type, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2647,4 +2374,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1661343779
+// LIFERAY-SERVICE-BUILDER-HASH:-995291080

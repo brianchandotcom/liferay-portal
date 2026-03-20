@@ -121,32 +121,6 @@ public interface AssetTagGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset tag group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag group rel
-	 * @throws NoSuchTagGroupRelException if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-				orderByComparator)
-		throws NoSuchTagGroupRelException;
-
-	/**
-	 * Returns the last asset tag group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag group rel, or <code>null</code> if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset tag group rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface AssetTagGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset tag group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag group rel
-	 * @throws NoSuchTagGroupRelException if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-				orderByComparator)
-		throws NoSuchTagGroupRelException;
-
-	/**
-	 * Returns the last asset tag group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag group rel, or <code>null</code> if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset tag group rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -438,32 +384,6 @@ public interface AssetTagGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset tag group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag group rel
-	 * @throws NoSuchTagGroupRelException if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-				orderByComparator)
-		throws NoSuchTagGroupRelException;
-
-	/**
-	 * Returns the last asset tag group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag group rel, or <code>null</code> if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset tag group rels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -561,32 +481,6 @@ public interface AssetTagGroupRelPersistence
 	 * @return the first matching asset tag group rel, or <code>null</code> if a matching asset tag group rel could not be found
 	 */
 	public AssetTagGroupRel fetchByTagId_First(
-		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset tag group rel in the ordered set where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag group rel
-	 * @throws NoSuchTagGroupRelException if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel findByTagId_Last(
-			long tagId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-				orderByComparator)
-		throws NoSuchTagGroupRelException;
-
-	/**
-	 * Returns the last asset tag group rel in the ordered set where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag group rel, or <code>null</code> if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel fetchByTagId_Last(
 		long tagId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
 			orderByComparator);
@@ -777,4 +671,4 @@ public interface AssetTagGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1632329678
+// LIFERAY-SERVICE-BUILDER-HASH:-1710685532

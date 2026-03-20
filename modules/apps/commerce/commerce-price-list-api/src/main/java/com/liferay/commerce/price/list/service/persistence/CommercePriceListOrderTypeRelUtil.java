@@ -219,37 +219,6 @@ public class CommercePriceListOrderTypeRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce price list order type rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a matching commerce price list order type rel could not be found
-	 */
-	public static CommercePriceListOrderTypeRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommercePriceListOrderTypeRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListOrderTypeRelException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list order type rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list order type rel, or <code>null</code> if a matching commerce price list order type rel could not be found
-	 */
-	public static CommercePriceListOrderTypeRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommercePriceListOrderTypeRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price list order type rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -382,41 +351,6 @@ public class CommercePriceListOrderTypeRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce price list order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a matching commerce price list order type rel could not be found
-	 */
-	public static CommercePriceListOrderTypeRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommercePriceListOrderTypeRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListOrderTypeRelException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list order type rel, or <code>null</code> if a matching commerce price list order type rel could not be found
-	 */
-	public static CommercePriceListOrderTypeRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommercePriceListOrderTypeRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price list order type rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -544,39 +478,6 @@ public class CommercePriceListOrderTypeRelUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchByCommercePriceListId_First(
-			commercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list order type rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a matching commerce price list order type rel could not be found
-	 */
-	public static CommercePriceListOrderTypeRel findByCommercePriceListId_Last(
-			long commercePriceListId,
-			OrderByComparator<CommercePriceListOrderTypeRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListOrderTypeRelException {
-
-		return getPersistence().findByCommercePriceListId_Last(
-			commercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list order type rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list order type rel, or <code>null</code> if a matching commerce price list order type rel could not be found
-	 */
-	public static CommercePriceListOrderTypeRel fetchByCommercePriceListId_Last(
-		long commercePriceListId,
-		OrderByComparator<CommercePriceListOrderTypeRel> orderByComparator) {
-
-		return getPersistence().fetchByCommercePriceListId_Last(
 			commercePriceListId, orderByComparator);
 	}
 
@@ -857,4 +758,4 @@ public class CommercePriceListOrderTypeRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1014533088
+// LIFERAY-SERVICE-BUILDER-HASH:625604613

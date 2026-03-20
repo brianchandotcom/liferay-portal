@@ -120,32 +120,6 @@ public interface BatchPlannerPlanPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-				orderByComparator)
-		throws NoSuchPlanException;
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-			orderByComparator);
-
-	/**
 	 * Returns all the batch planner plans that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -300,34 +274,6 @@ public interface BatchPlannerPlanPersistence
 	 * @return the first matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
 	 */
 	public BatchPlannerPlan fetchByC_U_First(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-			orderByComparator);
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan findByC_U_Last(
-			long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-				orderByComparator)
-		throws NoSuchPlanException;
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan fetchByC_U_Last(
 		long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
 			orderByComparator);
@@ -498,34 +444,6 @@ public interface BatchPlannerPlanPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and export = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param export the export
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan findByC_E_Last(
-			long companyId, boolean export,
-			com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-				orderByComparator)
-		throws NoSuchPlanException;
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and export = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param export the export
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan fetchByC_E_Last(
-		long companyId, boolean export,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-			orderByComparator);
-
-	/**
 	 * Returns all the batch planner plans that the user has permission to view where companyId = &#63; and export = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -691,34 +609,6 @@ public interface BatchPlannerPlanPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan findByC_N_Last(
-			long companyId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-				orderByComparator)
-		throws NoSuchPlanException;
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan fetchByC_N_Last(
-		long companyId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-			orderByComparator);
-
-	/**
 	 * Returns all the batch planner plans that the user has permission to view where companyId = &#63; and name = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -879,34 +769,6 @@ public interface BatchPlannerPlanPersistence
 	 * @return the first matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
 	 */
 	public BatchPlannerPlan fetchByC_T_First(
-		long companyId, boolean template,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-			orderByComparator);
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and template = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param template the template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan findByC_T_Last(
-			long companyId, boolean template,
-			com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-				orderByComparator)
-		throws NoSuchPlanException;
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and template = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param template the template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan fetchByC_T_Last(
 		long companyId, boolean template,
 		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
 			orderByComparator);
@@ -1078,36 +940,6 @@ public interface BatchPlannerPlanPersistence
 	 * @return the first matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
 	 */
 	public BatchPlannerPlan fetchByC_E_T_First(
-		long companyId, boolean export, boolean template,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-			orderByComparator);
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and export = &#63; and template = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param export the export
-	 * @param template the template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan
-	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan findByC_E_T_Last(
-			long companyId, boolean export, boolean template,
-			com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
-				orderByComparator)
-		throws NoSuchPlanException;
-
-	/**
-	 * Returns the last batch planner plan in the ordered set where companyId = &#63; and export = &#63; and template = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param export the export
-	 * @param template the template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
-	 */
-	public BatchPlannerPlan fetchByC_E_T_Last(
 		long companyId, boolean export, boolean template,
 		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerPlan>
 			orderByComparator);
@@ -1311,4 +1143,4 @@ public interface BatchPlannerPlanPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2071676632
+// LIFERAY-SERVICE-BUILDER-HASH:-1910239878

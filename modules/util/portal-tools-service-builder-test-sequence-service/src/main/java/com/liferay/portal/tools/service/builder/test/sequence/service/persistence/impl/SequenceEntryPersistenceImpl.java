@@ -313,64 +313,6 @@ public class SequenceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sequence entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sequence entry
-	 * @throws NoSuchSequenceEntryException if a matching sequence entry could not be found
-	 */
-	@Override
-	public SequenceEntry findByUuid_Last(
-			String uuid, OrderByComparator<SequenceEntry> orderByComparator)
-		throws NoSuchSequenceEntryException {
-
-		SequenceEntry sequenceEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (sequenceEntry != null) {
-			return sequenceEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSequenceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sequence entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sequence entry, or <code>null</code> if a matching sequence entry could not be found
-	 */
-	@Override
-	public SequenceEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SequenceEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SequenceEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sequence entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -695,72 +637,6 @@ public class SequenceEntryPersistenceImpl
 
 		List<SequenceEntry> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sequence entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sequence entry
-	 * @throws NoSuchSequenceEntryException if a matching sequence entry could not be found
-	 */
-	@Override
-	public SequenceEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SequenceEntry> orderByComparator)
-		throws NoSuchSequenceEntryException {
-
-		SequenceEntry sequenceEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (sequenceEntry != null) {
-			return sequenceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSequenceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sequence entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sequence entry, or <code>null</code> if a matching sequence entry could not be found
-	 */
-	@Override
-	public SequenceEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SequenceEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SequenceEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1511,4 +1387,4 @@ public class SequenceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2129672801
+// LIFERAY-SERVICE-BUILDER-HASH:-140298371

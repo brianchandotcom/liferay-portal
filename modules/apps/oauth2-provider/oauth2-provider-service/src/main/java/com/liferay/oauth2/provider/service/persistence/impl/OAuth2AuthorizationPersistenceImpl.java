@@ -311,66 +311,6 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last o auth2 authorization in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization findByUserId_Last(
-			long userId,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException {
-
-		OAuth2Authorization oAuth2Authorization = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 authorization in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByUserId_Last(
-		long userId, OrderByComparator<OAuth2Authorization> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2Authorization> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the o auth2 authorizations where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -658,68 +598,6 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		List<OAuth2Authorization> list = findByOAuth2ApplicationId(
 			oAuth2ApplicationId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last o auth2 authorization in the ordered set where oAuth2ApplicationId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization findByOAuth2ApplicationId_Last(
-			long oAuth2ApplicationId,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException {
-
-		OAuth2Authorization oAuth2Authorization =
-			fetchByOAuth2ApplicationId_Last(
-				oAuth2ApplicationId, orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("oAuth2ApplicationId=");
-		sb.append(oAuth2ApplicationId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 authorization in the ordered set where oAuth2ApplicationId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByOAuth2ApplicationId_Last(
-		long oAuth2ApplicationId,
-		OrderByComparator<OAuth2Authorization> orderByComparator) {
-
-		int count = countByOAuth2ApplicationId(oAuth2ApplicationId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2Authorization> list = findByOAuth2ApplicationId(
-			oAuth2ApplicationId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1042,73 +920,6 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last o auth2 authorization in the ordered set where companyId = &#63; and accessTokenContentHash = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accessTokenContentHash the access token content hash
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization findByC_ATCH_Last(
-			long companyId, long accessTokenContentHash,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException {
-
-		OAuth2Authorization oAuth2Authorization = fetchByC_ATCH_Last(
-			companyId, accessTokenContentHash, orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", accessTokenContentHash=");
-		sb.append(accessTokenContentHash);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 authorization in the ordered set where companyId = &#63; and accessTokenContentHash = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accessTokenContentHash the access token content hash
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByC_ATCH_Last(
-		long companyId, long accessTokenContentHash,
-		OrderByComparator<OAuth2Authorization> orderByComparator) {
-
-		int count = countByC_ATCH(companyId, accessTokenContentHash);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2Authorization> list = findByC_ATCH(
-			companyId, accessTokenContentHash, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the o auth2 authorizations where companyId = &#63; and accessTokenContentHash = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1422,73 +1233,6 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		List<OAuth2Authorization> list = findByC_RTCH(
 			companyId, refreshTokenContentHash, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last o auth2 authorization in the ordered set where companyId = &#63; and refreshTokenContentHash = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param refreshTokenContentHash the refresh token content hash
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization findByC_RTCH_Last(
-			long companyId, long refreshTokenContentHash,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException {
-
-		OAuth2Authorization oAuth2Authorization = fetchByC_RTCH_Last(
-			companyId, refreshTokenContentHash, orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", refreshTokenContentHash=");
-		sb.append(refreshTokenContentHash);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 authorization in the ordered set where companyId = &#63; and refreshTokenContentHash = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param refreshTokenContentHash the refresh token content hash
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByC_RTCH_Last(
-		long companyId, long refreshTokenContentHash,
-		OrderByComparator<OAuth2Authorization> orderByComparator) {
-
-		int count = countByC_RTCH(companyId, refreshTokenContentHash);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2Authorization> list = findByC_RTCH(
-			companyId, refreshTokenContentHash, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1848,80 +1592,6 @@ public class OAuth2AuthorizationPersistenceImpl
 		List<OAuth2Authorization> list = findByU_O_R(
 			userId, oAuth2ApplicationId, rememberDeviceContent, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param rememberDeviceContent the remember device content
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization findByU_O_R_Last(
-			long userId, long oAuth2ApplicationId, String rememberDeviceContent,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException {
-
-		OAuth2Authorization oAuth2Authorization = fetchByU_O_R_Last(
-			userId, oAuth2ApplicationId, rememberDeviceContent,
-			orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", oAuth2ApplicationId=");
-		sb.append(oAuth2ApplicationId);
-
-		sb.append(", rememberDeviceContent=");
-		sb.append(rememberDeviceContent);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param rememberDeviceContent the remember device content
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByU_O_R_Last(
-		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
-		OrderByComparator<OAuth2Authorization> orderByComparator) {
-
-		int count = countByU_O_R(
-			userId, oAuth2ApplicationId, rememberDeviceContent);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2Authorization> list = findByU_O_R(
-			userId, oAuth2ApplicationId, rememberDeviceContent, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3136,4 +2806,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:460681480
+// LIFERAY-SERVICE-BUILDER-HASH:-597403814

@@ -122,32 +122,6 @@ public interface MBSuspiciousActivityPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards suspicious activity in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
-	 */
-	public MBSuspiciousActivity findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<MBSuspiciousActivity> orderByComparator)
-		throws NoSuchSuspiciousActivityException;
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public MBSuspiciousActivity fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBSuspiciousActivity>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards suspicious activities where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface MBSuspiciousActivityPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards suspicious activity in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
-	 */
-	public MBSuspiciousActivity findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<MBSuspiciousActivity> orderByComparator)
-		throws NoSuchSuspiciousActivityException;
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public MBSuspiciousActivity fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBSuspiciousActivity>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards suspicious activities where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -439,32 +385,6 @@ public interface MBSuspiciousActivityPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards suspicious activity in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
-	 */
-	public MBSuspiciousActivity findByMessageId_Last(
-			long messageId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<MBSuspiciousActivity> orderByComparator)
-		throws NoSuchSuspiciousActivityException;
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public MBSuspiciousActivity fetchByMessageId_Last(
-		long messageId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBSuspiciousActivity>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards suspicious activities where messageId = &#63; from the database.
 	 *
 	 * @param messageId the message ID
@@ -562,32 +482,6 @@ public interface MBSuspiciousActivityPersistence
 	 * @return the first matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
 	 */
 	public MBSuspiciousActivity fetchByThreadId_First(
-		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBSuspiciousActivity>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where threadId = &#63;.
-	 *
-	 * @param threadId the thread ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
-	 */
-	public MBSuspiciousActivity findByThreadId_Last(
-			long threadId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<MBSuspiciousActivity> orderByComparator)
-		throws NoSuchSuspiciousActivityException;
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where threadId = &#63;.
-	 *
-	 * @param threadId the thread ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public MBSuspiciousActivity fetchByThreadId_Last(
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBSuspiciousActivity>
 			orderByComparator);
@@ -830,4 +724,4 @@ public interface MBSuspiciousActivityPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1320350033
+// LIFERAY-SERVICE-BUILDER-HASH:878833477

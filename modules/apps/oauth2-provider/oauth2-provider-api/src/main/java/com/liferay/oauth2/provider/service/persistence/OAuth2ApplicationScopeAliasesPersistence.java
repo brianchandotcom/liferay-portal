@@ -121,32 +121,6 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 			<OAuth2ApplicationScopeAliases> orderByComparator);
 
 	/**
-	 * Returns the last o auth2 application scope aliases in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application scope aliases
-	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
-	 */
-	public OAuth2ApplicationScopeAliases findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuth2ApplicationScopeAliases> orderByComparator)
-		throws NoSuchOAuth2ApplicationScopeAliasesException;
-
-	/**
-	 * Returns the last o auth2 application scope aliases in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
-	 */
-	public OAuth2ApplicationScopeAliases fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<OAuth2ApplicationScopeAliases> orderByComparator);
-
-	/**
 	 * Removes all the o auth2 application scope aliaseses where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -247,32 +221,6 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @return the first matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	 */
 	public OAuth2ApplicationScopeAliases fetchByOAuth2ApplicationId_First(
-		long oAuth2ApplicationId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<OAuth2ApplicationScopeAliases> orderByComparator);
-
-	/**
-	 * Returns the last o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application scope aliases
-	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
-	 */
-	public OAuth2ApplicationScopeAliases findByOAuth2ApplicationId_Last(
-			long oAuth2ApplicationId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuth2ApplicationScopeAliases> orderByComparator)
-		throws NoSuchOAuth2ApplicationScopeAliasesException;
-
-	/**
-	 * Returns the last o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
-	 */
-	public OAuth2ApplicationScopeAliases fetchByOAuth2ApplicationId_Last(
 		long oAuth2ApplicationId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<OAuth2ApplicationScopeAliases> orderByComparator);
@@ -422,4 +370,4 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-863353137
+// LIFERAY-SERVICE-BUILDER-HASH:-1733352079

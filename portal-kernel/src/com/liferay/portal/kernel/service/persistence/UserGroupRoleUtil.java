@@ -212,35 +212,6 @@ public class UserGroupRoleUtil {
 	}
 
 	/**
-	 * Returns the last user group role in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role
-	 * @throws NoSuchUserGroupRoleException if a matching user group role could not be found
-	 */
-	public static UserGroupRole findByUserId_Last(
-			long userId, OrderByComparator<UserGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupRoleException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user group role in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
-	 */
-	public static UserGroupRole fetchByUserId_Last(
-		long userId, OrderByComparator<UserGroupRole> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user group roles where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -362,35 +333,6 @@ public class UserGroupRoleUtil {
 	}
 
 	/**
-	 * Returns the last user group role in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role
-	 * @throws NoSuchUserGroupRoleException if a matching user group role could not be found
-	 */
-	public static UserGroupRole findByGroupId_Last(
-			long groupId, OrderByComparator<UserGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupRoleException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user group role in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
-	 */
-	public static UserGroupRole fetchByGroupId_Last(
-		long groupId, OrderByComparator<UserGroupRole> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user group roles where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -508,35 +450,6 @@ public class UserGroupRoleUtil {
 		long roleId, OrderByComparator<UserGroupRole> orderByComparator) {
 
 		return getPersistence().fetchByRoleId_First(roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user group role in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role
-	 * @throws NoSuchUserGroupRoleException if a matching user group role could not be found
-	 */
-	public static UserGroupRole findByRoleId_Last(
-			long roleId, OrderByComparator<UserGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupRoleException {
-
-		return getPersistence().findByRoleId_Last(roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user group role in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
-	 */
-	public static UserGroupRole fetchByRoleId_Last(
-		long roleId, OrderByComparator<UserGroupRole> orderByComparator) {
-
-		return getPersistence().fetchByRoleId_Last(roleId, orderByComparator);
 	}
 
 	/**
@@ -670,41 +583,6 @@ public class UserGroupRoleUtil {
 	}
 
 	/**
-	 * Returns the last user group role in the ordered set where userId = &#63; and groupId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role
-	 * @throws NoSuchUserGroupRoleException if a matching user group role could not be found
-	 */
-	public static UserGroupRole findByU_G_Last(
-			long userId, long groupId,
-			OrderByComparator<UserGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupRoleException {
-
-		return getPersistence().findByU_G_Last(
-			userId, groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user group role in the ordered set where userId = &#63; and groupId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
-	 */
-	public static UserGroupRole fetchByU_G_Last(
-		long userId, long groupId,
-		OrderByComparator<UserGroupRole> orderByComparator) {
-
-		return getPersistence().fetchByU_G_Last(
-			userId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user group roles where userId = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -833,41 +711,6 @@ public class UserGroupRoleUtil {
 		OrderByComparator<UserGroupRole> orderByComparator) {
 
 		return getPersistence().fetchByG_R_First(
-			groupId, roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user group role in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role
-	 * @throws NoSuchUserGroupRoleException if a matching user group role could not be found
-	 */
-	public static UserGroupRole findByG_R_Last(
-			long groupId, long roleId,
-			OrderByComparator<UserGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupRoleException {
-
-		return getPersistence().findByG_R_Last(
-			groupId, roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user group role in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user group role, or <code>null</code> if a matching user group role could not be found
-	 */
-	public static UserGroupRole fetchByG_R_Last(
-		long groupId, long roleId,
-		OrderByComparator<UserGroupRole> orderByComparator) {
-
-		return getPersistence().fetchByG_R_Last(
 			groupId, roleId, orderByComparator);
 	}
 
@@ -1128,4 +971,4 @@ public class UserGroupRoleUtil {
 	private static volatile UserGroupRolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1987485387
+// LIFERAY-SERVICE-BUILDER-HASH:-902193407

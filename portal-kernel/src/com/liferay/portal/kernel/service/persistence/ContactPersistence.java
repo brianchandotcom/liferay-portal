@@ -118,32 +118,6 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 			orderByComparator);
 
 	/**
-	 * Returns the last contact in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	public Contact findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Contact>
-				orderByComparator)
-		throws NoSuchContactException;
-
-	/**
-	 * Returns the last contact in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	public Contact fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Contact>
-			orderByComparator);
-
-	/**
 	 * Removes all the contacts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -241,32 +215,6 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 * @return the first matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	public Contact fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<Contact>
-			orderByComparator);
-
-	/**
-	 * Returns the last contact in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	public Contact findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Contact>
-				orderByComparator)
-		throws NoSuchContactException;
-
-	/**
-	 * Returns the last contact in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	public Contact fetchByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact>
 			orderByComparator);
@@ -380,34 +328,6 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 			orderByComparator);
 
 	/**
-	 * Returns the last contact in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	public Contact findByC_U_Last(
-			long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Contact>
-				orderByComparator)
-		throws NoSuchContactException;
-
-	/**
-	 * Returns the last contact in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	public Contact fetchByC_U_Last(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<Contact>
-			orderByComparator);
-
-	/**
 	 * Removes all the contacts where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -513,34 +433,6 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 * @return the first matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	public Contact fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<Contact>
-			orderByComparator);
-
-	/**
-	 * Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	public Contact findByC_C_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<Contact>
-				orderByComparator)
-		throws NoSuchContactException;
-
-	/**
-	 * Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	public Contact fetchByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact>
 			orderByComparator);
@@ -682,4 +574,4 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1432500457
+// LIFERAY-SERVICE-BUILDER-HASH:-981497787

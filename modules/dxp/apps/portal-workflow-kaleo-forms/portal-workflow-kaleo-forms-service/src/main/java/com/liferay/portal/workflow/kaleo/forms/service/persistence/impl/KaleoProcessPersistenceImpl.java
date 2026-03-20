@@ -319,64 +319,6 @@ public class KaleoProcessPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process
-	 * @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
-	 */
-	@Override
-	public KaleoProcess findByUuid_Last(
-			String uuid, OrderByComparator<KaleoProcess> orderByComparator)
-		throws NoSuchKaleoProcessException {
-
-		KaleoProcess kaleoProcess = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (kaleoProcess != null) {
-			return kaleoProcess;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchKaleoProcessException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	@Override
-	public KaleoProcess fetchByUuid_Last(
-		String uuid, OrderByComparator<KaleoProcess> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoProcess> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -908,72 +850,6 @@ public class KaleoProcessPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process
-	 * @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
-	 */
-	@Override
-	public KaleoProcess findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<KaleoProcess> orderByComparator)
-		throws NoSuchKaleoProcessException {
-
-		KaleoProcess kaleoProcess = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (kaleoProcess != null) {
-			return kaleoProcess;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchKaleoProcessException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	@Override
-	public KaleoProcess fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<KaleoProcess> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoProcess> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1274,65 +1150,6 @@ public class KaleoProcessPersistenceImpl
 
 		List<KaleoProcess> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo process in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process
-	 * @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
-	 */
-	@Override
-	public KaleoProcess findByGroupId_Last(
-			long groupId, OrderByComparator<KaleoProcess> orderByComparator)
-		throws NoSuchKaleoProcessException {
-
-		KaleoProcess kaleoProcess = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (kaleoProcess != null) {
-			return kaleoProcess;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchKaleoProcessException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo process in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	@Override
-	public KaleoProcess fetchByGroupId_Last(
-		long groupId, OrderByComparator<KaleoProcess> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoProcess> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2536,4 +2353,4 @@ public class KaleoProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:575975399
+// LIFERAY-SERVICE-BUILDER-HASH:-2111895355

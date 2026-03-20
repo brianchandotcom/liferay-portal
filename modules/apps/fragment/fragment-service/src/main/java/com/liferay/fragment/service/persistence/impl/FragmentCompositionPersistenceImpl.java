@@ -342,66 +342,6 @@ public class FragmentCompositionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last fragment composition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByUuid_Last(
-			String uuid,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByUuid_Last(
-		String uuid, OrderByComparator<FragmentComposition> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentComposition> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the fragment compositions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -950,72 +890,6 @@ public class FragmentCompositionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last fragment composition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentComposition> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the fragment compositions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1342,67 +1216,6 @@ public class FragmentCompositionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByGroupId_Last(
-			long groupId,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentComposition> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the fragment compositions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1704,68 +1517,6 @@ public class FragmentCompositionPersistenceImpl
 
 		List<FragmentComposition> list = findByFragmentCollectionId(
 			fragmentCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where fragmentCollectionId = &#63;.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByFragmentCollectionId_Last(
-			long fragmentCollectionId,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition =
-			fetchByFragmentCollectionId_Last(
-				fragmentCollectionId, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where fragmentCollectionId = &#63;.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByFragmentCollectionId_Last(
-		long fragmentCollectionId,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		int count = countByFragmentCollectionId(fragmentCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentComposition> list = findByFragmentCollectionId(
-			fragmentCollectionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2090,72 +1841,6 @@ public class FragmentCompositionPersistenceImpl
 
 		List<FragmentComposition> list = findByG_FCI(
 			groupId, fragmentCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByG_FCI_Last(
-			long groupId, long fragmentCollectionId,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = fetchByG_FCI_Last(
-			groupId, fragmentCollectionId, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByG_FCI_Last(
-		long groupId, long fragmentCollectionId,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		int count = countByG_FCI(groupId, fragmentCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentComposition> list = findByG_FCI(
-			groupId, fragmentCollectionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2732,78 +2417,6 @@ public class FragmentCompositionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByG_FCI_LikeN_Last(
-			long groupId, long fragmentCollectionId, String name,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = fetchByG_FCI_LikeN_Last(
-			groupId, fragmentCollectionId, name, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByG_FCI_LikeN_Last(
-		long groupId, long fragmentCollectionId, String name,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		int count = countByG_FCI_LikeN(groupId, fragmentCollectionId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentComposition> list = findByG_FCI_LikeN(
-			groupId, fragmentCollectionId, name, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3178,78 +2791,6 @@ public class FragmentCompositionPersistenceImpl
 
 		List<FragmentComposition> list = findByG_FCI_S(
 			groupId, fragmentCollectionId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByG_FCI_S_Last(
-			long groupId, long fragmentCollectionId, int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = fetchByG_FCI_S_Last(
-			groupId, fragmentCollectionId, status, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByG_FCI_S_Last(
-		long groupId, long fragmentCollectionId, int status,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		int count = countByG_FCI_S(groupId, fragmentCollectionId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentComposition> list = findByG_FCI_S(
-			groupId, fragmentCollectionId, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3634,84 +3175,6 @@ public class FragmentCompositionPersistenceImpl
 
 		List<FragmentComposition> list = findByG_FCI_LikeN_S(
 			groupId, fragmentCollectionId, name, status, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByG_FCI_LikeN_S_Last(
-			long groupId, long fragmentCollectionId, String name, int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = fetchByG_FCI_LikeN_S_Last(
-			groupId, fragmentCollectionId, name, status, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByG_FCI_LikeN_S_Last(
-		long groupId, long fragmentCollectionId, String name, int status,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		int count = countByG_FCI_LikeN_S(
-			groupId, fragmentCollectionId, name, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentComposition> list = findByG_FCI_LikeN_S(
-			groupId, fragmentCollectionId, name, status, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5295,4 +4758,4 @@ public class FragmentCompositionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-352217166
+// LIFERAY-SERVICE-BUILDER-HASH:6351923

@@ -120,32 +120,6 @@ public interface CPOptionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option
-	 * @throws NoSuchCPOptionException if a matching cp option could not be found
-	 */
-	public CPOption findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOption>
-				orderByComparator)
-		throws NoSuchCPOptionException;
-
-	/**
-	 * Returns the last cp option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option, or <code>null</code> if a matching cp option could not be found
-	 */
-	public CPOption fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOption>
-			orderByComparator);
-
-	/**
 	 * Returns all the cp options that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -298,34 +272,6 @@ public interface CPOptionPersistence
 	 * @return the first matching cp option, or <code>null</code> if a matching cp option could not be found
 	 */
 	public CPOption fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOption>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option
-	 * @throws NoSuchCPOptionException if a matching cp option could not be found
-	 */
-	public CPOption findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOption>
-				orderByComparator)
-		throws NoSuchCPOptionException;
-
-	/**
-	 * Returns the last cp option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option, or <code>null</code> if a matching cp option could not be found
-	 */
-	public CPOption fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOption>
 			orderByComparator);
@@ -484,32 +430,6 @@ public interface CPOptionPersistence
 	 * @return the first matching cp option, or <code>null</code> if a matching cp option could not be found
 	 */
 	public CPOption fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOption>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option
-	 * @throws NoSuchCPOptionException if a matching cp option could not be found
-	 */
-	public CPOption findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOption>
-				orderByComparator)
-		throws NoSuchCPOptionException;
-
-	/**
-	 * Returns the last cp option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option, or <code>null</code> if a matching cp option could not be found
-	 */
-	public CPOption fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOption>
 			orderByComparator);
@@ -798,4 +718,4 @@ public interface CPOptionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1678844331
+// LIFERAY-SERVICE-BUILDER-HASH:1572764679

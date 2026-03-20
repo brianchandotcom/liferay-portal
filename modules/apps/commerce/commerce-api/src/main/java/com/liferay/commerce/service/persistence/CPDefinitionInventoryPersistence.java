@@ -122,32 +122,6 @@ public interface CPDefinitionInventoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp definition inventory in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition inventory
-	 * @throws NoSuchCPDefinitionInventoryException if a matching cp definition inventory could not be found
-	 */
-	public CPDefinitionInventory findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionInventory> orderByComparator)
-		throws NoSuchCPDefinitionInventoryException;
-
-	/**
-	 * Returns the last cp definition inventory in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
-	 */
-	public CPDefinitionInventory fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionInventory>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp definition inventories where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -302,34 +276,6 @@ public interface CPDefinitionInventoryPersistence
 	 * @return the first matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
 	 */
 	public CPDefinitionInventory fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionInventory>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp definition inventory in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition inventory
-	 * @throws NoSuchCPDefinitionInventoryException if a matching cp definition inventory could not be found
-	 */
-	public CPDefinitionInventory findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionInventory> orderByComparator)
-		throws NoSuchCPDefinitionInventoryException;
-
-	/**
-	 * Returns the last cp definition inventory in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
-	 */
-	public CPDefinitionInventory fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionInventory>
 			orderByComparator);
@@ -520,4 +466,4 @@ public interface CPDefinitionInventoryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1409092424
+// LIFERAY-SERVICE-BUILDER-HASH:-2046364282

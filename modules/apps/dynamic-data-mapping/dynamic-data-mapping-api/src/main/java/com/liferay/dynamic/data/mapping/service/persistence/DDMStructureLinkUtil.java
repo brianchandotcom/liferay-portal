@@ -216,39 +216,6 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	 * Returns the last ddm structure link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure link
-	 * @throws NoSuchStructureLinkException if a matching ddm structure link could not be found
-	 */
-	public static DDMStructureLink findByStructureId_Last(
-			long structureId,
-			OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLinkException {
-
-		return getPersistence().findByStructureId_Last(
-			structureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure link, or <code>null</code> if a matching ddm structure link could not be found
-	 */
-	public static DDMStructureLink fetchByStructureId_Last(
-		long structureId,
-		OrderByComparator<DDMStructureLink> orderByComparator) {
-
-		return getPersistence().fetchByStructureId_Last(
-			structureId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm structure links where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -378,41 +345,6 @@ public class DDMStructureLinkUtil {
 		OrderByComparator<DDMStructureLink> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure link
-	 * @throws NoSuchStructureLinkException if a matching ddm structure link could not be found
-	 */
-	public static DDMStructureLink findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLinkException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure link, or <code>null</code> if a matching ddm structure link could not be found
-	 */
-	public static DDMStructureLink fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<DDMStructureLink> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
 	}
 
@@ -680,4 +612,4 @@ public class DDMStructureLinkUtil {
 	private static volatile DDMStructureLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1800618054
+// LIFERAY-SERVICE-BUILDER-HASH:291550054

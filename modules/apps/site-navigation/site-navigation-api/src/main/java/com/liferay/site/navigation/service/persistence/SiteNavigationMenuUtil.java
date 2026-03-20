@@ -213,35 +213,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns the last site navigation menu in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu findByUuid_Last(
-			String uuid,
-			OrderByComparator<SiteNavigationMenu> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByUuid_Last(
-		String uuid, OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the site navigation menus where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -436,40 +407,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns the last site navigation menu in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SiteNavigationMenu> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the site navigation menus where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -590,35 +527,6 @@ public class SiteNavigationMenuUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu findByGroupId_Last(
-			long groupId,
-			OrderByComparator<SiteNavigationMenu> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByGroupId_Last(
-		long groupId, OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -951,38 +859,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns the last site navigation menu in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<SiteNavigationMenu> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the site navigation menus where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1173,40 +1049,6 @@ public class SiteNavigationMenuUtil {
 		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 
 		return getPersistence().fetchByG_LikeN_First(
-			groupId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu findByG_LikeN_Last(
-			long groupId, String name,
-			OrderByComparator<SiteNavigationMenu> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-
-		return getPersistence().findByG_LikeN_Last(
-			groupId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByG_LikeN_Last(
-		long groupId, String name,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().fetchByG_LikeN_Last(
 			groupId, name, orderByComparator);
 	}
 
@@ -1565,40 +1407,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu findByG_T_Last(
-			long groupId, int type,
-			OrderByComparator<SiteNavigationMenu> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-
-		return getPersistence().findByG_T_Last(
-			groupId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByG_T_Last(
-		long groupId, int type,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().fetchByG_T_Last(
-			groupId, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1793,40 +1601,6 @@ public class SiteNavigationMenuUtil {
 		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 
 		return getPersistence().fetchByG_A_First(
-			groupId, auto, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and auto = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu
-	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu findByG_A_Last(
-			long groupId, boolean auto,
-			OrderByComparator<SiteNavigationMenu> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-
-		return getPersistence().findByG_A_Last(
-			groupId, auto, orderByComparator);
-	}
-
-	/**
-	 * Returns the last site navigation menu in the ordered set where groupId = &#63; and auto = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByG_A_Last(
-		long groupId, boolean auto,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().fetchByG_A_Last(
 			groupId, auto, orderByComparator);
 	}
 
@@ -2152,4 +1926,4 @@ public class SiteNavigationMenuUtil {
 	private static volatile SiteNavigationMenuPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1768683336
+// LIFERAY-SERVICE-BUILDER-HASH:-244617970

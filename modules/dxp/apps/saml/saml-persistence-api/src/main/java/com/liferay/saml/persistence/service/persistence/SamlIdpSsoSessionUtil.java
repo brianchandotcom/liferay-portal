@@ -279,39 +279,6 @@ public class SamlIdpSsoSessionUtil {
 	}
 
 	/**
-	 * Returns the last saml idp sso session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sso session
-	 * @throws NoSuchIdpSsoSessionException if a matching saml idp sso session could not be found
-	 */
-	public static SamlIdpSsoSession findByLtCreateDate_Last(
-			Date createDate,
-			OrderByComparator<SamlIdpSsoSession> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchIdpSsoSessionException {
-
-		return getPersistence().findByLtCreateDate_Last(
-			createDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saml idp sso session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
-	 */
-	public static SamlIdpSsoSession fetchByLtCreateDate_Last(
-		Date createDate,
-		OrderByComparator<SamlIdpSsoSession> orderByComparator) {
-
-		return getPersistence().fetchByLtCreateDate_Last(
-			createDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saml idp sso sessions where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -567,4 +534,4 @@ public class SamlIdpSsoSessionUtil {
 	private static volatile SamlIdpSsoSessionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1669719265
+// LIFERAY-SERVICE-BUILDER-HASH:-1249263404

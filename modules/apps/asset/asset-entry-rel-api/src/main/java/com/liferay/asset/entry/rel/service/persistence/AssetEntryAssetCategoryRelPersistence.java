@@ -123,32 +123,6 @@ public interface AssetEntryAssetCategoryRelPersistence
 			<AssetEntryAssetCategoryRel> orderByComparator);
 
 	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
-	 */
-	public AssetEntryAssetCategoryRel findByAssetEntryId_Last(
-			long assetEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetEntryAssetCategoryRel> orderByComparator)
-		throws NoSuchEntryAssetCategoryRelException;
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
-	 */
-	public AssetEntryAssetCategoryRel fetchByAssetEntryId_Last(
-		long assetEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AssetEntryAssetCategoryRel> orderByComparator);
-
-	/**
 	 * Removes all the asset entry asset category rels where assetEntryId = &#63; from the database.
 	 *
 	 * @param assetEntryId the asset entry ID
@@ -247,32 +221,6 @@ public interface AssetEntryAssetCategoryRelPersistence
 	 * @return the first matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
 	 */
 	public AssetEntryAssetCategoryRel fetchByAssetCategoryId_First(
-		long assetCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AssetEntryAssetCategoryRel> orderByComparator);
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
-	 */
-	public AssetEntryAssetCategoryRel findByAssetCategoryId_Last(
-			long assetCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetEntryAssetCategoryRel> orderByComparator)
-		throws NoSuchEntryAssetCategoryRelException;
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
-	 */
-	public AssetEntryAssetCategoryRel fetchByAssetCategoryId_Last(
 		long assetCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetEntryAssetCategoryRel> orderByComparator);
@@ -472,4 +420,4 @@ public interface AssetEntryAssetCategoryRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:10275155
+// LIFERAY-SERVICE-BUILDER-HASH:-1638998323

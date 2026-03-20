@@ -117,32 +117,6 @@ public interface AppPersistence extends BasePersistence<App> {
 			orderByComparator);
 
 	/**
-	 * Returns the last app in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	public App findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<App>
-				orderByComparator)
-		throws NoSuchAppException;
-
-	/**
-	 * Returns the last app in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	public App fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<App>
-			orderByComparator);
-
-	/**
 	 * Removes all the apps where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -250,34 +224,6 @@ public interface AppPersistence extends BasePersistence<App> {
 			orderByComparator);
 
 	/**
-	 * Returns the last app in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	public App findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<App>
-				orderByComparator)
-		throws NoSuchAppException;
-
-	/**
-	 * Returns the last app in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	public App fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<App>
-			orderByComparator);
-
-	/**
 	 * Removes all the apps where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -376,32 +322,6 @@ public interface AppPersistence extends BasePersistence<App> {
 	 * @return the first matching app, or <code>null</code> if a matching app could not be found
 	 */
 	public App fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<App>
-			orderByComparator);
-
-	/**
-	 * Returns the last app in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	public App findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<App>
-				orderByComparator)
-		throws NoSuchAppException;
-
-	/**
-	 * Returns the last app in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	public App fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<App>
 			orderByComparator);
@@ -550,32 +470,6 @@ public interface AppPersistence extends BasePersistence<App> {
 			orderByComparator);
 
 	/**
-	 * Returns the last app in the ordered set where category = &#63;.
-	 *
-	 * @param category the category
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	public App findByCategory_Last(
-			String category,
-			com.liferay.portal.kernel.util.OrderByComparator<App>
-				orderByComparator)
-		throws NoSuchAppException;
-
-	/**
-	 * Returns the last app in the ordered set where category = &#63;.
-	 *
-	 * @param category the category
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	public App fetchByCategory_Last(
-		String category,
-		com.liferay.portal.kernel.util.OrderByComparator<App>
-			orderByComparator);
-
-	/**
 	 * Removes all the apps where category = &#63; from the database.
 	 *
 	 * @param category the category
@@ -708,4 +602,4 @@ public interface AppPersistence extends BasePersistence<App> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:481654277
+// LIFERAY-SERVICE-BUILDER-HASH:2016659657

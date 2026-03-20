@@ -207,34 +207,6 @@ public class CProductUtil {
 	}
 
 	/**
-	 * Returns the last c product in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product
-	 * @throws NoSuchCProductException if a matching c product could not be found
-	 */
-	public static CProduct findByUuid_Last(
-			String uuid, OrderByComparator<CProduct> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCProductException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last c product in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product, or <code>null</code> if a matching c product could not be found
-	 */
-	public static CProduct fetchByUuid_Last(
-		String uuid, OrderByComparator<CProduct> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the c products where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -426,40 +398,6 @@ public class CProductUtil {
 	}
 
 	/**
-	 * Returns the last c product in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product
-	 * @throws NoSuchCProductException if a matching c product could not be found
-	 */
-	public static CProduct findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CProduct> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCProductException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last c product in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product, or <code>null</code> if a matching c product could not be found
-	 */
-	public static CProduct fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CProduct> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the c products where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -578,34 +516,6 @@ public class CProductUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last c product in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product
-	 * @throws NoSuchCProductException if a matching c product could not be found
-	 */
-	public static CProduct findByGroupId_Last(
-			long groupId, OrderByComparator<CProduct> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCProductException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last c product in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c product, or <code>null</code> if a matching c product could not be found
-	 */
-	public static CProduct fetchByGroupId_Last(
-		long groupId, OrderByComparator<CProduct> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -855,4 +765,4 @@ public class CProductUtil {
 	private static volatile CProductPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1209300966
+// LIFERAY-SERVICE-BUILDER-HASH:2136236385

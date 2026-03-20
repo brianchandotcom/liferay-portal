@@ -322,68 +322,6 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
-	 */
-	@Override
-	public PortletPreferenceValue findByPortletPreferencesId_Last(
-			long portletPreferencesId,
-			OrderByComparator<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException {
-
-		PortletPreferenceValue portletPreferenceValue =
-			fetchByPortletPreferencesId_Last(
-				portletPreferencesId, orderByComparator);
-
-		if (portletPreferenceValue != null) {
-			return portletPreferenceValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletPreferencesId=");
-		sb.append(portletPreferencesId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferenceValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
-	 */
-	@Override
-	public PortletPreferenceValue fetchByPortletPreferencesId_Last(
-		long portletPreferencesId,
-		OrderByComparator<PortletPreferenceValue> orderByComparator) {
-
-		int count = countByPortletPreferencesId(portletPreferencesId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferenceValue> list = findByPortletPreferencesId(
-			portletPreferencesId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the portlet preference values where portletPreferencesId = &#63; from the database.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
@@ -712,72 +650,6 @@ public class PortletPreferenceValuePersistenceImpl
 
 		List<PortletPreferenceValue> list = findByP_N(
 			portletPreferencesId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
-	 */
-	@Override
-	public PortletPreferenceValue findByP_N_Last(
-			long portletPreferencesId, String name,
-			OrderByComparator<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException {
-
-		PortletPreferenceValue portletPreferenceValue = fetchByP_N_Last(
-			portletPreferencesId, name, orderByComparator);
-
-		if (portletPreferenceValue != null) {
-			return portletPreferenceValue;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletPreferencesId=");
-		sb.append(portletPreferencesId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferenceValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
-	 */
-	@Override
-	public PortletPreferenceValue fetchByP_N_Last(
-		long portletPreferencesId, String name,
-		OrderByComparator<PortletPreferenceValue> orderByComparator) {
-
-		int count = countByP_N(portletPreferencesId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferenceValue> list = findByP_N(
-			portletPreferencesId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1164,77 +1036,6 @@ public class PortletPreferenceValuePersistenceImpl
 
 		List<PortletPreferenceValue> list = findByC_N_SV(
 			companyId, name, smallValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
-	 */
-	@Override
-	public PortletPreferenceValue findByC_N_SV_Last(
-			long companyId, String name, String smallValue,
-			OrderByComparator<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException {
-
-		PortletPreferenceValue portletPreferenceValue = fetchByC_N_SV_Last(
-			companyId, name, smallValue, orderByComparator);
-
-		if (portletPreferenceValue != null) {
-			return portletPreferenceValue;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", smallValue=");
-		sb.append(smallValue);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferenceValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
-	 */
-	@Override
-	public PortletPreferenceValue fetchByC_N_SV_Last(
-		long companyId, String name, String smallValue,
-		OrderByComparator<PortletPreferenceValue> orderByComparator) {
-
-		int count = countByC_N_SV(companyId, name, smallValue);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferenceValue> list = findByC_N_SV(
-			companyId, name, smallValue, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1882,78 +1683,6 @@ public class PortletPreferenceValuePersistenceImpl
 
 		List<PortletPreferenceValue> list = findByP_N_SV(
 			portletPreferencesId, name, smallValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
-	 */
-	@Override
-	public PortletPreferenceValue findByP_N_SV_Last(
-			long portletPreferencesId, String name, String smallValue,
-			OrderByComparator<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException {
-
-		PortletPreferenceValue portletPreferenceValue = fetchByP_N_SV_Last(
-			portletPreferencesId, name, smallValue, orderByComparator);
-
-		if (portletPreferenceValue != null) {
-			return portletPreferenceValue;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletPreferencesId=");
-		sb.append(portletPreferencesId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", smallValue=");
-		sb.append(smallValue);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferenceValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
-	 */
-	@Override
-	public PortletPreferenceValue fetchByP_N_SV_Last(
-		long portletPreferencesId, String name, String smallValue,
-		OrderByComparator<PortletPreferenceValue> orderByComparator) {
-
-		int count = countByP_N_SV(portletPreferencesId, name, smallValue);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletPreferenceValue> list = findByP_N_SV(
-			portletPreferencesId, name, smallValue, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3082,4 +2811,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:127422263
+// LIFERAY-SERVICE-BUILDER-HASH:62942778

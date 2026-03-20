@@ -340,67 +340,6 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp configuration entry setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a matching cp configuration entry setting could not be found
-	 */
-	@Override
-	public CPConfigurationEntrySetting findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPConfigurationEntrySetting> orderByComparator)
-		throws NoSuchCPConfigurationEntrySettingException {
-
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (cpConfigurationEntrySetting != null) {
-			return cpConfigurationEntrySetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationEntrySettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration entry setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting, or <code>null</code> if a matching cp configuration entry setting could not be found
-	 */
-	@Override
-	public CPConfigurationEntrySetting fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPConfigurationEntrySetting> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationEntrySetting> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp configuration entry settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -963,72 +902,6 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp configuration entry setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a matching cp configuration entry setting could not be found
-	 */
-	@Override
-	public CPConfigurationEntrySetting findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPConfigurationEntrySetting> orderByComparator)
-		throws NoSuchCPConfigurationEntrySettingException {
-
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (cpConfigurationEntrySetting != null) {
-			return cpConfigurationEntrySetting;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationEntrySettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration entry setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting, or <code>null</code> if a matching cp configuration entry setting could not be found
-	 */
-	@Override
-	public CPConfigurationEntrySetting fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPConfigurationEntrySetting> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationEntrySetting> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp configuration entry settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1351,67 +1224,6 @@ public class CPConfigurationEntrySettingPersistenceImpl
 
 		List<CPConfigurationEntrySetting> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp configuration entry setting in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a matching cp configuration entry setting could not be found
-	 */
-	@Override
-	public CPConfigurationEntrySetting findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPConfigurationEntrySetting> orderByComparator)
-		throws NoSuchCPConfigurationEntrySettingException {
-
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (cpConfigurationEntrySetting != null) {
-			return cpConfigurationEntrySetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationEntrySettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration entry setting in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting, or <code>null</code> if a matching cp configuration entry setting could not be found
-	 */
-	@Override
-	public CPConfigurationEntrySetting fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CPConfigurationEntrySetting> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationEntrySetting> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2775,4 +2587,4 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-465736798
+// LIFERAY-SERVICE-BUILDER-HASH:700488742

@@ -325,67 +325,6 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel
-	 * @throws NoSuchEntryRelException if a matching segments entry rel could not be found
-	 */
-	@Override
-	public SegmentsEntryRel findBySegmentsEntryId_Last(
-			long segmentsEntryId,
-			OrderByComparator<SegmentsEntryRel> orderByComparator)
-		throws NoSuchEntryRelException {
-
-		SegmentsEntryRel segmentsEntryRel = fetchBySegmentsEntryId_Last(
-			segmentsEntryId, orderByComparator);
-
-		if (segmentsEntryRel != null) {
-			return segmentsEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
-	 */
-	@Override
-	public SegmentsEntryRel fetchBySegmentsEntryId_Last(
-		long segmentsEntryId,
-		OrderByComparator<SegmentsEntryRel> orderByComparator) {
-
-		int count = countBySegmentsEntryId(segmentsEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntryRel> list = findBySegmentsEntryId(
-			segmentsEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the segments entry rels where segmentsEntryId = &#63; from the database.
 	 *
 	 * @param segmentsEntryId the segments entry ID
@@ -696,72 +635,6 @@ public class SegmentsEntryRelPersistenceImpl
 
 		List<SegmentsEntryRel> list = findByCN_CPK(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel
-	 * @throws NoSuchEntryRelException if a matching segments entry rel could not be found
-	 */
-	@Override
-	public SegmentsEntryRel findByCN_CPK_Last(
-			long classNameId, long classPK,
-			OrderByComparator<SegmentsEntryRel> orderByComparator)
-		throws NoSuchEntryRelException {
-
-		SegmentsEntryRel segmentsEntryRel = fetchByCN_CPK_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (segmentsEntryRel != null) {
-			return segmentsEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
-	 */
-	@Override
-	public SegmentsEntryRel fetchByCN_CPK_Last(
-		long classNameId, long classPK,
-		OrderByComparator<SegmentsEntryRel> orderByComparator) {
-
-		int count = countByCN_CPK(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntryRel> list = findByCN_CPK(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1106,77 +979,6 @@ public class SegmentsEntryRelPersistenceImpl
 
 		List<SegmentsEntryRel> list = findByG_CN_CPK(
 			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel
-	 * @throws NoSuchEntryRelException if a matching segments entry rel could not be found
-	 */
-	@Override
-	public SegmentsEntryRel findByG_CN_CPK_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<SegmentsEntryRel> orderByComparator)
-		throws NoSuchEntryRelException {
-
-		SegmentsEntryRel segmentsEntryRel = fetchByG_CN_CPK_Last(
-			groupId, classNameId, classPK, orderByComparator);
-
-		if (segmentsEntryRel != null) {
-			return segmentsEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
-	 */
-	@Override
-	public SegmentsEntryRel fetchByG_CN_CPK_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<SegmentsEntryRel> orderByComparator) {
-
-		int count = countByG_CN_CPK(groupId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntryRel> list = findByG_CN_CPK(
-			groupId, classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2478,4 +2280,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-834392827
+// LIFERAY-SERVICE-BUILDER-HASH:1490034091

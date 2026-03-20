@@ -334,66 +334,6 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout localization in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization
-	 * @throws NoSuchLayoutLocalizationException if a matching layout localization could not be found
-	 */
-	@Override
-	public LayoutLocalization findByUuid_Last(
-			String uuid,
-			OrderByComparator<LayoutLocalization> orderByComparator)
-		throws NoSuchLayoutLocalizationException {
-
-		LayoutLocalization layoutLocalization = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (layoutLocalization != null) {
-			return layoutLocalization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout localization in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization, or <code>null</code> if a matching layout localization could not be found
-	 */
-	@Override
-	public LayoutLocalization fetchByUuid_Last(
-		String uuid, OrderByComparator<LayoutLocalization> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutLocalization> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout localizations where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -942,72 +882,6 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout localization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization
-	 * @throws NoSuchLayoutLocalizationException if a matching layout localization could not be found
-	 */
-	@Override
-	public LayoutLocalization findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutLocalization> orderByComparator)
-		throws NoSuchLayoutLocalizationException {
-
-		LayoutLocalization layoutLocalization = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (layoutLocalization != null) {
-			return layoutLocalization;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout localization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization, or <code>null</code> if a matching layout localization could not be found
-	 */
-	@Override
-	public LayoutLocalization fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutLocalization> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutLocalization> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout localizations where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1318,65 +1192,6 @@ public class LayoutLocalizationPersistenceImpl
 
 		List<LayoutLocalization> list = findByPlid(
 			plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout localization in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization
-	 * @throws NoSuchLayoutLocalizationException if a matching layout localization could not be found
-	 */
-	@Override
-	public LayoutLocalization findByPlid_Last(
-			long plid, OrderByComparator<LayoutLocalization> orderByComparator)
-		throws NoSuchLayoutLocalizationException {
-
-		LayoutLocalization layoutLocalization = fetchByPlid_Last(
-			plid, orderByComparator);
-
-		if (layoutLocalization != null) {
-			return layoutLocalization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout localization in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization, or <code>null</code> if a matching layout localization could not be found
-	 */
-	@Override
-	public LayoutLocalization fetchByPlid_Last(
-		long plid, OrderByComparator<LayoutLocalization> orderByComparator) {
-
-		int count = countByPlid(plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutLocalization> list = findByPlid(
-			plid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2948,4 +2763,4 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2046310538
+// LIFERAY-SERVICE-BUILDER-HASH:909120670

@@ -297,65 +297,6 @@ public class FaroChannelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last faro channel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel
-	 * @throws NoSuchFaroChannelException if a matching faro channel could not be found
-	 */
-	@Override
-	public FaroChannel findByGroupId_Last(
-			long groupId, OrderByComparator<FaroChannel> orderByComparator)
-		throws NoSuchFaroChannelException {
-
-		FaroChannel faroChannel = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (faroChannel != null) {
-			return faroChannel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroChannelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro channel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel, or <code>null</code> if a matching faro channel could not be found
-	 */
-	@Override
-	public FaroChannel fetchByGroupId_Last(
-		long groupId, OrderByComparator<FaroChannel> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroChannel> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the faro channels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -637,67 +578,6 @@ public class FaroChannelPersistenceImpl
 
 		List<FaroChannel> list = findByWorkspaceGroupId(
 			workspaceGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last faro channel in the ordered set where workspaceGroupId = &#63;.
-	 *
-	 * @param workspaceGroupId the workspace group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel
-	 * @throws NoSuchFaroChannelException if a matching faro channel could not be found
-	 */
-	@Override
-	public FaroChannel findByWorkspaceGroupId_Last(
-			long workspaceGroupId,
-			OrderByComparator<FaroChannel> orderByComparator)
-		throws NoSuchFaroChannelException {
-
-		FaroChannel faroChannel = fetchByWorkspaceGroupId_Last(
-			workspaceGroupId, orderByComparator);
-
-		if (faroChannel != null) {
-			return faroChannel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("workspaceGroupId=");
-		sb.append(workspaceGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroChannelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro channel in the ordered set where workspaceGroupId = &#63;.
-	 *
-	 * @param workspaceGroupId the workspace group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel, or <code>null</code> if a matching faro channel could not be found
-	 */
-	@Override
-	public FaroChannel fetchByWorkspaceGroupId_Last(
-		long workspaceGroupId,
-		OrderByComparator<FaroChannel> orderByComparator) {
-
-		int count = countByWorkspaceGroupId(workspaceGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroChannel> list = findByWorkspaceGroupId(
-			workspaceGroupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1004,72 +884,6 @@ public class FaroChannelPersistenceImpl
 
 		List<FaroChannel> list = findByG_U(
 			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last faro channel in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel
-	 * @throws NoSuchFaroChannelException if a matching faro channel could not be found
-	 */
-	@Override
-	public FaroChannel findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<FaroChannel> orderByComparator)
-		throws NoSuchFaroChannelException {
-
-		FaroChannel faroChannel = fetchByG_U_Last(
-			groupId, userId, orderByComparator);
-
-		if (faroChannel != null) {
-			return faroChannel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroChannelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro channel in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel, or <code>null</code> if a matching faro channel could not be found
-	 */
-	@Override
-	public FaroChannel fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<FaroChannel> orderByComparator) {
-
-		int count = countByG_U(groupId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroChannel> list = findByG_U(
-			groupId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2019,4 +1833,4 @@ public class FaroChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-139944406
+// LIFERAY-SERVICE-BUILDER-HASH:1305518653

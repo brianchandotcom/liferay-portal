@@ -126,32 +126,6 @@ public interface DDMDataProviderInstanceLinkPersistence
 			<DDMDataProviderInstanceLink> orderByComparator);
 
 	/**
-	 * Returns the last ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a matching ddm data provider instance link could not be found
-	 */
-	public DDMDataProviderInstanceLink findByDataProviderInstanceId_Last(
-			long dataProviderInstanceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstanceLink> orderByComparator)
-		throws NoSuchDataProviderInstanceLinkException;
-
-	/**
-	 * Returns the last ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
-	 */
-	public DDMDataProviderInstanceLink fetchByDataProviderInstanceId_Last(
-		long dataProviderInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstanceLink> orderByComparator);
-
-	/**
 	 * Removes all the ddm data provider instance links where dataProviderInstanceId = &#63; from the database.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
@@ -250,32 +224,6 @@ public interface DDMDataProviderInstanceLinkPersistence
 	 * @return the first matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
 	 */
 	public DDMDataProviderInstanceLink fetchByStructureId_First(
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstanceLink> orderByComparator);
-
-	/**
-	 * Returns the last ddm data provider instance link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a matching ddm data provider instance link could not be found
-	 */
-	public DDMDataProviderInstanceLink findByStructureId_Last(
-			long structureId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstanceLink> orderByComparator)
-		throws NoSuchDataProviderInstanceLinkException;
-
-	/**
-	 * Returns the last ddm data provider instance link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
-	 */
-	public DDMDataProviderInstanceLink fetchByStructureId_Last(
 		long structureId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DDMDataProviderInstanceLink> orderByComparator);
@@ -476,4 +424,4 @@ public interface DDMDataProviderInstanceLinkPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-129123948
+// LIFERAY-SERVICE-BUILDER-HASH:813898824

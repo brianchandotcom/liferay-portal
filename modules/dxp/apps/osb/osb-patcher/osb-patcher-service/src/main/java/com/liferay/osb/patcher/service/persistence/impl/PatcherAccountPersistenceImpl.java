@@ -315,65 +315,6 @@ public class PatcherAccountPersistenceImpl
 	}
 
 	/**
-	 * Returns the last patcher account in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher account
-	 * @throws NoSuchPatcherAccountException if a matching patcher account could not be found
-	 */
-	@Override
-	public PatcherAccount findByCompanyId_Last(
-			long companyId, OrderByComparator<PatcherAccount> orderByComparator)
-		throws NoSuchPatcherAccountException {
-
-		PatcherAccount patcherAccount = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (patcherAccount != null) {
-			return patcherAccount;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherAccountException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher account in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher account, or <code>null</code> if a matching patcher account could not be found
-	 */
-	@Override
-	public PatcherAccount fetchByCompanyId_Last(
-		long companyId, OrderByComparator<PatcherAccount> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherAccount> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the patcher accounts that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1063,72 +1004,6 @@ public class PatcherAccountPersistenceImpl
 
 		List<PatcherAccount> list = findByC_LikeA(
 			companyId, accountEntryCode, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher account in the ordered set where companyId = &#63; and accountEntryCode LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryCode the account entry code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher account
-	 * @throws NoSuchPatcherAccountException if a matching patcher account could not be found
-	 */
-	@Override
-	public PatcherAccount findByC_LikeA_Last(
-			long companyId, String accountEntryCode,
-			OrderByComparator<PatcherAccount> orderByComparator)
-		throws NoSuchPatcherAccountException {
-
-		PatcherAccount patcherAccount = fetchByC_LikeA_Last(
-			companyId, accountEntryCode, orderByComparator);
-
-		if (patcherAccount != null) {
-			return patcherAccount;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", accountEntryCodeLIKE");
-		sb.append(accountEntryCode);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherAccountException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher account in the ordered set where companyId = &#63; and accountEntryCode LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryCode the account entry code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher account, or <code>null</code> if a matching patcher account could not be found
-	 */
-	@Override
-	public PatcherAccount fetchByC_LikeA_Last(
-		long companyId, String accountEntryCode,
-		OrderByComparator<PatcherAccount> orderByComparator) {
-
-		int count = countByC_LikeA(companyId, accountEntryCode);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherAccount> list = findByC_LikeA(
-			companyId, accountEntryCode, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2502,4 +2377,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1090160034
+// LIFERAY-SERVICE-BUILDER-HASH:917032546

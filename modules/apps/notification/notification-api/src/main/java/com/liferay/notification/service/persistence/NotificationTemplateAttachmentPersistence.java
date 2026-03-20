@@ -124,32 +124,6 @@ public interface NotificationTemplateAttachmentPersistence
 			<NotificationTemplateAttachment> orderByComparator);
 
 	/**
-	 * Returns the last notification template attachment in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template attachment
-	 * @throws NoSuchNotificationTemplateAttachmentException if a matching notification template attachment could not be found
-	 */
-	public NotificationTemplateAttachment findByNotificationTemplateId_Last(
-			long notificationTemplateId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<NotificationTemplateAttachment> orderByComparator)
-		throws NoSuchNotificationTemplateAttachmentException;
-
-	/**
-	 * Returns the last notification template attachment in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template attachment, or <code>null</code> if a matching notification template attachment could not be found
-	 */
-	public NotificationTemplateAttachment fetchByNotificationTemplateId_Last(
-		long notificationTemplateId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<NotificationTemplateAttachment> orderByComparator);
-
-	/**
 	 * Removes all the notification template attachments where notificationTemplateId = &#63; from the database.
 	 *
 	 * @param notificationTemplateId the notification template ID
@@ -348,4 +322,4 @@ public interface NotificationTemplateAttachmentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1804127825
+// LIFERAY-SERVICE-BUILDER-HASH:142527334

@@ -297,67 +297,6 @@ public class VersionedEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last versioned entry version in the ordered set where versionedEntryId = &#63;.
-	 *
-	 * @param versionedEntryId the versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a matching versioned entry version could not be found
-	 */
-	@Override
-	public VersionedEntryVersion findByVersionedEntryId_Last(
-			long versionedEntryId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
-		throws NoSuchVersionedEntryVersionException {
-
-		VersionedEntryVersion versionedEntryVersion =
-			fetchByVersionedEntryId_Last(versionedEntryId, orderByComparator);
-
-		if (versionedEntryVersion != null) {
-			return versionedEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("versionedEntryId=");
-		sb.append(versionedEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchVersionedEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where versionedEntryId = &#63;.
-	 *
-	 * @param versionedEntryId the versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
-	 */
-	@Override
-	public VersionedEntryVersion fetchByVersionedEntryId_Last(
-		long versionedEntryId,
-		OrderByComparator<VersionedEntryVersion> orderByComparator) {
-
-		int count = countByVersionedEntryId(versionedEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<VersionedEntryVersion> list = findByVersionedEntryId(
-			versionedEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the versioned entry versions where versionedEntryId = &#63; from the database.
 	 *
 	 * @param versionedEntryId the versioned entry ID
@@ -844,67 +783,6 @@ public class VersionedEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a matching versioned entry version could not be found
-	 */
-	@Override
-	public VersionedEntryVersion findByGroupId_Last(
-			long groupId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
-		throws NoSuchVersionedEntryVersionException {
-
-		VersionedEntryVersion versionedEntryVersion = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (versionedEntryVersion != null) {
-			return versionedEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchVersionedEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
-	 */
-	@Override
-	public VersionedEntryVersion fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<VersionedEntryVersion> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<VersionedEntryVersion> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the versioned entry versions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1203,72 +1081,6 @@ public class VersionedEntryVersionPersistenceImpl
 
 		List<VersionedEntryVersion> list = findByGroupId_Version(
 			groupId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a matching versioned entry version could not be found
-	 */
-	@Override
-	public VersionedEntryVersion findByGroupId_Version_Last(
-			long groupId, int version,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
-		throws NoSuchVersionedEntryVersionException {
-
-		VersionedEntryVersion versionedEntryVersion =
-			fetchByGroupId_Version_Last(groupId, version, orderByComparator);
-
-		if (versionedEntryVersion != null) {
-			return versionedEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchVersionedEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
-	 */
-	@Override
-	public VersionedEntryVersion fetchByGroupId_Version_Last(
-		long groupId, int version,
-		OrderByComparator<VersionedEntryVersion> orderByComparator) {
-
-		int count = countByGroupId_Version(groupId, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<VersionedEntryVersion> list = findByGroupId_Version(
-			groupId, version, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2022,4 +1834,4 @@ public class VersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:380094211
+// LIFERAY-SERVICE-BUILDER-HASH:-232168778

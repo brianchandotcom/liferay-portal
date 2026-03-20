@@ -336,63 +336,6 @@ public class RolePersistenceImpl
 	}
 
 	/**
-	 * Returns the last role in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	@Override
-	public Role findByUuid_Last(
-			String uuid, OrderByComparator<Role> orderByComparator)
-		throws NoSuchRoleException {
-
-		Role role = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last role in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	@Override
-	public Role fetchByUuid_Last(
-		String uuid, OrderByComparator<Role> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Role> list = findByUuid(uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -948,71 +891,6 @@ public class RolePersistenceImpl
 
 		List<Role> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last role in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	@Override
-	public Role findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Role> orderByComparator)
-		throws NoSuchRoleException {
-
-		Role role = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last role in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	@Override
-	public Role fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Role> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Role> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1578,64 +1456,6 @@ public class RolePersistenceImpl
 	}
 
 	/**
-	 * Returns the last role in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	@Override
-	public Role findByCompanyId_Last(
-			long companyId, OrderByComparator<Role> orderByComparator)
-		throws NoSuchRoleException {
-
-		Role role = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last role in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	@Override
-	public Role fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Role> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Role> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2123,63 +1943,6 @@ public class RolePersistenceImpl
 		String name, OrderByComparator<Role> orderByComparator) {
 
 		List<Role> list = findByName(name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last role in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	@Override
-	public Role findByName_Last(
-			String name, OrderByComparator<Role> orderByComparator)
-		throws NoSuchRoleException {
-
-		Role role = fetchByName_Last(name, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last role in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	@Override
-	public Role fetchByName_Last(
-		String name, OrderByComparator<Role> orderByComparator) {
-
-		int count = countByName(name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Role> list = findByName(name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2710,63 +2473,6 @@ public class RolePersistenceImpl
 	}
 
 	/**
-	 * Returns the last role in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	@Override
-	public Role findByType_Last(
-			int type, OrderByComparator<Role> orderByComparator)
-		throws NoSuchRoleException {
-
-		Role role = fetchByType_Last(type, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last role in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	@Override
-	public Role fetchByType_Last(
-		int type, OrderByComparator<Role> orderByComparator) {
-
-		int count = countByType(type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Role> list = findByType(type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where type = &#63;.
 	 *
 	 * @param type the type
@@ -3256,64 +2962,6 @@ public class RolePersistenceImpl
 		String subtype, OrderByComparator<Role> orderByComparator) {
 
 		List<Role> list = findBySubtype(subtype, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last role in the ordered set where subtype = &#63;.
-	 *
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	@Override
-	public Role findBySubtype_Last(
-			String subtype, OrderByComparator<Role> orderByComparator)
-		throws NoSuchRoleException {
-
-		Role role = fetchBySubtype_Last(subtype, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("subtype=");
-		sb.append(subtype);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last role in the ordered set where subtype = &#63;.
-	 *
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	@Override
-	public Role fetchBySubtype_Last(
-		String subtype, OrderByComparator<Role> orderByComparator) {
-
-		int count = countBySubtype(subtype);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Role> list = findBySubtype(
-			subtype, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4059,69 +3707,6 @@ public class RolePersistenceImpl
 		long companyId, int type, OrderByComparator<Role> orderByComparator) {
 
 		List<Role> list = findByC_T(companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last role in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	@Override
-	public Role findByC_T_Last(
-			long companyId, int type, OrderByComparator<Role> orderByComparator)
-		throws NoSuchRoleException {
-
-		Role role = fetchByC_T_Last(companyId, type, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last role in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	@Override
-	public Role fetchByC_T_Last(
-		long companyId, int type, OrderByComparator<Role> orderByComparator) {
-
-		int count = countByC_T(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Role> list = findByC_T(
-			companyId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5176,69 +4761,6 @@ public class RolePersistenceImpl
 		int type, String subtype, OrderByComparator<Role> orderByComparator) {
 
 		List<Role> list = findByT_S(type, subtype, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
-	 *
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	@Override
-	public Role findByT_S_Last(
-			int type, String subtype, OrderByComparator<Role> orderByComparator)
-		throws NoSuchRoleException {
-
-		Role role = fetchByT_S_Last(type, subtype, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append(", subtype=");
-		sb.append(subtype);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
-	 *
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	@Override
-	public Role fetchByT_S_Last(
-		int type, String subtype, OrderByComparator<Role> orderByComparator) {
-
-		int count = countByT_S(type, subtype);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Role> list = findByT_S(
-			type, subtype, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -9224,4 +8746,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-891526940
+// LIFERAY-SERVICE-BUILDER-HASH:1589516650

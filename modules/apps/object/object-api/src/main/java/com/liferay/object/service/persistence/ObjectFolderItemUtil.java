@@ -210,34 +210,6 @@ public class ObjectFolderItemUtil {
 	}
 
 	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	public static ObjectFolderItem findByUuid_Last(
-			String uuid, OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderItemException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	public static ObjectFolderItem fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectFolderItem> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object folder items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -365,40 +337,6 @@ public class ObjectFolderItemUtil {
 		OrderByComparator<ObjectFolderItem> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	public static ObjectFolderItem findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderItemException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	public static ObjectFolderItem fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectFolderItem> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -531,38 +469,6 @@ public class ObjectFolderItemUtil {
 	}
 
 	/**
-	 * Returns the last object folder item in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	public static ObjectFolderItem findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderItemException {
-
-		return getPersistence().findByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	public static ObjectFolderItem fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectFolderItem> orderByComparator) {
-
-		return getPersistence().fetchByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object folder items where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -685,38 +591,6 @@ public class ObjectFolderItemUtil {
 		OrderByComparator<ObjectFolderItem> orderByComparator) {
 
 		return getPersistence().fetchByObjectFolderId_First(
-			objectFolderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item
-	 * @throws NoSuchObjectFolderItemException if a matching object folder item could not be found
-	 */
-	public static ObjectFolderItem findByObjectFolderId_Last(
-			long objectFolderId,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderItemException {
-
-		return getPersistence().findByObjectFolderId_Last(
-			objectFolderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder item in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder item, or <code>null</code> if a matching object folder item could not be found
-	 */
-	public static ObjectFolderItem fetchByObjectFolderId_Last(
-		long objectFolderId,
-		OrderByComparator<ObjectFolderItem> orderByComparator) {
-
-		return getPersistence().fetchByObjectFolderId_Last(
 			objectFolderId, orderByComparator);
 	}
 
@@ -975,4 +849,4 @@ public class ObjectFolderItemUtil {
 	private static volatile ObjectFolderItemPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1831818711
+// LIFERAY-SERVICE-BUILDER-HASH:1461830027

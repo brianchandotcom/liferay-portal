@@ -232,41 +232,6 @@ public class LayoutSEOEntryCustomMetaTagUtil {
 	}
 
 	/**
-	 * Returns the last layout seo entry custom meta tag in the ordered set where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry custom meta tag
-	 * @throws NoSuchEntryCustomMetaTagException if a matching layout seo entry custom meta tag could not be found
-	 */
-	public static LayoutSEOEntryCustomMetaTag findByG_L_Last(
-			long groupId, long layoutSEOEntryId,
-			OrderByComparator<LayoutSEOEntryCustomMetaTag> orderByComparator)
-		throws com.liferay.layout.seo.exception.
-			NoSuchEntryCustomMetaTagException {
-
-		return getPersistence().findByG_L_Last(
-			groupId, layoutSEOEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout seo entry custom meta tag in the ordered set where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry custom meta tag, or <code>null</code> if a matching layout seo entry custom meta tag could not be found
-	 */
-	public static LayoutSEOEntryCustomMetaTag fetchByG_L_Last(
-		long groupId, long layoutSEOEntryId,
-		OrderByComparator<LayoutSEOEntryCustomMetaTag> orderByComparator) {
-
-		return getPersistence().fetchByG_L_Last(
-			groupId, layoutSEOEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -466,4 +431,4 @@ public class LayoutSEOEntryCustomMetaTagUtil {
 	private static volatile LayoutSEOEntryCustomMetaTagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:89510003
+// LIFERAY-SERVICE-BUILDER-HASH:1701380185

@@ -120,32 +120,6 @@ public interface CommerceTaxCategoryMappingPersistence
 			<CommerceTaxCategoryMapping> orderByComparator);
 
 	/**
-	 * Returns the last commerce tax category mapping in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping
-	 * @throws NoSuchTaxCategoryMappingException if a matching commerce tax category mapping could not be found
-	 */
-	public CommerceTaxCategoryMapping findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceTaxCategoryMapping> orderByComparator)
-		throws NoSuchTaxCategoryMappingException;
-
-	/**
-	 * Returns the last commerce tax category mapping in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
-	 */
-	public CommerceTaxCategoryMapping fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceTaxCategoryMapping> orderByComparator);
-
-	/**
 	 * Removes all the commerce tax category mappings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface CommerceTaxCategoryMappingPersistence
 			<CommerceTaxCategoryMapping> orderByComparator);
 
 	/**
-	 * Returns the last commerce tax category mapping in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping
-	 * @throws NoSuchTaxCategoryMappingException if a matching commerce tax category mapping could not be found
-	 */
-	public CommerceTaxCategoryMapping findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceTaxCategoryMapping> orderByComparator)
-		throws NoSuchTaxCategoryMappingException;
-
-	/**
-	 * Returns the last commerce tax category mapping in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
-	 */
-	public CommerceTaxCategoryMapping fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceTaxCategoryMapping> orderByComparator);
-
-	/**
 	 * Removes all the commerce tax category mappings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface CommerceTaxCategoryMappingPersistence
 	 * @return the first matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
 	 */
 	public CommerceTaxCategoryMapping fetchByCommerceTaxMethodId_First(
-		long commerceTaxMethodId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceTaxCategoryMapping> orderByComparator);
-
-	/**
-	 * Returns the last commerce tax category mapping in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping
-	 * @throws NoSuchTaxCategoryMappingException if a matching commerce tax category mapping could not be found
-	 */
-	public CommerceTaxCategoryMapping findByCommerceTaxMethodId_Last(
-			long commerceTaxMethodId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceTaxCategoryMapping> orderByComparator)
-		throws NoSuchTaxCategoryMappingException;
-
-	/**
-	 * Returns the last commerce tax category mapping in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
-	 */
-	public CommerceTaxCategoryMapping fetchByCommerceTaxMethodId_Last(
 		long commerceTaxMethodId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceTaxCategoryMapping> orderByComparator);
@@ -711,4 +631,4 @@ public interface CommerceTaxCategoryMappingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-780828451
+// LIFERAY-SERVICE-BUILDER-HASH:873794441

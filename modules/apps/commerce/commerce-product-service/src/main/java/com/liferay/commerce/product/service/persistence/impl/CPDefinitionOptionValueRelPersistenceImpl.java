@@ -340,67 +340,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (cpDefinitionOptionValueRel != null) {
-			return cpDefinitionOptionValueRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionOptionValueRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionOptionValueRel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -961,72 +900,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (cpDefinitionOptionValueRel != null) {
-			return cpDefinitionOptionValueRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionOptionValueRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionOptionValueRel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1358,67 +1231,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (cpDefinitionOptionValueRel != null) {
-			return cpDefinitionOptionValueRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionOptionValueRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionOptionValueRel> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1715,67 +1527,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 
 		List<CPDefinitionOptionValueRel> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (cpDefinitionOptionValueRel != null) {
-			return cpDefinitionOptionValueRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionOptionValueRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionOptionValueRel> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2092,68 +1843,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 
 		List<CPDefinitionOptionValueRel> list = findByCPDefinitionOptionRelId(
 			CPDefinitionOptionRelId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel findByCPDefinitionOptionRelId_Last(
-			long CPDefinitionOptionRelId,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			fetchByCPDefinitionOptionRelId_Last(
-				CPDefinitionOptionRelId, orderByComparator);
-
-		if (cpDefinitionOptionValueRel != null) {
-			return cpDefinitionOptionValueRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionOptionRelId=");
-		sb.append(CPDefinitionOptionRelId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionOptionValueRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByCPDefinitionOptionRelId_Last(
-		long CPDefinitionOptionRelId,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		int count = countByCPDefinitionOptionRelId(CPDefinitionOptionRelId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionOptionValueRel> list = findByCPDefinitionOptionRelId(
-			CPDefinitionOptionRelId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2489,67 +2178,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel findByCPInstanceUuid_Last(
-			String CPInstanceUuid,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			fetchByCPInstanceUuid_Last(CPInstanceUuid, orderByComparator);
-
-		if (cpDefinitionOptionValueRel != null) {
-			return cpDefinitionOptionValueRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionOptionValueRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByCPInstanceUuid_Last(
-		String CPInstanceUuid,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		int count = countByCPInstanceUuid(CPInstanceUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionOptionValueRel> list = findByCPInstanceUuid(
-			CPInstanceUuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where CPInstanceUuid = &#63; from the database.
 	 *
 	 * @param CPInstanceUuid the cp instance uuid
@@ -2871,67 +2499,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 
 		List<CPDefinitionOptionValueRel> list = findByKey(
 			key, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where key = &#63;.
-	 *
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel findByKey_Last(
-			String key,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = fetchByKey_Last(
-			key, orderByComparator);
-
-		if (cpDefinitionOptionValueRel != null) {
-			return cpDefinitionOptionValueRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("key=");
-		sb.append(key);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionOptionValueRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where key = &#63;.
-	 *
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByKey_Last(
-		String key,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		int count = countByKey(key);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionOptionValueRel> list = findByKey(
-			key, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3492,74 +3059,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 
 		List<CPDefinitionOptionValueRel> list = findByCDORI_P(
 			CPDefinitionOptionRelId, preselected, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param preselected the preselected
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel findByCDORI_P_Last(
-			long CPDefinitionOptionRelId, boolean preselected,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			fetchByCDORI_P_Last(
-				CPDefinitionOptionRelId, preselected, orderByComparator);
-
-		if (cpDefinitionOptionValueRel != null) {
-			return cpDefinitionOptionValueRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionOptionRelId=");
-		sb.append(CPDefinitionOptionRelId);
-
-		sb.append(", preselected=");
-		sb.append(preselected);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionOptionValueRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param preselected the preselected
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByCDORI_P_Last(
-		long CPDefinitionOptionRelId, boolean preselected,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		int count = countByCDORI_P(CPDefinitionOptionRelId, preselected);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionOptionValueRel> list = findByCDORI_P(
-			CPDefinitionOptionRelId, preselected, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4837,4 +4336,4 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:286389914
+// LIFERAY-SERVICE-BUILDER-HASH:-269772485

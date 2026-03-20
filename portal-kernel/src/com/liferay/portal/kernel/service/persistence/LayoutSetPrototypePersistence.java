@@ -121,32 +121,6 @@ public interface LayoutSetPrototypePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last layout set prototype in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
-	 */
-	public LayoutSetPrototype findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
-	 */
-	public LayoutSetPrototype fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-			orderByComparator);
-
-	/**
 	 * Returns all the layout set prototypes that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -300,34 +274,6 @@ public interface LayoutSetPrototypePersistence
 	 * @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	 */
 	public LayoutSetPrototype fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
-	 */
-	public LayoutSetPrototype findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
-	 */
-	public LayoutSetPrototype fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator);
@@ -491,32 +437,6 @@ public interface LayoutSetPrototypePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last layout set prototype in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
-	 */
-	public LayoutSetPrototype findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
-	 */
-	public LayoutSetPrototype fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-			orderByComparator);
-
-	/**
 	 * Returns all the layout set prototypes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -671,34 +591,6 @@ public interface LayoutSetPrototypePersistence
 	 * @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	 */
 	public LayoutSetPrototype fetchByC_A_First(
-		long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
-	 */
-	public LayoutSetPrototype findByC_A_Last(
-			long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
-	 */
-	public LayoutSetPrototype fetchByC_A_Last(
 		long companyId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator);
@@ -896,4 +788,4 @@ public interface LayoutSetPrototypePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1817562469
+// LIFERAY-SERVICE-BUILDER-HASH:1133489897

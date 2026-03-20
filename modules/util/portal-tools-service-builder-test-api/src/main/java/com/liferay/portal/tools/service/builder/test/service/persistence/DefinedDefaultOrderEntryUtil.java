@@ -284,39 +284,6 @@ public class DefinedDefaultOrderEntryUtil {
 	}
 
 	/**
-	 * Returns the last defined default order entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching defined default order entry
-	 * @throws NoSuchDefinedDefaultOrderEntryException if a matching defined default order entry could not be found
-	 */
-	public static DefinedDefaultOrderEntry findByName_Collection_Last(
-			String name,
-			OrderByComparator<DefinedDefaultOrderEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchDefinedDefaultOrderEntryException {
-
-		return getPersistence().findByName_Collection_Last(
-			name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last defined default order entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching defined default order entry, or <code>null</code> if a matching defined default order entry could not be found
-	 */
-	public static DefinedDefaultOrderEntry fetchByName_Collection_Last(
-		String name,
-		OrderByComparator<DefinedDefaultOrderEntry> orderByComparator) {
-
-		return getPersistence().fetchByName_Collection_Last(
-			name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the defined default order entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -511,4 +478,4 @@ public class DefinedDefaultOrderEntryUtil {
 	private static volatile DefinedDefaultOrderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:754858275
+// LIFERAY-SERVICE-BUILDER-HASH:-1067087857

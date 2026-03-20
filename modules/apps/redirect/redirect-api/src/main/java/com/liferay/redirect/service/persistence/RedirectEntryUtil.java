@@ -210,34 +210,6 @@ public class RedirectEntryUtil {
 	}
 
 	/**
-	 * Returns the last redirect entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry
-	 * @throws NoSuchEntryException if a matching redirect entry could not be found
-	 */
-	public static RedirectEntry findByUuid_Last(
-			String uuid, OrderByComparator<RedirectEntry> orderByComparator)
-		throws com.liferay.redirect.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	public static RedirectEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<RedirectEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the redirect entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,40 +404,6 @@ public class RedirectEntryUtil {
 	}
 
 	/**
-	 * Returns the last redirect entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry
-	 * @throws NoSuchEntryException if a matching redirect entry could not be found
-	 */
-	public static RedirectEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<RedirectEntry> orderByComparator)
-		throws com.liferay.redirect.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	public static RedirectEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<RedirectEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the redirect entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -585,34 +523,6 @@ public class RedirectEntryUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry
-	 * @throws NoSuchEntryException if a matching redirect entry could not be found
-	 */
-	public static RedirectEntry findByGroupId_Last(
-			long groupId, OrderByComparator<RedirectEntry> orderByComparator)
-		throws com.liferay.redirect.exception.NoSuchEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	public static RedirectEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<RedirectEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -803,40 +713,6 @@ public class RedirectEntryUtil {
 		OrderByComparator<RedirectEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_D_First(
-			groupId, destinationURL, orderByComparator);
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry
-	 * @throws NoSuchEntryException if a matching redirect entry could not be found
-	 */
-	public static RedirectEntry findByG_D_Last(
-			long groupId, String destinationURL,
-			OrderByComparator<RedirectEntry> orderByComparator)
-		throws com.liferay.redirect.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_D_Last(
-			groupId, destinationURL, orderByComparator);
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	public static RedirectEntry fetchByG_D_Last(
-		long groupId, String destinationURL,
-		OrderByComparator<RedirectEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_D_Last(
 			groupId, destinationURL, orderByComparator);
 	}
 
@@ -1149,4 +1025,4 @@ public class RedirectEntryUtil {
 	private static volatile RedirectEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1499048859
+// LIFERAY-SERVICE-BUILDER-HASH:1948239353

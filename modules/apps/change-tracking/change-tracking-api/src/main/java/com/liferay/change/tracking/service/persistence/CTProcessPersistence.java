@@ -119,32 +119,6 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 			orderByComparator);
 
 	/**
-	 * Returns the last ct process in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process
-	 * @throws NoSuchProcessException if a matching ct process could not be found
-	 */
-	public CTProcess findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
-				orderByComparator)
-		throws NoSuchProcessException;
-
-	/**
-	 * Returns the last ct process in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
-	 */
-	public CTProcess fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
-			orderByComparator);
-
-	/**
 	 * Returns all the ct processes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -291,32 +265,6 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @return the first matching ct process, or <code>null</code> if a matching ct process could not be found
 	 */
 	public CTProcess fetchByCtCollectionId_First(
-		long ctCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process
-	 * @throws NoSuchProcessException if a matching ct process could not be found
-	 */
-	public CTProcess findByCtCollectionId_Last(
-			long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
-				orderByComparator)
-		throws NoSuchProcessException;
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
-	 */
-	public CTProcess fetchByCtCollectionId_Last(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator);
@@ -475,34 +423,6 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @return the first matching ct process, or <code>null</code> if a matching ct process could not be found
 	 */
 	public CTProcess fetchByC_T_First(
-		long ctCollectionId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process
-	 * @throws NoSuchProcessException if a matching ct process could not be found
-	 */
-	public CTProcess findByC_T_Last(
-			long ctCollectionId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
-				orderByComparator)
-		throws NoSuchProcessException;
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
-	 */
-	public CTProcess fetchByC_T_Last(
 		long ctCollectionId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator);
@@ -698,4 +618,4 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-824751586
+// LIFERAY-SERVICE-BUILDER-HASH:206535871

@@ -324,65 +324,6 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order note in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note
-	 * @throws NoSuchOrderNoteException if a matching commerce order note could not be found
-	 */
-	@Override
-	public CommerceOrderNote findByUuid_Last(
-			String uuid, OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws NoSuchOrderNoteException {
-
-		CommerceOrderNote commerceOrderNote = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceOrderNote != null) {
-			return commerceOrderNote;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOrderNoteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	@Override
-	public CommerceOrderNote fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderNote> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce order notes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -914,72 +855,6 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order note in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note
-	 * @throws NoSuchOrderNoteException if a matching commerce order note could not be found
-	 */
-	@Override
-	public CommerceOrderNote findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws NoSuchOrderNoteException {
-
-		CommerceOrderNote commerceOrderNote = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceOrderNote != null) {
-			return commerceOrderNote;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderNoteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	@Override
-	public CommerceOrderNote fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderNote> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce order notes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1298,67 +1173,6 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order note in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note
-	 * @throws NoSuchOrderNoteException if a matching commerce order note could not be found
-	 */
-	@Override
-	public CommerceOrderNote findByCommerceOrderId_Last(
-			long commerceOrderId,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws NoSuchOrderNoteException {
-
-		CommerceOrderNote commerceOrderNote = fetchByCommerceOrderId_Last(
-			commerceOrderId, orderByComparator);
-
-		if (commerceOrderNote != null) {
-			return commerceOrderNote;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceOrderId=");
-		sb.append(commerceOrderId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderNoteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	@Override
-	public CommerceOrderNote fetchByCommerceOrderId_Last(
-		long commerceOrderId,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		int count = countByCommerceOrderId(commerceOrderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderNote> list = findByCommerceOrderId(
-			commerceOrderId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce order notes where commerceOrderId = &#63; from the database.
 	 *
 	 * @param commerceOrderId the commerce order ID
@@ -1661,72 +1475,6 @@ public class CommerceOrderNotePersistenceImpl
 
 		List<CommerceOrderNote> list = findByC_R(
 			commerceOrderId, restricted, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note
-	 * @throws NoSuchOrderNoteException if a matching commerce order note could not be found
-	 */
-	@Override
-	public CommerceOrderNote findByC_R_Last(
-			long commerceOrderId, boolean restricted,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws NoSuchOrderNoteException {
-
-		CommerceOrderNote commerceOrderNote = fetchByC_R_Last(
-			commerceOrderId, restricted, orderByComparator);
-
-		if (commerceOrderNote != null) {
-			return commerceOrderNote;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceOrderId=");
-		sb.append(commerceOrderId);
-
-		sb.append(", restricted=");
-		sb.append(restricted);
-
-		sb.append("}");
-
-		throw new NoSuchOrderNoteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	@Override
-	public CommerceOrderNote fetchByC_R_Last(
-		long commerceOrderId, boolean restricted,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		int count = countByC_R(commerceOrderId, restricted);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderNote> list = findByC_R(
-			commerceOrderId, restricted, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2853,4 +2601,4 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:868479886
+// LIFERAY-SERVICE-BUILDER-HASH:-2044323053

@@ -225,41 +225,6 @@ public class JSONStorageEntryUtil {
 	}
 
 	/**
-	 * Returns the last json storage entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a matching json storage entry could not be found
-	 */
-	public static JSONStorageEntry findByCN_CPK_Last(
-			long classNameId, long classPK,
-			OrderByComparator<JSONStorageEntry> orderByComparator)
-		throws com.liferay.json.storage.exception.
-			NoSuchJSONStorageEntryException {
-
-		return getPersistence().findByCN_CPK_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last json storage entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
-	 */
-	public static JSONStorageEntry fetchByCN_CPK_Last(
-		long classNameId, long classPK,
-		OrderByComparator<JSONStorageEntry> orderByComparator) {
-
-		return getPersistence().fetchByCN_CPK_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the json storage entries where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -416,48 +381,6 @@ public class JSONStorageEntryUtil {
 		OrderByComparator<JSONStorageEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_CN_I_T_VL_First(
-			companyId, classNameId, index, type, valueLong, orderByComparator);
-	}
-
-	/**
-	 * Returns the last json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param index the index
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a matching json storage entry could not be found
-	 */
-	public static JSONStorageEntry findByC_CN_I_T_VL_Last(
-			long companyId, long classNameId, int index, int type,
-			long valueLong,
-			OrderByComparator<JSONStorageEntry> orderByComparator)
-		throws com.liferay.json.storage.exception.
-			NoSuchJSONStorageEntryException {
-
-		return getPersistence().findByC_CN_I_T_VL_Last(
-			companyId, classNameId, index, type, valueLong, orderByComparator);
-	}
-
-	/**
-	 * Returns the last json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param index the index
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
-	 */
-	public static JSONStorageEntry fetchByC_CN_I_T_VL_Last(
-		long companyId, long classNameId, int index, int type, long valueLong,
-		OrderByComparator<JSONStorageEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_CN_I_T_VL_Last(
 			companyId, classNameId, index, type, valueLong, orderByComparator);
 	}
 
@@ -631,48 +554,6 @@ public class JSONStorageEntryUtil {
 		OrderByComparator<JSONStorageEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_CN_K_T_VL_First(
-			companyId, classNameId, key, type, valueLong, orderByComparator);
-	}
-
-	/**
-	 * Returns the last json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a matching json storage entry could not be found
-	 */
-	public static JSONStorageEntry findByC_CN_K_T_VL_Last(
-			long companyId, long classNameId, String key, int type,
-			long valueLong,
-			OrderByComparator<JSONStorageEntry> orderByComparator)
-		throws com.liferay.json.storage.exception.
-			NoSuchJSONStorageEntryException {
-
-		return getPersistence().findByC_CN_K_T_VL_Last(
-			companyId, classNameId, key, type, valueLong, orderByComparator);
-	}
-
-	/**
-	 * Returns the last json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
-	 */
-	public static JSONStorageEntry fetchByC_CN_K_T_VL_Last(
-		long companyId, long classNameId, String key, int type, long valueLong,
-		OrderByComparator<JSONStorageEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_CN_K_T_VL_Last(
 			companyId, classNameId, key, type, valueLong, orderByComparator);
 	}
 
@@ -972,4 +853,4 @@ public class JSONStorageEntryUtil {
 	private static volatile JSONStorageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1929829365
+// LIFERAY-SERVICE-BUILDER-HASH:1949496203

@@ -121,32 +121,6 @@ public interface KaleoTaskPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task
-	 * @throws NoSuchTaskException if a matching kaleo task could not be found
-	 */
-	public KaleoTask findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
-				orderByComparator)
-		throws NoSuchTaskException;
-
-	/**
-	 * Returns the last kaleo task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task, or <code>null</code> if a matching kaleo task could not be found
-	 */
-	public KaleoTask fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo tasks where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -245,32 +219,6 @@ public interface KaleoTaskPersistence
 	 * @return the first matching kaleo task, or <code>null</code> if a matching kaleo task could not be found
 	 */
 	public KaleoTask fetchByKaleoDefinitionVersionId_First(
-		long kaleoDefinitionVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo task in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task
-	 * @throws NoSuchTaskException if a matching kaleo task could not be found
-	 */
-	public KaleoTask findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
-				orderByComparator)
-		throws NoSuchTaskException;
-
-	/**
-	 * Returns the last kaleo task in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task, or <code>null</code> if a matching kaleo task could not be found
-	 */
-	public KaleoTask fetchByKaleoDefinitionVersionId_Last(
 		long kaleoDefinitionVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
 			orderByComparator);
@@ -455,4 +403,4 @@ public interface KaleoTaskPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:970266576
+// LIFERAY-SERVICE-BUILDER-HASH:-1885961322

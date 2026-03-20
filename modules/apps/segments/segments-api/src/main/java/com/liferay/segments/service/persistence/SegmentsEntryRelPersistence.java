@@ -122,32 +122,6 @@ public interface SegmentsEntryRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel
-	 * @throws NoSuchEntryRelException if a matching segments entry rel could not be found
-	 */
-	public SegmentsEntryRel findBySegmentsEntryId_Last(
-			long segmentsEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
-		throws NoSuchEntryRelException;
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
-	 */
-	public SegmentsEntryRel fetchBySegmentsEntryId_Last(
-		long segmentsEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
-
-	/**
 	 * Removes all the segments entry rels where segmentsEntryId = &#63; from the database.
 	 *
 	 * @param segmentsEntryId the segments entry ID
@@ -252,34 +226,6 @@ public interface SegmentsEntryRelPersistence
 	 * @return the first matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
 	 */
 	public SegmentsEntryRel fetchByCN_CPK_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel
-	 * @throws NoSuchEntryRelException if a matching segments entry rel could not be found
-	 */
-	public SegmentsEntryRel findByCN_CPK_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
-		throws NoSuchEntryRelException;
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
-	 */
-	public SegmentsEntryRel fetchByCN_CPK_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
 			orderByComparator);
@@ -397,36 +343,6 @@ public interface SegmentsEntryRelPersistence
 	 * @return the first matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
 	 */
 	public SegmentsEntryRel fetchByG_CN_CPK_First(
-		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel
-	 * @throws NoSuchEntryRelException if a matching segments entry rel could not be found
-	 */
-	public SegmentsEntryRel findByG_CN_CPK_Last(
-			long groupId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
-		throws NoSuchEntryRelException;
-
-	/**
-	 * Returns the last segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
-	 */
-	public SegmentsEntryRel fetchByG_CN_CPK_Last(
 		long groupId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
 			orderByComparator);
@@ -631,4 +547,4 @@ public interface SegmentsEntryRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:852827674
+// LIFERAY-SERVICE-BUILDER-HASH:583114258

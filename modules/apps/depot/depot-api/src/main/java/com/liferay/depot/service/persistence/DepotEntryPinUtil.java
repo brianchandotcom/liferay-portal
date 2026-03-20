@@ -210,34 +210,6 @@ public class DepotEntryPinUtil {
 	}
 
 	/**
-	 * Returns the last depot entry pin in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin
-	 * @throws NoSuchEntryPinException if a matching depot entry pin could not be found
-	 */
-	public static DepotEntryPin findByUuid_Last(
-			String uuid, OrderByComparator<DepotEntryPin> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryPinException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin, or <code>null</code> if a matching depot entry pin could not be found
-	 */
-	public static DepotEntryPin fetchByUuid_Last(
-		String uuid, OrderByComparator<DepotEntryPin> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the depot entry pins where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,40 +404,6 @@ public class DepotEntryPinUtil {
 	}
 
 	/**
-	 * Returns the last depot entry pin in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin
-	 * @throws NoSuchEntryPinException if a matching depot entry pin could not be found
-	 */
-	public static DepotEntryPin findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DepotEntryPin> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryPinException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin, or <code>null</code> if a matching depot entry pin could not be found
-	 */
-	public static DepotEntryPin fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DepotEntryPin> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the depot entry pins where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -587,34 +525,6 @@ public class DepotEntryPinUtil {
 	}
 
 	/**
-	 * Returns the last depot entry pin in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin
-	 * @throws NoSuchEntryPinException if a matching depot entry pin could not be found
-	 */
-	public static DepotEntryPin findByUserId_Last(
-			long userId, OrderByComparator<DepotEntryPin> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryPinException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin, or <code>null</code> if a matching depot entry pin could not be found
-	 */
-	public static DepotEntryPin fetchByUserId_Last(
-		long userId, OrderByComparator<DepotEntryPin> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the depot entry pins where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -733,37 +643,6 @@ public class DepotEntryPinUtil {
 		long depotEntryId, OrderByComparator<DepotEntryPin> orderByComparator) {
 
 		return getPersistence().fetchByDepotEntryId_First(
-			depotEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin
-	 * @throws NoSuchEntryPinException if a matching depot entry pin could not be found
-	 */
-	public static DepotEntryPin findByDepotEntryId_Last(
-			long depotEntryId,
-			OrderByComparator<DepotEntryPin> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryPinException {
-
-		return getPersistence().findByDepotEntryId_Last(
-			depotEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin, or <code>null</code> if a matching depot entry pin could not be found
-	 */
-	public static DepotEntryPin fetchByDepotEntryId_Last(
-		long depotEntryId, OrderByComparator<DepotEntryPin> orderByComparator) {
-
-		return getPersistence().fetchByDepotEntryId_Last(
 			depotEntryId, orderByComparator);
 	}
 
@@ -1009,4 +888,4 @@ public class DepotEntryPinUtil {
 	private static volatile DepotEntryPinPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1389203499
+// LIFERAY-SERVICE-BUILDER-HASH:1009747983

@@ -210,34 +210,6 @@ public class ObjectLayoutRowUtil {
 	}
 
 	/**
-	 * Returns the last object layout row in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row
-	 * @throws NoSuchObjectLayoutRowException if a matching object layout row could not be found
-	 */
-	public static ObjectLayoutRow findByUuid_Last(
-			String uuid, OrderByComparator<ObjectLayoutRow> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutRowException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object layout row in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row, or <code>null</code> if a matching object layout row could not be found
-	 */
-	public static ObjectLayoutRow fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectLayoutRow> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object layout rows where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -369,40 +341,6 @@ public class ObjectLayoutRowUtil {
 	}
 
 	/**
-	 * Returns the last object layout row in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row
-	 * @throws NoSuchObjectLayoutRowException if a matching object layout row could not be found
-	 */
-	public static ObjectLayoutRow findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectLayoutRow> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutRowException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object layout row in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row, or <code>null</code> if a matching object layout row could not be found
-	 */
-	public static ObjectLayoutRow fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectLayoutRow> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object layout rows where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -527,38 +465,6 @@ public class ObjectLayoutRowUtil {
 		OrderByComparator<ObjectLayoutRow> orderByComparator) {
 
 		return getPersistence().fetchByObjectLayoutBoxId_First(
-			objectLayoutBoxId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object layout row in the ordered set where objectLayoutBoxId = &#63;.
-	 *
-	 * @param objectLayoutBoxId the object layout box ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row
-	 * @throws NoSuchObjectLayoutRowException if a matching object layout row could not be found
-	 */
-	public static ObjectLayoutRow findByObjectLayoutBoxId_Last(
-			long objectLayoutBoxId,
-			OrderByComparator<ObjectLayoutRow> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutRowException {
-
-		return getPersistence().findByObjectLayoutBoxId_Last(
-			objectLayoutBoxId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object layout row in the ordered set where objectLayoutBoxId = &#63;.
-	 *
-	 * @param objectLayoutBoxId the object layout box ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row, or <code>null</code> if a matching object layout row could not be found
-	 */
-	public static ObjectLayoutRow fetchByObjectLayoutBoxId_Last(
-		long objectLayoutBoxId,
-		OrderByComparator<ObjectLayoutRow> orderByComparator) {
-
-		return getPersistence().fetchByObjectLayoutBoxId_Last(
 			objectLayoutBoxId, orderByComparator);
 	}
 
@@ -741,4 +647,4 @@ public class ObjectLayoutRowUtil {
 	private static volatile ObjectLayoutRowPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1210624594
+// LIFERAY-SERVICE-BUILDER-HASH:-1035175976

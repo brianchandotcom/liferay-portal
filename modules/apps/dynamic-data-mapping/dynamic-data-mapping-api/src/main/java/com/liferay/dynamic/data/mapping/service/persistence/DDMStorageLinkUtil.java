@@ -211,35 +211,6 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	public static DDMStorageLink findByUuid_Last(
-			String uuid, OrderByComparator<DDMStorageLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStorageLinkException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	public static DDMStorageLink fetchByUuid_Last(
-		String uuid, OrderByComparator<DDMStorageLink> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm storage links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -368,41 +339,6 @@ public class DDMStorageLinkUtil {
 		OrderByComparator<DDMStorageLink> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	public static DDMStorageLink findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStorageLinkException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	public static DDMStorageLink fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDMStorageLink> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -592,38 +528,6 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
-	 * Returns the last ddm storage link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	public static DDMStorageLink findByStructureId_Last(
-			long structureId,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStorageLinkException {
-
-		return getPersistence().findByStructureId_Last(
-			structureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	public static DDMStorageLink fetchByStructureId_Last(
-		long structureId, OrderByComparator<DDMStorageLink> orderByComparator) {
-
-		return getPersistence().fetchByStructureId_Last(
-			structureId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm storage links where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -747,39 +651,6 @@ public class DDMStorageLinkUtil {
 		OrderByComparator<DDMStorageLink> orderByComparator) {
 
 		return getPersistence().fetchByStructureVersionId_First(
-			structureVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	public static DDMStorageLink findByStructureVersionId_Last(
-			long structureVersionId,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStorageLinkException {
-
-		return getPersistence().findByStructureVersionId_Last(
-			structureVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	public static DDMStorageLink fetchByStructureVersionId_Last(
-		long structureVersionId,
-		OrderByComparator<DDMStorageLink> orderByComparator) {
-
-		return getPersistence().fetchByStructureVersionId_Last(
 			structureVersionId, orderByComparator);
 	}
 
@@ -1052,4 +923,4 @@ public class DDMStorageLinkUtil {
 	private static volatile DDMStorageLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:457458267
+// LIFERAY-SERVICE-BUILDER-HASH:-1868516627

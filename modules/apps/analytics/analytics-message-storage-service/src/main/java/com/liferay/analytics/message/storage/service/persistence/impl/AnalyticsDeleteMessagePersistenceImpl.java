@@ -325,67 +325,6 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message
-	 * @throws NoSuchDeleteMessageException if a matching analytics delete message could not be found
-	 */
-	@Override
-	public AnalyticsDeleteMessage findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AnalyticsDeleteMessage> orderByComparator)
-		throws NoSuchDeleteMessageException {
-
-		AnalyticsDeleteMessage analyticsDeleteMessage = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (analyticsDeleteMessage != null) {
-			return analyticsDeleteMessage;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDeleteMessageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message, or <code>null</code> if a matching analytics delete message could not be found
-	 */
-	@Override
-	public AnalyticsDeleteMessage fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<AnalyticsDeleteMessage> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnalyticsDeleteMessage> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the analytics delete messages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -699,72 +638,6 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 		List<AnalyticsDeleteMessage> list = findByC_GtM(
 			companyId, modifiedDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63; and modifiedDate &gt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message
-	 * @throws NoSuchDeleteMessageException if a matching analytics delete message could not be found
-	 */
-	@Override
-	public AnalyticsDeleteMessage findByC_GtM_Last(
-			long companyId, Date modifiedDate,
-			OrderByComparator<AnalyticsDeleteMessage> orderByComparator)
-		throws NoSuchDeleteMessageException {
-
-		AnalyticsDeleteMessage analyticsDeleteMessage = fetchByC_GtM_Last(
-			companyId, modifiedDate, orderByComparator);
-
-		if (analyticsDeleteMessage != null) {
-			return analyticsDeleteMessage;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", modifiedDate>");
-		sb.append(modifiedDate);
-
-		sb.append("}");
-
-		throw new NoSuchDeleteMessageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63; and modifiedDate &gt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message, or <code>null</code> if a matching analytics delete message could not be found
-	 */
-	@Override
-	public AnalyticsDeleteMessage fetchByC_GtM_Last(
-		long companyId, Date modifiedDate,
-		OrderByComparator<AnalyticsDeleteMessage> orderByComparator) {
-
-		int count = countByC_GtM(companyId, modifiedDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnalyticsDeleteMessage> list = findByC_GtM(
-			companyId, modifiedDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1825,4 +1698,4 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1325364225
+// LIFERAY-SERVICE-BUILDER-HASH:-117081381

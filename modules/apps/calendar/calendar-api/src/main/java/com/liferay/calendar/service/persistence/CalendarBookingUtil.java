@@ -210,34 +210,6 @@ public class CalendarBookingUtil {
 	}
 
 	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking findByUuid_Last(
-			String uuid, OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchBookingException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking fetchByUuid_Last(
-		String uuid, OrderByComparator<CalendarBooking> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the calendar bookings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,40 +404,6 @@ public class CalendarBookingUtil {
 	}
 
 	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchBookingException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the calendar bookings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -586,37 +524,6 @@ public class CalendarBookingUtil {
 		long calendarId, OrderByComparator<CalendarBooking> orderByComparator) {
 
 		return getPersistence().fetchByCalendarId_First(
-			calendarId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking findByCalendarId_Last(
-			long calendarId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchBookingException {
-
-		return getPersistence().findByCalendarId_Last(
-			calendarId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking fetchByCalendarId_Last(
-		long calendarId, OrderByComparator<CalendarBooking> orderByComparator) {
-
-		return getPersistence().fetchByCalendarId_Last(
 			calendarId, orderByComparator);
 	}
 
@@ -747,38 +654,6 @@ public class CalendarBookingUtil {
 	}
 
 	/**
-	 * Returns the last calendar booking in the ordered set where calendarResourceId = &#63;.
-	 *
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking findByCalendarResourceId_Last(
-			long calendarResourceId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchBookingException {
-
-		return getPersistence().findByCalendarResourceId_Last(
-			calendarResourceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarResourceId = &#63;.
-	 *
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking fetchByCalendarResourceId_Last(
-		long calendarResourceId,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		return getPersistence().fetchByCalendarResourceId_Last(
-			calendarResourceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the calendar bookings where calendarResourceId = &#63; from the database.
 	 *
 	 * @param calendarResourceId the calendar resource ID
@@ -903,38 +778,6 @@ public class CalendarBookingUtil {
 		OrderByComparator<CalendarBooking> orderByComparator) {
 
 		return getPersistence().fetchByParentCalendarBookingId_First(
-			parentCalendarBookingId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking findByParentCalendarBookingId_Last(
-			long parentCalendarBookingId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchBookingException {
-
-		return getPersistence().findByParentCalendarBookingId_Last(
-			parentCalendarBookingId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking fetchByParentCalendarBookingId_Last(
-		long parentCalendarBookingId,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		return getPersistence().fetchByParentCalendarBookingId_Last(
 			parentCalendarBookingId, orderByComparator);
 	}
 
@@ -1069,38 +912,6 @@ public class CalendarBookingUtil {
 		OrderByComparator<CalendarBooking> orderByComparator) {
 
 		return getPersistence().fetchByRecurringCalendarBookingId_First(
-			recurringCalendarBookingId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
-	 *
-	 * @param recurringCalendarBookingId the recurring calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking findByRecurringCalendarBookingId_Last(
-			long recurringCalendarBookingId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchBookingException {
-
-		return getPersistence().findByRecurringCalendarBookingId_Last(
-			recurringCalendarBookingId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
-	 *
-	 * @param recurringCalendarBookingId the recurring calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking fetchByRecurringCalendarBookingId_Last(
-		long recurringCalendarBookingId,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		return getPersistence().fetchByRecurringCalendarBookingId_Last(
 			recurringCalendarBookingId, orderByComparator);
 	}
 
@@ -1377,40 +1188,6 @@ public class CalendarBookingUtil {
 	}
 
 	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking findByC_S_Last(
-			long calendarId, int status,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchBookingException {
-
-		return getPersistence().findByC_S_Last(
-			calendarId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking fetchByC_S_Last(
-		long calendarId, int status,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		return getPersistence().fetchByC_S_Last(
-			calendarId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the calendar bookings where calendarId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -1636,40 +1413,6 @@ public class CalendarBookingUtil {
 		OrderByComparator<CalendarBooking> orderByComparator) {
 
 		return getPersistence().fetchByP_S_First(
-			parentCalendarBookingId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking findByP_S_Last(
-			long parentCalendarBookingId, int status,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchBookingException {
-
-		return getPersistence().findByP_S_Last(
-			parentCalendarBookingId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public static CalendarBooking fetchByP_S_Last(
-		long parentCalendarBookingId, int status,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		return getPersistence().fetchByP_S_Last(
 			parentCalendarBookingId, status, orderByComparator);
 	}
 
@@ -1922,4 +1665,4 @@ public class CalendarBookingUtil {
 	private static volatile CalendarBookingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:375549697
+// LIFERAY-SERVICE-BUILDER-HASH:650271693

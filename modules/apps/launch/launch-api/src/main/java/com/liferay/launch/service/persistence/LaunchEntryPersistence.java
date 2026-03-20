@@ -119,32 +119,6 @@ public interface LaunchEntryPersistence extends BasePersistence<LaunchEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last launch entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry
-	 * @throws NoSuchLaunchEntryException if a matching launch entry could not be found
-	 */
-	public LaunchEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LaunchEntry>
-				orderByComparator)
-		throws NoSuchLaunchEntryException;
-
-	/**
-	 * Returns the last launch entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry, or <code>null</code> if a matching launch entry could not be found
-	 */
-	public LaunchEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LaunchEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the launch entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -254,34 +228,6 @@ public interface LaunchEntryPersistence extends BasePersistence<LaunchEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last launch entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry
-	 * @throws NoSuchLaunchEntryException if a matching launch entry could not be found
-	 */
-	public LaunchEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LaunchEntry>
-				orderByComparator)
-		throws NoSuchLaunchEntryException;
-
-	/**
-	 * Returns the last launch entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry, or <code>null</code> if a matching launch entry could not be found
-	 */
-	public LaunchEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LaunchEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the launch entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -381,32 +327,6 @@ public interface LaunchEntryPersistence extends BasePersistence<LaunchEntry> {
 	 * @return the first matching launch entry, or <code>null</code> if a matching launch entry could not be found
 	 */
 	public LaunchEntry fetchByLaunchSetId_First(
-		long launchSetId,
-		com.liferay.portal.kernel.util.OrderByComparator<LaunchEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last launch entry in the ordered set where launchSetId = &#63;.
-	 *
-	 * @param launchSetId the launch set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry
-	 * @throws NoSuchLaunchEntryException if a matching launch entry could not be found
-	 */
-	public LaunchEntry findByLaunchSetId_Last(
-			long launchSetId,
-			com.liferay.portal.kernel.util.OrderByComparator<LaunchEntry>
-				orderByComparator)
-		throws NoSuchLaunchEntryException;
-
-	/**
-	 * Returns the last launch entry in the ordered set where launchSetId = &#63;.
-	 *
-	 * @param launchSetId the launch set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry, or <code>null</code> if a matching launch entry could not be found
-	 */
-	public LaunchEntry fetchByLaunchSetId_Last(
 		long launchSetId,
 		com.liferay.portal.kernel.util.OrderByComparator<LaunchEntry>
 			orderByComparator);
@@ -659,4 +579,4 @@ public interface LaunchEntryPersistence extends BasePersistence<LaunchEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1245242397
+// LIFERAY-SERVICE-BUILDER-HASH:-723526718

@@ -339,64 +339,6 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByUuid_Last(
-			String uuid, OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByUuid_Last(
-		String uuid, OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards categories where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -944,72 +886,6 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards categories where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1322,64 +1198,6 @@ public class MBCategoryPersistenceImpl
 		long groupId, OrderByComparator<MBCategory> orderByComparator) {
 
 		List<MBCategory> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByGroupId_Last(
-			long groupId, OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByGroupId_Last(
-		long groupId, OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1881,65 +1699,6 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByCompanyId_Last(
-			long companyId, OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByCompanyId_Last(
-		long companyId, OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards categories where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2250,72 +2009,6 @@ public class MBCategoryPersistenceImpl
 
 		List<MBCategory> list = findByG_P(
 			groupId, parentCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByG_P_Last(
-			long groupId, long parentCategoryId,
-			OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByG_P_Last(
-			groupId, parentCategoryId, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByG_P_Last(
-		long groupId, long parentCategoryId,
-		OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByG_P(groupId, parentCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByG_P(
-			groupId, parentCategoryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3588,72 +3281,6 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByG_S_Last(
-			groupId, status, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByG_S(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByG_S(
-			groupId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4186,72 +3813,6 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByC_S_Last(
-			companyId, status, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByC_S(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByC_S(
-			companyId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards categories where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -4580,78 +4141,6 @@ public class MBCategoryPersistenceImpl
 
 		List<MBCategory> list = findByNotC_G_P(
 			categoryId, groupId, parentCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByNotC_G_P_Last(
-			long categoryId, long groupId, long parentCategoryId,
-			OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByNotC_G_P_Last(
-			categoryId, groupId, parentCategoryId, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("categoryId!=");
-		sb.append(categoryId);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByNotC_G_P_Last(
-		long categoryId, long groupId, long parentCategoryId,
-		OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByNotC_G_P(categoryId, groupId, parentCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByNotC_G_P(
-			categoryId, groupId, parentCategoryId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5893,78 +5382,6 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByG_P_S_Last(
-			long groupId, long parentCategoryId, int status,
-			OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByG_P_S_Last(
-			groupId, parentCategoryId, status, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByG_P_S_Last(
-		long groupId, long parentCategoryId, int status,
-		OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByG_P_S(groupId, parentCategoryId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByG_P_S(
-			groupId, parentCategoryId, status, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7101,78 +6518,6 @@ public class MBCategoryPersistenceImpl
 
 		List<MBCategory> list = findByG_P_NotS(
 			groupId, parentCategoryId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByG_P_NotS_Last(
-			long groupId, long parentCategoryId, int status,
-			OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByG_P_NotS_Last(
-			groupId, parentCategoryId, status, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByG_P_NotS_Last(
-		long groupId, long parentCategoryId, int status,
-		OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByG_P_NotS(groupId, parentCategoryId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByG_P_NotS(
-			groupId, parentCategoryId, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -8338,84 +7683,6 @@ public class MBCategoryPersistenceImpl
 
 		List<MBCategory> list = findByNotC_G_P_S(
 			categoryId, groupId, parentCategoryId, status, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByNotC_G_P_S_Last(
-			long categoryId, long groupId, long parentCategoryId, int status,
-			OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByNotC_G_P_S_Last(
-			categoryId, groupId, parentCategoryId, status, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("categoryId!=");
-		sb.append(categoryId);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByNotC_G_P_S_Last(
-		long categoryId, long groupId, long parentCategoryId, int status,
-		OrderByComparator<MBCategory> orderByComparator) {
-
-		int count = countByNotC_G_P_S(
-			categoryId, groupId, parentCategoryId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByNotC_G_P_S(
-			categoryId, groupId, parentCategoryId, status, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -10945,4 +10212,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1769349497
+// LIFERAY-SERVICE-BUILDER-HASH:-931866688

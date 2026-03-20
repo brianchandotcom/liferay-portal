@@ -344,67 +344,6 @@ public class CPSpecificationOptionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	@Override
-	public CPSpecificationOption findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException {
-
-		CPSpecificationOption cpSpecificationOption = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	@Override
-	public CPSpecificationOption fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPSpecificationOption> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPSpecificationOption> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -976,72 +915,6 @@ public class CPSpecificationOptionPersistenceImpl
 
 		List<CPSpecificationOption> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	@Override
-	public CPSpecificationOption findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException {
-
-		CPSpecificationOption cpSpecificationOption = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	@Override
-	public CPSpecificationOption fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPSpecificationOption> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPSpecificationOption> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1624,67 +1497,6 @@ public class CPSpecificationOptionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp specification option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	@Override
-	public CPSpecificationOption findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException {
-
-		CPSpecificationOption cpSpecificationOption = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	@Override
-	public CPSpecificationOption fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CPSpecificationOption> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPSpecificationOption> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2185,68 +1997,6 @@ public class CPSpecificationOptionPersistenceImpl
 
 		List<CPSpecificationOption> list = findByCPOptionCategoryId(
 			CPOptionCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	@Override
-	public CPSpecificationOption findByCPOptionCategoryId_Last(
-			long CPOptionCategoryId,
-			OrderByComparator<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException {
-
-		CPSpecificationOption cpSpecificationOption =
-			fetchByCPOptionCategoryId_Last(
-				CPOptionCategoryId, orderByComparator);
-
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPOptionCategoryId=");
-		sb.append(CPOptionCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp specification option in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	@Override
-	public CPSpecificationOption fetchByCPOptionCategoryId_Last(
-		long CPOptionCategoryId,
-		OrderByComparator<CPSpecificationOption> orderByComparator) {
-
-		int count = countByCPOptionCategoryId(CPOptionCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPSpecificationOption> list = findByCPOptionCategoryId(
-			CPOptionCategoryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4124,4 +3874,4 @@ public class CPSpecificationOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1447407231
+// LIFERAY-SERVICE-BUILDER-HASH:1170781879

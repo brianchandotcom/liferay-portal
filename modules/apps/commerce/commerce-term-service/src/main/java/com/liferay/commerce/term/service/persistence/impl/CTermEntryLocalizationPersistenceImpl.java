@@ -317,68 +317,6 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last c term entry localization in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c term entry localization
-	 * @throws NoSuchCTermEntryLocalizationException if a matching c term entry localization could not be found
-	 */
-	@Override
-	public CTermEntryLocalization findByCommerceTermEntryId_Last(
-			long commerceTermEntryId,
-			OrderByComparator<CTermEntryLocalization> orderByComparator)
-		throws NoSuchCTermEntryLocalizationException {
-
-		CTermEntryLocalization cTermEntryLocalization =
-			fetchByCommerceTermEntryId_Last(
-				commerceTermEntryId, orderByComparator);
-
-		if (cTermEntryLocalization != null) {
-			return cTermEntryLocalization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceTermEntryId=");
-		sb.append(commerceTermEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCTermEntryLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last c term entry localization in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c term entry localization, or <code>null</code> if a matching c term entry localization could not be found
-	 */
-	@Override
-	public CTermEntryLocalization fetchByCommerceTermEntryId_Last(
-		long commerceTermEntryId,
-		OrderByComparator<CTermEntryLocalization> orderByComparator) {
-
-		int count = countByCommerceTermEntryId(commerceTermEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTermEntryLocalization> list = findByCommerceTermEntryId(
-			commerceTermEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the c term entry localizations where commerceTermEntryId = &#63; from the database.
 	 *
 	 * @param commerceTermEntryId the commerce term entry ID
@@ -1369,4 +1307,4 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1960034117
+// LIFERAY-SERVICE-BUILDER-HASH:1227256571

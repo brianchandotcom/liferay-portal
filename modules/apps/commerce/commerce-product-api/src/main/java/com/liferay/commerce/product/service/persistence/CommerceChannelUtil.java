@@ -210,34 +210,6 @@ public class CommerceChannelUtil {
 	}
 
 	/**
-	 * Returns the last commerce channel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel findByUuid_Last(
-			String uuid, OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceChannel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -424,40 +396,6 @@ public class CommerceChannelUtil {
 		OrderByComparator<CommerceChannel> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceChannel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -651,37 +589,6 @@ public class CommerceChannelUtil {
 	}
 
 	/**
-	 * Returns the last commerce channel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CommerceChannel> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -867,38 +774,6 @@ public class CommerceChannelUtil {
 	}
 
 	/**
-	 * Returns the last commerce channel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel findByAccountEntryId_Last(
-			long accountEntryId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findByAccountEntryId_Last(
-			accountEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel fetchByAccountEntryId_Last(
-		long accountEntryId,
-		OrderByComparator<CommerceChannel> orderByComparator) {
-
-		return getPersistence().fetchByAccountEntryId_Last(
-			accountEntryId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where accountEntryId = &#63;.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -1080,38 +955,6 @@ public class CommerceChannelUtil {
 		OrderByComparator<CommerceChannel> orderByComparator) {
 
 		return getPersistence().fetchBySiteGroupId_First(
-			siteGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where siteGroupId = &#63;.
-	 *
-	 * @param siteGroupId the site group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel findBySiteGroupId_Last(
-			long siteGroupId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findBySiteGroupId_Last(
-			siteGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where siteGroupId = &#63;.
-	 *
-	 * @param siteGroupId the site group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	public static CommerceChannel fetchBySiteGroupId_Last(
-		long siteGroupId,
-		OrderByComparator<CommerceChannel> orderByComparator) {
-
-		return getPersistence().fetchBySiteGroupId_Last(
 			siteGroupId, orderByComparator);
 	}
 
@@ -1426,4 +1269,4 @@ public class CommerceChannelUtil {
 	private static volatile CommerceChannelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:847116429
+// LIFERAY-SERVICE-BUILDER-HASH:-1736381416

@@ -220,38 +220,6 @@ public class DepotAppCustomizationUtil {
 	}
 
 	/**
-	 * Returns the last depot app customization in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot app customization
-	 * @throws NoSuchAppCustomizationException if a matching depot app customization could not be found
-	 */
-	public static DepotAppCustomization findByDepotEntryId_Last(
-			long depotEntryId,
-			OrderByComparator<DepotAppCustomization> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchAppCustomizationException {
-
-		return getPersistence().findByDepotEntryId_Last(
-			depotEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last depot app customization in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
-	 */
-	public static DepotAppCustomization fetchByDepotEntryId_Last(
-		long depotEntryId,
-		OrderByComparator<DepotAppCustomization> orderByComparator) {
-
-		return getPersistence().fetchByDepotEntryId_Last(
-			depotEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the depot app customizations where depotEntryId = &#63; from the database.
 	 *
 	 * @param depotEntryId the depot entry ID
@@ -577,4 +545,4 @@ public class DepotAppCustomizationUtil {
 	private static volatile DepotAppCustomizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1192109432
+// LIFERAY-SERVICE-BUILDER-HASH:-267580083

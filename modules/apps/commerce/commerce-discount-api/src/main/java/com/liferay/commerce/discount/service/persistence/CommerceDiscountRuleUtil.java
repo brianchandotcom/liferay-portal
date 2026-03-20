@@ -222,39 +222,6 @@ public class CommerceDiscountRuleUtil {
 	}
 
 	/**
-	 * Returns the last commerce discount rule in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rule
-	 * @throws NoSuchDiscountRuleException if a matching commerce discount rule could not be found
-	 */
-	public static CommerceDiscountRule findByCommerceDiscountId_Last(
-			long commerceDiscountId,
-			OrderByComparator<CommerceDiscountRule> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountRuleException {
-
-		return getPersistence().findByCommerceDiscountId_Last(
-			commerceDiscountId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount rule in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rule, or <code>null</code> if a matching commerce discount rule could not be found
-	 */
-	public static CommerceDiscountRule fetchByCommerceDiscountId_Last(
-		long commerceDiscountId,
-		OrderByComparator<CommerceDiscountRule> orderByComparator) {
-
-		return getPersistence().fetchByCommerceDiscountId_Last(
-			commerceDiscountId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce discount rules where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -444,4 +411,4 @@ public class CommerceDiscountRuleUtil {
 	private static volatile CommerceDiscountRulePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-858535077
+// LIFERAY-SERVICE-BUILDER-HASH:-205002442

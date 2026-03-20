@@ -120,32 +120,6 @@ public interface CommerceVirtualOrderItemPersistence
 			<CommerceVirtualOrderItem> orderByComparator);
 
 	/**
-	 * Returns the last commerce virtual order item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item
-	 * @throws NoSuchVirtualOrderItemException if a matching commerce virtual order item could not be found
-	 */
-	public CommerceVirtualOrderItem findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceVirtualOrderItem> orderByComparator)
-		throws NoSuchVirtualOrderItemException;
-
-	/**
-	 * Returns the last commerce virtual order item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item, or <code>null</code> if a matching commerce virtual order item could not be found
-	 */
-	public CommerceVirtualOrderItem fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceVirtualOrderItem> orderByComparator);
-
-	/**
 	 * Removes all the commerce virtual order items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -300,34 +274,6 @@ public interface CommerceVirtualOrderItemPersistence
 	 * @return the first matching commerce virtual order item, or <code>null</code> if a matching commerce virtual order item could not be found
 	 */
 	public CommerceVirtualOrderItem fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceVirtualOrderItem> orderByComparator);
-
-	/**
-	 * Returns the last commerce virtual order item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item
-	 * @throws NoSuchVirtualOrderItemException if a matching commerce virtual order item could not be found
-	 */
-	public CommerceVirtualOrderItem findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceVirtualOrderItem> orderByComparator)
-		throws NoSuchVirtualOrderItemException;
-
-	/**
-	 * Returns the last commerce virtual order item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item, or <code>null</code> if a matching commerce virtual order item could not be found
-	 */
-	public CommerceVirtualOrderItem fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceVirtualOrderItem> orderByComparator);
@@ -522,4 +468,4 @@ public interface CommerceVirtualOrderItemPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:177564577
+// LIFERAY-SERVICE-BUILDER-HASH:802951743

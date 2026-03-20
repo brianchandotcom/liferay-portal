@@ -303,65 +303,6 @@ public class AuditEventPersistenceImpl
 	}
 
 	/**
-	 * Returns the last audit event in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching audit event
-	 * @throws NoSuchEventException if a matching audit event could not be found
-	 */
-	@Override
-	public AuditEvent findByCompanyId_Last(
-			long companyId, OrderByComparator<AuditEvent> orderByComparator)
-		throws NoSuchEventException {
-
-		AuditEvent auditEvent = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (auditEvent != null) {
-			return auditEvent;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEventException(sb.toString());
-	}
-
-	/**
-	 * Returns the last audit event in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching audit event, or <code>null</code> if a matching audit event could not be found
-	 */
-	@Override
-	public AuditEvent fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AuditEvent> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AuditEvent> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the audit events where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1037,4 +978,4 @@ public class AuditEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1112487440
+// LIFERAY-SERVICE-BUILDER-HASH:1151014509

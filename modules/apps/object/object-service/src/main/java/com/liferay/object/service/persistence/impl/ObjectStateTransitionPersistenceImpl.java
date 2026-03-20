@@ -321,67 +321,6 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object state transition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws NoSuchObjectStateTransitionException {
-
-		ObjectStateTransition objectStateTransition = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectStateTransition> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object state transitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -717,72 +656,6 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object state transition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws NoSuchObjectStateTransitionException {
-
-		ObjectStateTransition objectStateTransition = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectStateTransition> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object state transitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1105,67 +978,6 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object state transition in the ordered set where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition findByObjectStateFlowId_Last(
-			long objectStateFlowId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws NoSuchObjectStateTransitionException {
-
-		ObjectStateTransition objectStateTransition =
-			fetchByObjectStateFlowId_Last(objectStateFlowId, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectStateFlowId=");
-		sb.append(objectStateFlowId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition fetchByObjectStateFlowId_Last(
-		long objectStateFlowId,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		int count = countByObjectStateFlowId(objectStateFlowId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectStateTransition> list = findByObjectStateFlowId(
-			objectStateFlowId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object state transitions where objectStateFlowId = &#63; from the database.
 	 *
 	 * @param objectStateFlowId the object state flow ID
@@ -1464,68 +1276,6 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object state transition in the ordered set where sourceObjectStateId = &#63;.
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition findBySourceObjectStateId_Last(
-			long sourceObjectStateId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws NoSuchObjectStateTransitionException {
-
-		ObjectStateTransition objectStateTransition =
-			fetchBySourceObjectStateId_Last(
-				sourceObjectStateId, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sourceObjectStateId=");
-		sb.append(sourceObjectStateId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where sourceObjectStateId = &#63;.
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition fetchBySourceObjectStateId_Last(
-		long sourceObjectStateId,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		int count = countBySourceObjectStateId(sourceObjectStateId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectStateTransition> list = findBySourceObjectStateId(
-			sourceObjectStateId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object state transitions where sourceObjectStateId = &#63; from the database.
 	 *
 	 * @param sourceObjectStateId the source object state ID
@@ -1815,68 +1565,6 @@ public class ObjectStateTransitionPersistenceImpl
 
 		List<ObjectStateTransition> list = findByTargetObjectStateId(
 			targetObjectStateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where targetObjectStateId = &#63;.
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition findByTargetObjectStateId_Last(
-			long targetObjectStateId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws NoSuchObjectStateTransitionException {
-
-		ObjectStateTransition objectStateTransition =
-			fetchByTargetObjectStateId_Last(
-				targetObjectStateId, orderByComparator);
-
-		if (objectStateTransition != null) {
-			return objectStateTransition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("targetObjectStateId=");
-		sb.append(targetObjectStateId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where targetObjectStateId = &#63;.
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	@Override
-	public ObjectStateTransition fetchByTargetObjectStateId_Last(
-		long targetObjectStateId,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		int count = countByTargetObjectStateId(targetObjectStateId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectStateTransition> list = findByTargetObjectStateId(
-			targetObjectStateId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2709,4 +2397,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-250753941
+// LIFERAY-SERVICE-BUILDER-HASH:-1965486327

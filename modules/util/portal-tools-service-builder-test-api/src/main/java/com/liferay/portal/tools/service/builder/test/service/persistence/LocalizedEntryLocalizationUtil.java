@@ -225,39 +225,6 @@ public class LocalizedEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the last localized entry localization in the ordered set where localizedEntryId = &#63;.
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching localized entry localization
-	 * @throws NoSuchLocalizedEntryLocalizationException if a matching localized entry localization could not be found
-	 */
-	public static LocalizedEntryLocalization findByLocalizedEntryId_Last(
-			long localizedEntryId,
-			OrderByComparator<LocalizedEntryLocalization> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLocalizedEntryLocalizationException {
-
-		return getPersistence().findByLocalizedEntryId_Last(
-			localizedEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last localized entry localization in the ordered set where localizedEntryId = &#63;.
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching localized entry localization, or <code>null</code> if a matching localized entry localization could not be found
-	 */
-	public static LocalizedEntryLocalization fetchByLocalizedEntryId_Last(
-		long localizedEntryId,
-		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByLocalizedEntryId_Last(
-			localizedEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the localized entry localizations where localizedEntryId = &#63; from the database.
 	 *
 	 * @param localizedEntryId the localized entry ID
@@ -529,4 +496,4 @@ public class LocalizedEntryLocalizationUtil {
 	private static volatile LocalizedEntryLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1437881187
+// LIFERAY-SERVICE-BUILDER-HASH:-562897555

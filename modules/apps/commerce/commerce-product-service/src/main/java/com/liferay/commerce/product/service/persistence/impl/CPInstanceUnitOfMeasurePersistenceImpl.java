@@ -337,67 +337,6 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp instance unit of measure in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure
-	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
-		throws NoSuchCPInstanceUnitOfMeasureException {
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpInstanceUnitOfMeasure != null) {
-			return cpInstanceUnitOfMeasure;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstanceUnitOfMeasure> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp instance unit of measures where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -747,72 +686,6 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp instance unit of measure in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure
-	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
-		throws NoSuchCPInstanceUnitOfMeasureException {
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpInstanceUnitOfMeasure != null) {
-			return cpInstanceUnitOfMeasure;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstanceUnitOfMeasure> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp instance unit of measures where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1144,67 +1017,6 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp instance unit of measure in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure
-	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure findByCPInstanceId_Last(
-			long CPInstanceId,
-			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
-		throws NoSuchCPInstanceUnitOfMeasureException {
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-			fetchByCPInstanceId_Last(CPInstanceId, orderByComparator);
-
-		if (cpInstanceUnitOfMeasure != null) {
-			return cpInstanceUnitOfMeasure;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceId=");
-		sb.append(CPInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure fetchByCPInstanceId_Last(
-		long CPInstanceId,
-		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
-
-		int count = countByCPInstanceId(CPInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstanceUnitOfMeasure> list = findByCPInstanceId(
-			CPInstanceId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp instance unit of measures where CPInstanceId = &#63; from the database.
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -1527,72 +1339,6 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 
 		List<CPInstanceUnitOfMeasure> list = findByC_S(
 			companyId, sku, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where companyId = &#63; and sku = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure
-	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure findByC_S_Last(
-			long companyId, String sku,
-			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
-		throws NoSuchCPInstanceUnitOfMeasureException {
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByC_S_Last(
-			companyId, sku, orderByComparator);
-
-		if (cpInstanceUnitOfMeasure != null) {
-			return cpInstanceUnitOfMeasure;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where companyId = &#63; and sku = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure fetchByC_S_Last(
-		long companyId, String sku,
-		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
-
-		int count = countByC_S(companyId, sku);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstanceUnitOfMeasure> list = findByC_S(
-			companyId, sku, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1940,72 +1686,6 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 
 		List<CPInstanceUnitOfMeasure> list = findByC_A(
 			CPInstanceId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where CPInstanceId = &#63; and active = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure
-	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure findByC_A_Last(
-			long CPInstanceId, boolean active,
-			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
-		throws NoSuchCPInstanceUnitOfMeasureException {
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByC_A_Last(
-			CPInstanceId, active, orderByComparator);
-
-		if (cpInstanceUnitOfMeasure != null) {
-			return cpInstanceUnitOfMeasure;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceId=");
-		sb.append(CPInstanceId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where CPInstanceId = &#63; and active = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure fetchByC_A_Last(
-		long CPInstanceId, boolean active,
-		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
-
-		int count = countByC_A(CPInstanceId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstanceUnitOfMeasure> list = findByC_A(
-			CPInstanceId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2555,72 +2235,6 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp instance unit of measure in the ordered set where CPInstanceId = &#63; and primary = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure
-	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure findByC_P_Last(
-			long CPInstanceId, boolean primary,
-			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
-		throws NoSuchCPInstanceUnitOfMeasureException {
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByC_P_Last(
-			CPInstanceId, primary, orderByComparator);
-
-		if (cpInstanceUnitOfMeasure != null) {
-			return cpInstanceUnitOfMeasure;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceId=");
-		sb.append(CPInstanceId);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where CPInstanceId = &#63; and primary = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure fetchByC_P_Last(
-		long CPInstanceId, boolean primary,
-		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
-
-		int count = countByC_P(CPInstanceId, primary);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstanceUnitOfMeasure> list = findByC_P(
-			CPInstanceId, primary, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp instance unit of measures where CPInstanceId = &#63; and primary = &#63; from the database.
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -2982,77 +2596,6 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 
 		List<CPInstanceUnitOfMeasure> list = findByC_K_S(
 			companyId, key, sku, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where companyId = &#63; and key = &#63; and sku = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure
-	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure findByC_K_S_Last(
-			long companyId, String key, String sku,
-			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
-		throws NoSuchCPInstanceUnitOfMeasureException {
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByC_K_S_Last(
-			companyId, key, sku, orderByComparator);
-
-		if (cpInstanceUnitOfMeasure != null) {
-			return cpInstanceUnitOfMeasure;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance unit of measure in the ordered set where companyId = &#63; and key = &#63; and sku = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
-	 */
-	@Override
-	public CPInstanceUnitOfMeasure fetchByC_K_S_Last(
-		long companyId, String key, String sku,
-		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
-
-		int count = countByC_K_S(companyId, key, sku);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstanceUnitOfMeasure> list = findByC_K_S(
-			companyId, key, sku, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4313,4 +3856,4 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1910270621
+// LIFERAY-SERVICE-BUILDER-HASH:560725867

@@ -122,32 +122,6 @@ public interface SocialActivityLimitPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last social activity limit in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit
-	 * @throws NoSuchActivityLimitException if a matching social activity limit could not be found
-	 */
-	public SocialActivityLimit findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityLimit> orderByComparator)
-		throws NoSuchActivityLimitException;
-
-	/**
-	 * Returns the last social activity limit in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
-	 */
-	public SocialActivityLimit fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityLimit>
-			orderByComparator);
-
-	/**
 	 * Removes all the social activity limits where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -245,32 +219,6 @@ public interface SocialActivityLimitPersistence
 	 * @return the first matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
 	 */
 	public SocialActivityLimit fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityLimit>
-			orderByComparator);
-
-	/**
-	 * Returns the last social activity limit in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit
-	 * @throws NoSuchActivityLimitException if a matching social activity limit could not be found
-	 */
-	public SocialActivityLimit findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityLimit> orderByComparator)
-		throws NoSuchActivityLimitException;
-
-	/**
-	 * Returns the last social activity limit in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
-	 */
-	public SocialActivityLimit fetchByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityLimit>
 			orderByComparator);
@@ -380,34 +328,6 @@ public interface SocialActivityLimitPersistence
 	 * @return the first matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
 	 */
 	public SocialActivityLimit fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityLimit>
-			orderByComparator);
-
-	/**
-	 * Returns the last social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit
-	 * @throws NoSuchActivityLimitException if a matching social activity limit could not be found
-	 */
-	public SocialActivityLimit findByC_C_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SocialActivityLimit> orderByComparator)
-		throws NoSuchActivityLimitException;
-
-	/**
-	 * Returns the last social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
-	 */
-	public SocialActivityLimit fetchByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivityLimit>
 			orderByComparator);
@@ -631,4 +551,4 @@ public interface SocialActivityLimitPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1543435976
+// LIFERAY-SERVICE-BUILDER-HASH:-317892358

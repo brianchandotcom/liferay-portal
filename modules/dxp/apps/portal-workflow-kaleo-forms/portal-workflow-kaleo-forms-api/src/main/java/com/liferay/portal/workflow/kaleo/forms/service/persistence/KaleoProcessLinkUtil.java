@@ -219,39 +219,6 @@ public class KaleoProcessLinkUtil {
 	}
 
 	/**
-	 * Returns the last kaleo process link in the ordered set where kaleoProcessId = &#63;.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process link
-	 * @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
-	 */
-	public static KaleoProcessLink findByKaleoProcessId_Last(
-			long kaleoProcessId,
-			OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.exception.
-			NoSuchKaleoProcessLinkException {
-
-		return getPersistence().findByKaleoProcessId_Last(
-			kaleoProcessId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo process link in the ordered set where kaleoProcessId = &#63;.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
-	 */
-	public static KaleoProcessLink fetchByKaleoProcessId_Last(
-		long kaleoProcessId,
-		OrderByComparator<KaleoProcessLink> orderByComparator) {
-
-		return getPersistence().fetchByKaleoProcessId_Last(
-			kaleoProcessId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo process links where kaleoProcessId = &#63; from the database.
 	 *
 	 * @param kaleoProcessId the kaleo process ID
@@ -509,4 +476,4 @@ public class KaleoProcessLinkUtil {
 	private static volatile KaleoProcessLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-832799163
+// LIFERAY-SERVICE-BUILDER-HASH:-186141308

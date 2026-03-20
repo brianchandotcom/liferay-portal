@@ -211,34 +211,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount findByUuid_Last(
-			String uuid, OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -425,40 +397,6 @@ public class CommerceDiscountUtil {
 		OrderByComparator<CommerceDiscount> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -652,37 +590,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -870,40 +777,6 @@ public class CommerceDiscountUtil {
 		OrderByComparator<CommerceDiscount> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			companyId, couponCode, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and couponCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param couponCode the coupon code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount findByC_C_Last(
-			long companyId, String couponCode,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, couponCode, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and couponCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param couponCode the coupon code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount fetchByC_C_Last(
-		long companyId, String couponCode,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			companyId, couponCode, orderByComparator);
 	}
 
@@ -1107,40 +980,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the last commerce discount in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -1337,40 +1176,6 @@ public class CommerceDiscountUtil {
 		OrderByComparator<CommerceDiscount> orderByComparator) {
 
 		return getPersistence().fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		return getPersistence().fetchByLtE_S_Last(
 			expirationDate, status, orderByComparator);
 	}
 
@@ -1661,44 +1466,6 @@ public class CommerceDiscountUtil {
 		OrderByComparator<CommerceDiscount> orderByComparator) {
 
 		return getPersistence().fetchByC_L_A_S_First(
-			companyId, level, active, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and level = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param level the level
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount
-	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount findByC_L_A_S_Last(
-			long companyId, String level, boolean active, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByC_L_A_S_Last(
-			companyId, level, active, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount in the ordered set where companyId = &#63; and level = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param level the level
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
-	 */
-	public static CommerceDiscount fetchByC_L_A_S_Last(
-		long companyId, String level, boolean active, int status,
-		OrderByComparator<CommerceDiscount> orderByComparator) {
-
-		return getPersistence().fetchByC_L_A_S_Last(
 			companyId, level, active, status, orderByComparator);
 	}
 
@@ -2043,4 +1810,4 @@ public class CommerceDiscountUtil {
 	private static volatile CommerceDiscountPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1099832712
+// LIFERAY-SERVICE-BUILDER-HASH:-1400075099

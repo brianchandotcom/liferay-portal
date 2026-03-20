@@ -211,34 +211,6 @@ public class UserIdMapperUtil {
 	}
 
 	/**
-	 * Returns the last user ID mapper in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user ID mapper
-	 * @throws NoSuchUserIdMapperException if a matching user ID mapper could not be found
-	 */
-	public static UserIdMapper findByUserId_Last(
-			long userId, OrderByComparator<UserIdMapper> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserIdMapperException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user ID mapper in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
-	 */
-	public static UserIdMapper fetchByUserId_Last(
-		long userId, OrderByComparator<UserIdMapper> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user ID mappers where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -542,4 +514,4 @@ public class UserIdMapperUtil {
 	private static volatile UserIdMapperPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-907372806
+// LIFERAY-SERVICE-BUILDER-HASH:1150328554

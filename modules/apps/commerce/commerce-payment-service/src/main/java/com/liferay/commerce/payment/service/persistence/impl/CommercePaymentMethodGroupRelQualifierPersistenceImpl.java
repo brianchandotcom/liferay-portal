@@ -341,76 +341,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier
-	 * @throws NoSuchPaymentMethodGroupRelQualifierException if a matching commerce payment method group rel qualifier could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRelQualifier
-			findByCommercePaymentMethodGroupRelId_Last(
-				long commercePaymentMethodGroupRelId,
-				OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-					orderByComparator)
-		throws NoSuchPaymentMethodGroupRelQualifierException {
-
-		CommercePaymentMethodGroupRelQualifier
-			commercePaymentMethodGroupRelQualifier =
-				fetchByCommercePaymentMethodGroupRelId_Last(
-					commercePaymentMethodGroupRelId, orderByComparator);
-
-		if (commercePaymentMethodGroupRelQualifier != null) {
-			return commercePaymentMethodGroupRelQualifier;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePaymentMethodGroupRelId=");
-		sb.append(commercePaymentMethodGroupRelId);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentMethodGroupRelQualifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier, or <code>null</code> if a matching commerce payment method group rel qualifier could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRelQualifier
-		fetchByCommercePaymentMethodGroupRelId_Last(
-			long commercePaymentMethodGroupRelId,
-			OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-				orderByComparator) {
-
-		int count = countByCommercePaymentMethodGroupRelId(
-			commercePaymentMethodGroupRelId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePaymentMethodGroupRelQualifier> list =
-			findByCommercePaymentMethodGroupRelId(
-				commercePaymentMethodGroupRelId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce payment method group rel qualifiers where commercePaymentMethodGroupRelId = &#63; from the database.
 	 *
 	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
@@ -743,77 +673,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 
 		List<CommercePaymentMethodGroupRelQualifier> list = findByC_C(
 			classNameId, commercePaymentMethodGroupRelId, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where classNameId = &#63; and commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier
-	 * @throws NoSuchPaymentMethodGroupRelQualifierException if a matching commerce payment method group rel qualifier could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRelQualifier findByC_C_Last(
-			long classNameId, long commercePaymentMethodGroupRelId,
-			OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-				orderByComparator)
-		throws NoSuchPaymentMethodGroupRelQualifierException {
-
-		CommercePaymentMethodGroupRelQualifier
-			commercePaymentMethodGroupRelQualifier = fetchByC_C_Last(
-				classNameId, commercePaymentMethodGroupRelId,
-				orderByComparator);
-
-		if (commercePaymentMethodGroupRelQualifier != null) {
-			return commercePaymentMethodGroupRelQualifier;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", commercePaymentMethodGroupRelId=");
-		sb.append(commercePaymentMethodGroupRelId);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentMethodGroupRelQualifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where classNameId = &#63; and commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier, or <code>null</code> if a matching commerce payment method group rel qualifier could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRelQualifier fetchByC_C_Last(
-		long classNameId, long commercePaymentMethodGroupRelId,
-		OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-			orderByComparator) {
-
-		int count = countByC_C(classNameId, commercePaymentMethodGroupRelId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePaymentMethodGroupRelQualifier> list = findByC_C(
-			classNameId, commercePaymentMethodGroupRelId, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1938,4 +1797,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:47045812
+// LIFERAY-SERVICE-BUILDER-HASH:1568873030

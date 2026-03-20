@@ -121,32 +121,6 @@ public interface ExpandoColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last expando column in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando column
-	 * @throws NoSuchColumnException if a matching expando column could not be found
-	 */
-	public ExpandoColumn findByTableId_Last(
-			long tableId,
-			com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn>
-				orderByComparator)
-		throws NoSuchColumnException;
-
-	/**
-	 * Returns the last expando column in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando column, or <code>null</code> if a matching expando column could not be found
-	 */
-	public ExpandoColumn fetchByTableId_Last(
-		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn>
-			orderByComparator);
-
-	/**
 	 * Returns all the expando columns that the user has permission to view where tableId = &#63;.
 	 *
 	 * @param tableId the table ID
@@ -477,4 +451,4 @@ public interface ExpandoColumnPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-189878091
+// LIFERAY-SERVICE-BUILDER-HASH:1981962669

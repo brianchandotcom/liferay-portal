@@ -225,39 +225,6 @@ public class FriendlyURLEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the last friendly url entry localization in the ordered set where friendlyURLEntryId = &#63;.
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization findByFriendlyURLEntryId_Last(
-			long friendlyURLEntryId,
-			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryLocalizationException {
-
-		return getPersistence().findByFriendlyURLEntryId_Last(
-			friendlyURLEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where friendlyURLEntryId = &#63;.
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_Last(
-		long friendlyURLEntryId,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByFriendlyURLEntryId_Last(
-			friendlyURLEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the friendly url entry localizations where friendlyURLEntryId = &#63; from the database.
 	 *
 	 * @param friendlyURLEntryId the friendly url entry ID
@@ -479,43 +446,6 @@ public class FriendlyURLEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization findByG_C_U_Last(
-			long groupId, long classNameId, String urlTitle,
-			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryLocalizationException {
-
-		return getPersistence().findByG_C_U_Last(
-			groupId, classNameId, urlTitle, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization fetchByG_C_U_Last(
-		long groupId, long classNameId, String urlTitle,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByG_C_U_Last(
-			groupId, classNameId, urlTitle, orderByComparator);
-	}
-
-	/**
 	 * Removes all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -674,48 +604,6 @@ public class FriendlyURLEntryLocalizationUtil {
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
 
 		return getPersistence().fetchByC_C_U_C_First(
-			companyId, classNameId, urlTitle, ctCollectionId,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where companyId = &#63; and classNameId = &#63; and urlTitle = &#63; and ctCollectionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization findByC_C_U_C_Last(
-			long companyId, long classNameId, String urlTitle,
-			long ctCollectionId,
-			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryLocalizationException {
-
-		return getPersistence().findByC_C_U_C_Last(
-			companyId, classNameId, urlTitle, ctCollectionId,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where companyId = &#63; and classNameId = &#63; and urlTitle = &#63; and ctCollectionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization fetchByC_C_U_C_Last(
-		long companyId, long classNameId, String urlTitle, long ctCollectionId,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByC_C_U_C_Last(
 			companyId, classNameId, urlTitle, ctCollectionId,
 			orderByComparator);
 	}
@@ -882,45 +770,6 @@ public class FriendlyURLEntryLocalizationUtil {
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_L_First(
-			groupId, classNameId, classPK, languageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization findByG_C_C_L_Last(
-			long groupId, long classNameId, long classPK, String languageId,
-			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryLocalizationException {
-
-		return getPersistence().findByG_C_C_L_Last(
-			groupId, classNameId, classPK, languageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization fetchByG_C_C_L_Last(
-		long groupId, long classNameId, long classPK, String languageId,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_L_Last(
 			groupId, classNameId, classPK, languageId, orderByComparator);
 	}
 
@@ -1175,45 +1024,6 @@ public class FriendlyURLEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and languageId &ne; &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization findByG_C_NotL_U_Last(
-			long groupId, long classNameId, String languageId, String urlTitle,
-			OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryLocalizationException {
-
-		return getPersistence().findByG_C_NotL_U_Last(
-			groupId, classNameId, languageId, urlTitle, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and languageId &ne; &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public static FriendlyURLEntryLocalization fetchByG_C_NotL_U_Last(
-		long groupId, long classNameId, String languageId, String urlTitle,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByG_C_NotL_U_Last(
-			groupId, classNameId, languageId, urlTitle, orderByComparator);
-	}
-
-	/**
 	 * Removes all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and languageId &ne; &#63; and urlTitle = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1425,4 +1235,4 @@ public class FriendlyURLEntryLocalizationUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:613557959
+// LIFERAY-SERVICE-BUILDER-HASH:942858570

@@ -210,34 +210,6 @@ public class ObjectFolderUtil {
 	}
 
 	/**
-	 * Returns the last object folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder
-	 * @throws NoSuchObjectFolderException if a matching object folder could not be found
-	 */
-	public static ObjectFolder findByUuid_Last(
-			String uuid, OrderByComparator<ObjectFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder, or <code>null</code> if a matching object folder could not be found
-	 */
-	public static ObjectFolder fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectFolder> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the object folders that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -426,40 +398,6 @@ public class ObjectFolderUtil {
 	}
 
 	/**
-	 * Returns the last object folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder
-	 * @throws NoSuchObjectFolderException if a matching object folder could not be found
-	 */
-	public static ObjectFolder findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder, or <code>null</code> if a matching object folder could not be found
-	 */
-	public static ObjectFolder fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectFolder> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the object folders that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -644,36 +582,6 @@ public class ObjectFolderUtil {
 		long companyId, OrderByComparator<ObjectFolder> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder
-	 * @throws NoSuchObjectFolderException if a matching object folder could not be found
-	 */
-	public static ObjectFolder findByCompanyId_Last(
-			long companyId, OrderByComparator<ObjectFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder, or <code>null</code> if a matching object folder could not be found
-	 */
-	public static ObjectFolder fetchByCompanyId_Last(
-		long companyId, OrderByComparator<ObjectFolder> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -1046,4 +954,4 @@ public class ObjectFolderUtil {
 	private static volatile ObjectFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-749727212
+// LIFERAY-SERVICE-BUILDER-HASH:-1430198732

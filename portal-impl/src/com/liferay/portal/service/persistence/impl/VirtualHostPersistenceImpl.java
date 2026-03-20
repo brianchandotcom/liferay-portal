@@ -308,65 +308,6 @@ public class VirtualHostPersistenceImpl
 	}
 
 	/**
-	 * Returns the last virtual host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host
-	 * @throws NoSuchVirtualHostException if a matching virtual host could not be found
-	 */
-	@Override
-	public VirtualHost findByCompanyId_Last(
-			long companyId, OrderByComparator<VirtualHost> orderByComparator)
-		throws NoSuchVirtualHostException {
-
-		VirtualHost virtualHost = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (virtualHost != null) {
-			return virtualHost;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualHostException(sb.toString());
-	}
-
-	/**
-	 * Returns the last virtual host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	@Override
-	public VirtualHost fetchByCompanyId_Last(
-		long companyId, OrderByComparator<VirtualHost> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<VirtualHost> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the virtual hosts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -869,72 +810,6 @@ public class VirtualHostPersistenceImpl
 	}
 
 	/**
-	 * Returns the last virtual host in the ordered set where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host
-	 * @throws NoSuchVirtualHostException if a matching virtual host could not be found
-	 */
-	@Override
-	public VirtualHost findByC_L_Last(
-			long companyId, long layoutSetId,
-			OrderByComparator<VirtualHost> orderByComparator)
-		throws NoSuchVirtualHostException {
-
-		VirtualHost virtualHost = fetchByC_L_Last(
-			companyId, layoutSetId, orderByComparator);
-
-		if (virtualHost != null) {
-			return virtualHost;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", layoutSetId=");
-		sb.append(layoutSetId);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualHostException(sb.toString());
-	}
-
-	/**
-	 * Returns the last virtual host in the ordered set where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	@Override
-	public VirtualHost fetchByC_L_Last(
-		long companyId, long layoutSetId,
-		OrderByComparator<VirtualHost> orderByComparator) {
-
-		int count = countByC_L(companyId, layoutSetId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<VirtualHost> list = findByC_L(
-			companyId, layoutSetId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the virtual hosts where companyId = &#63; and layoutSetId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1254,72 +1129,6 @@ public class VirtualHostPersistenceImpl
 
 		List<VirtualHost> list = findByNotL_H(
 			layoutSetId, hostname, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last virtual host in the ordered set where layoutSetId &ne; &#63; and hostname = &#63;.
-	 *
-	 * @param layoutSetId the layout set ID
-	 * @param hostname the hostname
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host
-	 * @throws NoSuchVirtualHostException if a matching virtual host could not be found
-	 */
-	@Override
-	public VirtualHost findByNotL_H_Last(
-			long layoutSetId, String hostname,
-			OrderByComparator<VirtualHost> orderByComparator)
-		throws NoSuchVirtualHostException {
-
-		VirtualHost virtualHost = fetchByNotL_H_Last(
-			layoutSetId, hostname, orderByComparator);
-
-		if (virtualHost != null) {
-			return virtualHost;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutSetId!=");
-		sb.append(layoutSetId);
-
-		sb.append(", hostname=");
-		sb.append(hostname);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualHostException(sb.toString());
-	}
-
-	/**
-	 * Returns the last virtual host in the ordered set where layoutSetId &ne; &#63; and hostname = &#63;.
-	 *
-	 * @param layoutSetId the layout set ID
-	 * @param hostname the hostname
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	@Override
-	public VirtualHost fetchByNotL_H_Last(
-		long layoutSetId, String hostname,
-		OrderByComparator<VirtualHost> orderByComparator) {
-
-		int count = countByNotL_H(layoutSetId, hostname);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<VirtualHost> list = findByNotL_H(
-			layoutSetId, hostname, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2630,4 +2439,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:966583048
+// LIFERAY-SERVICE-BUILDER-HASH:1904678400

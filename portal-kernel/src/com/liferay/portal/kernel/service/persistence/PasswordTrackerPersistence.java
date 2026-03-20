@@ -119,32 +119,6 @@ public interface PasswordTrackerPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last password tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password tracker
-	 * @throws NoSuchPasswordTrackerException if a matching password tracker could not be found
-	 */
-	public PasswordTracker findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<PasswordTracker>
-				orderByComparator)
-		throws NoSuchPasswordTrackerException;
-
-	/**
-	 * Returns the last password tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password tracker, or <code>null</code> if a matching password tracker could not be found
-	 */
-	public PasswordTracker fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<PasswordTracker>
-			orderByComparator);
-
-	/**
 	 * Removes all the password trackers where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -280,4 +254,4 @@ public interface PasswordTrackerPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1041699545
+// LIFERAY-SERVICE-BUILDER-HASH:483432680

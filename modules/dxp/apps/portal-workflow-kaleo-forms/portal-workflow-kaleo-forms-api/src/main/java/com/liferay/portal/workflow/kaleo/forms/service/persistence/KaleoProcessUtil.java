@@ -211,35 +211,6 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process
-	 * @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
-	 */
-	public static KaleoProcess findByUuid_Last(
-			String uuid, OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.exception.
-			NoSuchKaleoProcessException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	public static KaleoProcess fetchByUuid_Last(
-		String uuid, OrderByComparator<KaleoProcess> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,41 +406,6 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process
-	 * @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
-	 */
-	public static KaleoProcess findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.exception.
-			NoSuchKaleoProcessException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	public static KaleoProcess fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<KaleoProcess> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -590,35 +526,6 @@ public class KaleoProcessUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo process in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process
-	 * @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
-	 */
-	public static KaleoProcess findByGroupId_Last(
-			long groupId, OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.exception.
-			NoSuchKaleoProcessException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo process in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	public static KaleoProcess fetchByGroupId_Last(
-		long groupId, OrderByComparator<KaleoProcess> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -920,4 +827,4 @@ public class KaleoProcessUtil {
 	private static volatile KaleoProcessPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-618694795
+// LIFERAY-SERVICE-BUILDER-HASH:1131122012

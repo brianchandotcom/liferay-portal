@@ -120,32 +120,6 @@ public interface ERCGroupEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last erc group entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc group entry
-	 * @throws NoSuchERCGroupEntryException if a matching erc group entry could not be found
-	 */
-	public ERCGroupEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCGroupEntry>
-				orderByComparator)
-		throws NoSuchERCGroupEntryException;
-
-	/**
-	 * Returns the last erc group entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc group entry, or <code>null</code> if a matching erc group entry could not be found
-	 */
-	public ERCGroupEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ERCGroupEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the erc group entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -300,34 +274,6 @@ public interface ERCGroupEntryPersistence
 	 * @return the first matching erc group entry, or <code>null</code> if a matching erc group entry could not be found
 	 */
 	public ERCGroupEntry fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ERCGroupEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last erc group entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc group entry
-	 * @throws NoSuchERCGroupEntryException if a matching erc group entry could not be found
-	 */
-	public ERCGroupEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCGroupEntry>
-				orderByComparator)
-		throws NoSuchERCGroupEntryException;
-
-	/**
-	 * Returns the last erc group entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc group entry, or <code>null</code> if a matching erc group entry could not be found
-	 */
-	public ERCGroupEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ERCGroupEntry>
 			orderByComparator);
@@ -522,4 +468,4 @@ public interface ERCGroupEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2141331421
+// LIFERAY-SERVICE-BUILDER-HASH:-372968457

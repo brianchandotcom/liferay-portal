@@ -310,67 +310,6 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last country localization in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country localization
-	 * @throws NoSuchCountryLocalizationException if a matching country localization could not be found
-	 */
-	@Override
-	public CountryLocalization findByCountryId_Last(
-			long countryId,
-			OrderByComparator<CountryLocalization> orderByComparator)
-		throws NoSuchCountryLocalizationException {
-
-		CountryLocalization countryLocalization = fetchByCountryId_Last(
-			countryId, orderByComparator);
-
-		if (countryLocalization != null) {
-			return countryLocalization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append("}");
-
-		throw new NoSuchCountryLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last country localization in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country localization, or <code>null</code> if a matching country localization could not be found
-	 */
-	@Override
-	public CountryLocalization fetchByCountryId_Last(
-		long countryId,
-		OrderByComparator<CountryLocalization> orderByComparator) {
-
-		int count = countByCountryId(countryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CountryLocalization> list = findByCountryId(
-			countryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the country localizations where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -1542,4 +1481,4 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1341707079
+// LIFERAY-SERVICE-BUILDER-HASH:-1546446517

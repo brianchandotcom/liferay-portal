@@ -316,64 +316,6 @@ public class ObjectStatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last object state in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state
-	 * @throws NoSuchObjectStateException if a matching object state could not be found
-	 */
-	@Override
-	public ObjectState findByUuid_Last(
-			String uuid, OrderByComparator<ObjectState> orderByComparator)
-		throws NoSuchObjectStateException {
-
-		ObjectState objectState = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (objectState != null) {
-			return objectState;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state, or <code>null</code> if a matching object state could not be found
-	 */
-	@Override
-	public ObjectState fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectState> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectState> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object states where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -707,72 +649,6 @@ public class ObjectStatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last object state in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state
-	 * @throws NoSuchObjectStateException if a matching object state could not be found
-	 */
-	@Override
-	public ObjectState findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectState> orderByComparator)
-		throws NoSuchObjectStateException {
-
-		ObjectState objectState = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectState != null) {
-			return objectState;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state, or <code>null</code> if a matching object state could not be found
-	 */
-	@Override
-	public ObjectState fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectState> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectState> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object states where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1089,67 +965,6 @@ public class ObjectStatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last object state in the ordered set where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state
-	 * @throws NoSuchObjectStateException if a matching object state could not be found
-	 */
-	@Override
-	public ObjectState findByListTypeEntryId_Last(
-			long listTypeEntryId,
-			OrderByComparator<ObjectState> orderByComparator)
-		throws NoSuchObjectStateException {
-
-		ObjectState objectState = fetchByListTypeEntryId_Last(
-			listTypeEntryId, orderByComparator);
-
-		if (objectState != null) {
-			return objectState;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeEntryId=");
-		sb.append(listTypeEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state in the ordered set where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state, or <code>null</code> if a matching object state could not be found
-	 */
-	@Override
-	public ObjectState fetchByListTypeEntryId_Last(
-		long listTypeEntryId,
-		OrderByComparator<ObjectState> orderByComparator) {
-
-		int count = countByListTypeEntryId(listTypeEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectState> list = findByListTypeEntryId(
-			listTypeEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object states where listTypeEntryId = &#63; from the database.
 	 *
 	 * @param listTypeEntryId the list type entry ID
@@ -1436,67 +1251,6 @@ public class ObjectStatePersistenceImpl
 
 		List<ObjectState> list = findByObjectStateFlowId(
 			objectStateFlowId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object state in the ordered set where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state
-	 * @throws NoSuchObjectStateException if a matching object state could not be found
-	 */
-	@Override
-	public ObjectState findByObjectStateFlowId_Last(
-			long objectStateFlowId,
-			OrderByComparator<ObjectState> orderByComparator)
-		throws NoSuchObjectStateException {
-
-		ObjectState objectState = fetchByObjectStateFlowId_Last(
-			objectStateFlowId, orderByComparator);
-
-		if (objectState != null) {
-			return objectState;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectStateFlowId=");
-		sb.append(objectStateFlowId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state in the ordered set where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state, or <code>null</code> if a matching object state could not be found
-	 */
-	@Override
-	public ObjectState fetchByObjectStateFlowId_Last(
-		long objectStateFlowId,
-		OrderByComparator<ObjectState> orderByComparator) {
-
-		int count = countByObjectStateFlowId(objectStateFlowId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectState> list = findByObjectStateFlowId(
-			objectStateFlowId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2513,4 +2267,4 @@ public class ObjectStatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1373256686
+// LIFERAY-SERVICE-BUILDER-HASH:2081150122

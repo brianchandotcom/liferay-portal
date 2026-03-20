@@ -226,41 +226,6 @@ public class KaleoTimerUtil {
 	}
 
 	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer
-	 * @throws NoSuchTimerException if a matching kaleo timer could not be found
-	 */
-	public static KaleoTimer findByKCN_KCPK_Last(
-			String kaleoClassName, long kaleoClassPK,
-			OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTimerException {
-
-		return getPersistence().findByKCN_KCPK_Last(
-			kaleoClassName, kaleoClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
-	 */
-	public static KaleoTimer fetchByKCN_KCPK_Last(
-		String kaleoClassName, long kaleoClassPK,
-		OrderByComparator<KaleoTimer> orderByComparator) {
-
-		return getPersistence().fetchByKCN_KCPK_Last(
-			kaleoClassName, kaleoClassPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
 	 *
 	 * @param kaleoClassName the kaleo class name
@@ -406,43 +371,6 @@ public class KaleoTimerUtil {
 		OrderByComparator<KaleoTimer> orderByComparator) {
 
 		return getPersistence().fetchByKCN_KCPK_Blocking_First(
-			kaleoClassName, kaleoClassPK, blocking, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param blocking the blocking
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer
-	 * @throws NoSuchTimerException if a matching kaleo timer could not be found
-	 */
-	public static KaleoTimer findByKCN_KCPK_Blocking_Last(
-			String kaleoClassName, long kaleoClassPK, boolean blocking,
-			OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTimerException {
-
-		return getPersistence().findByKCN_KCPK_Blocking_Last(
-			kaleoClassName, kaleoClassPK, blocking, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param blocking the blocking
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
-	 */
-	public static KaleoTimer fetchByKCN_KCPK_Blocking_Last(
-		String kaleoClassName, long kaleoClassPK, boolean blocking,
-		OrderByComparator<KaleoTimer> orderByComparator) {
-
-		return getPersistence().fetchByKCN_KCPK_Blocking_Last(
 			kaleoClassName, kaleoClassPK, blocking, orderByComparator);
 	}
 
@@ -635,4 +563,4 @@ public class KaleoTimerUtil {
 	private static volatile KaleoTimerPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1642386370
+// LIFERAY-SERVICE-BUILDER-HASH:-328191228

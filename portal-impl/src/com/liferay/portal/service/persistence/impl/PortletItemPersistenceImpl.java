@@ -314,72 +314,6 @@ public class PortletItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet item
-	 * @throws NoSuchPortletItemException if a matching portlet item could not be found
-	 */
-	@Override
-	public PortletItem findByG_C_Last(
-			long groupId, long classNameId,
-			OrderByComparator<PortletItem> orderByComparator)
-		throws NoSuchPortletItemException {
-
-		PortletItem portletItem = fetchByG_C_Last(
-			groupId, classNameId, orderByComparator);
-
-		if (portletItem != null) {
-			return portletItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet item, or <code>null</code> if a matching portlet item could not be found
-	 */
-	@Override
-	public PortletItem fetchByG_C_Last(
-		long groupId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator) {
-
-		int count = countByG_C(groupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletItem> list = findByG_C(
-			groupId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the portlet items where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -718,78 +652,6 @@ public class PortletItemPersistenceImpl
 
 		List<PortletItem> list = findByG_P_C(
 			groupId, portletId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param portletId the portlet ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet item
-	 * @throws NoSuchPortletItemException if a matching portlet item could not be found
-	 */
-	@Override
-	public PortletItem findByG_P_C_Last(
-			long groupId, String portletId, long classNameId,
-			OrderByComparator<PortletItem> orderByComparator)
-		throws NoSuchPortletItemException {
-
-		PortletItem portletItem = fetchByG_P_C_Last(
-			groupId, portletId, classNameId, orderByComparator);
-
-		if (portletItem != null) {
-			return portletItem;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param portletId the portlet ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet item, or <code>null</code> if a matching portlet item could not be found
-	 */
-	@Override
-	public PortletItem fetchByG_P_C_Last(
-		long groupId, String portletId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator) {
-
-		int count = countByG_P_C(groupId, portletId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortletItem> list = findByG_P_C(
-			groupId, portletId, classNameId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1808,4 +1670,4 @@ public class PortletItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1170700429
+// LIFERAY-SERVICE-BUILDER-HASH:1910487605

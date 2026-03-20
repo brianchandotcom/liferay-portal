@@ -341,65 +341,6 @@ public class AssetListEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry findByUuid_Last(
-			String uuid, OrderByComparator<AssetListEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<AssetListEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset list entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -947,72 +888,6 @@ public class AssetListEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset list entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1329,65 +1204,6 @@ public class AssetListEntryPersistenceImpl
 
 		List<AssetListEntry> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry findByGroupId_Last(
-			long groupId, OrderByComparator<AssetListEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<AssetListEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2811,72 +2627,6 @@ public class AssetListEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry findByG_LikeT_Last(
-			long groupId, String title,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByG_LikeT_Last(
-			groupId, title, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", titleLIKE");
-		sb.append(title);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByG_LikeT_Last(
-		long groupId, String title,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		int count = countByG_LikeT(groupId, title);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntry> list = findByG_LikeT(
-			groupId, title, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4046,72 +3796,6 @@ public class AssetListEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry findByG_TY_Last(
-			long groupId, int type,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByG_TY_Last(
-			groupId, type, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByG_TY_Last(
-		long groupId, int type,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		int count = countByG_TY(groupId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntry> list = findByG_TY(
-			groupId, type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4661,72 +4345,6 @@ public class AssetListEntryPersistenceImpl
 
 		List<AssetListEntry> list = findByG_AET(
 			groupId, assetEntryType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry findByG_AET_Last(
-			long groupId, String assetEntryType,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByG_AET_Last(
-			groupId, assetEntryType, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", assetEntryType=");
-		sb.append(assetEntryType);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByG_AET_Last(
-		long groupId, String assetEntryType,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		int count = countByG_AET(groupId, assetEntryType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntry> list = findByG_AET(
-			groupId, assetEntryType, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6029,78 +5647,6 @@ public class AssetListEntryPersistenceImpl
 
 		List<AssetListEntry> list = findByG_LikeT_AET(
 			groupId, title, assetEntryType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry findByG_LikeT_AET_Last(
-			long groupId, String title, String assetEntryType,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByG_LikeT_AET_Last(
-			groupId, title, assetEntryType, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", titleLIKE");
-		sb.append(title);
-
-		sb.append(", assetEntryType=");
-		sb.append(assetEntryType);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByG_LikeT_AET_Last(
-		long groupId, String title, String assetEntryType,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		int count = countByG_LikeT_AET(groupId, title, assetEntryType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntry> list = findByG_LikeT_AET(
-			groupId, title, assetEntryType, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7593,79 +7139,6 @@ public class AssetListEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry findByG_AES_AET_Last(
-			long groupId, String assetEntrySubtype, String assetEntryType,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByG_AES_AET_Last(
-			groupId, assetEntrySubtype, assetEntryType, orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", assetEntrySubtype=");
-		sb.append(assetEntrySubtype);
-
-		sb.append(", assetEntryType=");
-		sb.append(assetEntryType);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByG_AES_AET_Last(
-		long groupId, String assetEntrySubtype, String assetEntryType,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		int count = countByG_AES_AET(
-			groupId, assetEntrySubtype, assetEntryType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntry> list = findByG_AES_AET(
-			groupId, assetEntrySubtype, assetEntryType, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -9069,87 +8542,6 @@ public class AssetListEntryPersistenceImpl
 
 		List<AssetListEntry> list = findByG_LikeT_AES_AET(
 			groupId, title, assetEntrySubtype, assetEntryType, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry
-	 * @throws NoSuchEntryException if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry findByG_LikeT_AES_AET_Last(
-			long groupId, String title, String assetEntrySubtype,
-			String assetEntryType,
-			OrderByComparator<AssetListEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByG_LikeT_AES_AET_Last(
-			groupId, title, assetEntrySubtype, assetEntryType,
-			orderByComparator);
-
-		if (assetListEntry != null) {
-			return assetListEntry;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", titleLIKE");
-		sb.append(title);
-
-		sb.append(", assetEntrySubtype=");
-		sb.append(assetEntrySubtype);
-
-		sb.append(", assetEntryType=");
-		sb.append(assetEntryType);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
-	@Override
-	public AssetListEntry fetchByG_LikeT_AES_AET_Last(
-		long groupId, String title, String assetEntrySubtype,
-		String assetEntryType,
-		OrderByComparator<AssetListEntry> orderByComparator) {
-
-		int count = countByG_LikeT_AES_AET(
-			groupId, title, assetEntrySubtype, assetEntryType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntry> list = findByG_LikeT_AES_AET(
-			groupId, title, assetEntrySubtype, assetEntryType, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -11926,4 +11318,4 @@ public class AssetListEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-784889680
+// LIFERAY-SERVICE-BUILDER-HASH:-250966017

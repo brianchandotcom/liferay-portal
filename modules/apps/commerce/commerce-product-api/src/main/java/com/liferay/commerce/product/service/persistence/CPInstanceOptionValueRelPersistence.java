@@ -122,32 +122,6 @@ public interface CPInstanceOptionValueRelPersistence
 			<CPInstanceOptionValueRel> orderByComparator);
 
 	/**
-	 * Returns the last cp instance option value rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPInstanceOptionValueRel> orderByComparator)
-		throws NoSuchCPInstanceOptionValueRelException;
-
-	/**
-	 * Returns the last cp instance option value rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel, or <code>null</code> if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPInstanceOptionValueRel> orderByComparator);
-
-	/**
 	 * Removes all the cp instance option value rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface CPInstanceOptionValueRelPersistence
 			<CPInstanceOptionValueRel> orderByComparator);
 
 	/**
-	 * Returns the last cp instance option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPInstanceOptionValueRel> orderByComparator)
-		throws NoSuchCPInstanceOptionValueRelException;
-
-	/**
-	 * Returns the last cp instance option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel, or <code>null</code> if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPInstanceOptionValueRel> orderByComparator);
-
-	/**
 	 * Removes all the cp instance option value rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,32 +389,6 @@ public interface CPInstanceOptionValueRelPersistence
 			<CPInstanceOptionValueRel> orderByComparator);
 
 	/**
-	 * Returns the last cp instance option value rel in the ordered set where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel findByCPDefinitionOptionRelId_Last(
-			long CPDefinitionOptionRelId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPInstanceOptionValueRel> orderByComparator)
-		throws NoSuchCPInstanceOptionValueRelException;
-
-	/**
-	 * Returns the last cp instance option value rel in the ordered set where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel, or <code>null</code> if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel fetchByCPDefinitionOptionRelId_Last(
-		long CPDefinitionOptionRelId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPInstanceOptionValueRel> orderByComparator);
-
-	/**
 	 * Removes all the cp instance option value rels where CPDefinitionOptionRelId = &#63; from the database.
 	 *
 	 * @param CPDefinitionOptionRelId the cp definition option rel ID
@@ -567,32 +487,6 @@ public interface CPInstanceOptionValueRelPersistence
 	 * @return the first matching cp instance option value rel, or <code>null</code> if a matching cp instance option value rel could not be found
 	 */
 	public CPInstanceOptionValueRel fetchByCPInstanceId_First(
-		long CPInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPInstanceOptionValueRel> orderByComparator);
-
-	/**
-	 * Returns the last cp instance option value rel in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel findByCPInstanceId_Last(
-			long CPInstanceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPInstanceOptionValueRel> orderByComparator)
-		throws NoSuchCPInstanceOptionValueRelException;
-
-	/**
-	 * Returns the last cp instance option value rel in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel, or <code>null</code> if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel fetchByCPInstanceId_Last(
 		long CPInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceOptionValueRel> orderByComparator);
@@ -702,34 +596,6 @@ public interface CPInstanceOptionValueRelPersistence
 	 * @return the first matching cp instance option value rel, or <code>null</code> if a matching cp instance option value rel could not be found
 	 */
 	public CPInstanceOptionValueRel fetchByCDORI_CII_First(
-		long CPDefinitionOptionRelId, long CPInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPInstanceOptionValueRel> orderByComparator);
-
-	/**
-	 * Returns the last cp instance option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and CPInstanceId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel findByCDORI_CII_Last(
-			long CPDefinitionOptionRelId, long CPInstanceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPInstanceOptionValueRel> orderByComparator)
-		throws NoSuchCPInstanceOptionValueRelException;
-
-	/**
-	 * Returns the last cp instance option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and CPInstanceId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance option value rel, or <code>null</code> if a matching cp instance option value rel could not be found
-	 */
-	public CPInstanceOptionValueRel fetchByCDORI_CII_Last(
 		long CPDefinitionOptionRelId, long CPInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceOptionValueRel> orderByComparator);
@@ -997,4 +863,4 @@ public interface CPInstanceOptionValueRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1993586433
+// LIFERAY-SERVICE-BUILDER-HASH:-1927489347

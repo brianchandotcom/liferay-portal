@@ -323,67 +323,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce subscription entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException {
-
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceSubscriptionEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce subscription entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -925,72 +864,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce subscription entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException {
-
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceSubscriptionEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce subscription entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1306,67 +1179,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce subscription entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException {
-
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceSubscriptionEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce subscription entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1649,67 +1461,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 
 		List<CommerceSubscriptionEntry> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException {
-
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceSubscriptionEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2195,68 +1946,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce subscription entry in the ordered set where subscriptionStatus = &#63;.
-	 *
-	 * @param subscriptionStatus the subscription status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry findBySubscriptionStatus_Last(
-			int subscriptionStatus,
-			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException {
-
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchBySubscriptionStatus_Last(
-				subscriptionStatus, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("subscriptionStatus=");
-		sb.append(subscriptionStatus);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where subscriptionStatus = &#63;.
-	 *
-	 * @param subscriptionStatus the subscription status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry fetchBySubscriptionStatus_Last(
-		int subscriptionStatus,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		int count = countBySubscriptionStatus(subscriptionStatus);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceSubscriptionEntry> list = findBySubscriptionStatus(
-			subscriptionStatus, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce subscription entries where subscriptionStatus = &#63; from the database.
 	 *
 	 * @param subscriptionStatus the subscription status
@@ -2560,72 +2249,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 
 		List<CommerceSubscriptionEntry> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException {
-
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceSubscriptionEntry> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2961,77 +2584,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 
 		List<CommerceSubscriptionEntry> list = findByG_C_U(
 			groupId, companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where groupId = &#63; and companyId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry findByG_C_U_Last(
-			long groupId, long companyId, long userId,
-			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException {
-
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByG_C_U_Last(
-			groupId, companyId, userId, orderByComparator);
-
-		if (commerceSubscriptionEntry != null) {
-			return commerceSubscriptionEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce subscription entry in the ordered set where groupId = &#63; and companyId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry fetchByG_C_U_Last(
-		long groupId, long companyId, long userId,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		int count = countByG_C_U(groupId, companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceSubscriptionEntry> list = findByG_C_U(
-			groupId, companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4243,4 +3795,4 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-873640314
+// LIFERAY-SERVICE-BUILDER-HASH:882841333

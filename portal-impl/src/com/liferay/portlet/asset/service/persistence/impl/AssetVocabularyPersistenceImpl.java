@@ -332,65 +332,6 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset vocabulary in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary findByUuid_Last(
-			String uuid, OrderByComparator<AssetVocabulary> orderByComparator)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByUuid_Last(
-		String uuid, OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabulary> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset vocabularies where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -938,72 +879,6 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabulary> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset vocabularies where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1320,65 +1195,6 @@ public class AssetVocabularyPersistenceImpl
 
 		List<AssetVocabulary> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary findByGroupId_Last(
-			long groupId, OrderByComparator<AssetVocabulary> orderByComparator)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByGroupId_Last(
-		long groupId, OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabulary> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2370,66 +2186,6 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset vocabulary in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabulary> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset vocabularies where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2944,72 +2700,6 @@ public class AssetVocabularyPersistenceImpl
 
 		List<AssetVocabulary> list = findByG_LikeN(
 			groupId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary findByG_LikeN_Last(
-			long groupId, String name,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = fetchByG_LikeN_Last(
-			groupId, name, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByG_LikeN_Last(
-		long groupId, String name,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		int count = countByG_LikeN(groupId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabulary> list = findByG_LikeN(
-			groupId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3596,72 +3286,6 @@ public class AssetVocabularyPersistenceImpl
 
 		List<AssetVocabulary> list = findByG_V(
 			groupId, visibilityType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary
-	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary findByG_V_Last(
-			long groupId, int visibilityType,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = fetchByG_V_Last(
-			groupId, visibilityType, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", visibilityType=");
-		sb.append(visibilityType);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByG_V_Last(
-		long groupId, int visibilityType,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		int count = countByG_V(groupId, visibilityType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabulary> list = findByG_V(
-			groupId, visibilityType, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5941,4 +5565,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1099032249
+// LIFERAY-SERVICE-BUILDER-HASH:-848608151

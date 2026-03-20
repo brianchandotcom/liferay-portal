@@ -120,32 +120,6 @@ public interface ERCVersionedEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry
-	 * @throws NoSuchERCVersionedEntryException if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-				orderByComparator)
-		throws NoSuchERCVersionedEntryException;
-
-	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the erc versioned entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -250,34 +224,6 @@ public interface ERCVersionedEntryPersistence
 	 * @return the first matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
 	 */
 	public ERCVersionedEntry fetchByUuid_Head_First(
-		String uuid, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry
-	 * @throws NoSuchERCVersionedEntryException if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry findByUuid_Head_Last(
-			String uuid, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-				orderByComparator)
-		throws NoSuchERCVersionedEntryException;
-
-	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry fetchByUuid_Head_Last(
 		String uuid, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
 			orderByComparator);
@@ -389,34 +335,6 @@ public interface ERCVersionedEntryPersistence
 	 * @return the first matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
 	 */
 	public ERCVersionedEntry fetchByUUID_G_First(
-		String uuid, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry
-	 * @throws NoSuchERCVersionedEntryException if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry findByUUID_G_Last(
-			String uuid, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-				orderByComparator)
-		throws NoSuchERCVersionedEntryException;
-
-	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry fetchByUUID_G_Last(
 		String uuid, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
 			orderByComparator);
@@ -591,34 +509,6 @@ public interface ERCVersionedEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry
-	 * @throws NoSuchERCVersionedEntryException if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-				orderByComparator)
-		throws NoSuchERCVersionedEntryException;
-
-	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the erc versioned entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -736,36 +626,6 @@ public interface ERCVersionedEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry
-	 * @throws NoSuchERCVersionedEntryException if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry findByUuid_C_Head_Last(
-			String uuid, long companyId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-				orderByComparator)
-		throws NoSuchERCVersionedEntryException;
-
-	/**
-	 * Returns the last erc versioned entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry fetchByUuid_C_Head_Last(
-		String uuid, long companyId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the erc versioned entries where uuid = &#63; and companyId = &#63; and head = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -874,34 +734,6 @@ public interface ERCVersionedEntryPersistence
 	 * @return the first matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
 	 */
 	public ERCVersionedEntry fetchByERC_G_First(
-		String externalReferenceCode, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last erc versioned entry in the ordered set where externalReferenceCode = &#63; and groupId = &#63;.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry
-	 * @throws NoSuchERCVersionedEntryException if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry findByERC_G_Last(
-			String externalReferenceCode, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
-				orderByComparator)
-		throws NoSuchERCVersionedEntryException;
-
-	/**
-	 * Returns the last erc versioned entry in the ordered set where externalReferenceCode = &#63; and groupId = &#63;.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
-	 */
-	public ERCVersionedEntry fetchByERC_G_Last(
 		String externalReferenceCode, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ERCVersionedEntry>
 			orderByComparator);
@@ -1149,4 +981,4 @@ public interface ERCVersionedEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-788529109
+// LIFERAY-SERVICE-BUILDER-HASH:-1054557557

@@ -309,65 +309,6 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last password policy in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy
-	 * @throws NoSuchPasswordPolicyException if a matching password policy could not be found
-	 */
-	@Override
-	public PasswordPolicy findByUuid_Last(
-			String uuid, OrderByComparator<PasswordPolicy> orderByComparator)
-		throws NoSuchPasswordPolicyException {
-
-		PasswordPolicy passwordPolicy = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (passwordPolicy != null) {
-			return passwordPolicy;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPasswordPolicyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last password policy in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
-	 */
-	@Override
-	public PasswordPolicy fetchByUuid_Last(
-		String uuid, OrderByComparator<PasswordPolicy> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PasswordPolicy> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the password policies that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -931,72 +872,6 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last password policy in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy
-	 * @throws NoSuchPasswordPolicyException if a matching password policy could not be found
-	 */
-	@Override
-	public PasswordPolicy findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<PasswordPolicy> orderByComparator)
-		throws NoSuchPasswordPolicyException {
-
-		PasswordPolicy passwordPolicy = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (passwordPolicy != null) {
-			return passwordPolicy;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPasswordPolicyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last password policy in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
-	 */
-	@Override
-	public PasswordPolicy fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PasswordPolicy> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the password policies that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1546,65 +1421,6 @@ public class PasswordPolicyPersistenceImpl
 
 		List<PasswordPolicy> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last password policy in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy
-	 * @throws NoSuchPasswordPolicyException if a matching password policy could not be found
-	 */
-	@Override
-	public PasswordPolicy findByCompanyId_Last(
-			long companyId, OrderByComparator<PasswordPolicy> orderByComparator)
-		throws NoSuchPasswordPolicyException {
-
-		PasswordPolicy passwordPolicy = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (passwordPolicy != null) {
-			return passwordPolicy;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPasswordPolicyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last password policy in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
-	 */
-	@Override
-	public PasswordPolicy fetchByCompanyId_Last(
-		long companyId, OrderByComparator<PasswordPolicy> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PasswordPolicy> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2786,4 +2602,4 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-740355945
+// LIFERAY-SERVICE-BUILDER-HASH:1379481409

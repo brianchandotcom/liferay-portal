@@ -121,32 +121,6 @@ public interface SamlSpSessionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last saml sp session in the ordered set where samlPeerBindingId = &#63;.
-	 *
-	 * @param samlPeerBindingId the saml peer binding ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp session
-	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
-	 */
-	public SamlSpSession findBySamlPeerBindingId_Last(
-			long samlPeerBindingId,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession>
-				orderByComparator)
-		throws NoSuchSpSessionException;
-
-	/**
-	 * Returns the last saml sp session in the ordered set where samlPeerBindingId = &#63;.
-	 *
-	 * @param samlPeerBindingId the saml peer binding ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
-	 */
-	public SamlSpSession fetchBySamlPeerBindingId_Last(
-		long samlPeerBindingId,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession>
-			orderByComparator);
-
-	/**
 	 * Removes all the saml sp sessions where samlPeerBindingId = &#63; from the database.
 	 *
 	 * @param samlPeerBindingId the saml peer binding ID
@@ -346,34 +320,6 @@ public interface SamlSpSessionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sessionIndex the session index
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp session
-	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
-	 */
-	public SamlSpSession findByC_SI_Last(
-			long companyId, String sessionIndex,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession>
-				orderByComparator)
-		throws NoSuchSpSessionException;
-
-	/**
-	 * Returns the last saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sessionIndex the session index
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
-	 */
-	public SamlSpSession fetchByC_SI_Last(
-		long companyId, String sessionIndex,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession>
-			orderByComparator);
-
-	/**
 	 * Removes all the saml sp sessions where companyId = &#63; and sessionIndex = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -511,4 +457,4 @@ public interface SamlSpSessionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-577049839
+// LIFERAY-SERVICE-BUILDER-HASH:837472549

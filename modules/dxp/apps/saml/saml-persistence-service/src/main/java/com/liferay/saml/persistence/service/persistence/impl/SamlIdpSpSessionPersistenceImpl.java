@@ -311,67 +311,6 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saml idp sp session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp session
-	 * @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
-	 */
-	@Override
-	public SamlIdpSpSession findByLtCreateDate_Last(
-			Date createDate,
-			OrderByComparator<SamlIdpSpSession> orderByComparator)
-		throws NoSuchIdpSpSessionException {
-
-		SamlIdpSpSession samlIdpSpSession = fetchByLtCreateDate_Last(
-			createDate, orderByComparator);
-
-		if (samlIdpSpSession != null) {
-			return samlIdpSpSession;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchIdpSpSessionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml idp sp session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
-	 */
-	@Override
-	public SamlIdpSpSession fetchByLtCreateDate_Last(
-		Date createDate,
-		OrderByComparator<SamlIdpSpSession> orderByComparator) {
-
-		int count = countByLtCreateDate(createDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlIdpSpSession> list = findByLtCreateDate(
-			createDate, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saml idp sp sessions where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -672,67 +611,6 @@ public class SamlIdpSpSessionPersistenceImpl
 
 		List<SamlIdpSpSession> list = findBySamlIdpSsoSessionId(
 			samlIdpSsoSessionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last saml idp sp session in the ordered set where samlIdpSsoSessionId = &#63;.
-	 *
-	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp session
-	 * @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
-	 */
-	@Override
-	public SamlIdpSpSession findBySamlIdpSsoSessionId_Last(
-			long samlIdpSsoSessionId,
-			OrderByComparator<SamlIdpSpSession> orderByComparator)
-		throws NoSuchIdpSpSessionException {
-
-		SamlIdpSpSession samlIdpSpSession = fetchBySamlIdpSsoSessionId_Last(
-			samlIdpSsoSessionId, orderByComparator);
-
-		if (samlIdpSpSession != null) {
-			return samlIdpSpSession;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("samlIdpSsoSessionId=");
-		sb.append(samlIdpSsoSessionId);
-
-		sb.append("}");
-
-		throw new NoSuchIdpSpSessionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml idp sp session in the ordered set where samlIdpSsoSessionId = &#63;.
-	 *
-	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
-	 */
-	@Override
-	public SamlIdpSpSession fetchBySamlIdpSsoSessionId_Last(
-		long samlIdpSsoSessionId,
-		OrderByComparator<SamlIdpSpSession> orderByComparator) {
-
-		int count = countBySamlIdpSsoSessionId(samlIdpSsoSessionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlIdpSpSession> list = findBySamlIdpSsoSessionId(
-			samlIdpSsoSessionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1467,4 +1345,4 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1511682457
+// LIFERAY-SERVICE-BUILDER-HASH:1195566846

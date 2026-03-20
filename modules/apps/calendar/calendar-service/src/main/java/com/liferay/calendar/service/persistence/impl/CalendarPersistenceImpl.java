@@ -329,64 +329,6 @@ public class CalendarPersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar
-	 * @throws NoSuchCalendarException if a matching calendar could not be found
-	 */
-	@Override
-	public Calendar findByUuid_Last(
-			String uuid, OrderByComparator<Calendar> orderByComparator)
-		throws NoSuchCalendarException {
-
-		Calendar calendar = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (calendar != null) {
-			return calendar;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCalendarException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
-	 */
-	@Override
-	public Calendar fetchByUuid_Last(
-		String uuid, OrderByComparator<Calendar> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Calendar> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendars where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -933,72 +875,6 @@ public class CalendarPersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar
-	 * @throws NoSuchCalendarException if a matching calendar could not be found
-	 */
-	@Override
-	public Calendar findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Calendar> orderByComparator)
-		throws NoSuchCalendarException {
-
-		Calendar calendar = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (calendar != null) {
-			return calendar;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCalendarException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
-	 */
-	@Override
-	public Calendar fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Calendar> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Calendar> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendars where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1333,72 +1209,6 @@ public class CalendarPersistenceImpl
 
 		List<Calendar> list = findByG_C(
 			groupId, calendarResourceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last calendar in the ordered set where groupId = &#63; and calendarResourceId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar
-	 * @throws NoSuchCalendarException if a matching calendar could not be found
-	 */
-	@Override
-	public Calendar findByG_C_Last(
-			long groupId, long calendarResourceId,
-			OrderByComparator<Calendar> orderByComparator)
-		throws NoSuchCalendarException {
-
-		Calendar calendar = fetchByG_C_Last(
-			groupId, calendarResourceId, orderByComparator);
-
-		if (calendar != null) {
-			return calendar;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", calendarResourceId=");
-		sb.append(calendarResourceId);
-
-		sb.append("}");
-
-		throw new NoSuchCalendarException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar in the ordered set where groupId = &#63; and calendarResourceId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
-	 */
-	@Override
-	public Calendar fetchByG_C_Last(
-		long groupId, long calendarResourceId,
-		OrderByComparator<Calendar> orderByComparator) {
-
-		int count = countByG_C(groupId, calendarResourceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Calendar> list = findByG_C(
-			groupId, calendarResourceId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1959,78 +1769,6 @@ public class CalendarPersistenceImpl
 
 		List<Calendar> list = findByG_C_D(
 			groupId, calendarResourceId, defaultCalendar, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last calendar in the ordered set where groupId = &#63; and calendarResourceId = &#63; and defaultCalendar = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param calendarResourceId the calendar resource ID
-	 * @param defaultCalendar the default calendar
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar
-	 * @throws NoSuchCalendarException if a matching calendar could not be found
-	 */
-	@Override
-	public Calendar findByG_C_D_Last(
-			long groupId, long calendarResourceId, boolean defaultCalendar,
-			OrderByComparator<Calendar> orderByComparator)
-		throws NoSuchCalendarException {
-
-		Calendar calendar = fetchByG_C_D_Last(
-			groupId, calendarResourceId, defaultCalendar, orderByComparator);
-
-		if (calendar != null) {
-			return calendar;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", calendarResourceId=");
-		sb.append(calendarResourceId);
-
-		sb.append(", defaultCalendar=");
-		sb.append(defaultCalendar);
-
-		sb.append("}");
-
-		throw new NoSuchCalendarException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar in the ordered set where groupId = &#63; and calendarResourceId = &#63; and defaultCalendar = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param calendarResourceId the calendar resource ID
-	 * @param defaultCalendar the default calendar
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
-	 */
-	@Override
-	public Calendar fetchByG_C_D_Last(
-		long groupId, long calendarResourceId, boolean defaultCalendar,
-		OrderByComparator<Calendar> orderByComparator) {
-
-		int count = countByG_C_D(groupId, calendarResourceId, defaultCalendar);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Calendar> list = findByG_C_D(
-			groupId, calendarResourceId, defaultCalendar, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3393,4 +3131,4 @@ public class CalendarPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2112377091
+// LIFERAY-SERVICE-BUILDER-HASH:633622685

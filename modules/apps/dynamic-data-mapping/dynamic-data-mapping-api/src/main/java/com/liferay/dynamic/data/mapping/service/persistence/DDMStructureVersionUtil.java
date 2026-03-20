@@ -221,39 +221,6 @@ public class DDMStructureVersionUtil {
 	}
 
 	/**
-	 * Returns the last ddm structure version in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure version
-	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
-	 */
-	public static DDMStructureVersion findByStructureId_Last(
-			long structureId,
-			OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureVersionException {
-
-		return getPersistence().findByStructureId_Last(
-			structureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure version in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
-	 */
-	public static DDMStructureVersion fetchByStructureId_Last(
-		long structureId,
-		OrderByComparator<DDMStructureVersion> orderByComparator) {
-
-		return getPersistence().fetchByStructureId_Last(
-			structureId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm structure versions where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -456,41 +423,6 @@ public class DDMStructureVersionUtil {
 	}
 
 	/**
-	 * Returns the last ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure version
-	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
-	 */
-	public static DDMStructureVersion findByS_S_Last(
-			long structureId, int status,
-			OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureVersionException {
-
-		return getPersistence().findByS_S_Last(
-			structureId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
-	 */
-	public static DDMStructureVersion fetchByS_S_Last(
-		long structureId, int status,
-		OrderByComparator<DDMStructureVersion> orderByComparator) {
-
-		return getPersistence().fetchByS_S_Last(
-			structureId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm structure versions where structureId = &#63; and status = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -681,4 +613,4 @@ public class DDMStructureVersionUtil {
 	private static volatile DDMStructureVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-293538636
+// LIFERAY-SERVICE-BUILDER-HASH:-433868470

@@ -290,64 +290,6 @@ public class PortletPersistenceImpl
 	}
 
 	/**
-	 * Returns the last portlet in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet
-	 * @throws NoSuchPortletException if a matching portlet could not be found
-	 */
-	@Override
-	public Portlet findByCompanyId_Last(
-			long companyId, OrderByComparator<Portlet> orderByComparator)
-		throws NoSuchPortletException {
-
-		Portlet portlet = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (portlet != null) {
-			return portlet;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portlet in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet, or <code>null</code> if a matching portlet could not be found
-	 */
-	@Override
-	public Portlet fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Portlet> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Portlet> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the portlets where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1214,4 +1156,4 @@ public class PortletPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:470803770
+// LIFERAY-SERVICE-BUILDER-HASH:643210078

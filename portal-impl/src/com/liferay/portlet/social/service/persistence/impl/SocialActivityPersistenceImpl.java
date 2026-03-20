@@ -309,65 +309,6 @@ public class SocialActivityPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social activity in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByGroupId_Last(
-			long groupId, OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByGroupId_Last(
-		long groupId, OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social activities where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -657,65 +598,6 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByCompanyId_Last(
-			long companyId, OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByCompanyId_Last(
-		long companyId, OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1020,65 +902,6 @@ public class SocialActivityPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social activity in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByUserId_Last(
-			long userId, OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByUserId_Last(
-		long userId, OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social activities where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1374,67 +1197,6 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = findByActivitySetId(
 			activitySetId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where activitySetId = &#63;.
-	 *
-	 * @param activitySetId the activity set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByActivitySetId_Last(
-			long activitySetId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByActivitySetId_Last(
-			activitySetId, orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("activitySetId=");
-		sb.append(activitySetId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where activitySetId = &#63;.
-	 *
-	 * @param activitySetId the activity set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByActivitySetId_Last(
-		long activitySetId,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByActivitySetId(activitySetId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByActivitySetId(
-			activitySetId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1941,67 +1703,6 @@ public class SocialActivityPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social activity in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByReceiverUserId_Last(
-			long receiverUserId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByReceiverUserId_Last(
-			receiverUserId, orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByReceiverUserId_Last(
-		long receiverUserId,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByReceiverUserId(receiverUserId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByReceiverUserId(
-			receiverUserId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social activities where receiverUserId = &#63; from the database.
 	 *
 	 * @param receiverUserId the receiver user ID
@@ -2310,72 +2011,6 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = findByC_CN(
 			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByC_CN_Last(
-			long companyId, long classNameId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByC_CN_Last(
-		long companyId, long classNameId,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByC_CN(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByC_CN(
-			companyId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2702,72 +2337,6 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3127,78 +2696,6 @@ public class SocialActivityPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social activity in the ordered set where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param mirrorActivityId the mirror activity ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByM_C_C_Last(
-			long mirrorActivityId, long classNameId, long classPK,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByM_C_C_Last(
-			mirrorActivityId, classNameId, classPK, orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("mirrorActivityId=");
-		sb.append(mirrorActivityId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param mirrorActivityId the mirror activity ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByM_C_C_Last(
-		long mirrorActivityId, long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByM_C_C(mirrorActivityId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByM_C_C(
-			mirrorActivityId, classNameId, classPK, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social activities where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param mirrorActivityId the mirror activity ID
@@ -3548,77 +3045,6 @@ public class SocialActivityPersistenceImpl
 
 		List<SocialActivity> list = findByC_C_T(
 			classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByC_C_T_Last(
-			long classNameId, long classPK, int type,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByC_C_T_Last(
-			classNameId, classPK, type, orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByC_C_T_Last(
-		long classNameId, long classPK, int type,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByC_C_T(classNameId, classPK, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByC_C_T(
-			classNameId, classPK, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4029,97 +3455,6 @@ public class SocialActivityPersistenceImpl
 		List<SocialActivity> list = findByG_U_C_C_T_R(
 			groupId, userId, classNameId, classPK, type, receiverUserId, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity
-	 * @throws NoSuchActivityException if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity findByG_U_C_C_T_R_Last(
-			long groupId, long userId, long classNameId, long classPK, int type,
-			long receiverUserId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByG_U_C_C_T_R_Last(
-			groupId, userId, classNameId, classPK, type, receiverUserId,
-			orderByComparator);
-
-		if (socialActivity != null) {
-			return socialActivity;
-		}
-
-		StringBundler sb = new StringBundler(14);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
-	 */
-	@Override
-	public SocialActivity fetchByG_U_C_C_T_R_Last(
-		long groupId, long userId, long classNameId, long classPK, int type,
-		long receiverUserId,
-		OrderByComparator<SocialActivity> orderByComparator) {
-
-		int count = countByG_U_C_C_T_R(
-			groupId, userId, classNameId, classPK, type, receiverUserId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivity> list = findByG_U_C_C_T_R(
-			groupId, userId, classNameId, classPK, type, receiverUserId,
-			count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5671,4 +5006,4 @@ public class SocialActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:779402469
+// LIFERAY-SERVICE-BUILDER-HASH:1601525572

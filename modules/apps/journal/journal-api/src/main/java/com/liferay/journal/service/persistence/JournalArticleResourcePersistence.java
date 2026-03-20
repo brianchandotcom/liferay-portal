@@ -122,32 +122,6 @@ public interface JournalArticleResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last journal article resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource
-	 * @throws NoSuchArticleResourceException if a matching journal article resource could not be found
-	 */
-	public JournalArticleResource findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException;
-
-	/**
-	 * Returns the last journal article resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
-	 */
-	public JournalArticleResource fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalArticleResource>
-			orderByComparator);
-
-	/**
 	 * Removes all the journal article resources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface JournalArticleResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last journal article resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource
-	 * @throws NoSuchArticleResourceException if a matching journal article resource could not be found
-	 */
-	public JournalArticleResource findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException;
-
-	/**
-	 * Returns the last journal article resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
-	 */
-	public JournalArticleResource fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalArticleResource>
-			orderByComparator);
-
-	/**
 	 * Removes all the journal article resources where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface JournalArticleResourcePersistence
 	 * @return the first matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	 */
 	public JournalArticleResource fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalArticleResource>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal article resource in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource
-	 * @throws NoSuchArticleResourceException if a matching journal article resource could not be found
-	 */
-	public JournalArticleResource findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException;
-
-	/**
-	 * Returns the last journal article resource in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
-	 */
-	public JournalArticleResource fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticleResource>
 			orderByComparator);
@@ -652,4 +572,4 @@ public interface JournalArticleResourcePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-254000936
+// LIFERAY-SERVICE-BUILDER-HASH:774578701

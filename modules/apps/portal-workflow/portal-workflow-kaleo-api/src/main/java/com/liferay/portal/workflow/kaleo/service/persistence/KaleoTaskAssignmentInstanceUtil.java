@@ -224,39 +224,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 	}
 
 	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance
-	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskAssignmentInstanceException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo task assignment instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -392,42 +359,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 	}
 
 	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance
-	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance
-			findByKaleoDefinitionVersionId_Last(
-				long kaleoDefinitionVersionId,
-				OrderByComparator<KaleoTaskAssignmentInstance>
-					orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskAssignmentInstanceException {
-
-		return getPersistence().findByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance
-		fetchByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
-
-		return getPersistence().fetchByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo task assignment instances where kaleoDefinitionVersionId = &#63; from the database.
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -557,39 +488,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
 		return getPersistence().fetchByKaleoInstanceId_First(
-			kaleoInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance
-	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance findByKaleoInstanceId_Last(
-			long kaleoInstanceId,
-			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskAssignmentInstanceException {
-
-		return getPersistence().findByKaleoInstanceId_Last(
-			kaleoInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance fetchByKaleoInstanceId_Last(
-		long kaleoInstanceId,
-		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
-
-		return getPersistence().fetchByKaleoInstanceId_Last(
 			kaleoInstanceId, orderByComparator);
 	}
 
@@ -729,42 +627,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 	}
 
 	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where kaleoTaskInstanceTokenId = &#63;.
-	 *
-	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance
-	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance
-			findByKaleoTaskInstanceTokenId_Last(
-				long kaleoTaskInstanceTokenId,
-				OrderByComparator<KaleoTaskAssignmentInstance>
-					orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskAssignmentInstanceException {
-
-		return getPersistence().findByKaleoTaskInstanceTokenId_Last(
-			kaleoTaskInstanceTokenId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where kaleoTaskInstanceTokenId = &#63;.
-	 *
-	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance
-		fetchByKaleoTaskInstanceTokenId_Last(
-			long kaleoTaskInstanceTokenId,
-			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
-
-		return getPersistence().fetchByKaleoTaskInstanceTokenId_Last(
-			kaleoTaskInstanceTokenId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo task assignment instances where kaleoTaskInstanceTokenId = &#63; from the database.
 	 *
 	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
@@ -894,39 +756,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
 		return getPersistence().fetchByAssigneeClassName_First(
-			assigneeClassName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where assigneeClassName = &#63;.
-	 *
-	 * @param assigneeClassName the assignee class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance
-	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance findByAssigneeClassName_Last(
-			String assigneeClassName,
-			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskAssignmentInstanceException {
-
-		return getPersistence().findByAssigneeClassName_Last(
-			assigneeClassName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where assigneeClassName = &#63;.
-	 *
-	 * @param assigneeClassName the assignee class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance fetchByAssigneeClassName_Last(
-		String assigneeClassName,
-		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
-
-		return getPersistence().fetchByAssigneeClassName_Last(
 			assigneeClassName, orderByComparator);
 	}
 
@@ -1061,41 +890,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
 		return getPersistence().fetchByG_ACPK_First(
-			groupId, assigneeClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where groupId = &#63; and assigneeClassPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance
-	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance findByG_ACPK_Last(
-			long groupId, long assigneeClassPK,
-			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskAssignmentInstanceException {
-
-		return getPersistence().findByG_ACPK_Last(
-			groupId, assigneeClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where groupId = &#63; and assigneeClassPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance fetchByG_ACPK_Last(
-		long groupId, long assigneeClassPK,
-		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
-
-		return getPersistence().fetchByG_ACPK_Last(
 			groupId, assigneeClassPK, orderByComparator);
 	}
 
@@ -1241,41 +1035,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 	}
 
 	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where kaleoTaskInstanceTokenId = &#63; and assigneeClassName = &#63;.
-	 *
-	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
-	 * @param assigneeClassName the assignee class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance
-	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance findByKTITI_ACN_Last(
-			long kaleoTaskInstanceTokenId, String assigneeClassName,
-			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskAssignmentInstanceException {
-
-		return getPersistence().findByKTITI_ACN_Last(
-			kaleoTaskInstanceTokenId, assigneeClassName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where kaleoTaskInstanceTokenId = &#63; and assigneeClassName = &#63;.
-	 *
-	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
-	 * @param assigneeClassName the assignee class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance fetchByKTITI_ACN_Last(
-		long kaleoTaskInstanceTokenId, String assigneeClassName,
-		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
-
-		return getPersistence().fetchByKTITI_ACN_Last(
-			kaleoTaskInstanceTokenId, assigneeClassName, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo task assignment instances where kaleoTaskInstanceTokenId = &#63; and assigneeClassName = &#63; from the database.
 	 *
 	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
@@ -1415,41 +1174,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
 		return getPersistence().fetchByACN_ACPK_First(
-			assigneeClassName, assigneeClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where assigneeClassName = &#63; and assigneeClassPK = &#63;.
-	 *
-	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance
-	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance findByACN_ACPK_Last(
-			String assigneeClassName, long assigneeClassPK,
-			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskAssignmentInstanceException {
-
-		return getPersistence().findByACN_ACPK_Last(
-			assigneeClassName, assigneeClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task assignment instance in the ordered set where assigneeClassName = &#63; and assigneeClassPK = &#63;.
-	 *
-	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
-	 */
-	public static KaleoTaskAssignmentInstance fetchByACN_ACPK_Last(
-		String assigneeClassName, long assigneeClassPK,
-		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
-
-		return getPersistence().fetchByACN_ACPK_Last(
 			assigneeClassName, assigneeClassPK, orderByComparator);
 	}
 
@@ -1658,4 +1382,4 @@ public class KaleoTaskAssignmentInstanceUtil {
 	private static volatile KaleoTaskAssignmentInstancePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-212646304
+// LIFERAY-SERVICE-BUILDER-HASH:-1331348888

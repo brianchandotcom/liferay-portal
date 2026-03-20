@@ -218,37 +218,6 @@ public class AssetVocabularyGroupRelUtil {
 	}
 
 	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	public static AssetVocabularyGroupRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
-		throws com.liferay.asset.kernel.exception.
-			NoSuchVocabularyGroupRelException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	public static AssetVocabularyGroupRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset vocabulary group rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -450,41 +419,6 @@ public class AssetVocabularyGroupRelUtil {
 	}
 
 	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	public static AssetVocabularyGroupRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
-		throws com.liferay.asset.kernel.exception.
-			NoSuchVocabularyGroupRelException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	public static AssetVocabularyGroupRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset vocabulary group rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -610,37 +544,6 @@ public class AssetVocabularyGroupRelUtil {
 	}
 
 	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	public static AssetVocabularyGroupRel findByGroupId_Last(
-			long groupId,
-			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
-		throws com.liferay.asset.kernel.exception.
-			NoSuchVocabularyGroupRelException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	public static AssetVocabularyGroupRel fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset vocabulary group rels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -763,39 +666,6 @@ public class AssetVocabularyGroupRelUtil {
 		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
 
 		return getPersistence().fetchByVocabularyId_First(
-			vocabularyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where vocabularyId = &#63;.
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	public static AssetVocabularyGroupRel findByVocabularyId_Last(
-			long vocabularyId,
-			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
-		throws com.liferay.asset.kernel.exception.
-			NoSuchVocabularyGroupRelException {
-
-		return getPersistence().findByVocabularyId_Last(
-			vocabularyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where vocabularyId = &#63;.
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	public static AssetVocabularyGroupRel fetchByVocabularyId_Last(
-		long vocabularyId,
-		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
-
-		return getPersistence().fetchByVocabularyId_Last(
 			vocabularyId, orderByComparator);
 	}
 
@@ -1063,4 +933,4 @@ public class AssetVocabularyGroupRelUtil {
 	private static volatile AssetVocabularyGroupRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:761099190
+// LIFERAY-SERVICE-BUILDER-HASH:-494209920

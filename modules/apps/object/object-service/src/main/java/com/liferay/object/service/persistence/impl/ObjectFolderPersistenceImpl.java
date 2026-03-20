@@ -326,64 +326,6 @@ public class ObjectFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder
-	 * @throws NoSuchObjectFolderException if a matching object folder could not be found
-	 */
-	@Override
-	public ObjectFolder findByUuid_Last(
-			String uuid, OrderByComparator<ObjectFolder> orderByComparator)
-		throws NoSuchObjectFolderException {
-
-		ObjectFolder objectFolder = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (objectFolder != null) {
-			return objectFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder, or <code>null</code> if a matching object folder could not be found
-	 */
-	@Override
-	public ObjectFolder fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectFolder> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFolder> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the object folders that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -946,72 +888,6 @@ public class ObjectFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder
-	 * @throws NoSuchObjectFolderException if a matching object folder could not be found
-	 */
-	@Override
-	public ObjectFolder findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectFolder> orderByComparator)
-		throws NoSuchObjectFolderException {
-
-		ObjectFolder objectFolder = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectFolder != null) {
-			return objectFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder, or <code>null</code> if a matching object folder could not be found
-	 */
-	@Override
-	public ObjectFolder fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectFolder> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFolder> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the object folders that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1557,65 +1433,6 @@ public class ObjectFolderPersistenceImpl
 
 		List<ObjectFolder> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder
-	 * @throws NoSuchObjectFolderException if a matching object folder could not be found
-	 */
-	@Override
-	public ObjectFolder findByCompanyId_Last(
-			long companyId, OrderByComparator<ObjectFolder> orderByComparator)
-		throws NoSuchObjectFolderException {
-
-		ObjectFolder objectFolder = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (objectFolder != null) {
-			return objectFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object folder, or <code>null</code> if a matching object folder could not be found
-	 */
-	@Override
-	public ObjectFolder fetchByCompanyId_Last(
-		long companyId, OrderByComparator<ObjectFolder> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFolder> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3127,4 +2944,4 @@ public class ObjectFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-900844309
+// LIFERAY-SERVICE-BUILDER-HASH:1388892889

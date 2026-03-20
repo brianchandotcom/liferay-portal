@@ -304,65 +304,6 @@ public class CTCommentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct comment in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct comment
-	 * @throws NoSuchCommentException if a matching ct comment could not be found
-	 */
-	@Override
-	public CTComment findByCtCollectionId_Last(
-			long ctCollectionId, OrderByComparator<CTComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		CTComment ctComment = fetchByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-
-		if (ctComment != null) {
-			return ctComment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct comment in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct comment, or <code>null</code> if a matching ct comment could not be found
-	 */
-	@Override
-	public CTComment fetchByCtCollectionId_Last(
-		long ctCollectionId, OrderByComparator<CTComment> orderByComparator) {
-
-		int count = countByCtCollectionId(ctCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTComment> list = findByCtCollectionId(
-			ctCollectionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ct comments where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -640,65 +581,6 @@ public class CTCommentPersistenceImpl
 
 		List<CTComment> list = findByCtEntryId(
 			ctEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct comment in the ordered set where ctEntryId = &#63;.
-	 *
-	 * @param ctEntryId the ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct comment
-	 * @throws NoSuchCommentException if a matching ct comment could not be found
-	 */
-	@Override
-	public CTComment findByCtEntryId_Last(
-			long ctEntryId, OrderByComparator<CTComment> orderByComparator)
-		throws NoSuchCommentException {
-
-		CTComment ctComment = fetchByCtEntryId_Last(
-			ctEntryId, orderByComparator);
-
-		if (ctComment != null) {
-			return ctComment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctEntryId=");
-		sb.append(ctEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct comment in the ordered set where ctEntryId = &#63;.
-	 *
-	 * @param ctEntryId the ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct comment, or <code>null</code> if a matching ct comment could not be found
-	 */
-	@Override
-	public CTComment fetchByCtEntryId_Last(
-		long ctEntryId, OrderByComparator<CTComment> orderByComparator) {
-
-		int count = countByCtEntryId(ctEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTComment> list = findByCtEntryId(
-			ctEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1414,4 +1296,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1849759627
+// LIFERAY-SERVICE-BUILDER-HASH:1007918115

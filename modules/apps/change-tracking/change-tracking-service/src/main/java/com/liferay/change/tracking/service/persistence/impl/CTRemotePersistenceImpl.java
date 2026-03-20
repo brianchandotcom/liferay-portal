@@ -302,64 +302,6 @@ public class CTRemotePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct remote in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct remote
-	 * @throws NoSuchRemoteException if a matching ct remote could not be found
-	 */
-	@Override
-	public CTRemote findByCompanyId_Last(
-			long companyId, OrderByComparator<CTRemote> orderByComparator)
-		throws NoSuchRemoteException {
-
-		CTRemote ctRemote = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (ctRemote != null) {
-			return ctRemote;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRemoteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct remote in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct remote, or <code>null</code> if a matching ct remote could not be found
-	 */
-	@Override
-	public CTRemote fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTRemote> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTRemote> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the ct remotes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1264,4 +1206,4 @@ public class CTRemotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1326031103
+// LIFERAY-SERVICE-BUILDER-HASH:-1698602048

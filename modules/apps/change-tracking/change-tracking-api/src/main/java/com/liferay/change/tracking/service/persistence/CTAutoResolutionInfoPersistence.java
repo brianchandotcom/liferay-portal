@@ -121,32 +121,6 @@ public interface CTAutoResolutionInfoPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
-	 */
-	public CTAutoResolutionInfo findByCtCollectionId_Last(
-			long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CTAutoResolutionInfo> orderByComparator)
-		throws NoSuchAutoResolutionInfoException;
-
-	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
-	 */
-	public CTAutoResolutionInfo fetchByCtCollectionId_Last(
-		long ctCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTAutoResolutionInfo>
-			orderByComparator);
-
-	/**
 	 * Removes all the ct auto resolution infos where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -260,36 +234,6 @@ public interface CTAutoResolutionInfoPersistence
 	 * @return the first matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
 	 */
 	public CTAutoResolutionInfo fetchByC_MCNI_SMCPK_First(
-		long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator<CTAutoResolutionInfo>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
-	 */
-	public CTAutoResolutionInfo findByC_MCNI_SMCPK_Last(
-			long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CTAutoResolutionInfo> orderByComparator)
-		throws NoSuchAutoResolutionInfoException;
-
-	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
-	 */
-	public CTAutoResolutionInfo fetchByC_MCNI_SMCPK_Last(
 		long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<CTAutoResolutionInfo>
 			orderByComparator);
@@ -526,4 +470,4 @@ public interface CTAutoResolutionInfoPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:634892390
+// LIFERAY-SERVICE-BUILDER-HASH:-1524087684

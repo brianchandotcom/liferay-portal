@@ -212,34 +212,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the last commerce order item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByUuid_Last(
-			String uuid, OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,40 +406,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the last commerce order item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -604,40 +542,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the last commerce order item in the ordered set where commerceInventoryBookedQuantityId = &#63;.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem
-			findByCommerceInventoryBookedQuantityId_Last(
-				long commerceInventoryBookedQuantityId,
-				OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByCommerceInventoryBookedQuantityId_Last(
-			commerceInventoryBookedQuantityId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where commerceInventoryBookedQuantityId = &#63;.
-	 *
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem
-		fetchByCommerceInventoryBookedQuantityId_Last(
-			long commerceInventoryBookedQuantityId,
-			OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByCommerceInventoryBookedQuantityId_Last(
-			commerceInventoryBookedQuantityId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where commerceInventoryBookedQuantityId = &#63; from the database.
 	 *
 	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
@@ -770,38 +674,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the last commerce order item in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByCommerceOrderId_Last(
-			long commerceOrderId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByCommerceOrderId_Last(
-			commerceOrderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByCommerceOrderId_Last(
-		long commerceOrderId,
-		OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByCommerceOrderId_Last(
-			commerceOrderId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where commerceOrderId = &#63; from the database.
 	 *
 	 * @param commerceOrderId the commerce order ID
@@ -927,38 +799,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the last commerce order item in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByCPInstanceId_Last(
-			long CPInstanceId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByCPInstanceId_Last(
-			CPInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByCPInstanceId_Last(
-		long CPInstanceId,
-		OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByCPInstanceId_Last(
-			CPInstanceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where CPInstanceId = &#63; from the database.
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -1078,38 +918,6 @@ public class CommerceOrderItemUtil {
 		OrderByComparator<CommerceOrderItem> orderByComparator) {
 
 		return getPersistence().fetchByCProductId_First(
-			CProductId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByCProductId_Last(
-			long CProductId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByCProductId_Last(
-			CProductId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByCProductId_Last(
-		long CProductId,
-		OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByCProductId_Last(
 			CProductId, orderByComparator);
 	}
 
@@ -1238,38 +1046,6 @@ public class CommerceOrderItemUtil {
 		OrderByComparator<CommerceOrderItem> orderByComparator) {
 
 		return getPersistence().fetchByCustomerCommerceOrderItemId_First(
-			customerCommerceOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where customerCommerceOrderItemId = &#63;.
-	 *
-	 * @param customerCommerceOrderItemId the customer commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByCustomerCommerceOrderItemId_Last(
-			long customerCommerceOrderItemId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByCustomerCommerceOrderItemId_Last(
-			customerCommerceOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where customerCommerceOrderItemId = &#63;.
-	 *
-	 * @param customerCommerceOrderItemId the customer commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByCustomerCommerceOrderItemId_Last(
-		long customerCommerceOrderItemId,
-		OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByCustomerCommerceOrderItemId_Last(
 			customerCommerceOrderItemId, orderByComparator);
 	}
 
@@ -1404,38 +1180,6 @@ public class CommerceOrderItemUtil {
 		OrderByComparator<CommerceOrderItem> orderByComparator) {
 
 		return getPersistence().fetchByParentCommerceOrderItemId_First(
-			parentCommerceOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where parentCommerceOrderItemId = &#63;.
-	 *
-	 * @param parentCommerceOrderItemId the parent commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByParentCommerceOrderItemId_Last(
-			long parentCommerceOrderItemId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByParentCommerceOrderItemId_Last(
-			parentCommerceOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where parentCommerceOrderItemId = &#63;.
-	 *
-	 * @param parentCommerceOrderItemId the parent commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByParentCommerceOrderItemId_Last(
-		long parentCommerceOrderItemId,
-		OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByParentCommerceOrderItemId_Last(
 			parentCommerceOrderItemId, orderByComparator);
 	}
 
@@ -1579,40 +1323,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the last commerce order item in the ordered set where commerceOrderId = &#63; and CPInstanceId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByC_CPI_Last(
-			long commerceOrderId, long CPInstanceId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByC_CPI_Last(
-			commerceOrderId, CPInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where commerceOrderId = &#63; and CPInstanceId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByC_CPI_Last(
-		long commerceOrderId, long CPInstanceId,
-		OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByC_CPI_Last(
-			commerceOrderId, CPInstanceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where commerceOrderId = &#63; and CPInstanceId = &#63; from the database.
 	 *
 	 * @param commerceOrderId the commerce order ID
@@ -1747,40 +1457,6 @@ public class CommerceOrderItemUtil {
 		OrderByComparator<CommerceOrderItem> orderByComparator) {
 
 		return getPersistence().fetchByC_PCOI_First(
-			commerceOrderId, parentCommerceOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where commerceOrderId = &#63; and parentCommerceOrderItemId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param parentCommerceOrderItemId the parent commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByC_PCOI_Last(
-			long commerceOrderId, long parentCommerceOrderItemId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByC_PCOI_Last(
-			commerceOrderId, parentCommerceOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where commerceOrderId = &#63; and parentCommerceOrderItemId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param parentCommerceOrderItemId the parent commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByC_PCOI_Last(
-		long commerceOrderId, long parentCommerceOrderItemId,
-		OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByC_PCOI_Last(
 			commerceOrderId, parentCommerceOrderItemId, orderByComparator);
 	}
 
@@ -1922,40 +1598,6 @@ public class CommerceOrderItemUtil {
 		OrderByComparator<CommerceOrderItem> orderByComparator) {
 
 		return getPersistence().fetchByC_S_First(
-			commerceOrderId, subscription, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where commerceOrderId = &#63; and subscription = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param subscription the subscription
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item
-	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem findByC_S_Last(
-			long commerceOrderId, boolean subscription,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByC_S_Last(
-			commerceOrderId, subscription, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order item in the ordered set where commerceOrderId = &#63; and subscription = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param subscription the subscription
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
-	public static CommerceOrderItem fetchByC_S_Last(
-		long commerceOrderId, boolean subscription,
-		OrderByComparator<CommerceOrderItem> orderByComparator) {
-
-		return getPersistence().fetchByC_S_Last(
 			commerceOrderId, subscription, orderByComparator);
 	}
 
@@ -2216,4 +1858,4 @@ public class CommerceOrderItemUtil {
 	private static volatile CommerceOrderItemPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-899102865
+// LIFERAY-SERVICE-BUILDER-HASH:459915499

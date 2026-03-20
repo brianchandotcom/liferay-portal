@@ -119,32 +119,6 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry
-	 * @throws NoSuchPLOEntryException if a matching plo entry could not be found
-	 */
-	public PLOEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
-				orderByComparator)
-		throws NoSuchPLOEntryException;
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	public PLOEntry fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the plo entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -248,34 +222,6 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	 * @return the first matching plo entry, or <code>null</code> if a matching plo entry could not be found
 	 */
 	public PLOEntry fetchByC_K_First(
-		long companyId, String key,
-		com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry
-	 * @throws NoSuchPLOEntryException if a matching plo entry could not be found
-	 */
-	public PLOEntry findByC_K_Last(
-			long companyId, String key,
-			com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
-				orderByComparator)
-		throws NoSuchPLOEntryException;
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	public PLOEntry fetchByC_K_Last(
 		long companyId, String key,
 		com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
 			orderByComparator);
@@ -387,34 +333,6 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	 * @return the first matching plo entry, or <code>null</code> if a matching plo entry could not be found
 	 */
 	public PLOEntry fetchByC_L_First(
-		long companyId, String languageId,
-		com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and languageId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry
-	 * @throws NoSuchPLOEntryException if a matching plo entry could not be found
-	 */
-	public PLOEntry findByC_L_Last(
-			long companyId, String languageId,
-			com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
-				orderByComparator)
-		throws NoSuchPLOEntryException;
-
-	/**
-	 * Returns the last plo entry in the ordered set where companyId = &#63; and languageId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	public PLOEntry fetchByC_L_Last(
 		long companyId, String languageId,
 		com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
 			orderByComparator);
@@ -611,4 +529,4 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-517957546
+// LIFERAY-SERVICE-BUILDER-HASH:-758418080

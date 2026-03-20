@@ -306,66 +306,6 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tax method in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax method
-	 * @throws NoSuchTaxMethodException if a matching commerce tax method could not be found
-	 */
-	@Override
-	public CommerceTaxMethod findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CommerceTaxMethod> orderByComparator)
-		throws NoSuchTaxMethodException {
-
-		CommerceTaxMethod commerceTaxMethod = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (commerceTaxMethod != null) {
-			return commerceTaxMethod;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxMethodException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax method in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
-	 */
-	@Override
-	public CommerceTaxMethod fetchByGroupId_Last(
-		long groupId, OrderByComparator<CommerceTaxMethod> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxMethod> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tax methods where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -859,72 +799,6 @@ public class CommerceTaxMethodPersistenceImpl
 
 		List<CommerceTaxMethod> list = findByG_A(
 			groupId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce tax method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax method
-	 * @throws NoSuchTaxMethodException if a matching commerce tax method could not be found
-	 */
-	@Override
-	public CommerceTaxMethod findByG_A_Last(
-			long groupId, boolean active,
-			OrderByComparator<CommerceTaxMethod> orderByComparator)
-		throws NoSuchTaxMethodException {
-
-		CommerceTaxMethod commerceTaxMethod = fetchByG_A_Last(
-			groupId, active, orderByComparator);
-
-		if (commerceTaxMethod != null) {
-			return commerceTaxMethod;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchTaxMethodException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
-	 */
-	@Override
-	public CommerceTaxMethod fetchByG_A_Last(
-		long groupId, boolean active,
-		OrderByComparator<CommerceTaxMethod> orderByComparator) {
-
-		int count = countByG_A(groupId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxMethod> list = findByG_A(
-			groupId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1710,4 +1584,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2137612367
+// LIFERAY-SERVICE-BUILDER-HASH:1224624000

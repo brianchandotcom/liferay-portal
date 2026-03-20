@@ -213,35 +213,6 @@ public class VersionedEntryUtil {
 	}
 
 	/**
-	 * Returns the last versioned entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry
-	 * @throws NoSuchVersionedEntryException if a matching versioned entry could not be found
-	 */
-	public static VersionedEntry findByGroupId_Last(
-			long groupId, OrderByComparator<VersionedEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchVersionedEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last versioned entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry, or <code>null</code> if a matching versioned entry could not be found
-	 */
-	public static VersionedEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<VersionedEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the versioned entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -370,41 +341,6 @@ public class VersionedEntryUtil {
 		OrderByComparator<VersionedEntry> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Head_First(
-			groupId, head, orderByComparator);
-	}
-
-	/**
-	 * Returns the last versioned entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry
-	 * @throws NoSuchVersionedEntryException if a matching versioned entry could not be found
-	 */
-	public static VersionedEntry findByGroupId_Head_Last(
-			long groupId, boolean head,
-			OrderByComparator<VersionedEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchVersionedEntryException {
-
-		return getPersistence().findByGroupId_Head_Last(
-			groupId, head, orderByComparator);
-	}
-
-	/**
-	 * Returns the last versioned entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry, or <code>null</code> if a matching versioned entry could not be found
-	 */
-	public static VersionedEntry fetchByGroupId_Head_Last(
-		long groupId, boolean head,
-		OrderByComparator<VersionedEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Head_Last(
 			groupId, head, orderByComparator);
 	}
 
@@ -650,4 +586,4 @@ public class VersionedEntryUtil {
 	private static volatile VersionedEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1036692382
+// LIFERAY-SERVICE-BUILDER-HASH:-386353520

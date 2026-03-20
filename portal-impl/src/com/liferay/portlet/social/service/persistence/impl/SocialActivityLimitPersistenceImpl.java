@@ -310,67 +310,6 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social activity limit in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit
-	 * @throws NoSuchActivityLimitException if a matching social activity limit could not be found
-	 */
-	@Override
-	public SocialActivityLimit findByGroupId_Last(
-			long groupId,
-			OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws NoSuchActivityLimitException {
-
-		SocialActivityLimit socialActivityLimit = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (socialActivityLimit != null) {
-			return socialActivityLimit;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityLimitException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity limit in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
-	 */
-	@Override
-	public SocialActivityLimit fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<SocialActivityLimit> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityLimit> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social activity limits where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -660,66 +599,6 @@ public class SocialActivityLimitPersistenceImpl
 
 		List<SocialActivityLimit> list = findByUserId(
 			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity limit in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit
-	 * @throws NoSuchActivityLimitException if a matching social activity limit could not be found
-	 */
-	@Override
-	public SocialActivityLimit findByUserId_Last(
-			long userId,
-			OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws NoSuchActivityLimitException {
-
-		SocialActivityLimit socialActivityLimit = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (socialActivityLimit != null) {
-			return socialActivityLimit;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityLimitException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity limit in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
-	 */
-	@Override
-	public SocialActivityLimit fetchByUserId_Last(
-		long userId, OrderByComparator<SocialActivityLimit> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityLimit> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1037,72 +916,6 @@ public class SocialActivityLimitPersistenceImpl
 
 		List<SocialActivityLimit> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit
-	 * @throws NoSuchActivityLimitException if a matching social activity limit could not be found
-	 */
-	@Override
-	public SocialActivityLimit findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws NoSuchActivityLimitException {
-
-		SocialActivityLimit socialActivityLimit = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (socialActivityLimit != null) {
-			return socialActivityLimit;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchActivityLimitException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity limit, or <code>null</code> if a matching social activity limit could not be found
-	 */
-	@Override
-	public SocialActivityLimit fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<SocialActivityLimit> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityLimit> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2432,4 +2245,4 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2019193953
+// LIFERAY-SERVICE-BUILDER-HASH:-1356335074

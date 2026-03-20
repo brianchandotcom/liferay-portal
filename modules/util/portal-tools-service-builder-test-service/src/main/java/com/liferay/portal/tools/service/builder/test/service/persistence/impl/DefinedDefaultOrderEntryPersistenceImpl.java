@@ -507,67 +507,6 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last defined default order entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching defined default order entry
-	 * @throws NoSuchDefinedDefaultOrderEntryException if a matching defined default order entry could not be found
-	 */
-	@Override
-	public DefinedDefaultOrderEntry findByName_Collection_Last(
-			String name,
-			OrderByComparator<DefinedDefaultOrderEntry> orderByComparator)
-		throws NoSuchDefinedDefaultOrderEntryException {
-
-		DefinedDefaultOrderEntry definedDefaultOrderEntry =
-			fetchByName_Collection_Last(name, orderByComparator);
-
-		if (definedDefaultOrderEntry != null) {
-			return definedDefaultOrderEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchDefinedDefaultOrderEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last defined default order entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching defined default order entry, or <code>null</code> if a matching defined default order entry could not be found
-	 */
-	@Override
-	public DefinedDefaultOrderEntry fetchByName_Collection_Last(
-		String name,
-		OrderByComparator<DefinedDefaultOrderEntry> orderByComparator) {
-
-		int count = countByName_Collection(name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DefinedDefaultOrderEntry> list = findByName_Collection(
-			name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the defined default order entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -1295,4 +1234,4 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1831342127
+// LIFERAY-SERVICE-BUILDER-HASH:-1604635594

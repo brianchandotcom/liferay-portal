@@ -338,65 +338,6 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition findByUuid_Last(
-			String uuid, OrderByComparator<KaleoDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		KaleoDefinition kaleoDefinition = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (kaleoDefinition != null) {
-			return kaleoDefinition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition fetchByUuid_Last(
-		String uuid, OrderByComparator<KaleoDefinition> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoDefinition> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -944,72 +885,6 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		KaleoDefinition kaleoDefinition = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (kaleoDefinition != null) {
-			return kaleoDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<KaleoDefinition> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoDefinition> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1335,66 +1210,6 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		KaleoDefinition kaleoDefinition = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoDefinition != null) {
-			return kaleoDefinition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KaleoDefinition> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoDefinition> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo definitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1684,66 +1499,6 @@ public class KaleoDefinitionPersistenceImpl
 
 		List<KaleoDefinition> list = findByActive(
 			active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition findByActive_Last(
-			boolean active,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		KaleoDefinition kaleoDefinition = fetchByActive_Last(
-			active, orderByComparator);
-
-		if (kaleoDefinition != null) {
-			return kaleoDefinition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition fetchByActive_Last(
-		boolean active, OrderByComparator<KaleoDefinition> orderByComparator) {
-
-		int count = countByActive(active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoDefinition> list = findByActive(
-			active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2287,72 +2042,6 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo definition in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		KaleoDefinition kaleoDefinition = fetchByC_A_Last(
-			companyId, active, orderByComparator);
-
-		if (kaleoDefinition != null) {
-			return kaleoDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<KaleoDefinition> orderByComparator) {
-
-		int count = countByC_A(companyId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoDefinition> list = findByC_A(
-			companyId, active, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo definitions where companyId = &#63; and active = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2700,77 +2389,6 @@ public class KaleoDefinitionPersistenceImpl
 
 		List<KaleoDefinition> list = findByG_C_S(
 			groupId, companyId, scope, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition findByG_C_S_Last(
-			long groupId, long companyId, String scope,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		KaleoDefinition kaleoDefinition = fetchByG_C_S_Last(
-			groupId, companyId, scope, orderByComparator);
-
-		if (kaleoDefinition != null) {
-			return kaleoDefinition;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", scope=");
-		sb.append(scope);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition fetchByG_C_S_Last(
-		long groupId, long companyId, String scope,
-		OrderByComparator<KaleoDefinition> orderByComparator) {
-
-		int count = countByG_C_S(groupId, companyId, scope);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoDefinition> list = findByG_C_S(
-			groupId, companyId, scope, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3653,83 +3271,6 @@ public class KaleoDefinitionPersistenceImpl
 
 		List<KaleoDefinition> list = findByG_C_S_A(
 			groupId, companyId, scope, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition
-	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition findByG_C_S_A_Last(
-			long groupId, long companyId, String scope, boolean active,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		KaleoDefinition kaleoDefinition = fetchByG_C_S_A_Last(
-			groupId, companyId, scope, active, orderByComparator);
-
-		if (kaleoDefinition != null) {
-			return kaleoDefinition;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", scope=");
-		sb.append(scope);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
-	 */
-	@Override
-	public KaleoDefinition fetchByG_C_S_A_Last(
-		long groupId, long companyId, String scope, boolean active,
-		OrderByComparator<KaleoDefinition> orderByComparator) {
-
-		int count = countByG_C_S_A(groupId, companyId, scope, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoDefinition> list = findByG_C_S_A(
-			groupId, companyId, scope, active, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5337,4 +4878,4 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:742686265
+// LIFERAY-SERVICE-BUILDER-HASH:777487117

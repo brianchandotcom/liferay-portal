@@ -122,32 +122,6 @@ public interface DEDataDefinitionFieldLinkPersistence
 			<DEDataDefinitionFieldLink> orderByComparator);
 
 	/**
-	 * Returns the last de data definition field link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DEDataDefinitionFieldLink> orderByComparator)
-		throws NoSuchDataDefinitionFieldLinkException;
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DEDataDefinitionFieldLink> orderByComparator);
-
-	/**
 	 * Removes all the de data definition field links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface DEDataDefinitionFieldLinkPersistence
 			<DEDataDefinitionFieldLink> orderByComparator);
 
 	/**
-	 * Returns the last de data definition field link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DEDataDefinitionFieldLink> orderByComparator)
-		throws NoSuchDataDefinitionFieldLinkException;
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DEDataDefinitionFieldLink> orderByComparator);
-
-	/**
 	 * Removes all the de data definition field links where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,32 +381,6 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @return the first matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	public DEDataDefinitionFieldLink fetchByDDMStructureId_First(
-		long ddmStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DEDataDefinitionFieldLink> orderByComparator);
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where ddmStructureId = &#63;.
-	 *
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink findByDDMStructureId_Last(
-			long ddmStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DEDataDefinitionFieldLink> orderByComparator)
-		throws NoSuchDataDefinitionFieldLinkException;
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where ddmStructureId = &#63;.
-	 *
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink fetchByDDMStructureId_Last(
 		long ddmStructureId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DEDataDefinitionFieldLink> orderByComparator);
@@ -570,34 +490,6 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @return the first matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	public DEDataDefinitionFieldLink fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DEDataDefinitionFieldLink> orderByComparator);
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink findByC_C_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DEDataDefinitionFieldLink> orderByComparator)
-		throws NoSuchDataDefinitionFieldLinkException;
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink fetchByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DEDataDefinitionFieldLink> orderByComparator);
@@ -714,34 +606,6 @@ public interface DEDataDefinitionFieldLinkPersistence
 			<DEDataDefinitionFieldLink> orderByComparator);
 
 	/**
-	 * Returns the last de data definition field link in the ordered set where classNameId = &#63; and ddmStructureId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink findByC_DDMSI_Last(
-			long classNameId, long ddmStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DEDataDefinitionFieldLink> orderByComparator)
-		throws NoSuchDataDefinitionFieldLinkException;
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where classNameId = &#63; and ddmStructureId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink fetchByC_DDMSI_Last(
-		long classNameId, long ddmStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DEDataDefinitionFieldLink> orderByComparator);
-
-	/**
 	 * Removes all the de data definition field links where classNameId = &#63; and ddmStructureId = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -848,34 +712,6 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @return the first matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	public DEDataDefinitionFieldLink fetchByDDMSI_F_First(
-		long ddmStructureId, String fieldName,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DEDataDefinitionFieldLink> orderByComparator);
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where ddmStructureId = &#63; and fieldName = &#63;.
-	 *
-	 * @param ddmStructureId the ddm structure ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink findByDDMSI_F_Last(
-			long ddmStructureId, String fieldName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DEDataDefinitionFieldLink> orderByComparator)
-		throws NoSuchDataDefinitionFieldLinkException;
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where ddmStructureId = &#63; and fieldName = &#63;.
-	 *
-	 * @param ddmStructureId the ddm structure ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink fetchByDDMSI_F_Last(
 		long ddmStructureId, String fieldName,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DEDataDefinitionFieldLink> orderByComparator);
@@ -1075,36 +911,6 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @return the first matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
 	 */
 	public DEDataDefinitionFieldLink fetchByC_DDMSI_F_First(
-		long classNameId, long ddmStructureId, String fieldName,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DEDataDefinitionFieldLink> orderByComparator);
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where classNameId = &#63; and ddmStructureId = &#63; and fieldName = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink findByC_DDMSI_F_Last(
-			long classNameId, long ddmStructureId, String fieldName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DEDataDefinitionFieldLink> orderByComparator)
-		throws NoSuchDataDefinitionFieldLinkException;
-
-	/**
-	 * Returns the last de data definition field link in the ordered set where classNameId = &#63; and ddmStructureId = &#63; and fieldName = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data definition field link, or <code>null</code> if a matching de data definition field link could not be found
-	 */
-	public DEDataDefinitionFieldLink fetchByC_DDMSI_F_Last(
 		long classNameId, long ddmStructureId, String fieldName,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DEDataDefinitionFieldLink> orderByComparator);
@@ -1425,4 +1231,4 @@ public interface DEDataDefinitionFieldLinkPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1402773034
+// LIFERAY-SERVICE-BUILDER-HASH:-349749814

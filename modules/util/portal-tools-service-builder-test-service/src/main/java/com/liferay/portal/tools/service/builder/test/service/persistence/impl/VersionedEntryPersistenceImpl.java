@@ -288,65 +288,6 @@ public class VersionedEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last versioned entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry
-	 * @throws NoSuchVersionedEntryException if a matching versioned entry could not be found
-	 */
-	@Override
-	public VersionedEntry findByGroupId_Last(
-			long groupId, OrderByComparator<VersionedEntry> orderByComparator)
-		throws NoSuchVersionedEntryException {
-
-		VersionedEntry versionedEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (versionedEntry != null) {
-			return versionedEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchVersionedEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last versioned entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry, or <code>null</code> if a matching versioned entry could not be found
-	 */
-	@Override
-	public VersionedEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<VersionedEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<VersionedEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the versioned entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -643,72 +584,6 @@ public class VersionedEntryPersistenceImpl
 
 		List<VersionedEntry> list = findByGroupId_Head(
 			groupId, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last versioned entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry
-	 * @throws NoSuchVersionedEntryException if a matching versioned entry could not be found
-	 */
-	@Override
-	public VersionedEntry findByGroupId_Head_Last(
-			long groupId, boolean head,
-			OrderByComparator<VersionedEntry> orderByComparator)
-		throws NoSuchVersionedEntryException {
-
-		VersionedEntry versionedEntry = fetchByGroupId_Head_Last(
-			groupId, head, orderByComparator);
-
-		if (versionedEntry != null) {
-			return versionedEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchVersionedEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last versioned entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry, or <code>null</code> if a matching versioned entry could not be found
-	 */
-	@Override
-	public VersionedEntry fetchByGroupId_Head_Last(
-		long groupId, boolean head,
-		OrderByComparator<VersionedEntry> orderByComparator) {
-
-		int count = countByGroupId_Head(groupId, head);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<VersionedEntry> list = findByGroupId_Head(
-			groupId, head, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1573,4 +1448,4 @@ public class VersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-250237577
+// LIFERAY-SERVICE-BUILDER-HASH:1289572550

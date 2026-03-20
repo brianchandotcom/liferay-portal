@@ -306,68 +306,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryLocalizationId = &#63;.
-	 *
-	 * @param lvEntryLocalizationId the lv entry localization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion findByLvEntryLocalizationId_Last(
-			long lvEntryLocalizationId,
-			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
-		throws NoSuchLVEntryLocalizationVersionException {
-
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryLocalizationId_Last(
-				lvEntryLocalizationId, orderByComparator);
-
-		if (lvEntryLocalizationVersion != null) {
-			return lvEntryLocalizationVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("lvEntryLocalizationId=");
-		sb.append(lvEntryLocalizationId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryLocalizationVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryLocalizationId = &#63;.
-	 *
-	 * @param lvEntryLocalizationId the lv entry localization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion fetchByLvEntryLocalizationId_Last(
-		long lvEntryLocalizationId,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		int count = countByLvEntryLocalizationId(lvEntryLocalizationId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryLocalizationVersion> list = findByLvEntryLocalizationId(
-			lvEntryLocalizationId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entry localization versions where lvEntryLocalizationId = &#63; from the database.
 	 *
 	 * @param lvEntryLocalizationId the lv entry localization ID
@@ -866,67 +804,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion findByLvEntryId_Last(
-			long lvEntryId,
-			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
-		throws NoSuchLVEntryLocalizationVersionException {
-
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryId_Last(lvEntryId, orderByComparator);
-
-		if (lvEntryLocalizationVersion != null) {
-			return lvEntryLocalizationVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("lvEntryId=");
-		sb.append(lvEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryLocalizationVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion fetchByLvEntryId_Last(
-		long lvEntryId,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		int count = countByLvEntryId(lvEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryLocalizationVersion> list = findByLvEntryId(
-			lvEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entry localization versions where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -1230,73 +1107,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		List<LVEntryLocalizationVersion> list = findByLvEntryId_Version(
 			lvEntryId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and version = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion findByLvEntryId_Version_Last(
-			long lvEntryId, int version,
-			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
-		throws NoSuchLVEntryLocalizationVersionException {
-
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryId_Version_Last(
-				lvEntryId, version, orderByComparator);
-
-		if (lvEntryLocalizationVersion != null) {
-			return lvEntryLocalizationVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("lvEntryId=");
-		sb.append(lvEntryId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryLocalizationVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and version = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion fetchByLvEntryId_Version_Last(
-		long lvEntryId, int version,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		int count = countByLvEntryId_Version(lvEntryId, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryLocalizationVersion> list = findByLvEntryId_Version(
-			lvEntryId, version, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1634,73 +1444,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		List<LVEntryLocalizationVersion> list = findByLvEntryId_LanguageId(
 			lvEntryId, languageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and languageId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion findByLvEntryId_LanguageId_Last(
-			long lvEntryId, String languageId,
-			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
-		throws NoSuchLVEntryLocalizationVersionException {
-
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryId_LanguageId_Last(
-				lvEntryId, languageId, orderByComparator);
-
-		if (lvEntryLocalizationVersion != null) {
-			return lvEntryLocalizationVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("lvEntryId=");
-		sb.append(lvEntryId);
-
-		sb.append(", languageId=");
-		sb.append(languageId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryLocalizationVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and languageId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion fetchByLvEntryId_LanguageId_Last(
-		long lvEntryId, String languageId,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		int count = countByLvEntryId_LanguageId(lvEntryId, languageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryLocalizationVersion> list = findByLvEntryId_LanguageId(
-			lvEntryId, languageId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2787,4 +2530,4 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2078995014
+// LIFERAY-SERVICE-BUILDER-HASH:-1685815906

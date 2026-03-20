@@ -129,34 +129,6 @@ public interface JournalArticleLocalizationPersistence
 			<JournalArticleLocalization> orderByComparator);
 
 	/**
-	 * Returns the last journal article localization in the ordered set where companyId = &#63; and articlePK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param articlePK the article pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article localization
-	 * @throws NoSuchArticleLocalizationException if a matching journal article localization could not be found
-	 */
-	public JournalArticleLocalization findByC_A_Last(
-			long companyId, long articlePK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalArticleLocalization> orderByComparator)
-		throws NoSuchArticleLocalizationException;
-
-	/**
-	 * Returns the last journal article localization in the ordered set where companyId = &#63; and articlePK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param articlePK the article pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
-	 */
-	public JournalArticleLocalization fetchByC_A_Last(
-		long companyId, long articlePK,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<JournalArticleLocalization> orderByComparator);
-
-	/**
 	 * Removes all the journal article localizations where companyId = &#63; and articlePK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -359,4 +331,4 @@ public interface JournalArticleLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-355534000
+// LIFERAY-SERVICE-BUILDER-HASH:-1341722141

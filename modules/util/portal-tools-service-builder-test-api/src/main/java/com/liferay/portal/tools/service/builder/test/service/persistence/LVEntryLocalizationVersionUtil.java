@@ -227,39 +227,6 @@ public class LVEntryLocalizationVersionUtil {
 	}
 
 	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryLocalizationId = &#63;.
-	 *
-	 * @param lvEntryLocalizationId the lv entry localization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a matching lv entry localization version could not be found
-	 */
-	public static LVEntryLocalizationVersion findByLvEntryLocalizationId_Last(
-			long lvEntryLocalizationId,
-			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationVersionException {
-
-		return getPersistence().findByLvEntryLocalizationId_Last(
-			lvEntryLocalizationId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryLocalizationId = &#63;.
-	 *
-	 * @param lvEntryLocalizationId the lv entry localization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	public static LVEntryLocalizationVersion fetchByLvEntryLocalizationId_Last(
-		long lvEntryLocalizationId,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		return getPersistence().fetchByLvEntryLocalizationId_Last(
-			lvEntryLocalizationId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entry localization versions where lvEntryLocalizationId = &#63; from the database.
 	 *
 	 * @param lvEntryLocalizationId the lv entry localization ID
@@ -469,39 +436,6 @@ public class LVEntryLocalizationVersionUtil {
 	}
 
 	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a matching lv entry localization version could not be found
-	 */
-	public static LVEntryLocalizationVersion findByLvEntryId_Last(
-			long lvEntryId,
-			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationVersionException {
-
-		return getPersistence().findByLvEntryId_Last(
-			lvEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	public static LVEntryLocalizationVersion fetchByLvEntryId_Last(
-		long lvEntryId,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		return getPersistence().fetchByLvEntryId_Last(
-			lvEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entry localization versions where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -631,41 +565,6 @@ public class LVEntryLocalizationVersionUtil {
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
 
 		return getPersistence().fetchByLvEntryId_Version_First(
-			lvEntryId, version, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and version = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a matching lv entry localization version could not be found
-	 */
-	public static LVEntryLocalizationVersion findByLvEntryId_Version_Last(
-			long lvEntryId, int version,
-			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationVersionException {
-
-		return getPersistence().findByLvEntryId_Version_Last(
-			lvEntryId, version, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and version = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	public static LVEntryLocalizationVersion fetchByLvEntryId_Version_Last(
-		long lvEntryId, int version,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		return getPersistence().fetchByLvEntryId_Version_Last(
 			lvEntryId, version, orderByComparator);
 	}
 
@@ -803,41 +702,6 @@ public class LVEntryLocalizationVersionUtil {
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
 
 		return getPersistence().fetchByLvEntryId_LanguageId_First(
-			lvEntryId, languageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and languageId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a matching lv entry localization version could not be found
-	 */
-	public static LVEntryLocalizationVersion findByLvEntryId_LanguageId_Last(
-			long lvEntryId, String languageId,
-			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationVersionException {
-
-		return getPersistence().findByLvEntryId_LanguageId_Last(
-			lvEntryId, languageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and languageId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	public static LVEntryLocalizationVersion fetchByLvEntryId_LanguageId_Last(
-		long lvEntryId, String languageId,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		return getPersistence().fetchByLvEntryId_LanguageId_Last(
 			lvEntryId, languageId, orderByComparator);
 	}
 
@@ -1128,4 +992,4 @@ public class LVEntryLocalizationVersionUtil {
 	private static volatile LVEntryLocalizationVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1709005919
+// LIFERAY-SERVICE-BUILDER-HASH:-1434528471

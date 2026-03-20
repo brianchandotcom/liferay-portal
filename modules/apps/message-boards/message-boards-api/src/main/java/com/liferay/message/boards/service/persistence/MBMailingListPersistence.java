@@ -121,32 +121,6 @@ public interface MBMailingListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards mailing list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list
-	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
-	 */
-	public MBMailingList findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
-		throws NoSuchMailingListException;
-
-	/**
-	 * Returns the last message boards mailing list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	 */
-	public MBMailingList fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards mailing lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface MBMailingListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list
-	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
-	 */
-	public MBMailingList findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
-		throws NoSuchMailingListException;
-
-	/**
-	 * Returns the last message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	 */
-	public MBMailingList fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards mailing lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface MBMailingListPersistence
 	 * @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
 	public MBMailingList fetchByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards mailing list in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list
-	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
-	 */
-	public MBMailingList findByActive_Last(
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
-		throws NoSuchMailingListException;
-
-	/**
-	 * Returns the last message boards mailing list in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	 */
-	public MBMailingList fetchByActive_Last(
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
 			orderByComparator);
@@ -649,4 +569,4 @@ public interface MBMailingListPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1066097247
+// LIFERAY-SERVICE-BUILDER-HASH:-264756007

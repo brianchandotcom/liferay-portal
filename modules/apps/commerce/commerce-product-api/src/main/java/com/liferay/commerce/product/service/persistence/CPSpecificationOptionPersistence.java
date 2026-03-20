@@ -122,32 +122,6 @@ public interface CPSpecificationOptionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	public CPSpecificationOption findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
-
-	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	public CPSpecificationOption fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
-			orderByComparator);
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -301,34 +275,6 @@ public interface CPSpecificationOptionPersistence
 	 * @return the first matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	 */
 	public CPSpecificationOption fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	public CPSpecificationOption findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
-
-	/**
-	 * Returns the last cp specification option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	public CPSpecificationOption fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
 			orderByComparator);
@@ -493,32 +439,6 @@ public interface CPSpecificationOptionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp specification option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	public CPSpecificationOption findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
-
-	/**
-	 * Returns the last cp specification option in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	public CPSpecificationOption fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
-			orderByComparator);
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -667,32 +587,6 @@ public interface CPSpecificationOptionPersistence
 	 * @return the first matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
 	 */
 	public CPSpecificationOption fetchByCPOptionCategoryId_First(
-		long CPOptionCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp specification option in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a matching cp specification option could not be found
-	 */
-	public CPSpecificationOption findByCPOptionCategoryId_Last(
-			long CPOptionCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
-
-	/**
-	 * Returns the last cp specification option in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	 */
-	public CPSpecificationOption fetchByCPOptionCategoryId_Last(
 		long CPOptionCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
 			orderByComparator);
@@ -989,4 +883,4 @@ public interface CPSpecificationOptionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1307868515
+// LIFERAY-SERVICE-BUILDER-HASH:2143642655

@@ -339,64 +339,6 @@ public class TemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last template entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry findByUuid_Last(
-			String uuid, OrderByComparator<TemplateEntry> orderByComparator)
-		throws NoSuchTemplateEntryException {
-
-		TemplateEntry templateEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<TemplateEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TemplateEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the template entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -944,72 +886,6 @@ public class TemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last template entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws NoSuchTemplateEntryException {
-
-		TemplateEntry templateEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<TemplateEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TemplateEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the template entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1324,65 +1200,6 @@ public class TemplateEntryPersistenceImpl
 
 		List<TemplateEntry> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry findByGroupId_Last(
-			long groupId, OrderByComparator<TemplateEntry> orderByComparator)
-		throws NoSuchTemplateEntryException {
-
-		TemplateEntry templateEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<TemplateEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TemplateEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2172,72 +1989,6 @@ public class TemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry findByG_IICN_Last(
-			long groupId, String infoItemClassName,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws NoSuchTemplateEntryException {
-
-		TemplateEntry templateEntry = fetchByG_IICN_Last(
-			groupId, infoItemClassName, orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", infoItemClassName=");
-		sb.append(infoItemClassName);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry fetchByG_IICN_Last(
-		long groupId, String infoItemClassName,
-		OrderByComparator<TemplateEntry> orderByComparator) {
-
-		int count = countByG_IICN(groupId, infoItemClassName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TemplateEntry> list = findByG_IICN(
-			groupId, infoItemClassName, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the template entries where groupId = &#63; and infoItemClassName = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2631,81 +2382,6 @@ public class TemplateEntryPersistenceImpl
 		List<TemplateEntry> list = findByG_IICN_IIFVK(
 			groupId, infoItemClassName, infoItemFormVariationKey, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63; and infoItemFormVariationKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param infoItemFormVariationKey the info item form variation key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry
-	 * @throws NoSuchTemplateEntryException if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry findByG_IICN_IIFVK_Last(
-			long groupId, String infoItemClassName,
-			String infoItemFormVariationKey,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws NoSuchTemplateEntryException {
-
-		TemplateEntry templateEntry = fetchByG_IICN_IIFVK_Last(
-			groupId, infoItemClassName, infoItemFormVariationKey,
-			orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", infoItemClassName=");
-		sb.append(infoItemClassName);
-
-		sb.append(", infoItemFormVariationKey=");
-		sb.append(infoItemFormVariationKey);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63; and infoItemFormVariationKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param infoItemFormVariationKey the info item form variation key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching template entry, or <code>null</code> if a matching template entry could not be found
-	 */
-	@Override
-	public TemplateEntry fetchByG_IICN_IIFVK_Last(
-		long groupId, String infoItemClassName, String infoItemFormVariationKey,
-		OrderByComparator<TemplateEntry> orderByComparator) {
-
-		int count = countByG_IICN_IIFVK(
-			groupId, infoItemClassName, infoItemFormVariationKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TemplateEntry> list = findByG_IICN_IIFVK(
-			groupId, infoItemClassName, infoItemFormVariationKey, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4605,4 +4281,4 @@ public class TemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1854997678
+// LIFERAY-SERVICE-BUILDER-HASH:-981143969

@@ -134,36 +134,6 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 					orderByComparator);
 
 	/**
-	 * Returns the last commerce notification template commerce account group rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template commerce account group rel
-	 * @throws NoSuchNotificationTemplateCommerceAccountGroupRelException if a matching commerce notification template commerce account group rel could not be found
-	 */
-	public CommerceNotificationTemplateCommerceAccountGroupRel
-			findByCommerceNotificationTemplateId_Last(
-				long commerceNotificationTemplateId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceNotificationTemplateCommerceAccountGroupRel>
-						orderByComparator)
-		throws NoSuchNotificationTemplateCommerceAccountGroupRelException;
-
-	/**
-	 * Returns the last commerce notification template commerce account group rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template commerce account group rel, or <code>null</code> if a matching commerce notification template commerce account group rel could not be found
-	 */
-	public CommerceNotificationTemplateCommerceAccountGroupRel
-		fetchByCommerceNotificationTemplateId_Last(
-			long commerceNotificationTemplateId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplateCommerceAccountGroupRel>
-					orderByComparator);
-
-	/**
 	 * Removes all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63; from the database.
 	 *
 	 * @param commerceNotificationTemplateId the commerce notification template ID
@@ -272,36 +242,6 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	 */
 	public CommerceNotificationTemplateCommerceAccountGroupRel
 		fetchByCommerceAccountGroupId_First(
-			long commerceAccountGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplateCommerceAccountGroupRel>
-					orderByComparator);
-
-	/**
-	 * Returns the last commerce notification template commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template commerce account group rel
-	 * @throws NoSuchNotificationTemplateCommerceAccountGroupRelException if a matching commerce notification template commerce account group rel could not be found
-	 */
-	public CommerceNotificationTemplateCommerceAccountGroupRel
-			findByCommerceAccountGroupId_Last(
-				long commerceAccountGroupId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceNotificationTemplateCommerceAccountGroupRel>
-						orderByComparator)
-		throws NoSuchNotificationTemplateCommerceAccountGroupRelException;
-
-	/**
-	 * Returns the last commerce notification template commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template commerce account group rel, or <code>null</code> if a matching commerce notification template commerce account group rel could not be found
-	 */
-	public CommerceNotificationTemplateCommerceAccountGroupRel
-		fetchByCommerceAccountGroupId_Last(
 			long commerceAccountGroupId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceNotificationTemplateCommerceAccountGroupRel>
@@ -515,4 +455,4 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1221510069
+// LIFERAY-SERVICE-BUILDER-HASH:-1772860763

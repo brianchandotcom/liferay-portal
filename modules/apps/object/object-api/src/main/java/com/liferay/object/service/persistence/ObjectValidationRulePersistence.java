@@ -120,32 +120,6 @@ public interface ObjectValidationRulePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object validation rule in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
-	 * Returns the last object validation rule in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
-			orderByComparator);
-
-	/**
 	 * Removes all the object validation rules where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -250,34 +224,6 @@ public interface ObjectValidationRulePersistence
 	 * @return the first matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
 	 */
 	public ObjectValidationRule fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
-			orderByComparator);
-
-	/**
-	 * Returns the last object validation rule in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
-	 * Returns the last object validation rule in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
 			orderByComparator);
@@ -388,32 +334,6 @@ public interface ObjectValidationRulePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
-			orderByComparator);
-
-	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -518,34 +438,6 @@ public interface ObjectValidationRulePersistence
 	 * @return the first matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
 	 */
 	public ObjectValidationRule fetchByODI_A_First(
-		long objectDefinitionId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
-			orderByComparator);
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and active = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule findByODI_A_Last(
-			long objectDefinitionId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and active = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule fetchByODI_A_Last(
 		long objectDefinitionId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
 			orderByComparator);
@@ -662,34 +554,6 @@ public interface ObjectValidationRulePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and engine = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule findByODI_E_Last(
-			long objectDefinitionId, String engine,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and engine = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule fetchByODI_E_Last(
-		long objectDefinitionId, String engine,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
-			orderByComparator);
-
-	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; and engine = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -801,34 +665,6 @@ public interface ObjectValidationRulePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param outputType the output type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule findByODI_O_Last(
-			long objectDefinitionId, String outputType,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param outputType the output type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule fetchByODI_O_Last(
-		long objectDefinitionId, String outputType,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
-			orderByComparator);
-
-	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; and outputType = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -935,34 +771,6 @@ public interface ObjectValidationRulePersistence
 	 * @return the first matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
 	 */
 	public ObjectValidationRule fetchByA_E_First(
-		boolean active, String engine,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
-			orderByComparator);
-
-	/**
-	 * Returns the last object validation rule in the ordered set where active = &#63; and engine = &#63;.
-	 *
-	 * @param active the active
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule findByA_E_Last(
-			boolean active, String engine,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
-	 * Returns the last object validation rule in the ordered set where active = &#63; and engine = &#63;.
-	 *
-	 * @param active the active
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	public ObjectValidationRule fetchByA_E_Last(
 		boolean active, String engine,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
 			orderByComparator);
@@ -1169,4 +977,4 @@ public interface ObjectValidationRulePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:525873590
+// LIFERAY-SERVICE-BUILDER-HASH:989759021

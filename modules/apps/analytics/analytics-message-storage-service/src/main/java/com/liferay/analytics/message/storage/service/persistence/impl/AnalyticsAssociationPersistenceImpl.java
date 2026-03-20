@@ -361,73 +361,6 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and associationClassName = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association
-	 * @throws NoSuchAssociationException if a matching analytics association could not be found
-	 */
-	@Override
-	public AnalyticsAssociation findByC_A_Last(
-			long companyId, String associationClassName,
-			OrderByComparator<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException {
-
-		AnalyticsAssociation analyticsAssociation = fetchByC_A_Last(
-			companyId, associationClassName, orderByComparator);
-
-		if (analyticsAssociation != null) {
-			return analyticsAssociation;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", associationClassName=");
-		sb.append(associationClassName);
-
-		sb.append("}");
-
-		throw new NoSuchAssociationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and associationClassName = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association, or <code>null</code> if a matching analytics association could not be found
-	 */
-	@Override
-	public AnalyticsAssociation fetchByC_A_Last(
-		long companyId, String associationClassName,
-		OrderByComparator<AnalyticsAssociation> orderByComparator) {
-
-		int count = countByC_A(companyId, associationClassName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnalyticsAssociation> list = findByC_A(
-			companyId, associationClassName, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the analytics associations where companyId = &#63; and associationClassName = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -804,79 +737,6 @@ public class AnalyticsAssociationPersistenceImpl
 
 		List<AnalyticsAssociation> list = findByC_GtM_A(
 			companyId, modifiedDate, associationClassName, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and associationClassName = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association
-	 * @throws NoSuchAssociationException if a matching analytics association could not be found
-	 */
-	@Override
-	public AnalyticsAssociation findByC_GtM_A_Last(
-			long companyId, Date modifiedDate, String associationClassName,
-			OrderByComparator<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException {
-
-		AnalyticsAssociation analyticsAssociation = fetchByC_GtM_A_Last(
-			companyId, modifiedDate, associationClassName, orderByComparator);
-
-		if (analyticsAssociation != null) {
-			return analyticsAssociation;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", modifiedDate>");
-		sb.append(modifiedDate);
-
-		sb.append(", associationClassName=");
-		sb.append(associationClassName);
-
-		sb.append("}");
-
-		throw new NoSuchAssociationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and associationClassName = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association, or <code>null</code> if a matching analytics association could not be found
-	 */
-	@Override
-	public AnalyticsAssociation fetchByC_GtM_A_Last(
-		long companyId, Date modifiedDate, String associationClassName,
-		OrderByComparator<AnalyticsAssociation> orderByComparator) {
-
-		int count = countByC_GtM_A(
-			companyId, modifiedDate, associationClassName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnalyticsAssociation> list = findByC_GtM_A(
-			companyId, modifiedDate, associationClassName, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1295,81 +1155,6 @@ public class AnalyticsAssociationPersistenceImpl
 		List<AnalyticsAssociation> list = findByC_A_A(
 			companyId, associationClassName, associationClassPK, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param associationClassPK the association class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association
-	 * @throws NoSuchAssociationException if a matching analytics association could not be found
-	 */
-	@Override
-	public AnalyticsAssociation findByC_A_A_Last(
-			long companyId, String associationClassName,
-			long associationClassPK,
-			OrderByComparator<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException {
-
-		AnalyticsAssociation analyticsAssociation = fetchByC_A_A_Last(
-			companyId, associationClassName, associationClassPK,
-			orderByComparator);
-
-		if (analyticsAssociation != null) {
-			return analyticsAssociation;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", associationClassName=");
-		sb.append(associationClassName);
-
-		sb.append(", associationClassPK=");
-		sb.append(associationClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchAssociationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param associationClassPK the association class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association, or <code>null</code> if a matching analytics association could not be found
-	 */
-	@Override
-	public AnalyticsAssociation fetchByC_A_A_Last(
-		long companyId, String associationClassName, long associationClassPK,
-		OrderByComparator<AnalyticsAssociation> orderByComparator) {
-
-		int count = countByC_A_A(
-			companyId, associationClassName, associationClassPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnalyticsAssociation> list = findByC_A_A(
-			companyId, associationClassName, associationClassPK, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2476,4 +2261,4 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-150616807
+// LIFERAY-SERVICE-BUILDER-HASH:-2138307649

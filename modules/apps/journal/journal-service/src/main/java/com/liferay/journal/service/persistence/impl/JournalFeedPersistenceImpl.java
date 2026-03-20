@@ -330,64 +330,6 @@ public class JournalFeedPersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal feed in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal feed
-	 * @throws NoSuchFeedException if a matching journal feed could not be found
-	 */
-	@Override
-	public JournalFeed findByUuid_Last(
-			String uuid, OrderByComparator<JournalFeed> orderByComparator)
-		throws NoSuchFeedException {
-
-		JournalFeed journalFeed = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (journalFeed != null) {
-			return journalFeed;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFeedException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal feed in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal feed, or <code>null</code> if a matching journal feed could not be found
-	 */
-	@Override
-	public JournalFeed fetchByUuid_Last(
-		String uuid, OrderByComparator<JournalFeed> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFeed> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal feeds where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -935,72 +877,6 @@ public class JournalFeedPersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal feed in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal feed
-	 * @throws NoSuchFeedException if a matching journal feed could not be found
-	 */
-	@Override
-	public JournalFeed findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<JournalFeed> orderByComparator)
-		throws NoSuchFeedException {
-
-		JournalFeed journalFeed = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (journalFeed != null) {
-			return journalFeed;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFeedException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal feed in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal feed, or <code>null</code> if a matching journal feed could not be found
-	 */
-	@Override
-	public JournalFeed fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<JournalFeed> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFeed> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal feeds where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1314,65 +1190,6 @@ public class JournalFeedPersistenceImpl
 
 		List<JournalFeed> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal feed in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal feed
-	 * @throws NoSuchFeedException if a matching journal feed could not be found
-	 */
-	@Override
-	public JournalFeed findByGroupId_Last(
-			long groupId, OrderByComparator<JournalFeed> orderByComparator)
-		throws NoSuchFeedException {
-
-		JournalFeed journalFeed = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (journalFeed != null) {
-			return journalFeed;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFeedException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal feed in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal feed, or <code>null</code> if a matching journal feed could not be found
-	 */
-	@Override
-	public JournalFeed fetchByGroupId_Last(
-		long groupId, OrderByComparator<JournalFeed> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFeed> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2889,4 +2706,4 @@ public class JournalFeedPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:190468068
+// LIFERAY-SERVICE-BUILDER-HASH:1241777277

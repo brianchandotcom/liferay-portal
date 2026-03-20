@@ -46,12 +46,6 @@ Import-Package:\
 	\
 	!net.sourceforge.barbecue.*,\
 	\
-	!org.apache.batik.anim.*,\
-	!org.apache.batik.bridge.*,\
-	!org.apache.batik.dom.*,\
-	!org.apache.batik.ext.*,\
-	!org.apache.batik.gvt.*,\
-	!org.apache.batik.util.*,\
 	!org.apache.bcel.*,\
 	!org.apache.commons.javaflow.*,\
 	!org.apache.commons.jci.*,\

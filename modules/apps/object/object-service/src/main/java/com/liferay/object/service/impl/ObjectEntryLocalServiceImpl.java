@@ -234,6 +234,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -531,7 +532,13 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 			serviceContext);
 
-		_deleteTempFileEntries(dlFileEntriesMap);
+		if (!StringUtil.equals(
+				GetterUtil.getString(
+					serviceContext.getAttribute(Constants.ACTION)),
+				Constants.COPY)) {
+
+			_deleteTempFileEntries(dlFileEntriesMap);
+		}
 
 		objectEntry = _addObjectEntryVersion(objectDefinition, objectEntry);
 
@@ -760,6 +767,8 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		values.put("externalReferenceCode", null);
+
+		serviceContext.setAttribute(Constants.ACTION, Constants.COPY);
 
 		return addObjectEntry(
 			objectEntryFolder.getGroupId(), userId,

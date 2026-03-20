@@ -8,6 +8,7 @@ package com.liferay.dynamic.data.lists.service.impl;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordVersionLocalServiceBaseImpl;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordVersionIdComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordVersionVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,8 +47,9 @@ public class DDLRecordVersionLocalServiceImpl
 	public DDLRecordVersion fetchLatestRecordVersion(
 		long userId, long recordSetId, String recordSetVersion, int status) {
 
-		return ddlRecordVersionPersistence.fetchByU_R_R_S_Last(
-			userId, recordSetId, recordSetVersion, status, null);
+		return ddlRecordVersionPersistence.fetchByU_R_R_S_First(
+			userId, recordSetId, recordSetVersion, status,
+			DDLRecordVersionIdComparator.getInstance(false));
 	}
 
 	/**

@@ -15,6 +15,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordVersionIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceRecordVersionVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -87,8 +88,9 @@ public class DDMFormInstanceRecordVersionLocalServiceImpl
 		long userId, long formInstanceId, String formInstanceVersion,
 		int status) {
 
-		return ddmFormInstanceRecordVersionPersistence.fetchByU_F_F_S_Last(
-			userId, formInstanceId, formInstanceVersion, status, null);
+		return ddmFormInstanceRecordVersionPersistence.fetchByU_F_F_S_First(
+			userId, formInstanceId, formInstanceVersion, status,
+			DDMFormInstanceRecordVersionIdComparator.getInstance(false));
 	}
 
 	@Override

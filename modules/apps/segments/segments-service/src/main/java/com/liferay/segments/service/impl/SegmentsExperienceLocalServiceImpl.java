@@ -36,6 +36,7 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
 import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
 import com.liferay.segments.service.persistence.SegmentsExperimentRelPersistence;
+import com.liferay.segments.util.comparator.SegmentsExperiencePriorityComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -377,7 +378,9 @@ public class SegmentsExperienceLocalServiceImpl
 	@Override
 	public int getLowestPriority(long groupId, long plid) {
 		SegmentsExperience segmentsExperience =
-			segmentsExperiencePersistence.fetchByG_P_Last(groupId, plid, null);
+			segmentsExperiencePersistence.fetchByG_P_First(
+				groupId, plid,
+				SegmentsExperiencePriorityComparator.getInstance(true));
 
 		if (segmentsExperience == null) {
 			return 0;

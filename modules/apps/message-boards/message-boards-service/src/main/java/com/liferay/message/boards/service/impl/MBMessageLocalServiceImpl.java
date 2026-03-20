@@ -1463,7 +1463,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public MBMessage getLastThreadMessage(long threadId, int status)
 		throws PortalException {
 
-		return mbMessagePersistence.findByT_S_Last(threadId, status, null);
+		return mbMessagePersistence.findByT_S_First(
+			threadId, status, MessageCreateDateComparator.getInstance(false));
 	}
 
 	@Override

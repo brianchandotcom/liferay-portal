@@ -159,6 +159,7 @@ import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.util.comparator.DLFileEntryMetadataIdComparator;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.io.File;
@@ -2049,8 +2050,9 @@ public class DLFileEntryLocalServiceImpl
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
 
 			DLFileEntryMetadata dlFileEntryMetadata =
-				_dlFileEntryMetadataPersistence.fetchByFileEntryId_Last(
-					fileEntryId, null);
+				_dlFileEntryMetadataPersistence.fetchByFileEntryId_First(
+					fileEntryId,
+					DLFileEntryMetadataIdComparator.getInstance(false));
 
 			DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
 				dlFileEntryMetadata.getDDMStructureId());

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -65,8 +66,27 @@ public class DefaultOrderEntityTest {
 			_definedDefaultOrderEntryPersistence.fetchByName(name));
 		Assert.assertEquals(
 			_definedDefaultOrderEntryPersistence.fetchByName(name),
-			_definedDefaultOrderEntryPersistence.fetchByName_Collection_Last(
-				name, null));
+			_definedDefaultOrderEntryPersistence.fetchByName_Collection_First(
+				name,
+				new OrderByComparator<DefinedDefaultOrderEntry>() {
+
+					@Override
+					public int compare(
+						DefinedDefaultOrderEntry entry1,
+						DefinedDefaultOrderEntry entry2) {
+
+						return entry2.getModifiedDate(
+						).compareTo(
+							entry1.getModifiedDate()
+						);
+					}
+
+					@Override
+					public String getOrderBy() {
+						return "DefinedDefaultOrderEntry.modifiedDate DESC";
+					}
+
+				}));
 
 		// Undefined
 
@@ -84,8 +104,27 @@ public class DefaultOrderEntityTest {
 
 		Assert.assertEquals(
 			_undefinedDefaultOrderEntryPersistence.fetchByName(name),
-			_undefinedDefaultOrderEntryPersistence.fetchByName_Collection_Last(
-				name, null));
+			_undefinedDefaultOrderEntryPersistence.fetchByName_Collection_First(
+				name,
+				new OrderByComparator<UndefinedDefaultOrderEntry>() {
+
+					@Override
+					public int compare(
+						UndefinedDefaultOrderEntry entry1,
+						UndefinedDefaultOrderEntry entry2) {
+
+						return Long.compare(
+							entry2.getUndefinedDefaultOrderEntryId(),
+							entry1.getUndefinedDefaultOrderEntryId());
+					}
+
+					@Override
+					public String getOrderBy() {
+						return "UndefinedDefaultOrderEntry." +
+							"undefinedDefaultOrderEntryId DESC";
+					}
+
+				}));
 	}
 
 	private DefinedDefaultOrderEntry _createDefinedDefaultOrderEntry(

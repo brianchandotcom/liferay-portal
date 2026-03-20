@@ -59,6 +59,7 @@ import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentLocalServiceBaseImpl;
 import com.liferay.segments.service.persistence.SegmentsExperiencePersistence;
 import com.liferay.segments.service.persistence.SegmentsExperimentRelPersistence;
+import com.liferay.segments.util.comparator.SegmentsExperiencePriorityComparator;
 
 import java.math.RoundingMode;
 
@@ -432,9 +433,10 @@ public class SegmentsExperimentLocalServiceImpl
 		int originalPriority = controlSegmentsExperience.getPriority();
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperiencePersistence.fetchByG_P_Last(
+			_segmentsExperiencePersistence.fetchByG_P_First(
 				controlSegmentsExperience.getGroupId(),
-				controlSegmentsExperience.getPlid(), null);
+				controlSegmentsExperience.getPlid(),
+				SegmentsExperiencePriorityComparator.getInstance(true));
 
 		controlSegmentsExperience.setPriority(
 			segmentsExperience.getPriority() - 1);

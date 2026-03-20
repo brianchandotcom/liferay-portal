@@ -27,6 +27,7 @@ import com.liferay.message.boards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
+import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -1071,8 +1072,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			return;
 		}
 
-		MBMessage message = _mbMessagePersistence.fetchByT_S_Last(
-			threadId, WorkflowConstants.STATUS_APPROVED, null);
+		MBMessage message = _mbMessagePersistence.fetchByT_S_First(
+			threadId, WorkflowConstants.STATUS_APPROVED,
+			MessageCreateDateComparator.getInstance(false));
 
 		if ((message == null) || message.isAnonymous()) {
 			thread.setLastPostByUserId(0);

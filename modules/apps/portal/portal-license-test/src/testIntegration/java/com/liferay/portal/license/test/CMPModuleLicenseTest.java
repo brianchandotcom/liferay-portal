@@ -66,11 +66,11 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 			});
 
 		try {
-			assertLicenseNotRegistered();
+			assertPortalLicenseNotRegistered();
 
-			deployEnterpriseLicense(Time.HOUR);
+			deployEnterprisePortalLicense(Time.HOUR);
 
-			assertLicenseInvalid();
+			assertPortalLicenseInvalid();
 		}
 		finally {
 			PortalClassLoaderUtil.setClassLoader(classLoader);
@@ -83,15 +83,15 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertBundlesExisted(_getCmpSymbolicNames());
 
-		assertLicenseNotRegistered();
+		assertPortalLicenseNotRegistered();
 
 		assertBundlesExisted(_getCmpSymbolicNames());
 
-		deployEnterpriseLicense(Time.HOUR);
+		deployEnterprisePortalLicense(Time.HOUR);
 
 		assertLicensePropertiesNotExisted(getCMPProductId());
 
-		assertLicenseRegistered();
+		assertPortalLicenseRegistered();
 
 		assertBundlesNotExisted(_getCmpSymbolicNames());
 
@@ -99,7 +99,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertLicensePropertiesExisted(getCMPProductId());
 
-		assertLicenseRegistered();
+		assertPortalLicenseRegistered();
 
 		assertBundlesExisted(_getCmpSymbolicNames());
 
@@ -111,7 +111,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		resetLifecycleAction();
 
-		assertLicenseRegistered();
+		assertPortalLicenseRegistered();
 
 		assertBundlesNotExisted(_getCmpSymbolicNames());
 	}
@@ -122,15 +122,15 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertBundlesExisted(_getCmpSymbolicNames());
 
-		assertLicenseNotRegistered();
+		assertPortalLicenseNotRegistered();
 
 		assertBundlesExisted(_getCmpSymbolicNames());
 
-		deployFreeTierLicense(Time.HOUR);
+		deployFreeTierPortalLicense(Time.HOUR);
 
 		assertLicensePropertiesNotExisted(getCMPProductId());
 
-		assertLicenseRegistered();
+		assertPortalLicenseRegistered();
 
 		assertBundlesNotExisted(_getCmpSymbolicNames());
 
@@ -138,7 +138,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertLicensePropertiesExisted(getCMPProductId());
 
-		assertLicenseRegistered();
+		assertPortalLicenseRegistered();
 
 		assertBundlesNotExisted(_getCmpSymbolicNames());
 
@@ -150,7 +150,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		resetLifecycleAction();
 
-		assertLicenseRegistered();
+		assertPortalLicenseRegistered();
 
 		assertBundlesNotExisted(_getCmpSymbolicNames());
 	}
@@ -174,11 +174,11 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 			});
 
 		try {
-			assertLicenseNotRegistered();
+			assertPortalLicenseNotRegistered();
 
-			deployEnterpriseLicense(Time.HOUR);
+			deployEnterprisePortalLicense(Time.HOUR);
 
-			assertLicenseInvalid();
+			assertPortalLicenseInvalid();
 		}
 		finally {
 			PortalClassLoaderUtil.setClassLoader(classLoader);

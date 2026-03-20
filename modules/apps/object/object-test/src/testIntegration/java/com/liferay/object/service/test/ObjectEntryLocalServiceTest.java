@@ -1752,6 +1752,47 @@ public class ObjectEntryLocalServiceTest {
 				ObjectFieldUtil.getCounterName(objectField)));
 	}
 
+	@Test
+	public void testAddObjectEntryWithCopyAttribute() throws Exception {
+		FileEntry fileEntry = _addTempFileEntry(RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				"attachment", fileEntry.getFileEntryId()
+			).put(
+				"emailAddressRequired", "peter@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build(),
+			serviceContext);
+
+		Assert.assertNull(
+			_dlAppLocalService.fetchFileEntry(fileEntry.getFileEntryId()));
+
+		serviceContext.setAttribute(Constants.ACTION, Constants.COPY);
+
+		long persistedFileEntryId = MapUtil.getLong(
+			objectEntry.getValues(), "attachment");
+
+		_addObjectEntry(
+			_objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				"attachment", persistedFileEntryId
+			).put(
+				"emailAddressRequired", "peter@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build(),
+			serviceContext);
+
+		Assert.assertNotNull(
+			_dlAppLocalService.fetchFileEntry(persistedFileEntryId));
+	}
+
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryWithDraftWorkflowDefinition()

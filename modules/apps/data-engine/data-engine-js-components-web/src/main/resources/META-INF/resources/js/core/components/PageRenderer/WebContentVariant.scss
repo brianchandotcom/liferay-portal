@@ -24,9 +24,9 @@
 			background: transparent;
 			border-radius: 0 4px 4px;
 			box-shadow: 0 0 0 0.125rem #0b5fff;
-			cursor: grabbing;
 
 			> .lfr-forms__form-view-field-topbar {
+				cursor: grabbing;
 				display: flex;
 			}
 		}

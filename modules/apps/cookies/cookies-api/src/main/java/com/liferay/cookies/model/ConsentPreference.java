@@ -50,3 +50,4 @@ public interface ConsentPreference
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1902947419

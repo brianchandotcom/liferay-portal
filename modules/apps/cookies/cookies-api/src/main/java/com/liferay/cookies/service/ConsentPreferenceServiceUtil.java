@@ -90,3 +90,4 @@ public class ConsentPreferenceServiceUtil {
 			ConsentPreferenceServiceUtil.class, ConsentPreferenceService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2059967442

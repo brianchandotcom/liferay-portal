@@ -212,3 +212,4 @@ public class ConsentPreferenceCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2006989661

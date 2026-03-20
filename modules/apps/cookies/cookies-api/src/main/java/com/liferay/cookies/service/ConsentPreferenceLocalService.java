@@ -262,3 +262,4 @@ public interface ConsentPreferenceLocalService
 		ConsentPreference consentPreference);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-556205927

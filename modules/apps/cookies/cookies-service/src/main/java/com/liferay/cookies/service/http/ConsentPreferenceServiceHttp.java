@@ -299,3 +299,4 @@ public class ConsentPreferenceServiceHttp {
 		new Class[] {com.liferay.cookies.model.ConsentPreference.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1328215813

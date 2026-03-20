@@ -66,3 +66,4 @@ public abstract class BaseConsentPreferenceUADExporter
 	protected ConsentPreferenceLocalService consentPreferenceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-262050585

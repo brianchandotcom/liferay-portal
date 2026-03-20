@@ -908,3 +908,4 @@ public class ConsentPreferenceModelImpl
 	private ConsentPreference _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-902586617

@@ -132,3 +132,4 @@ public class ConsentPreferenceModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1962642167

@@ -879,3 +879,4 @@ public class ConsentPreferenceUtil {
 	private static volatile ConsentPreferencePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2144474045

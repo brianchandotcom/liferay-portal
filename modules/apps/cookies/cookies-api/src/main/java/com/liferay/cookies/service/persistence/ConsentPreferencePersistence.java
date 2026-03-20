@@ -656,3 +656,4 @@ public interface ConsentPreferencePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2147092528

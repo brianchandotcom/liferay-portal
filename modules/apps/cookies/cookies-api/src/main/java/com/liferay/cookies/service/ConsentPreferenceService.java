@@ -74,3 +74,4 @@ public interface ConsentPreferenceService extends BaseService {
 		ConsentPreference consentPreference);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2140313568

@@ -52,3 +52,4 @@ public class ConsentPreferenceTable extends BaseTable<ConsentPreferenceTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1754899266

@@ -307,3 +307,4 @@ public class ConsentPreferenceLocalServiceUtil {
 			ConsentPreferenceLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1578712731

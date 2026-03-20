@@ -103,3 +103,4 @@ public class ConsentPreferenceServiceWrapper
 	private ConsentPreferenceService _consentPreferenceService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2042930996

@@ -39,3 +39,4 @@ public abstract class ConsentPreferenceBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:197837860

@@ -346,3 +346,4 @@ public class ConsentPreferenceWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1229027979

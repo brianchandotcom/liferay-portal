@@ -47,3 +47,11 @@ export const mockFrequencyChartData = [
 	{frequencyType: 'BIWEEKLY', visitCount: 100},
 	{frequencyType: 'MONTHLY', visitCount: 200},
 ];
+
+export const mockRoomStatisticsData = {
+	timeViewedMinutes: 45,
+	totalActions: 10,
+	totalComments: 5,
+	totalVisits: 100,
+	uniqueVisitors: 20,
+};

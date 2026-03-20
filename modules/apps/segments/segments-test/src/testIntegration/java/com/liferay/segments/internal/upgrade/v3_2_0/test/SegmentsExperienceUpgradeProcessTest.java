@@ -150,14 +150,20 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
-			_renameColumn("plid", "plid2", "FragmentEntryLink");
+			_db.alterColumnName(
+				_connection, "LayoutPageTemplateStructure", "plid",
+				"classPK LONG");
+			_db.alterColumnName(
+				_connection, "FragmentEntryLink", "plid", "plid2 LONG");
 
 			runUpgrade();
 		}
 		finally {
-			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
-			_renameColumn("plid2", "plid", "FragmentEntryLink");
+			_db.alterColumnName(
+				_connection, "LayoutPageTemplateStructure", "classPK",
+				"plid LONG");
+			_db.alterColumnName(
+				_connection, "FragmentEntryLink", "plid2", "plid LONG");
 		}
 
 		_assertSegmentsExperiences();
@@ -170,12 +176,14 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_renameColumn("plid", "plid2", "FragmentEntryLink");
+			_db.alterColumnName(
+				_connection, "FragmentEntryLink", "plid", "plid2 LONG");
 
 			runUpgrade();
 		}
 		finally {
-			_renameColumn("plid2", "plid", "FragmentEntryLink");
+			_db.alterColumnName(
+				_connection, "FragmentEntryLink", "plid2", "plid LONG");
 		}
 
 		_assertSegmentsExperiences();
@@ -188,12 +196,16 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
+			_db.alterColumnName(
+				_connection, "LayoutPageTemplateStructure", "plid",
+				"classPK LONG");
 
 			runUpgrade();
 		}
 		finally {
-			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
+			_db.alterColumnName(
+				_connection, "LayoutPageTemplateStructure", "classPK",
+				"plid LONG");
 		}
 
 		_assertSegmentsExperiences();
@@ -206,25 +218,27 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
+			_db.alterColumnName(
+				_connection, "LayoutPageTemplateStructure", "plid",
+				"classPK LONG");
 			_db.alterTableDropColumn(
 				_connection, "FragmentEntryLink", "segmentsExperienceId");
 			_db.alterTableDropColumn(
 				_connection, "LayoutPageTemplateStructureRel",
 				"ctCollectionId");
 
-			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
-
 			runUpgrade();
 		}
 		finally {
+			_db.alterColumnName(
+				_connection, "LayoutPageTemplateStructure", "classPK",
+				"plid LONG");
 			_db.alterTableAddColumn(
-					_connection, "FragmentEntryLink", "segmentsExperienceId",
-					"LONG");
+				_connection, "FragmentEntryLink", "segmentsExperienceId",
+				"LONG");
 			_db.alterTableAddColumn(
 				_connection, "LayoutPageTemplateStructureRel", "ctCollectionId",
 				"LONG");
-
-			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
 		}
 
 		_assertSegmentsExperiences();
@@ -371,18 +385,6 @@ public class SegmentsExperienceUpgradeProcessTest
 				draftSegmentsExperience.getSegmentsExperienceKey(), plid);
 
 		return publishedSegmentsExperience.getSegmentsExperienceId();
-	}
-
-	private void _renameColumn(
-			String columnName, String newColumnName, String tableName)
-		throws Exception {
-
-		try (Connection connection = DataAccess.getConnection()) {
-			DB db = DBManagerUtil.getDB();
-
-			db.alterColumnName(
-				connection, tableName, columnName, newColumnName + " LONG");
-		}
 	}
 
 	private void _updateFragmentEntryLinks() {

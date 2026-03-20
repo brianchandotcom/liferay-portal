@@ -34,12 +34,39 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 	extends ObjectDefinitionLocalServiceWrapper {
 
 	@Override
+	public ObjectDefinition publishCustomObjectDefinition(
+			long userId, long objectDefinitionId)
+		throws PortalException {
+
+		return _setResourcePermissions(
+			super.publishCustomObjectDefinition(userId, objectDefinitionId));
+	}
+
+	@Override
 	public ObjectDefinition publishSystemObjectDefinition(
 			long userId, long objectDefinitionId)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition = super.publishSystemObjectDefinition(
-			userId, objectDefinitionId);
+		return _setResourcePermissions(
+			super.publishSystemObjectDefinition(userId, objectDefinitionId));
+	}
+
+	private void _setObjectDefinitionResourcePermissions(
+			ObjectDefinition objectDefinition, String roleName)
+		throws PortalException {
+
+		Role role = _roleLocalService.getRole(
+			objectDefinition.getCompanyId(), roleName);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			objectDefinition.getCompanyId(), ObjectDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectDefinition.getObjectDefinitionId()),
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
+	}
+
+	private ObjectDefinition _setResourcePermissions(
+		ObjectDefinition objectDefinition) {
 
 		String objectFolderExternalReferenceCode =
 			objectDefinition.getObjectFolderExternalReferenceCode();
@@ -77,28 +104,16 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 					ActionKeys.UPDATE, ActionKeys.VIEW
 				});
 
-			_setResourcePermissions(objectDefinition, RoleConstants.GUEST);
-			_setResourcePermissions(objectDefinition, RoleConstants.USER);
+			_setObjectDefinitionResourcePermissions(
+				objectDefinition, RoleConstants.GUEST);
+			_setObjectDefinitionResourcePermissions(
+				objectDefinition, RoleConstants.USER);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
 
 		return objectDefinition;
-	}
-
-	private void _setResourcePermissions(
-			ObjectDefinition objectDefinition, String roleName)
-		throws PortalException {
-
-		Role role = _roleLocalService.getRole(
-			objectDefinition.getCompanyId(), roleName);
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			objectDefinition.getCompanyId(), ObjectDefinition.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(objectDefinition.getObjectDefinitionId()),
-			role.getRoleId(), new String[] {ActionKeys.VIEW});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

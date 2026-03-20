@@ -15,6 +15,8 @@ public interface ParentBuild extends Build {
 
 	public void addCachedDownstreamBuild(Build build);
 
+	public void addDownstreamBuild(Build build);
+
 	public void addDownstreamBuilds(Map<String, String> urlAxisNames);
 
 	public void addDownstreamBuilds(String... urls);

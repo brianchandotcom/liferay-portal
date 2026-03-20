@@ -109,7 +109,11 @@ export default function ColorPickerField({
 					<TokenButton
 						inherited={!value && field.inherited}
 						label={tokenLabel}
-						onClick={onSplotchClick}
+						onClick={() => {
+							onSplotchClick();
+
+							setTab('values');
+						}}
 						small
 						triggerRef={triggerRef}
 						value={tokenValue}
@@ -127,7 +131,11 @@ export default function ColorPickerField({
 						name={name}
 						onHexBlur={onBlurInput}
 						onHexChange={onHexChange}
-						onSplotchClick={onSplotchClick}
+						onSplotchClick={() => {
+							onSplotchClick();
+
+							setTab('custom');
+						}}
 						setValue={setValue}
 						small
 						splotchRef={triggerRef}

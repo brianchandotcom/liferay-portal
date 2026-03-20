@@ -77,8 +77,10 @@ export class DataSetPage {
 		const button = item.getByRole('button', {
 			name: `${filter} Actions`,
 		});
-		const dropdownId = await button.getAttribute('aria-controls');
+
 		await button.click({timeout});
+
+		const dropdownId = await button.getAttribute('aria-controls');
 
 		const dropdownMenu = this.page
 			.locator(`#${dropdownId}`)

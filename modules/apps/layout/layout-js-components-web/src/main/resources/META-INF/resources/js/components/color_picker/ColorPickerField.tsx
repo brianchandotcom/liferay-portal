@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayColorPicker, {useColorPicker} from '@clayui/color-picker';
+import {FocusTrap} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import {FocusScope, InternalDispatch} from '@clayui/shared';
 import classNames from 'classnames';
@@ -139,78 +140,87 @@ export default function ColorPickerField({
 					ref={dropdownContainerRef}
 					triggerRef={triggerRef}
 				>
-					<ClayButton.Group className="c-mb-3 c-px-3" role="tablist">
-						<ClayButton
-							aria-controls="tabpanel1"
-							aria-selected={tab === 'custom'}
-							className={classNames({
-								active: tab === 'custom',
-							})}
-							displayType="secondary"
-							onClick={() => setTab('custom')}
-							role="tab"
-							size="xs"
+					<FocusTrap active={internalActive} stopPropagation>
+						<ClayButton.Group
+							className="c-mb-3 c-px-3"
+							role="tablist"
 						>
-							{Liferay.Language.get('custom')}
-						</ClayButton>
+							<ClayButton
+								aria-controls="tabpanel1"
+								aria-selected={tab === 'custom'}
+								className={classNames({
+									active: tab === 'custom',
+								})}
+								displayType="secondary"
+								onClick={() => setTab('custom')}
+								role="tab"
+								size="xs"
+							>
+								{Liferay.Language.get('custom')}
+							</ClayButton>
 
-						<ClayButton
-							aria-controls="tabpanel2"
-							aria-selected={tab === 'values'}
-							className={classNames({
-								active: tab === 'values',
+							<ClayButton
+								aria-controls="tabpanel2"
+								aria-selected={tab === 'values'}
+								className={classNames({
+									active: tab === 'values',
+								})}
+								displayType="secondary"
+								onClick={() => setTab('values')}
+								role="tab"
+								size="xs"
+							>
+								{Liferay.Language.get('value-from-stylebook')}
+							</ClayButton>
+						</ClayButton.Group>
+
+						<div
+							className={classNames('c-px-3', {
+								'd-none': tab !== 'custom',
 							})}
-							displayType="secondary"
-							onClick={() => setTab('values')}
-							role="tab"
-							size="xs"
+							id="tabpanel1"
+							role="tabpanel"
 						>
-							{Liferay.Language.get('value-from-stylebook')}
-						</ClayButton>
-					</ClayButton.Group>
+							{customEditorActive ? (
+								<ClayColorPicker.Editor
+									color={color}
+									colors={customColors}
+									hex={state.hex}
+									hue={state.hue}
+									internalToHex={internalToHex}
+									onChange={onChangeEditor}
+									onColorChange={(color) => {
+										onColorChangeEditor(color);
+										externalOnColorChangeEditor(
+											color.toHexString().toUpperCase()
+										);
+									}}
+									onHexBlur={externalOnColorChangeEditor}
+									onHexChange={(hex: string) =>
+										dispatch({hex})
+									}
+									onHueChange={(hue: number) =>
+										dispatch({hue})
+									}
+								/>
+							) : null}
+						</div>
 
-					<div
-						className={classNames('c-px-3', {
-							'd-none': tab !== 'custom',
-						})}
-						id="tabpanel1"
-						role="tabpanel"
-					>
-						{customEditorActive ? (
-							<ClayColorPicker.Editor
-								color={color}
-								colors={customColors}
-								hex={state.hex}
-								hue={state.hue}
-								internalToHex={internalToHex}
-								onChange={onChangeEditor}
-								onColorChange={(color) => {
-									onColorChangeEditor(color);
-									externalOnColorChangeEditor(
-										color.toHexString().toUpperCase()
-									);
-								}}
-								onHexBlur={externalOnColorChangeEditor}
-								onHexChange={(hex: string) => dispatch({hex})}
-								onHueChange={(hue: number) => dispatch({hue})}
+						<div
+							className={classNames({
+								'd-none': tab !== 'values',
+							})}
+							id="tabpanel2"
+							role="tabpanel"
+						>
+							<ColorPaletteTab
+								active={active}
+								colors={colorsFromStylebook}
+								onActiveChange={onActiveChange}
+								onValueChange={onClickColorPalette}
 							/>
-						) : null}
-					</div>
-
-					<div
-						className={classNames({
-							'd-none': tab !== 'values',
-						})}
-						id="tabpanel2"
-						role="tabpanel"
-					>
-						<ColorPaletteTab
-							active={active}
-							colors={colorsFromStylebook}
-							onActiveChange={onActiveChange}
-							onValueChange={onClickColorPalette}
-						/>
-					</div>
+						</div>
+					</FocusTrap>
 				</ClayDropDown.Menu>
 			</div>
 		</FocusScope>

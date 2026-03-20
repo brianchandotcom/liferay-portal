@@ -1,0 +1,34 @@
+resource "helm_release" "crossplane" {
+	atomic=true
+	chart="crossplane"
+	cleanup_on_fail=true
+	create_namespace=true
+	name="crossplane"
+	namespace=var.crossplane_namespace
+	repository="https://charts.crossplane.io/stable"
+	values=[
+		yamlencode(
+			{
+				resourcesCrossplane={
+					limits={
+						memory="2Gi"
+					}
+					requests={
+						cpu="63m"
+						memory="768Mi"
+					}
+				}
+				resourcesRBACManager={
+					limits={
+						memory="512Mi"
+					}
+					requests={
+						cpu="15m"
+						memory="256Mi"
+					}
+				}
+			})
+	]
+	version="2.1.3"
+	wait=true
+}

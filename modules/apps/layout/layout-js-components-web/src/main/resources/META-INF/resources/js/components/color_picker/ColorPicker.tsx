@@ -179,17 +179,19 @@ function ColorPicker({
 			value = defaultTokenValue;
 		}
 
-		if (value.toLowerCase() === target.value.toLowerCase()) {
+		const hexValue = normalizeHexColor(value);
+
+		if (hexValue.toLowerCase() === target.value.toLowerCase()) {
 			return;
 		}
 
 		if (!target.value) {
-			setColor(value);
+			setColor(hexValue);
 
 			return;
 		}
 
-		if (target.value !== value) {
+		if (target.value !== hexValue) {
 			const token = tokenColorValues.find(
 				(token) =>
 					token.label.toLowerCase() === target.value.toLowerCase()

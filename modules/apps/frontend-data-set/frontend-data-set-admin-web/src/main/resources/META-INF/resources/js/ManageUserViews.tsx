@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayLabel from '@clayui/label';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
@@ -17,9 +16,6 @@ import React, {
 	useState,
 } from 'react';
 
-import UserViewsTypeFilter, {
-	setSystemDataSetNames,
-} from './filters/UserViewsTypeFilter';
 import {DEFAULT_FETCH_HEADERS, FDS_DEFAULT_PROPS} from './utils/constants';
 import getDataSetResourceURL from './utils/getDataSetResourceURL';
 import getDataSetSnapshotResourceURL from './utils/getDataSetSnapshotResourceURL';
@@ -39,7 +35,6 @@ interface IManageUserViewsProps {
 interface IDataSetLabelsContextValue {
 	dataSetLabels: Record<string, string>;
 	requestLabel: (fdsName: string) => void;
-	systemDataSetNamesSet: Set<string>;
 }
 
 const DataSetLabelsContext = createContext<IDataSetLabelsContextValue | null>(
@@ -61,11 +56,6 @@ const views = {
 				contentRenderer: 'dataSetNameRenderer',
 				fieldName: 'dataSetName',
 				label: Liferay.Language.get('data-set'),
-			},
-			{
-				contentRenderer: 'dataSetTypeRenderer',
-				fieldName: 'dataSetType',
-				label: Liferay.Language.get('data-set-type'),
 			},
 			{
 				contentRenderer: 'dateTime',
@@ -101,23 +91,6 @@ const DataSetNameRenderer = ({itemData}: {itemData: {fdsName?: string}}) => {
 	return cachedLabel || fdsName;
 };
 
-const DataSetTypeRenderer = ({itemData}: {itemData: {fdsName?: string}}) => {
-	const context = useContext(DataSetLabelsContext);
-	const fdsName = itemData.fdsName || '';
-	const isSystem =
-		!!fdsName && context
-			? context.systemDataSetNamesSet.has(fdsName)
-			: false;
-	const dataSetType = isSystem ? 'system' : 'custom';
-	const displayType = isSystem ? 'info' : 'warning';
-
-	return (
-		<ClayLabel displayType={displayType}>
-			{Liferay.Language.get(dataSetType)}
-		</ClayLabel>
-	);
-};
-
 export default function ManageUserViews({
 	currentURL,
 	namespace,
@@ -144,16 +117,6 @@ export default function ManageUserViews({
 		() => initialSystemDataSetLabels
 	);
 	const labelRequestsRef = useRef<Set<string>>(new Set());
-	const systemDataSetNamesSet = useMemo(
-		() => new Set(systemDataSetEntries.map((entry) => entry.name)),
-		[systemDataSetEntries]
-	);
-
-	useEffect(() => {
-		setSystemDataSetNames(
-			systemDataSetEntries.map((entry) => entry.name).filter(Boolean)
-		);
-	}, [systemDataSetEntries]);
 
 	const deleteUserViews = useCallback(
 		({
@@ -294,13 +257,6 @@ export default function ManageUserViews({
 				label: Liferay.Language.get('date'),
 				type: 'dateRange',
 			},
-			{
-				clientExtensionFilterImplementation: UserViewsTypeFilter,
-				entityFieldType: 'string',
-				id: 'dataSetType',
-				label: Liferay.Language.get('type'),
-				type: 'clientExtension',
-			},
 		],
 		[getUserViewsDataSetsURL]
 	);
@@ -310,7 +266,6 @@ export default function ManageUserViews({
 			value={{
 				dataSetLabels,
 				requestLabel,
-				systemDataSetNamesSet,
 			}}
 		>
 			<div className="data-sets manage-user-views">
@@ -328,7 +283,6 @@ export default function ManageUserViews({
 					currentURL={currentURL}
 					customDataRenderers={{
 						dataSetNameRenderer: DataSetNameRenderer,
-						dataSetTypeRenderer: DataSetTypeRenderer,
 					}}
 					emptyState={{
 						description: Liferay.Language.get(

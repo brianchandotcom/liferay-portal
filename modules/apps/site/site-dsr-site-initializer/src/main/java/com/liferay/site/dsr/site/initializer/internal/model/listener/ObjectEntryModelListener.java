@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -128,13 +129,16 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			objectEntry.getCompanyId());
 		User user = _userLocalService.getUser(objectEntry.getUserId());
 
+		Group group;
+		LayoutSetPrototype layoutSetPrototype;
+
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					company, user)) {
 
 			Map<String, Serializable> values = objectEntry.getValues();
 
-			Group group = _groupLocalService.addGroup(
+			group = _groupLocalService.addGroup(
 				null, user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 				GroupConstants.DEFAULT_LIVE_GROUP_ID,
@@ -164,13 +168,24 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			LiveUsers.joinGroup(
 				group.getCompanyId(), group.getGroupId(), user.getUserId());
 
-			LayoutSetPrototype layoutSetPrototype =
+			layoutSetPrototype =
 				_layoutSetPrototypeLocalService.
 					getLayoutSetPrototypeByUuidAndCompanyId(
 						GetterUtil.getString(
 							values.get("siteTemplateKey"),
 							"L_DSR_LAYOUT_SET_PROTOTYPE"),
 						company.getCompanyId());
+		}
+
+		Role adminRole = _roleLocalService.getRole(
+			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		User adminUser = _userLocalService.getUser(
+			_userLocalService.getRoleUserIds(adminRole.getRoleId())[0]);
+
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					company, adminUser)) {
 
 			_sites.updateLayoutSetPrototypesLinks(
 				group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, false,
@@ -348,6 +363,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Reference
 	private LayoutServiceContextHelper _layoutServiceContextHelper;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

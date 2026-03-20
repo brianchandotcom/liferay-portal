@@ -61,8 +61,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				objectDefinition.getCompanyId());
 
 			_setResourcePermissions(
-				objectDefinition.getCompanyId(),
-				layoutSetPrototype.getGroupId(), objectDefinition);
+				objectDefinition.getCompanyId(), layoutSetPrototype,
+				objectDefinition);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -105,8 +105,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private void _setResourcePermissions(
-			long companyId, long groupId, ObjectDefinition objectDefinition)
+			long companyId, LayoutSetPrototype layoutSetPrototype,
+			ObjectDefinition objectDefinition)
 		throws PortalException {
+
+		long groupId = layoutSetPrototype.getGroupId();
 
 		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
 			"L_DSR_CONTRIBUTOR", companyId);
@@ -129,16 +132,22 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			role = _roleLocalService.addRole(
 				"L_DSR_SELLER", user.getUserId(), null, 0, "DSR Seller", null,
 				null, RoleConstants.TYPE_REGULAR, null, null);
-
-			_resourcePermissionLocalService.addResourcePermission(
-				companyId, PortletKeys.PORTAL, ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(companyId), role.getRoleId(),
-				ActionKeys.VIEW_CONTROL_PANEL);
-			_resourcePermissionLocalService.addResourcePermission(
-				role.getCompanyId(), objectDefinition.getResourceName(),
-				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-				role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
 		}
+
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, PortletKeys.PORTAL, ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(companyId), role.getRoleId(),
+			ActionKeys.VIEW_CONTROL_PANEL);
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+		_resourcePermissionLocalService.setResourcePermissions(
+			companyId, LayoutSetPrototype.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(
+				layoutSetPrototype.getLayoutSetPrototypeId()),
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
 
 		Map<String, String[]> permissionsMap = HashMapBuilder.put(
 			RoleConstants.OWNER,
@@ -155,6 +164,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
 				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
 			}
+		).put(
+			"DSR Seller", new String[] {ActionKeys.VIEW}
 		).build();
 
 		for (Role currentRole :

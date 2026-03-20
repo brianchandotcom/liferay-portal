@@ -4,11 +4,13 @@
  */
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
-import {dateUtils} from 'frontend-js-web';
 import React from 'react';
 
-import {ActionItem, DesignLibraryItem} from '../types';
-import {FromNowDateTimeRenderer, LinkRenderer} from './cell_renderers';
+import {
+	FromNowDateTimeRenderer,
+	LinkRenderer,
+	createSetItemComponentProps,
+} from './cell_renderers';
 import {TableCellContentType} from './constants';
 
 export default function DesignLibraryAdminFDSPropsTransformer(
@@ -90,24 +92,7 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 					symbol: '',
 					title: 'name',
 				},
-				setItemComponentProps: ({
-					item,
-					props,
-				}: {
-					item: DesignLibraryItem;
-					props: {actions: ActionItem[]};
-				}) => {
-					return {
-						...props,
-						description: dateUtils.fromNow(
-							new Date(item.dateModified)
-						),
-						href: props.actions.find(
-							(action) => action.data.id === 'edit'
-						)?.href,
-						symbol: 'books',
-					};
-				},
+				setItemComponentProps: createSetItemComponentProps('books'),
 				thumbnail: 'cards2',
 			},
 		],

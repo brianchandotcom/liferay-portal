@@ -5,3 +5,5 @@
 
 export {default as FromNowDateTimeRenderer} from './FromNowDateTimeRenderer';
 export {default as LinkRenderer} from './LinkRenderer';
+
+export {default as createSetItemComponentProps} from './createSetItemComponentProps';

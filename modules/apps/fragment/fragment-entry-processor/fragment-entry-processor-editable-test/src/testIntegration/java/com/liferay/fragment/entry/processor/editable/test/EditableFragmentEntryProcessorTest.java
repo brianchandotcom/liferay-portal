@@ -6,6 +6,10 @@
 package com.liferay.fragment.entry.processor.editable.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.util.DLURLHelper;
@@ -69,6 +73,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -1195,6 +1200,116 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(
 			objectDefinition.getName(),
 			element.attr("data-analytics-object-definition-name"));
+	}
+
+	@FeatureFlag("LPD-39437")
+	@Test
+	@TestInfo("LPD-82531")
+	public void testFragmentEntryProcessorEditableAssertAnalyticsAttributesWithMappedObjectEntryWithAssetCategoriesAndAssetTags()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_editable_text.html");
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						"LongText", "Clob", true, true, null,
+						RandomTestUtil.randomString(), "content", false)),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		AssetTag assetTag1 = AssetTestUtil.addTag(_group.getGroupId());
+		AssetTag assetTag2 = AssetTestUtil.addTag(_group.getGroupId());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"content", "contentValue"
+			).build(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId(),
+				new long[] {
+					assetCategory1.getCategoryId(),
+					assetCategory2.getCategoryId()
+				},
+				new String[] {assetTag1.getName(), assetTag2.getName()}));
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				fragmentEntry.getExternalReferenceCode(), null,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				TestPropsValues.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				StringPool.BLANK,
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"editable_text",
+						JSONUtil.put(
+							"classNameId",
+							_portal.getClassNameId(
+								objectDefinition.getClassName())
+						).put(
+							"classPK", objectEntry.getPrimaryKey()
+						).put(
+							"defaultValue", RandomTestUtil.randomString()
+						).put(
+							"fieldId", "content"
+						))
+				).toString(),
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext());
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_text", fragmentEntryLink,
+			LocaleUtil.US, FragmentEntryLinkConstants.VIEW);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			element.attr("data-analytics-object-definition-categories"));
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			assetCategory1.getCategoryId(), jsonObject.getLong("id"));
+		Assert.assertEquals(
+			assetCategory1.getTitle(LocaleUtil.US),
+			jsonObject.getString("name"));
+
+		jsonObject = jsonArray.getJSONObject(1);
+
+		Assert.assertEquals(
+			assetCategory2.getCategoryId(), jsonObject.getLong("id"));
+		Assert.assertEquals(
+			assetCategory2.getTitle(LocaleUtil.US),
+			jsonObject.getString("name"));
+
+		jsonArray = JSONFactoryUtil.createJSONArray(
+			element.attr("data-analytics-object-definition-tags"));
+
+		jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(assetTag1.getTagId(), jsonObject.getLong("id"));
+		Assert.assertEquals(assetTag1.getName(), jsonObject.getString("name"));
+
+		jsonObject = jsonArray.getJSONObject(1);
+
+		Assert.assertEquals(assetTag2.getTagId(), jsonObject.getLong("id"));
+		Assert.assertEquals(assetTag2.getName(), jsonObject.getString("name"));
 	}
 
 	@FeatureFlag("LPD-39437")

@@ -190,9 +190,8 @@ generateBranchValidationScript {
 	}
 
 	doLast {
-		println
-		println "Script generated at: ${outputs.files.singleFile}"
-		println
+		println ""
+		println "Script generated at: file://${outputs.files.singleFile}"
 	}
 }
 

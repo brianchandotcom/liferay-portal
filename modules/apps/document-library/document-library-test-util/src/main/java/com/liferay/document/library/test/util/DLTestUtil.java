@@ -102,9 +102,9 @@ public class DLTestUtil {
 	}
 
 	public static byte[] randomTextFileBytes(int length) {
-		return StringUtil.randomId(
-			length
-		).getBytes();
+		String string = StringUtil.randomId(length);
+
+		return string.getBytes();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DLTestUtil.class);

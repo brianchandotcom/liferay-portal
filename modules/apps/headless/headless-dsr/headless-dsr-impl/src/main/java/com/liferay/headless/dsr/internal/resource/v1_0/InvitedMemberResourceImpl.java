@@ -51,7 +51,7 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _checkPermissionAndGetGroup(roomId, ActionKeys.UPDATE);
+		Group group = _getGroup(roomId);
 		Ticket ticket = _ticketLocalService.getTicket(invitedMemberId);
 
 		if (!Objects.equals(Group.class.getName(), ticket.getClassName()) ||
@@ -73,7 +73,7 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _checkPermissionAndGetGroup(roomId, ActionKeys.VIEW);
+		Group group = _getGroup(roomId);
 
 		return Page.of(
 			transform(
@@ -83,13 +83,11 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 				this::_toInvitedMember));
 	}
 
-	private Group _checkPermissionAndGetGroup(long roomId, String actionId)
-		throws Exception {
-
+	private Group _getGroup(long roomId) throws Exception {
 		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
 
 		_objectEntryService.checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), roomId, actionId);
+			objectEntry.getObjectDefinitionId(), roomId, ActionKeys.UPDATE);
 
 		Map<String, Serializable> values = objectEntry.getValues();
 

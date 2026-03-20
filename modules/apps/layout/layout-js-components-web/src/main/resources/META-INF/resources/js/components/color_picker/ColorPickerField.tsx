@@ -11,8 +11,9 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
-import {Color, ColorCategoryMap} from '../../types/ColorPicker';
+import {Color, ColorCategoryMap, Field} from '../../types/ColorPicker';
 import ColorPalette from './ColorPalette';
+import TokenButton from './TokenButton';
 
 interface Props
 	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
@@ -20,6 +21,7 @@ interface Props
 	colors: string[];
 	colorsFromStylebook: ColorCategoryMap;
 	disabled?: boolean;
+	field: Field;
 	name?: string;
 	onActiveChange: InternalDispatch<boolean>;
 	onBlurInput: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -35,6 +37,8 @@ interface Props
 	}) => void;
 	onColorChangeEditor: (value: string) => void;
 	onColorsChange: (value: Array<string>) => void;
+	tokenLabel: string | null;
+	tokenValue: string;
 	value: string;
 }
 
@@ -43,6 +47,7 @@ export default function ColorPickerField({
 	colors,
 	colorsFromStylebook,
 	disabled,
+	field,
 	name,
 	onActiveChange,
 	onBlurInput,
@@ -50,6 +55,8 @@ export default function ColorPickerField({
 	onClickColorPalette,
 	onColorChangeEditor: externalOnColorChangeEditor,
 	onColorsChange,
+	tokenLabel,
+	tokenValue,
 	value,
 	...otherProps
 }: Props) {
@@ -72,6 +79,7 @@ export default function ColorPickerField({
 	} = useColorPicker({
 		active,
 		colors,
+		externalOnBlur: otherProps.onBlur,
 		onActiveChange,
 		onChange,
 		onColorsChange,
@@ -81,33 +89,43 @@ export default function ColorPickerField({
 	const [tab, setTab] = useState<'custom' | 'values'>('custom');
 
 	const dropdownContainerRef = useRef<HTMLDivElement>(null);
-	const splotchRef = useRef<HTMLButtonElement>(null);
 	const triggerElementRef = useRef<HTMLDivElement>(null);
+	const triggerRef = useRef<HTMLButtonElement>(null);
 
 	return (
 		<FocusScope arrowKeysUpDown={false}>
-			<div className="clay-color-picker">
-				<ClayColorPicker.Field
-					ariaLabels={{
-						selectColor: Liferay.Language.get('select-a-color'),
-						selectionIs: sub(
-							Liferay.Language.get('color-selection-is-x'),
-							color
-						),
-					}}
-					disabled={disabled}
-					name={name}
-					onHexBlur={onBlurInput}
-					onHexChange={onHexChange}
-					onSplotchClick={onSplotchClick}
-					setValue={setValue}
-					small
-					splotchRef={splotchRef}
-					triggerElementRef={triggerElementRef}
-					value={internalValue}
-					valueInputRef={valueInputRef}
-					{...otherProps}
-				/>
+			<div className="clay-color-picker w-100" ref={triggerElementRef}>
+				{tokenLabel ? (
+					<TokenButton
+						inherited={!value && field.inherited}
+						label={tokenLabel}
+						onClick={onSplotchClick}
+						small
+						triggerRef={triggerRef}
+						value={tokenValue}
+					/>
+				) : (
+					<ClayColorPicker.Field
+						ariaLabels={{
+							selectColor: Liferay.Language.get('select-a-color'),
+							selectionIs: sub(
+								Liferay.Language.get('color-selection-is-x'),
+								color
+							),
+						}}
+						disabled={disabled}
+						name={name}
+						onHexBlur={onBlurInput}
+						onHexChange={onHexChange}
+						onSplotchClick={onSplotchClick}
+						setValue={setValue}
+						small
+						splotchRef={triggerRef}
+						value={internalValue}
+						valueInputRef={valueInputRef}
+						{...otherProps}
+					/>
+				)}
 
 				<ClayDropDown.Menu
 					active={internalActive}
@@ -119,13 +137,15 @@ export default function ColorPickerField({
 					deps={[internalActive]}
 					onActiveChange={setInternalActive}
 					ref={dropdownContainerRef}
-					triggerRef={splotchRef}
+					triggerRef={triggerRef}
 				>
-					<ClayButton.Group className="c-mb-3 c-mx-3">
+					<ClayButton.Group className="c-mb-3 c-px-3" role="tablist">
 						<ClayButton
 							aria-controls="tabpanel1"
 							aria-selected={tab === 'custom'}
-							className={classNames({active: tab === 'custom'})}
+							className={classNames({
+								active: tab === 'custom',
+							})}
 							displayType="secondary"
 							onClick={() => setTab('custom')}
 							role="tab"
@@ -137,7 +157,9 @@ export default function ColorPickerField({
 						<ClayButton
 							aria-controls="tabpanel2"
 							aria-selected={tab === 'values'}
-							className={classNames({active: tab === 'values'})}
+							className={classNames({
+								active: tab === 'values',
+							})}
 							displayType="secondary"
 							onClick={() => setTab('values')}
 							role="tab"
@@ -147,53 +169,48 @@ export default function ColorPickerField({
 						</ClayButton>
 					</ClayButton.Group>
 
-					{customEditorActive ? (
-						<>
-							<div
-								className={classNames('c-px-3', {
-									'd-none': tab !== 'custom',
-								})}
-								id="tabpanel1"
-								role="tabpanel"
-							>
-								<ClayColorPicker.Editor
-									color={color}
-									colors={customColors}
-									hex={state.hex}
-									hue={state.hue}
-									internalToHex={internalToHex}
-									onChange={onChangeEditor}
-									onColorChange={(color) => {
-										onColorChangeEditor(color);
-										externalOnColorChangeEditor(
-											color.toHexString().toUpperCase()
-										);
-									}}
-									onHexBlur={externalOnColorChangeEditor}
-									onHexChange={(hex: string) =>
-										dispatch({hex})
-									}
-									onHueChange={(hue: number) =>
-										dispatch({hue})
-									}
-								/>
-							</div>
-							<div
-								className={classNames({
-									'd-none': tab !== 'values',
-								})}
-								id="tabpanel2"
-								role="tabpanel"
-							>
-								<ColorPaletteTab
-									active={active}
-									colors={colorsFromStylebook}
-									onActiveChange={onActiveChange}
-									onValueChange={onClickColorPalette}
-								/>
-							</div>
-						</>
-					) : null}
+					<div
+						className={classNames('c-px-3', {
+							'd-none': tab !== 'custom',
+						})}
+						id="tabpanel1"
+						role="tabpanel"
+					>
+						{customEditorActive ? (
+							<ClayColorPicker.Editor
+								color={color}
+								colors={customColors}
+								hex={state.hex}
+								hue={state.hue}
+								internalToHex={internalToHex}
+								onChange={onChangeEditor}
+								onColorChange={(color) => {
+									onColorChangeEditor(color);
+									externalOnColorChangeEditor(
+										color.toHexString().toUpperCase()
+									);
+								}}
+								onHexBlur={externalOnColorChangeEditor}
+								onHexChange={(hex: string) => dispatch({hex})}
+								onHueChange={(hue: number) => dispatch({hue})}
+							/>
+						) : null}
+					</div>
+
+					<div
+						className={classNames({
+							'd-none': tab !== 'values',
+						})}
+						id="tabpanel2"
+						role="tabpanel"
+					>
+						<ColorPaletteTab
+							active={active}
+							colors={colorsFromStylebook}
+							onActiveChange={onActiveChange}
+							onValueChange={onClickColorPalette}
+						/>
+					</div>
 				</ClayDropDown.Menu>
 			</div>
 		</FocusScope>

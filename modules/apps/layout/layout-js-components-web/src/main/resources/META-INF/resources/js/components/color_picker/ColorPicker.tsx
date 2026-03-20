@@ -24,7 +24,6 @@ import {
 } from '../../contexts/StyleErrorsContext';
 import {Color, ColorCategoryMap, Field, Token} from '../../types/ColorPicker';
 import ColorPickerField from './ColorPickerField';
-import {DropdownColorPicker} from './DropdownColorPicker';
 import OldColorPicker from './OldColorPicker';
 import {parseColorValue} from './parseColorValue';
 
@@ -78,8 +77,6 @@ function ColorPicker({
 	const setStyleError = useSetStyleError();
 	const styleErrors = useStyleErrors();
 
-	const [activeDropdownColorPicker, setActiveDropdownColorPicker] =
-		useState(false);
 	const [activeColorPicker, setActiveColorPicker] = useState(false);
 	const [clearedValue, setClearedValue] = useState(false);
 	const [color, setColor] = usePropsFirst(
@@ -267,52 +264,38 @@ function ColorPicker({
 				className={classNames('layout__color-picker rounded', {
 					'custom': !tokenLabel,
 					'has-error': error.value,
-					'hovered': activeColorPicker || activeDropdownColorPicker,
+					'hovered': activeColorPicker,
 				})}
 			>
-				{tokenLabel ? (
-					<DropdownColorPicker
-						active={activeDropdownColorPicker}
-						colors={colors}
-						fieldLabel={showLabel ? null : field.label}
-						inherited={!value && field.inherited}
-						label={tokenLabel}
-						onSetActive={setActiveDropdownColorPicker}
-						onValueChange={({label, name, value}) =>
-							onSetValue({label, name, value})
+				<ColorPickerField
+					active={activeColorPicker}
+					colors={customColors}
+					colorsFromStylebook={colors}
+					field={field}
+					onActiveChange={setActiveColorPicker}
+					onBlurInput={onBlurInput}
+					onChange={onChangeInput}
+					onClickColorPalette={({label, name, value}) => {
+						onSetValue({label, name, value});
+
+						if (error.value) {
+							setError({
+								label: null,
+								value: null,
+							});
+
+							deleteStyleError(field.name);
 						}
-						small
-						triggerElementRef={dropdownColorPickerRef}
-						value={color || defaultTokenValue}
-					/>
-				) : (
-					<ColorPickerField
-						active={activeColorPicker}
-						colors={customColors}
-						colorsFromStylebook={colors}
-						onActiveChange={setActiveColorPicker}
-						onBlurInput={onBlurInput}
-						onChange={onChangeInput}
-						onClickColorPalette={({label, name, value}) => {
-							onSetValue({label, name, value});
-
-							if (error.value) {
-								setError({
-									label: null,
-									value: null,
-								});
-
-								deleteStyleError(field.name);
-							}
-						}}
-						onColorChangeEditor={(color: string) => {
-							debouncedOnValueSelect(field.name, color);
-						}}
-						onColorsChange={setCustomColors}
-						onKeyDown={onKeyDownInput}
-						value={error.value || normalizeHexColor(color)}
-					/>
-				)}
+					}}
+					onColorChangeEditor={(color: string) => {
+						debouncedOnValueSelect(field.name, color);
+					}}
+					onColorsChange={setCustomColors}
+					onKeyDown={onKeyDownInput}
+					tokenLabel={tokenLabel}
+					tokenValue={color || defaultTokenValue}
+					value={error.value || normalizeHexColor(color)}
+				/>
 
 				{tokenLabel && canDetachTokenValues && (
 					<ClayButtonWithIcon

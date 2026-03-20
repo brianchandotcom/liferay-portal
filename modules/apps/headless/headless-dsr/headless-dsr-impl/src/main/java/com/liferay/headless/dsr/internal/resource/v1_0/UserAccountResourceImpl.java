@@ -89,10 +89,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry = _checkPermissionAndGetObjectEntry(
-			roomId, ActionKeys.UPDATE);
-
-		Group group = _getGroup(objectEntry);
+		Group group = _getGroup(roomId);
 
 		LiveUsers.leaveGroup(
 			contextCompany.getCompanyId(), group.getGroupId(), userAccountId);
@@ -114,10 +111,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry = _checkPermissionAndGetObjectEntry(
-			roomId, ActionKeys.VIEW);
-
-		Group group = _getGroup(objectEntry);
+		Group group = _getGroup(roomId);
 
 		return Page.of(
 			null,
@@ -141,11 +135,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry = _checkPermissionAndGetObjectEntry(
-			roomId, ActionKeys.UPDATE);
-
 		User user = _userLocalService.getUser(userAccountId);
-		Group group = _getGroup(objectEntry);
+		Group group = _getGroup(roomId);
 
 		_userGroupRoleLocalService.deleteUserGroupRoles(
 			new long[] {user.getUserId()}, group.getGroupId());
@@ -184,8 +175,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new ValidationException("Email Address is null");
 		}
 
-		ObjectEntry objectEntry = _checkPermissionAndGetObjectEntry(
-			roomId, ActionKeys.UPDATE);
+		ObjectEntry objectEntry = _getObjectEntry(roomId);
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -321,22 +311,21 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		return ticket;
 	}
 
-	private ObjectEntry _checkPermissionAndGetObjectEntry(
-			long roomId, String actionId)
-		throws Exception {
+	private Group _getGroup(long roomId) throws Exception {
+		ObjectEntry objectEntry = _getObjectEntry(roomId);
 
-		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
-
-		_objectEntryService.checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), roomId, actionId);
-
-		return objectEntry;
-	}
-
-	private Group _getGroup(ObjectEntry objectEntry) throws Exception {
 		Map<String, Serializable> values = objectEntry.getValues();
 
 		return _groupService.getGroup(GetterUtil.getLong(values.get("siteId")));
+	}
+
+	private ObjectEntry _getObjectEntry(long roomId) throws Exception {
+		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
+
+		_objectEntryService.checkModelResourcePermission(
+			objectEntry.getObjectDefinitionId(), roomId, ActionKeys.UPDATE);
+
+		return objectEntry;
 	}
 
 	private void _initThemeDisplay(long groupId) throws Exception {

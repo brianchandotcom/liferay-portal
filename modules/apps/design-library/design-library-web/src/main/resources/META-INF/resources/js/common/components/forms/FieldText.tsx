@@ -8,12 +8,16 @@ import React from 'react';
 
 import FieldWrapper from './FieldWrapper';
 
-type ClayInputProps = {
+interface Props
+	extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
 	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;
+	errorMessage?: string;
 	insetAfter?: boolean;
 	insetBefore?: boolean;
+	label: string;
+	name: string;
 	sizing?: 'lg' | 'regular' | 'sm';
-} & React.InputHTMLAttributes<HTMLInputElement>;
+}
 
 export default function FieldText({
 	component = 'input',
@@ -26,14 +30,7 @@ export default function FieldText({
 	type = 'text',
 	value = '',
 	...restProps
-}: {
-	component?: 'textarea' | 'input';
-	errorMessage?: string;
-	label: string;
-	name: string;
-	required?: boolean;
-	value?: string;
-} & ClayInputProps) {
+}: Props) {
 	const fieldId = id ?? name;
 	const feedbackId = `feedback-${fieldId}`;
 

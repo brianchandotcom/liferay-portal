@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.cards;
 
+import com.liferay.frontend.data.set.view.FDSSchemaLabelFieldBuilder;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.cards.BaseCardsFDSView;
 import com.liferay.frontend.data.set.view.cards.FDSCardSchema;
@@ -58,27 +59,28 @@ public class ContentAndFileSectionsCardsFDSView extends BaseCardsFDSView {
 			fdsCardSchemaBuilderFactory.create();
 
 		return fdsCardSchemaBuilder.add(
-			"embedded.status.label",
-			HashMapBuilder.put(
-				"approved", "success"
-			).put(
-				"denied", "danger"
-			).put(
-				"draft", "secondary"
-			).put(
-				"expired", "danger"
-			).put(
-				"in-trash", "info"
-			).put(
-				"inactive", "secondary"
-			).put(
-				"incomplete", "warning"
-			).put(
-				"pending", "info"
-			).put(
-				"scheduled", "info"
-			).build(),
-			"embedded.status.label_i18n"
+			FDSSchemaLabelFieldBuilder.create(
+				"embedded.status.label",
+				HashMapBuilder.put(
+					"approved", "success"
+				).put(
+					"denied", "danger"
+				).put(
+					"draft", "secondary"
+				).put(
+					"expired", "danger"
+				).put(
+					"in-trash", "info"
+				).put(
+					"inactive", "secondary"
+				).put(
+					"incomplete", "warning"
+				).put(
+					"pending", "info"
+				).put(
+					"scheduled", "info"
+				).build(),
+				"embedded.status.label_i18n")
 		).build();
 	}
 

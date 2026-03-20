@@ -6,6 +6,7 @@
 package com.liferay.frontend.data.set.sample.web.internal.view;
 
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
+import com.liferay.frontend.data.set.view.FDSSchemaLabelFieldBuilder;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.cards.BaseCardsFDSView;
 import com.liferay.frontend.data.set.view.cards.FDSCardSchema;
@@ -38,13 +39,14 @@ public class AdvancedCardsFDSView extends BaseCardsFDSView {
 			_fdsCardSchemaBuilderFactory.create();
 
 		return fdsCardSchemaBuilder.add(
-			"status.label",
-			HashMapBuilder.put(
-				"approved", "success"
-			).put(
-				"expired", "danger"
-			).build(),
-			"status.label_i18n"
+			FDSSchemaLabelFieldBuilder.create(
+				"status.label",
+				HashMapBuilder.put(
+					"approved", "success"
+				).put(
+					"expired", "danger"
+				).build(),
+				"status.label_i18n")
 		).build();
 	}
 

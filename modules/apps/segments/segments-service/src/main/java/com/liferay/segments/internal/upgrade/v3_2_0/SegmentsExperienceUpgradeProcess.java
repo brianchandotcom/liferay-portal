@@ -40,10 +40,10 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 			layoutPageTemplateStructureColumnName = "classPK";
 		}
 
-		boolean hasLayoutPageTemplateStructureRelCTCollectionId = hasColumn(
-			"LayoutPageTemplateStructureRel", "ctCollectionId");
 		boolean hasFragmentEntryLinkCTCollectionId = hasColumn(
 			"FragmentEntryLink", "ctCollectionId");
+		boolean hasLayoutPageTemplateStructureRelCTCollectionId = hasColumn(
+			"LayoutPageTemplateStructureRel", "ctCollectionId");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select * from SegmentsExperience");
@@ -64,7 +64,7 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 					connection,
 					_getUpdateFragmentEntryLinkSQL(
 						fragmentEntryLinkColumnName,
-						hasLayoutPageTemplateStructureRelCTCollectionId));
+						hasFragmentEntryLinkCTCollectionId));
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

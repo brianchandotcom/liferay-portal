@@ -1,0 +1,10 @@
+{
+	"options": {
+		"auto_approve": false,
+		"parallelism": 10
+	},
+	"variables": {
+		"deployment_name": "liferay-aws-test",
+		"region": "us-east-1"
+	}
+}

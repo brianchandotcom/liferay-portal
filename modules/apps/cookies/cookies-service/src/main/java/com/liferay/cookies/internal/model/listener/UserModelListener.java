@@ -5,7 +5,7 @@
 
 package com.liferay.cookies.internal.model.listener;
 
-import com.liferay.cookies.service.ConsentPreferenceService;
+import com.liferay.cookies.service.ConsentPreferenceLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -21,10 +21,11 @@ import org.osgi.service.component.annotations.Reference;
 public class UserModelListener extends BaseModelListener<User> {
 
 	public void onBeforeRemove(User user) throws ModelListenerException {
-		_consentPreferenceService.deleteConsentPreferences(user.getUserId());
+		_consentPreferenceLocalService.deleteConsentPreferences(
+			user.getUserId());
 	}
 
 	@Reference
-	private ConsentPreferenceService _consentPreferenceService;
+	private ConsentPreferenceLocalService _consentPreferenceLocalService;
 
 }

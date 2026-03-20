@@ -38,6 +38,7 @@ import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
 import com.liferay.frontend.data.set.sort.FDSSorts;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
+import com.liferay.frontend.data.set.view.FDSSchemaLabelFieldBuilder;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.FDSViewContextContributor;
 import com.liferay.frontend.data.set.view.cards.BaseCardsFDSView;
@@ -1373,15 +1374,17 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					new FDSCardSchemaBuilderImpl();
 
 				return fdsCardSchemaBuilder.add(
-					DISPLAY_TYPE_KEYS[0], DISPLAY_TYPE_VALUES[0]
+					FDSSchemaLabelFieldBuilder.create(
+						DISPLAY_TYPE_KEYS[0], DISPLAY_TYPE_VALUES[0])
 				).add(
-					DISPLAY_TYPE_KEYS[1],
-					HashMapBuilder.put(
-						DISPLAY_TYPE_KEYS[2], DISPLAY_TYPE_VALUES[1]
-					).put(
-						DISPLAY_TYPE_KEYS[3], DISPLAY_TYPE_VALUES[2]
-					).build(),
-					DISPLAY_TYPE_VALUES[3]
+					FDSSchemaLabelFieldBuilder.create(
+						DISPLAY_TYPE_KEYS[1],
+						HashMapBuilder.put(
+							DISPLAY_TYPE_KEYS[2], DISPLAY_TYPE_VALUES[1]
+						).put(
+							DISPLAY_TYPE_KEYS[3], DISPLAY_TYPE_VALUES[2]
+						).build(),
+						DISPLAY_TYPE_VALUES[3])
 				).build();
 			}
 

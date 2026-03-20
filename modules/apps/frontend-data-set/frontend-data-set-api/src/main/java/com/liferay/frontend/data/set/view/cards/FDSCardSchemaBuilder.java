@@ -7,8 +7,6 @@ package com.liferay.frontend.data.set.view.cards;
 
 import com.liferay.frontend.data.set.view.FDSSchemaLabelField;
 
-import java.util.Map;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -18,12 +16,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FDSCardSchemaBuilder {
 
 	public FDSCardSchemaBuilder add(FDSSchemaLabelField fdsSchemaLabelField);
-
-	public FDSCardSchemaBuilder add(
-		String displayTypeKey, Map<String, String> displayTypeValues,
-		String value);
-
-	public FDSCardSchemaBuilder add(String displayType, String value);
 
 	public FDSCardSchema build();
 

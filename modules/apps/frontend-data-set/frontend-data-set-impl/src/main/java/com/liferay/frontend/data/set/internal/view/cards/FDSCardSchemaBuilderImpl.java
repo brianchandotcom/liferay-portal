@@ -11,7 +11,6 @@ import com.liferay.frontend.data.set.view.cards.FDSCardSchemaBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Mikel Lorza
@@ -20,34 +19,6 @@ public class FDSCardSchemaBuilderImpl implements FDSCardSchemaBuilder {
 
 	@Override
 	public FDSCardSchemaBuilder add(FDSSchemaLabelField fdsSchemaLabelField) {
-		_fdsSchemaLabelFieldsList.add(fdsSchemaLabelField);
-
-		return this;
-	}
-
-	@Override
-	public FDSCardSchemaBuilder add(
-		String displayTypeKey, Map<String, String> displayTypeValues,
-		String value) {
-
-		FDSSchemaLabelField fdsSchemaLabelField = new FDSSchemaLabelField();
-
-		fdsSchemaLabelField.setDisplayTypeKey(displayTypeKey);
-		fdsSchemaLabelField.setDisplayTypeValues(displayTypeValues);
-		fdsSchemaLabelField.setValue(value);
-
-		_fdsSchemaLabelFieldsList.add(fdsSchemaLabelField);
-
-		return this;
-	}
-
-	@Override
-	public FDSCardSchemaBuilder add(String displayType, String value) {
-		FDSSchemaLabelField fdsSchemaLabelField = new FDSSchemaLabelField();
-
-		fdsSchemaLabelField.setDisplayType(displayType);
-		fdsSchemaLabelField.setValue(value);
-
 		_fdsSchemaLabelFieldsList.add(fdsSchemaLabelField);
 
 		return this;

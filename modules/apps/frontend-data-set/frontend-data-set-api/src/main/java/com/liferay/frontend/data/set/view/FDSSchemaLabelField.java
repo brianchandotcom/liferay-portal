@@ -31,30 +31,20 @@ public class FDSSchemaLabelField {
 		return _value;
 	}
 
-	public FDSSchemaLabelField setDisplayType(String displayType) {
+	public void setDisplayType(String displayType) {
 		_displayType = displayType;
-
-		return this;
 	}
 
-	public FDSSchemaLabelField setDisplayTypeKey(String displayTypeKey) {
+	public void setDisplayTypeKey(String displayTypeKey) {
 		_displayTypeKey = displayTypeKey;
-
-		return this;
 	}
 
-	public FDSSchemaLabelField setDisplayTypeValues(
-		Map<String, String> displayTypeValues) {
-
+	public void setDisplayTypeValues(Map<String, String> displayTypeValues) {
 		_displayTypeValues = displayTypeValues;
-
-		return this;
 	}
 
-	public FDSSchemaLabelField setValue(String value) {
+	public void setValue(String value) {
 		_value = value;
-
-		return this;
 	}
 
 	public JSONObject toJSONObject() {

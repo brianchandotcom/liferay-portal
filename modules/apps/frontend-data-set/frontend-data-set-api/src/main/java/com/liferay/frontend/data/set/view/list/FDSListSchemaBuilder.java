@@ -7,8 +7,6 @@ package com.liferay.frontend.data.set.view.list;
 
 import com.liferay.frontend.data.set.view.FDSSchemaLabelField;
 
-import java.util.Map;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -18,12 +16,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FDSListSchemaBuilder {
 
 	public FDSListSchemaBuilder add(FDSSchemaLabelField fdsSchemaLabelField);
-
-	public FDSListSchemaBuilder add(
-		String displayTypeKey, Map<String, String> displayTypeValues,
-		String value);
-
-	public FDSListSchemaBuilder add(String displayType, String value);
 
 	public FDSListSchema build();
 

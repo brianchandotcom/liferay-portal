@@ -148,7 +148,10 @@ public class PortletImportControllerImpl implements PortletImportController {
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if (portletDataHandler.isBatch()) {
+		if (portletDataHandler.isBatch() ||
+			(portlet.isPreferencesUniquePerLayout() &&
+			 (portletDataContext.getPlid() == PortletKeys.PREFS_PLID_SHARED))) {
+
 			return;
 		}
 

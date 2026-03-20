@@ -244,6 +244,36 @@ public class SegmentsExperienceUpgradeProcessTest
 		_assertSegmentsExperiences();
 	}
 
+	@Test
+	public void testUpgradeWithoutCtCollectionIdColumns() throws Exception {
+		_deleteSegmentsExperiences();
+
+		try {
+			_db.alterColumnName(
+				_connection, "LayoutPageTemplateStructure", "plid",
+				"classPK LONG");
+			_db.alterTableDropColumn(
+				_connection, "FragmentEntryLink", "ctCollectionId");
+			_db.alterTableDropColumn(
+				_connection, "LayoutPageTemplateStructureRel",
+				"ctCollectionId");
+
+			runUpgrade();
+		}
+		finally {
+			_db.alterColumnName(
+				_connection, "LayoutPageTemplateStructure", "classPK",
+				"plid LONG");
+			_db.alterTableAddColumn(
+				_connection, "FragmentEntryLink", "ctCollectionId", "LONG");
+			_db.alterTableAddColumn(
+				_connection, "LayoutPageTemplateStructureRel", "ctCollectionId",
+				"LONG");
+		}
+
+		_assertSegmentsExperiences();
+	}
+
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return SegmentsTestUtil.addSegmentsExperience(

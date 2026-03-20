@@ -17,6 +17,7 @@ import com.liferay.petra.function.UnsafeFunction;
 	import com.liferay.portal.vulcan.util.TransformUtil;
 </#if>
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1232,6 +1233,17 @@ public abstract class Base${schemaName}ResourceImpl
 				public Locale getPreferredLocale() {
 					return LocaleUtil.fromLanguageId(languageId);
 				}
+
+				<#if generateBatch && freeMarkerTool.isVersionCompatible(configYAML, 15)>
+					@Override
+					public boolean isAcceptAllLanguages() {
+						if (ExportImportThreadLocal.isExportInProcess()) {
+							return true;
+						}
+
+						return AcceptLanguage.super.isAcceptAllLanguages();
+					}
+				</#if>
 
 			};
 		}

@@ -230,12 +230,11 @@ public class ProvisioningRestController extends BaseRestController {
 	public LicenseKey postLicenseKeyTypeFree(@RequestBody String json)
 		throws Exception {
 
-		LicenseKey licenseKey = LicenseKey.toDTO(json);
-
 		LicenseKeyResource licenseKeyResource =
 			_provisioningService.getLicenseKeyResource();
 
-		licenseKey = licenseKeyResource.postLicenseKeyTypeFree(licenseKey);
+		LicenseKey licenseKey = licenseKeyResource.postLicenseKeyTypeFree(
+			LicenseKey.toDTO(json));
 
 		_marketplaceService.completeOrder(
 			GetterUtil.getLong(licenseKey.getAssetReceiptLicenseUuid()),

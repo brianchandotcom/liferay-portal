@@ -732,6 +732,8 @@ public class MarketplaceService extends BaseService {
 			int paymentStatus)
 		throws Exception {
 
+		OrderResource orderResource = getOrderResource();
+
 		Order order = new Order();
 
 		if (_log.isInfoEnabled()) {
@@ -747,8 +749,6 @@ public class MarketplaceService extends BaseService {
 		order.setCustomFields(() -> customFields);
 		order.setOrderStatus(() -> orderStatus);
 		order.setPaymentStatus(() -> paymentStatus);
-
-		OrderResource orderResource = getOrderResource();
 
 		orderResource.patchOrder(orderId, order);
 	}

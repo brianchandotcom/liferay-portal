@@ -251,7 +251,6 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 			_repositoryFactory.createLocalRepository(repositoryId);
 
 		checkRepository(repositoryId);
-		checkRepositoryAccess(repositoryId);
 
 		return localRepository;
 	}

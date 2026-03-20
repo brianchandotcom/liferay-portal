@@ -120,7 +120,10 @@ resource "google_gke_hub_membership" "membership" {
 	authority {
     	issuer = "https://container.googleapis.com/v1/${google_container_cluster.primary.id}"
   	}
-	depends_on=[google_container_cluster.primary]
+	depends_on=[
+		google_container_cluster.primary,
+		google_container_node_pool.general_purpose,
+	]
 	endpoint {
 		gke_cluster {
 			resource_link="//container.googleapis.com/${google_container_cluster.primary.id}"

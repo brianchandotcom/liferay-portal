@@ -207,27 +207,7 @@ public class SegmentsExperienceUpgradeProcessTest
 
 		try {
 			_db.alterTableDropColumn(
-				_connection, "FragmentEntryLink", "ctCollectionId");
-
-			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
-
-			runUpgrade();
-		}
-		finally {
-			_db.alterTableAddColumn(
-				_connection, "FragmentEntryLink", "ctCollectionId", "LONG");
-
-			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
-		}
-
-		_assertSegmentsExperiences();
-	}
-
-	@Test
-	public void testUpgradeWithoutCtCollectionIdColumn() throws Exception {
-		_deleteSegmentsExperiences();
-
-		try {
+				_connection, "FragmentEntryLink", "segmentsExperienceId");
 			_db.alterTableDropColumn(
 				_connection, "LayoutPageTemplateStructureRel",
 				"ctCollectionId");
@@ -237,6 +217,9 @@ public class SegmentsExperienceUpgradeProcessTest
 			runUpgrade();
 		}
 		finally {
+			_db.alterTableAddColumn(
+					_connection, "FragmentEntryLink", "segmentsExperienceId",
+					"LONG");
 			_db.alterTableAddColumn(
 				_connection, "LayoutPageTemplateStructureRel", "ctCollectionId",
 				"LONG");

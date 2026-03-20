@@ -41,7 +41,7 @@ const accountMembershipConfig: DataDrivenConfig = [
 		items: [
 			{className: 'col-12', icon: 'heart', key: 'customerSince'},
 			{className: 'col-12', key: 'lastActivityDate'},
-			{className: 'col-12', key: 'createDate'}
+			{className: 'col-12', key: 'createdDate'}
 		],
 		title: Liferay.Language.get('account-relationship-details')
 	},
@@ -55,7 +55,7 @@ const accountMembershipConfig: DataDrivenConfig = [
 	}
 ];
 
-const dateKeys = ['createDate', 'customerSince', 'lastActivityDate'];
+const dateKeys = ['createdDate', 'lastActivityDate'];
 
 interface IAccountMembershipProps {
 	accountData?: Map<string, any>;
@@ -67,7 +67,7 @@ const ACCOUNT_MEMBERSHIP_LABEL_MAP: Record<string, string> = {
 	accountType: Liferay.Language.get('account-type'),
 	annualRevenue: Liferay.Language.get('annual-revenue'),
 	country: Liferay.Language.get('country'),
-	createDate: Liferay.Language.get('created-date'),
+	createdDate: Liferay.Language.get('created-date'),
 	currencyCode: Liferay.Language.get('currency-code'),
 	customerSince: Liferay.Language.get('customer-since'),
 	id: 'accountId',
@@ -85,7 +85,7 @@ const AccountMembership: React.FC<IAccountMembershipProps> = ({
 	const getValue = (key: string): string | undefined => {
 		const data = accountData?.get(key);
 
-		if (data === undefined || data === null) {
+		if (!data) {
 			return undefined;
 		}
 

@@ -401,7 +401,7 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testSmoke() throws Exception {
+	public void testMoveFileEntryToTrashAndDelete() throws Exception {
 		Store originalStore = ReflectionTestUtil.getFieldValue(
 			DLStoreImpl.class, "_wrappedStore");
 

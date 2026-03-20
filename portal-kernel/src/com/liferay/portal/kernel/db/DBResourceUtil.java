@@ -102,13 +102,7 @@ public class DBResourceUtil {
 	public static Map<String, String[]> getModuleTablesPrimaryKeyColumnNames(
 		Bundle bundle) {
 
-		String sql = getModuleTablesSQL(bundle);
-
-		if (sql == null) {
-			return Collections.emptyMap();
-		}
-
-		return _getTablesPrimaryKeyColumnNames(sql);
+		return _getTablesPrimaryKeyColumnNames(getModuleTablesSQL(bundle));
 	}
 
 	public static String getModuleTablesSQL(Bundle bundle) {
@@ -288,6 +282,10 @@ public class DBResourceUtil {
 
 	private static Map<String, String[]> _getTablesPrimaryKeyColumnNames(
 		String sql) {
+
+		if (sql == null) {
+			return Collections.emptyMap();
+		}
 
 		return HashMapBuilder.putAll(
 			_getTablesPrimaryKeyColumnNames(_composedPrimaryKeyPattern, sql)

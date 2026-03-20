@@ -2574,11 +2574,11 @@ public class BatchEnginePortletDataHandlerTest {
 					importedObjectEntry.getValues(),
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER));
 
+			String content = StringUtil.read(dlFileEntry.getContentStream());
+
 			Assert.assertArrayEquals(
 				_OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER,
-				StringUtil.read(
-					dlFileEntry.getContentStream()
-				).getBytes());
+				content.getBytes());
 		}
 	}
 

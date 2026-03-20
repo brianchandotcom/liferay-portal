@@ -36,11 +36,9 @@ test(
 		page,
 		siteSettingsLocalizationPage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
 
 		await localizationInstanceSettingsPage.goto('Language');
 

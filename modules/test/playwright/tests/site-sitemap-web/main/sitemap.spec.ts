@@ -48,14 +48,12 @@ test(
 		tag: '@LPD-72680',
 	},
 	async ({apiHelpers, instanceSettingsPage, page}) => {
-		const guestSite = await apiHelpers.headlessSite.getSiteByERC('L_GUEST');
+		const guestSite = await apiHelpers.headlessAdminSite.getSite('L_GUEST');
 
-		const childSite = await apiHelpers.headlessSite.createSite({
+		const childSite = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
-			parentSiteKey: guestSite.name,
+			parentSiteExternalReferenceCode: guestSite.externalReferenceCode,
 		});
-
-		apiHelpers.data.push({id: childSite.id, type: 'site'});
 
 		await instanceSettingsPage.goToInstanceSetting('SEO', 'XML Sitemap');
 

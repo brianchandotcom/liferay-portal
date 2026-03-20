@@ -5,7 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {sitesPageTest} from '../../../fixtures/sitesPageTest';
 import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
@@ -15,7 +15,7 @@ import {selectSiteInitializerPagesTest} from './fixtures/selectSiteInitializerPa
 import {sitesAdminPagesTest} from './fixtures/sitesAdminPagesTest';
 
 const test = mergeTests(
-	apiHelpersTest,
+	dataApiHelpersTest,
 	loginTest(),
 	selectSiteInitializerPagesTest,
 	sitesAdminPagesTest,
@@ -173,52 +173,37 @@ test('Ensure that, using Keyboard Navigation, it is possible to access the back 
 	page,
 	sitesAdminPage,
 }) => {
-	let site: Site;
+	await sitesAdminPage.goto();
 
-	try {
-		await sitesAdminPage.goto();
+	await page.getByRole('link', {name: 'Add Site'}).click();
 
-		await page.getByRole('link', {name: 'Add Site'}).click();
+	await page.waitForTimeout(300);
 
-		await page.waitForTimeout(300);
+	await page.getByRole('link', {name: 'Skip to Main Content'}).press('Tab');
 
-		await page
-			.getByRole('link', {name: 'Skip to Main Content'})
-			.press('Tab');
+	await expect(page.getByRole('link', {name: 'Go to Sites'})).toBeFocused();
 
-		await expect(
-			page.getByRole('link', {name: 'Go to Sites'})
-		).toBeFocused();
+	await expect(
+		page.getByRole('tooltip').getByText('Go to Sites')
+	).toBeVisible();
 
-		await expect(
-			page.getByRole('tooltip').getByText('Go to Sites')
-		).toBeVisible();
+	const site = await apiHelpers.headlessAdminSite.postSite({
+		name: getRandomString(),
+	});
 
-		site = await apiHelpers.headlessSite.createSite({
-			name: getRandomString(),
-		});
+	await page.getByRole('link', {name: 'Go to Sites'}).click();
 
-		await page.getByRole('link', {name: 'Go to Sites'}).click();
+	await page.getByRole('link', {name: site.name}).click();
 
-		await page.getByRole('link', {name: site.name}).click();
+	await page.waitForTimeout(300);
 
-		await page.waitForTimeout(300);
+	await page.getByRole('link', {name: 'Skip to Main Content'}).press('Tab');
 
-		await page
-			.getByRole('link', {name: 'Skip to Main Content'})
-			.press('Tab');
+	await expect(page.getByRole('link', {name: 'Go to Sites'})).toBeFocused();
 
-		await expect(
-			page.getByRole('link', {name: 'Go to Sites'})
-		).toBeFocused();
-
-		await expect(
-			page.getByRole('tooltip').getByText('Go to Sites')
-		).toBeVisible();
-	}
-	finally {
-		await apiHelpers.headlessSite.deleteSite(site.id);
-	}
+	await expect(
+		page.getByRole('tooltip').getByText('Go to Sites')
+	).toBeVisible();
 });
 
 test('Ensure that, using Keyboard Navigation, it is possible to access the back button of a Site child and the tooltip is Go to Site Name', async ({
@@ -226,62 +211,49 @@ test('Ensure that, using Keyboard Navigation, it is possible to access the back 
 	page,
 	sitesAdminPage,
 }) => {
-	const site: Site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
 
-	const childSite: Site = await apiHelpers.headlessSite.createSite({
+	const childSite = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
-		parentSiteKey: site.name,
+		parentSiteExternalReferenceCode: site.externalReferenceCode,
 	});
 
-	const grandChildSite: Site = await apiHelpers.headlessSite.createSite({
+	const grandChildSite = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
-		parentSiteKey: childSite.name,
+		parentSiteExternalReferenceCode: childSite.externalReferenceCode,
 	});
 
-	try {
-		await sitesAdminPage.goto();
+	await sitesAdminPage.goto();
 
-		await page.getByRole('link', {name: site.name}).click();
+	await page.getByRole('link', {name: site.name}).click();
 
-		await page.getByRole('link', {name: childSite.name}).click();
+	await page.getByRole('link', {name: childSite.name}).click();
 
-		await page.waitForTimeout(300);
+	await page.waitForTimeout(300);
 
-		await page
-			.getByRole('link', {name: 'Skip to Main Content'})
-			.press('Tab');
+	await page.getByRole('link', {name: 'Skip to Main Content'}).press('Tab');
 
-		await expect(
-			page.getByRole('link', {name: `Go to ${site.name}`})
-		).toBeFocused();
+	await expect(
+		page.getByRole('link', {name: `Go to ${site.name}`})
+	).toBeFocused();
 
-		await expect(
-			page.getByRole('tooltip').getByText(`Go to ${site.name}`)
-		).toBeVisible();
+	await expect(
+		page.getByRole('tooltip').getByText(`Go to ${site.name}`)
+	).toBeVisible();
 
-		await page.getByRole('link', {name: grandChildSite.name}).click();
+	await page.getByRole('link', {name: grandChildSite.name}).click();
 
-		await page.waitForTimeout(300);
+	await page.waitForTimeout(300);
 
-		await page
-			.getByRole('link', {name: 'Skip to Main Content'})
-			.press('Tab');
+	await page.getByRole('link', {name: 'Skip to Main Content'}).press('Tab');
 
-		await expect(
-			page.getByRole('link', {name: `Go to ${childSite.name}`})
-		).toBeFocused();
+	await expect(
+		page.getByRole('link', {name: `Go to ${childSite.name}`})
+	).toBeFocused();
 
-		await expect(
-			page.getByRole('tooltip').getByText(`Go to ${childSite.name}`)
-		).toBeVisible();
-	}
-	finally {
-		await apiHelpers.headlessSite.deleteSite(grandChildSite.id);
-
-		await apiHelpers.headlessSite.deleteSite(childSite.id);
-
-		await apiHelpers.headlessSite.deleteSite(site.id);
-	}
+	await expect(
+		page.getByRole('tooltip').getByText(`Go to ${childSite.name}`)
+	).toBeVisible();
 });

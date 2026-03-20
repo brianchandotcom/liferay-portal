@@ -1,0 +1,15 @@
+[
+	{
+		"allowedServiceSignatures": [
+			"com.liferay.headless.admin.taxonomy.internal.resource.v1_0.BaseTaxonomyCategoryResourceImpl#getTaxonomyVocabularyTaxonomyCategoriesPage",
+			"com.liferay.headless.admin.taxonomy.internal.resource.v1_0.BaseTaxonomyVocabularyResourceImpl#getSiteTaxonomyVocabularyByExternalReferenceCode",
+			"com.liferay.headless.delivery*"
+		],
+		"defaultSAPEntry": true,
+		"enabled": true,
+		"name": "CUSTOMER_PORTAL_RELEASE_NOTES",
+		"title_i18n": {
+			"en-US": "Customer Portal - Release Notes"
+		}
+	}
+]

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="Name" index-type="keyword" instance-id="7CaN2YES" name="Name63242962" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Description" index-type="text" instance-id="WYTz2lV7" name="Description75723801" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p data-local-id="8a8072d5-5b13-40eb-ad7d-0b7c2664ee64" data-pm-slice="1 1 [&quot;table&quot;,{&quot;displayMode&quot;:null,&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;align-start&quot;,&quot;localId&quot;:&quot;0ec97c20-7826-4619-b503-67d4a01d6023&quot;,&quot;width&quot;:1208,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,{&quot;localId&quot;:&quot;d8e3a599-326d-4dc7-92fd-cd57bdf585d5&quot;},&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:4,&quot;colwidth&quot;:[619],&quot;background&quot;:null,&quot;localId&quot;:&quot;b6f2c57a-e650-442f-8662-04da4d098115&quot;}]" data-prosemirror-content-type="node" data-prosemirror-node-block="true" data-prosemirror-node-name="paragraph">Users can customize the field layout to streamline the content creation experience.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Ticket" index-type="" instance-id="ChJjHrED" name="Ticket45014877" type="fieldset">
+		<dynamic-element field-reference="TicketURLTitle" index-type="keyword" instance-id="vQnTpsdC" name="TicketURLTitle57091701" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[LPD-50245 - Allow users to configure the experience of their structures for content creators]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="TicketURL" index-type="keyword" instance-id="yk4Z1NsJ" name="TicketURL01919120" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[https://liferay.atlassian.net/browse/LPD-50245]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element field-reference="MoreInfo" index-type="" instance-id="sw4I4KFZ" name="MoreInfo86076450" type="fieldset">
+		<dynamic-element field-reference="MoreInfoURLTitle" index-type="keyword" instance-id="914DAtxO" name="MoreInfoURLTitle39032355" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Content Structures]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="MoreInfoURL" index-type="keyword" instance-id="VbAD1B46" name="MoreInfoURL94290720" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[https://learn.liferay.com/w/dxp/content-management-system/liferay-headless-content-management-system/content-structures]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

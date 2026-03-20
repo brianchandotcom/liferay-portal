@@ -1,0 +1,11 @@
+{
+	"articleId": "WEB-CONTENT-RELEASE-NOTES-02",
+	"assetCategoryERCs": [
+		"T_FA_GENERALLY_AVAILABLE_AKA_OOTB",
+		"T_PC_PLATFORM",
+		"T_QR_2026Q1_RELEASE"
+	],
+	"ddmStructureKey": "RELEASE-NOTES-FEATURE-STRUCTURE",
+	"folder": "Release Notes",
+	"name": "Release Notes 1 - Feature"
+}

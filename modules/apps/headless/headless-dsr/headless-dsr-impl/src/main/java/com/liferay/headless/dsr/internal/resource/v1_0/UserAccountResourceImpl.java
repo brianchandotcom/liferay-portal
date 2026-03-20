@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -88,7 +90,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _getGroup(roomId);
+		ObjectEntry objectEntry =
+			_checkPermissionAndGetObjectEntry(roomId, ActionKeys.UPDATE);
+
+		Group group = _getGroup(objectEntry);
 
 		LiveUsers.leaveGroup(
 			contextCompany.getCompanyId(), group.getGroupId(), userAccountId);
@@ -110,7 +115,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _getGroup(roomId);
+		ObjectEntry objectEntry =
+			_checkPermissionAndGetObjectEntry(roomId, ActionKeys.VIEW);
+
+		Group group = _getGroup(objectEntry);
 
 		return Page.of(
 			null,
@@ -134,8 +142,11 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		ObjectEntry objectEntry =
+			_checkPermissionAndGetObjectEntry(roomId, ActionKeys.UPDATE);
+
 		User user = _userLocalService.getUser(userAccountId);
-		Group group = _getGroup(roomId);
+		Group group = _getGroup(objectEntry);
 
 		_userGroupRoleLocalService.deleteUserGroupRoles(
 			new long[] {user.getUserId()}, group.getGroupId());
@@ -174,7 +185,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new ValidationException("Email Address is null");
 		}
 
-		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
+		ObjectEntry objectEntry =
+			_checkPermissionAndGetObjectEntry(roomId, ActionKeys.UPDATE);
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -310,9 +322,18 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		return ticket;
 	}
 
-	private Group _getGroup(long roomId) throws Exception {
+	private ObjectEntry _checkPermissionAndGetObjectEntry(
+		long roomId, String actionId) throws PortalException {
+
 		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
 
+		_objectEntryService.checkModelResourcePermission(
+			objectEntry.getObjectDefinitionId(), roomId, actionId);
+
+		return objectEntry;
+	}
+
+	private Group _getGroup(ObjectEntry objectEntry) throws Exception {
 		Map<String, Serializable> values = objectEntry.getValues();
 
 		return _groupService.getGroup(GetterUtil.getLong(values.get("siteId")));

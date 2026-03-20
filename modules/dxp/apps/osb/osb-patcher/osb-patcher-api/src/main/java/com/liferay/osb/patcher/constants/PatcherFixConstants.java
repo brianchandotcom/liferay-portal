@@ -12,6 +12,8 @@ public class PatcherFixConstants {
 
 	public static final double KEY_VERSION_DEFAULT = 1.0;
 
+	public static final String LABEL_AUTO_FIX = "auto-fix";
+
 	public static final String LABEL_EXCLUDED = "excluded";
 
 	public static final String LABEL_FIX_PACK = "fix-pack";
@@ -29,6 +31,8 @@ public class PatcherFixConstants {
 
 	public static final int TYPE_ANY = -1;
 
+	public static final int TYPE_AUTO_FIX = 7;
+
 	public static final int TYPE_EXCLUDED = 3;
 
 	public static final int TYPE_FIX_PACK = 4;
@@ -44,7 +48,10 @@ public class PatcherFixConstants {
 	public static final int TYPE_WORKAROUND = 1;
 
 	public static String getTypeLabel(int type) {
-		if (type == TYPE_EXCLUDED) {
+		if (type == TYPE_AUTO_FIX) {
+			return LABEL_AUTO_FIX;
+		}
+		else if (type == TYPE_EXCLUDED) {
 			return LABEL_EXCLUDED;
 		}
 		else if (type == TYPE_FIX_PACK) {

@@ -7,6 +7,51 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React from 'react';
 
+export const ItemAfter = React.forwardRef<
+	HTMLSpanElement,
+	React.HTMLAttributes<HTMLSpanElement>
+>(({children, className, ...otherProps}, ref) => (
+	<span
+		{...otherProps}
+		className={classNames(className, 'badge-item badge-item-after')}
+		ref={ref}
+	>
+		{children}
+	</span>
+));
+
+ItemAfter.displayName = 'ClayBadgeItemAfter';
+
+export const ItemBefore = React.forwardRef<
+	HTMLSpanElement,
+	React.HTMLAttributes<HTMLSpanElement>
+>(({children, className, ...otherProps}, ref) => (
+	<span
+		{...otherProps}
+		className={classNames(className, 'badge-item badge-item-before')}
+		ref={ref}
+	>
+		{children}
+	</span>
+));
+
+ItemBefore.displayName = 'ClayBadgeItemBefore';
+
+export const ItemExpand = React.forwardRef<
+	HTMLSpanElement,
+	React.HTMLAttributes<HTMLSpanElement>
+>(({children, className, ...otherProps}, ref) => (
+	<span
+		{...otherProps}
+		className={classNames(className, 'badge-item badge-item-expand')}
+		ref={ref}
+	>
+		{children}
+	</span>
+));
+
+ItemExpand.displayName = 'ClayBadgeItemExpand';
+
 type DisplayType =
 	| 'primary'
 	| 'secondary'
@@ -52,7 +97,7 @@ interface IProps extends React.HTMLAttributes<HTMLSpanElement> {
 	translucent?: boolean;
 }
 
-const Badge = React.forwardRef<HTMLSpanElement, IProps>(
+const BadgeComponent = React.forwardRef<HTMLSpanElement, IProps>(
 	(
 		{
 			className,
@@ -90,18 +135,24 @@ const Badge = React.forwardRef<HTMLSpanElement, IProps>(
 				)}
 				ref={ref}
 			>
-				<span className="badge-item badge-item-expand">{label}</span>
+				<ItemExpand>{label}</ItemExpand>
 
 				{symbol && (
-					<span className="badge-item badge-item-after">
+					<ItemAfter>
 						<ClayIcon spritemap={spritemap} symbol={symbol} />
-					</span>
+					</ItemAfter>
 				)}
 			</span>
 		);
 	}
 );
 
-Badge.displayName = 'ClayBadge';
+BadgeComponent.displayName = 'ClayBadge';
+
+const Badge = Object.assign(BadgeComponent, {
+	ItemAfter,
+	ItemBefore,
+	ItemExpand,
+});
 
 export default Badge;

@@ -784,8 +784,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 		}
 
-		if (Validator.isNull(portletId)) {
-			_log.error(
+		if (Validator.isNull(portletId) && _log.isDebugEnabled()) {
+			_log.debug(
 				StringBundler.concat(
 					"Struts path ", strutsPath,
 					" is not mapped to a portlet in liferay-portlet.xml"));

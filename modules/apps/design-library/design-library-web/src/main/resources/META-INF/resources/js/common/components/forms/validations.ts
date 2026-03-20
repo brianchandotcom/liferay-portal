@@ -30,32 +30,27 @@ const required: ValidationFunction = (value) => {
 const validate = (
 	fields: ValidationSchema,
 	values: Record<string, any>,
-	errors?: Errors
+	errors: Errors = {}
 ) => {
-	const nextErrors = {...errors};
-
-	Object.entries(fields).forEach(([inputName, validations]) => {
-		if (!validations.length) {
-			delete nextErrors[inputName];
-
-			return;
-		}
-
-		validations.some((validation) => {
-			const error = validation(values[inputName]);
+	return Object.entries(fields).reduce(
+		(acc, [inputName, validations]) => {
+			const error = validations
+				.map((validation) => validation(values[inputName]))
+				.find((result) => Boolean(result));
 
 			if (error) {
-				nextErrors[inputName] = error;
-			}
-			else {
-				delete nextErrors[inputName];
+				return {
+					...acc,
+					[inputName]: error,
+				};
 			}
 
-			return Boolean(error);
-		});
-	});
+			const {[inputName]: _, ...rest} = acc;
 
-	return nextErrors;
+			return rest;
+		},
+		{...errors}
+	);
 };
 
 export {maxLength, required, validate};

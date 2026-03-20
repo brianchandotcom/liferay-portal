@@ -10,7 +10,7 @@ import React, {ReactNode} from 'react';
 import ErrorFeedback from './ErrorFeedback';
 import RequiredMark from './RequiredMark';
 
-const FieldWrapper = ({
+export default function FieldWrapper({
 	children,
 	className = '',
 	disabled,
@@ -28,24 +28,27 @@ const FieldWrapper = ({
 	fieldId: string;
 	label: string;
 	required?: boolean;
-}) => (
-	<ClayForm.Group
-		className={classNames(className, {'has-error': errorMessage})}
-	>
-		<label className={disabled ? 'disabled' : ''} htmlFor={fieldId}>
-			{label}
+}) {
+	return (
+		<ClayForm.Group
+			className={classNames(className, {'has-error': errorMessage})}
+		>
+			<label
+				className={classNames(className, {disabled})}
+				htmlFor={fieldId}
+			>
+				{label}
 
-			{required && <RequiredMark />}
-		</label>
+				{required && <RequiredMark />}
+			</label>
 
-		{children}
+			{children}
 
-		{errorMessage && (
-			<ClayForm.FeedbackGroup id={feedbackId}>
-				<ErrorFeedback message={errorMessage} />
-			</ClayForm.FeedbackGroup>
-		)}
-	</ClayForm.Group>
-);
-
-export default FieldWrapper;
+			{errorMessage && (
+				<ClayForm.FeedbackGroup id={feedbackId}>
+					<ErrorFeedback message={errorMessage} />
+				</ClayForm.FeedbackGroup>
+			)}
+		</ClayForm.Group>
+	);
+}

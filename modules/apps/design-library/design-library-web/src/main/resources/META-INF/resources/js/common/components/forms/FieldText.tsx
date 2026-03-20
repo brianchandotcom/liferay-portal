@@ -15,7 +15,7 @@ type ClayInputProps = {
 	sizing?: 'lg' | 'regular' | 'sm';
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-const FieldText = ({
+export default function FieldText({
 	component = 'input',
 	disabled,
 	errorMessage,
@@ -33,7 +33,7 @@ const FieldText = ({
 	name: string;
 	required?: boolean;
 	value?: string;
-} & ClayInputProps) => {
+} & ClayInputProps) {
 	const fieldId = id ?? name;
 	const feedbackId = `feedback-${fieldId}`;
 
@@ -59,6 +59,4 @@ const FieldText = ({
 			/>
 		</FieldWrapper>
 	);
-};
-
-export default FieldText;
+}

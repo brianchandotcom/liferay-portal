@@ -15,8 +15,14 @@ import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 import com.liferay.jenkins.results.parser.test.batch.TestBatchFactory;
 
 import java.io.File;
+import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.PathMatcher;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -344,6 +350,81 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		return JenkinsResultsParserUtil.getProperty(
 			JenkinsResultsParserUtil.getProperties(baseTestPropertiesFile),
 			propertyName, getTestSuiteName());
+	}
+
+	private List<File> _getModuleProjectDirs(File moduleDir) {
+		final List<File> moduleProjectDirs = new ArrayList<>();
+
+		try {
+			Files.walkFileTree(
+				moduleDir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+						Path filePath,
+						BasicFileAttributes basicFileAttributes) {
+
+						File currentDirectory = filePath.toFile();
+
+						File bndBndFile = new File(currentDirectory, "bnd.bnd");
+
+						File buildGradleFile = new File(
+							currentDirectory, "build.gradle");
+
+						String directoryName = currentDirectory.getName();
+
+						if (buildGradleFile.exists() && bndBndFile.exists()) {
+							moduleProjectDirs.add(currentDirectory);
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						if (directoryName.startsWith("frontend-theme")) {
+							File gulpFile = new File(
+								currentDirectory, "gulpfile.js");
+
+							if (buildGradleFile.exists() && gulpFile.exists()) {
+								moduleProjectDirs.add(currentDirectory);
+
+								return FileVisitResult.SKIP_SUBTREE;
+							}
+						}
+
+						buildGradleFile = new File(
+							currentDirectory, "build.xml");
+
+						if (directoryName.endsWith("-hook") &&
+							buildGradleFile.exists()) {
+
+							moduleProjectDirs.add(currentDirectory);
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						if (directoryName.endsWith("-portlet")) {
+							File ivyFile = new File(
+								currentDirectory, "ivy.xml");
+
+							if (buildGradleFile.exists() && ivyFile.exists()) {
+								moduleProjectDirs.add(currentDirectory);
+
+								return FileVisitResult.SKIP_SUBTREE;
+							}
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get module marker files from " + moduleDir,
+				ioException);
+		}
+
+		return moduleProjectDirs;
 	}
 
 	private String _getParentFilePath() {

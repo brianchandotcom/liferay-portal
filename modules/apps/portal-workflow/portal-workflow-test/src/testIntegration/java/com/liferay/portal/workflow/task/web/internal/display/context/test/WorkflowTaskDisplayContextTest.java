@@ -178,10 +178,9 @@ public class WorkflowTaskDisplayContextTest {
 
 		AssetEntry assetEntry = ReflectionTestUtil.invoke(
 			workflowTaskDisplayContext, "getWorkflowAssetEntry",
-			new Class<?>[] {
-				AssetRenderer.class, WorkflowHandler.class, long.class
-			},
-			assetRenderer, workflowHandler, classPK);
+			new Class<?>[] {String.class, long.class, long.class},
+			workflowHandler.getClassName(), classPK,
+			assetRenderer.getClassPK());
 
 		List<AssetTag> assetTags =
 			AssetTagLocalServiceUtil.getAssetEntryAssetTags(

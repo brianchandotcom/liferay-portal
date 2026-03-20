@@ -76,12 +76,12 @@ public class TestScriptGenerator {
 		sb.append("\tlocal base_dir=$(git rev-parse --show-toplevel)\n\n");
 		sb.append("\tif [ -z \"${base_dir}\" ]\n");
 		sb.append("\tthen\n");
-		sb.append("\t\techo \"Unable to find base directory.\"\n");
+		sb.append("\t\techo \"Unable to find base directory.\"\n\n");
 		sb.append("\t\texit 1\n");
 		sb.append("\tfi\n\n");
 		sb.append("\tcd \"${base_dir}\" || exit 1\n\n");
 		sb.append("\techo \"Running local tests.\"\n");
-		sb.append("\techo \"\"\n\n");
+		sb.append("\techo \"\"\n");
 		sb.append("\techo \"This script was generated on branch ");
 		sb.append(_gitWorkingDirectory.getCurrentBranchName());
 		sb.append(" (");
@@ -187,7 +187,7 @@ public class TestScriptGenerator {
 			index++;
 		}
 
-		sb.append("\n\tlocal commands_list=(\n");
+		sb.append("\tlocal commands_list=(\n");
 
 		for (int i = 0; i < total; i++) {
 			sb.append("\t\t\"command_");
@@ -261,7 +261,7 @@ public class TestScriptGenerator {
 		sb.append("\tdone\n\n");
 		sb.append("\techo \"");
 		sb.append(_SEPARATOR);
-		sb.append("\"\n\n");
+		sb.append("\"\n");
 		sb.append("\techo \"\"\n\n");
 		sb.append("\tif [ \"${failed_commands}\" -eq 0 ]\n");
 		sb.append("\tthen\n");
@@ -280,7 +280,7 @@ public class TestScriptGenerator {
 		sb.append("\t\techo \"$((${1} % 60))s\"\n");
 		sb.append("\tfi\n");
 		sb.append("}\n\n");
-		sb.append("main\n");
+		sb.append("main");
 
 		String generatedScript = sb.toString();
 

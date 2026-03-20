@@ -76,7 +76,7 @@ public class TestScriptGenerator {
 		sb.append("\tlocal base_dir=$(git rev-parse --show-toplevel)\n\n");
 		sb.append("\tif [ -z \"${base_dir}\" ]\n");
 		sb.append("\tthen\n");
-		sb.append("\t\techo \"Error: Not inside a git repository.\"\n");
+		sb.append("\t\techo \"Unable to find base directory.\"\n");
 		sb.append("\t\texit 1\n");
 		sb.append("\tfi\n\n");
 		sb.append("\tcd \"${base_dir}\" || exit 1\n\n");

@@ -155,11 +155,11 @@ public class BasePortletPreferencesUpgradeProcessTest
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, String xml) {
 
-		jakarta.portlet.PortletPreferences portletPreferences =
+		jakarta.portlet.PortletPreferences jxPortletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		return PortletPreferencesFactoryUtil.toXML(jxPortletPreferences);
 	}
 
 	private void _assertCompanyIds(

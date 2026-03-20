@@ -190,17 +190,17 @@ public class AssetPublisherUserNotificationTest {
 	}
 
 	private void _updatePortletPreferences() throws Exception {
-		jakarta.portlet.PortletPreferences portletPreferences =
+		jakarta.portlet.PortletPreferences jxPortletPreferences =
 			LayoutTestUtil.getPortletPreferences(_layout, _portletId);
 
-		portletPreferences.setValue(
+		jxPortletPreferences.setValue(
 			_localization.getLocalizedName(
 				"emailAssetEntryAddedBody",
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault())),
 			_EMAIL_ASSET_ENTRY_ADDED_BODY);
-		portletPreferences.setValue("selectionStyle", "dynamic");
+		jxPortletPreferences.setValue("selectionStyle", "dynamic");
 
-		portletPreferences.store();
+		jxPortletPreferences.store();
 	}
 
 	private static final String _EMAIL_ASSET_ENTRY_ADDED_BODY =

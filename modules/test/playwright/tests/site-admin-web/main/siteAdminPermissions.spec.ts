@@ -9,7 +9,11 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {TRole} from '../../../helpers/HeadlessAdminUserApiHelper';
 import getRandomString from '../../../utils/getRandomString';
-import {performUserSwitch, userData} from '../../../utils/performLogin';
+import {
+	performLoginViaApi,
+	performUserSwitch,
+	userData,
+} from '../../../utils/performLogin';
 import {sitesAdminPagesTest} from './fixtures/sitesAdminPagesTest';
 
 export const test = mergeTests(
@@ -23,23 +27,13 @@ let role: TRole;
 let site: Site;
 let user: TUserAccount;
 
-test.afterEach(async ({apiHelpers, page}) => {
-	await performUserSwitch(page, 'test');
+test.afterEach(async ({page}) => {
+	await performLoginViaApi({page, screenName: 'test'});
 
-	if (role) {
-		await apiHelpers.headlessAdminUser.deleteRole(role.id);
-
-		role = null;
-	}
-
+	role = null;
 	childSite = null;
 	site = null;
-
-	if (user) {
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
-
-		user = null;
-	}
+	user = null;
 });
 
 test('User can add site with Add Site permission', async ({

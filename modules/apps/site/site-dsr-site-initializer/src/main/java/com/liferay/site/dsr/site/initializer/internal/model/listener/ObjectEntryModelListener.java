@@ -176,15 +176,15 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 						company.getCompanyId());
 		}
 
-		Role adminRole = _roleLocalService.getRole(
+		Role administratorRole = _roleLocalService.getRole(
 			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		User adminUser = _userLocalService.getUser(
-			_userLocalService.getRoleUserIds(adminRole.getRoleId())[0]);
 
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
-					company, adminUser)) {
+					company,
+					_userLocalService.getUser(
+						_userLocalService.getRoleUserIds(
+							administratorRole.getRoleId())[0]))) {
 
 			_sites.updateLayoutSetPrototypesLinks(
 				group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, false,

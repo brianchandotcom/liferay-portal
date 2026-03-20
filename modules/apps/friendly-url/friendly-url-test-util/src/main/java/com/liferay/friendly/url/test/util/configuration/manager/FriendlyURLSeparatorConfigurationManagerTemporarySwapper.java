@@ -8,6 +8,7 @@ package com.liferay.friendly.url.test.util.configuration.manager;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -36,6 +37,8 @@ public class FriendlyURLSeparatorConfigurationManagerTemporarySwapper
 
 		friendlyURLSeparatorConfigurationManager.
 			updateFriendlyURLSeparatorCompanyConfiguration(companyId, json);
+
+		FriendlyURLResolverRegistryUtil.removeURLSeparators();
 	}
 
 	@Override
@@ -47,6 +50,8 @@ public class FriendlyURLSeparatorConfigurationManagerTemporarySwapper
 		friendlyURLSeparatorConfigurationManager.
 			updateFriendlyURLSeparatorCompanyConfiguration(
 				_companyId, _jsonObject.toString());
+
+		FriendlyURLResolverRegistryUtil.removeURLSeparators();
 	}
 
 	private static final BundleContext _bundleContext;

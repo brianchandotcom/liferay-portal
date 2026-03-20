@@ -8,6 +8,7 @@ import ClayColorPicker, {useColorPicker} from '@clayui/color-picker';
 import {FocusTrap} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import {FocusScope, InternalDispatch} from '@clayui/shared';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
@@ -92,6 +93,14 @@ export default function ColorPickerField({
 	const dropdownContainerRef = useRef<HTMLDivElement>(null);
 	const triggerElementRef = useRef<HTMLDivElement>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
+
+	const previousInternalActive = usePrevious(internalActive);
+
+	useEffect(() => {
+		if (previousInternalActive && !internalActive) {
+			triggerRef.current?.focus();
+		}
+	}, [internalActive, previousInternalActive]);
 
 	return (
 		<FocusScope arrowKeysUpDown={false}>

@@ -185,6 +185,7 @@ import {config as trashWebConfig} from './tests/trash-web/main/config';
 import {config as usersAdminWebEmailConfig} from './tests/users-admin-web/email/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/main/config';
 import {config as usersAdminWebPermissionsConfig} from './tests/users-admin-web/permissions/config';
+import {config as usersAdminWebPropertiesConfig} from './tests/users-admin-web/properties/config';
 import {config as utilTaglibConfig} from './tests/util-taglib/main/config';
 import {config as wikiWebConfig} from './tests/wiki-web/main/config';
 import {config as customerConfig} from './tests/workspaces/liferay-customer-workspace/main/config';
@@ -386,6 +387,7 @@ export default defineConfig({
 		usersAdminWebConfig,
 		usersAdminWebEmailConfig,
 		usersAdminWebPermissionsConfig,
+		usersAdminWebPropertiesConfig,
 		utilTaglibConfig,
 		wikiWebConfig,
 		...setupProjects,

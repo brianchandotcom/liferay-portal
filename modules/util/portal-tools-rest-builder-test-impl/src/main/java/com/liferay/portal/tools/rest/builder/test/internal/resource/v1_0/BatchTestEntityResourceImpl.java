@@ -312,19 +312,18 @@ public class BatchTestEntityResourceImpl
 		BatchTestEntity originalBatchTestEntity) {
 
 		if (contextAcceptLanguage.isAcceptAllLanguages()) {
-			originalBatchTestEntity.setAcceptAllLanguagesProperty(true);
+			originalBatchTestEntity.setAcceptAllLanguages(true);
 		}
 
 		return new BatchTestEntity() {
 			{
-				setAcceptAllLanguagesProperty(
+				setAcceptAllLanguages(
 					() -> {
-						Boolean originalAcceptAllLanguagesProperty =
-							originalBatchTestEntity.
-								getAcceptAllLanguagesProperty();
+						Boolean originalAcceptAllLanguages =
+							originalBatchTestEntity.getAcceptAllLanguages();
 
-						if (originalAcceptAllLanguagesProperty != null) {
-							return originalAcceptAllLanguagesProperty;
+						if (originalAcceptAllLanguages != null) {
+							return originalAcceptAllLanguages;
 						}
 
 						return contextAcceptLanguage.isAcceptAllLanguages();

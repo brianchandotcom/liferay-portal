@@ -148,21 +148,6 @@ public interface ConsentPreferencePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the consent preferences before and after the current consent preference in the ordered set where userId = &#63;.
-	 *
-	 * @param consentPreferenceId the primary key of the current consent preference
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next consent preference
-	 * @throws NoSuchConsentPreferenceException if a consent preference with the primary key could not be found
-	 */
-	public ConsentPreference[] findByUserId_PrevAndNext(
-			long consentPreferenceId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<ConsentPreference>
-				orderByComparator)
-		throws NoSuchConsentPreferenceException;
-
-	/**
 	 * Removes all the consent preferences where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -290,21 +275,6 @@ public interface ConsentPreferencePersistence
 		Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<ConsentPreference>
 			orderByComparator);
-
-	/**
-	 * Returns the consent preferences before and after the current consent preference in the ordered set where expirationDate = &#63;.
-	 *
-	 * @param consentPreferenceId the primary key of the current consent preference
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next consent preference
-	 * @throws NoSuchConsentPreferenceException if a consent preference with the primary key could not be found
-	 */
-	public ConsentPreference[] findByExpirationDate_PrevAndNext(
-			long consentPreferenceId, Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<ConsentPreference>
-				orderByComparator)
-		throws NoSuchConsentPreferenceException;
 
 	/**
 	 * Removes all the consent preferences where expirationDate = &#63; from the database.
@@ -442,22 +412,6 @@ public interface ConsentPreferencePersistence
 		long userId, String domain,
 		com.liferay.portal.kernel.util.OrderByComparator<ConsentPreference>
 			orderByComparator);
-
-	/**
-	 * Returns the consent preferences before and after the current consent preference in the ordered set where userId = &#63; and domain = &#63;.
-	 *
-	 * @param consentPreferenceId the primary key of the current consent preference
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next consent preference
-	 * @throws NoSuchConsentPreferenceException if a consent preference with the primary key could not be found
-	 */
-	public ConsentPreference[] findByU_D_PrevAndNext(
-			long consentPreferenceId, long userId, String domain,
-			com.liferay.portal.kernel.util.OrderByComparator<ConsentPreference>
-				orderByComparator)
-		throws NoSuchConsentPreferenceException;
 
 	/**
 	 * Removes all the consent preferences where userId = &#63; and domain = &#63; from the database.
@@ -656,4 +610,4 @@ public interface ConsentPreferencePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2147092528
+// LIFERAY-SERVICE-BUILDER-HASH:1695274581

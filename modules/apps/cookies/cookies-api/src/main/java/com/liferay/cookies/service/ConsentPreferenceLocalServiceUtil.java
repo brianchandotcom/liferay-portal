@@ -53,6 +53,15 @@ public class ConsentPreferenceLocalServiceUtil {
 		return getService().addConsentPreference(consentPreference);
 	}
 
+	public static ConsentPreference addConsentPreference(
+			long userId, String domain, java.util.Date expirationDate,
+			String name, String value)
+		throws PortalException {
+
+		return getService().addConsentPreference(
+			userId, domain, expirationDate, name, value);
+	}
+
 	/**
 	 * Creates a new consent preference with the primary key. Does not add the consent preference to the database.
 	 *
@@ -107,6 +116,21 @@ public class ConsentPreferenceLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteConsentPreference(consentPreferenceId);
+	}
+
+	public static void deleteConsentPreference(
+			long userId, String domain, String name)
+		throws PortalException {
+
+		getService().deleteConsentPreference(userId, domain, name);
+	}
+
+	public static void deleteConsentPreferences(long userId) {
+		getService().deleteConsentPreferences(userId);
+	}
+
+	public static void deleteConsentPreferences(long userId, String domain) {
+		getService().deleteConsentPreferences(userId, domain);
 	}
 
 	/**
@@ -210,6 +234,12 @@ public class ConsentPreferenceLocalServiceUtil {
 		return getService().fetchConsentPreference(consentPreferenceId);
 	}
 
+	public static ConsentPreference fetchConsentPreference(
+		long userId, String domain, String name) {
+
+		return getService().fetchConsentPreference(userId, domain, name);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -245,6 +275,12 @@ public class ConsentPreferenceLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getConsentPreferences(start, end);
+	}
+
+	public static List<ConsentPreference> getConsentPreferences(
+		long userId, String domain) {
+
+		return getService().getConsentPreferences(userId, domain);
 	}
 
 	/**
@@ -307,4 +343,4 @@ public class ConsentPreferenceLocalServiceUtil {
 			ConsentPreferenceLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1578712731
+// LIFERAY-SERVICE-BUILDER-HASH:-202141043

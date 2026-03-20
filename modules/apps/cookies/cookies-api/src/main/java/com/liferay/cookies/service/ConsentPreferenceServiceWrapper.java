@@ -28,48 +28,6 @@ public class ConsentPreferenceServiceWrapper
 		_consentPreferenceService = consentPreferenceService;
 	}
 
-	@Override
-	public com.liferay.cookies.model.ConsentPreference addConsentPreference(
-			long userId, String domain, java.util.Date expirationDate,
-			String name, String value)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _consentPreferenceService.addConsentPreference(
-			userId, domain, expirationDate, name, value);
-	}
-
-	@Override
-	public void deleteConsentPreference(long userId, String domain, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_consentPreferenceService.deleteConsentPreference(userId, domain, name);
-	}
-
-	@Override
-	public void deleteConsentPreferences(long userId) {
-		_consentPreferenceService.deleteConsentPreferences(userId);
-	}
-
-	@Override
-	public void deleteConsentPreferences(long userId, String domain) {
-		_consentPreferenceService.deleteConsentPreferences(userId, domain);
-	}
-
-	@Override
-	public com.liferay.cookies.model.ConsentPreference getConsentPreference(
-		long userId, String domain, String name) {
-
-		return _consentPreferenceService.getConsentPreference(
-			userId, domain, name);
-	}
-
-	@Override
-	public java.util.List<com.liferay.cookies.model.ConsentPreference>
-		getConsentPreferences(long userId, String domain) {
-
-		return _consentPreferenceService.getConsentPreferences(userId, domain);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -78,14 +36,6 @@ public class ConsentPreferenceServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _consentPreferenceService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.cookies.model.ConsentPreference updateConsentPreference(
-		com.liferay.cookies.model.ConsentPreference consentPreference) {
-
-		return _consentPreferenceService.updateConsentPreference(
-			consentPreference);
 	}
 
 	@Override
@@ -103,4 +53,4 @@ public class ConsentPreferenceServiceWrapper
 	private ConsentPreferenceService _consentPreferenceService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2042930996
+// LIFERAY-SERVICE-BUILDER-HASH:511015892

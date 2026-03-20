@@ -242,24 +242,6 @@ public class ConsentPreferenceUtil {
 	}
 
 	/**
-	 * Returns the consent preferences before and after the current consent preference in the ordered set where userId = &#63;.
-	 *
-	 * @param consentPreferenceId the primary key of the current consent preference
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next consent preference
-	 * @throws NoSuchConsentPreferenceException if a consent preference with the primary key could not be found
-	 */
-	public static ConsentPreference[] findByUserId_PrevAndNext(
-			long consentPreferenceId, long userId,
-			OrderByComparator<ConsentPreference> orderByComparator)
-		throws com.liferay.cookies.exception.NoSuchConsentPreferenceException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			consentPreferenceId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the consent preferences where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -415,24 +397,6 @@ public class ConsentPreferenceUtil {
 
 		return getPersistence().fetchByExpirationDate_Last(
 			expirationDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the consent preferences before and after the current consent preference in the ordered set where expirationDate = &#63;.
-	 *
-	 * @param consentPreferenceId the primary key of the current consent preference
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next consent preference
-	 * @throws NoSuchConsentPreferenceException if a consent preference with the primary key could not be found
-	 */
-	public static ConsentPreference[] findByExpirationDate_PrevAndNext(
-			long consentPreferenceId, Date expirationDate,
-			OrderByComparator<ConsentPreference> orderByComparator)
-		throws com.liferay.cookies.exception.NoSuchConsentPreferenceException {
-
-		return getPersistence().findByExpirationDate_PrevAndNext(
-			consentPreferenceId, expirationDate, orderByComparator);
 	}
 
 	/**
@@ -598,25 +562,6 @@ public class ConsentPreferenceUtil {
 
 		return getPersistence().fetchByU_D_Last(
 			userId, domain, orderByComparator);
-	}
-
-	/**
-	 * Returns the consent preferences before and after the current consent preference in the ordered set where userId = &#63; and domain = &#63;.
-	 *
-	 * @param consentPreferenceId the primary key of the current consent preference
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next consent preference
-	 * @throws NoSuchConsentPreferenceException if a consent preference with the primary key could not be found
-	 */
-	public static ConsentPreference[] findByU_D_PrevAndNext(
-			long consentPreferenceId, long userId, String domain,
-			OrderByComparator<ConsentPreference> orderByComparator)
-		throws com.liferay.cookies.exception.NoSuchConsentPreferenceException {
-
-		return getPersistence().findByU_D_PrevAndNext(
-			consentPreferenceId, userId, domain, orderByComparator);
 	}
 
 	/**
@@ -879,4 +824,4 @@ public class ConsentPreferenceUtil {
 	private static volatile ConsentPreferencePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2144474045
+// LIFERAY-SERVICE-BUILDER-HASH:959443986

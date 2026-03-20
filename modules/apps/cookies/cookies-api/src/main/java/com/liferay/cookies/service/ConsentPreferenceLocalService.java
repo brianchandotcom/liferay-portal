@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -66,6 +67,11 @@ public interface ConsentPreferenceLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ConsentPreference addConsentPreference(
 		ConsentPreference consentPreference);
+
+	public ConsentPreference addConsentPreference(
+			long userId, String domain, Date expirationDate, String name,
+			String value)
+		throws PortalException;
 
 	/**
 	 * Creates a new consent preference with the primary key. Does not add the consent preference to the database.
@@ -110,6 +116,13 @@ public interface ConsentPreferenceLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public ConsentPreference deleteConsentPreference(long consentPreferenceId)
 		throws PortalException;
+
+	public void deleteConsentPreference(long userId, String domain, String name)
+		throws PortalException;
+
+	public void deleteConsentPreferences(long userId);
+
+	public void deleteConsentPreferences(long userId, String domain);
 
 	/**
 	 * @throws PortalException
@@ -194,6 +207,10 @@ public interface ConsentPreferenceLocalService
 	public ConsentPreference fetchConsentPreference(long consentPreferenceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ConsentPreference fetchConsentPreference(
+		long userId, String domain, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -220,6 +237,10 @@ public interface ConsentPreferenceLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ConsentPreference> getConsentPreferences(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ConsentPreference> getConsentPreferences(
+		long userId, String domain);
 
 	/**
 	 * Returns the number of consent preferences.
@@ -262,4 +283,4 @@ public interface ConsentPreferenceLocalService
 		ConsentPreference consentPreference);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-556205927
+// LIFERAY-SERVICE-BUILDER-HASH:-474838812

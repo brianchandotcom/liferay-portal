@@ -47,6 +47,16 @@ public class ConsentPreferenceLocalServiceWrapper
 			consentPreference);
 	}
 
+	@Override
+	public com.liferay.cookies.model.ConsentPreference addConsentPreference(
+			long userId, String domain, java.util.Date expirationDate,
+			String name, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _consentPreferenceLocalService.addConsentPreference(
+			userId, domain, expirationDate, name, value);
+	}
+
 	/**
 	 * Creates a new consent preference with the primary key. Does not add the consent preference to the database.
 	 *
@@ -109,6 +119,24 @@ public class ConsentPreferenceLocalServiceWrapper
 
 		return _consentPreferenceLocalService.deleteConsentPreference(
 			consentPreferenceId);
+	}
+
+	@Override
+	public void deleteConsentPreference(long userId, String domain, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_consentPreferenceLocalService.deleteConsentPreference(
+			userId, domain, name);
+	}
+
+	@Override
+	public void deleteConsentPreferences(long userId) {
+		_consentPreferenceLocalService.deleteConsentPreferences(userId);
+	}
+
+	@Override
+	public void deleteConsentPreferences(long userId, String domain) {
+		_consentPreferenceLocalService.deleteConsentPreferences(userId, domain);
 	}
 
 	/**
@@ -235,6 +263,14 @@ public class ConsentPreferenceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.cookies.model.ConsentPreference fetchConsentPreference(
+		long userId, String domain, String name) {
+
+		return _consentPreferenceLocalService.fetchConsentPreference(
+			userId, domain, name);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -273,6 +309,14 @@ public class ConsentPreferenceLocalServiceWrapper
 		getConsentPreferences(int start, int end) {
 
 		return _consentPreferenceLocalService.getConsentPreferences(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.cookies.model.ConsentPreference>
+		getConsentPreferences(long userId, String domain) {
+
+		return _consentPreferenceLocalService.getConsentPreferences(
+			userId, domain);
 	}
 
 	/**
@@ -352,4 +396,4 @@ public class ConsentPreferenceLocalServiceWrapper
 	private ConsentPreferenceLocalService _consentPreferenceLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:276956163
+// LIFERAY-SERVICE-BUILDER-HASH:1592956429

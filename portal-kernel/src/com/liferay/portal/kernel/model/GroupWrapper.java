@@ -582,11 +582,6 @@ public class GroupWrapper
 		return model.getLogoURL(themeDisplay, useDefault);
 	}
 
-	@Override
-	public long getMaintenanceUtilityPageEntryId() {
-		return model.getMaintenanceUtilityPageEntryId();
-	}
-
 	/**
 	 * Returns the manual membership of this group.
 	 *

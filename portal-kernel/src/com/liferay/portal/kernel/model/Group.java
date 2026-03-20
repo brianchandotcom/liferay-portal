@@ -102,8 +102,6 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		boolean useDefault);
 
-	public long getMaintenanceUtilityPageEntryId();
-
 	public long getOrganizationId();
 
 	public Group getParentGroup();

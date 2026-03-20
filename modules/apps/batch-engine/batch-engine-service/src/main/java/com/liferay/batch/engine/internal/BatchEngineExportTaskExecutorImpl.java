@@ -202,6 +202,10 @@ public class BatchEngineExportTaskExecutorImpl
 		_exportTaskPostActions.close();
 	}
 
+	private void _clearSessionPersistenceContext() {
+		LastSessionRecorderHelperUtil.syncLastSessionState();
+	}
+
 	private InputStream _exportItems(
 			BatchEngineExportTask batchEngineExportTask, Settings settings)
 		throws Exception {
@@ -319,7 +323,7 @@ public class BatchEngineExportTaskExecutorImpl
 							updateBatchEngineExportTask(batchEngineExportTask);
 				}
 
-				clearSessionPersistenceContext();
+				_clearSessionPersistenceContext();
 
 				if (Thread.interrupted()) {
 					throw new InterruptedException();
@@ -584,10 +588,6 @@ public class BatchEngineExportTaskExecutorImpl
 			batchEngineExportTask.getCallbackURL(),
 			batchEngineExportTask.getExecuteStatus(),
 			batchEngineExportTask.getBatchEngineExportTaskId());
-	}
-
-	private void clearSessionPersistenceContext() {
-		LastSessionRecorderHelperUtil.syncLastSessionState();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -49,33 +49,29 @@ public class BatchTestEntity implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Boolean getAcceptAllLanguagesProperty() {
-		if (_acceptAllLanguagesPropertySupplier != null) {
-			acceptAllLanguagesProperty =
-				_acceptAllLanguagesPropertySupplier.get();
+	public Boolean getAcceptAllLanguages() {
+		if (_acceptAllLanguagesSupplier != null) {
+			acceptAllLanguages = _acceptAllLanguagesSupplier.get();
 
-			_acceptAllLanguagesPropertySupplier = null;
+			_acceptAllLanguagesSupplier = null;
 		}
 
-		return acceptAllLanguagesProperty;
+		return acceptAllLanguages;
 	}
 
-	public void setAcceptAllLanguagesProperty(
-		Boolean acceptAllLanguagesProperty) {
+	public void setAcceptAllLanguages(Boolean acceptAllLanguages) {
+		this.acceptAllLanguages = acceptAllLanguages;
 
-		this.acceptAllLanguagesProperty = acceptAllLanguagesProperty;
-
-		_acceptAllLanguagesPropertySupplier = null;
+		_acceptAllLanguagesSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setAcceptAllLanguagesProperty(
-		UnsafeSupplier<Boolean, Exception>
-			acceptAllLanguagesPropertyUnsafeSupplier) {
+	public void setAcceptAllLanguages(
+		UnsafeSupplier<Boolean, Exception> acceptAllLanguagesUnsafeSupplier) {
 
-		_acceptAllLanguagesPropertySupplier = () -> {
+		_acceptAllLanguagesSupplier = () -> {
 			try {
-				return acceptAllLanguagesPropertyUnsafeSupplier.get();
+				return acceptAllLanguagesUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -88,10 +84,10 @@ public class BatchTestEntity implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean acceptAllLanguagesProperty;
+	protected Boolean acceptAllLanguages;
 
 	@JsonIgnore
-	private Supplier<Boolean> _acceptAllLanguagesPropertySupplier;
+	private Supplier<Boolean> _acceptAllLanguagesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
@@ -374,16 +370,16 @@ public class BatchTestEntity implements Serializable {
 
 		sb.append("{");
 
-		Boolean acceptAllLanguagesProperty = getAcceptAllLanguagesProperty();
+		Boolean acceptAllLanguages = getAcceptAllLanguages();
 
-		if (acceptAllLanguagesProperty != null) {
+		if (acceptAllLanguages != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"acceptAllLanguagesProperty\": ");
+			sb.append("\"acceptAllLanguages\": ");
 
-			sb.append(acceptAllLanguagesProperty);
+			sb.append(acceptAllLanguages);
 		}
 
 		com.liferay.portal.vulcan.custom.field.CustomField[] customFields =

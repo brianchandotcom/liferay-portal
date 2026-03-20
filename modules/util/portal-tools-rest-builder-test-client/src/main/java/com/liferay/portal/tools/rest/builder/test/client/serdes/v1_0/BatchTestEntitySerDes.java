@@ -46,14 +46,14 @@ public class BatchTestEntitySerDes {
 
 		sb.append("{");
 
-		if (batchTestEntity.getAcceptAllLanguagesProperty() != null) {
+		if (batchTestEntity.getAcceptAllLanguages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"acceptAllLanguagesProperty\": ");
+			sb.append("\"acceptAllLanguages\": ");
 
-			sb.append(batchTestEntity.getAcceptAllLanguagesProperty());
+			sb.append(batchTestEntity.getAcceptAllLanguages());
 		}
 
 		if (batchTestEntity.getCustomFields() != null) {
@@ -158,14 +158,13 @@ public class BatchTestEntitySerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (batchTestEntity.getAcceptAllLanguagesProperty() == null) {
-			map.put("acceptAllLanguagesProperty", null);
+		if (batchTestEntity.getAcceptAllLanguages() == null) {
+			map.put("acceptAllLanguages", null);
 		}
 		else {
 			map.put(
-				"acceptAllLanguagesProperty",
-				String.valueOf(
-					batchTestEntity.getAcceptAllLanguagesProperty()));
+				"acceptAllLanguages",
+				String.valueOf(batchTestEntity.getAcceptAllLanguages()));
 		}
 
 		if (batchTestEntity.getCustomFields() == null) {
@@ -236,9 +235,7 @@ public class BatchTestEntitySerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "acceptAllLanguagesProperty")) {
-
+			if (Objects.equals(jsonParserFieldName, "acceptAllLanguages")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
@@ -272,11 +269,9 @@ public class BatchTestEntitySerDes {
 			BatchTestEntity batchTestEntity, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "acceptAllLanguagesProperty")) {
-
+			if (Objects.equals(jsonParserFieldName, "acceptAllLanguages")) {
 				if (jsonParserFieldValue != null) {
-					batchTestEntity.setAcceptAllLanguagesProperty(
+					batchTestEntity.setAcceptAllLanguages(
 						(Boolean)jsonParserFieldValue);
 				}
 			}

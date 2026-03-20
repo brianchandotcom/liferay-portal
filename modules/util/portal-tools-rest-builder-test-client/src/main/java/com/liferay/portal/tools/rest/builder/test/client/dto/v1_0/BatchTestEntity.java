@@ -25,30 +25,26 @@ public class BatchTestEntity implements Cloneable, Serializable {
 		return BatchTestEntitySerDes.toDTO(json);
 	}
 
-	public Boolean getAcceptAllLanguagesProperty() {
-		return acceptAllLanguagesProperty;
+	public Boolean getAcceptAllLanguages() {
+		return acceptAllLanguages;
 	}
 
-	public void setAcceptAllLanguagesProperty(
-		Boolean acceptAllLanguagesProperty) {
-
-		this.acceptAllLanguagesProperty = acceptAllLanguagesProperty;
+	public void setAcceptAllLanguages(Boolean acceptAllLanguages) {
+		this.acceptAllLanguages = acceptAllLanguages;
 	}
 
-	public void setAcceptAllLanguagesProperty(
-		UnsafeSupplier<Boolean, Exception>
-			acceptAllLanguagesPropertyUnsafeSupplier) {
+	public void setAcceptAllLanguages(
+		UnsafeSupplier<Boolean, Exception> acceptAllLanguagesUnsafeSupplier) {
 
 		try {
-			acceptAllLanguagesProperty =
-				acceptAllLanguagesPropertyUnsafeSupplier.get();
+			acceptAllLanguages = acceptAllLanguagesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean acceptAllLanguagesProperty;
+	protected Boolean acceptAllLanguages;
 
 	public
 		com.liferay.portal.tools.rest.builder.test.client.custom.field.

@@ -123,8 +123,8 @@ liferay-default:
             backendRequest: 300s
             request: 300s
     podSecurityContext:
-        runAsNonRoot: true
         fsGroup: 1000
+        runAsNonRoot: true
         seccompProfile:
         type: RuntimeDefault
     portalBundleDenyList:

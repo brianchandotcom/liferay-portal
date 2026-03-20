@@ -301,9 +301,9 @@ securityContext:
     capabilities:
         drop:
             -   ALL
+    readOnlyRootFilesystem: true
     seccompProfile:
         type: RuntimeDefault
-    readOnlyRootFilesystem: true
 service:
     annotations: {}
     ports:

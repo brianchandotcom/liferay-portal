@@ -25,3 +25,17 @@ ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext = (ViewRoomsSectio
 		/>
 	</div>
 </div>
+
+<c:if test="<%= SessionErrors.contains(request, PrincipalException.MustHavePermission.class) %>">
+	<aui:script>
+		Liferay.Util.openToast({
+			message:
+				'<liferay-ui:message key="you-do-not-have-the-required-permissions" />',
+			title: '<liferay-ui:message key="error" />',
+			toastProps: {
+				autoClose: 5000,
+			},
+			type: 'danger',
+		});
+	</aui:script>
+</c:if>

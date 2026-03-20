@@ -39,86 +39,33 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testGetActionDropdownItemsExportableFragmentCollection()
-		throws Exception {
-
+	public void testGetActionDropdownItems() throws Exception {
 		setUpFragmentPermission(true);
 
-		_setUpFragmentCollection(true, false);
+		for (boolean exportable : new boolean[] {false, true}) {
+			String[] expectedLabels = {"edit", "import", "delete"};
 
-		FragmentCollectionActionDropdownItemsProvider
-			fragmentCollectionActionDropdownItemsProvider =
-				new FragmentCollectionActionDropdownItemsProvider(
-					_fragmentDisplayContext, httpServletRequest,
-					renderResponse);
+			if (exportable) {
+				expectedLabels = new String[] {
+					"edit", "export", "import", "delete"
+				};
+			}
 
-		assertDropdownItemsInCorrectOrder(
-			fragmentCollectionActionDropdownItemsProvider.
-				getActionDropdownItems(),
-			"edit", "export", "import", "delete");
-	}
+			for (boolean marketplace : new boolean[] {false, true}) {
+				_setUpFragmentCollection(exportable, marketplace);
 
-	@Test
-	@TestInfo("LPD-82487")
-	public void testGetActionDropdownItemsNonexportableFragmentCollection()
-		throws Exception {
+				FragmentCollectionActionDropdownItemsProvider
+					fragmentCollectionActionDropdownItemsProvider =
+						new FragmentCollectionActionDropdownItemsProvider(
+							_fragmentDisplayContext, httpServletRequest,
+							renderResponse);
 
-		setUpFragmentPermission(true);
-
-		_setUpFragmentCollection(false, false);
-
-		FragmentCollectionActionDropdownItemsProvider
-			fragmentCollectionActionDropdownItemsProvider =
-				new FragmentCollectionActionDropdownItemsProvider(
-					_fragmentDisplayContext, httpServletRequest,
-					renderResponse);
-
-		assertDropdownItemsInCorrectOrder(
-			fragmentCollectionActionDropdownItemsProvider.
-				getActionDropdownItems(),
-			"edit", "import", "delete");
-	}
-
-	@Test
-	@TestInfo("LPD-82487")
-	public void testGetActionDropdownItemsForMarketplaceFragmentCollection()
-		throws Exception {
-
-		setUpFragmentPermission(true);
-
-		_setUpFragmentCollection(false, true);
-
-		FragmentCollectionActionDropdownItemsProvider
-			fragmentCollectionActionDropdownItemsProvider =
-				new FragmentCollectionActionDropdownItemsProvider(
-					_fragmentDisplayContext, httpServletRequest,
-					renderResponse);
-
-		assertDropdownItemsInCorrectOrder(
-			fragmentCollectionActionDropdownItemsProvider.
-				getActionDropdownItems(),
-			"edit", "import", "delete");
-	}
-
-	@Test
-	@TestInfo("LPD-82487")
-	public void testGetActionDropdownItemsForMarketplaceFragmentCollectionWithExportable()
-		throws Exception {
-
-		setUpFragmentPermission(true);
-
-		_setUpFragmentCollection(true, true);
-
-		FragmentCollectionActionDropdownItemsProvider
-			fragmentCollectionActionDropdownItemsProvider =
-				new FragmentCollectionActionDropdownItemsProvider(
-					_fragmentDisplayContext, httpServletRequest,
-					renderResponse);
-
-		assertDropdownItemsInCorrectOrder(
-			fragmentCollectionActionDropdownItemsProvider.
-				getActionDropdownItems(),
-			"edit", "export", "import", "delete");
+				assertDropdownItemsInCorrectOrder(
+					fragmentCollectionActionDropdownItemsProvider.
+						getActionDropdownItems(),
+					expectedLabels);
+			}
+		}
 	}
 
 	private void _setUpFragmentCollection(

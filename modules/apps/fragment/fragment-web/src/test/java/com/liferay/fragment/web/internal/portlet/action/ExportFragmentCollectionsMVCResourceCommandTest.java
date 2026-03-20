@@ -103,46 +103,35 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testServeResourceExportableFragmentCollection()
-		throws Exception {
+	public void testServeResource() throws Exception {
+		for (boolean exportable : new boolean[] {false, true}) {
+			Mockito.when(
+				_fragmentCollection.isExportable()
+			).thenReturn(
+				exportable
+			);
 
-		Mockito.when(
-			_fragmentCollection.isExportable()
-		).thenReturn(
-			true
-		);
+			_exportFragmentCollectionsMVCResourceCommand.serveResource(
+				_getMockLiferayResourceRequest(),
+				new MockLiferayResourceResponse());
 
-		_exportFragmentCollectionsMVCResourceCommand.serveResource(
-			_getMockLiferayResourceRequest(),
-			new MockLiferayResourceResponse());
+			if (exportable) {
+				Mockito.verify(
+					_fragmentCollection
+				).populateZipWriter(
+					_zipWriter
+				);
+			}
+			else {
+				Mockito.verify(
+					_fragmentCollection, Mockito.never()
+				).populateZipWriter(
+					Mockito.any()
+				);
+			}
 
-		Mockito.verify(
-			_fragmentCollection
-		).populateZipWriter(
-			_zipWriter
-		);
-	}
-
-	@Test
-	@TestInfo("LPD-82487")
-	public void testServeResourceNonexportableFragmentCollection()
-		throws Exception {
-
-		Mockito.when(
-			_fragmentCollection.isExportable()
-		).thenReturn(
-			false
-		);
-
-		_exportFragmentCollectionsMVCResourceCommand.serveResource(
-			_getMockLiferayResourceRequest(),
-			new MockLiferayResourceResponse());
-
-		Mockito.verify(
-			_fragmentCollection, Mockito.never()
-		).populateZipWriter(
-			Mockito.any()
-		);
+			Mockito.clearInvocations(_fragmentCollection);
+		}
 	}
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest() {

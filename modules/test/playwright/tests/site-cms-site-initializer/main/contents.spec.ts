@@ -381,6 +381,88 @@ test(
 );
 
 test(
+	'Nested entries from referenced structures do not appear in View Usages',
+	{tag: '@LPD-83177'},
+	async ({contentsPage, page, structureBuilderPage, structuresPage}) => {
+
+		// Create a structure that references Basic Web Content
+
+		const structureLabel = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			name: `StructureName${getRandomInt()}`,
+			page: structureBuilderPage,
+			publish: false,
+		});
+
+		await structureBuilderPage.addReferencedStructures([
+			'Basic Web Content',
+		]);
+
+		await structureBuilderPage.publishStructure();
+
+		// Create content of the new structure type and fill both titles
+
+		const contentTitle = getRandomString();
+		const nestedContentTitle = getRandomString();
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent(structureLabel);
+
+		await page.getByPlaceholder(`New ${structureLabel}`).fill(contentTitle);
+
+		await page
+			.locator('.lfr-layout-structure-item-form-relationship')
+			.getByRole('textbox', {exact: true, name: 'Title'})
+			.fill(nestedContentTitle);
+
+		await contentsPage.saveContent();
+
+		// Navigate to structures and view usages of Basic Web Content
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'View Usages',
+			filter: 'Basic Web Content',
+		});
+
+		// Assert the nested entry title is not shown
+
+		await page.locator('.fds').waitFor();
+
+		await expect(
+			page.getByRole('row', {name: nestedContentTitle})
+		).not.toBeVisible();
+
+		// Delete content
+
+		await contentsPage.goto();
+
+		const card = page
+			.locator('tr', {hasText: contentTitle})
+			.or(page.locator('.card-row', {hasText: contentTitle}));
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: card.locator('button'),
+		});
+
+		await page
+			.getByRole('dialog')
+			.getByRole('button', {name: 'Delete Entry'})
+			.click();
+
+		await waitForAlert(page, `Success:${contentTitle} was moved`, {
+			autoClose: false,
+		});
+	}
+);
+
+test(
 	'Content with Upload fragment opens new Item Selector',
 	{tag: '@LPD-67215'},
 	async ({apiHelpers, contentsPage, page, structureBuilderPage}) => {

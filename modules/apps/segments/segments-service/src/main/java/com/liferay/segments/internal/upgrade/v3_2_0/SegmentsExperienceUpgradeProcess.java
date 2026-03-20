@@ -42,6 +42,8 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 
 		boolean hasFragmentEntryLinkCTCollectionId = hasColumn(
 			"FragmentEntryLink", "ctCollectionId");
+		boolean hasFragmentEntryLinkSegmentsExperienceId = hasColumn(
+			"FragmentEntryLink", "segmentsExperienceId");
 		boolean hasLayoutPageTemplateStructureRelCTCollectionId = hasColumn(
 			"LayoutPageTemplateStructureRel", "ctCollectionId");
 
@@ -136,7 +138,7 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 
 				int index = 1;
 
-				if (hasColumn("FragmentEntryLink", "segmentsExperienceId")) {
+				if (hasFragmentEntryLinkSegmentsExperienceId) {
 					preparedStatement3.setLong(
 						index++, draftLayoutSegmentsExperienceId);
 

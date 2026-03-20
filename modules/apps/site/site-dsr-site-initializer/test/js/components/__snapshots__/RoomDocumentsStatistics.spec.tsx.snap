@@ -1,0 +1,327 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RoomDocumentsStatistics renders the component with provided data 1`] = `
+<body>
+  <div>
+    <div
+      class="document-statistics-fds"
+    >
+      <div
+        class="fds"
+      >
+        <div
+          class="data-set-wrapper visualization-mode-table"
+          data-testid="visualization-mode-table"
+        >
+          <div
+            class="data-set data-set-inline"
+          >
+            <div
+              class="data-set-content-wrapper"
+            >
+              <input
+                name="test-namespace_id"
+                readonly=""
+                type="hidden"
+                value=""
+              />
+              <div
+                class="table-responsive"
+              >
+                <table
+                  class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped table-valign-middle table-sort"
+                  style="table-layout: fixed;"
+                >
+                  <thead>
+                    <tr>
+                      <th
+                        class="cell-title table-head-title"
+                        data-id="string,title"
+                        scope="col"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        title
+                        <div
+                          class="dnd-th-resizer is-allowed"
+                        />
+                      </th>
+                      <th
+                        class="cell-totalViews table-head-title"
+                        data-id="string,totalViews"
+                        scope="col"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        total-views
+                        <div
+                          class="dnd-th-resizer is-allowed"
+                        />
+                      </th>
+                      <th
+                        class="cell-lastViewed table-head-title"
+                        data-id="string,lastViewed"
+                        scope="col"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        last-viewed
+                        <div
+                          class="dnd-th-resizer is-allowed"
+                        />
+                      </th>
+                      <th
+                        class="cell-download table-head-title"
+                        data-id="string,download"
+                        scope="col"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        download
+                        <div
+                          class="dnd-th-resizer is-allowed"
+                        />
+                      </th>
+                      <th
+                        class="cell-averageTime table-head-title"
+                        data-id="string,averageTime"
+                        scope="col"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        average-time
+                        <div
+                          class="dnd-th-resizer is-allowed"
+                        />
+                      </th>
+                      <th
+                        class="cell-userInvolved table-head-title"
+                        data-id="string,userInvolved"
+                        scope="col"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        user-involved
+                        <div
+                          class="dnd-th-resizer is-allowed"
+                        />
+                      </th>
+                      <th
+                        class="table-head-title"
+                        data-id="string,visibility"
+                        style="width: 64px;"
+                        tabindex="-1"
+                      >
+                        <span
+                          class="sr-only"
+                        >
+                          manage-columns-visibility
+                        </span>
+                        <div
+                          class="dropdown"
+                        >
+                          <button
+                            aria-haspopup="true"
+                            aria-label="manage-columns-visibility"
+                            class="dropdown-toggle btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
+                            title="manage-columns-visibility"
+                            type="button"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-caret-bottom"
+                              role="presentation"
+                            >
+                              <use
+                                href="#caret-bottom"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                      data-id="string,$.0"
+                      tabindex="-1"
+                    >
+                      <td
+                        aria-colindex="1"
+                        class="cell-title"
+                        data-id="string,null:title"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        <div>
+                          <span
+                            class="sticker c-mr-2 flex-shrink-0 inline-item inline-item-before file-icon-color-0 sticker-lg"
+                          >
+                            <span
+                              class="sticker-overlay inline-item"
+                            >
+                              <svg
+                                aria-label="pdf"
+                                class="lexicon-icon lexicon-icon-document-pdf"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#document-pdf"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                          <span
+                            aria-label="pdf_test"
+                            class="table-list-title"
+                          >
+                            pdf_test
+                          </span>
+                        </div>
+                      </td>
+                      <td
+                        aria-colindex="2"
+                        class="cell-totalViews"
+                        data-id="string,null:totalViews"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        89
+                      </td>
+                      <td
+                        aria-colindex="3"
+                        class="cell-lastViewed"
+                        data-id="string,null:lastViewed"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        Mar 3, 2026
+                      </td>
+                      <td
+                        aria-colindex="4"
+                        class="cell-download"
+                        data-id="string,null:download"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        324
+                      </td>
+                      <td
+                        aria-colindex="5"
+                        class="cell-averageTime"
+                        data-id="string,null:averageTime"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        1h 33 min
+                      </td>
+                      <td
+                        aria-colindex="6"
+                        class="cell-userInvolved"
+                        data-id="string,null:userInvolved"
+                        style="width: auto;"
+                        tabindex="-1"
+                      >
+                        4 users
+                      </td>
+                      <td
+                        aria-colindex="7"
+                        class="cell-item-actions"
+                        data-id="string,null:actions"
+                        style="width: auto;"
+                        tabindex="-1"
+                      />
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="lfr-tooltip-scope"
+  >
+    <div
+      class="fds-side-panel-nav-cover navigation-bar border-bottom is-hidden"
+      style="top: 0px;"
+    >
+      <div
+        class="container"
+      >
+        <ul
+          class="navbar-nav"
+        >
+          <li
+            class="nav-item"
+          >
+            <button
+              aria-label="back"
+              class="btn btn-unstyled nav-link"
+              title="back"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-angle-left"
+                role="presentation"
+              >
+                <use
+                  href="#angle-left"
+                />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="fds-side-panel fds-side-panel-lg is-hidden is-loading"
+      style="top: 0px;"
+    >
+      <div
+        class="tab-content"
+      >
+        <div
+          class="loader"
+        >
+          <span
+            aria-hidden="true"
+            class="loading-animation"
+          />
+        </div>
+        <div
+          class="active fade show tab-pane"
+          role="tabpanel"
+        >
+          <iframe
+            frameborder="0"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-live-announcer="true"
+    style="border: 0px; clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+  >
+    <div
+      aria-live="assertive"
+      aria-relevant="additions"
+      role="log"
+    />
+    <div
+      aria-live="polite"
+      aria-relevant="additions"
+      role="log"
+    />
+  </div>
+  <div
+    aria-hidden="true"
+    id="clay-id-1"
+    style="display: none;"
+  >
+    sortable-column
+  </div>
+</body>
+`;

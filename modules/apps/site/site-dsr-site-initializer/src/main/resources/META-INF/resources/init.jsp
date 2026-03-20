@@ -13,6 +13,7 @@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/user" prefix="liferay-user" %>
@@ -35,6 +36,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
 page import="com.liferay.site.dsr.site.initializer.internal.constants.DSRSiteInitializerFDSNames" %><%@
 page import="com.liferay.site.dsr.site.initializer.internal.display.context.InviteMemberDisplayContext" %><%@
+page import="com.liferay.site.dsr.site.initializer.internal.display.context.ViewAnalyticsRoomTrendAnalyticsSectionDisplayContext" %><%@
 page import="com.liferay.site.dsr.site.initializer.internal.display.context.ViewRoomsSectionDisplayContext" %>
 
 <liferay-theme:defineObjects />

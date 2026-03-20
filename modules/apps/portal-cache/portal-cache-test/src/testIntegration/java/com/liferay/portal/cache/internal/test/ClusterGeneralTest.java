@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterNode;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
+import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -44,6 +48,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -73,6 +79,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Future;
 
 import org.apache.logging.log4j.core.LoggerContext;
 
@@ -124,6 +131,56 @@ public class ClusterGeneralTest implements Serializable {
 	public void testCanCreateVirtualInstanceWithClustering() throws Exception {
 		_testCanCreateVirtualInstanceWithClustering(_tomcatNode1, _tomcatNode2);
 		_testCanCreateVirtualInstanceWithClustering(_tomcatNode2, _tomcatNode1);
+	}
+
+	@Test
+	public void testCanInvokeMethods() throws Exception {
+		String tomcatNode1ClusterNodeId = _tomcatNode1.syncExecute(
+			ClusterGeneralTest::_getLocalClusterNodeId);
+
+		String tomcatNode2ClusterNodeId = _tomcatNode2.syncExecute(
+			ClusterGeneralTest::_getLocalClusterNodeId);
+
+		String masterNodeClusterNodeId;
+
+		if (_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster)) {
+			masterNodeClusterNodeId = tomcatNode1ClusterNodeId;
+		}
+		else {
+			masterNodeClusterNodeId = tomcatNode2ClusterNodeId;
+		}
+
+		Assert.assertEquals(
+			tomcatNode2ClusterNodeId,
+			_tomcatNode1.syncExecute(() -> _testInvokeMethodPortal()));
+
+		Assert.assertEquals(
+			tomcatNode1ClusterNodeId,
+			_tomcatNode2.syncExecute(() -> _testInvokeMethodPortal()));
+
+		Assert.assertEquals(
+			masterNodeClusterNodeId,
+			_tomcatNode1.syncExecute(() -> _testInvokeMethodPortalOnMaster()));
+
+		Assert.assertEquals(
+			masterNodeClusterNodeId,
+			_tomcatNode2.syncExecute(() -> _testInvokeMethodPortalOnMaster()));
+
+		Assert.assertEquals(
+			tomcatNode2ClusterNodeId,
+			_tomcatNode1.syncExecute(() -> _testInvokeMethodModule()));
+
+		Assert.assertEquals(
+			tomcatNode1ClusterNodeId,
+			_tomcatNode2.syncExecute(() -> _testInvokeMethodModule()));
+
+		Assert.assertEquals(
+			masterNodeClusterNodeId,
+			_tomcatNode1.syncExecute(() -> _testInvokeMethodModuleOnMaster()));
+
+		Assert.assertEquals(
+			masterNodeClusterNodeId,
+			_tomcatNode2.syncExecute(() -> _testInvokeMethodModuleOnMaster()));
 	}
 
 	@Test
@@ -735,6 +792,116 @@ public class ClusterGeneralTest implements Serializable {
 				}));
 	}
 
+	private String _testInvokeMethodModule() throws Exception {
+		ClusterNode localClusterNode =
+			ClusterExecutorUtil.getLocalClusterNode();
+
+		ClusterNode targetClusterNode = null;
+
+		for (ClusterNode clusterNode : ClusterExecutorUtil.getClusterNodes()) {
+			if (!clusterNode.equals(localClusterNode)) {
+				targetClusterNode = clusterNode;
+
+				break;
+			}
+		}
+
+		if (targetClusterNode == null) {
+			return null;
+		}
+
+		MethodKey methodKey = new MethodKey(
+			ClusterSampleClass.class, "getLocalClusterNode");
+
+		MethodHandler methodHandler = new MethodHandler(methodKey);
+
+		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
+			methodHandler, targetClusterNode.getClusterNodeId());
+
+		FutureClusterResponses futureClusterResponses =
+			ClusterExecutorUtil.execute(clusterRequest);
+
+		ClusterNodeResponses clusterNodeResponses =
+			futureClusterResponses.get();
+
+		ClusterNodeResponse clusterNodeResponse =
+			clusterNodeResponses.getClusterResponse(
+				targetClusterNode.getClusterNodeId());
+
+		ClusterNode clusterNode = (ClusterNode)clusterNodeResponse.getResult();
+
+		return clusterNode.getClusterNodeId();
+	}
+
+	private String _testInvokeMethodModuleOnMaster() throws Exception {
+		MethodKey methodKey = new MethodKey(
+			ClusterSampleClass.class, "getLocalClusterNode");
+
+		MethodHandler methodHandler = new MethodHandler(methodKey);
+
+		Future<ClusterNode> future = ClusterMasterExecutorUtil.executeOnMaster(
+			methodHandler);
+
+		ClusterNode clusterNode = future.get();
+
+		return clusterNode.getClusterNodeId();
+	}
+
+	private String _testInvokeMethodPortal() throws Exception {
+		ClusterNode localClusterNode =
+			ClusterExecutorUtil.getLocalClusterNode();
+
+		ClusterNode targetClusterNode = null;
+
+		for (ClusterNode clusterNode : ClusterExecutorUtil.getClusterNodes()) {
+			if (!clusterNode.equals(localClusterNode)) {
+				targetClusterNode = clusterNode;
+
+				break;
+			}
+		}
+
+		if (targetClusterNode == null) {
+			return null;
+		}
+
+		MethodKey methodKey = new MethodKey(
+			ClusterExecutorUtil.class, "getLocalClusterNode");
+
+		MethodHandler methodHandler = new MethodHandler(methodKey);
+
+		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
+			methodHandler, targetClusterNode.getClusterNodeId());
+
+		FutureClusterResponses futureClusterResponses =
+			ClusterExecutorUtil.execute(clusterRequest);
+
+		ClusterNodeResponses clusterNodeResponses =
+			futureClusterResponses.get();
+
+		ClusterNodeResponse clusterNodeResponse =
+			clusterNodeResponses.getClusterResponse(
+				targetClusterNode.getClusterNodeId());
+
+		ClusterNode clusterNode = (ClusterNode)clusterNodeResponse.getResult();
+
+		return clusterNode.getClusterNodeId();
+	}
+
+	private String _testInvokeMethodPortalOnMaster() throws Exception {
+		MethodKey methodKey = new MethodKey(
+			ClusterExecutorUtil.class, "getLocalClusterNode");
+
+		MethodHandler methodHandler = new MethodHandler(methodKey);
+
+		Future<ClusterNode> future = ClusterMasterExecutorUtil.executeOnMaster(
+			methodHandler);
+
+		ClusterNode clusterNode = future.get();
+
+		return clusterNode.getClusterNodeId();
+	}
+
 	private void _testValidateFileEntryOnSeparateNodes(
 			long groupId, long userId, String fileName, TomcatNode tomcatNode1,
 			TomcatNode tomcatNode2)
@@ -757,6 +924,14 @@ public class ClusterGeneralTest implements Serializable {
 
 	private static transient TomcatNode _tomcatNode1;
 	private static transient TomcatNode _tomcatNode2;
+
+	private static class ClusterSampleClass {
+
+		public static ClusterNode getLocalClusterNode() {
+			return ClusterExecutorUtil.getLocalClusterNode();
+		}
+
+	}
 
 	private static class TestClusterMasterTokenTransitionListener
 		implements ClusterMasterTokenTransitionListener {

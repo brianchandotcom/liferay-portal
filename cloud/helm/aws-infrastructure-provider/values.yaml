@@ -1,5 +1,4 @@
 aws: {}
-crossplaneNamespace: crossplane-system
 clusterBootstrap:
     image: alpine:3
     resources:
@@ -11,6 +10,7 @@ clusterBootstrap:
             memory: 8Mi
     script: |
         sysctl -w vm.max_map_count=1048576
+crossplaneNamespace: crossplane-system
 gateway:
     internetFacing: true
     namespace: envoy-gateway-system

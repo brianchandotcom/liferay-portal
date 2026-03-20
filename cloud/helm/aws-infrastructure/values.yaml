@@ -32,7 +32,7 @@ search:
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
-                type: "RuntimeDefault"
+                type: RuntimeDefault
         securityContext:
             allowPrivilegeEscalation: false
             capabilities:

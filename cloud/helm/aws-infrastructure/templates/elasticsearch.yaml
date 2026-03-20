@@ -71,10 +71,10 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-    name: {{ $elasticsearchNamespace }}
     labels:
         name: {{ $elasticsearchNamespace }}
         pod-security.kubernetes.io/enforce: restricted
+    name: {{ $elasticsearchNamespace }}
 ---
 apiVersion: v1
 kind: Secret

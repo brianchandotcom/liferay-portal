@@ -470,7 +470,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			kaleoDefinitionVersion =
 				_kaleoDefinitionVersionLocalService.
 					fetchLatestKaleoDefinitionVersion(
-						themeDisplay.getCompanyId(), name, null);
+						themeDisplay.getCompanyId(), name);
 		}
 		else {
 			kaleoDefinitionVersion =

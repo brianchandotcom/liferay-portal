@@ -65,7 +65,7 @@ public class AgentDefinitionResourceTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
@@ -76,7 +76,7 @@ public class AgentDefinitionResourceTest
 			ServiceContextTestUtil.getServiceContext());
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), TestPropsValues.getUserId());
+			_accountEntry.getAccountEntryId(), TestPropsValues.getUserId());
 
 		_dtoConverterContext = new DefaultDTOConverterContext(
 			false, Map.of(), _dtoConverterRegistry, null,
@@ -236,6 +236,10 @@ public class AgentDefinitionResourceTest
 		Assert.assertEquals(
 			objectEntry1.getPropertyValue("outputVariable"),
 			objectEntry2.getPropertyValue("outputVariable"));
+		Assert.assertEquals(
+			_accountEntry.getAccountEntryId(),
+			objectEntry2.getPropertyValue(
+				"r_accountToAIHubAgentDefinitions_accountEntryId"));
 		Assert.assertNotEquals(
 			objectEntry1.getPropertyValue("title_i18n"),
 			objectEntry2.getPropertyValue("title_i18n"));
@@ -257,6 +261,9 @@ public class AgentDefinitionResourceTest
 		Assert.assertNotEquals(
 			workflowDefinition1.getExternalReferenceCode(),
 			workflowDefinition2.getExternalReferenceCode());
+		Assert.assertEquals(
+			_accountEntry.getAccountEntryGroupId(),
+			workflowDefinition2.getGroupId());
 		Assert.assertNotEquals(
 			workflowDefinition1.getName(), workflowDefinition2.getName());
 		Assert.assertNotEquals(
@@ -334,6 +341,8 @@ public class AgentDefinitionResourceTest
 		assertEquals(
 			_systemAgentDefinitions, (List<AgentDefinition>)page.getItems());
 	}
+
+	private static AccountEntry _accountEntry;
 
 	@Inject
 	private static AccountEntryLocalService _accountEntryLocalService;

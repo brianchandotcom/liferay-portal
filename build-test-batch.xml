@@ -1230,7 +1230,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					</if>
 
 					<if>
-						<equals arg1="${test.batch.name}" arg2="solr" />
+						<contains string="${test.batch.name}" substring="solr" />
 						<then>
 							<ant antfile="build-test-solr.xml" target="start-solr" />
 
@@ -9460,6 +9460,8 @@ information. Make sure to commit in all format-javadoc results.
 						</gradle-execute>
 					</then>
 				</if>
+
+				<property name="test.batch.name" unless:set="test.batch.name" value="${env.TEST_BATCH_NAME}" />
 
 				<condition else="" property="test.arg.opensearch2.unit.tests" value="-Dcom.liferay.portal.search.opensearch2.test.unit.enabled=true">
 					<istrue value="${run.opensearch2.unit.tests}" />

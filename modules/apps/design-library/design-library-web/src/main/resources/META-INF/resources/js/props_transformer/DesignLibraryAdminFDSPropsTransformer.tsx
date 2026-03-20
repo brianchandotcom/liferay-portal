@@ -34,15 +34,11 @@ export default function DesignLibraryAdminFDSPropsTransformer({
 				label: Liferay.Language.get('new-design-library'),
 				onClick: () => {
 					openModal({
-						contentComponent: ({
-							closeModal,
-						}: {
-							closeModal: () => void;
-						}) =>
+						contentComponent: ({closeModal}) =>
 							CreateDesignLibraryModal({
-								closeModal,
 								dataSetId: id,
 								entryIdKey,
+								onClose: closeModal,
 								redirectURL,
 							}),
 						size: 'md',

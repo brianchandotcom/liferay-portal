@@ -21,18 +21,46 @@ import {
 const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
 
 export default function CreateDesignLibraryModal({
-	closeModal,
 	dataSetId,
 	entryIdKey,
+	onClose,
 	redirectURL: baseRedirectURL,
 }: {
-	closeModal: () => void;
 	dataSetId: string;
 	entryIdKey: string;
+	onClose: () => void;
 	redirectURL: string;
 }) {
 	const [nameInputError, setNameInputError] = useState<string>('');
-	const [close, setClose] = useState(false);
+
+	const createDesignLibrary = async (name: string, description: string) => {
+		const url = '/o/headless-asset-library/v1.0/asset-libraries';
+		const body = {
+			description,
+			name,
+			type: 'DesignLibrary',
+		};
+
+		const response = await fetch(url, {
+			body: JSON.stringify(body),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+		});
+
+		const data = await response.json().catch(() => ({}));
+
+		if (!response.ok) {
+			throw {
+				error: data.title || 'UNKNOWN_ERROR',
+				status: data.status || response.status,
+			};
+		}
+
+		return data as {id: string};
+	};
 
 	const {
 		errors,
@@ -48,112 +76,63 @@ export default function CreateDesignLibraryModal({
 			designLibraryDescription: '',
 			designLibraryName: '',
 		},
-		onSubmit: (values) => {
-			const url = '/o/headless-asset-library/v1.0/asset-libraries';
-			const body = {
-				description: values.designLibraryDescription,
-				name: values.designLibraryName,
-				settings: {},
-				type: 'DesignLibrary',
-			};
+		onSubmit: async (values) => {
+			try {
+				const data = await createDesignLibrary(
+					values.designLibraryName,
+					values.designLibraryDescription
+				);
 
-			return fetch(url, {
-				body: JSON.stringify(body),
-				headers: new Headers({
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				}),
-				method: 'POST',
-			})
-				.then(async (response) => {
-					const data = await response.json().catch(() => ({}));
-
-					if (!response.ok) {
-						throw {
-							error: data.title || 'UNKNOWN_ERROR',
-							status: data.status || response.status,
-						};
-					}
-
-					return data;
-				})
-				.then((data) => {
-					openToast({
-						message: sub(
-							Liferay.Language.get('x-was-created-successfully'),
-							`<strong>${Liferay.Util.escapeHTML(values.designLibraryName)}</strong>`
-						),
-						type: 'success',
-					});
-
-					Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {id: dataSetId});
-
-					resetForm();
-					setNameInputError('');
-
-					if (close) {
-						closeModal();
-					}
-
-					const redirectURL = createPortletURL(baseRedirectURL, {
-						[entryIdKey]: (data as {id: string}).id,
-					});
-
-					navigate(redirectURL);
-				})
-				.catch(({error}) => {
-					if (error === 'Please enter a unique name.') {
-						setNameInputError(
-							Liferay.Language.get(
-								'please-enter-a-unique-name.-this-one-is-already-in-use'
-							)
-						);
-
-						openToast({
-							message: Liferay.Language.get(
-								'please-enter-a-unique-name.-this-one-is-already-in-use'
-							),
-							title: Liferay.Language.get('error'),
-							type: 'danger',
-						});
-					}
-					else {
-						openToast({
-							message: Liferay.Language.get(
-								'an-unexpected-error-occurred'
-							),
-							title: Liferay.Language.get('error'),
-							type: 'danger',
-						});
-
-						if (close) {
-							closeModal();
-						}
-					}
-
-					throw new Error(
-						`POST request failed to create a new Design Library with name ${body.name}`
-					);
+				openToast({
+					message: sub(
+						Liferay.Language.get('x-was-created-successfully'),
+						`<strong>${Liferay.Util.escapeHTML(values.designLibraryName)}</strong>`
+					),
+					type: 'success',
 				});
+
+				Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {id: dataSetId});
+
+				resetForm();
+				setNameInputError('');
+
+				navigate(
+					createPortletURL(baseRedirectURL, {
+						[entryIdKey]: (data as {id: string}).id,
+					})
+				);
+			}
+			catch (error: any) {
+				const errorMessage =
+					error?.error ||
+					Liferay.Language.get('an-unexpected-error-occurred');
+
+				if (error?.error) {
+					setNameInputError(errorMessage);
+				}
+
+				openToast({
+					message: errorMessage,
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
+
+				throw new Error(
+					`POST request failed to create a new Design Library with name ${values.designLibraryName}`
+				);
+			}
 		},
 		validate: (values) => {
-			const errors = validate(
+			return validate(
 				{
 					designLibraryName: [required, maxLength(75)],
 				},
 				values
 			);
-
-			return errors;
 		},
 	});
 
-	const shouldDisableSaveBtn = isSubmitting || !values.designLibraryName;
-
-	const errorMessage = sub(
-		Liferay.Language.get('the-x-field-is-required'),
-		Liferay.Language.get('name')
-	);
+	const shouldDisableSaveButton = isSubmitting || !values.designLibraryName;
 
 	const handleNameInputErrorMessage = () => {
 		if (nameInputError) {
@@ -168,7 +147,10 @@ export default function CreateDesignLibraryModal({
 			return errors.designLibraryName;
 		}
 
-		return errorMessage;
+		return sub(
+			Liferay.Language.get('the-x-field-is-required'),
+			Liferay.Language.get('name')
+		);
 	};
 
 	return (
@@ -211,16 +193,15 @@ export default function CreateDesignLibraryModal({
 						<ClayButton.Group spaced>
 							<ClayButton
 								displayType="secondary"
-								onClick={closeModal}
+								onClick={onClose}
 								type="button"
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
 							<ClayButton
-								disabled={shouldDisableSaveBtn}
+								disabled={shouldDisableSaveButton}
 								displayType="primary"
-								onClick={() => setClose(true)}
 								type="submit"
 							>
 								{Liferay.Language.get('save')}

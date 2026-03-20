@@ -141,6 +141,28 @@ public class AnalyticsAttributesUtil {
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
+		List<AssetCategory> assetCategories =
+			AssetCategoryLocalServiceUtil.getCategories(
+				infoItemFieldMapped.getClassName(),
+				classPKInfoItemIdentifier.getClassPK());
+
+		if (ListUtil.isNotEmpty(assetCategories)) {
+			JSONArray jsonArray = JSONUtil.toJSONArray(
+				assetCategories,
+				assetCategory -> JSONUtil.put(
+					"id", assetCategory.getCategoryId()
+				).put(
+					"name",
+					assetCategory.getTitle(
+						fragmentEntryProcessorContext.getLocale())
+				),
+				_log);
+
+			element.attr(
+				"data-analytics-object-definition-categories",
+				jsonArray.toString());
+		}
+
 		element.attr(
 			"data-analytics-asset-id",
 			String.valueOf(classPKInfoItemIdentifier.getClassPK()));
@@ -164,47 +186,6 @@ public class AnalyticsAttributesUtil {
 				element.attr("data-analytics-asset-action", ACTION_VIEW);
 			}
 
-			List<AssetCategory> assetCategories =
-				AssetCategoryLocalServiceUtil.getCategories(
-					objectEntry.getModelClassName(),
-					objectEntry.getObjectEntryId());
-
-			if (ListUtil.isNotEmpty(assetCategories)) {
-				JSONArray jsonArray = JSONUtil.toJSONArray(
-					assetCategories,
-					assetCategory -> JSONUtil.put(
-						"id", assetCategory.getCategoryId()
-					).put(
-						"name",
-						assetCategory.getTitle(
-							fragmentEntryProcessorContext.getLocale())
-					),
-					_log);
-
-				element.attr(
-					"data-analytics-object-definition-categories",
-					jsonArray.toString());
-			}
-
-			List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
-				objectEntry.getModelClassName(),
-				objectEntry.getObjectEntryId());
-
-			if (ListUtil.isNotEmpty(assetTags)) {
-				JSONArray jsonArray = JSONUtil.toJSONArray(
-					assetTags,
-					assetTag -> JSONUtil.put(
-						"id", assetTag.getTagId()
-					).put(
-						"name", assetTag.getName()
-					),
-					_log);
-
-				element.attr(
-					"data-analytics-object-definition-tags",
-					jsonArray.toString());
-			}
-
 			element.attr(
 				"data-analytics-object-definition-name",
 				_getAnalyticsObjectDefinitionName(
@@ -214,6 +195,26 @@ public class AnalyticsAttributesUtil {
 		element.attr(
 			"data-analytics-asset-subtype",
 			_getAnalyticsSubtype(infoItemFieldMapped, infoItemServiceRegistry));
+
+		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
+			infoItemFieldMapped.getClassName(),
+			classPKInfoItemIdentifier.getClassPK());
+
+		if (ListUtil.isNotEmpty(assetTags)) {
+			JSONArray jsonArray = JSONUtil.toJSONArray(
+				assetTags,
+				assetTag -> JSONUtil.put(
+					"id", assetTag.getTagId()
+				).put(
+					"name", assetTag.getName()
+				),
+				_log);
+
+			element.attr(
+				"data-analytics-object-definition-tags",
+				jsonArray.toString());
+		}
+
 		element.attr(
 			"data-analytics-asset-title",
 			_getAnalyticsTitle(

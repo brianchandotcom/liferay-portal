@@ -2958,6 +2958,19 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JenkinsMaster getMostAvailableJenkinsMaster(
+		String baseInvocationURL, int invokedBatchSize,
+		String labelExpression) {
+
+		String mostAvailableMasterURL = getMostAvailableMasterURL(
+			baseInvocationURL, null, invokedBatchSize, null, labelExpression,
+			JenkinsMaster.getSlaveRAMMinimumDefault(),
+			JenkinsMaster.getSlavesPerHostDefault());
+
+		return JenkinsMaster.getInstance(
+			mostAvailableMasterURL.replaceAll("http://(.+)", "$1"));
+	}
+
+	public static JenkinsMaster getMostAvailableJenkinsMaster(
 		String baseInvocationURL, String blacklist, int invokedBatchSize,
 		int minimumRAM, int maximumSlavesPerHost) {
 

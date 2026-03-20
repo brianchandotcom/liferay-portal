@@ -188,10 +188,10 @@ public class CommerceOrderContentDisplayContext {
 
 		_themeDisplay = _cpRequestHelper.getThemeDisplay();
 
-		_commerceOrderDateFormat = FastDateFormatFactoryUtil.getDate(
+		_dateFormat = FastDateFormatFactoryUtil.getDate(
 			DateFormat.MEDIUM, _themeDisplay.getLocale(),
 			_themeDisplay.getTimeZone());
-		_commerceOrderTimeFormat = FastDateFormatFactoryUtil.getTime(
+		_timeFormat = FastDateFormatFactoryUtil.getTime(
 			DateFormat.MEDIUM, _themeDisplay.getLocale(),
 			_themeDisplay.getTimeZone());
 
@@ -221,7 +221,7 @@ public class CommerceOrderContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return _commerceOrderDateFormat.format(date);
+		return _dateFormat.format(date);
 	}
 
 	public AccountEntry getAccountEntry() {
@@ -331,7 +331,7 @@ public class CommerceOrderContentDisplayContext {
 			orderDate = commerceOrder.getOrderDate();
 		}
 
-		return _commerceOrderDateFormat.format(orderDate);
+		return _dateFormat.format(orderDate);
 	}
 
 	public long getCommerceOrderId() {
@@ -416,7 +416,7 @@ public class CommerceOrderContentDisplayContext {
 			orderDate = commerceOrder.getOrderDate();
 		}
 
-		return _commerceOrderTimeFormat.format(orderDate);
+		return _timeFormat.format(orderDate);
 	}
 
 	public String getCommerceOrderTypeName(String languageId)
@@ -1470,7 +1470,6 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceContext _commerceContext;
 	private CommerceOrder _commerceOrder;
-	private final Format _commerceOrderDateFormat;
 	private final CommerceOrderEngine _commerceOrderEngine;
 	private CommerceOrderFieldsConfiguration _commerceOrderFieldsConfiguration;
 	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
@@ -1484,7 +1483,6 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 	private final CommerceOrderStepTrackerHelper
 		_commerceOrderStepTrackerHelper;
-	private final Format _commerceOrderTimeFormat;
 	private final CommerceOrderTypeService _commerceOrderTypeService;
 	private final CommercePaymentIntegrationRegistry
 		_commercePaymentIntegrationRegistry;
@@ -1494,6 +1492,7 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceTermEntryService _commerceTermEntryService;
 	private final ConfigurationProvider _configurationProvider;
 	private final CPRequestHelper _cpRequestHelper;
+	private final Format _dateFormat;
 	private Long _displayStyleGroupId;
 	private String _displayStyleGroupKey;
 	private final DLAppLocalService _dlAppLocalService;
@@ -1508,5 +1507,6 @@ public class CommerceOrderContentDisplayContext {
 	private final PortletResourcePermission _portletResourcePermission;
 	private SearchContainer<CommerceOrder> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
+	private final Format _timeFormat;
 
 }

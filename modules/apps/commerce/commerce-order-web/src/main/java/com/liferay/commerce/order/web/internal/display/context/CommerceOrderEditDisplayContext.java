@@ -265,7 +265,6 @@ public class CommerceOrderEditDisplayContext {
 		Format dateFormat = FastDateFormatFactoryUtil.getDate(
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
-
 		Format timeFormat = FastDateFormatFactoryUtil.getTime(
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());

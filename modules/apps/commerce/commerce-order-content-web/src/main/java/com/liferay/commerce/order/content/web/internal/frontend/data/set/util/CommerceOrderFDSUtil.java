@@ -327,18 +327,18 @@ public class CommerceOrderFDSUtil {
 		Locale locale, Date orderDate, boolean showCommerceOrderCreateTime,
 		TimeZone timeZone) {
 
-		Format commerceOrderDateFormat = FastDateFormatFactoryUtil.getDate(
+		Format dateFormat = FastDateFormatFactoryUtil.getDate(
 			DateFormat.MEDIUM, locale, timeZone);
 
 		if (showCommerceOrderCreateTime) {
-			Format commerceOrderTimeFormat = FastDateFormatFactoryUtil.getTime(
+			Format timeFormat = FastDateFormatFactoryUtil.getTime(
 				DateFormat.MEDIUM, locale, timeZone);
 
-			return commerceOrderDateFormat.format(orderDate) + " " +
-				commerceOrderTimeFormat.format(orderDate);
+			return dateFormat.format(orderDate) + " " +
+				timeFormat.format(orderDate);
 		}
 
-		return commerceOrderDateFormat.format(orderDate);
+		return dateFormat.format(orderDate);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -397,6 +397,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		return null;
 	}
 
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
 	/**
 	 * Returns the last ${entity.humanName} in the ordered set where ${entityFinder.getHumanConditions(false)}.
 	 *
@@ -490,6 +491,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		return null;
 	}
+	</#if>
 
 	<#if !entityFinder.hasEntityColumn(entity.PKVariableName) && !serviceBuilder.isVersionGTE_7_4_0()>
 		/**

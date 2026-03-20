@@ -155,6 +155,14 @@ public class ObjectDefinitionDeployerImplTest {
 			role.getRoleId());
 
 		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		_assertHasResourcePermissions(
+			actionIds, layoutSetPrototype.getGroupId(),
+			List.of(ActionKeys.VIEW),
+			role.getRoleId());
+
+		role = _roleLocalService.fetchRole(
 			TestPropsValues.getCompanyId(), "DSR Contributor");
 
 		_assertHasResourcePermissions(

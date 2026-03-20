@@ -51,7 +51,6 @@ import com.liferay.sharing.security.permission.SharingEntryAction;
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -203,24 +202,22 @@ public class SharedAssetDTOConverter
 			return null;
 		}
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId())) {
 
-		for (ObjectField objectField : objectFields) {
 			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+				Objects.equals(objectField.getName(), "file")) {
 
 				Map<String, Serializable> values = objectEntry.getValues();
 
-				String objectFieldName = objectField.getName();
+				long fileEntryId = GetterUtil.getLong(values.get("file"));
 
-				Serializable serializable = values.get(objectFieldName);
-
-				if (serializable instanceof Long) {
+				if (fileEntryId != 0) {
 					return _getFileEntry(
-						GetterUtil.getLong(serializable), objectDefinition,
-						objectEntry, objectField);
+						fileEntryId, objectDefinition, objectEntry,
+						objectField);
 				}
 			}
 		}

@@ -11,7 +11,7 @@ import {
 	DesignLibraryLinkRenderer,
 	FromNowDateTimeRenderer,
 } from './cell_renderers';
-import {TableCellRenderer} from './constants';
+import {TableCellContentType} from './constants';
 
 export default function DesignLibraryAdminFDSPropsTransformer(
 	props: IFrontendDataSetProps
@@ -31,12 +31,12 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 			tableCell: [
 				{
 					component: DesignLibraryLinkRenderer,
-					name: TableCellRenderer.DESIGN_LIBRARY_LINK,
+					name: TableCellContentType.DESIGN_LIBRARY_LINK,
 					type: 'internal',
 				},
 				{
 					component: FromNowDateTimeRenderer,
-					name: TableCellRenderer.FROM_NOW_DATE_TIME,
+					name: TableCellContentType.FROM_NOW_DATE_TIME,
 					type: 'internal',
 				},
 			],
@@ -53,7 +53,7 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 						{
 							actionId: 'edit',
 							contentRenderer:
-								TableCellRenderer.DESIGN_LIBRARY_LINK,
+								TableCellContentType.DESIGN_LIBRARY_LINK,
 							fieldName: 'name',
 							label: Liferay.Language.get('title'),
 							localizeLabel: true,
@@ -67,7 +67,7 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 						},
 						{
 							contentRenderer:
-								TableCellRenderer.FROM_NOW_DATE_TIME,
+								TableCellContentType.FROM_NOW_DATE_TIME,
 							fieldName: 'dateModified',
 							label: Liferay.Language.get('modified'),
 							localizeLabel: true,

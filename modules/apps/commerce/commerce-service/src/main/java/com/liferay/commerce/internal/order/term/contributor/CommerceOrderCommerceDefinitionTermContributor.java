@@ -338,16 +338,15 @@ public class CommerceOrderCommerceDefinitionTermContributor
 
 		User user = _userLocalService.getUser(commerceOrder.getUserId());
 
-		Format commerceOrderDateFormat = FastDateFormatFactoryUtil.getDate(
+		Format dateFormat = FastDateFormatFactoryUtil.getDate(
 			DateFormat.MEDIUM, locale, user.getTimeZone());
-
-		Format commerceOrderTimeFormat = FastDateFormatFactoryUtil.getTime(
+		Format timeFormat = FastDateFormatFactoryUtil.getTime(
 			DateFormat.MEDIUM, locale, user.getTimeZone());
 
 		Date orderDate = commerceOrder.getOrderDate();
 
-		return commerceOrderDateFormat.format(orderDate) + " " +
-			commerceOrderTimeFormat.format(orderDate);
+		return dateFormat.format(orderDate) + " " +
+			timeFormat.format(orderDate);
 	}
 
 	private String _getOrderItemsTerm(

@@ -37,6 +37,7 @@ resource "kubernetes_manifest" "git_repo_credentials_external_secret" {
 					each.value.method == "ssh" ? [
 						{
 							remoteRef={
+								decodingStrategy="Auto"
 								key=each.value.credentials_secret_name
 								property=each.value.ssh_private_key_property
 							}

@@ -27,7 +27,8 @@ task setUpLibs
 task setUpPortalTools
 task setUpYarnOfflineCache
 task updateYarnBinariesCache
-task validateBranch(type: JavaExec)
+task generateBranchValidationScript(type: JavaExec)
+task validateBranch(type: Exec)
 task wrapperPortal(type: Wrapper)
 task wrapperProjectTemplates(type: Wrapper)
 task wrapperSubrepo(type: Wrapper)
@@ -69,11 +70,11 @@ appendHotfixQualifier {
 }
 
 configurations {
-	validateBranchConfiguration
+	generateBranchValidationScriptConfiguration
 }
 
 dependencies {
-	validateBranchConfiguration group: "com.liferay", name: "com.liferay.jenkins.results.parser", version: "1.0.1763"
+	generateBranchValidationScriptConfiguration group: "com.liferay", name: "com.liferay.jenkins.results.parser", version: "1.0.1763"
 }
 
 formatSourceCurrentBranch {
@@ -168,45 +169,36 @@ updateYarnBinariesCache {
 	}
 }
 
-validateBranch {
-	classpath = configurations.validateBranchConfiguration
+File repoRootDir = project.rootDir.parentFile
+
+generateBranchValidationScript {
+	Task task ->
+
+	File outputDir = file "${buildDir}/${task.name}"
+
+	args repoRootDir, outputDir
+
+	classpath = configurations.generateBranchValidationScriptConfiguration
 	mainClass = "com.liferay.jenkins.results.parser.test.suite.TestScriptGenerator"
 
-	File gitRoot = projectDir.parentFile
+	outputs.file provider { file "${repoRootDir}/validate_branch.sh" }
+	// outputs.file provider { file "${outputDir}/validate_branch.sh" }
 
-	while (gitRoot != null) {
-		File gitDir = new File(gitRoot, ".git")
-
-		if (gitDir.exists()) {
-			break
-		}
-
-		gitRoot = gitRoot.parentFile
-	}
-
-	if (project.hasProperty("gitRepositoryDirPath")) {
-		Object gitRepositoryDirPath = project.property("gitRepositoryDirPath")
-
-		gitRoot = file(gitRepositoryDirPath)
-	}
-
-	if (gitRoot != null) {
-		String gitRootAbsolutePath = gitRoot.absolutePath
-
-		args gitRootAbsolutePath
-	}
+	outputs.upToDateWhen { false }
 
 	doLast {
-		if (gitRoot != null) {
-			exec {
-				String gitRootAbsolutePath = gitRoot.absolutePath
-
-				commandLine "bash", "${gitRootAbsolutePath}/validate_branch.sh"
-				standardInput = System.in
-				workingDir gitRoot
-			}
-		}
+		println
+		println "Script generated at: ${outputs.files.singleFile}"
+		println
 	}
+}
+
+validateBranch {
+	dependsOn generateBranchValidationScript
+
+	executable generateBranchValidationScript.outputs.files.singleFile
+	standardInput = System.in
+	workingDir repoRootDir
 }
 
 wrapperPortal {

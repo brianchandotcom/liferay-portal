@@ -238,7 +238,7 @@ public class SegmentsExperienceUpgradeProcessTest
 				"LONG");
 			_db.alterTableAddColumn(
 				_connection, "LayoutPageTemplateStructureRel", "ctCollectionId",
-				"LONG");
+				"LONG default 0 not null");
 		}
 
 		_assertSegmentsExperiences();
@@ -265,10 +265,11 @@ public class SegmentsExperienceUpgradeProcessTest
 				_connection, "LayoutPageTemplateStructure", "classPK",
 				"plid LONG");
 			_db.alterTableAddColumn(
-				_connection, "FragmentEntryLink", "ctCollectionId", "LONG");
+				_connection, "FragmentEntryLink", "ctCollectionId",
+				"LONG default 0 not null");
 			_db.alterTableAddColumn(
 				_connection, "LayoutPageTemplateStructureRel", "ctCollectionId",
-				"LONG");
+				"LONG default 0 not null");
 		}
 
 		_assertSegmentsExperiences();

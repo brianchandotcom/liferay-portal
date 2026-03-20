@@ -54,7 +54,7 @@ public class ViewStructureUsagesDisplayContext {
 	public String getAPIURL() {
 		return StringBundler.concat(
 			"/o/search/v1.0/search?emptySearch=true&",
-			"filter=(objectDefinitionId eq ",
+			"filter=(folderId ne 0 and objectDefinitionId eq ",
 			ParamUtil.getLong(_httpServletRequest, "objectDefinitionId"),
 			" and status in (", _STATUSES, "))&nestedFields=embedded");
 	}

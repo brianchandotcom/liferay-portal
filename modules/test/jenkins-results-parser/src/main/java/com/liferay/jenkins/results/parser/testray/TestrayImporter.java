@@ -29,6 +29,7 @@ import com.liferay.jenkins.results.parser.Workspace;
 import com.liferay.jenkins.results.parser.WorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
+import com.liferay.jenkins.results.parser.persistent.resource.PersistentResource;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
@@ -977,43 +978,13 @@ public class TestrayImporter {
 				testBaseDir = axisTestClassGroup.getTestBaseDir();
 			}
 
-			TestrayBuild testrayBuild = getTestrayBuild(testBaseDir);
-
-			TopLevelStandaloneBuildTestrayCaseResult
-				topLevelStandaloneBuildTestrayCaseResult =
-					TestrayFactory.newTopLevelStandaloneBuildTestrayCaseResult(
-						testrayBuild, _topLevelBuildReport);
-
-			topLevelStandaloneBuildTestrayCaseResult.recordTestrayCaseResult(
-				job);
-
-			AppServerBundleStandaloneBuildTestrayCaseResult
-				portalAppServerBundleStandaloneBuildTestrayCaseResult =
-					new AppServerBundleStandaloneBuildTestrayCaseResult(
-						"portal", testrayBuild, _topLevelBuildReport);
-
-			BuildReport portalAppServerBundleBuildReport =
-				portalAppServerBundleStandaloneBuildTestrayCaseResult.
-					getBuildReport();
-
-			if (portalAppServerBundleBuildReport != null) {
-				portalAppServerBundleStandaloneBuildTestrayCaseResult.
-					recordTestrayCaseResult(job);
-			}
-
-			AppServerBundleStandaloneBuildTestrayCaseResult
-				analyticsCloudAppServerBundleStandaloneBuildTestrayCaseResult =
-					new AppServerBundleStandaloneBuildTestrayCaseResult(
-						"analytics.cloud", testrayBuild, _topLevelBuildReport);
-
-			BuildReport analyticsCloudAppServerBundleBuildReport =
-				analyticsCloudAppServerBundleStandaloneBuildTestrayCaseResult.
-					getBuildReport();
-
-			if (analyticsCloudAppServerBundleBuildReport != null) {
-				analyticsCloudAppServerBundleStandaloneBuildTestrayCaseResult.
-					recordTestrayCaseResult(job);
-			}
+			_recordAppServerTestrayCaseResult(
+				job, PersistentResource.Type.ASAH_BUNDLE, testBaseDir);
+			_recordAppServerTestrayCaseResult(
+				job, PersistentResource.Type.FARO_BUNDLE, testBaseDir);
+			_recordAppServerTestrayCaseResult(
+				job, PersistentResource.Type.PORTAL_BUNDLE, testBaseDir);
+			_recordTopLevelTestrayCaseResult(job, testBaseDir);
 
 			for (final AxisTestClassGroup axisTestClassGroup :
 					axisTestClassGroups) {
@@ -1384,6 +1355,29 @@ public class TestrayImporter {
 		return "Liferay CI";
 	}
 
+	private void _recordAppServerTestrayCaseResult(
+		Job job, PersistentResource.Type persistentResourceType,
+		File testBaseDir) {
+
+		TestrayBuild testrayBuild = getTestrayBuild(testBaseDir);
+
+		AppServerBundleStandaloneBuildTestrayCaseResult
+			appServerBundleStandaloneBuildTestrayCaseResult =
+				new AppServerBundleStandaloneBuildTestrayCaseResult(
+					String.valueOf(persistentResourceType), testrayBuild,
+					_topLevelBuildReport);
+
+		BuildReport buildReport =
+			appServerBundleStandaloneBuildTestrayCaseResult.getBuildReport();
+
+		if (buildReport == null) {
+			return;
+		}
+
+		appServerBundleStandaloneBuildTestrayCaseResult.recordTestrayCaseResult(
+			job);
+	}
+
 	private void _recordAxisTestClassGroup(
 		AxisTestClassGroup axisTestClassGroup) {
 
@@ -1635,6 +1629,15 @@ public class TestrayImporter {
 				" case results for ", axisTestClassGroup.getAxisName(), " in ",
 				JenkinsResultsParserUtil.toDurationString(
 					currentTimeMillis - start)));
+	}
+
+	private void _recordTopLevelTestrayCaseResult(Job job, File testBaseDir) {
+		TopLevelStandaloneBuildTestrayCaseResult
+			topLevelStandaloneBuildTestrayCaseResult =
+				TestrayFactory.newTopLevelStandaloneBuildTestrayCaseResult(
+					getTestrayBuild(testBaseDir), _topLevelBuildReport);
+
+		topLevelStandaloneBuildTestrayCaseResult.recordTestrayCaseResult(job);
 	}
 
 	private String _replaceEnvVars(String string, boolean truncate) {

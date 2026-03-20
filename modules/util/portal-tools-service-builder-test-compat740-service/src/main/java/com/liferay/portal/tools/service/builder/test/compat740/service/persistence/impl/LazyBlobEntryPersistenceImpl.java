@@ -312,64 +312,6 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lazy blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lazy blob entry
-	 * @throws NoSuchLazyBlobEntryException if a matching lazy blob entry could not be found
-	 */
-	@Override
-	public LazyBlobEntry findByUuid_Last(
-			String uuid, OrderByComparator<LazyBlobEntry> orderByComparator)
-		throws NoSuchLazyBlobEntryException {
-
-		LazyBlobEntry lazyBlobEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (lazyBlobEntry != null) {
-			return lazyBlobEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLazyBlobEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lazy blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lazy blob entry, or <code>null</code> if a matching lazy blob entry could not be found
-	 */
-	@Override
-	public LazyBlobEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<LazyBlobEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LazyBlobEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lazy blob entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1307,4 +1249,4 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:241312030
+// LIFERAY-SERVICE-BUILDER-HASH:-1636027422

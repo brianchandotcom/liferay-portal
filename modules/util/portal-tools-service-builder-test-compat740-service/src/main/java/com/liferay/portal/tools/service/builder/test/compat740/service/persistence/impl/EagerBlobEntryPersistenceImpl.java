@@ -312,65 +312,6 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last eager blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching eager blob entry
-	 * @throws NoSuchEagerBlobEntryException if a matching eager blob entry could not be found
-	 */
-	@Override
-	public EagerBlobEntry findByUuid_Last(
-			String uuid, OrderByComparator<EagerBlobEntry> orderByComparator)
-		throws NoSuchEagerBlobEntryException {
-
-		EagerBlobEntry eagerBlobEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (eagerBlobEntry != null) {
-			return eagerBlobEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEagerBlobEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last eager blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching eager blob entry, or <code>null</code> if a matching eager blob entry could not be found
-	 */
-	@Override
-	public EagerBlobEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<EagerBlobEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<EagerBlobEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the eager blob entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1303,4 +1244,4 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:905856166
+// LIFERAY-SERVICE-BUILDER-HASH:1019556316

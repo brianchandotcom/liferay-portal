@@ -320,64 +320,6 @@ public class ERCGroupEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last erc group entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc group entry
-	 * @throws NoSuchERCGroupEntryException if a matching erc group entry could not be found
-	 */
-	@Override
-	public ERCGroupEntry findByUuid_Last(
-			String uuid, OrderByComparator<ERCGroupEntry> orderByComparator)
-		throws NoSuchERCGroupEntryException {
-
-		ERCGroupEntry ercGroupEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (ercGroupEntry != null) {
-			return ercGroupEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchERCGroupEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last erc group entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc group entry, or <code>null</code> if a matching erc group entry could not be found
-	 */
-	@Override
-	public ERCGroupEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<ERCGroupEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ERCGroupEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the erc group entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -900,72 +842,6 @@ public class ERCGroupEntryPersistenceImpl
 
 		List<ERCGroupEntry> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last erc group entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc group entry
-	 * @throws NoSuchERCGroupEntryException if a matching erc group entry could not be found
-	 */
-	@Override
-	public ERCGroupEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ERCGroupEntry> orderByComparator)
-		throws NoSuchERCGroupEntryException {
-
-		ERCGroupEntry ercGroupEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ercGroupEntry != null) {
-			return ercGroupEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchERCGroupEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last erc group entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching erc group entry, or <code>null</code> if a matching erc group entry could not be found
-	 */
-	@Override
-	public ERCGroupEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ERCGroupEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ERCGroupEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2030,4 +1906,4 @@ public class ERCGroupEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1180868922
+// LIFERAY-SERVICE-BUILDER-HASH:2058898758

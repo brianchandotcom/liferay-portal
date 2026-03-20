@@ -312,65 +312,6 @@ public class WhereClauseEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last where clause entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching where clause entry
-	 * @throws NoSuchWhereClauseEntryException if a matching where clause entry could not be found
-	 */
-	@Override
-	public WhereClauseEntry findByName_Nickname_Last(
-			String name, OrderByComparator<WhereClauseEntry> orderByComparator)
-		throws NoSuchWhereClauseEntryException {
-
-		WhereClauseEntry whereClauseEntry = fetchByName_Nickname_Last(
-			name, orderByComparator);
-
-		if (whereClauseEntry != null) {
-			return whereClauseEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchWhereClauseEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last where clause entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching where clause entry, or <code>null</code> if a matching where clause entry could not be found
-	 */
-	@Override
-	public WhereClauseEntry fetchByName_Nickname_Last(
-		String name, OrderByComparator<WhereClauseEntry> orderByComparator) {
-
-		int count = countByName_Nickname(name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WhereClauseEntry> list = findByName_Nickname(
-			name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the where clause entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -1061,4 +1002,4 @@ public class WhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-4495298
+// LIFERAY-SERVICE-BUILDER-HASH:1116693235

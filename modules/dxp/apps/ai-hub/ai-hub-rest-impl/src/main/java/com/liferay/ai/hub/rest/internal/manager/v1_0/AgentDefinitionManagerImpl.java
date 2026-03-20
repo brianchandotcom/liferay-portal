@@ -165,20 +165,17 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 
 		String workflowDefinitionName = PortalUUIDUtil.generate();
 
+		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
+			dtoConverterContext.getUserId());
+
 		_workflowDefinitionManager.deployWorkflowDefinition(
 			content.getBytes(), companyId, null,
-			workflowDefinition.getGroupId(), workflowDefinitionName,
+			accountEntry.getAccountEntryGroupId(), workflowDefinitionName,
 			WorkflowDefinitionConstants.SCOPE_AI,
 			LanguageUtil.format(
 				locale, "copy-of-x",
 				workflowDefinition.getTitle(locale.getDisplayLanguage())),
 			dtoConverterContext.getUserId());
-
-		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
-			dtoConverterContext.getUserId());
-
-		long accountEntryId =
-			(accountEntry != null) ? accountEntry.getAccountEntryId() : 0;
 
 		Map<String, String> title =
 			(Map<String, String>)objectEntry.getPropertyValue("title_i18n");
@@ -211,8 +208,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 										"outputVariable")),
 								"r_accountToAIHubAgentDefinitions_" +
 									"accountEntryId",
-								accountEntryId, "title_i18n", title,
-								"workflowDefinitionName",
+								accountEntry.getAccountEntryId(), "title_i18n",
+								title, "workflowDefinitionName",
 								workflowDefinitionName));
 					}
 				},

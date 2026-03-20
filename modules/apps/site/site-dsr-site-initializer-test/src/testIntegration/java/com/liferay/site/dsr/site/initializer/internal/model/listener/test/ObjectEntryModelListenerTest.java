@@ -12,24 +12,34 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -192,6 +202,74 @@ public class ObjectEntryModelListenerTest {
 	}
 
 	@Test
+	public void testOnAfterCreateWithDSRSellerRole() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Role dsrSellerRole = _roleLocalService.fetchRoleByExternalReferenceCode(
+			"L_DSR_SELLER", TestPropsValues.getCompanyId());
+
+		_userLocalService.addRoleUser(dsrSellerRole.getRoleId(), user);
+
+		String roomName = StringUtil.toLowerCase(
+			"A" + RandomTestUtil.randomString());
+
+		ObjectEntry objectEntry;
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user)) {
+
+			objectEntry = _objectEntryService.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(), 0, null,
+				HashMapBuilder.<String, Serializable>put(
+					"name", roomName
+				).put(
+					"r_accountToDSRRooms_accountEntryId",
+					_accountEntry.getAccountEntryId()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+
+		Group group = _groupLocalService.fetchGroup(
+			TestPropsValues.getCompanyId(),
+			_classNameLocalService.getClassNameId(
+				_objectDefinition.getClassName()),
+			objectEntry.getObjectEntryId());
+
+		Assert.assertNotNull(group);
+		Assert.assertEquals("/" + roomName, group.getFriendlyURL());
+		Assert.assertEquals(
+			GroupConstants.TYPE_SITE_RESTRICTED, group.getType());
+		Assert.assertTrue(group.isSite());
+
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.
+				fetchLayoutSetPrototypeByUuidAndCompanyId(
+					"L_DSR_LAYOUT_SET_PROTOTYPE",
+					TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(layoutSetPrototype);
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			group.getGroupId(), false);
+
+		Assert.assertEquals(
+			layoutSetPrototype.getLayoutSetPrototypeId(),
+			layoutSet.getLayoutSetPrototypeId());
+		Assert.assertEquals(
+			layoutSetPrototype.getUuid(),
+			layoutSet.getLayoutSetPrototypeUuid());
+
+		DSRLayoutTestUtil.assertLayouts(
+			group.getGroupId(),
+			new String[] {"Documents", "Login", "Onboarding"}, false);
+
+		Assert.assertTrue(
+			_userGroupRoleLocalService.hasUserGroupRole(
+				user.getUserId(), group.getGroupId(),
+				RoleConstants.SITE_OWNER));
+	}
+
+	@Test
 	public void testOnAfterRemove() throws Exception {
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
@@ -247,6 +325,12 @@ public class ObjectEntryModelListenerTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
 	private ObjectDefinition _objectDefinition;
 
 	@Inject
@@ -256,6 +340,9 @@ public class ObjectEntryModelListenerTest {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
+	private ObjectEntryService _objectEntryService;
+
+	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
@@ -263,5 +350,11 @@ public class ObjectEntryModelListenerTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

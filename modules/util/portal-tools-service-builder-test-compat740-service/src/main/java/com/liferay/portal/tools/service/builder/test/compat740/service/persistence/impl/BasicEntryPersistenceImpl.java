@@ -306,64 +306,6 @@ public class BasicEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last basic entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching basic entry
-	 * @throws NoSuchBasicEntryException if a matching basic entry could not be found
-	 */
-	@Override
-	public BasicEntry findByGroupId_Last(
-			long groupId, OrderByComparator<BasicEntry> orderByComparator)
-		throws NoSuchBasicEntryException {
-
-		BasicEntry basicEntry = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (basicEntry != null) {
-			return basicEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchBasicEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last basic entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching basic entry, or <code>null</code> if a matching basic entry could not be found
-	 */
-	@Override
-	public BasicEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<BasicEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BasicEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the basic entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1614,4 +1556,4 @@ public class BasicEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:53313616
+// LIFERAY-SERVICE-BUILDER-HASH:1269317740

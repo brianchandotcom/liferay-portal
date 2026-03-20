@@ -306,65 +306,6 @@ public class ArrayableEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last arrayable entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching arrayable entry
-	 * @throws NoSuchArrayableEntryException if a matching arrayable entry could not be found
-	 */
-	@Override
-	public ArrayableEntry findByGroupId_Last(
-			long groupId, OrderByComparator<ArrayableEntry> orderByComparator)
-		throws NoSuchArrayableEntryException {
-
-		ArrayableEntry arrayableEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (arrayableEntry != null) {
-			return arrayableEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchArrayableEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last arrayable entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching arrayable entry, or <code>null</code> if a matching arrayable entry could not be found
-	 */
-	@Override
-	public ArrayableEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<ArrayableEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ArrayableEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the arrayable entries where groupId = any &#63;.
 	 *
 	 * <p>
@@ -1373,4 +1314,4 @@ public class ArrayableEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:455000481
+// LIFERAY-SERVICE-BUILDER-HASH:-384242351

@@ -313,64 +313,6 @@ public class CTEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchCTEntryException if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<CTEntry> orderByComparator)
-		throws NoSuchCTEntryException {
-
-		CTEntry ctEntry = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (ctEntry != null) {
-			return ctEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCTEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ct entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1512,4 +1454,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:863468373
+// LIFERAY-SERVICE-BUILDER-HASH:-1206917247

@@ -583,84 +583,6 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last like finder entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching like finder entry
-	 * @throws NoSuchLikeFinderEntryException if a matching like finder entry could not be found
-	 */
-	@Override
-	public LikeFinderEntry findByC_O_O_LikeP_Last(
-			long companyId, long ownerId, int ownerType, String portletId,
-			OrderByComparator<LikeFinderEntry> orderByComparator)
-		throws NoSuchLikeFinderEntryException {
-
-		LikeFinderEntry likeFinderEntry = fetchByC_O_O_LikeP_Last(
-			companyId, ownerId, ownerType, portletId, orderByComparator);
-
-		if (likeFinderEntry != null) {
-			return likeFinderEntry;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletIdLIKE");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchLikeFinderEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last like finder entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	@Override
-	public LikeFinderEntry fetchByC_O_O_LikeP_Last(
-		long companyId, long ownerId, int ownerType, String portletId,
-		OrderByComparator<LikeFinderEntry> orderByComparator) {
-
-		int count = countByC_O_O_LikeP(
-			companyId, ownerId, ownerType, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LikeFinderEntry> list = findByC_O_O_LikeP(
-			companyId, ownerId, ownerType, portletId, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the like finder entries where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1421,4 +1343,4 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-149556312
+// LIFERAY-SERVICE-BUILDER-HASH:-397206032

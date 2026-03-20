@@ -299,65 +299,6 @@ public class MVCCEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last mvcc entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching mvcc entry
-	 * @throws NoSuchMVCCEntryException if a matching mvcc entry could not be found
-	 */
-	@Override
-	public MVCCEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<MVCCEntry> orderByComparator)
-		throws NoSuchMVCCEntryException {
-
-		MVCCEntry mvccEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (mvccEntry != null) {
-			return mvccEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchMVCCEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last mvcc entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
-	 */
-	@Override
-	public MVCCEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<MVCCEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MVCCEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the mvcc entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1243,4 +1184,4 @@ public class MVCCEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1580870988
+// LIFERAY-SERVICE-BUILDER-HASH:723116272

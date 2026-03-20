@@ -18,7 +18,7 @@ function main {
 
 	_generate_tfvars "${1}" "${_SCRIPTS_DIR}/global_terraform.tfvars"
 
-	echo "Attempting to login to your Google Cloud account via Application Default Credentials."
+	echo "Attempting to login to your Google Cloud account via application default credentials."
 
 	gcloud auth application-default login
 

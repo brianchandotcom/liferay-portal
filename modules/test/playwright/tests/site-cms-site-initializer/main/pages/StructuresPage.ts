@@ -34,7 +34,7 @@ export class StructuresPage {
 		filter,
 		timeout,
 	}: {
-		action: 'Delete' | 'Edit';
+		action: 'Delete' | 'Edit' | 'View Usages';
 		filter: string;
 		timeout?: number;
 	}) {

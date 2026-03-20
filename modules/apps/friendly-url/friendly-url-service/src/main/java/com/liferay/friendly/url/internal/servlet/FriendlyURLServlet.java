@@ -11,9 +11,11 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration;
 import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfigurationProvider;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.CharPool;
@@ -273,7 +275,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 					if (layout.isTypeUtility() && !layout.isDraftLayout()) {
 						LayoutUtilityPageEntry layoutUtilityPageEntry =
-							LayoutUtilityPageEntryLocalServiceUtil.
+							layoutUtilityPageEntryLocalService.
 								fetchLayoutUtilityPageEntryByPlid(
 									layout.getPlid());
 
@@ -663,7 +665,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					HttpServletResponse.SC_SERVICE_UNAVAILABLE);
 
 				LayoutUtilityPageEntry layoutUtilityPageEntry =
-					LayoutUtilityPageEntryLocalServiceUtil.
+					layoutUtilityPageEntryLocalService.
 						fetchDefaultLayoutUtilityPageEntry(
 							maintenanceGroupId,
 							LayoutUtilityPageEntryConstants.
@@ -699,19 +701,19 @@ public class FriendlyURLServlet extends HttpServlet {
 					}
 				}
 
-				httpServletResponse.setContentType("text/html; charset=UTF-8");
+				LayoutUtilityPageEntryViewRenderer
+					layoutUtilityPageEntryViewRenderer =
+						LayoutUtilityPageEntryViewRendererRegistryUtil.
+							getLayoutUtilityPageEntryViewRenderer(
+								LayoutUtilityPageEntryConstants.
+									TYPE_SC_SERVICE_UNAVAILABLE);
 
-				httpServletResponse.getWriter(
-				).write(
-					StringBundler.concat(
-						"<!DOCTYPE html><html><head>",
-						"<title>503 Service Unavailable</title></head><body>",
-						"<h1>Service Unavailable</h1>",
-						"<p>This site is temporarily unavailable for ",
-						"maintenance.</p></body></html>")
-				);
+				if (layoutUtilityPageEntryViewRenderer != null) {
+					layoutUtilityPageEntryViewRenderer.renderHTML(
+						httpServletRequest, httpServletResponse);
 
-				return;
+					return;
+				}
 			}
 
 			redirect = new Redirect();
@@ -885,6 +887,10 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference
 	protected LayoutService layoutService;
+
+	@Reference
+	protected LayoutUtilityPageEntryLocalService
+		layoutUtilityPageEntryLocalService;
 
 	@Reference
 	protected Portal portal;

@@ -7,13 +7,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-layout:render-layout-utility-page-entry
-	type="<%= LayoutUtilityPageEntryConstants.TYPE_SC_SERVICE_UNAVAILABLE %>"
->
-	<clay:alert
-		displayType="warning"
-		message="503-service-unavailable"
-	/>
+<html>
+	<head>
+		<title>503 Service Unavailable</title>
+	</head>
 
-	<liferay-ui:message key="this-site-is-temporarily-unavailable-for-maintenance" />
-</liferay-layout:render-layout-utility-page-entry>
+	<body>
+		<h1>Service Unavailable</h1>
+
+		<p><liferay-ui:message key="this-site-is-temporarily-unavailable-for-maintenance" /></p>
+	</body>
+</html>

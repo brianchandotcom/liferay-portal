@@ -7,12 +7,20 @@ package com.liferay.site.dsr.site.initializer.internal.servlet.taglib;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectEntryServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.dsr.site.initializer.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;
 
 import java.util.Objects;
@@ -22,37 +30,43 @@ import java.util.Objects;
  */
 public class ShareTag extends IncludeTag {
 
+	@Override
+	public int doStartTag() throws JspException {
+		if (_roomId == 0) {
+			return SKIP_BODY;
+		}
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			if (ObjectEntryServiceUtil.hasModelResourcePermission(
+					themeDisplay.getUser(), _roomId, ActionKeys.UPDATE)) {
+
+				return SKIP_BODY;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return SKIP_BODY;
+		}
+
+		return super.doStartTag();
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		setServletContext(ServletContextUtil.getServletContext());
-	}
-
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_groupId = 0;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute(
-			"liferay-site-dsr-site-initializer:share:roomId", 0L);
+		_roomId = 0L;
 
 		if (_groupId == 0) {
 			return;
@@ -76,13 +90,40 @@ public class ShareTag extends IncludeTag {
 			return;
 		}
 
+		_roomId = group.getClassPK();
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_groupId = 0;
+		_roomId = 0;
+	}
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-site-dsr-site-initializer:share:roomId",
-			group.getClassPK());
+			"liferay-site-dsr-site-initializer:share:roomId", _roomId);
 	}
 
 	private static final String _PAGE = "/share/page.jsp";
 
+	private static final Log _log = LogFactoryUtil.getLog(ShareTag.class);
+
 	private long _groupId;
+	private long _roomId;
 
 }

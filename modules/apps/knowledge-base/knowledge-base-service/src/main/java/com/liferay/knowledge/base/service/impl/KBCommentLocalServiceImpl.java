@@ -167,9 +167,9 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 	public KBComment getKBComment(long userId, String className, long classPK)
 		throws PortalException {
 
-		return kbCommentPersistence.findByU_C_C_Last(
+		return kbCommentPersistence.findByU_C_C_First(
 			userId, _classNameLocalService.getClassNameId(className), classPK,
-			KBCommentCreateDateComparator.getInstance(false));
+			KBCommentCreateDateComparator.getInstance(true));
 	}
 
 	@Override

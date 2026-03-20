@@ -253,9 +253,9 @@ public class LayoutRevisionLocalServiceImpl
 	@Override
 	public LayoutRevision fetchLastLayoutRevision(long plid, boolean head) {
 		try {
-			return layoutRevisionPersistence.findByH_P_Last(
+			return layoutRevisionPersistence.findByH_P_First(
 				head, plid,
-				LayoutRevisionCreateDateComparator.getInstance(true));
+				LayoutRevisionCreateDateComparator.getInstance(false));
 		}
 		catch (NoSuchLayoutRevisionException noSuchLayoutRevisionException) {
 

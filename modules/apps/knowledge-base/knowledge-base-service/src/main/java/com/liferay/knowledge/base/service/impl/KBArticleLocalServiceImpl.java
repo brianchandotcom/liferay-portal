@@ -724,18 +724,18 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public KBArticle fetchLatestKBArticleByExternalReferenceCode(
 		long groupId, String externalReferenceCode) {
 
-		return kbArticlePersistence.fetchByG_ERC_Last(
+		return kbArticlePersistence.fetchByG_ERC_First(
 			groupId, externalReferenceCode,
-			KBArticleVersionComparator.getInstance(false));
+			KBArticleVersionComparator.getInstance(true));
 	}
 
 	@Override
 	public KBArticle fetchLatestKBArticleByExternalReferenceCode(
 		long groupId, String externalReferenceCode, int status) {
 
-		KBArticle latestKBArticle = kbArticlePersistence.fetchByG_ERC_Last(
+		KBArticle latestKBArticle = kbArticlePersistence.fetchByG_ERC_First(
 			groupId, externalReferenceCode,
-			KBArticleVersionComparator.getInstance(false));
+			KBArticleVersionComparator.getInstance(true));
 
 		if ((latestKBArticle == null) ||
 			(status == WorkflowConstants.STATUS_ANY) ||

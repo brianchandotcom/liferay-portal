@@ -133,8 +133,6 @@ resource "google_project_iam_member" "node_permissions" {
 	for_each=toset(
 		[
 			"roles/artifactregistry.reader",
-			"roles/gkehub.gatewayAdmin",
-			"roles/gkehub.viewer",
 			"roles/logging.logWriter",
 			"roles/monitoring.metricWriter",
 		])

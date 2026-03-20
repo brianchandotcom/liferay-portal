@@ -410,6 +410,10 @@ test(
 
 		await usersAndOrganizationsPage.goToOrganizations();
 
+		await usersAndOrganizationsPage.organizationsTable.search(
+			organization.name
+		);
+
 		await usersAndOrganizationsPage.organizationsTable
 			.valueLink(organization.name)
 			.click();
@@ -451,6 +455,10 @@ test(
 			await apiHelpers.headlessAdminUser.postOrganization();
 
 		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			organization.name
+		);
 
 		await (
 			await usersAndOrganizationsPage.organizationsTable.rowActions(
@@ -593,6 +601,8 @@ test(
 	'Check custom field is escaped',
 	{tag: '@LPD-29981'},
 	async ({page, usersAndOrganizationsPage}) => {
+		const fieldName = `field${getRandomInt()}`;
+
 		await page.goto('/');
 
 		await usersAndOrganizationsPage.goToUsers();
@@ -613,7 +623,7 @@ test(
 
 		await customFieldLabel.waitFor({state: 'visible'});
 		await customFieldLabel.click();
-		await customFieldLabel.fill('fieldTest');
+		await customFieldLabel.fill(fieldName);
 
 		const customFieldValue = page.getByLabel('Values Required');
 
@@ -637,21 +647,28 @@ test(
 			await usersAndOrganizationsPage.usersTableRowLink('test')
 		).click();
 
-		const customFieldDropDownLabel = page.getByLabel('Fieldtest', {
+		const fieldLabel =
+			fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+		const fieldTitle = fieldName.replace(
+			/[A-Z]/g,
+			(match) => `-${match.toLowerCase()}`
+		);
+
+		const customFieldDropDownLabel = page.getByLabel(fieldLabel, {
 			exact: true,
 		});
 
 		await customFieldDropDownLabel.waitFor({state: 'visible'});
 
-		const customFieldDropDownOptions = await page.evaluate(() => {
-			const selection = document.querySelector('[title="field-test"]');
+		const customFieldDropDownOptions = await page.evaluate((title) => {
+			const selection = document.querySelector(`[title="${title}"]`);
 
 			// @ts-ignore
 
 			return [...selection.options].some(
 				(option) => option.text === 'a & b'
 			);
-		});
+		}, fieldTitle);
 
 		expect(customFieldDropDownOptions).toBeTruthy();
 	}
@@ -790,6 +807,10 @@ test(
 		await performUserSwitch(page, user.alternateName);
 
 		await usersAndOrganizationsPage.goToOrganizationsWithLimitedAccess();
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			organization.name
+		);
 
 		await usersAndOrganizationsPage.organizationsTable
 			.valueLink(organization.name)
@@ -1035,7 +1056,7 @@ test(
 		await expect(async () => {
 			await siteMembershipsPage.newUserGroupButton.click();
 			await siteMembershipsPage.assignUserGroupTable.changeView('Table');
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await expect(
 			siteMembershipsPage.assignUserGroupTable.cell(userGroup.name)
@@ -1664,6 +1685,8 @@ test(
 		await expect(
 			usersAndOrganizationsPage.statusText('Approved')
 		).toBeVisible();
+
+		await usersAndOrganizationsPage.organizationsTable.changeView('Table');
 	}
 );
 
@@ -1807,7 +1830,7 @@ test(
 		await expect(async () => {
 			await editUserPage.selectUserGroupsButton.click();
 			await editUserPage.selectUserGroupTable.changeView('table');
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await editUserPage.selectUserGroupTable.cell(userGroup.name).click();
 
@@ -1866,6 +1889,8 @@ test(
 				'Upload images no larger than 0 B.'
 			)
 		).not.toBeVisible();
+
+		await userSettingsPage.updateUserImageMaxFileSize(307200);
 	}
 );
 
@@ -1919,5 +1944,7 @@ test(
 				userAccount.givenName + ' ' + userAccount.familyName
 			)
 		).toBeVisible();
+
+		await organizationUsersPage.organizationUsersTable.changeView('Table');
 	}
 );

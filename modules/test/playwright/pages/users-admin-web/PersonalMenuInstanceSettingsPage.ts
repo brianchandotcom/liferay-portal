@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
@@ -36,8 +36,12 @@ export class PersonalMenuInstanceSettingsPage {
 	}
 
 	async selectPersonalApplicationsLookAndFeel(option: string) {
-		await this.personalApplicationsLookAndFeelSelect.click();
+		await expect(async () => {
+			await this.personalApplicationsLookAndFeelSelect.click();
 
-		await this.page.getByRole('option', {name: option}).click();
+			await this.page
+				.getByRole('option', {name: option})
+				.click({timeout: 1000});
+		}).toPass({timeout: 5000});
 	}
 }

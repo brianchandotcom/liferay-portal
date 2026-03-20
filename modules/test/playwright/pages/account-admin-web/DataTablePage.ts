@@ -224,9 +224,10 @@ export class DataTablePage {
 			await expect(this.selectViewTableButton).toBeVisible({
 				timeout: 100,
 			});
-		}).toPass({timeout: 1500});
 
-		await this.selectViewTableButton.click();
+			await this.selectViewTableButton.click({timeout: 500});
+		}).toPass({timeout: 5000});
+
 		await expect(this.viewStatus(view)).toBeVisible();
 	}
 

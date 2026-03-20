@@ -5,10 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import getRandomString from '../../../utils/getRandomString';
 
-const test = mergeTests(instanceSettingsPagesTest, loginTest());
+const test = mergeTests(
+	dataApiHelpersTest,
+	instanceSettingsPagesTest,
+	loginTest(),
+	usersAndOrganizationsPagesTest
+);
 
 test(
 	'View portal settings',
@@ -188,6 +196,49 @@ test(
 			await contactInformationInstanceSettingsPage.urlInput.clear();
 
 			await instanceSettingsPage.saveAndWaitForAlert();
+		}
+	}
+);
+
+test(
+	'Enter reserved email address',
+	{tag: '@LPD-81993'},
+	async ({
+		instanceSettingsPage,
+		reservedCredentialsInstanceSettingsPage,
+		usersAndOrganizationsPage,
+	}) => {
+		const reservedEmail = `reserved${getRandomString()}@liferay.com`;
+
+		await reservedCredentialsInstanceSettingsPage.goto();
+
+		await reservedCredentialsInstanceSettingsPage.emailAddressesInput.fill(
+			reservedEmail
+		);
+
+		await instanceSettingsPage.saveAndWaitForAlert();
+
+		try {
+			await usersAndOrganizationsPage.goToUsers();
+
+			await usersAndOrganizationsPage.addUserButton.click();
+
+			await usersAndOrganizationsPage.screenNameInput.fill(
+				`user${getRandomString()}`
+			);
+			await usersAndOrganizationsPage.emailAddressInput.fill(
+				reservedEmail
+			);
+			await usersAndOrganizationsPage.firstNameInput.fill('userfn');
+			await usersAndOrganizationsPage.lastNameInput.fill('userln');
+			await usersAndOrganizationsPage.saveUserButton.click();
+
+			await expect(usersAndOrganizationsPage.errorMessage).toContainText(
+				'The email address you requested is reserved.'
+			);
+		}
+		finally {
+			await reservedCredentialsInstanceSettingsPage.resetFields();
 		}
 	}
 );

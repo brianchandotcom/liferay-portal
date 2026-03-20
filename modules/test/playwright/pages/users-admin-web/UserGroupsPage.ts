@@ -46,12 +46,18 @@ export class UserGroupsPage {
 	readonly deleteButton: Locator;
 	readonly deleteUserGroupWithUsersErrorMessage: Locator;
 	readonly editUserGroupMenuItem: Locator;
+	readonly exportButton: Locator;
+	readonly exportImportFrame: FrameLocator;
+	readonly exportImportMenuItem: Locator;
+	readonly goToDashboardPagesMenuItem: Locator;
+	readonly goToProfilePagesMenuItem: Locator;
 	readonly managePagesMenuItem: Locator;
 	readonly nameInput: Locator;
 	readonly newUserButton: Locator;
 	readonly newUserGroupButton: Locator;
 	readonly noUserGroupsMessage: Locator;
 	readonly noUsersMessage: Locator;
+	readonly optionsButton: Locator;
 	readonly page: Page;
 	readonly removeUserMenuItem: Locator;
 	readonly saveButton: Locator;
@@ -114,9 +120,27 @@ export class UserGroupsPage {
 		this.editUserGroupMenuItem = page.getByRole('menuitem', {
 			name: 'Edit',
 		});
+		this.exportButton = page
+			.frameLocator('iframe[title="Export / Import"]')
+			.getByRole('button', {name: 'Export'});
+		this.exportImportFrame = page.frameLocator(
+			'iframe[title="Export / Import"]'
+		);
+		this.exportImportMenuItem = page.getByRole('menuitem', {
+			name: 'Export / Import',
+		});
+		this.goToDashboardPagesMenuItem = page.getByRole('menuitem', {
+			name: 'Go to Dashboard Pages',
+		});
+		this.goToProfilePagesMenuItem = page.getByRole('menuitem', {
+			name: 'Go to Profile Pages',
+		});
 		this.managePagesMenuItem = page.getByRole('menuitem', {
 			name: 'Manage Pages',
 		});
+		this.optionsButton = page.locator(
+			'[id*="UserGroupsAdminPortlet"] [title="Options"]'
+		);
 		this.nameInput = page
 			.getByLabel('Name')
 			.or(page.getByLabel('New Name'));

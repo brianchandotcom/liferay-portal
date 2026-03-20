@@ -18,12 +18,39 @@ export class EmailNotificationPage {
 		this.page = page;
 	}
 
+	emailBodyLink(text: string) {
+		return this.page.getByRole('link', {name: text});
+	}
+
 	emailBodyText(text: string) {
 		return this.page.getByText(text).first();
 	}
 
 	emailSubjectLink(subject: string) {
 		return this.page.getByRole('link', {name: subject});
+	}
+
+	async getEmailBodyLinkHref(hrefContains: string): Promise<string> {
+		const link = this.page.locator(`a[href*="${hrefContains}"]`).first();
+
+		if (await link.isVisible()) {
+			return (await link.getAttribute('href')) || '';
+		}
+
+		const bodyText = await this.page
+			.locator(
+				'[name="bodyPlainText"] .well, [name="bodyHTML_Unformatted"] .well'
+			)
+			.first()
+			.innerText();
+
+		const urlMatch = bodyText.match(
+			new RegExp(
+				`https?://[^\\s<>"]*${hrefContains}[^\\s<>"]*[^\\s<>".)]`
+			)
+		);
+
+		return urlMatch ? urlMatch[0] : '';
 	}
 
 	async goto() {

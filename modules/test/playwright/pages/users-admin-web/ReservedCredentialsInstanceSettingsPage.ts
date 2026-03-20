@@ -5,31 +5,37 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
-export class TermsOfUseInstanceSettingsPage {
-	readonly articleIdInput: Locator;
-	readonly groupIdInput: Locator;
+export class ReservedCredentialsInstanceSettingsPage {
+	readonly emailAddressesInput: Locator;
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
-	readonly termsOfUseRequiredCheckbox: Locator;
 
 	constructor(page: Page) {
-		this.articleIdInput = page.getByLabel('Article ID');
-		this.groupIdInput = page.getByLabel('Group ID');
+		this.emailAddressesInput = page.locator(
+			'[id$="admin-reserved-email-addresses"]'
+		);
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
-		this.termsOfUseRequiredCheckbox = page.getByLabel(
-			'Require Terms of Use'
-		);
 	}
 
 	async goto() {
 		await this.instanceSettingsPage.goToInstanceSetting(
-			'Instance Configuration',
-			'Terms of Use'
+			'User Authentication',
+			'Reserved Credentials'
 		);
+	}
+
+	async resetFields() {
+		await this.goto();
+
+		await this.emailAddressesInput.clear();
+		await this.saveButton.click();
+
+		await waitForAlert(this.page);
 	}
 }

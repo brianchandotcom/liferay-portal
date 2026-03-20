@@ -343,6 +343,8 @@ test(
 			.valueLink(organization.name)
 			.click();
 
+		await usersAndOrganizationsPage.organizationsTable.changeView('Table');
+
 		await expect(
 			usersAndOrganizationsPage.organizationsTableDivider
 		).toBeVisible();
@@ -495,7 +497,7 @@ test(
 			await usersAndOrganizationsPage.organizationsTable
 				.orderMenuItem('Name')
 				.click({timeout: 500});
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await expect(async () => {
 			await usersAndOrganizationsPage.organizationsTable.orderButton.click();
@@ -985,7 +987,7 @@ test(
 					await editOrganizationPage
 						.categoryOption(categoryName)
 						.click({timeout: 1000});
-				}).toPass();
+				}).toPass({timeout: 5000});
 
 				const comment = 'This is a test comment!';
 
@@ -1095,8 +1097,7 @@ test(
 			});
 		}).toPass({timeout: 6000});
 
-		const organizationName =
-			'"><img src=x onerror=prompt(document.cookie)></img>';
+		const organizationName = `"><img src=x onerror=prompt(${getRandomInt()})></img>`;
 
 		await editOrganizationPage.nameInput.fill(organizationName);
 		await editOrganizationPage.saveButton.click();
@@ -1180,8 +1181,10 @@ test(
 
 			await countriesManagementPage.countriesTable.newButton.click();
 
-			await expect(editCountryPage.titleInput).toBeVisible();
-		}).toPass();
+			await expect(editCountryPage.titleInput).toBeVisible({
+				timeout: 500,
+			});
+		}).toPass({timeout: 5000});
 
 		await editCountryPage.editCountry(country);
 
@@ -1195,7 +1198,7 @@ test(
 			});
 		}).toPass({timeout: 20000});
 
-		const xssOrgName = `AnyName<img src=x onerror="alert('xssOrg')">`;
+		const xssOrgName = `AnyName${getRandomInt()}<img src=x onerror="alert('xssOrg')">`;
 
 		await editOrganizationPage.nameInput.fill(xssOrgName);
 		await editOrganizationPage.countrySelect.selectOption(`${country.key}`);
@@ -1238,7 +1241,7 @@ test(
 				});
 
 				await waitForAlert(page);
-			}).toPass();
+			}).toPass({timeout: 5000});
 
 			await usersAndOrganizationsPage.goToOrganizations();
 			await usersAndOrganizationsPage.changeView('Table');
@@ -1598,5 +1601,210 @@ test(
 		await expect(editOrganizationPage.securityQuestionsInput).toHaveValue(
 			'Nihongo'
 		);
+	}
+);
+
+test(
+	'Cannot add organization without permission',
+	{tag: '@LPD-81993'},
+	async ({apiHelpers, page, usersAndOrganizationsPage}) => {
+		const companyId = await page.evaluate(() =>
+			Liferay.ThemeDisplay.getCompanyId()
+		);
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: `RegRole${getRandomString()}`,
+			rolePermissions: [
+				{
+					actionIds: ['VIEW_CONTROL_PANEL'],
+					primaryKey: companyId,
+					resourceName: '90',
+					scope: 1,
+				},
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+					primaryKey: companyId,
+					resourceName:
+						'com_liferay_users_admin_web_portlet_UsersAdminPortlet',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.portal.kernel.model.UserGroup',
+					scope: 1,
+				},
+			],
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: userData['test'].password,
+			surname: user.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		await test.step('Verify user cannot see Add button or organizations', async () => {
+			await performUserSwitch(page, user.alternateName);
+
+			await usersAndOrganizationsPage.goToOrganizationsWithLimitedAccess();
+
+			await expect(
+				usersAndOrganizationsPage.addOrganizationButton
+			).not.toBeVisible();
+			await expect(
+				page.getByText(
+					'You do not belong to an organization and are not allowed to view other organizations.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Grant ADD_ORGANIZATION, create org as admin, then revoke', async () => {
+			await performUserSwitch(page, 'test');
+
+			await apiHelpers.jsonWebServicesResourcePermissionApiHelper.addResourcePermission(
+				'ADD_ORGANIZATION',
+				companyId,
+				'0',
+				'90',
+				companyId,
+				String(role.id),
+				'1'
+			);
+
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomString()}`,
+			});
+
+			await apiHelpers.jsonWebServicesResourcePermissionApiHelper.removeResourcePermission(
+				'ADD_ORGANIZATION',
+				companyId,
+				'0',
+				'90',
+				companyId,
+				String(role.id),
+				'1'
+			);
+		});
+
+		await test.step('Verify user still cannot see Add button or organizations', async () => {
+			await performUserSwitch(page, user.alternateName);
+
+			await usersAndOrganizationsPage.goToOrganizationsWithLimitedAccess();
+
+			await expect(
+				usersAndOrganizationsPage.addOrganizationButton
+			).not.toBeVisible();
+			await expect(
+				page.getByText(
+					'You do not belong to an organization and are not allowed to view other organizations.'
+				)
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Organization admin can manage suborganizations',
+	{tag: '@LPD-81993'},
+	async ({
+		apiHelpers,
+		editOrganizationPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: userData['test'].password,
+			surname: user.familyName,
+		};
+
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomString()}`,
+			});
+		const suborganization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Suborganization${getRandomString()}`,
+				parentOrganization: {id: organization.id},
+			});
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization.id,
+			user.emailAddress
+		);
+
+		const organizationAdminRole =
+			await apiHelpers.headlessAdminUser.getRoleByName(
+				'Organization Administrator'
+			);
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationRole(
+			organizationAdminRole!.id!,
+			String(user.id),
+			organization.id
+		);
+
+		await performUserSwitch(page, user.alternateName);
+
+		await usersAndOrganizationsPage.goToMyOrganizations();
+
+		await (
+			await usersAndOrganizationsPage.myOrganizationsTableRowLink(
+				organization.name
+			)
+		).click();
+
+		const editedName = `SuborganizationEdit${getRandomString()}`;
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.myOrganizationsTableRowActions(
+					suborganization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		await editOrganizationPage.nameInput.fill(editedName);
+		await editOrganizationPage.countrySelect.selectOption({
+			label: 'United States',
+		});
+		await editOrganizationPage.regionSelect.selectOption({
+			label: 'California',
+		});
+		await editOrganizationPage.saveButton.click();
+
+		await page.waitForLoadState('networkidle');
+
+		await page.goto('/');
+		await page.waitForLoadState('networkidle');
+
+		await usersAndOrganizationsPage.goToMyOrganizations();
+
+		await (
+			await usersAndOrganizationsPage.myOrganizationsTableRowLink(
+				organization.name
+			)
+		).click();
+
+		await expect(
+			await usersAndOrganizationsPage.myOrganizationsUserAndOrgsTableRowLink(
+				editedName
+			)
+		).toBeVisible();
 	}
 );

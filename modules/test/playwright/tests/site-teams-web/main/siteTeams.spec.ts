@@ -56,7 +56,7 @@ test(
 				await teamsPage.teamsTable.rowActions(team.teamName)
 			).click();
 
-			await expect(teamsPage.editButton).toBeVisible();
+			await expect(teamsPage.editButton).toBeVisible({timeout: 500});
 		}).toPass({timeout: 5000});
 
 		await teamsPage.editButton.click();
@@ -87,7 +87,7 @@ test(
 				await teamsPage.teamsTable.rowActions(newTeam.teamName)
 			).click();
 
-			await expect(teamsPage.editButton).toBeVisible();
+			await expect(teamsPage.editButton).toBeVisible({timeout: 500});
 		}).toPass({timeout: 5000});
 
 		await teamsPage.editButton.click();
@@ -104,7 +104,7 @@ test(
 				await teamsPage.teamsTable.rowActions(newTeam.teamName)
 			).click();
 
-			await expect(teamsPage.deleteButton).toBeVisible();
+			await expect(teamsPage.deleteButton).toBeVisible({timeout: 500});
 		}).toPass({timeout: 5000});
 
 		await teamsPage.deleteButton.click();
@@ -870,5 +870,54 @@ test(
 
 			await expect(usersPage.deleteButton).toBeVisible({timeout: 200});
 		}).toPass({timeout: 1000});
+	}
+);
+
+test(
+	'Team user is visible on staging site',
+	{tag: ['@LPD-81993', '@LPS-115692']},
+	async ({apiHelpers, page, selectUserPage, site, teamsPage, usersPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.jsonWebServicesUser.assignUsersToSite(
+			site.id,
+			String(user.id)
+		);
+
+		const teamName = `Team${getRandomString()}`;
+
+		await teamsPage.goTo(site.friendlyUrlPath);
+
+		await teamsPage.newTeamButton.click();
+		await teamsPage.newTeam({teamName});
+
+		await (await teamsPage.teamsTable.cellLink(teamName)).click();
+
+		await expect(async () => {
+			await usersPage.newButton.click();
+
+			await expect(selectUserPage.addButton).toBeVisible({
+				timeout: 2000,
+			});
+		}).toPass({timeout: 5000});
+
+		await (await selectUserPage.usersTable.rowCheckbox(user.name)).click();
+		await selectUserPage.addButton.click();
+
+		await expect(page.getByText(user.name, {exact: false})).toBeVisible();
+
+		await test.step('Verify team user is still visible after enabling staging', async () => {
+			await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
+				groupId: site.id,
+			});
+
+			await teamsPage.goTo(site.friendlyUrlPath);
+
+			await (await teamsPage.teamsTable.cellLink(teamName)).click();
+
+			await expect(
+				page.getByText(user.name, {exact: false})
+			).toBeVisible();
+		});
 	}
 );

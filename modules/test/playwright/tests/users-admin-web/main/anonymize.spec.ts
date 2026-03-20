@@ -282,7 +282,7 @@ test(
 		await expect(async () => {
 			await userAssociatedDataJournalPage.optionsButton.click();
 			await userAssociatedDataSiteStagingPage.stagingMenuItem.click();
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await userAssociatedDataSiteStagingPage.stagingFramePublishToLiveButton.click();
 
@@ -828,7 +828,7 @@ test(
 			await personalDataErasurePage
 				.infoPanelEllipsisButton(blog1Name)
 				.click();
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await personalDataErasurePage.anonymizeLink.click();
 
@@ -1307,8 +1307,8 @@ test(
 			await userAssociatedDataEditMessageBoardThreadPage.selectButton.click();
 			await expect(
 				userAssociatedDataEditMessageBoardThreadPage.blogEntryMenuItem
-			).toBeVisible();
-		}).toPass();
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
 
 		await userAssociatedDataEditMessageBoardThreadPage.blogEntryMenuItem.click();
 
@@ -1329,8 +1329,8 @@ test(
 			await userAssociatedDataEditMessageBoardThreadPage.selectButton.click();
 			await expect(
 				userAssociatedDataEditMessageBoardThreadPage.basicDocumentMenuItem
-			).toBeVisible();
-		}).toPass();
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
 
 		await userAssociatedDataEditMessageBoardThreadPage.basicDocumentMenuItem.click();
 

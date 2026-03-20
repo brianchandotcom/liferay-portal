@@ -3,30 +3,50 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
-import {LoginOptions, loginTest} from '../../../fixtures/loginTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {performLoginViaApi, userData} from '../../../utils/performLogin';
 
-const sessionIds = [];
+const test = mergeTests(dataApiHelpersTest, loginTest());
 
-for (const screenName of [
-	'demo.company.admin',
-	'demo.organization.owner',
-	'demo.unprivileged',
-	'test',
-]) {
-	const test = loginTest({screenName} as LoginOptions);
+test('Login with different users works', async ({apiHelpers, page}) => {
+	const adminUser = await apiHelpers.headlessAdminUser.postUserAccount();
 
-	test(`Login with screen name '${screenName}' works`, async ({login}) => {
+	const adminRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
 
-		// Check correct login
+	await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+		adminRole.externalReferenceCode,
+		adminUser.id
+	);
 
-		expect(login.screenName).toBe(screenName);
+	const regularUser = await apiHelpers.headlessAdminUser.postUserAccount();
 
-		// Check session id is not reused
+	const sessionIds: string[] = [];
 
-		expect(sessionIds).not.toContain(login.sessionId);
+	for (const user of [
+		{screenName: 'test'},
+		{screenName: adminUser.alternateName},
+		{screenName: regularUser.alternateName},
+	]) {
+		userData[user.screenName] = userData[user.screenName] || {
+			name: user.screenName,
+			password: userData['test'].password,
+			surname: user.screenName,
+		};
 
-		sessionIds.push(login.sessionId);
-	});
-}
+		const cookies = await performLoginViaApi({
+			page,
+			screenName: user.screenName,
+		});
+
+		const sessionId = cookies.find((c) => c.name === 'JSESSIONID')?.value;
+
+		expect(sessionId).toBeTruthy();
+		expect(sessionIds).not.toContain(sessionId);
+
+		sessionIds.push(sessionId!);
+	}
+});

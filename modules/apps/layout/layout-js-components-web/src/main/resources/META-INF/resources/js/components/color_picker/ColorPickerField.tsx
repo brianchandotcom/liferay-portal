@@ -112,6 +112,11 @@ export default function ColorPickerField({
 						onClick={() => {
 							onSplotchClick();
 
+							dispatch({
+								hex: internalToHex(color),
+								hue: color.toHsv().h,
+							});
+
 							setTab('values');
 						}}
 						small
@@ -205,6 +210,7 @@ export default function ColorPickerField({
 									hex={state.hex}
 									hue={state.hue}
 									internalToHex={internalToHex}
+									key={tab}
 									onChange={onChangeEditor}
 									onColorChange={(color) => {
 										onColorChangeEditor(color);

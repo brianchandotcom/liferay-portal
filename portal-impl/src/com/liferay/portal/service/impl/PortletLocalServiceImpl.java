@@ -739,7 +739,57 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Transactional(enabled = false)
 	public Portlet getPortletByStrutsPath(long companyId, String strutsPath) {
-		String portletId = getPortletId(strutsPath);
+		Map<String, String> portletIdsByStrutsPath = _portletIdsByStrutsPath;
+
+		if (portletIdsByStrutsPath == null) {
+			portletIdsByStrutsPath = new ConcurrentHashMap<>();
+
+			for (Portlet portlet : _portletsMap.values()) {
+				String portletStrutsPath = portlet.getStrutsPath();
+
+				String oldPortletId = portletIdsByStrutsPath.put(
+					portletStrutsPath, portlet.getPortletId());
+
+				if ((oldPortletId != null) && _log.isWarnEnabled()) {
+					Portlet oldPortlet = _portletsMap.get(oldPortletId);
+
+					String oldPortletContextName = oldPortlet.getContextName();
+
+					if (!StringUtil.equals(
+							oldPortletContextName, portlet.getContextName())) {
+
+						_log.warn("Duplicate Struts path " + portletStrutsPath);
+					}
+				}
+			}
+
+			_portletIdsByStrutsPath = portletIdsByStrutsPath;
+		}
+
+		String portletId = portletIdsByStrutsPath.get(strutsPath);
+
+		if (Validator.isNull(portletId)) {
+			for (Map.Entry<String, String> entry :
+					portletIdsByStrutsPath.entrySet()) {
+
+				String portletStrutsPath = entry.getKey();
+
+				if (strutsPath.startsWith(
+						portletStrutsPath.concat(StringPool.SLASH))) {
+
+					portletId = entry.getValue();
+
+					break;
+				}
+			}
+		}
+
+		if (Validator.isNull(portletId)) {
+			_log.error(
+				StringBundler.concat(
+					"Struts path ", strutsPath,
+					" is not mapped to a portlet in liferay-portlet.xml"));
+		}
 
 		if (portletId == null) {
 			return null;
@@ -1249,62 +1299,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		for (Map.Entry<String, Portlet> entry : portletsMap.entrySet()) {
 			consumer.accept(entry.getValue());
 		}
-	}
-
-	protected String getPortletId(String securityPath) {
-		Map<String, String> portletIdsByStrutsPath = _portletIdsByStrutsPath;
-
-		if (portletIdsByStrutsPath == null) {
-			portletIdsByStrutsPath = new ConcurrentHashMap<>();
-
-			for (Portlet portlet : _portletsMap.values()) {
-				String strutsPath = portlet.getStrutsPath();
-
-				String oldPortletId = portletIdsByStrutsPath.put(
-					strutsPath, portlet.getPortletId());
-
-				if ((oldPortletId != null) && _log.isWarnEnabled()) {
-					Portlet oldPortlet = _portletsMap.get(oldPortletId);
-
-					String oldPortletContextName = oldPortlet.getContextName();
-
-					if (!StringUtil.equals(
-							oldPortletContextName, portlet.getContextName())) {
-
-						_log.warn("Duplicate Struts path " + strutsPath);
-					}
-				}
-			}
-
-			_portletIdsByStrutsPath = portletIdsByStrutsPath;
-		}
-
-		String portletId = portletIdsByStrutsPath.get(securityPath);
-
-		if (Validator.isNull(portletId)) {
-			for (Map.Entry<String, String> entry :
-					portletIdsByStrutsPath.entrySet()) {
-
-				String strutsPath = entry.getKey();
-
-				if (securityPath.startsWith(
-						strutsPath.concat(StringPool.SLASH))) {
-
-					portletId = entry.getValue();
-
-					break;
-				}
-			}
-		}
-
-		if (Validator.isNull(portletId)) {
-			_log.error(
-				StringBundler.concat(
-					"Struts path ", securityPath,
-					" is not mapped to a portlet in liferay-portlet.xml"));
-		}
-
-		return portletId;
 	}
 
 	protected List<Portlet> getPortletsByPortletName(

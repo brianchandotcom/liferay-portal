@@ -904,89 +904,67 @@ test(
 	async ({navigationMenuWidgetPage, page, widgetPagePage}) => {
 		const apiHelpers = new ApiHelpers(page);
 
-		let parentSiteId: string;
+		// Create sites
 
-		let childSiteId: string;
+		const parentSite = await apiHelpers.headlessAdminSite.postSite({
+			name: getRandomString(),
+		});
 
-		let grandchildSiteId: string;
+		const childSite = await apiHelpers.headlessAdminSite.postSite({
+			name: getRandomString(),
+			parentSiteExternalReferenceCode: parentSite.externalReferenceCode,
+		});
 
-		try {
+		const grandchildSite = await apiHelpers.headlessAdminSite.postSite({
+			name: getRandomString(),
+			parentSiteExternalReferenceCode: childSite.externalReferenceCode,
+		});
 
-			// Create sites
+		// Add Layout to the grandchild site
 
-			const parentSite = await apiHelpers.headlessSite.createSite({
-				name: getRandomString(),
-			});
+		const layoutName = getRandomString();
 
-			parentSiteId = parentSite.id;
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: String(grandchildSite.id),
+			title: layoutName,
+		});
 
-			const childSite = await apiHelpers.headlessSite.createSite({
-				name: getRandomString(),
-				parentSiteKey: parentSite.name,
-			});
+		// Add Navigation Menu to the Parent site
 
-			childSiteId = childSite.id;
+		const navigationMenuERC = getRandomString();
+		const navigationMenuName = getRandomString();
+		const urlItemName = getRandomString();
 
-			const grandchildSite = await apiHelpers.headlessSite.createSite({
-				name: getRandomString(),
-				parentSiteKey: childSite.name,
-			});
-
-			grandchildSiteId = grandchildSite.id;
-
-			// Add Layout to the grandchild site
-
-			const layoutName = getRandomString();
-
-			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: grandchildSite.id,
-				title: layoutName,
-			});
-
-			// Add Navigation Menu to the Parent site
-
-			const navigationMenuERC = getRandomString();
-			const navigationMenuName = getRandomString();
-			const urlItemName = getRandomString();
-
-			await apiHelpers.headlessAdminSite.postSiteNavigationMenu(
-				parentSite.externalReferenceCode,
-				{
-					externalReferenceCode: navigationMenuERC,
-					name: navigationMenuName,
-					navigationMenuItems: [
-						{
-							name_i18n: {en_US: urlItemName},
-							navigationMenuItemSettings: {
-								url: 'https://www.liferay.com',
-							},
-							type: 'url',
+		await apiHelpers.headlessAdminSite.postSiteNavigationMenu(
+			parentSite.externalReferenceCode,
+			{
+				externalReferenceCode: navigationMenuERC,
+				name: navigationMenuName,
+				navigationMenuItems: [
+					{
+						name_i18n: {en_US: urlItemName},
+						navigationMenuItemSettings: {
+							url: 'https://www.liferay.com',
 						},
-					],
-				}
-			);
+						type: 'url',
+					},
+				],
+			}
+		);
 
-			await widgetPagePage.goto(layout, grandchildSite.friendlyUrlPath);
+		await widgetPagePage.goto(layout, grandchildSite.friendlyUrlPath);
 
-			await navigationMenuWidgetPage.openConfigurationModal(layoutName);
+		await navigationMenuWidgetPage.openConfigurationModal(layoutName);
 
-			await navigationMenuWidgetPage.selectCustomNavigationMenu(
-				navigationMenuName
-			);
+		await navigationMenuWidgetPage.selectCustomNavigationMenu(
+			navigationMenuName
+		);
 
-			await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
+		await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
 
-			await expect(
-				page.getByRole('menuitem', {name: urlItemName})
-			).toBeVisible();
-		}
-		finally {
-			await apiHelpers.headlessSite.deleteSite(grandchildSiteId);
-
-			await apiHelpers.headlessSite.deleteSite(childSiteId);
-
-			await apiHelpers.headlessSite.deleteSite(parentSiteId);
-		}
+		await expect(
+			page.getByRole('menuitem', {name: urlItemName})
+		).toBeVisible();
 	}
 );
 
@@ -1002,65 +980,56 @@ test(
 		site,
 		widgetPagePage,
 	}) => {
-		let childSiteId: string;
 
-		try {
+		// Create Navigation Menu
 
-			// Create Navigation Menu
+		const navigationMenuName = getRandomString();
+		const urlItemName = getRandomString();
 
-			const navigationMenuName = getRandomString();
-			const urlItemName = getRandomString();
-
-			await apiHelpers.headlessAdminSite.postSiteNavigationMenu(
-				site.externalReferenceCode,
-				{
-					name: navigationMenuName,
-					navigationMenuItems: [
-						{
-							name_i18n: {en_US: urlItemName},
-							navigationMenuItemSettings: {
-								url: 'https://www.liferay.com',
-							},
-							type: 'url',
+		await apiHelpers.headlessAdminSite.postSiteNavigationMenu(
+			site.externalReferenceCode,
+			{
+				name: navigationMenuName,
+				navigationMenuItems: [
+					{
+						name_i18n: {en_US: urlItemName},
+						navigationMenuItemSettings: {
+							url: 'https://www.liferay.com',
 						},
-					],
-				}
-			);
+						type: 'url',
+					},
+				],
+			}
+		);
 
-			const childSiteName = getRandomString();
+		const childSiteName = getRandomString();
 
-			const childSite = await apiHelpers.headlessSite.createSite({
-				name: childSiteName,
-				parentSiteKey: site.name,
-			});
+		const childSite = await apiHelpers.headlessAdminSite.postSite({
+			name: childSiteName,
+			parentSiteExternalReferenceCode: site.externalReferenceCode,
+		});
 
-			childSiteId = childSite.id;
+		const layoutName = getRandomString();
 
-			const layoutName = getRandomString();
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			externalReferenceCode: getRandomString(),
+			groupId: childSite.id,
+			title: layoutName,
+		});
 
-			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-				externalReferenceCode: getRandomString(),
-				groupId: childSite.id,
-				title: layoutName,
-			});
+		await widgetPagePage.goto(layout, childSite.friendlyUrlPath);
 
-			await widgetPagePage.goto(layout, childSite.friendlyUrlPath);
+		await navigationMenuWidgetPage.openConfigurationModal(
+			layout.nameCurrentValue
+		);
 
-			await navigationMenuWidgetPage.openConfigurationModal(
-				layout.nameCurrentValue
-			);
+		await navigationMenuWidgetPage.selectCustomNavigationMenu(
+			navigationMenuName
+		);
 
-			await navigationMenuWidgetPage.selectCustomNavigationMenu(
-				navigationMenuName
-			);
+		await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
 
-			await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
-
-			await expect(page.getByText(urlItemName)).toBeVisible();
-		}
-		finally {
-			await apiHelpers.headlessSite.deleteSite(childSiteId);
-		}
+		await expect(page.getByText(urlItemName)).toBeVisible();
 	}
 );
 

@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -23,6 +24,7 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	loginTest(),
 	isolatedSiteTest,
 	pageEditorPagesTest,
@@ -152,17 +154,17 @@ test('Assert joining sites with different membership types using My Sites portle
 	apiHelpers,
 	page,
 }) => {
-	const privateSite = await apiHelpers.headlessSite.createSite({
+	const privateSite = await apiHelpers.headlessAdminSite.postSite({
 		membershipType: 'private',
 		name: getRandomString(),
 	});
 
-	const openSite = await apiHelpers.headlessSite.createSite({
+	const openSite = await apiHelpers.headlessAdminSite.postSite({
 		membershipType: 'open',
 		name: getRandomString(),
 	});
 
-	const restrictedSite = await apiHelpers.headlessSite.createSite({
+	const restrictedSite = await apiHelpers.headlessAdminSite.postSite({
 		membershipType: 'restricted',
 		name: getRandomString(),
 	});
@@ -291,9 +293,6 @@ test('Assert joining sites with different membership types using My Sites portle
 	}
 	finally {
 		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
-		await apiHelpers.headlessSite.deleteSite(privateSite.id);
-		await apiHelpers.headlessSite.deleteSite(openSite.id);
-		await apiHelpers.headlessSite.deleteSite(restrictedSite.id);
 	}
 });
 
@@ -312,7 +311,7 @@ test('Assert My Sites widget displays user memberships assigned in multiple ways
 		surname: user.familyName,
 	};
 
-	const site2 = await apiHelpers.headlessSite.createSite({
+	const site2 = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
 
@@ -396,7 +395,6 @@ test('Assert My Sites widget displays user memberships assigned in multiple ways
 	}
 	finally {
 		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
-		await apiHelpers.headlessSite.deleteSite(site2.id);
 	}
 });
 
@@ -405,44 +403,39 @@ test('Assert My Sites widget search shows active sites only', async ({
 	page,
 	site,
 }) => {
-	const inactiveSite = await apiHelpers.headlessSite.createSite({
+	const inactiveSite = await apiHelpers.headlessAdminSite.postSite({
 		active: false,
 		name: getRandomString(),
 	});
 
-	try {
-		await page.goto(`/web${site.friendlyUrlPath}`);
+	await page.goto(`/web${site.friendlyUrlPath}`);
 
-		await page.waitForTimeout(500);
+	await page.waitForTimeout(500);
 
-		const searchBar = page.getByPlaceholder('Search for');
+	const searchBar = page.getByPlaceholder('Search for');
 
-		await searchBar.fill(site.name);
-		await searchBar.press('Enter');
+	await searchBar.fill(site.name);
+	await searchBar.press('Enter');
 
-		await expect(
-			page.getByRole('link', {exact: true, name: site.name})
-		).toBeVisible();
-		await expect(
-			page
-				.locator(
-					`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${site.name}"]`
-				)
-				.getByText('User')
-		).toHaveText('1 User');
-		await expect(page.getByText('1 Result Found')).toBeVisible();
+	await expect(
+		page.getByRole('link', {exact: true, name: site.name})
+	).toBeVisible();
+	await expect(
+		page
+			.locator(
+				`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${site.name}"]`
+			)
+			.getByText('User')
+	).toHaveText('1 User');
+	await expect(page.getByText('1 Result Found')).toBeVisible();
 
-		await searchBar.fill(inactiveSite.name);
-		await searchBar.press('Enter');
+	await searchBar.fill(inactiveSite.name);
+	await searchBar.press('Enter');
 
-		await expect(
-			page.getByRole('link', {exact: true, name: inactiveSite.name})
-		).toBeHidden();
-		await expect(page.getByText('0 Result Found')).toBeHidden();
-	}
-	finally {
-		await apiHelpers.headlessSite.deleteSite(inactiveSite.id);
-	}
+	await expect(
+		page.getByRole('link', {exact: true, name: inactiveSite.name})
+	).toBeHidden();
+	await expect(page.getByText('0 Result Found')).toBeHidden();
 });
 
 test('Assert that pagination is working for My Sites widget', async ({
@@ -451,34 +444,27 @@ test('Assert that pagination is working for My Sites widget', async ({
 	site,
 }) => {
 	for (let i = 1; i < 20; i++) {
-		await apiHelpers.headlessSite.createSite({
+		await apiHelpers.headlessAdminSite.postSite({
 			externalReferenceCode: `Site${i}`,
 			name: getRandomString(),
 		});
 	}
 
-	try {
-		await page.goto(`/web${site.friendlyUrlPath}`);
+	await page.goto(`/web${site.friendlyUrlPath}`);
 
-		await page.waitForTimeout(500);
+	await page.waitForTimeout(500);
 
-		await expect(
-			page.getByText('Showing 1 to 20 of 21 entries.')
-		).toBeVisible();
+	await expect(
+		page.getByText('Showing 1 to 20 of 21 entries.')
+	).toBeVisible();
 
-		await page.getByLabel('Items per Page').click();
+	await page.getByLabel('Items per Page').click();
 
-		await page.getByRole('option', {name: '40 Entries per Page'}).click();
+	await page.getByRole('option', {name: '40 Entries per Page'}).click();
 
-		await expect(
-			page.getByText('Showing 1 to 21 of 21 entries.')
-		).toBeVisible();
-	}
-	finally {
-		for (let i = 1; i < 20; i++) {
-			await apiHelpers.headlessSite.deleteSiteByERC(`Site${i}`);
-		}
-	}
+	await expect(
+		page.getByText('Showing 1 to 21 of 21 entries.')
+	).toBeVisible();
 });
 
 test('Assert that site tags appear in My Sites widget', async ({

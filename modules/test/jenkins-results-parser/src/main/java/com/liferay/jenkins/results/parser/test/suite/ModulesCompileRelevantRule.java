@@ -7,7 +7,6 @@ package com.liferay.jenkins.results.parser.test.suite;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,25 +29,24 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 
 	@Override
 	public List<TestScriptCommand> getTestScriptCommands() {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			getPortalGitWorkingDirectory();
-
 		try {
 			List<File> moduleDirs = new ArrayList<>();
 
-			List<File> modifiedModuleDirsList =
-				portalGitWorkingDirectory.getModifiedModuleDirsList();
+			List<File> modifiedModuleProjectDirsList =
+				getModifiedModuleProjectDirsList();
 
-			if (modifiedModuleDirsList.size() <= 5) {
-				moduleDirs.addAll(modifiedModuleDirsList);
+			if (modifiedModuleProjectDirsList.size() <= 5) {
+				moduleDirs.addAll(modifiedModuleProjectDirsList);
 			}
 			else {
-				for (File modifiedModuleDir : modifiedModuleDirsList) {
+				for (File modifiedModuleProjectDir :
+						modifiedModuleProjectDirsList) {
+
 					File lfrbuildPortalFile = new File(
-						modifiedModuleDir, ".lfrbuild-portal");
+						modifiedModuleProjectDir, ".lfrbuild-portal");
 
 					if (!lfrbuildPortalFile.exists()) {
-						moduleDirs.add(modifiedModuleDir);
+						moduleDirs.add(modifiedModuleProjectDir);
 					}
 				}
 			}
@@ -88,19 +86,18 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 
 	@Override
 	public boolean matches(File modifiedFile) {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			getPortalGitWorkingDirectory();
-
 		try {
-			List<File> modifiedModuleDirsList =
-				portalGitWorkingDirectory.getModifiedModuleDirsList();
+			List<File> modifiedModuleProjectDirsList =
+				getModifiedModuleProjectDirsList();
 
-			if (modifiedModuleDirsList.size() > 5) {
+			if (modifiedModuleProjectDirsList.size() > 5) {
 				boolean hasNonPortalModule = false;
 
-				for (File modifiedModuleDir : modifiedModuleDirsList) {
+				for (File modifiedModuleProjectDir :
+						modifiedModuleProjectDirsList) {
+
 					File lfrbuildPortalFile = new File(
-						modifiedModuleDir, ".lfrbuild-portal");
+						modifiedModuleProjectDir, ".lfrbuild-portal");
 
 					if (!lfrbuildPortalFile.exists()) {
 						hasNonPortalModule = true;

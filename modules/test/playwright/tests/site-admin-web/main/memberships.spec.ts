@@ -12,7 +12,6 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
 	performLogout,
@@ -86,8 +85,6 @@ test(
 		await page.getByLabel('Remove Site Administrator').click();
 
 		await expect(page.getByText(user.name)).toBeVisible();
-
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 	}
 );
 
@@ -137,13 +134,6 @@ test(
 
 		await expect(page.getByText(userGroup1.name)).toBeVisible();
 		await expect(page.getByText(userGroup2.name)).toBeVisible();
-
-		await apiHelpers.headlessAdminUser.deleteUserGroup(
-			Number(userGroup1.id)
-		);
-		await apiHelpers.headlessAdminUser.deleteUserGroup(
-			Number(userGroup2.id)
-		);
 	}
 );
 
@@ -231,10 +221,6 @@ test(
 				)
 				.first()
 		).not.toBeVisible();
-
-		await apiHelpers.headlessAdminUser.deleteUserAccount(
-			Number(userAccount.id)
-		);
 	}
 );
 
@@ -264,8 +250,6 @@ test(
 		await membershipsPage.removeSiteMembershipFromUser(user.alternateName);
 
 		await expect(page.getByText(user.name)).not.toBeVisible();
-
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 	}
 );
 
@@ -313,8 +297,6 @@ test(
 				.frameLocator('iframe[title="Assign Roles"]')
 				.getByText('Site Administrator')
 		).toBeVisible();
-
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 	}
 );
 
@@ -405,8 +387,6 @@ test(
 				.locator('.control-menu-nav-item')
 				.getByTitle('Go to Memberships')
 		).toBeVisible();
-
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 	}
 );
 
@@ -543,8 +523,6 @@ test(
 		await expect(
 			page.locator('.tooltip-inner', {hasText: 'Go to Memberships'})
 		).toBeVisible();
-
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 	}
 );
 
@@ -554,21 +532,10 @@ test(
 		tag: '@LPD-69499',
 	},
 	async ({apiHelpers, membershipsPage, page}) => {
-		const randomNumber = getRandomInt();
-
-		const user = await apiHelpers.post(
-			`${apiHelpers.baseUrl}headless-admin-user/v1.0/user-accounts`,
-			{
-				data: {
-					alternateName: 'User' + randomNumber,
-					emailAddress: 'User' + randomNumber + '@liferay.com',
-					familyName: `"><script>alert(2)</script>`,
-					givenName: `"><script>alert(1)</script>`,
-					password: 'test',
-				},
-				failOnStatusCode: true,
-			}
-		);
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			familyName: `"><script>alert(2)</script>`,
+			givenName: `"><script>alert(1)</script>`,
+		});
 
 		userData[user.alternateName] = {
 			name: user.givenName,
@@ -576,37 +543,30 @@ test(
 			surname: user.familyName,
 		};
 
-		try {
-			await membershipsPage.goto();
+		await membershipsPage.goto();
 
-			await page.getByRole('heading', {name: 'Memberships'}).waitFor();
+		await page.getByRole('heading', {name: 'Memberships'}).waitFor();
 
-			await page.getByRole('button', {name: 'Add'}).click();
+		await page.getByRole('button', {name: 'Add'}).click();
 
-			await page
-				.frameLocator('iframe[title="Assign Users to This Site"]')
-				.getByLabel(user.givenName)
-				.check();
+		await page
+			.frameLocator('iframe[title="Assign Users to This Site"]')
+			.getByLabel(user.givenName)
+			.check();
 
-			await page.getByRole('button', {name: 'Done'}).click();
+		await page.getByRole('button', {name: 'Done'}).click();
 
-			const userCard = page.locator(
-				`[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_${user.alternateName}"]`
-			);
+		const userCard = page.locator(
+			`[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_${user.alternateName}"]`
+		);
 
-			await userCard.waitFor();
+		await userCard.waitFor();
 
-			await userCard.click({force: true});
+		await userCard.click({force: true});
 
-			const alert = page.locator('.alert');
+		const alert = page.locator('.alert');
 
-			await expect(alert).toHaveCount(0);
-		}
-		finally {
-			await apiHelpers.headlessAdminUser.deleteUserAccount(
-				Number(user.id)
-			);
-		}
+		await expect(alert).toHaveCount(0);
 	}
 );
 
@@ -708,14 +668,14 @@ test(
 		await page.getByRole('link', {name: 'Approved'}).click();
 
 		await page
-			.getByRole('link', {name: `${user.givenName} ${user.familyName}`})
+			.getByRole('link', {
+				name: `${user.givenName} ${user.familyName}`,
+			})
 			.click();
 
 		const alert = page.locator('.alert');
 
 		await expect(alert).toHaveCount(0);
-
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 	}
 );
 

@@ -95,63 +95,58 @@ test('Assert a user cannot join or leave a site with manual membership managemen
 		surname: user.familyName,
 	};
 
-	try {
-		const role =
-			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
 
-		await apiHelpers.headlessAdminUser.assignUserToRole(
-			role.externalReferenceCode,
-			user.id
-		);
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
 
-		await siteSettingsPage.goToSiteSetting(
-			'Site Configuration',
-			'Details',
-			site.friendlyUrlPath
-		);
+	await siteSettingsPage.goToSiteSetting(
+		'Site Configuration',
+		'Details',
+		site.friendlyUrlPath
+	);
 
-		await page.getByLabel('Allow Manual Membership').click();
+	await page.getByLabel('Allow Manual Membership').click();
 
-		await siteSettingsPage.saveButton.click();
+	await siteSettingsPage.saveButton.click();
 
-		await waitForAlert(page, 'Success');
+	await waitForAlert(page, 'Success');
 
-		await performLogout(page);
+	await performLogout(page);
 
-		await performLoginViaApi({page, screenName: user.alternateName});
+	await performLoginViaApi({page, screenName: user.alternateName});
 
-		await page.goto(`/web${site.friendlyUrlPath}`);
+	await page.goto(`/web${site.friendlyUrlPath}`);
 
-		await page.waitForTimeout(500);
+	await page.waitForTimeout(500);
 
-		const availableSitesLink = page.getByRole('link', {
-			name: 'Available Sites',
-		});
+	const availableSitesLink = page.getByRole('link', {
+		name: 'Available Sites',
+	});
 
-		await availableSitesLink.click();
+	await availableSitesLink.click();
 
-		const showActionsLabel = page
-			.locator(
-				`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${site.name}"]`
-			)
-			.getByLabel('Show Actions');
+	const showActionsLabel = page
+		.locator(
+			`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${site.name}"]`
+		)
+		.getByLabel('Show Actions');
 
-		await expect(showActionsLabel).toBeHidden();
+	await expect(showActionsLabel).toBeHidden();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+	await performLogout(page);
+	await performLoginViaApi({page, screenName: 'test'});
 
-		await page.goto(`/web${site.friendlyUrlPath}`);
+	await page.goto(`/web${site.friendlyUrlPath}`);
 
-		await page.waitForTimeout(500);
+	await page.waitForTimeout(500);
 
-		await availableSitesLink.click();
+	await availableSitesLink.click();
 
-		await expect(showActionsLabel).toBeHidden();
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
-	}
+	await expect(showActionsLabel).toBeHidden();
 });
 
 test('Assert joining sites with different membership types using My Sites portlet', async ({
@@ -181,123 +176,118 @@ test('Assert joining sites with different membership types using My Sites portle
 		surname: user.familyName,
 	};
 
-	try {
-		await performLogout(page);
+	await performLogout(page);
 
-		await performLoginViaApi({page, screenName: user.alternateName});
+	await performLoginViaApi({page, screenName: user.alternateName});
 
-		await page.getByLabel(user.name).click();
+	await page.getByLabel(user.name).click();
 
-		// Join open site and assert private site is hidden
+	// Join open site and assert private site is hidden
 
-		await page.getByRole('menuitem', {name: 'My Dashboard'}).click();
+	await page.getByRole('menuitem', {name: 'My Dashboard'}).click();
 
-		await page.getByRole('link', {name: 'Available Sites'}).click();
+	await page.getByRole('link', {name: 'Available Sites'}).click();
 
-		await page.waitForTimeout(500);
+	await page.waitForTimeout(500);
 
-		await expect(page.getByText(privateSite.name)).toBeHidden();
-		await expect(page.getByText(openSite.name)).toBeVisible();
+	await expect(page.getByText(privateSite.name)).toBeHidden();
+	await expect(page.getByText(openSite.name)).toBeVisible();
 
-		await page
-			.locator(
-				`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${openSite.name}"]`
-			)
-			.getByLabel('Show Actions')
-			.click();
+	await page
+		.locator(
+			`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${openSite.name}"]`
+		)
+		.getByLabel('Show Actions')
+		.click();
 
-		await page.getByRole('menuitem', {name: 'Join'}).click();
+	await page.getByRole('menuitem', {name: 'Join'}).click();
 
-		await waitForAlert(page, 'Success');
+	await waitForAlert(page, 'Success');
 
-		// Join restricted site
+	// Join restricted site
 
-		const restrictedSiteShowActionsLabel = page
-			.locator(
-				`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${restrictedSite.name}"]`
-			)
-			.getByLabel('Show Actions');
+	const restrictedSiteShowActionsLabel = page
+		.locator(
+			`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${restrictedSite.name}"]`
+		)
+		.getByLabel('Show Actions');
 
-		await restrictedSiteShowActionsLabel.click();
+	await restrictedSiteShowActionsLabel.click();
 
-		await page.getByRole('menuitem', {name: 'Request Membership'}).click();
+	await page.getByRole('menuitem', {name: 'Request Membership'}).click();
 
-		await page
-			.getByLabel('Characters Maximum:')
-			.fill('Please, allow me to join Restricted Site');
+	await page
+		.getByLabel('Characters Maximum:')
+		.fill('Please, allow me to join Restricted Site');
 
-		await page.getByRole('button', {name: 'Save'}).click();
+	await page.getByRole('button', {name: 'Save'}).click();
 
-		await waitForAlert(page, 'Success');
+	await waitForAlert(page, 'Success');
 
-		await performLogout(page);
+	await performLogout(page);
 
-		await performLoginViaApi({page, screenName: 'test'});
+	await performLoginViaApi({page, screenName: 'test'});
 
-		await page.waitForTimeout(300);
+	await page.waitForTimeout(300);
 
-		await page.goto(
-			`/group/${restrictedSite.name}/~/control_panel/manage/-/site_memberships`
-		);
+	await page.goto(
+		`/group/${restrictedSite.name}/~/control_panel/manage/-/site_memberships`
+	);
 
-		await page.waitForTimeout(300);
+	await page.waitForTimeout(300);
 
-		await page.getByLabel('Options').click();
+	await page.getByLabel('Options').click();
 
-		await page
-			.getByRole('menuitem', {name: 'View Membership Requests'})
-			.click();
+	await page
+		.getByRole('menuitem', {name: 'View Membership Requests'})
+		.click();
 
-		await expect(
-			page.getByRole('heading', {name: 'Membership Requests'})
-		).toBeVisible();
+	await expect(
+		page.getByRole('heading', {name: 'Membership Requests'})
+	).toBeVisible();
 
-		await page.getByLabel('More actions').click();
+	await page.getByLabel('More actions').click();
 
-		await page.getByRole('menuitem', {name: 'Reply'}).click();
+	await page.getByRole('menuitem', {name: 'Reply'}).click();
 
-		await page
-			.getByLabel('Characters Maximum:')
-			.fill('You may join the Restricted Site');
+	await page
+		.getByLabel('Characters Maximum:')
+		.fill('You may join the Restricted Site');
 
-		await page.getByRole('button', {name: 'Save'}).click();
+	await page.getByRole('button', {name: 'Save'}).click();
 
-		await waitForAlert(page, 'Success');
+	await waitForAlert(page, 'Success');
 
-		await page.getByRole('link', {name: 'Approved'}).click();
+	await page.getByRole('link', {name: 'Approved'}).click();
 
-		await expect(page.getByText(user.name)).toBeVisible();
+	await expect(page.getByText(user.name)).toBeVisible();
 
-		await performLogout(page);
+	await performLogout(page);
 
-		await performLoginViaApi({page, screenName: user.alternateName});
+	await performLoginViaApi({page, screenName: user.alternateName});
 
-		// Assert user joined restricted and open sites
+	// Assert user joined restricted and open sites
 
-		await page.getByLabel(user.name).click();
+	await page.getByLabel(user.name).click();
 
-		await page.getByRole('menuitem', {name: 'My Dashboard'}).click();
+	await page.getByRole('menuitem', {name: 'My Dashboard'}).click();
 
-		await expect(page.getByText(openSite.name)).toBeVisible();
-		await expect(page.getByText(restrictedSite.name)).toBeVisible();
+	await expect(page.getByText(openSite.name)).toBeVisible();
+	await expect(page.getByText(restrictedSite.name)).toBeVisible();
 
-		await restrictedSiteShowActionsLabel.click();
+	await restrictedSiteShowActionsLabel.click();
 
-		await page.getByRole('menuitem', {name: 'Leave Site'}).click();
+	await page.getByRole('menuitem', {name: 'Leave Site'}).click();
 
-		await waitForAlert(page, 'Success');
+	await waitForAlert(page, 'Success');
 
-		await page.reload();
+	await page.reload();
 
-		await expect(page.getByText(restrictedSite.name)).toBeHidden();
+	await expect(page.getByText(restrictedSite.name)).toBeHidden();
 
-		await performLogout(page);
+	await performLogout(page);
 
-		await performLoginViaApi({page, screenName: 'test'});
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
-	}
+	await performLoginViaApi({page, screenName: 'test'});
 });
 
 test('Assert My Sites widget displays user memberships assigned in multiple ways', async ({
@@ -319,87 +309,78 @@ test('Assert My Sites widget displays user memberships assigned in multiple ways
 		name: getRandomString(),
 	});
 
-	try {
+	// Assign site membership via Site Settings
 
-		// Assign site membership via Site Settings
+	await page.goto(
+		`/group/${site.name}/~/control_panel/manage/-/site_memberships`
+	);
 
-		await page.goto(
-			`/group/${site.name}/~/control_panel/manage/-/site_memberships`
-		);
+	await page.getByRole('button', {name: 'Add'}).click();
 
-		await page.getByRole('button', {name: 'Add'}).click();
+	await page
+		.frameLocator('iframe[title="Assign Users to This Site"]')
+		.getByLabel(user.alternateName)
+		.check();
 
-		await page
-			.frameLocator('iframe[title="Assign Users to This Site"]')
-			.getByLabel(user.alternateName)
-			.check();
+	await page.getByRole('button', {name: 'Done'}).click();
 
-		await page.getByRole('button', {name: 'Done'}).click();
+	await waitForAlert(page, 'Success');
 
-		await waitForAlert(page, 'Success');
+	await expect(page.getByText(user.name)).toBeVisible();
 
-		await expect(page.getByText(user.name)).toBeVisible();
+	// Assign site membership via User Admin
 
-		// Assign site membership via User Admin
+	const role = await apiHelpers.headlessAdminUser.getRoleByName('Power User');
 
-		const role =
-			await apiHelpers.headlessAdminUser.getRoleByName('Power User');
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
 
-		await apiHelpers.headlessAdminUser.assignUserToRole(
-			role.externalReferenceCode,
-			user.id
-		);
+	await usersAndOrganizationsPage.goToUsers();
 
-		await usersAndOrganizationsPage.goToUsers();
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink(user.alternateName)
+	).click();
 
-		await (
-			await usersAndOrganizationsPage.usersTableRowLink(
-				user.alternateName
+	await editUserPage.membershipsLink.click();
+
+	await editUserPage.selectSiteButton.click();
+
+	await page.waitForTimeout(300);
+
+	await page
+		.frameLocator('iframe[title="Select Site"]')
+		.getByRole('link', {exact: true, name: site2.name})
+		.click();
+
+	await usersAndOrganizationsPage.saveUserButton.click();
+
+	await waitForAlert(page, 'Success');
+
+	// Verify that both site memberships are displayed in My Sites widget
+
+	await page.goto(`/web${site.friendlyUrlPath}`);
+
+	await performLogout(page);
+
+	await performLoginViaApi({page, screenName: user.alternateName});
+
+	await page.getByLabel(user.name).click();
+
+	await page.goto(`/web${site.friendlyUrlPath}`);
+
+	await expect(
+		page
+			.locator(
+				`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${site.name}"]`
 			)
-		).click();
+			.getByRole('link', {name: site.name})
+	).toBeVisible();
+	await expect(page.getByText(site2.name)).toBeVisible();
 
-		await editUserPage.membershipsLink.click();
-
-		await editUserPage.selectSiteButton.click();
-
-		await page.waitForTimeout(300);
-
-		await page
-			.frameLocator('iframe[title="Select Site"]')
-			.getByRole('link', {exact: true, name: site2.name})
-			.click();
-
-		await usersAndOrganizationsPage.saveUserButton.click();
-
-		await waitForAlert(page, 'Success');
-
-		// Verify that both site memberships are displayed in My Sites widget
-
-		await page.goto(`/web${site.friendlyUrlPath}`);
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: user.alternateName});
-
-		await page.getByLabel(user.name).click();
-
-		await page.goto(`/web${site.friendlyUrlPath}`);
-
-		await expect(
-			page
-				.locator(
-					`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${site.name}"]`
-				)
-				.getByRole('link', {name: site.name})
-		).toBeVisible();
-		await expect(page.getByText(site2.name)).toBeVisible();
-
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
-	}
+	await performLogout(page);
+	await performLoginViaApi({page, screenName: 'test'});
 });
 
 test('Assert My Sites widget search shows active sites only', async ({

@@ -6,7 +6,7 @@ application:
     name: Liferay.Headless.Asset.Library
 author: Roberto Díaz
 clientDir: ../headless-asset-library-client/src/main/java
-compatibilityVersion: 14
+compatibilityVersion: 15
 forcePredictableOperationId: true
 generateBatch: true
 generateGraphQL: false

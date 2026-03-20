@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
@@ -16,6 +17,7 @@ import {stagingConfigurationPageTest} from '../../staging-configuration-web/main
 
 const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),
 	navigationMenusPagesTest,
@@ -29,18 +31,12 @@ let site;
 const siteName = 'Test Site Name';
 
 test.beforeEach(async ({apiHelpers}) => {
-	site = await apiHelpers.headlessSite.createSite({
+	site = await apiHelpers.headlessAdminSite.postSite({
 		name: siteName,
 	});
 
 	await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
 		groupId: site.id,
-	});
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	await test.step('Delete site on de DXP side', async () => {
-		await apiHelpers.headlessSite.deleteSite(site.id);
 	});
 });
 

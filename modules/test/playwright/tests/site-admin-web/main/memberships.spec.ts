@@ -281,7 +281,7 @@ test(
 			return String(Liferay.ThemeDisplay.getSiteGroupId());
 		});
 
-		const site2 = await apiHelpers.headlessSite.createSite({
+		const site2 = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
 
@@ -315,7 +315,6 @@ test(
 		).toBeVisible();
 
 		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
-		await apiHelpers.headlessSite.deleteSite(site2.id);
 	}
 );
 
@@ -624,7 +623,7 @@ test(
 		site,
 		siteSettingsPage,
 	}) => {
-		const site2 = await apiHelpers.headlessSite.createSite({
+		const site2 = await apiHelpers.headlessAdminSite.postSite({
 			membershipType: 'restricted',
 			name: getRandomString(),
 		});
@@ -715,8 +714,6 @@ test(
 		const alert = page.locator('.alert');
 
 		await expect(alert).toHaveCount(0);
-
-		await apiHelpers.headlessSite.deleteSite(site2.id);
 
 		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 	}

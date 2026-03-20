@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
@@ -13,6 +14,7 @@ import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),
 	pageViewModePagesTest
@@ -24,9 +26,9 @@ test('Ensure Sites Directory widget can display child site', async ({
 	site,
 	widgetPagePage,
 }) => {
-	const childSite = await apiHelpers.headlessSite.createSite({
+	const childSite = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
-		parentSiteKey: site.name,
+		parentSiteExternalReferenceCode: site.externalReferenceCode,
 	});
 
 	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
@@ -55,8 +57,6 @@ test('Ensure Sites Directory widget can display child site', async ({
 	await expect(page.locator('[id$="groupsSearchContainer_1"]')).toHaveText(
 		childSite.name
 	);
-
-	await apiHelpers.headlessSite.deleteSite(childSite.id);
 });
 
 test('Ensure Sites Directory widget can display parent site', async ({
@@ -65,9 +65,9 @@ test('Ensure Sites Directory widget can display parent site', async ({
 	site,
 	widgetPagePage,
 }) => {
-	const childSite = await apiHelpers.headlessSite.createSite({
+	const childSite = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
-		parentSiteKey: site.name,
+		parentSiteExternalReferenceCode: site.externalReferenceCode,
 	});
 
 	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
@@ -94,8 +94,6 @@ test('Ensure Sites Directory widget can display parent site', async ({
 		.allInnerTexts();
 
 	await expect(breadcrumbEntries).toContainEqual(site.name);
-
-	await apiHelpers.headlessSite.deleteSite(childSite.id);
 });
 
 test('Ensure Sites Directory widget can display sibling site', async ({
@@ -104,14 +102,14 @@ test('Ensure Sites Directory widget can display sibling site', async ({
 	site,
 	widgetPagePage,
 }) => {
-	const childSite1 = await apiHelpers.headlessSite.createSite({
+	const childSite1 = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
-		parentSiteKey: site.name,
+		parentSiteExternalReferenceCode: site.externalReferenceCode,
 	});
 
-	const childSite2 = await apiHelpers.headlessSite.createSite({
+	const childSite2 = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
-		parentSiteKey: site.name,
+		parentSiteExternalReferenceCode: site.externalReferenceCode,
 	});
 
 	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
@@ -142,7 +140,4 @@ test('Ensure Sites Directory widget can display sibling site', async ({
 	await expect(breadcrumbEntries).toEqual(
 		expect.arrayContaining([childSite1.name, childSite2.name])
 	);
-
-	await apiHelpers.headlessSite.deleteSite(childSite1.id);
-	await apiHelpers.headlessSite.deleteSite(childSite2.id);
 });

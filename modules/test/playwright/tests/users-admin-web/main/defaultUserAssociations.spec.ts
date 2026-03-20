@@ -13,7 +13,7 @@ import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganiza
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
-export const test = mergeTests(
+const test = mergeTests(
 	dataApiHelpersTest,
 	instanceSettingsPagesTest,
 	isolatedSiteTest,
@@ -121,6 +121,81 @@ test(
 					editUserPage.regularRoleCell(role.name)
 				).toBeVisible();
 			});
+		}
+		finally {
+			await defaultUserAssociationsPage.resetFields();
+		}
+	}
+);
+
+test(
+	'Organization site default user associations',
+	{tag: '@LPD-81993'},
+	async ({
+		apiHelpers,
+		defaultUserAssociationsPage,
+		editOrganizationPage,
+		editUserPage,
+		page,
+		site,
+		usersAndOrganizationsPage,
+	}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Org${getRandomString()}`,
+			});
+
+		try {
+			await usersAndOrganizationsPage.goToOrganizations();
+
+			await expect(async () => {
+				await (
+					await usersAndOrganizationsPage.organizationsTable.rowActions(
+						organization.name
+					)
+				).click();
+
+				await expect(
+					usersAndOrganizationsPage.editOrganizationMenuItem
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
+
+			await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+			await editOrganizationPage.organizationSiteLink.click();
+			await editOrganizationPage.createSiteToggle.check();
+			await editOrganizationPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await defaultUserAssociationsPage.goto();
+
+			await defaultUserAssociationsPage.sitesInput.fill(site.name);
+			await defaultUserAssociationsPage.organizationSitesInput.fill(
+				organization.name
+			);
+			await defaultUserAssociationsPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			await usersAndOrganizationsPage.goToUsers();
+
+			await (
+				await usersAndOrganizationsPage.usersTableRowLink(
+					user.alternateName
+				)
+			).click();
+
+			await editUserPage.membershipsLink.click();
+
+			await expect(
+				await editUserPage.membershipsSiteTableCell(site.name)
+			).toBeVisible();
+			await expect(
+				await editUserPage.membershipsSiteTableCell(organization.name)
+			).toBeVisible();
 		}
 		finally {
 			await defaultUserAssociationsPage.resetFields();

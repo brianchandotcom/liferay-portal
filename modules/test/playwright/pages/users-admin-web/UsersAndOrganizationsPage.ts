@@ -112,6 +112,9 @@ export class UsersAndOrganizationsPage {
 		value: string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
+	readonly myOrganizationsTableRowActions: (
+		organizationName: string
+	) => Promise<Locator>;
 	readonly myOrganizationsTableRowLink: (
 		organizationName: string
 	) => Promise<Locator>;
@@ -388,6 +391,24 @@ export class UsersAndOrganizationsPage {
 				return myOrganizationsTableRow.column.getByRole('link', {
 					name: organizationName,
 				});
+			}
+
+			throw new Error(
+				`Cannot locate organization row with name ${organizationName}`
+			);
+		};
+		this.myOrganizationsTableRowActions = async (
+			organizationName: string
+		) => {
+			const myOrganizationsTableRow =
+				await this.myOrganizationsUserAndOrgsTableRow(
+					1,
+					organizationName,
+					false
+				);
+
+			if (myOrganizationsTableRow && myOrganizationsTableRow.row) {
+				return myOrganizationsTableRow.row.getByLabel('Show Actions');
 			}
 
 			throw new Error(

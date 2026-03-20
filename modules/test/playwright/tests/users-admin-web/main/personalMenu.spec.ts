@@ -87,30 +87,42 @@ test(
 test(
 	'Configure look and feel current site and My Dashboard',
 	{tag: '@LPD-81993'},
-	async ({personalMenuInstanceSettingsPage, personalMenuPage}) => {
-		await personalMenuInstanceSettingsPage.goToPersonalMenuSettings();
+	async ({page, personalMenuInstanceSettingsPage, personalMenuPage}) => {
+		await test.step('Set to Current Site and verify apps open in current site', async () => {
+			await personalMenuInstanceSettingsPage.goToPersonalMenuSettings();
 
-		await personalMenuInstanceSettingsPage.selectPersonalApplicationsLookAndFeel(
-			'Current Site'
-		);
+			await personalMenuInstanceSettingsPage.selectPersonalApplicationsLookAndFeel(
+				'Current Site'
+			);
 
-		await personalMenuInstanceSettingsPage.save();
+			await personalMenuInstanceSettingsPage.save();
 
-		await personalMenuPage.userPersonalMenuButton.click();
+			await page.goto('/');
+			await page.waitForLoadState('networkidle');
 
-		await expect(personalMenuPage.myDashboardMenuItem).not.toBeVisible();
+			await personalMenuPage.userPersonalMenuButton.click();
+			await personalMenuPage.notificationsMenuItem.click();
 
-		await personalMenuInstanceSettingsPage.goToPersonalMenuSettings();
+			await expect(page).not.toHaveURL(/\/user\//);
+		});
 
-		await personalMenuInstanceSettingsPage.selectPersonalApplicationsLookAndFeel(
-			'My Dashboard'
-		);
+		await test.step('Set to My Dashboard and verify apps open in user dashboard', async () => {
+			await personalMenuInstanceSettingsPage.goToPersonalMenuSettings();
 
-		await personalMenuInstanceSettingsPage.save();
+			await personalMenuInstanceSettingsPage.selectPersonalApplicationsLookAndFeel(
+				'My Dashboard'
+			);
 
-		await personalMenuPage.userPersonalMenuButton.click();
+			await personalMenuInstanceSettingsPage.save();
 
-		await expect(personalMenuPage.myDashboardMenuItem).toBeVisible();
+			await page.goto('/');
+			await page.waitForLoadState('networkidle');
+
+			await personalMenuPage.userPersonalMenuButton.click();
+			await personalMenuPage.notificationsMenuItem.click();
+
+			await expect(page).toHaveURL(/\/user\//);
+		});
 	}
 );
 

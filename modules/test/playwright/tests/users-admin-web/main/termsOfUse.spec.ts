@@ -9,7 +9,13 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
-import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
+import getRandomString from '../../../utils/getRandomString';
+import {
+	performLoginViaApi,
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 const test = mergeTests(
@@ -28,14 +34,16 @@ test.afterEach(
 		if (await userLoginPage.iAgreeButton.isVisible()) {
 			await userLoginPage.iAgreeButton.click();
 			await page.waitForLoadState('networkidle');
-
-			await termsOfUseInstanceSettingsPage.goto();
-
-			await termsOfUseInstanceSettingsPage.termsOfUseRequiredCheckbox.uncheck();
-			await termsOfUseInstanceSettingsPage.saveButton.click();
-
-			await waitForAlert(page);
 		}
+
+		await termsOfUseInstanceSettingsPage.goto();
+
+		await termsOfUseInstanceSettingsPage.termsOfUseRequiredCheckbox.uncheck();
+		await termsOfUseInstanceSettingsPage.groupIdInput.fill('0');
+		await termsOfUseInstanceSettingsPage.articleIdInput.fill('');
+		await termsOfUseInstanceSettingsPage.saveButton.click();
+
+		await waitForAlert(page);
 	}
 );
 
@@ -61,6 +69,13 @@ test(
 
 			await page.waitForLoadState('networkidle');
 
+			if (await userLoginPage.iAgreeButton.isVisible()) {
+				await userLoginPage.iAgreeButton.click();
+				await page.waitForLoadState('networkidle');
+			}
+
+			await termsOfUseInstanceSettingsPage.goto();
+
 			await expect(
 				termsOfUseInstanceSettingsPage.termsOfUseRequiredCheckbox
 			).toBeChecked();
@@ -78,6 +93,9 @@ test(
 		});
 
 		await test.step('Verify new user can login without terms of use', async () => {
+			await page.goto('/');
+			await page.waitForLoadState('networkidle');
+
 			const userAccount =
 				await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -87,7 +105,7 @@ test(
 			await userLoginPage.emailAddressInput.fill(
 				userAccount.emailAddress
 			);
-			await userLoginPage.passwordInput.fill('test');
+			await userLoginPage.passwordInput.fill(userData['test'].password);
 			await userLoginPage.signInButton.click();
 
 			await expect(userLoginPage.iAgreeButton).not.toBeVisible();
@@ -95,5 +113,76 @@ test(
 				timeout: 30000,
 			});
 		});
+	}
+);
+
+test(
+	'Can specify terms of use web content',
+	{tag: '@LPD-81993'},
+	async ({
+		apiHelpers,
+		page,
+		termsOfUseInstanceSettingsPage,
+		userLoginPage,
+	}) => {
+		const site = await apiHelpers.headlessSite.createSite({
+			name: `Site${getRandomString()}`,
+		});
+
+		try {
+			const temsContent = 'This is a custom terms of use content.';
+
+			const ddmStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			const webContent =
+				await apiHelpers.jsonWebServicesJournal.addWebContent({
+					content: temsContent,
+					ddmStructureId,
+					groupId: Number(site.id),
+					serviceContext: {
+						addGroupPermissions: true,
+						addGuestPermissions: true,
+						workflowAction: 1,
+					},
+					titleMap: {en_US: `ToU WC ${getRandomString()}`},
+				});
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			await termsOfUseInstanceSettingsPage.goto();
+
+			await termsOfUseInstanceSettingsPage.termsOfUseRequiredCheckbox.check();
+
+			await termsOfUseInstanceSettingsPage.groupIdInput.fill(
+				String(site.id)
+			);
+			await termsOfUseInstanceSettingsPage.articleIdInput.fill(
+				String(webContent.articleId)
+			);
+			await termsOfUseInstanceSettingsPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await performLogout(page);
+
+			await userLoginPage.goto();
+			await userLoginPage.emailAddressInput.fill(user.emailAddress);
+			await userLoginPage.passwordInput.fill(userData['test'].password);
+			await userLoginPage.signInButton.click();
+
+			await expect(page.getByText(temsContent)).toBeVisible({
+				timeout: 10000,
+			});
+
+			await userLoginPage.iAgreeButton.click();
+
+			await expect(userLoginPage.userProfileMenuButton).toBeVisible({
+				timeout: 20000,
+			});
+		}
+		finally {
+			await apiHelpers.headlessSite.deleteSite(site.id);
+		}
 	}
 );

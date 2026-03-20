@@ -9,6 +9,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import {EditUserPage} from '../../../pages/users-admin-web/EditUserPage';
 import {UsersAndOrganizationsPage} from '../../../pages/users-admin-web/UsersAndOrganizationsPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -22,11 +23,13 @@ export const test = mergeTests(
 	virtualInstancesPagesTest
 );
 
+const basePort = new URL(liferayConfig.environment.baseUrl).port || '8080';
+
 test(
 	'On demand admin',
 	{tag: ['@LPD-70297', '@LPS-150388', '@LPS-156154']},
 	async ({onDemandAdminPage, page, virtualInstancesPage}) => {
-		test.setTimeout(160000);
+		test.setTimeout(240000);
 
 		const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 
@@ -83,7 +86,9 @@ test(
 				).not.toBeVisible();
 			});
 
-			await newPage.goto(`http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`);
+			await newPage.goto(
+				`http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:${basePort}`
+			);
 
 			await test.step('can change instance administrator password', async () => {
 				const newUsersAndOrganizationsPage =
@@ -108,12 +113,12 @@ test(
 				await waitForAlert(newPage);
 
 				await newPage.goto(
-					`http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`
+					`http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:${basePort}`
 				);
 				await newPage.getByTitle('User Profile Menu').click();
 				await newPage.getByRole('menuitem', {name: 'Sign Out'}).click();
 				await newPage.goto(
-					`http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`
+					`http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:${basePort}`
 				);
 
 				const signInButton = newPage

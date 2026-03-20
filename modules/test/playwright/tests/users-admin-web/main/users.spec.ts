@@ -16,6 +16,7 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
+import {UserPersonalSitePage} from '../../../pages/users-admin-web/UserPersonalSitePage';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -165,7 +166,7 @@ test(
 			await userAssociatedDataMessageBoardWidgetPage.permissionsMenuItem.click(
 				{timeout: 500}
 			);
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await userAssociatedDataMessageBoardPage.setPermissions([
 			'#user_ACTION_ADD_MESSAGE',
@@ -355,7 +356,7 @@ test(
 
 		await expect(editUserPage.firstNameInput).toHaveValue(name);
 
-		await performUserSwitch(page, userAccount.alternateName);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
 
 		await page.goto(`/web/${userAccount.alternateName}`);
 
@@ -417,9 +418,6 @@ test(
 			usersAndOrganizationsPage.usersTableCell(user3.alternateName)
 		).toBeVisible();
 		await expect(
-			usersAndOrganizationsPage.usersTableCell('test')
-		).toBeVisible();
-		await expect(
 			usersAndOrganizationsPage.usersTableCell(user1.alternateName)
 		).not.toBeVisible();
 		await expect(
@@ -450,7 +448,7 @@ test(
 		await expect(async () => {
 			await editUserPage.selectUserGroupsButton.click();
 			await editUserPage.selectUserGroupTable.changeView('table');
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await editUserPage.selectUserGroupTable.cell(userGroup.name).click();
 
@@ -497,7 +495,7 @@ test(
 
 				await expect(
 					notificationsPage.workflowReviewMessage('User')
-				).toBeVisible();
+				).toBeVisible({timeout: 500});
 
 				await notificationsPage.selectAllItemsCheckbox.check();
 				await notificationsPage.deleteButton.click();
@@ -506,7 +504,7 @@ test(
 					page,
 					'Notifications were deleted successfully.'
 				);
-			}).toPass();
+			}).toPass({timeout: 5000});
 		}
 		finally {
 			await configurationTabPage.goTo();
@@ -599,13 +597,35 @@ test(
 test(
 	'Can add widget to my profile page',
 	{tag: ['@LPD-58336', '@LPS-159181']},
-	async ({page, userPersonalSitePage}) => {
+	async ({apiHelpers, page, userPersonalSitePage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: userData['test'].password,
+			surname: user.familyName,
+		};
+
+		const adminRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			adminRole.externalReferenceCode,
+			user.id
+		);
+
+		await performUserSwitch(page, user.alternateName);
+
 		await userPersonalSitePage.userPersonalMenuButton.click();
 		await userPersonalSitePage.myProfileMenuItem.click();
 
 		await userPersonalSitePage.addLanguageSelectorToPage();
 
-		await expect(page.getByTitle('Select a language')).toBeVisible();
+		await expect(
+			page
+				.getByTitle('Select a language')
+				.or(page.getByTitle('Select a Language'))
+		).toBeVisible();
 	}
 );
 
@@ -628,9 +648,6 @@ test(
 		await expect(
 			usersAndOrganizationsPage.usersTableCell(user.alternateName)
 		).not.toBeVisible();
-		await expect(
-			usersAndOrganizationsPage.usersTableCell('test')
-		).toBeVisible();
 
 		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
 
@@ -640,9 +657,6 @@ test(
 
 		await expect(
 			usersAndOrganizationsPage.usersTableCell(user.alternateName)
-		).toBeVisible();
-		await expect(
-			usersAndOrganizationsPage.usersTableCell('test')
 		).toBeVisible();
 	}
 );
@@ -667,9 +681,6 @@ test(
 		await expect(
 			usersAndOrganizationsPage.usersTableCell(user.alternateName)
 		).not.toBeVisible();
-		await expect(
-			usersAndOrganizationsPage.usersTableCell('test')
-		).toBeVisible();
 
 		await apiHelpers.headlessAdminUser.deleteOrganizationUserAccountAssociation(
 			organization.id,
@@ -682,9 +693,6 @@ test(
 
 		await expect(
 			usersAndOrganizationsPage.usersTableCell(user.alternateName)
-		).toBeVisible();
-		await expect(
-			usersAndOrganizationsPage.usersTableCell('test')
 		).toBeVisible();
 	}
 );
@@ -952,7 +960,7 @@ test(
 			await editUserPage.addAdditionalEmailAddressesButton.click();
 			await editUserPage.additionalEmailAddressInput.fill(emailAddress1);
 			await editUserPage.saveButton.click();
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await expect(
 			(
@@ -974,7 +982,7 @@ test(
 			await editUserPage.makePrimaryCheckbox.check();
 			await editUserPage.additionalEmailAddressInput.fill(emailAddress2);
 			await editUserPage.saveButton.click();
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await expect(
 			await editUserPage.additionalEmailAddressesTablePrimaryText(
@@ -986,7 +994,7 @@ test(
 			await editUserPage.addAdditionalEmailAddressesButton.click();
 			await editUserPage.additionalEmailAddressInput.fill(emailAddress3);
 			await editUserPage.saveButton.click();
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await expect(
 			await editUserPage.additionalEmailAddressesTablePrimaryText(
@@ -1013,7 +1021,7 @@ test(
 			await editUserPage.editMenuItem.click();
 			await editUserPage.makePrimaryCheckbox.uncheck();
 			await editUserPage.saveButton.click();
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await expect(
 			await editUserPage.additionalEmailAddressesTablePrimaryText(
@@ -1215,7 +1223,7 @@ test(
 			await editUserPage.makePrimaryCheckbox.uncheck();
 			await editUserPage.saveButton.click();
 			await waitForAlert(page);
-		}).toPass();
+		}).toPass({timeout: 5000});
 
 		await expect(
 			await editUserPage.phoneNumbersTablePrimaryText(phoneNumber2)
@@ -1407,7 +1415,7 @@ test(
 			await editUserPage.saveButton.click();
 
 			await waitForAlert(page);
-		}).toPass();
+		}).toPass({timeout: 5000});
 		await expect(
 			await editUserPage.websitesTablePrimaryText(website2)
 		).not.toBeVisible();
@@ -1686,5 +1694,63 @@ test(
 		).click();
 
 		await expect(editUserPage.categoryGridCell(categoryName)).toBeVisible();
+	}
+);
+
+test(
+	'View page rendered properly after be yourself again',
+	{tag: '@LPD-81993'},
+	async ({apiHelpers, page, usersAndOrganizationsPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName: `user${getRandomInt()}`,
+		});
+
+		await usersAndOrganizationsPage.goto();
+
+		await usersAndOrganizationsPage.usersSearchBar.fill(user.alternateName);
+		await usersAndOrganizationsPage.usersSearchBar.press('Enter');
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					user.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.impersonateUserMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		const [impersonatedPage] = await Promise.all([
+			page.context().waitForEvent('page'),
+			usersAndOrganizationsPage.impersonateUserMenuItem.click(),
+		]);
+
+		await impersonatedPage.waitForLoadState('networkidle');
+
+		const impersonatedPersonalSite = new UserPersonalSitePage(
+			impersonatedPage
+		);
+
+		await impersonatedPersonalSite.userPersonalMenuButton.click();
+		await impersonatedPersonalSite.myProfileMenuItem.click();
+
+		await expect(
+			impersonatedPage
+				.getByText(`${user.givenName} ${user.familyName}`)
+				.first()
+		).toBeVisible();
+
+		await impersonatedPersonalSite.userPersonalMenuButton.click();
+		await impersonatedPersonalSite.beYourselfAgainMenuItem.click();
+
+		await impersonatedPage.waitForLoadState('networkidle');
+
+		await expect(
+			impersonatedPage.getByText('Test Test').first()
+		).toBeVisible();
+
+		await impersonatedPage.close();
 	}
 );

@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import {editCustomElementPageTest} from '../../client-extension-web/main/fixtures/editCustomElementPageTest';
 import {WaitAction} from '../../client-extension-web/main/pages/EditClientExtensionsPage';
 import {componentsPageTest} from '../../configuration-admin-web/main/fixtures/ComponentsPageTest';
@@ -24,7 +25,7 @@ test('LPD-39537 - Check that the name field of custom elements does not allow st
 	editCustomElementPage,
 	page,
 }) => {
-	const NAME = '<svg onload=alert(XSS injection)>';
+	const NAME = `<svg onload=alert(XSS injection ${getRandomInt()})>`;
 
 	await editCustomElementPage.goto();
 

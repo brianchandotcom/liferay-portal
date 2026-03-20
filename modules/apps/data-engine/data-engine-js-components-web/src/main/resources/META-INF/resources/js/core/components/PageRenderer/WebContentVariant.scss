@@ -21,13 +21,26 @@
 		&:focus,
 		&:focus-within,
 		&:hover {
-			background: transparent;
-			border-radius: 0 4px 4px;
-			box-shadow: 0 0 0 0.125rem #0b5fff;
+			&::after {
+				border: 0.125rem solid #0b5fff;
+				border-radius: 0 4px 4px;
+				bottom: -4px;
+				content: '';
+				left: 0;
+				pointer-events: none;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
 
 			> .lfr-forms__form-view-field-topbar {
-				cursor: grabbing;
 				display: flex;
+
+				.lexicon-icon-drag {
+					cursor: grab;
+					height: 16px;
+					width: 16px;
+				}
 			}
 		}
 
@@ -53,10 +66,10 @@
 		border-top-right-radius: 4px;
 		color: #fff;
 		display: none;
-		font-size: 14px;
+		font-size: 12px;
 		font-weight: 600;
 		height: 28px;
-		left: -2px;
+		left: 0;
 		padding: 0 9px 0 8px;
 		position: absolute;
 		top: -28px;

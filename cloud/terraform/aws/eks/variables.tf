@@ -32,6 +32,7 @@ variable "observability_config" {
 	default={}
 	type=object(
 		{
+			alloy_namespace=optional(string, "alloy")
 			enabled=optional(bool, true)
 		}
 	)

@@ -185,6 +185,16 @@
 				"actionId": "VIEW",
 				"resource": "com.liferay.object.model.ObjectDefinition",
 				"scope": 1
+			},
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.portal.kernel.model.Role",
+				"scope": 1
+			},
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.portal.kernel.model.User",
+				"scope": 1
 			}
 		],
 		"name": "CMS Administrator",

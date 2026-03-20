@@ -152,6 +152,9 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
+		String sseEventSinkKey = GetterUtil.getString(
+			workflowContext.get("sseEventSinkKey"));
+
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
 			).contentRetriever(
@@ -170,6 +173,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponseConsumer(
 				response -> {
+					MCPToolProviderUtil.close(sseEventSinkKey);
+
 					vertexAiGeminiStreamingChatModel.close();
 
 					KaleoLogUtil.addNodeUsageKaleoLog(
@@ -180,6 +185,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				}
 			).onErrorConsumer(
 				throwable -> {
+					MCPToolProviderUtil.close(sseEventSinkKey);
+
 					vertexAiGeminiStreamingChatModel.close();
 
 					_log.error(throwable);
@@ -194,7 +201,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 					kaleoInstanceToken.getGroupId(), serviceContext.getLocale(),
 					ToolsUtil.getMCPServerExternalReferenceCodes(
 						_jsonFactory, kaleoNodeSettingValues),
-					_objectEntryManager, serviceContext.getUserId())
+					_objectEntryManager, sseEventSinkKey,
+					serviceContext.getUserId())
 			).userMessage(
 				userMessage
 			).vertexAiGeminiStreamingChatModel(

@@ -121,6 +121,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 					return null;
 				});
 
+		String sseEventSinkKey = GetterUtil.getString(
+			workflowContext.get("sseEventSinkKey"));
+
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
 			).contentRetriever(
@@ -147,11 +150,15 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 						throw new RuntimeException(exception);
 					}
 					finally {
+						MCPToolProviderUtil.close(sseEventSinkKey);
+
 						vertexAiGeminiStreamingChatModel.close();
 					}
 				}
 			).onErrorConsumer(
 				throwable -> {
+					MCPToolProviderUtil.close(sseEventSinkKey);
+
 					vertexAiGeminiStreamingChatModel.close();
 
 					_log.error(throwable);
@@ -164,7 +171,8 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 					kaleoInstanceToken.getGroupId(), serviceContext.getLocale(),
 					ToolsUtil.getMCPServerExternalReferenceCodes(
 						_jsonFactory, kaleoNodeSettingValues),
-					_objectEntryManager, serviceContext.getUserId())
+					_objectEntryManager, sseEventSinkKey,
+					serviceContext.getUserId())
 			).userMessage(
 				userMessage
 			).vertexAiGeminiStreamingChatModel(

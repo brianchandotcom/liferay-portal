@@ -82,6 +82,47 @@ html#{$cadmin-selector} {
 			}
 		}
 
+		.layout__color-picker {
+			&__color-palette .sheet-subtitle {
+				border-bottom: 0;
+				border-top: 1px solid $cadmin-secondary-l3;
+			}
+
+			&__search-form
+				+ .layout__color-picker__color-palette
+				.sheet-subtitle {
+				border-top: 0;
+			}
+
+			&__token-button {
+				&.btn {
+					height: 32px;
+					padding-left: 6px;
+					padding-right: 9px;
+				}
+
+				&:hover {
+					background-color: transparent;
+				}
+
+				.inherited {
+					background-color: $cadmin-blue;
+					border-radius: 50%;
+					flex-shrink: 0;
+					height: 6px;
+					margin-left: 8px;
+					width: 6px;
+				}
+
+				&-splotch {
+					border: 1px solid $cadmin-gray-300;
+					height: 21px;
+					margin-right: 18px;
+					min-width: 21px;
+				}
+			}
+		}
+
 		&.layout__color-picker__dropdown .clay-color-dropdown-menu {
 			padding-left: 0;
 			padding-right: 0;

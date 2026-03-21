@@ -177,13 +177,16 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
+
+		String fetchedUnitOfMeasureKey = _getUnitOfMeasureKey(
+			cpInstanceId, unitOfMeasureKey);
+
 		commercePriceEntry.setPricingQuantity(
-			_getPricingQuantity(cpInstanceId, unitOfMeasureKey));
+			_getPricingQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setQuantity(
-			_getQuantity(cpInstanceId, unitOfMeasureKey));
-		commercePriceEntry.setUnitOfMeasureKey(
-			_getUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey));
+			_getQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
+		commercePriceEntry.setUnitOfMeasureKey(fetchedUnitOfMeasureKey);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -707,13 +710,17 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
+
+		String fetchedUnitOfMeasureKey = _getUnitOfMeasureKey(
+			cpInstanceId, unitOfMeasureKey);
+
 		commercePriceEntry.setPricingQuantity(
-			_getPricingQuantity(cpInstanceId, unitOfMeasureKey));
+			_getPricingQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setQuantity(
-			_getQuantity(cpInstanceId, unitOfMeasureKey));
+			_getQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
 		commercePriceEntry.setUnitOfMeasureKey(
-			_getUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey));
+			_getUnitOfMeasureKey(cpInstanceId, fetchedUnitOfMeasureKey));
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);

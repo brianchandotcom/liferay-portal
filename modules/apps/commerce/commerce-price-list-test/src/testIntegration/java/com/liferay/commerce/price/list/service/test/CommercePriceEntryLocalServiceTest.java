@@ -12,9 +12,11 @@ import com.liferay.commerce.price.list.exception.CommercePriceEntryUnitOfMeasure
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.util.comparator.CommercePriceEntryUOMCreateDateComparator;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -25,6 +27,7 @@ import com.liferay.commerce.test.util.price.list.CommercePriceEntryTestUtil;
 import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -40,6 +44,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -636,6 +642,59 @@ public class CommercePriceEntryLocalServiceTest {
 			commercePriceList.getCommercePriceListId(), null,
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
 			"NO-KEY");
+	}
+
+	@Test
+	public void testAddorUpdateCommercePriceEntryWithMissingUOM()
+		throws PortalException {
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+
+		BigDecimal incrementalOrderQuantity = BigDecimal.TEN.setScale(
+			2, RoundingMode.HALF_UP);
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			CPTestUtil.addCPInstanceUnitOfMeasure(
+				_group.getGroupId(), cpInstance.getCPInstanceId(),
+				RandomTestUtil.randomString(), incrementalOrderQuantity,
+				cpInstance.getSku());
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				null, _group.getGroupId(), _commerceCurrency.getCode(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
+				true, null, null);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		Calendar calendar = new GregorianCalendar();
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryLocalServiceUtil.addOrUpdateCommercePriceEntry(
+				null, 0, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), true, null, null,
+				null, null, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				BigDecimal.valueOf(RandomTestUtil.randomDouble()), false,
+				BigDecimal.valueOf(RandomTestUtil.randomDouble()), null, null,
+				ServiceContextTestUtil.getServiceContext(
+					commercePriceList.getGroupId()));
+
+		Assert.assertEquals(
+			cpInstanceUnitOfMeasure.getKey(),
+			commercePriceEntry.getUnitOfMeasureKey());
+
+		Assert.assertEquals(
+			cpInstanceUnitOfMeasure.getPricingQuantity(),
+			commercePriceEntry.getPricingQuantity());
+
+		BigDecimal scale = incrementalOrderQuantity.setScale(
+			cpInstanceUnitOfMeasure.getPrecision(), RoundingMode.HALF_UP);
+
+		Assert.assertEquals(scale, commercePriceEntry.getQuantity());
 	}
 
 	@Test

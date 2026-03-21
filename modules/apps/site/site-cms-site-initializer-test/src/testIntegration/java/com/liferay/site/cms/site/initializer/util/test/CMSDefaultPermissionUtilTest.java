@@ -81,36 +81,6 @@ public class CMSDefaultPermissionUtilTest {
 	}
 
 	@Test
-	public void testAddObjectEntryModelPermissions() throws Exception {
-		Group group = _depotEntry.getGroup();
-
-		ObjectEntry objectEntry =
-			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
-				RandomTestUtil.randomString(), group.getCompanyId(),
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				_depotEntry.getModelClassName(),
-				JSONUtil.put(
-					"L_CMS_BASIC_WEB_CONTENT",
-					JSONUtil.putAll(ActionKeys.VIEW)),
-				group.getGroupId(), StringPool.BLANK);
-
-		Role cmsAdministratorRole = _roleLocalService.getRole(
-			group.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
-
-		for (String actionId :
-				List.of(
-					ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW)) {
-
-			Assert.assertTrue(
-				_resourcePermissionLocalService.hasResourcePermission(
-					group.getCompanyId(), objectEntry.getModelClassName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(objectEntry.getObjectEntryId()),
-					cmsAdministratorRole.getRoleId(), actionId));
-		}
-	}
-
-	@Test
 	public void testAddOrUpdateObjectEntry() throws Exception {
 		Group group = _depotEntry.getGroup();
 		String externalReferenceCode = RandomTestUtil.randomString();
@@ -159,6 +129,31 @@ public class CMSDefaultPermissionUtilTest {
 		Assert.assertEquals(ActionKeys.UPDATE, jsonArray.getString(0));
 		Assert.assertEquals(ActionKeys.VIEW, jsonArray.getString(1));
 		Assert.assertEquals(2, jsonArray.length());
+
+		ObjectEntry objectEntry3 =
+			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+				RandomTestUtil.randomString(), group.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				_depotEntry.getModelClassName(),
+				JSONUtil.put(
+					"L_CMS_BASIC_WEB_CONTENT",
+					JSONUtil.putAll(ActionKeys.VIEW)),
+				group.getGroupId(), StringPool.BLANK);
+
+		Role cmsAdministratorRole = _roleLocalService.getRole(
+			group.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+		for (String actionId :
+				List.of(
+					ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW)) {
+
+			Assert.assertTrue(
+				_resourcePermissionLocalService.hasResourcePermission(
+					group.getCompanyId(), objectEntry3.getModelClassName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(objectEntry3.getObjectEntryId()),
+					cmsAdministratorRole.getRoleId(), actionId));
+		}
 	}
 
 	@Test

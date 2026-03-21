@@ -261,9 +261,8 @@ public class LayoutActionsDisplayContext {
 				"/portal/get_page_preview",
 			"p_l_id", draftLayout.getPlid(), "p_l_mode", Constants.PREVIEW,
 			"p_p_state", WindowState.UNDEFINED.toString(),
-			"segmentsExperienceId",
-			_getSegmentsExperienceId(draftLayout), "selPlid",
-			draftLayout.getPlid());
+			"segmentsExperienceId", _getSegmentsExperienceId(draftLayout),
+			"selPlid", draftLayout.getPlid());
 
 		if (Validator.isNotNull(_themeDisplay.getDoAsUserId())) {
 			pagePreviewURL = PortalUtil.addPreservedParameters(

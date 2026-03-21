@@ -174,6 +174,58 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
+	public void testDeleteTrashEntry() throws Exception {
+		Store originalStore = ReflectionTestUtil.getFieldValue(
+			DLStoreImpl.class, "_wrappedStore");
+
+		DLStoreImpl.setStore(_store);
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+				group.getGroupId());
+
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+			Assert.assertTrue(
+				_store.hasFile(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					dlFileVersion.getStoreFileName()));
+
+			DLTrashLocalServiceUtil.moveFileEntryToTrash(
+				dlFileEntry.getUserId(), dlFileEntry.getRepositoryId(),
+				dlFileEntry.getFileEntryId());
+
+			Assert.assertTrue(
+				_store.hasFile(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					dlFileVersion.getStoreFileName()));
+
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					DLFileEntry.class.getName());
+
+			trashHandler.deleteTrashEntry(dlFileEntry.getPrimaryKey());
+
+			Assert.assertFalse(
+				_store.hasFile(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					dlFileVersion.getStoreFileName()));
+
+			GroupTestUtil.deleteGroup(group);
+		}
+		finally {
+			DLStoreImpl.setStore(originalStore);
+		}
+	}
+
+	@Test
 	public void testGetFileAsStream() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
@@ -397,58 +449,6 @@ public abstract class BaseStoreTestCase {
 			Assert.assertTrue(
 				_store.hasFile(
 					_companyId, _repositoryId, fileName, versionLabel + i));
-		}
-	}
-
-	@Test
-	public void testDeleteTrashEntry() throws Exception {
-		Store originalStore = ReflectionTestUtil.getFieldValue(
-			DLStoreImpl.class, "_wrappedStore");
-
-		DLStoreImpl.setStore(_store);
-
-		try {
-			Group group = GroupTestUtil.addGroup();
-
-			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-				group.getGroupId());
-
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-			Assert.assertTrue(
-				_store.hasFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					dlFileVersion.getStoreFileName()));
-
-			DLTrashLocalServiceUtil.moveFileEntryToTrash(
-				dlFileEntry.getUserId(), dlFileEntry.getRepositoryId(),
-				dlFileEntry.getFileEntryId());
-
-			Assert.assertTrue(
-				_store.hasFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					dlFileVersion.getStoreFileName()));
-
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					DLFileEntry.class.getName());
-
-			trashHandler.deleteTrashEntry(dlFileEntry.getPrimaryKey());
-
-			Assert.assertFalse(
-				_store.hasFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					dlFileVersion.getStoreFileName()));
-
-			GroupTestUtil.deleteGroup(group);
-		}
-		finally {
-			DLStoreImpl.setStore(originalStore);
 		}
 	}
 

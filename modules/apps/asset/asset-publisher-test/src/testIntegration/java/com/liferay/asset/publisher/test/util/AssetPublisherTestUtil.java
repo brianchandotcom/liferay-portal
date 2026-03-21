@@ -7,11 +7,6 @@ package com.liferay.asset.publisher.test.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.SetUtil;
-
-import java.util.List;
-
-import org.junit.Assert;
 
 /**
  * Provides a utility method to convert an asset entry to XML format so it can
@@ -20,19 +15,6 @@ import org.junit.Assert;
  * @author Tamas Molnar
  */
 public class AssetPublisherTestUtil {
-
-	public static void assertAssetEntries(
-		List<AssetEntry> expectedAssetEntries,
-		List<AssetEntry> actualAssetEntries) {
-
-		Assert.assertEquals(
-			actualAssetEntries.toString(), expectedAssetEntries.size(),
-			actualAssetEntries.size());
-
-		Assert.assertEquals(
-			SetUtil.fromList(expectedAssetEntries),
-			SetUtil.fromList(actualAssetEntries));
-	}
 
 	public static String getAssetEntryXml(AssetEntry assetEntry) {
 		StringBundler sb = new StringBundler(6);

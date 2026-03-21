@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -113,8 +114,9 @@ public class AssetPublisherOSGiCommandsTest {
 		List<AssetEntry> actualAssetEntries =
 			assetEntryResult.getAssetEntries();
 
-		AssetPublisherTestUtil.assertAssetEntries(
-			assetEntries, assetEntryResult.getAssetEntries());
+		Assert.assertEquals(
+			SetUtil.fromList(assetEntries),
+			SetUtil.fromList(actualAssetEntries));
 
 		_run("migratePortletPreferences");
 
@@ -156,8 +158,9 @@ public class AssetPublisherOSGiCommandsTest {
 
 		assetEntryResult = actualAssetEntryResults.get(0);
 
-		AssetPublisherTestUtil.assertAssetEntries(
-			actualAssetEntries, assetEntryResult.getAssetEntries());
+		Assert.assertEquals(
+			SetUtil.fromList(actualAssetEntries),
+			SetUtil.fromList(assetEntryResult.getAssetEntries()));
 	}
 
 	@Test

@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.rule.SearchTestRule;
@@ -1260,8 +1261,9 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 			actualAssetEntries.addAll(assetEntryResult.getAssetEntries());
 		}
 
-		AssetPublisherTestUtil.assertAssetEntries(
-			expectedAssetEntries, actualAssetEntries);
+		Assert.assertEquals(
+			SetUtil.fromList(expectedAssetEntries),
+			SetUtil.fromList(actualAssetEntries));
 	}
 
 	protected void testExportImportAssetEntries(Group scopeGroup)
@@ -1321,8 +1323,9 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 				new MockPortletRequest(), importedPortletPreferences,
 				_permissionChecker, selectedGroupIds, false, false);
 
-		AssetPublisherTestUtil.assertAssetEntries(
-			assetEntries, actualAssetEntries);
+		Assert.assertEquals(
+			SetUtil.fromList(assetEntries),
+			SetUtil.fromList(actualAssetEntries));
 	}
 
 	protected void testSortByAssetVocabulary(boolean globalVocabulary)

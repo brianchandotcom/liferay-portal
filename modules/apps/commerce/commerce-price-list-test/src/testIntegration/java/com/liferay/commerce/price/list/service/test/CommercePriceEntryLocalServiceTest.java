@@ -648,16 +648,16 @@ public class CommercePriceEntryLocalServiceTest {
 	public void testAddorUpdateCommercePriceEntryWithMissingUOM()
 		throws PortalException {
 
-		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+		CPInstance cpInstance1 = CPTestUtil.addCPInstance(_group.getGroupId());
 
 		BigDecimal incrementalOrderQuantity = BigDecimal.TEN.setScale(
 			2, RoundingMode.HALF_UP);
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure1 =
 			CPTestUtil.addCPInstanceUnitOfMeasure(
-				_group.getGroupId(), cpInstance.getCPInstanceId(),
+				_group.getGroupId(), cpInstance1.getCPInstanceId(),
 				RandomTestUtil.randomString(), incrementalOrderQuantity,
-				cpInstance.getSku());
+				cpInstance1.getSku());
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -665,14 +665,14 @@ public class CommercePriceEntryLocalServiceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 				true, null, null);
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+		CPDefinition cpDefinition1 = cpInstance1.getCPDefinition();
 
 		Calendar calendar = new GregorianCalendar();
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryLocalServiceUtil.addOrUpdateCommercePriceEntry(
-				null, 0, cpDefinition.getCProductId(),
-				cpInstance.getCPInstanceUuid(),
+				null, 0, cpDefinition1.getCProductId(),
+				cpInstance1.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), true, null, null,
 				null, null, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
@@ -684,17 +684,62 @@ public class CommercePriceEntryLocalServiceTest {
 					commercePriceList.getGroupId()));
 
 		Assert.assertEquals(
-			cpInstanceUnitOfMeasure.getKey(),
+			cpInstanceUnitOfMeasure1.getKey(),
 			commercePriceEntry.getUnitOfMeasureKey());
 
 		Assert.assertEquals(
-			cpInstanceUnitOfMeasure.getPricingQuantity(),
+			cpInstanceUnitOfMeasure1.getPricingQuantity(),
 			commercePriceEntry.getPricingQuantity());
 
 		BigDecimal scale = incrementalOrderQuantity.setScale(
-			cpInstanceUnitOfMeasure.getPrecision(), RoundingMode.HALF_UP);
+			cpInstanceUnitOfMeasure1.getPrecision(), RoundingMode.HALF_UP);
 
 		Assert.assertEquals(scale, commercePriceEntry.getQuantity());
+
+		commercePriceEntry = CommercePriceEntryTestUtil.addCommercePriceEntry(
+			_group.getGroupId());
+
+		Assert.assertNull(commercePriceEntry.getPricingQuantity());
+		Assert.assertNull(commercePriceEntry.getQuantity());
+		Assert.assertEquals(
+			StringPool.BLANK, commercePriceEntry.getUnitOfMeasureKey());
+
+		CPInstance cpInstance2 = _cpInstanceLocalService.fetchCPInstance(
+			commercePriceEntry.getCProductId(),
+			commercePriceEntry.getCPInstanceUuid());
+
+		incrementalOrderQuantity = BigDecimal.TEN.setScale(
+			2, RoundingMode.HALF_UP);
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure2 =
+			CPTestUtil.addCPInstanceUnitOfMeasure(
+				_group.getGroupId(), cpInstance2.getCPInstanceId(),
+				RandomTestUtil.randomString(), incrementalOrderQuantity,
+				cpInstance2.getSku());
+
+		commercePriceEntry =
+			CommercePriceEntryLocalServiceUtil.addOrUpdateCommercePriceEntry(
+				null, commercePriceEntry.getCommercePriceEntryId(),
+				commercePriceEntry.getCProductId(),
+				cpInstance2.getCPInstanceUuid(),
+				commercePriceEntry.getCommercePriceListId(), true, null, null,
+				null, null, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				BigDecimal.valueOf(RandomTestUtil.randomDouble()), false,
+				BigDecimal.valueOf(RandomTestUtil.randomDouble()), null, null,
+				ServiceContextTestUtil.getServiceContext(
+					commercePriceList.getGroupId()));
+
+		Assert.assertEquals(
+			cpInstanceUnitOfMeasure2.getPricingQuantity(),
+			commercePriceEntry.getPricingQuantity());
+		Assert.assertEquals(
+			incrementalOrderQuantity, commercePriceEntry.getQuantity());
+		Assert.assertEquals(
+			cpInstanceUnitOfMeasure2.getKey(),
+			commercePriceEntry.getUnitOfMeasureKey());
 	}
 
 	@Test

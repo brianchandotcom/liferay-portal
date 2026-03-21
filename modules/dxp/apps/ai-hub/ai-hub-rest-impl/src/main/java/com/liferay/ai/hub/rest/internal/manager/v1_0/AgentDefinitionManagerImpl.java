@@ -149,6 +149,9 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 			String externalReferenceCode)
 		throws Exception {
 
+		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
+			dtoConverterContext.getUserId());
+
 		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
 			_getObjectDefinition(companyId), null);
@@ -164,9 +167,6 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 		Locale locale = dtoConverterContext.getLocale();
 
 		String workflowDefinitionName = PortalUUIDUtil.generate();
-
-		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
-			dtoConverterContext.getUserId());
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
 			content.getBytes(), companyId, null,

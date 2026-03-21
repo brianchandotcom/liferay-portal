@@ -49,7 +49,7 @@ test(
 		await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			options: {
-				type: 'widget',
+				type: 'portlet',
 			},
 			title: layoutTitle,
 		});

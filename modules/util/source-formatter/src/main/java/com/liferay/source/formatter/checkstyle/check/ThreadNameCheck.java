@@ -56,6 +56,10 @@ public class ThreadNameCheck extends BaseCheck {
 
 			name = name.substring(1, name.length() - 1);
 
+			if (name.length() == 0) {
+				continue;
+			}
+
 			Matcher matcher = _camelCasePattern.matcher(name);
 
 			String expectedName = StringUtil.getTitleCase(

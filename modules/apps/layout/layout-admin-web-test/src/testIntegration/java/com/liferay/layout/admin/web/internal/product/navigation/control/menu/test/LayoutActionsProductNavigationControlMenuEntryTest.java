@@ -66,7 +66,7 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 
 	@Test
 	@TestInfo("LPS-137155")
-	public void testGetDropdownItems() throws Exception {
+	public void testGetDropdownItems1() throws Exception {
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		_productNavigationControlMenuEntry.includeIcon(
@@ -95,7 +95,7 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 
 	@Test
 	@TestInfo("LPD-80135")
-	public void testPreviewDropdownItemContainsPlid() throws Exception {
+	public void testGetDropdownItems2() throws Exception {
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		_productNavigationControlMenuEntry.includeIcon(

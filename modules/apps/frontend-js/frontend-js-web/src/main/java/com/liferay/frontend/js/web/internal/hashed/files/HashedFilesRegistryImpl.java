@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -329,7 +330,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 			hashesSet.add(HashedFilesUtil.getHash(hashedFileURI));
 		}
 
-		ArrayList<String> hashesList = new ArrayList<>(hashesSet);
+		List<String> hashesList = new ArrayList<>(hashesSet);
 
 		Collections.sort(hashesList);
 

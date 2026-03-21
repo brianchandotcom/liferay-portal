@@ -88,20 +88,17 @@ public class JavaScriptFrontendResourceRequestHandler
 	public FrontendResource handleRequest(HttpServletRequest httpServletRequest)
 		throws IOException, ServletException {
 
-		boolean requestContainsHash;
-		String resourceURI;
+		boolean requestContainsHash = true;
 
 		String requestURI = httpServletRequest.getRequestURI();
 
-		if (requestURI.startsWith(getBundleHashedFileURIPrefix(_portal))) {
-			requestContainsHash = true;
+		String resourceURI = requestURI;
 
+		if (requestURI.startsWith(getBundleHashedFileURIPrefix(_portal))) {
 			resourceURI = _getBundleHashedFileResourceURI(requestURI);
 		}
 		else {
 			requestContainsHash = HashedFilesUtil.getHash(requestURI) != null;
-
-			resourceURI = requestURI;
 		}
 
 		if (resourceURI == null) {

@@ -721,8 +721,7 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setQuantity(
 			_getQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
-		commercePriceEntry.setUnitOfMeasureKey(
-			_getUnitOfMeasureKey(cpInstanceId, fetchedUnitOfMeasureKey));
+		commercePriceEntry.setUnitOfMeasureKey(fetchedUnitOfMeasureKey);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);

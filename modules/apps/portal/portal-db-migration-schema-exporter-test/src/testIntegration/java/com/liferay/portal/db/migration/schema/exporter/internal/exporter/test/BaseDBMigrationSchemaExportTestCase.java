@@ -19,7 +19,6 @@ import com.liferay.portal.db.migration.schema.exporter.internal.test.util.Config
 import com.liferay.portal.db.migration.schema.exporter.internal.test.util.DatabaseTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -185,7 +184,7 @@ public abstract class BaseDBMigrationSchemaExportTestCase {
 	private String _getColumnNamesMismatchMessage(
 		List<String> columnNames, List<String> copyColumnNames) {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("Column names do not match because: ");
 		sb.append(columnNames);

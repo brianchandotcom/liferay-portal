@@ -407,7 +407,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	private static final String[] _SPA_DEFAULT_EXCLUDED_PATHS = {
 		"/c/document_library", "/documents", "/image", "/o/cms/download-folder",
-		"/o/cms/translations/"
+		"/o/cms/translations"
 	};
 
 	private static final String _SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY =

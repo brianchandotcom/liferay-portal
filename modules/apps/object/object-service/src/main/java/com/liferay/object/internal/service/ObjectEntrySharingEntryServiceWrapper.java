@@ -96,8 +96,12 @@ public class ObjectEntrySharingEntryServiceWrapper
 			return originalSharingEntryActions;
 		}
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			classPK);
+
+		if (objectEntry == null) {
+			return originalSharingEntryActions;
+		}
 
 		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 

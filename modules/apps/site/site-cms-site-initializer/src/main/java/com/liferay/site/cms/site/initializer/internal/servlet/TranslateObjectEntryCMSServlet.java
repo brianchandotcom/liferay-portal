@@ -59,13 +59,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.TranslateObjectEntryServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.TranslateObjectEntryCMSServlet",
 		"osgi.http.whiteboard.servlet.pattern=/cms/translations/*",
 		"servlet.init.httpMethods=GET,POST"
 	},
 	service = Servlet.class
 )
-public class TranslateObjectEntryServlet extends BaseCMSServlet {
+public class TranslateObjectEntryCMSServlet extends BaseCMSServlet {
 
 	@Override
 	protected void doGet(
@@ -256,7 +256,7 @@ public class TranslateObjectEntryServlet extends BaseCMSServlet {
 		"ExportTranslationBulkAction";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TranslateObjectEntryServlet.class);
+		TranslateObjectEntryCMSServlet.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;

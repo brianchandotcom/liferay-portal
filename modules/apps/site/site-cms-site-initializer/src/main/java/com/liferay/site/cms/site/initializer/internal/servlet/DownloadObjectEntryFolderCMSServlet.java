@@ -63,13 +63,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.DownloadObjectEntryFolderServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.DownloadObjectEntryFolderCMSServlet",
 		"osgi.http.whiteboard.servlet.pattern=/cms/download-folder/*",
 		"servlet.init.httpMethods=GET,POST"
 	},
 	service = Servlet.class
 )
-public class DownloadObjectEntryFolderServlet extends BaseCMSServlet {
+public class DownloadObjectEntryFolderCMSServlet extends BaseCMSServlet {
 
 	@Override
 	protected void doGet(
@@ -350,7 +350,7 @@ public class DownloadObjectEntryFolderServlet extends BaseCMSServlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DownloadObjectEntryFolderServlet.class);
+		DownloadObjectEntryFolderCMSServlet.class);
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

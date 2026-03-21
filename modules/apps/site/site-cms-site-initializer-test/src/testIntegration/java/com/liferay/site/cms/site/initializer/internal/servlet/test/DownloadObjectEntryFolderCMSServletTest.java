@@ -62,7 +62,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-34594")}
 )
 @RunWith(Arquillian.class)
-public class DownloadObjectEntryFolderServletTest
+public class DownloadObjectEntryFolderCMSServletTest
 	extends BaseCMSServletTestCase {
 
 	@ClassRule
@@ -328,7 +328,7 @@ public class DownloadObjectEntryFolderServletTest
 	private Portal _portal;
 
 	@Inject(
-		filter = "osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.DownloadObjectEntryFolderServlet"
+		filter = "osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.DownloadObjectEntryFolderCMSServlet"
 	)
 	private Servlet _servlet;
 

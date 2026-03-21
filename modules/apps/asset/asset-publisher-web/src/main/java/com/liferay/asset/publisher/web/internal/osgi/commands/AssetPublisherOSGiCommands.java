@@ -71,7 +71,7 @@ public class AssetPublisherOSGiCommands implements OSGiCommands {
 
 	private AssetListEntry _addDynamicAssetListEntry(
 			String instanceId, Layout layout,
-			jakarta.portlet.PortletPreferences portletPreferences,
+			jakarta.portlet.PortletPreferences jxPortletPreferences,
 			long scopeGroupId, ServiceContext serviceContext, long userId)
 		throws Exception {
 
@@ -82,15 +82,15 @@ public class AssetPublisherOSGiCommands implements OSGiCommands {
 			_getTitle(
 				layout.isDraftLayout(), instanceId,
 				name.substring(0, Math.min(name.length(), 60))),
-			_getTypeSettings(layout, portletPreferences), serviceContext);
+			_getTypeSettings(layout, jxPortletPreferences), serviceContext);
 	}
 
 	private AssetListEntry _getAssetListEntry(
 			long companyId, Layout layout, String portletId,
-			jakarta.portlet.PortletPreferences portletPreferences)
+			jakarta.portlet.PortletPreferences jxPortletPreferences)
 		throws Exception {
 
-		String selectionStyle = portletPreferences.getValue(
+		String selectionStyle = jxPortletPreferences.getValue(
 			"selectionStyle", "dynamic");
 
 		long scopeGroupId = _getScopeGroupId(layout);
@@ -109,7 +109,7 @@ public class AssetPublisherOSGiCommands implements OSGiCommands {
 				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
 
 			return _addDynamicAssetListEntry(
-				instanceId, layout, portletPreferences, scopeGroupId,
+				instanceId, layout, jxPortletPreferences, scopeGroupId,
 				serviceContext, userId);
 		}
 
@@ -129,9 +129,9 @@ public class AssetPublisherOSGiCommands implements OSGiCommands {
 				name.substring(0, Math.min(name.length(), 60))),
 			ListUtil.toLongArray(
 				_assetPublisherHelper.getAssetEntries(
-					null, portletPreferences, null, companyId,
+					null, jxPortletPreferences, null, companyId,
 					_assetPublisherHelper.getGroupIds(
-						portletPreferences, scopeGroupId, layout),
+						jxPortletPreferences, scopeGroupId, layout),
 					false, true, false,
 					AssetRendererFactory.TYPE_LATEST_APPROVED),
 				AssetEntry::getEntryId),
@@ -159,17 +159,18 @@ public class AssetPublisherOSGiCommands implements OSGiCommands {
 	}
 
 	private String _getTypeSettings(
-		Layout layout, jakarta.portlet.PortletPreferences portletPreferences) {
+		Layout layout,
+		jakarta.portlet.PortletPreferences jxPortletPreferences) {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-		Enumeration<String> enumeration = portletPreferences.getNames();
+		Enumeration<String> enumeration = jxPortletPreferences.getNames();
 
 		while (enumeration.hasMoreElements()) {
 			String name = enumeration.nextElement();
 
 			String value = StringUtil.merge(
-				portletPreferences.getValues(name, null));
+				jxPortletPreferences.getValues(name, null));
 
 			if (Validator.isNull(value) || name.contains("email")) {
 				continue;

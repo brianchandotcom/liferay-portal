@@ -140,7 +140,8 @@ public class DevCommandLineRunner
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Task ", workflowTask.getId(), " has no creator for ",
+						"Workflow task ", workflowTask.getId(),
+						" has no creator for blog posting ",
 						blogPosting.getHeadline()));
 			}
 

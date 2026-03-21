@@ -93,8 +93,6 @@ public class JSONFactoryTest {
 
 		Object values = deserializedMap.get("key");
 
-		Class<?> clazz = values.getClass();
-
 		Assert.assertTrue(values instanceof Long[]);
 	}
 

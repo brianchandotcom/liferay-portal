@@ -183,6 +183,7 @@ public class CommercePriceEntryLocalServiceImpl
 
 		commercePriceEntry.setPricingQuantity(
 			_getPricingQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
+
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setQuantity(
 			_getQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
@@ -716,6 +717,7 @@ public class CommercePriceEntryLocalServiceImpl
 
 		commercePriceEntry.setPricingQuantity(
 			_getPricingQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
+
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setQuantity(
 			_getQuantity(cpInstanceId, fetchedUnitOfMeasureKey));

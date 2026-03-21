@@ -57,7 +57,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-34594")}
 )
 @RunWith(Arquillian.class)
-public class TranslateObjectEntryServletTest extends BaseCMSServletTestCase {
+public class TranslateObjectEntryCMSServletTest extends BaseCMSServletTestCase {
 
 	@ClassRule
 	@Rule
@@ -338,7 +338,7 @@ public class TranslateObjectEntryServletTest extends BaseCMSServletTestCase {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject(
-		filter = "osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.TranslateObjectEntryServlet"
+		filter = "osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.TranslateObjectEntryCMSServlet"
 	)
 	private Servlet _servlet;
 

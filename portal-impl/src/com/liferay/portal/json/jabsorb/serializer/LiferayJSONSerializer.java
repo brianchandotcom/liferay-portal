@@ -52,7 +52,36 @@ public class LiferayJSONSerializer extends JSONSerializer {
 			return null;
 		}
 
-		if (object instanceof JSONObject) {
+		if (object instanceof JSONArray jsonArray) {
+			if (jsonArray.isEmpty()) {
+				return super.getClassFromHint(object);
+			}
+
+			try {
+				if (!Objects.equals(
+						super.getClassFromHint(jsonArray.get(0)),
+						Integer.class)) {
+
+					return super.getClassFromHint(object);
+				}
+
+				for (int i = 1; i < jsonArray.length(); i++) {
+					if (Objects.equals(
+							super.getClassFromHint(jsonArray.get(i)),
+							Long.class)) {
+
+						return Long[].class;
+					}
+				}
+
+				return Integer[].class;
+			}
+			catch (JSONException jsonException) {
+				throw new NoSuchElementException(
+					jsonException.getMessage(), jsonException);
+			}
+		}
+		else if (object instanceof JSONObject) {
 			String className = StringPool.BLANK;
 
 			try {
@@ -107,35 +136,6 @@ public class LiferayJSONSerializer extends JSONSerializer {
 			catch (Exception exception) {
 				throw new UnmarshallException(
 					"Unable to get class " + className, exception);
-			}
-		}
-		else if (object instanceof JSONArray jsonArray) {
-			if (jsonArray.isEmpty()) {
-				return super.getClassFromHint(object);
-			}
-
-			try {
-				if (!Objects.equals(
-						super.getClassFromHint(jsonArray.get(0)),
-						Integer.class)) {
-
-					return super.getClassFromHint(object);
-				}
-
-				for (int i = 1; i < jsonArray.length(); i++) {
-					if (Objects.equals(
-							super.getClassFromHint(jsonArray.get(i)),
-							Long.class)) {
-
-						return Long[].class;
-					}
-				}
-
-				return Integer[].class;
-			}
-			catch (JSONException jsonException) {
-				throw new NoSuchElementException(
-					jsonException.getMessage(), jsonException);
 			}
 		}
 

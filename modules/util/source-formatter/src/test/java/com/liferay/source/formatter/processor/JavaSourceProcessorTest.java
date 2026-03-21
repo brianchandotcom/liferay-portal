@@ -1038,6 +1038,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testThreadVariableName() throws Exception {
+		test(
+			"ThreadVariableName.testjava",
+			"Rename thread to \"Lock Create Thread\"", 14);
+	}
+
+	@Test
 	public void testThrowsSystemException() throws Exception {
 		test("ThrowsSystemException.testjava");
 	}

@@ -204,10 +204,10 @@ public class AssetPublisherOSGiCommandsTest {
 			_group.getGroupId(), blogsEntry.getUuid());
 	}
 
-	private void _run(String functionName) throws Exception {
+	private void _run(String name) throws Exception {
 		Class<?> clazz = _assetPublisherOSGiCommands.getClass();
 
-		Method method = clazz.getMethod(functionName);
+		Method method = clazz.getMethod(name);
 
 		method.invoke(_assetPublisherOSGiCommands, null);
 	}

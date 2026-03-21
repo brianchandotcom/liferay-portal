@@ -152,35 +152,43 @@ public class ClusterGeneralTest implements Serializable {
 
 		Assert.assertEquals(
 			tomcatNode2ClusterNodeId,
-			_tomcatNode1.syncExecute(() -> _testInvokeMethodPortal()));
+			_tomcatNode1.syncExecute(
+				() -> _testInvokeMethod(ClusterExecutorUtil.class)));
 
 		Assert.assertEquals(
 			tomcatNode1ClusterNodeId,
-			_tomcatNode2.syncExecute(() -> _testInvokeMethodPortal()));
+			_tomcatNode2.syncExecute(
+				() -> _testInvokeMethod(ClusterExecutorUtil.class)));
 
 		Assert.assertEquals(
 			masterNodeClusterNodeId,
-			_tomcatNode1.syncExecute(() -> _testInvokeMethodPortalOnMaster()));
+			_tomcatNode1.syncExecute(
+				() -> _testInvokeMethodOnMaster(ClusterExecutorUtil.class)));
 
 		Assert.assertEquals(
 			masterNodeClusterNodeId,
-			_tomcatNode2.syncExecute(() -> _testInvokeMethodPortalOnMaster()));
+			_tomcatNode2.syncExecute(
+				() -> _testInvokeMethodOnMaster(ClusterExecutorUtil.class)));
 
 		Assert.assertEquals(
 			tomcatNode2ClusterNodeId,
-			_tomcatNode1.syncExecute(() -> _testInvokeMethodModule()));
+			_tomcatNode1.syncExecute(
+				() -> _testInvokeMethod(ClusterSampleClass.class)));
 
 		Assert.assertEquals(
 			tomcatNode1ClusterNodeId,
-			_tomcatNode2.syncExecute(() -> _testInvokeMethodModule()));
+			_tomcatNode2.syncExecute(
+				() -> _testInvokeMethod(ClusterSampleClass.class)));
 
 		Assert.assertEquals(
 			masterNodeClusterNodeId,
-			_tomcatNode1.syncExecute(() -> _testInvokeMethodModuleOnMaster()));
+			_tomcatNode1.syncExecute(
+				() -> _testInvokeMethodOnMaster(ClusterSampleClass.class)));
 
 		Assert.assertEquals(
 			masterNodeClusterNodeId,
-			_tomcatNode2.syncExecute(() -> _testInvokeMethodModuleOnMaster()));
+			_tomcatNode2.syncExecute(
+				() -> _testInvokeMethodOnMaster(ClusterSampleClass.class)));
 	}
 
 	@Test
@@ -792,7 +800,7 @@ public class ClusterGeneralTest implements Serializable {
 				}));
 	}
 
-	private String _testInvokeMethodModule() throws Exception {
+	private String _testInvokeMethod(Class<?> clazz) throws Exception {
 		ClusterNode localClusterNode =
 			ClusterExecutorUtil.getLocalClusterNode();
 
@@ -810,8 +818,7 @@ public class ClusterGeneralTest implements Serializable {
 			return null;
 		}
 
-		MethodKey methodKey = new MethodKey(
-			ClusterSampleClass.class, "getLocalClusterNode");
+		MethodKey methodKey = new MethodKey(clazz, "getLocalClusterNode");
 
 		MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -833,64 +840,8 @@ public class ClusterGeneralTest implements Serializable {
 		return clusterNode.getClusterNodeId();
 	}
 
-	private String _testInvokeMethodModuleOnMaster() throws Exception {
-		MethodKey methodKey = new MethodKey(
-			ClusterSampleClass.class, "getLocalClusterNode");
-
-		MethodHandler methodHandler = new MethodHandler(methodKey);
-
-		Future<ClusterNode> future = ClusterMasterExecutorUtil.executeOnMaster(
-			methodHandler);
-
-		ClusterNode clusterNode = future.get();
-
-		return clusterNode.getClusterNodeId();
-	}
-
-	private String _testInvokeMethodPortal() throws Exception {
-		ClusterNode localClusterNode =
-			ClusterExecutorUtil.getLocalClusterNode();
-
-		ClusterNode targetClusterNode = null;
-
-		for (ClusterNode clusterNode : ClusterExecutorUtil.getClusterNodes()) {
-			if (!clusterNode.equals(localClusterNode)) {
-				targetClusterNode = clusterNode;
-
-				break;
-			}
-		}
-
-		if (targetClusterNode == null) {
-			return null;
-		}
-
-		MethodKey methodKey = new MethodKey(
-			ClusterExecutorUtil.class, "getLocalClusterNode");
-
-		MethodHandler methodHandler = new MethodHandler(methodKey);
-
-		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
-			methodHandler, targetClusterNode.getClusterNodeId());
-
-		FutureClusterResponses futureClusterResponses =
-			ClusterExecutorUtil.execute(clusterRequest);
-
-		ClusterNodeResponses clusterNodeResponses =
-			futureClusterResponses.get();
-
-		ClusterNodeResponse clusterNodeResponse =
-			clusterNodeResponses.getClusterResponse(
-				targetClusterNode.getClusterNodeId());
-
-		ClusterNode clusterNode = (ClusterNode)clusterNodeResponse.getResult();
-
-		return clusterNode.getClusterNodeId();
-	}
-
-	private String _testInvokeMethodPortalOnMaster() throws Exception {
-		MethodKey methodKey = new MethodKey(
-			ClusterExecutorUtil.class, "getLocalClusterNode");
+	private String _testInvokeMethodOnMaster(Class<?> clazz) throws Exception {
+		MethodKey methodKey = new MethodKey(clazz, "getLocalClusterNode");
 
 		MethodHandler methodHandler = new MethodHandler(methodKey);
 

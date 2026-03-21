@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -66,24 +67,27 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 
 	@Test
 	public void testPublishCustomObjectDefinition() throws Exception {
-		_testPublishCustomObjectDefinitionInContentStructuresFolder();
-		_testPublishCustomObjectDefinitionInDefaultFolder();
-		_testPublishCustomObjectDefinitionInFileTypesFolder();
+		_testPublishCustomObjectDefinition();
+
+		_testPublishCustomObjectDefinition(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
+		_testPublishCustomObjectDefinition(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
 	}
 
 	private void _assertCMSAdministratorObjectDefinitionPermissions(
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		long companyId = TestPropsValues.getCompanyId();
-
 		Role cmsAdministratorRole = _roleLocalService.getRole(
-			companyId, RoleConstants.CMS_ADMINISTRATOR);
+			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
-				companyId, objectDefinition.getResourceName(),
-				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				TestPropsValues.getCompanyId(),
+				objectDefinition.getResourceName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
 				cmsAdministratorRole.getRoleId(),
 				ObjectActionKeys.ADD_OBJECT_ENTRY));
 
@@ -94,8 +98,10 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 
 			Assert.assertTrue(
 				_resourcePermissionLocalService.hasResourcePermission(
-					companyId, objectDefinition.getClassName(),
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					TestPropsValues.getCompanyId(),
+					objectDefinition.getClassName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
 					cmsAdministratorRole.getRoleId(), actionId));
 		}
 	}
@@ -114,6 +120,21 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectDefinition.getObjectDefinitionId()),
 				role.getRoleId(), ActionKeys.VIEW));
+	}
+
+	private long _getObjectFolderId(String objectFolderExternalReferenceCode)
+		throws Exception {
+
+		if (Validator.isNull(objectFolderExternalReferenceCode)) {
+			return 0;
+		}
+
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
+				objectFolderExternalReferenceCode,
+				TestPropsValues.getCompanyId());
+
+		return objectFolder.getObjectFolderId();
 	}
 
 	private ObjectDefinition _publishCustomObjectDefinition(long objectFolderId)
@@ -146,66 +167,40 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 		return objectDefinition;
 	}
 
-	private ObjectDefinition _publishCustomObjectDefinition(
-			String objectFolderExternalReferenceCode)
-		throws Exception {
-
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
-				objectFolderExternalReferenceCode,
-				TestPropsValues.getCompanyId());
-
-		return _publishCustomObjectDefinition(objectFolder.getObjectFolderId());
-	}
-
-	private void _testPublishCustomObjectDefinitionInContentStructuresFolder()
-		throws Exception {
-
+	private void _testPublishCustomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
+			_getObjectFolderId(null));
 
-		_assertCMSAdministratorObjectDefinitionPermissions(objectDefinition);
-		_assertObjectDefinitionViewPermission(
-			objectDefinition, RoleConstants.GUEST);
-		_assertObjectDefinitionViewPermission(
-			objectDefinition, RoleConstants.USER);
-	}
-
-	private void _testPublishCustomObjectDefinitionInDefaultFolder()
-		throws Exception {
-
-		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(0);
-
-		long companyId = TestPropsValues.getCompanyId();
-
-		Role cmsAdministratorRole = _roleLocalService.fetchRole(
-			companyId, RoleConstants.CMS_ADMINISTRATOR);
-
-		if (cmsAdministratorRole != null) {
-			Assert.assertFalse(
-				_resourcePermissionLocalService.hasResourcePermission(
-					companyId, objectDefinition.getResourceName(),
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					cmsAdministratorRole.getRoleId(),
-					ObjectActionKeys.ADD_OBJECT_ENTRY));
-		}
-
-		Role guestRole = _roleLocalService.getRole(
-			companyId, RoleConstants.GUEST);
+		Role cmsAdministratorRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
 
 		Assert.assertFalse(
 			_resourcePermissionLocalService.hasResourcePermission(
-				companyId, ObjectDefinition.class.getName(),
+				TestPropsValues.getCompanyId(),
+				objectDefinition.getResourceName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				cmsAdministratorRole.getRoleId(),
+				ObjectActionKeys.ADD_OBJECT_ENTRY));
+
+		Role guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		Assert.assertFalse(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				ObjectDefinition.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectDefinition.getObjectDefinitionId()),
 				guestRole.getRoleId(), ActionKeys.VIEW));
 	}
 
-	private void _testPublishCustomObjectDefinitionInFileTypesFolder()
+	private void _testPublishCustomObjectDefinition(
+			String objectFolderExternalReferenceCode)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
+			_getObjectFolderId(objectFolderExternalReferenceCode));
 
 		_assertCMSAdministratorObjectDefinitionPermissions(objectDefinition);
 		_assertObjectDefinitionViewPermission(

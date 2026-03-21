@@ -436,9 +436,9 @@ public class KeywordResourceImpl
 				searchContext.setAttribute(Field.NAME, search);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
-				// Asset Tag entries are never checked for VIEW permissions, but
-				// instead are sanitized (see AssetTagService.sanitize) if the
-				// user is not a company admin or owner.
+				// Asset tag entries are never checked for VIEW permissions, but
+				// instead are sanitized (see AssetTagService#sanitize) if the
+				// user is not a company admin or the owner.
 
 				searchContext.setUserId(UserConstants.USER_ID_DEFAULT);
 				searchContext.setVulcanCheckPermissions(false);

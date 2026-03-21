@@ -187,11 +187,10 @@ public abstract class BaseDBMigrationSchemaExportTestCase {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("Column names do not match because ");
-		sb.append(ListUtil.remove(columnNames, copyColumnNames));
-		sb.append(" are missing and ");
-		sb.append(ListUtil.remove(copyColumnNames, columnNames));
-		sb.append(" are added.");
+		sb.append("Column names do not match because: ");
+		sb.append(columnNames);
+		sb.append(" versus ");
+		sb.append(copyColumnNames);
 
 		return sb.toString();
 	}

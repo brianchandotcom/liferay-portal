@@ -856,12 +856,9 @@ test(
 			await expect(usersPage.deleteButton).toBeEnabled({timeout: 200});
 		}).toPass({timeout: 1000});
 
-		await expect(async () => {
-			await (await usersPage.usersTable.rowCheckbox(user1.name)).check();
-
-			await expect(usersPage.deleteButton).toBeVisible({timeout: 200});
-			await expect(usersPage.deleteButton).toBeDisabled({timeout: 200});
-		}).toPass({timeout: 1000});
+		await expect(
+			await usersPage.usersTable.rowCheckbox(user1.name)
+		).toBeDisabled();
 
 		await page.reload();
 

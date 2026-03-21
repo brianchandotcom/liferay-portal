@@ -72,12 +72,10 @@ public class TranslateObjectEntryCMSServletTest extends BaseCMSServletTestCase {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BASIC_WEB_CONTENT", group.getCompanyId());
-
 		_blogObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BLOG", group.getCompanyId());
-
 		_contentsObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
@@ -132,7 +130,6 @@ public class TranslateObjectEntryCMSServletTest extends BaseCMSServletTestCase {
 
 		mockHttpServletRequest.setContextPath("/o");
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
-
 		mockHttpServletRequest.setServletPath("/cms/translations");
 
 		return mockHttpServletRequest;

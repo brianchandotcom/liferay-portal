@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "select-content",
+					"name": "contentSelector",
+					"type": "itemSelector",
+					"typeOptions": {
+						"itemType": "com.liferay.journal.model.JournalArticle"
+					}
+				}
+			]
+		}
+	]
+}

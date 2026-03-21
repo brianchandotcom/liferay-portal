@@ -39,8 +39,10 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
@@ -89,6 +91,7 @@ import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
@@ -248,6 +251,8 @@ public class RenderLayoutStructureTagTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
 		_originalName = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
@@ -256,6 +261,9 @@ public class RenderLayoutStructureTagTest {
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+		ContentLayoutTestUtil.publishLayout(
+			_layout.fetchDraftLayout(), _layout);
 	}
 
 	@After
@@ -920,6 +928,48 @@ public class RenderLayoutStructureTagTest {
 			content, content.contains(submitButtonAttributes + " disabled"));
 		Assert.assertTrue(content, content.contains(submitButtonAttributes));
 		Assert.assertTrue(content, content.contains(textInputIdAttribute));
+	}
+
+	@Test
+	@TestInfo("LPD-82690")
+	public void testPageRenderWhenFirstFragmentHasWebContentTemplate()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle basicJournalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_read("basic_journal_article_content.xml"), "BASIC-WEB-CONTENT",
+				null);
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				null, _group.getGroupId(), "Fragment Collection",
+				StringPool.BLANK, _serviceContext);
+
+		FragmentEntry editableFragment = _addFragmentEntry(
+			null, fragmentCollection, "fragment_editable_type_html.html",
+			"Editable FragmentEntry");
+
+		FragmentEntry configurableFragment = _addFragmentEntry(
+			"configuration_journal_article.json", fragmentCollection,
+			"fragment_configurable.html", "Configurable FragmentEntry");
+
+		_addFragmentEntryLinkToLayout(
+			configurableFragment,
+			_buildConfigurableFragmentValue(basicJournalArticle));
+
+		_addFragmentEntryLinkToLayout(
+			editableFragment, _buildEditableFragmentValue(journalArticle));
+
+		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()));
+
+		Assert.assertTrue(html.contains(basicJournalArticle.getTitle()));
 	}
 
 	@Test
@@ -3462,6 +3512,20 @@ public class RenderLayoutStructureTagTest {
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
+	private FragmentEntry _addFragmentEntry(
+			String configFile, FragmentCollection fragmentCollection,
+			String htmlFile, String name)
+		throws Exception {
+
+		return _fragmentEntryService.addFragmentEntry(
+			null, _group.getGroupId(),
+			fragmentCollection.getFragmentCollectionId(), null, name, null,
+			_read(htmlFile), null, false,
+			(configFile != null) ? _read(configFile) : null, null, 0, false,
+			false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+	}
+
 	private FragmentEntryLink[] _addFragmentEntryLinks(
 			int count, JSONObject jsonObject, Layout layout,
 			long segmentsExperienceId)
@@ -3488,6 +3552,19 @@ public class RenderLayoutStructureTagTest {
 		}
 
 		return fragmentEntryLinks;
+	}
+
+	private void _addFragmentEntryLinkToLayout(
+			FragmentEntry fragmentEntry, String value)
+		throws Exception {
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			value, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getExternalReferenceCode(), null,
+			fragmentEntry.getHtml(), fragmentEntry.getJs(), _layout, null,
+			FragmentConstants.TYPE_COMPONENT, null, 0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
@@ -3894,6 +3971,42 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
+	private JSONObject _buildArticleSelectorJSON(JournalArticle article) {
+		return JSONUtil.put(
+			"className", JournalArticle.class.getName()
+		).put(
+			"classNameId",
+			String.valueOf(
+				_portal.getClassNameId(JournalArticle.class.getName()))
+		).put(
+			"classPK", String.valueOf(article.getResourcePrimKey())
+		).put(
+			"classTypeId", String.valueOf(article.getDDMStructureId())
+		);
+	}
+
+	private String _buildConfigurableFragmentValue(JournalArticle article) {
+		return JSONUtil.put(
+			"com.liferay.fragment.entry.processor.freemarker." +
+				"FreeMarkerFragmentEntryProcessor",
+			JSONUtil.put("contentSelector", _buildArticleSelectorJSON(article))
+		).toString();
+	}
+
+	private String _buildEditableFragmentValue(JournalArticle article) {
+		JSONObject articleSelectorJSONObject = _buildArticleSelectorJSON(
+			article);
+
+		articleSelectorJSONObject.put(
+			"fieldId", "_ddmTemplate_" + article.getDDMTemplateKey());
+
+		return JSONUtil.put(
+			"com.liferay.fragment.entry.processor.editable." +
+				"EditableFragmentEntryProcessor",
+			JSONUtil.put("template_1", articleSelectorJSONObject)
+		).toString();
+	}
+
 	private DDMForm _deserialize(String content) {
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
@@ -4295,6 +4408,9 @@ public class RenderLayoutStructureTagTest {
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Inject
+	private FragmentCollectionService _fragmentCollectionService;
+
+	@Inject
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
 
@@ -4303,6 +4419,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private FragmentEntryService _fragmentEntryService;
 
 	@Inject
 	private FragmentRendererRegistry _fragmentRendererRegistry;
@@ -4334,6 +4453,8 @@ public class RenderLayoutStructureTagTest {
 	@Inject
 	private Language _language;
 
+	private Layout _layout;
+
 	@Inject
 	private LayoutDisplayPageProviderRegistry
 		_layoutDisplayPageProviderRegistry;
@@ -4347,6 +4468,9 @@ public class RenderLayoutStructureTagTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;

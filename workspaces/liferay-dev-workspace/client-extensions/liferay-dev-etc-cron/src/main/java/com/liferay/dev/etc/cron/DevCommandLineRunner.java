@@ -45,10 +45,11 @@ public class DevCommandLineRunner
 
 	@Override
 	public void run(String... args) throws Exception {
+		List<Long> approvedBlogPostingIds = new ArrayList<>();
+
 		String authorization =
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes);
-
 		URL url = new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 
 		BlogPostingResource blogPostingResource = BlogPostingResource.builder(
@@ -58,13 +59,14 @@ public class DevCommandLineRunner
 			url
 		).build();
 
+		List<Long> staffBlogPostingIds = new ArrayList<>();
+
 		UserAccountResource userAccountResource = UserAccountResource.builder(
 		).header(
 			"Authorization", authorization
 		).endpoint(
 			url
 		).build();
-
 		WorkflowTaskResource workflowTaskResource =
 			WorkflowTaskResource.builder(
 			).header(
@@ -73,28 +75,9 @@ public class DevCommandLineRunner
 				url
 			).build();
 
-		WorkflowTasksBulkSelection workflowTasksBulkSelection =
-			new WorkflowTasksBulkSelection();
+		for (WorkflowTask workflowTask :
+				_getWorkflowTasks(workflowTaskResource)) {
 
-		workflowTasksBulkSelection.setAssetTypes(
-			() -> new String[] {"com.liferay.blogs.model.BlogsEntry"});
-		workflowTasksBulkSelection.setCompleted(() -> false);
-
-		Collection<WorkflowTask> workflowTasks =
-			workflowTaskResource.postWorkflowTasksPage(
-				null, null, workflowTasksBulkSelection
-			).getItems();
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Found ", workflowTasks.size(), " workflow tasks"));
-		}
-
-		List<Long> approvedBlogPostingIds = new ArrayList<>();
-		List<Long> staffBlogPostingIds = new ArrayList<>();
-
-		for (WorkflowTask workflowTask : workflowTasks) {
 			ObjectReviewed objectReviewed = workflowTask.getObjectReviewed();
 
 			try {
@@ -120,6 +103,31 @@ public class DevCommandLineRunner
 			_log.info("Approved blog posting IDs: " + approvedBlogPostingIds);
 			_log.info("Staff blog posting IDs: " + staffBlogPostingIds);
 		}
+	}
+
+	private Collection<WorkflowTask> _getWorkflowTasks(
+			WorkflowTaskResource workflowTaskResource)
+		throws Exception {
+
+		WorkflowTasksBulkSelection workflowTasksBulkSelection =
+			new WorkflowTasksBulkSelection();
+
+		workflowTasksBulkSelection.setAssetTypes(
+			() -> new String[] {"com.liferay.blogs.model.BlogsEntry"});
+		workflowTasksBulkSelection.setCompleted(() -> false);
+
+		Collection<WorkflowTask> workflowTasks =
+			workflowTaskResource.postWorkflowTasksPage(
+				null, null, workflowTasksBulkSelection
+			).getItems();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Found ", workflowTasks.size(), " workflow tasks"));
+		}
+
+		return workflowTasks;
 	}
 
 	private boolean _processWorkflowTask(

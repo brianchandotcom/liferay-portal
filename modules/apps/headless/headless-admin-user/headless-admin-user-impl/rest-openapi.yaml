@@ -462,6 +462,9 @@ components:
                     readOnly: true
                 name:
                     type: string
+                previewURL:
+                    readOnly: true
+                    type: string
                 thumbnailURL:
                     readOnly: true
                     type: string

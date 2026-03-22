@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
@@ -119,6 +120,14 @@ public class ConfigurationModelIndexer
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return ConfigurationModelIndexer.class.getName();
+	}
+
+	@Override
+	public long getReindexEntryCount(long companyId) {
+		Map<String, ConfigurationModel> configurationModels =
+			_getConfigurationModels();
+
+		return configurationModels.size();
 	}
 
 	@Override
@@ -370,8 +379,7 @@ public class ConfigurationModelIndexer
 		Set<Document> documents = new HashSet<>();
 
 		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels(
-				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+			_getConfigurationModels();
 
 		for (ConfigurationModel configurationModel :
 				configurationModels.values()) {
@@ -433,6 +441,24 @@ public class ConfigurationModelIndexer
 				_log.warn("Unable to commit", searchException);
 			}
 		}
+	}
+
+	private Map<String, ConfigurationModel> _getConfigurationModels() {
+		Map<String, ConfigurationModel> configurationModels =
+			ReindexCacheThreadLocal.getGlobalReindexCache(
+				() -> -1,
+				ConfigurationModelIndexer.class.getName() +
+					"#_getConfigurationModels",
+				count -> _configurationModelRetriever.getConfigurationModels(
+					ExtendedObjectClassDefinition.Scope.SYSTEM, null));
+
+		if (configurationModels == null) {
+			configurationModels =
+				_configurationModelRetriever.getConfigurationModels(
+					ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+		}
+
+		return configurationModels;
 	}
 
 	private List<String> _getLocalizedValues(

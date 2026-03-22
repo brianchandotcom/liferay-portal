@@ -200,7 +200,8 @@ public class DBCopyTablesProcessTest {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
 					Assert.assertArrayEquals(
-						(byte[])values[total++], resultSet.getBytes(1));
+						(byte[])values[total++],
+						resultSet.getBytes("testColumn"));
 				}
 			}
 		}
@@ -246,7 +247,7 @@ public class DBCopyTablesProcessTest {
 				while (resultSet.next()) {
 					Assert.assertEquals(
 						expectedFunction.apply(expectedValues[total++]),
-						getFunction.apply(resultSet.getObject(1)));
+						getFunction.apply(resultSet.getObject("testColumn")));
 				}
 			}
 		}

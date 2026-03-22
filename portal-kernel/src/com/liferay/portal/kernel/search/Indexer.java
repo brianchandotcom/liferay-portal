@@ -49,6 +49,10 @@ public interface Indexer<T> {
 
 	public IndexerPostProcessor[] getIndexerPostProcessors();
 
+	public default long getReindexEntryCount(long companyId) {
+		return Long.MAX_VALUE;
+	}
+
 	public String[] getSearchClassNames();
 
 	/**

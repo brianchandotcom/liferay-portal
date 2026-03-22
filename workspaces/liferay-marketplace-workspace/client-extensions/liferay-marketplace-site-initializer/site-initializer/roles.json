@@ -12,6 +12,16 @@
 				"scope": 3
 			},
 			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.commerce.model.CommerceOrderType",
+				"scope": 3
+			},
+			{
+				"actionId": "ADD_COMMERCE_ORDER",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
 				"actionId": "CHECKOUT_OPEN_COMMERCE_ORDERS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 3
@@ -27,12 +37,12 @@
 				"scope": 3
 			},
 			{
-				"actionId": "MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS",
+				"actionId": "MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 3
 			},
 			{
-				"actionId": "VIEW_OPEN_COMMERCE_ORDERS",
+				"actionId": "MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 3
 			},
@@ -42,23 +52,13 @@
 				"scope": 3
 			},
 			{
-				"actionId": "MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
-				"resource": "com.liferay.commerce.order",
-				"scope": 3
-			},
-			{
 				"actionId": "VIEW_COMMERCE_ORDERS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 3
 			},
 			{
-				"actionId": "ADD_COMMERCE_ORDER",
+				"actionId": "VIEW_OPEN_COMMERCE_ORDERS",
 				"resource": "com.liferay.commerce.order",
-				"scope": 3
-			},
-			{
-				"actionId": "VIEW",
-				"resource": "com.liferay.commerce.model.CommerceOrderType",
 				"scope": 3
 			}
 		],
@@ -79,8 +79,8 @@
 				"scope": 1
 			},
 			{
-				"actionId": "VIEW",
-				"resource": "com.liferay.commerce.product.model.CommerceCatalog",
+				"actionId": "MANAGE_COMMERCE_ORDERS",
+				"resource": "com.liferay.commerce.order",
 				"scope": 1
 			},
 			{
@@ -89,13 +89,13 @@
 				"scope": 1
 			},
 			{
-				"actionId": "MANAGE_COMMERCE_ORDERS",
+				"actionId": "VIEW_COMMERCE_ORDERS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 1
 			},
 			{
-				"actionId": "VIEW_COMMERCE_ORDERS",
-				"resource": "com.liferay.commerce.order",
+				"actionId": "VIEW",
+				"resource": "com.liferay.commerce.product.model.CommerceCatalog",
 				"scope": 1
 			}
 		],
@@ -105,12 +105,12 @@
 	{
 		"actions": [
 			{
-				"actionId": "VIEW_COMMERCE_ORDERS",
+				"actionId": "ADD_COMMERCE_ORDER",
 				"resource": "com.liferay.commerce.order",
 				"scope": 3
 			},
 			{
-				"actionId": "ADD_COMMERCE_ORDER",
+				"actionId": "VIEW_COMMERCE_ORDERS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 3
 			}
@@ -121,12 +121,12 @@
 	{
 		"actions": [
 			{
-				"actionId": "VIEW_COMMERCE_ORDERS",
+				"actionId": "ADD_COMMERCE_ORDER",
 				"resource": "com.liferay.commerce.order",
 				"scope": 3
 			},
 			{
-				"actionId": "ADD_COMMERCE_ORDER",
+				"actionId": "VIEW_COMMERCE_ORDERS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 3
 			}

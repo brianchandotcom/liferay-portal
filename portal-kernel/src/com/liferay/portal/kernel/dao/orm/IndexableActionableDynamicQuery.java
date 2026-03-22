@@ -45,14 +45,7 @@ public class IndexableActionableDynamicQuery {
 		_hasBackgroundTask = BackgroundTaskThreadLocal.hasBackgroundTask();
 
 		if (_hasBackgroundTask) {
-			try {
-				_total = (Long)_dynamicQueryCountMethod.invoke(
-					_baseLocalService, _createDynamicQuery(),
-					ProjectionFactoryUtil.rowCount());
-			}
-			catch (Exception exception) {
-				ReflectionUtil.throwException(exception);
-			}
+			_total = performCount();
 		}
 
 		try {
@@ -90,6 +83,17 @@ public class IndexableActionableDynamicQuery {
 			}
 
 			_sendStatusMessage();
+		}
+	}
+
+	public long performCount() {
+		try {
+			return (Long)_dynamicQueryCountMethod.invoke(
+				_baseLocalService, _createDynamicQuery(),
+				ProjectionFactoryUtil.rowCount());
+		}
+		catch (Exception exception) {
+			throw ReflectionUtil.<RuntimeException>throwException(exception);
 		}
 	}
 

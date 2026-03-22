@@ -241,6 +241,20 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
+	public long getReindexEntryCount(long companyId) {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			getIndexableActionableDynamicQuery();
+
+		if (indexableActionableDynamicQuery == null) {
+			return Long.MAX_VALUE;
+		}
+
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+
+		return indexableActionableDynamicQuery.performCount();
+	}
+
+	@Override
 	public String[] getSearchClassNames() {
 		return new String[] {getClassName()};
 	}

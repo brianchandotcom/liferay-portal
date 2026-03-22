@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -677,6 +678,92 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
+	public void testMaintenanceModeCompanyAdminBypass() throws Exception {
+		_enableMaintenanceMode(_group);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_serviceMaintenanceModeRequest(TestPropsValues.getUser());
+
+		Assert.assertNotEquals(
+			HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+			mockHttpServletResponse.getStatus());
+	}
+
+	@Test
+	public void testMaintenanceModeGuestUserGets503() throws Exception {
+		_enableMaintenanceMode(_group);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_serviceMaintenanceModeRequest(null);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+			mockHttpServletResponse.getStatus());
+	}
+
+	@Test
+	public void testMaintenanceModeGuestUserGets503WithUtilityPage()
+		throws Exception {
+
+		_enableMaintenanceMode(_group);
+
+		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, true,
+			"Maintenance Page",
+			LayoutUtilityPageEntryConstants.TYPE_SC_SERVICE_UNAVAILABLE, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_serviceMaintenanceModeRequest(null);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+			mockHttpServletResponse.getStatus());
+	}
+
+	@Test
+	public void testMaintenanceModeInactiveSiteWithoutMaintenanceReturns404()
+		throws Exception {
+
+		_deactivateGroup(_group);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_serviceMaintenanceModeRequest(null);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
+	}
+
+	@Test
+	public void testMaintenanceModeRegularUserGets503() throws Exception {
+		_enableMaintenanceMode(_group);
+
+		_user = UserTestUtil.addUser();
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_serviceMaintenanceModeRequest(_user);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+			mockHttpServletResponse.getStatus());
+	}
+
+	@Test
+	public void testMaintenanceModeSiteAdminBypass() throws Exception {
+		_enableMaintenanceMode(_group);
+
+		_user = UserTestUtil.addGroupAdminUser(_group);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_serviceMaintenanceModeRequest(_user);
+
+		Assert.assertNotEquals(
+			HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+			mockHttpServletResponse.getStatus());
+	}
+
+	@Test
 	public void testServiceForward() throws Throwable {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -1018,6 +1105,32 @@ public class FriendlyURLServletTest {
 			expectedRedirect);
 	}
 
+	private void _deactivateGroup(Group group) throws Exception {
+		_groupLocalService.updateGroup(
+			group.getGroupId(), group.getParentGroupId(), group.getNameMap(),
+			group.getDescriptionMap(), group.getType(), group.getTypeSettings(),
+			group.isManualMembership(), group.getMembershipRestriction(),
+			group.getFriendlyURL(), group.isInheritContent(), false,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
+	private void _enableMaintenanceMode(Group group) throws Exception {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			GroupConstants.TYPE_SETTINGS_KEY_MAINTENANCE_MODE,
+			Boolean.TRUE.toString());
+
+		_groupLocalService.updateGroup(
+			group.getGroupId(), group.getParentGroupId(), group.getNameMap(),
+			group.getDescriptionMap(), group.getType(),
+			typeSettingsUnicodeProperties.toString(),
+			group.isManualMembership(), group.getMembershipRestriction(),
+			group.getFriendlyURL(), group.isInheritContent(), false,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
 	private String _getEncryptedDoAsUserId(
 			MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
@@ -1049,6 +1162,28 @@ public class FriendlyURLServletTest {
 		Group group, Layout layout, Locale locale) {
 
 		return group.getFriendlyURL() + layout.getFriendlyURL(locale);
+	}
+
+	private MockHttpServletResponse _serviceMaintenanceModeRequest(User user)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(
+				"GET",
+				StringBundler.concat(
+					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+					_group.getFriendlyURL(), _layout.getFriendlyURL()));
+
+		if (user != null) {
+			mockHttpServletRequest.setAttribute(WebKeys.USER, user);
+		}
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		return mockHttpServletResponse;
 	}
 
 	private void _testGetRedirectForAlternativeSite(
@@ -1277,6 +1412,9 @@ public class FriendlyURLServletTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private final I18nServlet _i18nServlet = new I18nServlet() {
 

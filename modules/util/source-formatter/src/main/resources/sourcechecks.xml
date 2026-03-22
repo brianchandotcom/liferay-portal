@@ -1202,6 +1202,14 @@
 			<category name="Styling" />
 			<description name="Sorts by `resourceName` and `roleName` in `resource-permissions.json` files." />
 		</check>
+		<check name="JSONResourcePermissionsFileCheck">
+			<category name="Styling" />
+			<description name="Sorts by `resourceName` and `roleName` in `resource-permissions.json` files." />
+		</check>
+		<check name="JSONRolesFileCheck">
+			<category name="Styling" />
+			<description name="Sorts by `resource` and `actionId` in `roles.json` files." />
+		</check>
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">
 		<check name="ArrayCheck">

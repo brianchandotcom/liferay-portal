@@ -27,6 +27,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -250,6 +251,21 @@ public class SharedAssetDTOConverter
 					_objectEntryService, objectField,
 					GuestOrUserUtil.getPermissionChecker(), _portal)));
 		fileEntry.setName(dlFileEntry::getFileName);
+		fileEntry.setPreviewURL(
+			() -> {
+				LiferayFileEntry liferayFileEntry = new LiferayFileEntry(
+					dlFileEntry);
+
+				String previewURL = _dlURLHelper.getPreviewURL(
+					liferayFileEntry, liferayFileEntry.getFileVersion(), null,
+					StringPool.BLANK);
+
+				if (Validator.isNull(previewURL)) {
+					return null;
+				}
+
+				return previewURL;
+			});
 		fileEntry.setThumbnailURL(
 			() -> {
 				String thumbnailURL = _dlURLHelper.getThumbnailSrc(

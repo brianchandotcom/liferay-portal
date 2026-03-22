@@ -42,6 +42,11 @@ public class AssetEntryIndexer extends BaseIndexer<AssetEntry> {
 	}
 
 	@Override
+	public long getReindexEntryCount(long companyId) {
+		return 0;
+	}
+
+	@Override
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
 			SearchContext searchContext)

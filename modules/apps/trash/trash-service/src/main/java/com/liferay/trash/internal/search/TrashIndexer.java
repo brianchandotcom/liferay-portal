@@ -107,6 +107,11 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 	}
 
 	@Override
+	public long getReindexEntryCount(long companyId) {
+		return 0;
+	}
+
+	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String entryClassName,
 			long entryClassPK, String actionId)

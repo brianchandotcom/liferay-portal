@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -44,7 +45,7 @@ public class IndexableActionableDynamicQuery {
 
 		_hasBackgroundTask = BackgroundTaskThreadLocal.hasBackgroundTask();
 
-		if (_hasBackgroundTask) {
+		if (_hasBackgroundTask && (_total == -1)) {
 			_total = performCount();
 		}
 
@@ -87,14 +88,20 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	public long performCount() {
-		try {
-			return (Long)_dynamicQueryCountMethod.invoke(
-				_baseLocalService, _createDynamicQuery(),
-				ProjectionFactoryUtil.rowCount());
+		String cacheKey = "performCount#" + _modelClass.getName();
+
+		if (_cacheKeySuffix != null) {
+			cacheKey = cacheKey + _cacheKeySuffix;
 		}
-		catch (Exception exception) {
-			throw ReflectionUtil.<RuntimeException>throwException(exception);
+
+		Long cachedCount = ReindexCacheThreadLocal.getGlobalReindexCache(
+			() -> -1, cacheKey, count -> _performCount());
+
+		if (cachedCount != null) {
+			return cachedCount;
 		}
+
+		return _performCount();
 	}
 
 	public void setAddCriteriaMethod(
@@ -294,6 +301,17 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
+	private long _performCount() {
+		try {
+			return (Long)_dynamicQueryCountMethod.invoke(
+				_baseLocalService, _createDynamicQuery(),
+				ProjectionFactoryUtil.rowCount());
+		}
+		catch (Exception exception) {
+			throw ReflectionUtil.<RuntimeException>throwException(exception);
+		}
+	}
+
 	private void _sendStatusMessage() {
 		if (!_hasBackgroundTask) {
 			return;
@@ -324,6 +342,6 @@ public class IndexableActionableDynamicQuery {
 	private UnsafeFunction _performActionUnsafeFunction;
 
 	private String _primaryKeyPropertyName;
-	private long _total;
+	private long _total = -1;
 
 }

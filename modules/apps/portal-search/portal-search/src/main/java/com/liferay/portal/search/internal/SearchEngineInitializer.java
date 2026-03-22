@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Time;
@@ -32,6 +33,7 @@ import com.liferay.portal.search.index.SyncReindexManager;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +62,7 @@ public class SearchEngineInitializer implements Runnable {
 		_executionMode = executionMode;
 		_executorService = executorService;
 		_indexNameBuilder = indexNameBuilder;
-		_indexers = indexers;
+		_indexers = _sortIndexersByReindexEntryCount(indexers);
 		_jsonFactory = jsonFactory;
 		_searchEngineAdapter = searchEngineAdapter;
 		_syncReindexManager = syncReindexManager;
@@ -222,7 +224,6 @@ public class SearchEngineInitializer implements Runnable {
 
 			boolean finalFullMode = fullMode;
 
-			Set<String> indexerClassNames = new HashSet<>();
 			Map<String, Object> sharedReindexCacheMap =
 				new ConcurrentHashMap<>();
 
@@ -231,8 +232,6 @@ public class SearchEngineInitializer implements Runnable {
 
 				if (_indexers.size() == 1) {
 					Indexer<?> indexer = _indexers.get(0);
-
-					indexerClassNames.add(indexer.getClassName());
 
 					try (SafeCloseable safeCloseable1 =
 							ReindexCacheThreadLocal.openReindexMode(
@@ -249,8 +248,6 @@ public class SearchEngineInitializer implements Runnable {
 					List<FutureTask<Void>> futureTasks = new ArrayList<>();
 
 					for (Indexer<?> indexer : _indexers) {
-						indexerClassNames.add(indexer.getClassName());
-
 						FutureTask<Void> futureTask = new FutureTask<>(
 							new Callable<Void>() {
 
@@ -293,6 +290,12 @@ public class SearchEngineInitializer implements Runnable {
 					_companyId);
 			}
 			else if (_isExecuteSyncReindex()) {
+				Set<String> indexerClassNames = new HashSet<>();
+
+				for (Indexer<?> indexer : _indexers) {
+					indexerClassNames.add(indexer.getClassName());
+				}
+
 				_syncReindexManager.deleteStaleDocuments(
 					_companyId, date, indexerClassNames);
 			}
@@ -316,6 +319,54 @@ public class SearchEngineInitializer implements Runnable {
 		}
 
 		_finished = true;
+	}
+
+	private List<Indexer<?>> _sortIndexersByReindexEntryCount(
+		List<Indexer<?>> indexers) {
+
+		List<Indexer<?>> sortedIndexers = new ArrayList<>();
+		Map<String, Long> reindexEntryCounts = new HashMap<>();
+
+		try (SafeCloseable safeCloseable1 =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(_companyId);
+			SafeCloseable safeCloseable2 =
+				ReindexCacheThreadLocal.openReindexMode()) {
+
+			for (Indexer<?> indexer : indexers) {
+				try {
+					long count = indexer.getReindexEntryCount(_companyId);
+
+					if (count != 0) {
+						reindexEntryCounts.put(indexer.getClassName(), count);
+
+						sortedIndexers.add(indexer);
+					}
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to get reindex entry count for " +
+							indexer.getClassName(),
+						exception);
+				}
+			}
+		}
+
+		sortedIndexers.sort(
+			(indexer1, indexer2) -> Long.compare(
+				reindexEntryCounts.get(indexer2.getClassName()),
+				reindexEntryCounts.get(indexer1.getClassName())));
+
+		if (_log.isDebugEnabled()) {
+			for (Indexer<?> indexer : sortedIndexers) {
+				_log.debug(
+					StringBundler.concat(
+						"Indexer ", indexer.getClassName(),
+						" reindex entry count: ",
+						reindexEntryCounts.get(indexer.getClassName())));
+			}
+		}
+
+		return sortedIndexers;
 	}
 
 	private void _updateIndexSettings(String indexName, String settings) {

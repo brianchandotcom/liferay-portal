@@ -156,6 +156,7 @@ JSONPageFileCheck | [Styling](styling_checks.md#styling-checks) | .ipynb, .json,
 JSONPortletResponseUtilCheck | [Styling](styling_checks.md#styling-checks) | .java | Checks if `JSONPortletResponseUtil.writeJSON ` should come before method calling `hideDefaultSuccessMessage`. |
 JSONReplacementsFileCheck | [Styling](styling_checks.md#styling-checks) | .ipynb, .json, or .npmbridgerc | Sorts by `issueKey`, `from` and `to` in `replacements.json` file. |
 JSONResourcePermissionsFileCheck | [Styling](styling_checks.md#styling-checks) | .ipynb, .json, or .npmbridgerc | Sorts by `resourceName` and `roleName` in `resource-permissions.json` files. |
+JSONRolesFileCheck | [Styling](styling_checks.md#styling-checks) | .ipynb, .json, or .npmbridgerc | Sorts by `resource` and `actionId` in `roles.json` files. |
 JSONStylingCheck | [Styling](styling_checks.md#styling-checks) | .ipynb, .json, or .npmbridgerc | Applies rules to enforce consistency in code style. |
 JSONUpgradeLiferayThemePackageJSONCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .ipynb, .json, or .npmbridgerc | Upgrade the `package.json` of a Liferay Theme to make it compatible with Liferay 7.4. |
 [JSONUtilCheck](check/json_util_check.md#jsonutilcheck) | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks for utilization of class `JSONUtil`. |

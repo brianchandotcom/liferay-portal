@@ -30,13 +30,13 @@ public interface IndexerWriter<T extends BaseModel<?>> {
 
 	public void reindex(long classPK);
 
-	public void reindex(String[] ids);
-
 	public void reindex(T baseModel);
 
 	public default void reindex(T baseModel, boolean notify) {
 		reindex(baseModel);
 	}
+
+	public void reindexCompany(long companyId);
 
 	public void setEnabled(boolean enabled);
 

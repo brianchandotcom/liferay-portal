@@ -6,10 +6,12 @@
 package com.liferay.style.book.service.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -260,6 +262,19 @@ public class StyleBookEntryLocalServiceImpl
 
 			curStyleBookEntryKey = styleBookEntryKey + CharPool.DASH + count++;
 		}
+	}
+
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext) {
+
+		ExportActionableDynamicQuery exportActionableDynamicQuery =
+			super.getExportActionableDynamicQuery(portletDataContext);
+
+		exportActionableDynamicQuery.setGroupId(
+			portletDataContext.getScopeGroupId());
+
+		return exportActionableDynamicQuery;
 	}
 
 	@Override

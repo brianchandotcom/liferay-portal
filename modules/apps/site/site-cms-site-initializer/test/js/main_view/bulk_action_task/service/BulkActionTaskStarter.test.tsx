@@ -99,7 +99,7 @@ describe('BulkActionTaskStarter', () => {
 			expect(composeCreateTaskURL).toHaveBeenCalledWith(
 				dto.apiURL,
 				dto.selectedData,
-				false
+				dto.type
 			);
 		});
 
@@ -111,13 +111,15 @@ describe('BulkActionTaskStarter', () => {
 			expect(composeCreateTaskURL).toHaveBeenCalledWith(
 				dto.apiURL,
 				dto.selectedData,
-				true
+				'DownloadBulkAction'
 			);
 		});
 	});
 
 	describe('onCreateSuccess', () => {
-		const mockResponse = {data: {id: 987}};
+		const mockResponse = {
+			data: {id: 987, type: 'DeleteObjectBulkSelectionAction'},
+		};
 
 		it('calls onCreateTaskSuccess and overrides default toast when specified', () => {
 			const onCreateSuccess = jest.fn();
@@ -173,6 +175,25 @@ describe('BulkActionTaskStarter', () => {
 				'info',
 				expect.any(Object),
 				undefined
+			);
+		});
+
+		it('displays a toast with the correct message when additionalData is provided', () => {
+			const additionalData = {assetName: 'test-asset'};
+			const starter = new BulkActionTaskStarter(
+				getStarterDTO({additionalData})
+			);
+			(getBulkActionTaskMessage as jest.Mock).mockReturnValue(
+				'mock-message'
+			);
+
+			starter.onCreateSuccess(mockResponse as any);
+
+			expect(getBulkActionTaskMessage).toHaveBeenCalledWith(
+				'DeleteObjectBulkSelectionAction',
+				'info',
+				expect.any(Object),
+				additionalData
 			);
 		});
 

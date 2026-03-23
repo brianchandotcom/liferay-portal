@@ -14,7 +14,7 @@ import {URL_BULK_ACTION_TASK} from '../../../../../src/main/resources/META-INF/r
 
 describe('Bulk Actions Monitor Utils', () => {
 	describe('composeCreateTaskURL', () => {
-		it('return the download URL when useDownloadUrl is true', () => {
+		it('return the download URL when type is DownloadBulkAction', () => {
 			const taskUrl = composeCreateTaskURL(
 				URL_BULK_ACTION_TASK,
 				{
@@ -22,7 +22,7 @@ describe('Bulk Actions Monitor Utils', () => {
 					searchQuery: '',
 					selectAll: false,
 				},
-				true
+				'DownloadBulkAction'
 			);
 
 			expect(taskUrl).toBe(
@@ -30,7 +30,7 @@ describe('Bulk Actions Monitor Utils', () => {
 			);
 		});
 
-		it('return the bulk action URL when useDownloadUrl is false', () => {
+		it('return the bulk action URL when type is not DownloadBulkAction or ExportTranslationBulkAction', () => {
 			const taskUrl = composeCreateTaskURL(
 				URL_BULK_ACTION_TASK,
 				{
@@ -38,7 +38,7 @@ describe('Bulk Actions Monitor Utils', () => {
 					searchQuery: '',
 					selectAll: false,
 				},
-				false
+				'DeleteObjectBulkSelectionAction'
 			);
 
 			expect(taskUrl).toBe(
@@ -61,7 +61,7 @@ describe('Bulk Actions Monitor Utils', () => {
 					searchQuery: 'test',
 					selectAll: true,
 				},
-				false
+				'DeleteObjectBulkSelectionAction'
 			);
 
 			expect(taskUrl).toBe(
@@ -83,11 +83,30 @@ describe('Bulk Actions Monitor Utils', () => {
 					],
 					selectAll: true,
 				},
-				false
+				'DeleteObjectBulkSelectionAction'
 			);
 
 			expect(taskUrl).toBe(
 				`${Liferay.ThemeDisplay.getPortalURL()}${'/o/bulk/v1.0/bulk-action?emptySearch=true&filter=asset'}`
+			);
+		});
+
+		it('applies specific filter for ExportTranslationBulkAction when selectAll is true', () => {
+			const apiURLWithFilter =
+				'/o/search/v1.0/search?filter=folderId eq 123 and groupIds/any(g:g in (456))';
+
+			const taskUrl = composeCreateTaskURL(
+				apiURLWithFilter,
+				{
+					filters: [],
+					searchQuery: '',
+					selectAll: true,
+				},
+				'ExportTranslationBulkAction'
+			);
+
+			expect(taskUrl).toBe(
+				`${Liferay.ThemeDisplay.getPortalURL()}/o/cms/translations?type=ExportTranslationBulkAction&emptySearch=true&filter=cmsRoot eq true and cmsSection eq 'contents' and status in (0, 2, 3) and folderId eq 123 and groupIds/any(g:g in (456))`
 			);
 		});
 	});

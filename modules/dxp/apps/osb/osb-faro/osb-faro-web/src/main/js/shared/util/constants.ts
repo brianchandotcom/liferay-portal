@@ -387,6 +387,8 @@ export const DATA_RETENTION_PERIOD_KEY = 'data-retention-period';
 
 export const DEVELOPER_MODE = FARO_DEV_MODE;
 
+export const ENABLE_ASSET_OBJECT_ENTRY = true;
+
 // LRAC-11571 Disable temporarily Accounts
 
 export const ENABLE_ACCOUNTS = false;

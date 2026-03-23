@@ -103,6 +103,8 @@ import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Arrays;
@@ -744,9 +746,6 @@ public class SitePageResourceImpl
 
 		Layout layout = _getLayout(groupId, friendlyUrlPath);
 
-		contextHttpServletRequest = DynamicServletRequest.addQueryString(
-			contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);
-
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout, contextUser)) {
@@ -754,29 +753,39 @@ public class SitePageResourceImpl
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
+			HttpServletRequest httpServletRequest =
+				_portal.getOriginalServletRequest(contextHttpServletRequest);
+
+			httpServletRequest = DynamicServletRequest.addQueryString(
+				httpServletRequest, "p_l_id=" + layout.getPlid(), false);
+
+			serviceContext.setRequest(httpServletRequest);
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			themeDisplay.setRequest(httpServletRequest);
+
 			SegmentsExperience segmentsExperience = _getSegmentsExperience(
-				layout, segmentsExperienceKey,
-				serviceContext.getThemeDisplay());
+				layout, segmentsExperienceKey, themeDisplay);
 
 			if (segmentsExperience != null) {
-				contextHttpServletRequest.setAttribute(
+				httpServletRequest.setAttribute(
 					SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 					new long[] {segmentsExperience.getSegmentsExperienceId()});
 			}
 
 			layout.includeLayoutContent(
-				contextHttpServletRequest, contextHttpServletResponse);
+				httpServletRequest, contextHttpServletResponse);
 
-			StringBundler sb =
-				(StringBundler)contextHttpServletRequest.getAttribute(
-					WebKeys.LAYOUT_CONTENT);
+			StringBundler sb = (StringBundler)httpServletRequest.getAttribute(
+				WebKeys.LAYOUT_CONTENT);
 
 			LayoutSet layoutSet = layout.getLayoutSet();
 
 			Document document = Jsoup.parse(
 				ThemeUtil.include(
 					ServletContextPool.get(StringPool.BLANK),
-					contextHttpServletRequest, contextHttpServletResponse,
+					httpServletRequest, contextHttpServletResponse,
 					"portal_normal.ftl", layoutSet.getTheme(), false));
 
 			Element bodyElement = document.body();

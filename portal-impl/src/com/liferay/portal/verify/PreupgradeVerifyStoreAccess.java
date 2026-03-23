@@ -9,6 +9,8 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -51,8 +53,12 @@ public class PreupgradeVerifyStoreAccess extends PreupgradeVerifyProcess {
 		}
 
 		if (store == null) {
-			throw new VerifyException(
+			VerifyException verifyException = new VerifyException(
 				PropsValues.DL_STORE_IMPL + " is not available");
+
+			_log.error(verifyException);
+
+			throw verifyException;
 		}
 
 		long randomCompanyId = _getRandomCompanyId();
@@ -72,8 +78,12 @@ public class PreupgradeVerifyStoreAccess extends PreupgradeVerifyProcess {
 				randomCompanyId, randomRepositoryId, randomFileName,
 				Store.VERSION_DEFAULT)) {
 
-			throw new VerifyException(
+			VerifyException verifyException = new VerifyException(
 				"Unable to create temporary file in store");
+
+			_log.error(verifyException);
+
+			throw verifyException;
 		}
 
 		store.deleteFile(
@@ -99,5 +109,8 @@ public class PreupgradeVerifyStoreAccess extends PreupgradeVerifyProcess {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PreupgradeVerifyStoreAccess.class);
 
 }

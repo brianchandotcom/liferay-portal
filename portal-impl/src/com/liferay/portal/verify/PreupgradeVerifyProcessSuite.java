@@ -6,8 +6,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -46,14 +44,9 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 			verify(verifyProcess);
 		}
 		catch (VerifyException verifyException) {
-			_log.error(verifyException);
-
 			_exceptionMessages.add(verifyException.getMessage());
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PreupgradeVerifyProcessSuite.class);
 
 	private final List<String> _exceptionMessages = new ArrayList<>();
 

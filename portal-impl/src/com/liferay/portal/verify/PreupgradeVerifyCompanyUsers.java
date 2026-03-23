@@ -6,14 +6,22 @@
 package com.liferay.portal.verify;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author István András Dézsi
@@ -31,6 +39,15 @@ public class PreupgradeVerifyCompanyUsers extends PreupgradeVerifyProcess {
 				_verifyCompanyAdminUser(companyId);
 				_verifyCompanyGuestUser(companyId);
 			});
+
+		if (ListUtil.isNotEmpty(_verifyMessages)) {
+			for (String verifyMessage : _verifyMessages) {
+				_log.error(verifyMessage);
+			}
+
+			throw new VerifyException(
+				StringUtil.merge(_verifyMessages, StringPool.COMMA_AND_SPACE));
+		}
 	}
 
 	private void _verifyCompanyAdminUser(long companyId) throws Exception {
@@ -64,7 +81,7 @@ public class PreupgradeVerifyCompanyUsers extends PreupgradeVerifyProcess {
 					int count = resultSet.getInt(1);
 
 					if (count == 0) {
-						throw new VerifyException(
+						_verifyMessages.add(
 							"No admin user found for company " + companyId);
 					}
 				}
@@ -95,12 +112,17 @@ public class PreupgradeVerifyCompanyUsers extends PreupgradeVerifyProcess {
 					int count = resultSet.getInt(1);
 
 					if (count == 0) {
-						throw new VerifyException(
+						_verifyMessages.add(
 							"No guest user found for company " + companyId);
 					}
 				}
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PreupgradeVerifyCompanyUsers.class);
+
+	private final List<String> _verifyMessages = new ArrayList<>();
 
 }

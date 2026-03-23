@@ -8,6 +8,8 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.sql.PreparedStatement;
 
@@ -50,10 +52,17 @@ public class PreupgradeVerifyDatabasePrivileges
 			runSQL("drop table TEMP_TABLE");
 		}
 		catch (Exception exception) {
-			throw new VerifyException(
+			VerifyException verifyException = new VerifyException(
 				"Database user is missing privileges: " +
 					exception.getMessage());
+
+			_log.error(verifyException);
+
+			throw verifyException;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PreupgradeVerifyDatabasePrivileges.class);
 
 }

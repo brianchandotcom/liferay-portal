@@ -14,10 +14,9 @@ import jakarta.portlet.PortletResponse;
 /**
  * @author Lianne Louie
  */
-public class EditSiteTeamAssignmentsUserRowChecker
-	extends EmptyOnClickRowChecker {
+public class SiteTeamUserRowChecker extends EmptyOnClickRowChecker {
 
-	public EditSiteTeamAssignmentsUserRowChecker(
+	public SiteTeamUserRowChecker(
 		PortletResponse portletResponse, long teamId) {
 
 		super(portletResponse);

@@ -34,24 +34,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Story: LRAC-11860 | Automation ID: LRAC-12437 | Test Summary: Empty state of connection screen"
-	@priority = 3
-	test CheckConnectionEmptyStateMessage {
-		task ("Go to Instance Settings > Analytics Cloud") {
-			ACDXPSettings.goToInstanceSettingsAC();
-		}
-
-		task ("Check that there is no token in the field") {
-			AssertTextEquals(
-				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
-				value1 = "");
-		}
-
-		task ("Check that the connect button is disabled") {
-			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
-		}
-	}
-
 	@description = "Story: LRAC-11860 | Automation ID: LRAC-12439 | Test Summary: Connect DXP with AC token updates data source status"
 	@priority = 4
 	test CheckDataSourceStatusUpdateWhenSyncSitesAndContacts {
@@ -162,6 +144,16 @@ definition {
 		property analytics.cloud.acceptance = "true";
 		property analytics.cloud.smoke = "true";
 		property portal.release = "true";
+
+		task ("Check that there is no token in the field") {
+			AssertTextEquals(
+				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
+				value1 = "");
+		}
+
+		task ("Check that the connect button is disabled") {
+			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
+		}
 
 		task ("Connect AC with DXP") {
 			ACDXPSettings.connectAnalyticsCloud();

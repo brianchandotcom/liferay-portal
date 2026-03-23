@@ -296,6 +296,17 @@ export interface IFileDropSettings {
 	onFileDrop?: TOnFileDrop;
 }
 
+export type TLoadDataParams = {
+	additionalAPIURLParameters?: string;
+	apiURL: string;
+	currentURL?: string;
+	delta?: number;
+	odataFiltersStrings?: Array<string>;
+	page?: number;
+	searchParam?: string;
+	sorts?: TSort[];
+};
+
 export interface IFrontendDataSetProps {
 	actionParameterName?: string;
 	additionalAPIURLParameters?: string;

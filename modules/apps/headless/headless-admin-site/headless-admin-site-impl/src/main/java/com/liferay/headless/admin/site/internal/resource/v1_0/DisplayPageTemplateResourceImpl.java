@@ -134,7 +134,7 @@ public class DisplayPageTemplateResourceImpl
 
 			@Override
 			public String getKey() {
-				return LayoutPageTemplateEntry.class.getName() + "#" +
+				return LayoutPageTemplateEntry.class.getName() + "-" +
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE;
 			}
 

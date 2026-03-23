@@ -118,7 +118,12 @@ export default function LeftSidebarTreeView({
 						type: 'success',
 					});
 				}
-				catch (error) {}
+				catch (error) {
+					openToast({
+						message: (error as Error).message,
+						type: 'danger',
+					});
+				}
 			}
 		}
 	};

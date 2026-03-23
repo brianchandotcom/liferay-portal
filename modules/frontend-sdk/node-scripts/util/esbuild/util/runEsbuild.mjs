@@ -7,6 +7,8 @@ import esbuild from 'esbuild';
 import fs from 'fs/promises';
 import path from 'path';
 
+import print from '../../print.mjs';
+
 export default async function runEsbuild(esbuildConfig, configName) {
 	const [result] = await Promise.all([
 		doRunEsbuild(esbuildConfig, configName),
@@ -42,8 +44,11 @@ async function doRunEsbuild(esbuildesbuildConfig, configName) {
 
 	const lapse = performance.now() - start;
 
-	console.log(
-		`⌛ Esbuild for ${configName} took: ${(lapse / 1000).toFixed(3)} s`
+	print(
+		0,
+		true,
+		print.info('INFO:'),
+		`Esbuild for ${configName} took ${(lapse / 1000).toFixed(3)} seconds.`
 	);
 
 	return result;

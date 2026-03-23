@@ -7,6 +7,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import {PORTAL_DIR} from '../util/locations.mjs';
+import print from '../util/print.mjs';
 
 export default async function main() {
 	const gitConfigPath = path.resolve(PORTAL_DIR, '.git', 'config');
@@ -14,9 +15,13 @@ export default async function main() {
 	let contents = await fs.readFile(gitConfigPath, 'utf-8');
 
 	if (contents.includes('[merge "node-scripts"]')) {
-		console.log(`
-⚠️ Git merge driver for node-scripts is already configured: doing nothing 🦥
-`);
+		print(
+			0,
+			true,
+			print.warning('\nWARNING:'),
+			'Git merge driver for node-scripts is already configured: doing nothing.\n'
+		);
+
 		process.exit(3);
 	}
 
@@ -35,7 +40,10 @@ export default async function main() {
 		'utf-8'
 	);
 
-	console.log(`
-✅ Added Git merge driver for node-scripts to .git/config file 🎉
-`);
+	print(
+		0,
+		true,
+		print.info('\nINFO:'),
+		'Added Git merge driver for node-scripts to .git/config file\n'
+	);
 }

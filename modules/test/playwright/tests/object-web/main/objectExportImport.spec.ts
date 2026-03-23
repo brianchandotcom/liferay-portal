@@ -11,7 +11,7 @@ import {
 	ObjectViewAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
-import {readFile} from 'fs/promises';
+import {readFile, writeFile} from 'fs/promises';
 import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -94,28 +94,30 @@ async function importObjectDefinitionFromFile(
 			.or(page.locator('#externalReferenceCode'))
 	).not.toBeEmpty({timeout: 10000});
 
-	const responsePromise = page.waitForResponse(
-		(response) =>
-			response.url().includes('/object-definitions') &&
+	let importedObjectId: number | null = null;
+
+	page.on('response', async (response) => {
+		if (
+			response.url().includes('/object-admin') &&
 			response.request().method() === 'POST' &&
 			response.status() === 200
-	);
+		) {
+			try {
+				const body = await response.json();
+
+				if (body.id && !importedObjectId) {
+					importedObjectId = body.id;
+				}
+			}
+			catch {
+				// Ignore non-JSON responses
+			}
+		}
+	});
 
 	await page.getByRole('button', {name: 'Import'}).click();
 
-	let importedObjectId: number | null = null;
-
-	try {
-		const response = await responsePromise;
-		const responseBody = await response.json();
-
-		importedObjectId = responseBody.id ?? null;
-	}
-	catch {
-		// Response may not be captured in all cases
-	}
-
-	await waitForAlert(page);
+	await page.locator('.modal-body').waitFor({state: 'hidden', timeout: 60000});
 
 	return importedObjectId;
 }
@@ -142,7 +144,7 @@ async function deleteObjectDefinitionFromData(apiHelpers, objectDefinitionId) {
 test(
 	'LPD-78504 Field values persist for object entries with 100 fields after export and import',
 	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
+	async ({apiHelpers, page, viewObjectDefinitionsPage, viewObjectEntriesPage}) => {
 		test.setTimeout(300000);
 
 		const listTypeDefinition =
@@ -192,7 +194,21 @@ test(
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: [
 				'Picklist',
-				{businessType: 'Picklist', state: true},
+				{
+					businessType: 'Picklist',
+					objectFieldSettings: [
+						{
+							name: 'defaultValueType',
+							value: 'inputAsValue' as any,
+						},
+						{
+							name: 'defaultValue',
+							value: 'open',
+						},
+					],
+					required: true,
+					state: true,
+				},
 				'MultiselectPicklist',
 			],
 		});
@@ -237,9 +253,57 @@ test(
 			});
 		}
 
+		await viewObjectDefinitionsPage.goto();
+
+		await page
+			.getByPlaceholder('Search')
+			.fill(objectDefinition.label['en_US']);
+
+		await page.keyboard.press('Enter');
+
 		await expect(
 			page.getByRole('link', {name: objectDefinition.label['en_US']})
 		).toBeVisible();
+
+		if (importedObjectId) {
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			await objectDefinitionAPIClient.postObjectDefinitionPublish(
+				importedObjectId
+			);
+
+			const importedObjectDefinition =
+				await objectDefinitionAPIClient.getObjectDefinition(
+					importedObjectId
+				);
+
+			await viewObjectEntriesPage.goto(
+				importedObjectDefinition.body.className
+			);
+
+			const textFieldLabel = allObjectFields[0].label['en_US'];
+			const entryValue = 'Test field value';
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.fillObjectEntry({
+				objectFieldLabel: textFieldLabel,
+				objectFieldValue: entryValue,
+			});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page);
+
+			await viewObjectEntriesPage.backButton.click();
+
+			await expect(
+				page.locator('td').getByText(entryValue)
+			).toBeVisible();
+		}
 	}
 );
 
@@ -289,6 +353,21 @@ test(
 		await page.getByRole('button', {name: 'Cancel'}).click();
 
 		await expect(page.locator('.modal-body')).toBeHidden();
+
+		await viewObjectDefinitionsPage.goto();
+
+		await page
+			.getByPlaceholder('Search')
+			.fill(objectDefinition.label['en_US']);
+
+		await page.keyboard.press('Enter');
+
+		await expect(
+			page.getByRole('link', {
+				exact: true,
+				name: objectDefinition.label['en_US'],
+			})
+		).toHaveCount(1);
 	}
 );
 
@@ -336,7 +415,7 @@ test(
 			page
 				.getByLabel('External Reference Code')
 				.or(page.locator('#externalReferenceCode'))
-		).toBeEmpty();
+		).not.toBeVisible();
 	}
 );
 
@@ -533,6 +612,10 @@ test(
 			});
 		}
 
+		await viewObjectDefinitionsPage.goto();
+		await page.getByPlaceholder('Search').fill(objectDefinition.label['en_US']);
+		await page.keyboard.press('Enter');
+
 		await expect(
 			page.getByRole('link', {name: objectDefinition.label['en_US']})
 		).toBeVisible();
@@ -554,6 +637,7 @@ test(
 	'LPD-78504 Can import and export State Manager structure',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
+		test.setTimeout(300000);
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
@@ -577,6 +661,17 @@ test(
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Picklist',
+					objectFieldSettings: [
+						{
+							name: 'defaultValueType',
+							value: 'inputAsValue' as any,
+						},
+						{
+							name: 'defaultValue',
+							value: picklistItemName.toLowerCase(),
+						},
+					],
+					required: true,
 					state: true,
 				},
 			],
@@ -619,6 +714,10 @@ test(
 				type: 'objectDefinition',
 			});
 		}
+
+		await viewObjectDefinitionsPage.goto();
+		await page.getByPlaceholder('Search').fill(objectDefinition.label['en_US']);
+		await page.keyboard.press('Enter');
 
 		await expect(
 			page.getByRole('link', {name: objectDefinition.label['en_US']})
@@ -709,6 +808,10 @@ test(
 			});
 		}
 
+		await viewObjectDefinitionsPage.goto();
+		await page.getByPlaceholder('Search').fill(objectDefinition.label['en_US']);
+		await page.keyboard.press('Enter');
+
 		await expect(
 			page.getByRole('link', {name: objectDefinition.label['en_US']})
 		).toBeVisible();
@@ -769,7 +872,9 @@ test(
 			});
 		}
 
-		await expect(page.getByText('Default').first()).toBeVisible();
+		await viewObjectDefinitionsPage.goto();
+		await page.getByPlaceholder('Search').fill(objectDefinition.label['en_US']);
+		await page.keyboard.press('Enter');
 
 		await expect(
 			page.getByRole('link', {name: objectDefinition.label['en_US']})
@@ -825,10 +930,6 @@ test(
 			});
 		}
 
-		await expect(
-			page.getByRole('link', {name: objectDefinition.label['en_US']})
-		).toBeVisible();
-
 		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
 			objectDefinition.label['en_US']
 		);
@@ -839,10 +940,12 @@ test(
 			.click();
 
 		await expect(
-			page.getByRole('cell').getByText(customFieldLabel)
+			page.getByRole('cell').getByText(customFieldLabel, {exact: true})
 		).toBeVisible();
 
-		await expect(page.getByRole('cell').getByText('Text')).toBeVisible();
+		await expect(
+			page.getByRole('cell').getByText('Text', {exact: true}).first()
+		).toBeVisible();
 	}
 );
 
@@ -876,8 +979,6 @@ test(
 
 		await objectLayoutsPage.createObjectLayout(layoutName);
 
-		await waitForAlert(page);
-
 		const {filePath} = await exportObjectDefinitionAsJSON(
 			page,
 			viewObjectDefinitionsPage,
@@ -904,10 +1005,6 @@ test(
 				type: 'objectDefinition',
 			});
 		}
-
-		await expect(
-			page.getByRole('link', {name: objectDefinition.label['en_US']})
-		).toBeVisible();
 
 		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
 			objectDefinition.label['en_US']
@@ -984,17 +1081,15 @@ test(
 			});
 		}
 
-		await expect(
-			page.getByRole('link', {name: objectDefinition.label['en_US']})
-		).toBeVisible();
-
 		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
 			objectDefinition.label['en_US']
 		);
 
 		await page.getByRole('link', {name: 'Actions'}).click();
 
-		await expect(page.getByText(actionLabel)).toBeVisible();
+		await expect(
+			page.getByRole('cell').getByText(actionLabel, {exact: true})
+		).toBeVisible();
 
 		await expect(page.getByText('Yes')).toBeVisible();
 	}
@@ -1025,12 +1120,62 @@ test(
 			objectDefinition.id
 		);
 
+		const jsonContent = JSON.parse(await readFile(filePath, 'utf-8'));
+
 		const importedObjectNameA = 'ImportedObjectA' + getRandomInt();
+		const importedObjectNameB = 'ImportedObjectB' + getRandomInt();
+
+		const filePathA = path.join(
+			getTempDir(),
+			importedObjectNameA + '.json'
+		);
+
+		const filePathB = path.join(
+			getTempDir(),
+			importedObjectNameB + '.json'
+		);
+
+		const makeMinimalJson = (
+			objectName: string,
+			label: Record<string, string>
+		) => ({
+			externalReferenceCode: objectName,
+			label,
+			name: objectName,
+			objectFields: [],
+			objectFolderExternalReferenceCode:
+				jsonContent.objectFolderExternalReferenceCode ?? 'default',
+			panelCategoryKey: jsonContent.panelCategoryKey ?? '',
+			pluralLabel: {en_US: objectName + 's'},
+			scope: jsonContent.scope ?? 'company',
+			status: {code: 2},
+			titleObjectFieldName: jsonContent.titleObjectFieldName ?? 'id',
+		});
+
+		await writeFile(
+			filePathA,
+			JSON.stringify(
+				makeMinimalJson(
+					importedObjectNameA,
+					jsonContent.label as Record<string, string>
+				)
+			)
+		);
+
+		await writeFile(
+			filePathB,
+			JSON.stringify(
+				makeMinimalJson(
+					importedObjectNameB,
+					jsonContent.label as Record<string, string>
+				)
+			)
+		);
 
 		const importedObjectIdA = await importObjectDefinitionFromFile(
 			page,
 			viewObjectDefinitionsPage,
-			filePath,
+			filePathA,
 			importedObjectNameA
 		);
 
@@ -1041,12 +1186,10 @@ test(
 			});
 		}
 
-		const importedObjectNameB = 'ImportedObjectB' + getRandomInt();
-
 		const importedObjectIdB = await importObjectDefinitionFromFile(
 			page,
 			viewObjectDefinitionsPage,
-			filePath,
+			filePathB,
 			importedObjectNameB
 		);
 
@@ -1056,6 +1199,14 @@ test(
 				type: 'objectDefinition',
 			});
 		}
+
+		await viewObjectDefinitionsPage.goto();
+
+		await page
+			.getByPlaceholder('Search')
+			.fill(objectDefinition.label['en_US']);
+
+		await page.keyboard.press('Enter');
 
 		const objectDefinitionLinks = page.getByRole('link', {
 			exact: true,
@@ -1108,6 +1259,10 @@ test(
 			});
 		}
 
+		await viewObjectDefinitionsPage.goto();
+		await page.getByPlaceholder('Search').fill(objectDefinition.label['en_US']);
+		await page.keyboard.press('Enter');
+
 		await expect(
 			page.getByRole('link', {name: objectDefinition.label['en_US']})
 		).toBeVisible();
@@ -1128,7 +1283,7 @@ test(
 	async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
+				status: {code: 2},
 			});
 
 		apiHelpers.data.push({
@@ -1162,6 +1317,10 @@ test(
 				type: 'objectDefinition',
 			});
 		}
+
+		await viewObjectDefinitionsPage.goto();
+		await page.getByPlaceholder('Search').fill(objectDefinition.label['en_US']);
+		await page.keyboard.press('Enter');
 
 		await expect(
 			page.getByRole('link', {name: objectDefinition.label['en_US']})

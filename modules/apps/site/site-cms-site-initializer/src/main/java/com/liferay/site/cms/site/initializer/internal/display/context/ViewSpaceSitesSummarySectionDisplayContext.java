@@ -25,6 +25,7 @@ import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUti
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,19 +35,19 @@ import java.util.Map;
 public class ViewSpaceSitesSummarySectionDisplayContext {
 
 	public ViewSpaceSitesSummarySectionDisplayContext(
-		DepotEntryService depotEntryService,
 		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
-		String externalReferenceCode, long groupId,
-		HttpServletRequest httpServletRequest, Language language,
-		ModelResourcePermission<DepotEntry> depotEntryModelResourcePermission) {
+		ModelResourcePermission<DepotEntry> depotEntryModelResourcePermission,
+		DepotEntryService depotEntryService, String externalReferenceCode,
+		long groupId, HttpServletRequest httpServletRequest,
+		Language language) {
 
-		_depotEntryService = depotEntryService;
 		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
+		_depotEntryModelResourcePermission = depotEntryModelResourcePermission;
+		_depotEntryService = depotEntryService;
 		_externalReferenceCode = externalReferenceCode;
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
-		_depotEntryModelResourcePermission = depotEntryModelResourcePermission;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -145,7 +146,8 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 
 	private boolean _hasConnectSitesPermission() throws Exception {
 		return _depotEntryModelResourcePermission.contains(
-			_themeDisplay.getPermissionChecker(), _groupId, ActionKeys.UPDATE);
+			_themeDisplay.getPermissionChecker(),
+			_depotEntryService.getGroupDepotEntry(_groupId), ActionKeys.UPDATE);
 	}
 
 	private final DepotEntryGroupRelLocalService

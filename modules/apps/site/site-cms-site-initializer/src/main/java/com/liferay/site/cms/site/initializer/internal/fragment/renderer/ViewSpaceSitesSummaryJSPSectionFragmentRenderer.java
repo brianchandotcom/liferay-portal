@@ -43,9 +43,9 @@ public class ViewSpaceSitesSummaryJSPSectionFragmentRenderer
 		Group group = _groupService.getGroup(groupId);
 
 		return new ViewSpaceSitesSummarySectionDisplayContext(
-			_depotEntryService, _depotEntryGroupRelLocalService,
-			group.getExternalReferenceCode(), groupId, httpServletRequest,
-			_language, _depotEntryModelResourcePermission);
+			_depotEntryGroupRelLocalService, _depotEntryModelResourcePermission,
+			_depotEntryService, group.getExternalReferenceCode(), groupId,
+			httpServletRequest, _language);
 	}
 
 	@Override
@@ -61,9 +61,7 @@ public class ViewSpaceSitesSummaryJSPSectionFragmentRenderer
 	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
-	)
+	@Reference(target = "(model.class.name=com.liferay.depot.model.DepotEntry)")
 	private ModelResourcePermission<DepotEntry>
 		_depotEntryModelResourcePermission;
 

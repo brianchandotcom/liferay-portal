@@ -179,18 +179,7 @@ export function transformItemCardView(
 ) {
 	return {
 		...props,
-		description: dateFormat(
-			{
-				day: 'numeric',
-				hour: 'numeric',
-				minute: 'numeric',
-				month: 'short',
-				second: 'numeric',
-				timeZone: Liferay.ThemeDisplay.getTimeZone(),
-				year: 'numeric',
-			},
-			item.dateModified
-		),
+		description: dateFormat(item.dateModified),
 		href: getHrefLink(item, props),
 		labels: getLabels(item, props),
 		stickerProps: {

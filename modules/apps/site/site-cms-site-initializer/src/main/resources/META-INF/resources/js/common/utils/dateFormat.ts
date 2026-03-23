@@ -6,16 +6,22 @@
 // based on FDS code
 // https://github.com/liferay/liferay-portal/blob/master/modules/apps/frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/cell_renderers/DateTimeRenderer.tsx
 
-export default function dateFormat(pattern: object, value: string) {
+export default function dateFormat(value: string) {
 	if (!value) {
 		return null;
 	}
 
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
-	const formattedDate = new Intl.DateTimeFormat(locale, pattern).format(
-		new Date(value)
-	);
+	const formattedDate = new Intl.DateTimeFormat(locale, {
+		day: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		month: 'short',
+		second: 'numeric',
+		timeZone: Liferay.ThemeDisplay.getTimeZone(),
+		year: 'numeric',
+	}).format(new Date(value));
 
 	return formattedDate;
 }

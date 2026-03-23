@@ -48,9 +48,11 @@ export async function createDataSource(page) {
 		trigger: page.getByRole('button', {name: 'Add Data Source'}),
 	});
 
-	const token = await page
-		.locator('.onboarding-modal-root input')
-		.getAttribute('value');
+	const input = page.locator('#token');
+
+	await expect(input).not.toHaveValue('');
+
+	const token = await input.inputValue();
 
 	return {token};
 }

@@ -1264,6 +1264,7 @@
 		<exception>ObjectDefinitionLabel</exception>
 		<exception>ObjectDefinitionModifiable</exception>
 		<exception>ObjectDefinitionName</exception>
+		<exception>ObjectDefinitionObjectFolderId</exception>
 		<exception>ObjectDefinitionPanelCategoryKey</exception>
 		<exception>ObjectDefinitionPluralLabel</exception>
 		<exception>ObjectDefinitionPortlet</exception>

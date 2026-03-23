@@ -17,38 +17,43 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.problem.Problem;
-import com.liferay.data.engine.rest.resource.exception.DataLayoutValidationException;
-import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.client.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataDefinitionTestUtil;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.TestDataDefinitionContentType;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.test.util.ModelResourceActionTestUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceWrapper;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -59,6 +64,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
@@ -69,6 +75,9 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Jeyvison Nascimento
@@ -691,25 +700,22 @@ public class DataDefinitionResourceTest
 
 		Group group = GroupTestUtil.addGroup();
 
-		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
-			_dataDefinitionResourceFactory.create();
-
-		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourceBuilder.user(
-				TestPropsValues.getUser()
-			).build();
-
 		try {
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
 				group.getGroupId(), _CONTENT_TYPE,
-				com.liferay.data.engine.rest.dto.v2_0.DataDefinition.toDTO(
+				DataDefinition.toDTO(
 					DataDefinitionTestUtil.read(
 						"data-definition-invalid-row-size.json")));
 
 			Assert.fail("An exception must be thrown");
 		}
-		catch (DataLayoutValidationException.InvalidRowSize
-					dataLayoutValidationException) {
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				"DataLayoutValidationException.InvalidRowSize",
+				problem.getType());
 
 			Assert.assertEquals(
 				0,
@@ -725,24 +731,41 @@ public class DataDefinitionResourceTest
 	public void testPutDataDefinition() throws Exception {
 		Queue<Long> queue = new LinkedList<>();
 
-		ReflectionTestUtil.setFieldValue(
-			_dataDefinitionResource, "_ddmStructureLocalService",
-			ProxyUtil.newProxyInstance(
-				DDMStructureLocalService.class.getClassLoader(),
-				new Class<?>[] {DDMStructureLocalService.class},
-				(proxy, method, arguments) -> {
-					if (Objects.equals(method.getName(), "updateStructure")) {
-						queue.add((Long)arguments[1]);
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				ServiceWrapper.class,
+				new DDMStructureLocalServiceWrapper(_ddmStructureLocalService) {
+
+					@Override
+					public DDMStructure updateStructure(
+							String externalReferenceCode, long userId,
+							long structureId, long groupId,
+							long parentStructureId, long classNameId,
+							String structureKey, Map<Locale, String> nameMap,
+							Map<Locale, String> descriptionMap,
+							String definition, ServiceContext serviceContext)
+						throws PortalException {
+
+						queue.add(structureId);
+
+						return super.updateStructure(
+							externalReferenceCode, userId, structureId, groupId,
+							parentStructureId, classNameId, structureKey,
+							nameMap, descriptionMap, definition,
+							serviceContext);
 					}
 
-					return method.invoke(_ddmStructureLocalService, arguments);
-				}));
-
-		String originalName = PrincipalThreadLocal.getName();
+				},
+				HashMapDictionaryBuilder.<String, Object>put(
+					"service.ranking", Integer.MAX_VALUE
+				).put(
+					"service.wrapper.class",
+					DDMStructureLocalService.class.getName()
+				).build());
 
 		try {
-			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
 			DataDefinition dataDefinition1 =
 				dataDefinitionResource.postSiteDataDefinitionByContentType(
 					testGroup.getGroupId(), _CONTENT_TYPE,
@@ -763,13 +786,8 @@ public class DataDefinitionResourceTest
 							"data-definition-3-linked-to-data-definition-2." +
 								"json")));
 
-			_setUpDataDefinitionResource(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUser());
-
-			_dataDefinitionResource.putDataDefinition(
-				dataDefinition1.getId(),
-				com.liferay.data.engine.rest.dto.v2_0.DataDefinition.toDTO(
-					dataDefinition1.toString()));
+			dataDefinitionResource.putDataDefinition(
+				dataDefinition1.getId(), dataDefinition1);
 
 			Assert.assertEquals(3, queue.size());
 
@@ -799,10 +817,6 @@ public class DataDefinitionResourceTest
 
 				User user = UserTestUtil.getAdminUser(companyId);
 
-				PrincipalThreadLocal.setName(user.getUserId());
-
-				_setUpDataDefinitionResource(companyId, user);
-
 				Group group = GroupTestUtil.addGroup(
 					companyId, user.getUserId(), 0);
 
@@ -814,24 +828,31 @@ public class DataDefinitionResourceTest
 
 				customProperties.put("ddmStructureId", dataDefinition1.getId());
 
-				_dataDefinitionResource.postSiteDataDefinitionByContentType(
-					group.getGroupId(), _CONTENT_TYPE,
-					com.liferay.data.engine.rest.dto.v2_0.DataDefinition.toDTO(
-						dataDefinition2.toString()));
+				DataDefinitionResource dataDefinitionResource =
+					DataDefinitionResource.builder(
+					).authentication(
+						user.getEmailAddress(),
+						PropsValues.DEFAULT_ADMIN_PASSWORD
+					).endpoint(
+						CompanyLocalServiceUtil.getCompany(
+							companyId
+						).getVirtualHostname(),
+						8080, "http"
+					).locale(
+						LocaleUtil.getDefault()
+					).build();
+
+				dataDefinitionResource.postSiteDataDefinitionByContentType(
+					group.getGroupId(), _CONTENT_TYPE, dataDefinition2);
 			}
 
-			_setUpDataDefinitionResource(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUser());
-
-			_dataDefinitionResource.putDataDefinition(
-				dataDefinition1.getId(),
-				com.liferay.data.engine.rest.dto.v2_0.DataDefinition.toDTO(
-					dataDefinition1.toString()));
+			dataDefinitionResource.putDataDefinition(
+				dataDefinition1.getId(), dataDefinition1);
 
 			Assert.assertEquals(1, queue.size());
 		}
 		finally {
-			PrincipalThreadLocal.setName(originalName);
+			serviceRegistration.unregister();
 		}
 
 		DataDefinition postDataDefinition =
@@ -1105,14 +1126,6 @@ public class DataDefinitionResourceTest
 		return dataLayoutColumnFieldNames;
 	}
 
-	private void _setUpDataDefinitionResource(long companyId, User user)
-		throws Exception {
-
-		_dataDefinitionResource.setContextCompany(
-			_companyLocalService.getCompany(companyId));
-		_dataDefinitionResource.setContextUser(user);
-	}
-
 	private void _testCopiedDataDefinitionDataLayout(
 		DataLayout dataLayout1, DataLayout dataLayout2) {
 
@@ -1210,12 +1223,6 @@ public class DataDefinitionResourceTest
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private DataDefinitionResource _dataDefinitionResource;
-
-	@Inject
-	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject(type = DataEngineNativeObjectRegistry.class)
 	private DataEngineNativeObjectRegistry _dataEngineNativeObjectRegistry;

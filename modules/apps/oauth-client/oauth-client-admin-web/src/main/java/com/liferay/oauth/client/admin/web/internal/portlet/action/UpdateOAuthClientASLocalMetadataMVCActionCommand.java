@@ -80,8 +80,8 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 				actionRequest, "authorizationEndpoint");
 			String issuer = ParamUtil.getString(actionRequest, "issuer");
 			String jwksURI = ParamUtil.getString(actionRequest, "jwksURI");
-			boolean enabledLocalWellKnown = ParamUtil.getBoolean(
-				actionRequest, "enabledLocalWellKnown");
+			boolean localWellKnownEnabled = ParamUtil.getBoolean(
+				actionRequest, "localWellKnownEnabled");
 			String registrationEndpoint = ParamUtil.getString(
 				actionRequest, "registrationEndpoint");
 			String supportedGrantTypes = ParamUtil.getString(
@@ -104,7 +104,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 				_oAuthClientASLocalMetadataService.
 					addOAuthClientASLocalMetadata(
 						authorizationEndpoint, issuer, jwksURI,
-						enabledLocalWellKnown, registrationEndpoint,
+						localWellKnownEnabled, registrationEndpoint,
 						StringUtil.split(supportedGrantTypes, StringPool.COMMA),
 						StringUtil.split(supportedScopes, StringPool.COMMA),
 						StringUtil.split(
@@ -117,7 +117,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 						oAuthClientASLocalMetadata.
 							getOAuthClientASLocalMetadataId(),
 						authorizationEndpoint, issuer, jwksURI,
-						enabledLocalWellKnown, registrationEndpoint,
+						localWellKnownEnabled, registrationEndpoint,
 						StringUtil.split(supportedGrantTypes, StringPool.COMMA),
 						StringUtil.split(supportedScopes, StringPool.COMMA),
 						StringUtil.split(

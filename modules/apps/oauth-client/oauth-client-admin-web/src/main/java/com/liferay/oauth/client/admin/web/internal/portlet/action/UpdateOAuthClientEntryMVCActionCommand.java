@@ -104,7 +104,7 @@ public class UpdateOAuthClientEntryMVCActionCommand
 			return null;
 		}
 
-		JSONObject customClaimsJSONObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		int[] indexes = ParamUtil.getIntegerValues(
 			actionRequest, "customClaimsIndexes");
@@ -116,11 +116,11 @@ public class UpdateOAuthClientEntryMVCActionCommand
 				actionRequest, "customClaimsValue-" + index);
 
 			if (Validator.isNotNull(key) && Validator.isNotNull(value)) {
-				customClaimsJSONObject.put(key, value);
+				jsonObject.put(key, value);
 			}
 		}
 
-		return customClaimsJSONObject.toString();
+		return jsonObject.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

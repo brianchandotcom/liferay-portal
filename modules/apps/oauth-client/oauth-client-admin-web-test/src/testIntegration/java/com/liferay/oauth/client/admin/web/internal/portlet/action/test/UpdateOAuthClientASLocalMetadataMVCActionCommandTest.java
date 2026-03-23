@@ -211,11 +211,11 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 					HashMapBuilder.put(
 						"authorizationEndpoint", new String[] {urlString}
 					).put(
-						"enabledLocalWellKnown", new String[] {"true"}
-					).put(
 						"issuer", new String[] {urlString}
 					).put(
 						"jwksURI", new String[] {urlString}
+					).put(
+						"localWellKnownEnabled", new String[] {"true"}
 					).put(
 						"oAuthClientASLocalMetadataId",
 						new String[] {

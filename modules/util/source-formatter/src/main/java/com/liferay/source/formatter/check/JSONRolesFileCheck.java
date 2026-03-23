@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.source.formatter.check.util.JsonSourceUtil;
 
 import java.util.Comparator;
@@ -77,6 +78,9 @@ public class JSONRolesFileCheck extends BaseFileCheck {
 
 		@Override
 		public int compare(Object object1, Object object2) {
+			NaturalOrderStringComparator comparator =
+				new NaturalOrderStringComparator();
+
 			JSONObject jsonObject1 = (JSONObject)object1;
 
 			String resource1 = jsonObject1.getString("resource");
@@ -86,13 +90,13 @@ public class JSONRolesFileCheck extends BaseFileCheck {
 			String resource2 = jsonObject2.getString("resource");
 
 			if (!resource1.equals(resource2)) {
-				return resource1.compareTo(resource2);
+				return comparator.compare(resource1, resource2);
 			}
 
 			String actionId1 = jsonObject1.getString("actionId");
 			String actionId2 = jsonObject2.getString("actionId");
 
-			return actionId1.compareTo(actionId2);
+			return comparator.compare(actionId1, actionId2);
 		}
 
 	}

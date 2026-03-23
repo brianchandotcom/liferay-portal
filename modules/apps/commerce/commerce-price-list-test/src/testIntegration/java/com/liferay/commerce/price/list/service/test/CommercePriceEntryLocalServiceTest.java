@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -645,7 +646,7 @@ public class CommercePriceEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddorUpdateCommercePriceEntryWithMissingUOM()
+	public void testAddOrUpdateCommercePriceEntryWithMissingUOM()
 		throws PortalException {
 
 		CPInstance cpInstance1 = CPTestUtil.addCPInstance(_group.getGroupId());
@@ -687,14 +688,15 @@ public class CommercePriceEntryLocalServiceTest {
 			cpInstanceUnitOfMeasure1.getKey(),
 			commercePriceEntry.getUnitOfMeasureKey());
 
-		Assert.assertEquals(
-			cpInstanceUnitOfMeasure1.getPricingQuantity(),
-			commercePriceEntry.getPricingQuantity());
+		Assert.assertTrue(
+			BigDecimalUtil.eq(cpInstanceUnitOfMeasure1.getPricingQuantity(),
+			commercePriceEntry.getPricingQuantity()));
 
 		BigDecimal scale = incrementalOrderQuantity.setScale(
 			cpInstanceUnitOfMeasure1.getPrecision(), RoundingMode.HALF_UP);
 
-		Assert.assertEquals(scale, commercePriceEntry.getQuantity());
+		Assert.assertTrue(
+			BigDecimalUtil.eq(scale, commercePriceEntry.getQuantity()));
 
 		commercePriceEntry = CommercePriceEntryTestUtil.addCommercePriceEntry(
 			_group.getGroupId());
@@ -732,11 +734,11 @@ public class CommercePriceEntryLocalServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					commercePriceList.getGroupId()));
 
-		Assert.assertEquals(
-			cpInstanceUnitOfMeasure2.getPricingQuantity(),
-			commercePriceEntry.getPricingQuantity());
-		Assert.assertEquals(
-			incrementalOrderQuantity, commercePriceEntry.getQuantity());
+		Assert.assertTrue(
+			BigDecimalUtil.eq(cpInstanceUnitOfMeasure2.getPricingQuantity(),
+			commercePriceEntry.getPricingQuantity()));
+		Assert.assertTrue(
+			BigDecimalUtil.eq(incrementalOrderQuantity, commercePriceEntry.getQuantity()));
 		Assert.assertEquals(
 			cpInstanceUnitOfMeasure2.getKey(),
 			commercePriceEntry.getUnitOfMeasureKey());

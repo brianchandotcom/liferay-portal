@@ -28,6 +28,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {goToObjectEntity} from '../../setup/page-management-site/main/utils/goToObjectEntity';
 import {cmsPagesTest} from '../../site-cms-site-initializer/main/fixtures/cmsPagesTest';
 import {structureBuilderPagesTest} from '../../site-cms-site-initializer/structure-builder/fixtures/structureBuilderPagesTest';
+import chooseFileFromCMSLibrary from '../main/utils/chooseFileFromCMSLibrary';
 import chooseFileFromDocumentLibrary from '../main/utils/chooseFileFromDocumentLibrary';
 import getFormContainerDefinition from '../main/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../main/utils/getFragmentDefinition';
@@ -1221,6 +1222,7 @@ test(
 	'Can translate attachment form fields',
 	{tag: '@LPD-46482'},
 	async ({
+		apiHelpers,
 		contentsPage,
 		localizationSelectPage,
 		page,
@@ -1297,6 +1299,46 @@ test(
 
 		await contentsPage.fillData([{label: 'Title', value: contentTitle}]);
 
+		// Create documents in Document Library via API
+
+		const fileBase64 = 'R0lGODlhAQABAAAAACw=';
+
+		const document3 = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64,
+					name: 'file_upload_image_3.jpg',
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: 'file_upload_image_3.jpg',
+			},
+			'cms/basic-documents',
+			'Default'
+		);
+
+		apiHelpers.data.push({
+			id: document3.file.id,
+			type: 'document',
+		});
+
+		const document4 = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64,
+					name: 'file_upload_image_4.jpg',
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: 'file_upload_image_4.jpg',
+			},
+			'cms/basic-documents',
+			'Default'
+		);
+
+		apiHelpers.data.push({
+			id: document4.file.id,
+			type: 'document',
+		});
+
 		// Select files for default language
 
 		const filePath1 = path.join(
@@ -1306,14 +1348,6 @@ test(
 		const filePath2 = path.join(
 			__dirname,
 			'../main/dependencies/file_upload_image_2.jpg'
-		);
-		const filePath3 = path.join(
-			__dirname,
-			'../main/dependencies/file_upload_image_3.jpg'
-		);
-		const filePath4 = path.join(
-			__dirname,
-			'../main/dependencies/file_upload_image_4.jpg'
 		);
 
 		// Select file from computer in the default language
@@ -1330,8 +1364,8 @@ test(
 
 		const dmFileFragment = page.locator('.file-upload').nth(1);
 
-		await chooseFileFromDocumentLibrary({
-			filePath: filePath3,
+		await chooseFileFromCMSLibrary({
+			fileName: document3.title,
 			page,
 			trigger: dmFileFragment.getByText('Select File', {
 				exact: true,
@@ -1352,8 +1386,8 @@ test(
 			await localizationSelectPage.switchLanguage('es-ES');
 
 			await expect(async () => {
-				await chooseFileFromDocumentLibrary({
-					filePath: filePath4,
+				await chooseFileFromCMSLibrary({
+					fileName: document4.title,
 					page,
 					trigger: dmFileFragment.getByText('Select File', {
 						exact: true,

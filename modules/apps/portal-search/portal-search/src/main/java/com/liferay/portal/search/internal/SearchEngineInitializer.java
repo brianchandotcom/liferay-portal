@@ -83,7 +83,7 @@ public class SearchEngineInitializer implements Runnable {
 					" entities started");
 		}
 
-		indexer.reindex(new String[] {String.valueOf(_companyId)});
+		indexer.reindex(_companyId);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

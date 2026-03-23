@@ -94,7 +94,7 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchOnlyOne(content);
 
-		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+		indexer.reindex(_group.getCompanyId());
 
 		_layoutIndexerFixture.searchOnlyOne(content);
 	}

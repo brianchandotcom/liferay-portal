@@ -144,7 +144,7 @@ public class UserGroupIndexerReindexTest {
 	}
 
 	private void _reindexAllIndexerModels() throws Exception {
-		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+		indexer.reindex(_group.getCompanyId());
 	}
 
 	private Group _group;

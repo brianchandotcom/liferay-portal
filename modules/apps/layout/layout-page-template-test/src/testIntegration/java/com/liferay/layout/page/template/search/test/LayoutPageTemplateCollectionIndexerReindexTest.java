@@ -131,8 +131,7 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 	}
 
 	private void _reindex() throws Exception {
-		indexer.reindex(
-			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
+		indexer.reindex(TestPropsValues.getCompanyId());
 	}
 
 	private void _reindex(

@@ -280,7 +280,7 @@ public class AssetHelperTest {
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			AssetEntry.class.getName());
 
-		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+		indexer.reindex(_group.getCompanyId());
 	}
 
 	@Inject

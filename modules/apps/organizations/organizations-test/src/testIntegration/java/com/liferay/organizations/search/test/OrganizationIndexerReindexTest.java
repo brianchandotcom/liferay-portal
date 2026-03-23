@@ -119,7 +119,7 @@ public class OrganizationIndexerReindexTest {
 	}
 
 	protected void reindexAllIndexerModels() throws Exception {
-		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+		indexer.reindex(_group.getCompanyId());
 	}
 
 	protected SearchResponse search(String searchTerm) {

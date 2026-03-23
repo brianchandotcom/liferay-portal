@@ -107,6 +107,19 @@ export class UtilityPagesPage {
 		});
 	}
 
+	async deleteAllPages() {
+		while ((await this.page.locator('div.card-row').count()) > 0) {
+			const name = await this.page
+				.locator('div.card-row')
+				.first()
+				.locator('[title]')
+				.first()
+				.getAttribute('title');
+
+			await this.deletePage(name);
+		}
+	}
+
 	async deletePage(name: string) {
 		await this.clickOnAction('Delete', name);
 

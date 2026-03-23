@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
@@ -385,6 +386,9 @@ test('Style book is incompatible with the applied theme', async ({
 
 const stagingTest = mergeTests(
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-40054': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest(),
 	masterPagesPagesTest,

@@ -12,7 +12,7 @@ import {
 } from '@testing-library/react';
 import React, {ComponentProps} from 'react';
 
-import {DropdownColorPicker} from '../../../src/main/resources/META-INF/resources/js/components/color_picker/DropdownColorPicker';
+import {DropdownColorPicker} from '../../../src/main/resources/META-INF/resources/js/components/color_picker/OldDropdownColorPicker';
 
 const COLORS = {
 	'Category 1': {

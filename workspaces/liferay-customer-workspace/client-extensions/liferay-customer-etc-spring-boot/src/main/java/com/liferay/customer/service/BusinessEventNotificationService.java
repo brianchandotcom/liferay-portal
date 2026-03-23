@@ -34,122 +34,12 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 
 	public void sendNotifications() {
 		try {
-			sendNotifications(_lastSuccessfulRunZonedDateTime);
+			_sendNotifications(_lastSuccessfulRunZonedDateTime);
 
 			_lastSuccessfulRunZonedDateTime = ZonedDateTime.now();
 		}
 		catch (Exception exception) {
 			_log.error("Error sending business event notifications", exception);
-		}
-	}
-
-	public void sendNotifications(ZonedDateTime zonedDateTime)
-		throws Exception {
-
-		if (zonedDateTime == null) {
-			zonedDateTime = ZonedDateTime.now(
-				ZoneOffset.UTC
-			).minusDays(
-				1
-			);
-		}
-
-		String fromDate = zonedDateTime.withNano(
-			0
-		).toInstant(
-		).toString();
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Checking for business event notifications since " + fromDate);
-		}
-
-		JSONObject jsonObject = new JSONObject(
-			get(
-				getAuthorization(),
-				UriComponentsBuilder.fromPath(
-					"/o/c/businessevents"
-				).queryParam(
-					"filter", "dateModified gt " + fromDate
-				).build(
-				).toUri()));
-
-		JSONArray businessEventsJSONArray = jsonObject.getJSONArray("items");
-
-		if (businessEventsJSONArray.length() == 0) {
-			if (_log.isInfoEnabled()) {
-				_log.info("No new business events to notify");
-			}
-
-			return;
-		}
-
-		for (int i = 0; i < businessEventsJSONArray.length(); i++) {
-			JSONObject businessEventJSONObject =
-				businessEventsJSONArray.getJSONObject(i);
-
-			String accountExternalReferenceCode =
-				businessEventJSONObject.getString(
-					NotificationSubscriptionConstants.
-						FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT);
-
-			JSONObject koroneikiAccountJSONObject =
-				_fetchKoroneikiAccountJSONObject(accountExternalReferenceCode);
-
-			if (koroneikiAccountJSONObject == null) {
-				continue;
-			}
-
-			JSONArray subscriptionsJSONArray = _getSubscriptionsJSONArray(
-				koroneikiAccountJSONObject);
-
-			if (subscriptionsJSONArray.length() == 0) {
-				continue;
-			}
-
-			JSONObject templatePayloadJSONObject = new JSONObject();
-
-			templatePayloadJSONObject.put(
-				"BUSINESSEVENT_ACTIVITY_HISTORY_PAGE_LINK",
-				String.format(
-					"%s/project/#/%s/business-events/%s/activity-history",
-					portalURL, accountExternalReferenceCode,
-					businessEventJSONObject.getLong("id"))
-			).put(
-				"BUSINESSEVENT_EVENTTYPE",
-				businessEventJSONObject.getJSONObject(
-					"eventType"
-				).optString(
-					"key"
-				)
-			).put(
-				"BUSINESSEVENT_LASTCOMMENT",
-				HtmlUtil.escape(
-					businessEventJSONObject.optString("lastComment"))
-			).put(
-				"BUSINESSEVENT_NAME", businessEventJSONObject.optString("name")
-			).put(
-				"BUSINESSEVENT_TARGETGOLIVEDATETIME",
-				businessEventJSONObject.optString("targetGoLiveDateTime")
-			).put(
-				"BUSINESSEVENT_VERSIONS",
-				_getBusinessEventVersions(
-					fromDate, businessEventJSONObject.getLong("id"))
-			).put(
-				"PROJECT_NAME", koroneikiAccountJSONObject.optString("name")
-			);
-
-			sendNotifications(
-				subscriptionsJSONArray,
-				NotificationTemplateConstants.
-					EXTERNAL_REFERENCE_CODE_UPDATED_BUSINESS_EVENTS,
-				templatePayloadJSONObject);
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Sent " + businessEventsJSONArray.length() +
-					" business event notifications");
 		}
 	}
 
@@ -322,6 +212,116 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 		}
 
 		return false;
+	}
+
+	private void _sendNotifications(ZonedDateTime zonedDateTime)
+		throws Exception {
+
+		if (zonedDateTime == null) {
+			zonedDateTime = ZonedDateTime.now(
+				ZoneOffset.UTC
+			).minusDays(
+				1
+			);
+		}
+
+		String fromDate = zonedDateTime.withNano(
+			0
+		).toInstant(
+		).toString();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Checking for business event notifications since " + fromDate);
+		}
+
+		JSONObject jsonObject = new JSONObject(
+			get(
+				getAuthorization(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/businessevents"
+				).queryParam(
+					"filter", "dateModified gt " + fromDate
+				).build(
+				).toUri()));
+
+		JSONArray businessEventsJSONArray = jsonObject.getJSONArray("items");
+
+		if (businessEventsJSONArray.length() == 0) {
+			if (_log.isInfoEnabled()) {
+				_log.info("No new business events to notify");
+			}
+
+			return;
+		}
+
+		for (int i = 0; i < businessEventsJSONArray.length(); i++) {
+			JSONObject businessEventJSONObject =
+				businessEventsJSONArray.getJSONObject(i);
+
+			String accountExternalReferenceCode =
+				businessEventJSONObject.getString(
+					NotificationSubscriptionConstants.
+						FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT);
+
+			JSONObject koroneikiAccountJSONObject =
+				_fetchKoroneikiAccountJSONObject(accountExternalReferenceCode);
+
+			if (koroneikiAccountJSONObject == null) {
+				continue;
+			}
+
+			JSONArray subscriptionsJSONArray = _getSubscriptionsJSONArray(
+				koroneikiAccountJSONObject);
+
+			if (subscriptionsJSONArray.length() == 0) {
+				continue;
+			}
+
+			JSONObject templatePayloadJSONObject = new JSONObject();
+
+			templatePayloadJSONObject.put(
+				"BUSINESSEVENT_ACTIVITY_HISTORY_PAGE_LINK",
+				String.format(
+					"%s/project/#/%s/business-events/%s/activity-history",
+					portalURL, accountExternalReferenceCode,
+					businessEventJSONObject.getLong("id"))
+			).put(
+				"BUSINESSEVENT_EVENTTYPE",
+				businessEventJSONObject.getJSONObject(
+					"eventType"
+				).optString(
+					"key"
+				)
+			).put(
+				"BUSINESSEVENT_LASTCOMMENT",
+				HtmlUtil.escape(
+					businessEventJSONObject.optString("lastComment"))
+			).put(
+				"BUSINESSEVENT_NAME", businessEventJSONObject.optString("name")
+			).put(
+				"BUSINESSEVENT_TARGETGOLIVEDATETIME",
+				businessEventJSONObject.optString("targetGoLiveDateTime")
+			).put(
+				"BUSINESSEVENT_VERSIONS",
+				_getBusinessEventVersions(
+					fromDate, businessEventJSONObject.getLong("id"))
+			).put(
+				"PROJECT_NAME", koroneikiAccountJSONObject.optString("name")
+			);
+
+			sendNotifications(
+				subscriptionsJSONArray,
+				NotificationTemplateConstants.
+					EXTERNAL_REFERENCE_CODE_UPDATED_BUSINESS_EVENTS,
+				templatePayloadJSONObject);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Sent " + businessEventsJSONArray.length() +
+					" business event notifications");
+		}
 	}
 
 	private static final DateTimeFormatter _DATE_TIME_FORMATTER =

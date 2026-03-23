@@ -1,0 +1,40 @@
+##
+## Deprecated or Archived Modules
+##
+
+    #
+    # Ignore apps that are no longer under active development.
+    #
+	apps/archived/
+	apps/microblogs/
+
+##
+## Sample Files
+##
+
+    #
+    # The few files here are provided for example purposes and are not actively
+    # changed, so we exclude them from linting.
+    #
+	**/src/test/**
+	**/testIntegration/
+	test/jenkins-results-parser/
+	test/poshi/
+	sdk/
+
+##
+## Other
+##
+
+    #
+    # LRAC-12941 Temporarily ignore SF on FARO files.
+    #
+	dxp/apps/osb/osb-faro/osb-faro-web/
+	dxp/apps/osb/osb-faro/osb-faro-theme/
+
+    #
+    # Ignore the Clay Docs Site for now.
+    #
+	apps/frontend-js/frontend-js-clay-web/clay/clay-*
+	apps/frontend-js/frontend-js-clay-web/clay/.storybook/
+	apps/frontend-js/frontend-js-clay-web/clay/www/

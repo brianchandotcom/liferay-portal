@@ -31,6 +31,7 @@ export interface ActionDropdownItemProps {
 	target?:
 		| 'asyncDelete'
 		| 'asyncPost'
+		| 'asyncPut'
 		| 'defaultPermissionsModal'
 		| 'link'
 		| 'modal';
@@ -65,9 +66,7 @@ function ActionDropdownItem({
 	...props
 }: {label: string} & ActionDropdownItemProps) {
 	const handleTargetAction = async () => {
-		if (target === 'asyncDelete') {
-			const {error} = await ApiHelper.delete(href);
-
+		function handleAsyncTargetAction(error: string | null) {
 			if (!error) {
 				openToast({
 					message:
@@ -86,26 +85,21 @@ function ActionDropdownItem({
 				displayErrorToast(error);
 			}
 		}
+
+		if (target === 'asyncDelete') {
+			const {error} = await ApiHelper.delete(href);
+
+			handleAsyncTargetAction(error);
+		}
 		else if (target === 'asyncPost') {
 			const {error} = await ApiHelper.post(href);
 
-			if (!error) {
-				openToast({
-					message:
-						successMessage ||
-						Liferay.Language.get(
-							'your-request-completed-successfully'
-						),
-					type: 'success',
-				});
+			handleAsyncTargetAction(error);
+		}
+		else if (target === 'asyncPut') {
+			const {error} = await ApiHelper.put(href);
 
-				if (redirect) {
-					navigate(redirect);
-				}
-			}
-			else {
-				displayErrorToast(error);
-			}
+			handleAsyncTargetAction(error);
 		}
 		else if (
 			target === 'defaultPermissionsModal' &&

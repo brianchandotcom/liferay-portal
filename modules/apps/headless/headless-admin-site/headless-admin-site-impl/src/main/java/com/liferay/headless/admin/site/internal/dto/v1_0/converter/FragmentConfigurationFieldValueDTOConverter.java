@@ -907,8 +907,8 @@ public class FragmentConfigurationFieldValueDTOConverter
 		}
 		else {
 			textFragmentConfigurationFieldValue.setValue(
-				() -> GetterUtil.getString(
-					fragmentFragmentConfigurationFieldValue));
+				() -> Objects.toString(
+					fragmentFragmentConfigurationFieldValue, null));
 		}
 
 		return textFragmentConfigurationFieldValue;

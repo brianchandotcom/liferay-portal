@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import {EmailNotificationPage} from '../../../pages/users-admin-web/EmailNotificationPage';
 import {UserRegistrationPage} from '../../../pages/users-admin-web/UserRegistrationPage';
 import {SiteSettingsPage} from '../../../pages/users-admin-web/site-admin-web/SiteSettingsPage';
@@ -218,7 +219,11 @@ test(
 			);
 
 			try {
-				await registrationPage.goto('http://www.able.com:8081');
+				const {port} = new URL(liferayConfig.environment.baseUrl);
+
+				await registrationPage.goto(
+					`http://www.able.com:${port || '8080'}`
+				);
 
 				await userRegistrationPage.signInButton.click();
 				await userRegistrationPage.createAccountLink.click();

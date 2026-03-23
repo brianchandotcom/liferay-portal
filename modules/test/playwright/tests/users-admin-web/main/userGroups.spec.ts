@@ -404,7 +404,7 @@ testWithPersonalSite(
 test(
 	'Can export user group members',
 	{tag: '@LPD-81993'},
-	async ({apiHelpers, page, userGroupsPage}) => {
+	async ({apiHelpers, userGroupsPage}) => {
 		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup({
 			name: `UGUserGroup${getRandomString()}`,
 		});
@@ -419,17 +419,20 @@ test(
 
 		await userGroupsPage.goto();
 
-		await page.waitForLoadState('networkidle');
-
 		await expect(async () => {
 			await userGroupsPage.optionsButton.click();
 
 			await expect(userGroupsPage.exportImportMenuItem).toBeVisible({
 				timeout: 500,
 			});
-		}).toPass({timeout: 10000});
 
-		await userGroupsPage.exportImportMenuItem.click();
+			await userGroupsPage.exportImportMenuItem.click({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await expect(userGroupsPage.exportButton).toBeVisible({
+			timeout: 10000,
+		});
+
 		await userGroupsPage.exportButton.click();
 
 		await expect(

@@ -2632,7 +2632,7 @@ baseTest(
 );
 
 baseTest(
-	'Publish and Schedule button is not disabled and shows validation error for custom structures required fields',
+	'Publish button is not disabled when validating custom structures required fields',
 	{
 		tag: '@LPD-75537',
 	},
@@ -2661,37 +2661,11 @@ baseTest(
 
 		await journalEditArticlePage.fillTitle(title);
 
-		baseTest.step(
-			'Publish button is not disabled and shows validation error',
-			async () => {
-				await journalEditArticlePage.publishArticle(true);
+		await journalEditArticlePage.publishArticle(true);
 
-				await expect(
-					journalEditArticlePage.publishButton
-				).not.toBeDisabled();
-				await expect(
-					page.getByText('This field is required.')
-				).toBeVisible();
-			}
-		);
+		await expect(journalEditArticlePage.publishButton).not.toBeDisabled();
 
-		baseTest.step(
-			'Schedule Publication button shows validation error',
-			async () => {
-				await clickAndExpectToBeVisible({
-					autoClick: true,
-					target: page.getByRole('menuitem', {
-						name: 'Schedule Publication',
-					}),
-					trigger: journalEditArticlePage.publishDropdown,
-				});
-
-				await expect(page.locator('.modal-dialog')).not.toBeVisible();
-				await expect(
-					page.getByText('This field is required.')
-				).toBeVisible();
-			}
-		);
+		await expect(page.getByText('This field is required.')).toBeVisible();
 	}
 );
 

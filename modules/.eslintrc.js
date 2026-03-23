@@ -33,7 +33,6 @@ const config = {
 		svg4everybody: true,
 		themeDisplay: true,
 	},
-	ignorePatterns: ['!*'],
 	overrides: [
 		{
 			env: {

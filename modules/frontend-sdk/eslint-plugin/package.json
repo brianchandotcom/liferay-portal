@@ -1,8 +1,8 @@
 {
 	"author": "Liferay Frontend Infrastructure Team <pt-frontend-infrastructure@liferay.com>",
 	"dependencies": {
-		"@typescript-eslint/eslint-plugin": "4.30.0",
-		"@typescript-eslint/parser": "4.30.0",
+		"@typescript-eslint/eslint-plugin": "5.27.0",
+		"@typescript-eslint/parser": "5.27.0",
 		"eslint-config-prettier": "8.1.0",
 		"eslint-plugin-no-for-of-loops": "^1.0.0",
 		"eslint-plugin-no-only-tests": "^2.1.0",

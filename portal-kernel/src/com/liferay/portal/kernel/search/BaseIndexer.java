@@ -16,6 +16,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
@@ -1115,7 +1116,21 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	protected abstract void doReindex(T object) throws Exception;
 
-	protected abstract void doReindexCompany(long companyId) throws Exception;
+	protected void doReindexCompany(long companyId) throws Exception {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			getIndexableActionableDynamicQuery();
+
+		if (indexableActionableDynamicQuery == null) {
+			return;
+		}
+
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			this::safeGetDocument);
+
+		indexableActionableDynamicQuery.performActions();
+	}
 
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {
@@ -1221,6 +1236,12 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected List<ExpandoQueryContributor> getExpandoQueryContributors() {
 		return Collections.singletonList(
 			_expandoQueryContributorSnapshot.get());
+	}
+
+	protected IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return null;
 	}
 
 	protected Locale getLocale(PortletRequest portletRequest) {

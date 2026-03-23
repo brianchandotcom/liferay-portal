@@ -6,12 +6,12 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {liferayConfig} from '../../../liferay.config';
+import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {openProductMenu} from '../../../utils/productMenu';
@@ -19,74 +19,82 @@ import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
+	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
 	pagesAdminPagesTest,
-	pagesPagesTest
+	pagesPagesTest,
+	serverAdministrationPageTest
 );
 
-async function addEmptyPage({
-	apiHelpers,
-	name,
-	siteId,
-}: {
-	apiHelpers: ApiHelpers;
-	name: string;
-	siteId: string;
-}): Promise<Layout> {
-	const serviceContext = {
-		attributes: {
-			'layout.instanceable.allowed': true,
-		},
-		scopeGroupId: siteId,
-	};
+const getGroovyScript = (companyId, pageName, siteId, userId) => `
+	import com.liferay.petra.lang.SafeCloseable
+	import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal
+	import com.liferay.portal.kernel.model.LayoutConstants
+	import com.liferay.portal.kernel.service.LayoutLocalServiceUtil
+	import com.liferay.portal.kernel.service.ServiceContext
 
-	const urlSearchParams = new URLSearchParams();
+	def serviceContext = new ServiceContext()
+	serviceContext.setScopeGroupId(${siteId})
+	serviceContext.setCompanyId(${companyId})
+	serviceContext.setAttribute("layout.instanceable.allowed", Boolean.TRUE)
 
-	urlSearchParams.append('externalReferenceCode', null);
-	urlSearchParams.append('groupId', siteId);
-	urlSearchParams.append('privateLayout', 'false');
-	urlSearchParams.append('parentLayoutId', '0');
-	urlSearchParams.append('name', name);
-	urlSearchParams.append('title', name);
-	urlSearchParams.append('description', '');
-	urlSearchParams.append('type', 'empty');
-	urlSearchParams.append('hidden', 'true');
-	urlSearchParams.append('friendlyURL', '');
-	urlSearchParams.append('serviceContext', JSON.stringify(serviceContext));
+	def safeCloseable =
+		LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)
 
-	const layout = await apiHelpers.post(
-		`${liferayConfig.environment.baseUrl}/api/jsonws/layout/add-layout`,
-		{
-			data: urlSearchParams.toString(),
-			failOnStatusCode: true,
-			headers: await apiHelpers.getJSONWebServicesHeaders(),
-		}
-	);
-
-	return layout;
-}
+	try {
+		out.println(
+			LayoutLocalServiceUtil.addLayout(
+				null, ${userId}, ${siteId}, false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				"${pageName}", "${pageName}", "",
+				LayoutConstants.TYPE_EMPTY, true, "", serviceContext))
+	}
+	finally {
+		safeCloseable.close()
+	}
+`;
 
 test('Empty pages show correct label in UI and correct alert in view mode', async ({
 	apiHelpers,
+	applicationsMenuPage,
 	page,
 	pageTreePage,
 	pagesAdminPage,
+	serverAdministrationPage,
 	site,
 }) => {
 
-	// Create a page of type Empty
+	// Create a page of type Empty using a Groovy script that enables
+	// LazyReferencingThreadLocal (required since LPD-78297)
+
+	await applicationsMenuPage.goToServerAdministration();
+
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'test@liferay.com'
+		);
 
 	const layoutName = getRandomString();
 
-	const layout = await addEmptyPage({
-		apiHelpers,
-		name: layoutName,
-		siteId: site.id,
-	});
+	await serverAdministrationPage.executeScript(
+		getGroovyScript(companyId, layoutName, site.id, user.id)
+	);
+
+	await expect(page.getByText('"type": "empty"')).toBeVisible();
+
+	const output = await page
+		.locator("//b[text() = 'Output']/following-sibling::pre")
+		.textContent();
+
+	const layout = JSON.parse(output);
 
 	await page.goto(`/web/${site.name}`);
 

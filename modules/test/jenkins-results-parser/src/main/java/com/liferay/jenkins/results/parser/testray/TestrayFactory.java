@@ -299,7 +299,15 @@ public class TestrayFactory {
 		TestrayBuild testrayBuild, String batchName,
 		List<File> propertiesFiles) {
 
-		return new TestrayRun(testrayBuild, batchName, propertiesFiles);
+		return new TestrayRun(testrayBuild, batchName, null, propertiesFiles);
+	}
+
+	public static TestrayRun newTestrayRun(
+		TestrayBuild testrayBuild, String batchName, String testSuiteName,
+		List<File> propertiesFiles) {
+
+		return new TestrayRun(
+			testrayBuild, batchName, testSuiteName, propertiesFiles);
 	}
 
 	public static TestrayRunComparison newTestrayRunComparison(

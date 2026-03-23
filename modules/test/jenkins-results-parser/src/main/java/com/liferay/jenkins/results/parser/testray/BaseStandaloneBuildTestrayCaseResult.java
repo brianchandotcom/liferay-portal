@@ -9,6 +9,7 @@ import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.TestSuiteJob;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
 import java.io.File;
@@ -125,8 +126,19 @@ public abstract class BaseStandaloneBuildTestrayCaseResult
 	public void recordTestrayCaseResult(Job job) {
 		TestrayBuild testrayBuild = getTestrayBuild();
 
-		TestrayRun testrayRun = TestrayFactory.newTestrayRun(
-			testrayBuild, getBatchName(), job.getJobPropertiesFiles());
+		TestrayRun testrayRun;
+
+		if (job instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+
+			testrayRun = TestrayFactory.newTestrayRun(
+				testrayBuild, getBatchName(), testSuiteJob.getTestSuiteName(),
+				job.getJobPropertiesFiles());
+		}
+		else {
+			testrayRun = TestrayFactory.newTestrayRun(
+				testrayBuild, getBatchName(), job.getJobPropertiesFiles());
+		}
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 

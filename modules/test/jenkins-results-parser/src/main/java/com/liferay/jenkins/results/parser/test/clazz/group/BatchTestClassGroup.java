@@ -468,6 +468,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return sb.toString();
 	}
 
+	public String getTestSuiteName() {
+		return testSuiteName;
+	}
+
 	public TestTaskHistory getTestTaskHistory(String testTaskName) {
 		BatchHistory batchHistory = getBatchHistory();
 
@@ -978,10 +982,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return targetAxisDuration;
-	}
-
-	protected String getTestSuiteName() {
-		return testSuiteName;
 	}
 
 	protected boolean ignore() {

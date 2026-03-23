@@ -9,8 +9,7 @@
 				"dataType": "string",
 				"displayStyle": "multiline",
 				"fieldNamespace": "",
-				"options": {
-				},
+				"fieldReference": "Text1",
 				"placeholder": {
 					"en_US": "Placeholder Text",
 					"pt_BR": "Texto Placeholder"
@@ -18,14 +17,6 @@
 				"tooltip": {
 					"en_US": "Tooltip",
 					"pt_BR": "Dica"
-				},
-				"validation": {
-					"errorMessage": {
-					},
-					"expression": {
-					},
-					"parameter": {
-					}
 				},
 				"visibilityExpression": ""
 			},
@@ -37,11 +28,51 @@
 			"indexType": "keyword",
 			"indexable": true,
 			"label": {
-				"en_US": "Text",
-				"pt_BR": "Texto"
+				"en_US": "Text 1",
+				"pt_BR": "Texto 1"
 			},
 			"localizable": true,
-			"name": "Text",
+			"name": "Text1",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": true,
+			"required": true,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Help Text",
+				"pt_BR": "Texto de Ajuda"
+			}
+		},
+		{
+			"customProperties": {
+				"dataType": "string",
+				"displayStyle": "multiline",
+				"fieldNamespace": "",
+				"fieldReference": "Text2",
+				"placeholder": {
+					"en_US": "Placeholder Text",
+					"pt_BR": "Texto Placeholder"
+				},
+				"tooltip": {
+					"en_US": "Tooltip",
+					"pt_BR": "Dica"
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Text 2",
+				"pt_BR": "Texto 2"
+			},
+			"localizable": true,
+			"name": "Text2",
 			"nestedDataDefinitionFields": [
 			],
 			"readOnly": false,
@@ -63,7 +94,13 @@
 							{
 								"columnSize": 6,
 								"fieldNames": [
-									"Text"
+									"Text1"
+								]
+							},
+							{
+								"columnSize": 7,
+								"fieldNames": [
+									"Text2"
 								]
 							}
 						]

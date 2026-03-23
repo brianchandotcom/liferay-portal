@@ -29,13 +29,11 @@ const CKEditor5ReactClassicEditor = ({
 
 	function toggleReadOnlyMode() {
 		if (myEditor) {
-			if (myEditor.isReadOnly) {
+			if (!myEditor.isReadOnly) {
 				myEditor.enableReadOnlyMode('toggle');
-				myEditor.ui.element.classList.add('lfr-ck-disabled');
 			}
 			else {
 				myEditor.disableReadOnlyMode('toggle');
-				myEditor.ui.element.classList.remove('lfr-ck-disabled');
 			}
 		}
 	}

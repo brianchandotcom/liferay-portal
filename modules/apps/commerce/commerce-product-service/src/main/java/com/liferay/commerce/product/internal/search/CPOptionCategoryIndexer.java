@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
 
 import jakarta.portlet.PortletRequest;
@@ -147,15 +146,13 @@ public class CPOptionCategoryIndexer extends BaseIndexer<CPOptionCategory> {
 	}
 
 	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_cpOptionCategoryLocalService.getCPOptionCategory(classPK));
+	protected void doReindex(long companyId) throws Exception {
+		_reindexCPOptionCategorys(companyId);
 	}
 
 	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexCPOptionCategorys(companyId);
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(_cpOptionCategoryLocalService.getCPOptionCategory(classPK));
 	}
 
 	private void _reindexCPOptionCategorys(long companyId) throws Exception {

@@ -174,17 +174,15 @@ public class CPDefinitionOptionValueRelIndexer
 	}
 
 	@Override
+	protected void doReindex(long companyId) throws Exception {
+		_reindexCPDefinitionOptionValueRels(companyId);
+	}
+
+	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(
 			_cpDefinitionOptionValueRelLocalService.
 				getCPDefinitionOptionValueRel(classPK));
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexCPDefinitionOptionValueRels(companyId);
 	}
 
 	private void _reindexCPDefinitionOptionValueRels(long companyId)

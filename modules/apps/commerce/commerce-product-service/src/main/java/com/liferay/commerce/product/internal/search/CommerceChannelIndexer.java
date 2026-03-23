@@ -146,15 +146,13 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 	}
 
 	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_commerceChannelLocalService.getCommerceChannel(classPK));
+	protected void doReindex(long companyId) throws Exception {
+		_reindexCommerceChannels(companyId);
 	}
 
 	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexCommerceChannels(companyId);
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(_commerceChannelLocalService.getCommerceChannel(classPK));
 	}
 
 	@Override

@@ -215,6 +215,11 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	}
 
 	@Override
+	protected void doReindex(long companyId) throws Exception {
+		_reindexKBArticles(companyId);
+	}
+
+	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		KBArticle kbArticle = kbArticleLocalService.fetchLatestKBArticle(
 			classPK, WorkflowConstants.STATUS_ANY);
@@ -232,13 +237,6 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		if (kbArticle != null) {
 			_reindexKBArticles(kbArticle);
 		}
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexKBArticles(companyId);
 	}
 
 	@Reference

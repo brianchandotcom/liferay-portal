@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
@@ -147,17 +146,15 @@ public class CommerceShippingFixedOptionIndexer
 	}
 
 	@Override
+	protected void doReindex(long companyId) throws Exception {
+		_reindexCommerceShippingFixedOptions(companyId);
+	}
+
+	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(
 			_commerceShippingFixedOptionLocalService.
 				getCommerceShippingFixedOption(classPK));
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexCommerceShippingFixedOptions(companyId);
 	}
 
 	@Override

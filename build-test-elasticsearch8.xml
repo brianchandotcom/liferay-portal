@@ -4,7 +4,7 @@
 	<import file="build-test.xml" />
 
 	<get-testcase-property if:set="env.JENKINS_HOME" property.name="elastic.override.version" />
-	<propertycopy from="suite.elastic.version[${env.CI_TEST_SUITE}]" name="suite.elastic.version" silent="true" />
+	<propertycopy from="search.engine.version[${env.CI_TEST_SUITE}]" name="search.engine.version" silent="true" />
 
 	<if>
 		<isset property="elastic.override.version" />
@@ -12,9 +12,9 @@
 			<property name="elasticsearch.version" value="${elastic.override.version}" />
 		</then>
 		<elseif>
-			<isset property="suite.elastic.version" />
+			<isset property="search.engine.version" />
 			<then>
-				<property name="elasticsearch.version" value="${suite.elastic.version}" />
+				<property name="elasticsearch.version" value="${search.engine.version}" />
 			</then>
 		</elseif>
 		<else>

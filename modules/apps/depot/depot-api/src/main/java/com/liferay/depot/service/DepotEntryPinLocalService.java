@@ -219,6 +219,9 @@ public interface DepotEntryPinLocalService
 		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DepotEntryPin fetchGroupDepotEntryPin(long groupId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -358,4 +361,4 @@ public interface DepotEntryPinLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1294441067
+// LIFERAY-SERVICE-BUILDER-HASH:1681208431

@@ -263,6 +263,12 @@ public class DepotEntryPinLocalServiceWrapper
 	}
 
 	@Override
+	public DepotEntryPin fetchGroupDepotEntryPin(long groupId, long userId) {
+		return _depotEntryPinLocalService.fetchGroupDepotEntryPin(
+			groupId, userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -479,4 +485,4 @@ public class DepotEntryPinLocalServiceWrapper
 	private DepotEntryPinLocalService _depotEntryPinLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1992325993
+// LIFERAY-SERVICE-BUILDER-HASH:-972458589

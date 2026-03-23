@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,7 +8,7 @@ package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
 import com.liferay.frontend.js.web.internal.resource.handler.JavaScriptFrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.resource.handler.LanguageFrontendResourceRequestHandler;
-import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
+import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera Avellón
  */
 @Component(service = DynamicJSImportMapsContributor.class)
-public class FrontendJsWebDynamicJSImportMapsContributor
+public class FrontendJSWebDynamicJSImportMapsContributor
 	implements DynamicJSImportMapsContributor {
 
 	@Override
@@ -39,12 +39,12 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 			LanguageFrontendResourceRequestHandler.LANGUAGE_MODULE_PREFIX);
 		writer.write("\": \"");
 
-		String baseURL = FrontendJsWebUtil.getBaseURL(
+		String baseURL = FrontendJSWebUtil.getBaseURL(
 			httpServletRequest, _portal);
 
 		writer.write(baseURL);
 
-		writer.write(FrontendJsWebUtil.getPortalContextPath(_portal));
+		writer.write(FrontendJSWebUtil.getPortalContextPath(_portal));
 		writer.write(
 			LanguageFrontendResourceRequestHandler.LANGUAGE_URI_PREFIX);
 		writer.write(StringPool.QUOTE);

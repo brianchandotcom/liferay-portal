@@ -6,7 +6,7 @@
 package com.liferay.frontend.js.web.internal.resource.handler;
 
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
-import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
+import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
@@ -157,7 +157,7 @@ public abstract class BaseFrontendResourceRequestHandlerTestCase {
 	}
 
 	protected void setUp() {
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 	}
 
 	protected static final long COMPANY_ID = 100;

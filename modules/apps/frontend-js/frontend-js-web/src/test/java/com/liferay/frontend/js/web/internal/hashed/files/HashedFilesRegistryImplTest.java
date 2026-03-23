@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files;
 
-import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
+import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
 import com.liferay.frontend.js.web.test.util.FrontendJSWebTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
@@ -38,7 +38,7 @@ public class HashedFilesRegistryImplTest {
 
 	@Before
 	public void setUp() {
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 	}
 
 	@Test

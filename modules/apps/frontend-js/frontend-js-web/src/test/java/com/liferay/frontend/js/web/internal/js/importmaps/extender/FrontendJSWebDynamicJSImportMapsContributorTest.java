@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
-import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
+import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
@@ -41,7 +41,7 @@ import org.springframework.test.util.ReflectionTestUtils;
  * @author Iván Zaera Avellón
  */
 @RunWith(Parameterized.class)
-public class FrontendJsWebDynamicJSImportMapsContributorTest {
+public class FrontendJSWebDynamicJSImportMapsContributorTest {
 
 	@ClassRule
 	@Rule
@@ -155,17 +155,17 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 
 	@Test
 	public void testWriteGlobalImports() throws Exception {
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 
-		FrontendJsWebDynamicJSImportMapsContributor
-			frontendJsWebDynamicJSImportMapsContributor =
-				new FrontendJsWebDynamicJSImportMapsContributor();
+		FrontendJSWebDynamicJSImportMapsContributor
+			frontendJSWebDynamicJSImportMapsContributor =
+				new FrontendJSWebDynamicJSImportMapsContributor();
 
 		ReflectionTestUtils.setField(
-			frontendJsWebDynamicJSImportMapsContributor, "_hashedFilesRegistry",
+			frontendJSWebDynamicJSImportMapsContributor, "_hashedFilesRegistry",
 			_mockHashedFileRegistry());
 		ReflectionTestUtils.setField(
-			frontendJsWebDynamicJSImportMapsContributor, "_portal",
+			frontendJSWebDynamicJSImportMapsContributor, "_portal",
 			_mockPortal());
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -174,7 +174,7 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
 			byteArrayOutputStream, StandardCharsets.UTF_8);
 
-		frontendJsWebDynamicJSImportMapsContributor.writeGlobalImports(
+		frontendJSWebDynamicJSImportMapsContributor.writeGlobalImports(
 			new MockHttpServletRequest(), outputStreamWriter);
 
 		outputStreamWriter.close();

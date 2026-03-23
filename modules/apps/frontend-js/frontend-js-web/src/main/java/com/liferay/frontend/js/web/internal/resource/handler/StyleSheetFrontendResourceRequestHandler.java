@@ -8,7 +8,7 @@ package com.liferay.frontend.js.web.internal.resource.handler;
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.StyleSheetFrontendResource;
-import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
+import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -91,7 +91,7 @@ public class StyleSheetFrontendResourceRequestHandler
 		}
 
 		FrontendCachingConfiguration frontendCachingConfiguration =
-			FrontendJsWebUtil.getFrontendCachingConfiguration(
+			FrontendJSWebUtil.getFrontendCachingConfiguration(
 				_portal.getCompanyId(httpServletRequest),
 				_configurationProvider);
 

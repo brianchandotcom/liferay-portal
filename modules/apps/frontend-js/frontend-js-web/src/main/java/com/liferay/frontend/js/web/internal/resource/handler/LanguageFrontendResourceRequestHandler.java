@@ -8,7 +8,7 @@ package com.liferay.frontend.js.web.internal.resource.handler;
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.LanguageFrontendResource;
-import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
+import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -55,7 +55,7 @@ public class LanguageFrontendResourceRequestHandler
 		String requestURI = httpServletRequest.getRequestURI();
 
 		if (requestURI.startsWith(
-				FrontendJsWebUtil.getPortalContextPath(_portal) +
+				FrontendJSWebUtil.getPortalContextPath(_portal) +
 					LANGUAGE_URI_PREFIX) &&
 			requestURI.endsWith("/all.js")) {
 
@@ -71,7 +71,7 @@ public class LanguageFrontendResourceRequestHandler
 
 		String requestURI = httpServletRequest.getRequestURI();
 
-		String portalContextPath = FrontendJsWebUtil.getPortalContextPath(
+		String portalContextPath = FrontendJSWebUtil.getPortalContextPath(
 			_portal);
 
 		requestURI = requestURI.substring(
@@ -105,7 +105,7 @@ public class LanguageFrontendResourceRequestHandler
 		}
 
 		FrontendCachingConfiguration frontendCachingConfiguration =
-			FrontendJsWebUtil.getFrontendCachingConfiguration(
+			FrontendJSWebUtil.getFrontendCachingConfiguration(
 				_portal.getCompanyId(httpServletRequest),
 				_configurationProvider);
 

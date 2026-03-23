@@ -8,7 +8,7 @@ package com.liferay.frontend.js.web.internal.resource.handler;
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.JavaScriptFrontendResource;
-import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
+import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -48,7 +48,7 @@ public class JavaScriptFrontendResourceRequestHandler
 	implements FrontendResourceRequestHandler {
 
 	public static String getBundleHashedFileURIPrefix(Portal portal) {
-		return FrontendJsWebUtil.getPortalContextPath(portal) + "/o/js/-/";
+		return FrontendJSWebUtil.getPortalContextPath(portal) + "/o/js/-/";
 	}
 
 	public JavaScriptFrontendResourceRequestHandler(
@@ -125,7 +125,7 @@ public class JavaScriptFrontendResourceRequestHandler
 		}
 
 		FrontendCachingConfiguration frontendCachingConfiguration =
-			FrontendJsWebUtil.getFrontendCachingConfiguration(
+			FrontendJSWebUtil.getFrontendCachingConfiguration(
 				_portal.getCompanyId(httpServletRequest),
 				_configurationProvider);
 
@@ -181,7 +181,7 @@ public class JavaScriptFrontendResourceRequestHandler
 		}
 
 		String unhashedResourceURI = StringBundler.concat(
-			FrontendJsWebUtil.getPortalContextPath(_portal), Portal.PATH_MODULE,
+			FrontendJSWebUtil.getPortalContextPath(_portal), Portal.PATH_MODULE,
 			StringPool.SLASH, servletContextName,
 			requestURI.substring(closeParethensisIndex + 1));
 
@@ -257,9 +257,9 @@ public class JavaScriptFrontendResourceRequestHandler
 
 				URL languageJsonURL = _hashedFilesRegistry.getResource(
 					StringBundler.concat(
-						FrontendJsWebUtil.getPortalContextPath(_portal),
+						FrontendJSWebUtil.getPortalContextPath(_portal),
 						Portal.PATH_MODULE,
-						FrontendJsWebUtil.getWebContextPathFromFileURI(
+						FrontendJSWebUtil.getWebContextPathFromFileURI(
 							_portal, resourceURI),
 						"/language.json"));
 

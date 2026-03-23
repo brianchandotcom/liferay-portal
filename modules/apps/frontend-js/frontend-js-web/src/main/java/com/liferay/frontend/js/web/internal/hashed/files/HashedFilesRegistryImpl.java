@@ -6,7 +6,7 @@
 package com.liferay.frontend.js.web.internal.hashed.files;
 
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
-import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
+import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -72,7 +72,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 			DataBag dataBag = entry.getValue();
 
 			biConsumer.accept(
-				FrontendJsWebUtil.getServletContextNameFromServletContextPath(
+				FrontendJSWebUtil.getServletContextNameFromServletContextPath(
 					_portal, entry.getKey()),
 				dataBag._servletContextHash);
 		}
@@ -83,7 +83,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		HttpServletRequest httpServletRequest) {
 
 		FrontendCachingConfiguration frontendCachingConfiguration =
-			FrontendJsWebUtil.getFrontendCachingConfiguration(
+			FrontendJSWebUtil.getFrontendCachingConfiguration(
 				_portal.getCompanyId(httpServletRequest),
 				_configurationProvider);
 
@@ -95,7 +95,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		_lazyActivate();
 
 		DataBag dataBag = _dataBags.get(
-			FrontendJsWebUtil.getServletContextPathFromFileURI(
+			FrontendJSWebUtil.getServletContextPathFromFileURI(
 				unhashedFileURI, _portal));
 
 		if (dataBag == null) {
@@ -120,7 +120,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		}
 
 		DataBag dataBag = _dataBags.get(
-			FrontendJsWebUtil.getServletContextPathFromFileURI(
+			FrontendJSWebUtil.getServletContextPathFromFileURI(
 				fileURI, _portal));
 
 		if (dataBag == null) {
@@ -131,7 +131,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 			ServletContext servletContext = dataBag._servletContext;
 
 			return servletContext.getResource(
-				FrontendJsWebUtil.getServletContextResourcePathFromFileURI(
+				FrontendJSWebUtil.getServletContextResourcePathFromFileURI(
 					fileURI, _portal));
 		}
 		catch (MalformedURLException malformedURLException) {
@@ -144,7 +144,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		_lazyActivate();
 
 		DataBag dataBag = _dataBags.get(
-			FrontendJsWebUtil.getServletContextPathFromServletContextName(
+			FrontendJSWebUtil.getServletContextPathFromServletContextName(
 				_portal, servletContextName));
 
 		if (dataBag == null) {

@@ -27,7 +27,7 @@ import org.mockito.Mockito;
  * @author Iván Zaera Avellón
  */
 @RunWith(Parameterized.class)
-public class FrontendJsWebUtilTest {
+public class FrontendJSWebUtilTest {
 
 	@ClassRule
 	@Rule
@@ -53,22 +53,22 @@ public class FrontendJsWebUtilTest {
 
 	@Test
 	public void testGetBaseURL() throws Exception {
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 
 		Assert.assertEquals(
 			_RESULTS_GET_BASE_URL[index],
-			FrontendJsWebUtil.getBaseURL(
+			FrontendJSWebUtil.getBaseURL(
 				Mockito.mock(HttpServletRequest.class),
 				_mockPortal(cdnHost, contextPath, proxyPath)));
 	}
 
 	@Test
 	public void testGetPortalContextPath() throws Exception {
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 
 		Assert.assertEquals(
 			_RESULTS_GET_PORTAL_CONTEXT_PATH[index],
-			FrontendJsWebUtil.getPortalContextPath(
+			FrontendJSWebUtil.getPortalContextPath(
 				_mockPortal(cdnHost, contextPath, proxyPath)));
 	}
 
@@ -76,22 +76,22 @@ public class FrontendJsWebUtilTest {
 	public void testGetServletContextNameFromServletContextPath()
 		throws Exception {
 
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 
 		Assert.assertEquals(
 			"frontend-js-web",
-			FrontendJsWebUtil.getServletContextNameFromServletContextPath(
+			FrontendJSWebUtil.getServletContextNameFromServletContextPath(
 				_mockPortal(cdnHost, contextPath, proxyPath),
 				contextPath + "/o/frontend-js-web"));
 	}
 
 	@Test
 	public void testGetServletContextPathFromFileURI() throws Exception {
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 
 		Assert.assertEquals(
 			contextPath + "/o/frontend-js-web",
-			FrontendJsWebUtil.getServletContextPathFromFileURI(
+			FrontendJSWebUtil.getServletContextPathFromFileURI(
 				contextPath + "/o/frontend-js-web/__liferay__/index.js",
 				_mockPortal(cdnHost, contextPath, proxyPath)));
 	}
@@ -100,11 +100,11 @@ public class FrontendJsWebUtilTest {
 	public void testGetServletContextPathFromServletContextName()
 		throws Exception {
 
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 
 		Assert.assertEquals(
 			_RESULTS_GET_SERVLET_CONTEXT_PATH_FROM_SERVLET_CONTEXT_NAME[index],
-			FrontendJsWebUtil.getServletContextPathFromServletContextName(
+			FrontendJSWebUtil.getServletContextPathFromServletContextName(
 				_mockPortal(cdnHost, contextPath, proxyPath),
 				"frontend-js-web"));
 	}
@@ -113,22 +113,22 @@ public class FrontendJsWebUtilTest {
 	public void testGetServletContextResourcePathFromFileURI()
 		throws Exception {
 
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 
 		Assert.assertEquals(
 			"/__liferay__/index.js",
-			FrontendJsWebUtil.getServletContextResourcePathFromFileURI(
+			FrontendJSWebUtil.getServletContextResourcePathFromFileURI(
 				contextPath + "/o/frontend-js-web/__liferay__/index.js",
 				_mockPortal(cdnHost, contextPath, proxyPath)));
 	}
 
 	@Test
 	public void testGetWebContextPathFromFileURI() throws Exception {
-		FrontendJsWebUtil.clearCache();
+		FrontendJSWebUtil.clearCache();
 
 		Assert.assertEquals(
 			"/frontend-js-web",
-			FrontendJsWebUtil.getWebContextPathFromFileURI(
+			FrontendJSWebUtil.getWebContextPathFromFileURI(
 				_mockPortal(cdnHost, contextPath, proxyPath),
 				contextPath + "/o/frontend-js-web/__liferay__/index.js"));
 	}

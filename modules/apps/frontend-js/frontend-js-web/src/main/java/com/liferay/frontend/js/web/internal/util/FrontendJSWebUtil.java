@@ -56,7 +56,7 @@ import java.util.HashMap;
  * @author Iván Zaera Avellón
  * @review
  */
-public class FrontendJsWebUtil {
+public class FrontendJSWebUtil {
 
 	public static void clearCache() {
 		_baseURL = null;
@@ -248,7 +248,7 @@ public class FrontendJsWebUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FrontendJsWebUtil.class);
+		FrontendJSWebUtil.class);
 
 	private static volatile String _baseURL;
 	private static volatile String _portalContextPath;

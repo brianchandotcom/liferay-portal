@@ -12,6 +12,8 @@ public class FrontendTokenDefinitionConstants {
 
 	public static final String THEME_TYPE_BUNDLE = "bundle";
 
+	public static final String THEME_TYPE_GLOBAL = "global";
+
 	public static final String THEME_TYPE_THEME_CSS_CET = "themeCSSCET";
 
 }

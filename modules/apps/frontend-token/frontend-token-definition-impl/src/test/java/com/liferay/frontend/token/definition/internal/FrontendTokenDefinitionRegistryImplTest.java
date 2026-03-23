@@ -5,11 +5,16 @@
 
 package com.liferay.frontend.token.definition.internal;
 
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -34,6 +39,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.osgi.framework.Bundle;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Iván Zaera
@@ -51,10 +57,7 @@ public class FrontendTokenDefinitionRegistryImplTest {
 			ResourceBundleLoaderUtil.class);
 
 		_resourceBundleLoaderUtilMockedStatic.when(
-			() ->
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						Mockito.anyString())
+			ResourceBundleLoaderUtil::getPortalResourceBundleLoader
 		).thenReturn(
 			Mockito.mock(ResourceBundleLoader.class)
 		);
@@ -63,6 +66,96 @@ public class FrontendTokenDefinitionRegistryImplTest {
 	@After
 	public void tearDown() {
 		_resourceBundleLoaderUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testGetFrontendTokenDefinition() throws Exception {
+		_testGetFrontendTokenDefinitionsWithGlobalDefinition(
+			false,
+			(frontendTokenDefinitionRegistryImpl,
+			 frontendTokenDefinitionImpls) -> Assert.assertNull(
+				frontendTokenDefinitionRegistryImpl.getFrontendTokenDefinition(
+					123L, "com.liferay.frontend.js.clay.web")));
+
+		_testGetFrontendTokenDefinitionsWithGlobalDefinition(
+			true,
+			(frontendTokenDefinitionRegistryImpl,
+			 frontendTokenDefinitionImpls) -> {
+
+				FrontendTokenDefinition frontendTokenDefinition =
+					frontendTokenDefinitionRegistryImpl.
+						getFrontendTokenDefinition(
+							123L, "com.liferay.frontend.js.clay.web");
+
+				Assert.assertNotNull(frontendTokenDefinition);
+
+				Assert.assertEquals(
+					FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL,
+					frontendTokenDefinition.getThemeType());
+			});
+	}
+
+	@Test
+	public void testGetFrontendTokenDefinitionImplsIncludesGlobalDefinitionFiles()
+		throws Exception {
+
+		_testGetFrontendTokenDefinitionsWithGlobalDefinition(
+			false,
+			(frontendTokenDefinitionRegistryImpl,
+			 frontendTokenDefinitionImpls) -> {
+
+				Assert.assertEquals(
+					frontendTokenDefinitionImpls.toString(), 1,
+					frontendTokenDefinitionImpls.size());
+
+				FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
+					frontendTokenDefinitionImpls.get(0);
+
+				Assert.assertEquals(
+					"com.liferay.frontend.js.clay.web",
+					frontendTokenDefinitionImpl.getThemeId());
+				Assert.assertEquals(
+					FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL,
+					frontendTokenDefinitionImpl.getThemeType());
+			});
+	}
+
+	@Test
+	public void testGetFrontendTokenDefinitions() throws Exception {
+		_testGetFrontendTokenDefinitionsWithGlobalDefinition(
+			false,
+			(frontendTokenDefinitionRegistryImpl,
+			 frontendTokenDefinitionImpls) -> {
+
+				List<FrontendTokenDefinition> frontendTokenDefinitions =
+					frontendTokenDefinitionRegistryImpl.
+						getFrontendTokenDefinitions(123L);
+
+				Assert.assertTrue(
+					frontendTokenDefinitions.toString(),
+					frontendTokenDefinitions.isEmpty());
+			});
+
+		_testGetFrontendTokenDefinitionsWithGlobalDefinition(
+			true,
+			(frontendTokenDefinitionRegistryImpl,
+			 frontendTokenDefinitionImpls) -> {
+
+				List<FrontendTokenDefinition> frontendTokenDefinitions =
+					frontendTokenDefinitionRegistryImpl.
+						getFrontendTokenDefinitions(123L);
+
+				Assert.assertEquals(
+					frontendTokenDefinitions.toString(), 1,
+					frontendTokenDefinitions.size());
+
+				FrontendTokenDefinition frontendTokenDefinition =
+					frontendTokenDefinitions.get(0);
+
+				Assert.assertEquals(
+					FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL,
+					frontendTokenDefinition.getThemeType());
+			});
 	}
 
 	@Test
@@ -233,6 +326,64 @@ public class FrontendTokenDefinitionRegistryImplTest {
 
 		Assert.assertEquals("modern_WAR_twothemes", themesData2.get("id"));
 		Assert.assertEquals("Modern", themesData2.get("name"));
+	}
+
+	private void _testGetFrontendTokenDefinitionsWithGlobalDefinition(
+			boolean featureFlagEnabled,
+			UnsafeBiConsumer
+				<FrontendTokenDefinitionRegistryImpl,
+				 List<FrontendTokenDefinitionImpl>, Exception> consumer)
+		throws Exception {
+
+		FrontendTokenDefinitionRegistryImpl
+			frontendTokenDefinitionRegistryImpl =
+				new FrontendTokenDefinitionRegistryImpl();
+
+		frontendTokenDefinitionRegistryImpl.jsonFactory = new JSONFactoryImpl();
+		frontendTokenDefinitionRegistryImpl.portal = new PortalImpl();
+
+		Bundle bundle = Mockito.mock(Bundle.class);
+
+		Mockito.when(
+			bundle.getEntry("WEB-INF/frontend-token-definition.json")
+		).thenReturn(
+			_frontendTokenDefinitionJSONURL
+		);
+
+		Mockito.when(
+			bundle.getEntry("WEB-INF/liferay-look-and-feel.xml")
+		).thenReturn(
+			null
+		);
+
+		Mockito.when(
+			bundle.getSymbolicName()
+		).thenReturn(
+			"com.liferay.frontend.js.clay.web"
+		);
+
+		BundleTrackerCustomizer<List<FrontendTokenDefinitionImpl>>
+			bundleTrackerCustomizer = ReflectionTestUtil.getFieldValue(
+				frontendTokenDefinitionRegistryImpl,
+				"_bundleTrackerCustomizer");
+
+		List<FrontendTokenDefinitionImpl> frontendTokenDefinitionImpls =
+			bundleTrackerCustomizer.addingBundle(bundle, null);
+
+		try (MockedStatic<FeatureFlagManagerUtil>
+				featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
+					FeatureFlagManagerUtil.class)) {
+
+			featureFlagManagerUtilMockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(123L, "LPD-84497")
+			).thenReturn(
+				featureFlagEnabled
+			);
+
+			consumer.accept(
+				frontendTokenDefinitionRegistryImpl,
+				frontendTokenDefinitionImpls);
+		}
 	}
 
 	private static final URL _frontendTokenDefinitionJSONURL =

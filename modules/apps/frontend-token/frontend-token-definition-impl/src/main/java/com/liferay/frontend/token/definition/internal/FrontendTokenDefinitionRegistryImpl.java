@@ -18,8 +18,10 @@ import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -42,6 +44,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -132,9 +135,14 @@ public class FrontendTokenDefinitionRegistryImpl
 		long companyId, String themeId) {
 
 		FrontendTokenDefinition frontendTokenDefinition =
-			_frontendTokenDefinitions.get(themeId);
+			_getBundleFrontendTokenDefinition(themeId);
 
-		if (frontendTokenDefinition != null) {
+		if ((frontendTokenDefinition != null) &&
+			(!Objects.equals(
+				frontendTokenDefinition.getThemeType(),
+				FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL) ||
+			 FeatureFlagManagerUtil.isEnabled(companyId, "LPD-84497"))) {
+
 			return frontendTokenDefinition;
 		}
 
@@ -152,8 +160,18 @@ public class FrontendTokenDefinitionRegistryImpl
 	public List<FrontendTokenDefinition> getFrontendTokenDefinitions(
 		long companyId) {
 
+		Map<String, FrontendTokenDefinition> bundleFrontendTokenDefinitions =
+			_getBundleFrontendTokenDefinitions();
+
 		List<FrontendTokenDefinition> frontendTokenDefinitions =
-			new ArrayList<>(_frontendTokenDefinitions.values());
+			new ArrayList<>(bundleFrontendTokenDefinitions.values());
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-84497")) {
+			frontendTokenDefinitions.removeIf(
+				frontendTokenDefinition -> Objects.equals(
+					frontendTokenDefinition.getThemeType(),
+					FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL));
+		}
 
 		Map<String, FrontendTokenDefinition> frontendTokenDefinitionsMap =
 			_frontendTokenDefinitionsMap.get(companyId);
@@ -242,13 +260,27 @@ public class FrontendTokenDefinitionRegistryImpl
 			List<FrontendTokenDefinitionImpl> frontendTokenDefinitionImpls =
 				new ArrayList<>();
 
-			for (Map<String, String> themeMap : getThemeMaps(bundle)) {
+			List<Map<String, String>> themeMaps = getThemeMaps(bundle);
+
+			JSONObject jsonObject = jsonFactory.createJSONObject(json);
+
+			if (themeMaps.isEmpty()) {
 				frontendTokenDefinitionImpls.add(
 					new FrontendTokenDefinitionImpl(
-						jsonFactory.createJSONObject(json), jsonFactory,
-						resourceBundleLoader, themeMap.get("id"),
-						themeMap.get("name"),
-						FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE));
+						jsonObject, jsonFactory, resourceBundleLoader,
+						bundle.getSymbolicName(),
+						jsonObject.getString("name", bundle.getSymbolicName()),
+						FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL));
+			}
+			else {
+				for (Map<String, String> themeMap : themeMaps) {
+					frontendTokenDefinitionImpls.add(
+						new FrontendTokenDefinitionImpl(
+							jsonObject, jsonFactory, resourceBundleLoader,
+							themeMap.get("id"), themeMap.get("name"),
+							FrontendTokenDefinitionConstants.
+								THEME_TYPE_BUNDLE));
+				}
 			}
 
 			return frontendTokenDefinitionImpls;
@@ -361,15 +393,23 @@ public class FrontendTokenDefinitionRegistryImpl
 	private FrontendTokenDefinition _getBundleFrontendTokenDefinition(
 		String themeId) {
 
-		Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
-			_frontendTokenDefinitionsDCLSingleton.getSingleton(
-				() -> {
+		Map<String, FrontendTokenDefinition> bundleFrontendTokenDefinitions =
+			_getBundleFrontendTokenDefinitions();
+
+		return bundleFrontendTokenDefinitions.get(themeId);
+	}
+
+	private Map<String, FrontendTokenDefinition>
+		_getBundleFrontendTokenDefinitions() {
+
+		return _frontendTokenDefinitionsDCLSingleton.getSingleton(
+			() -> {
+				if (_bundleTracker != null) {
 					_bundleTracker.open();
+				}
 
-					return _frontendTokenDefinitions;
-				});
-
-		return frontendTokenDefinitions.get(themeId);
+				return _frontendTokenDefinitions;
+			});
 	}
 
 	private String _getCETExternalReferenceCode(

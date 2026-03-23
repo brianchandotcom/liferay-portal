@@ -159,6 +159,10 @@
 			},
 			"title": "The Frontend Token Categories",
 			"type": "array"
+		},
+		"name": {
+			"title": "The Name of the Design Frontend Tokens Definition",
+			"type": "string"
 		}
 	},
 	"title": "The Design Frontend Tokens Definition Schema",

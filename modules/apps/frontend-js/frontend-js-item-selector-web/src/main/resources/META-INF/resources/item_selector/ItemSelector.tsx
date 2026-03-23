@@ -266,7 +266,12 @@ function ItemSelector<T extends Record<string, any>>({
 		resource: sourceItems = [],
 	} = useResource({
 		fetch: async (link) => {
-			const result = await fetch(link);
+			const result = await fetch(link, {
+				headers: {
+					'Accept-Language':
+						Liferay.ThemeDisplay.getBCP47LanguageId(),
+				},
+			});
 
 			const contentType = result.headers.get('Content-Type') || '';
 

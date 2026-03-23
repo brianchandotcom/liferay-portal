@@ -215,6 +215,32 @@ public class BreadcrumbDisplayContext {
 							).put(
 								"target", "defaultPermissionsModal"
 							));
+						unsafeConsumer.accept(
+							JSONUtil.put(
+								"defaultPermissionAdditionalProps",
+								HashMapBuilder.putAll(
+									PermissionUtil.
+										getDefaultPermissionAdditionalProps(
+											true, _httpServletRequest,
+											_themeDisplay)
+								).put(
+									"classExternalReferenceCode",
+									group.getExternalReferenceCode()
+								).put(
+									"className", DepotEntry.class.getName()
+								).build()
+							).put(
+								"href", StringPool.BLANK
+							).put(
+								"label",
+								LanguageUtil.get(
+									_httpServletRequest,
+									"edit-and-propagate-default-permissions")
+							).put(
+								"symbolLeft", "password-policies"
+							).put(
+								"target", "defaultPermissionsModal"
+							));
 					}
 
 					if (permissionChecker.hasPermission(

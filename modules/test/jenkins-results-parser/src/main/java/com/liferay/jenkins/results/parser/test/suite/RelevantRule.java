@@ -151,8 +151,7 @@ public class RelevantRule implements Comparable<RelevantRule> {
 
 	public List<TestBatch> getTestBatches() {
 		if (_job == null) {
-			throw new IllegalStateException(
-				"Job object is required for getTestBatches");
+			throw new IllegalStateException("Job is null");
 		}
 
 		if (_testBatches == null) {
@@ -189,8 +188,7 @@ public class RelevantRule implements Comparable<RelevantRule> {
 
 	public JobProperty getTestBatchNamesJobProperty() {
 		if (_job == null) {
-			throw new IllegalStateException(
-				"Job object is required for getTestBatchNamesJobProperty");
+			throw new IllegalStateException("Job is null");
 		}
 
 		File propertiesFile = new File(_filePath);

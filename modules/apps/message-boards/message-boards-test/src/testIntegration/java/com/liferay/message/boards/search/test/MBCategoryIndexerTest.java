@@ -68,8 +68,7 @@ public class MBCategoryIndexerTest {
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-			_indexer.reindex(
-				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
+			_indexer.reindex(TestPropsValues.getCompanyId());
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -92,8 +91,7 @@ public class MBCategoryIndexerTest {
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
-			_indexer.reindex(
-				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
+			_indexer.reindex(TestPropsValues.getCompanyId());
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

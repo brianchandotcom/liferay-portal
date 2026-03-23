@@ -74,8 +74,7 @@ public class MBThreadIndexerTest {
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-			_indexer.reindex(
-				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
+			_indexer.reindex(TestPropsValues.getCompanyId());
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -101,8 +100,7 @@ public class MBThreadIndexerTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 				RandomTestUtil.randomString(), s -> serviceContext);
 
-			_indexer.reindex(
-				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
+			_indexer.reindex(TestPropsValues.getCompanyId());
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -144,8 +142,7 @@ public class MBThreadIndexerTest {
 				MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
 				false, serviceContext);
 
-			_indexer.reindex(
-				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
+			_indexer.reindex(TestPropsValues.getCompanyId());
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

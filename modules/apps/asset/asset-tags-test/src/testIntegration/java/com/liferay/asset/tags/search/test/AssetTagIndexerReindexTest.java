@@ -124,7 +124,7 @@ public class AssetTagIndexerReindexTest {
 	}
 
 	protected void reindexAllIndexerModels() throws Exception {
-		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+		indexer.reindex(_group.getCompanyId());
 	}
 
 	protected SearchResponse search(String searchTerm) {

@@ -56,7 +56,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 				@Override
 				public InputStream getResourceAsStream(String name) {
-					if (name.equals(_getCmpFilePath())) {
+					if (name.equals(_getCMPFilePath())) {
 						return InputStream.nullInputStream();
 					}
 
@@ -81,11 +81,11 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 	public void testEnterpriseLicense() throws Exception {
 		assertLicensePropertiesNotExisted(getCMPProductId());
 
-		assertBundlesExisted(_getCmpSymbolicNames());
+		assertBundlesExisted(_getCMPSymbolicNames());
 
 		assertPortalLicenseNotRegistered();
 
-		assertBundlesExisted(_getCmpSymbolicNames());
+		assertBundlesExisted(_getCMPSymbolicNames());
 
 		deployEnterprisePortalLicense(Time.HOUR);
 
@@ -93,7 +93,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCmpSymbolicNames());
+		assertBundlesNotExisted(_getCMPSymbolicNames());
 
 		File binaryFile = deployCMPLicense(Time.HOUR);
 
@@ -101,7 +101,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesExisted(_getCmpSymbolicNames());
+		assertBundlesExisted(_getCMPSymbolicNames());
 
 		binaryFile.delete();
 
@@ -113,18 +113,18 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCmpSymbolicNames());
+		assertBundlesNotExisted(_getCMPSymbolicNames());
 	}
 
 	@Test
 	public void testFreeTierLicense() throws Exception {
 		assertLicensePropertiesNotExisted(getCMPProductId());
 
-		assertBundlesExisted(_getCmpSymbolicNames());
+		assertBundlesExisted(_getCMPSymbolicNames());
 
 		assertPortalLicenseNotRegistered();
 
-		assertBundlesExisted(_getCmpSymbolicNames());
+		assertBundlesExisted(_getCMPSymbolicNames());
 
 		deployFreeTierPortalLicense(Time.HOUR);
 
@@ -132,7 +132,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCmpSymbolicNames());
+		assertBundlesNotExisted(_getCMPSymbolicNames());
 
 		File binaryFile = deployCMPLicense(Time.HOUR);
 
@@ -140,7 +140,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCmpSymbolicNames());
+		assertBundlesNotExisted(_getCMPSymbolicNames());
 
 		binaryFile.delete();
 
@@ -152,7 +152,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 		assertPortalLicenseRegistered();
 
-		assertBundlesNotExisted(_getCmpSymbolicNames());
+		assertBundlesNotExisted(_getCMPSymbolicNames());
 	}
 
 	@Test
@@ -164,7 +164,7 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 
 				@Override
 				public InputStream getResourceAsStream(String name) {
-					if (name.equals(_getCmpFilePath())) {
+					if (name.equals(_getCMPFilePath())) {
 						return null;
 					}
 
@@ -185,11 +185,11 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 		}
 	}
 
-	private String _getCmpFilePath() {
+	private String _getCMPFilePath() {
 		return getProperty("cmp.file.path");
 	}
 
-	private String[] _getCmpSymbolicNames() {
+	private String[] _getCMPSymbolicNames() {
 		String property = getProperty("cmp.symbolic.names");
 
 		return property.split(StringPool.COMMA);

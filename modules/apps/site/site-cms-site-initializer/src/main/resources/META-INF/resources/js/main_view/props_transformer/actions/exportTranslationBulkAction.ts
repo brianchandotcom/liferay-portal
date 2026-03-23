@@ -24,7 +24,7 @@ export async function exportTranslationBulkAction(
 
 	openToast({
 		message: Liferay.Language.get(
-			'the-export-of-all-selected-files-is-being-prepared.-please-do-not-close-this-window-or-navigate-to-another-section'
+			'the-export-of-all-selected-contents-is-being-prepared.-please-do-not-close-this-window-or-navigate-to-another-section'
 		),
 		type: 'warning',
 	});

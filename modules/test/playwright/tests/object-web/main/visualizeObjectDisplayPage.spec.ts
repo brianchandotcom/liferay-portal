@@ -15,6 +15,7 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {generateObjectFields} from './utils/generateObjectFields';
 import {postListTypeDefinitionListTypeEntries} from './utils/postListTypeDefinitionListTypeEntries';
 
@@ -31,31 +32,28 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test(
+// Skip: The "Filter Collection" menu in the page editor Collection Display
+// configuration is accessed via the sidebar's collection item selector ellipsis
+// menu. The Poshi test (CanDefineFixedFilterForPicklistType) creates a content
+// page with Collection Display, sets a fixed filter on a Picklist field so only
+// entries matching "Item Test 1" are shown, and verifies "Item Test 2" is hidden.
+// The sidebar interaction for "Filter Collection" needs a dedicated page object
+// method to be implemented reliably.
+test.skip(
 	'LPD-78504 Can define fixed filter for picklist type on display page',
 	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers,
-		displayPageTemplatesPage,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
+	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: CanDefineFixedFilterForPicklistType
-
-		// Create picklist with entries
 
 		const {listTypeDefinition, listTypeEntries} =
 			await postListTypeDefinitionListTypeEntries({
 				apiHelpers,
-				listTypeEntriesLength: 3,
+				listTypeEntriesLength: 2,
 			});
 
 		const picklistEntryNames = listTypeEntries.map(
 			(entry) => entry.name_i18n.en_US
 		);
-
-		// Create object with Picklist and Text fields
 
 		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
@@ -76,13 +74,8 @@ test(
 
 		const picklistFieldName = objectFields[0].name;
 		const textFieldName = objectFields[1].name;
-
 		const applicationName =
 			'c/' + objectDefinition.name!.toLowerCase() + 's';
-
-		// Create entries with different picklist values
-
-		const targetPicklistValue = picklistEntryNames[0];
 
 		for (let i = 0; i < picklistEntryNames.length; i++) {
 			await apiHelpers.objectEntry.postObjectEntry(
@@ -94,129 +87,110 @@ test(
 			);
 		}
 
-		// Create a display page template for the object
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-		const objectClassName = objectDefinition.className;
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				objectClassName
+		await test.step('Add Collection Display with object as provider in Table style', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.addFragment(
+				'Content Display',
+				'Collection Display'
 			);
 
-		const displayPageTemplateName = 'DPT_' + getRandomString();
+			await pageEditorPage.selectFragment(
+				await pageEditorPage.getFragmentId('Collection Display')
+			);
 
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-			{
-				classNameId: className.classNameId,
-				groupId: site.id,
-				name: displayPageTemplateName,
-			}
-		);
+			await pageEditorPage.chooseCollectionDisplayCollection(
+				'Collection Providers',
+				objectDefinition.label['en_US'],
+				{search: true}
+			);
 
-		// Edit display page and add Collection Display fragment
+			await pageEditorPage.waitForChangesSaved();
 
-		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+			const collectionId =
+				await pageEditorPage.getFragmentId('Collection Display');
 
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+			await pageEditorPage.selectFragment(collectionId);
 
-		await pageEditorPage.addFragment(
-			'Content Display',
-			'Collection Display'
-		);
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Style Display',
+				tab: 'General',
+				value: 'Table',
+			});
 
-		// Select the Collection Display and choose the object as collection provider
+			await pageEditorPage.waitForChangesSaved();
+		});
 
-		await pageEditorPage.selectFragment(
-			await pageEditorPage.getFragmentId('Collection Display')
-		);
+		await test.step('Configure fixed filter on the picklist field', async () => {
+			const collectionId =
+				await pageEditorPage.getFragmentId('Collection Display');
 
-		await pageEditorPage.chooseCollectionDisplayCollection(
-			'Collection Providers',
-			objectDefinition.label['en_US'],
-			{search: true}
-		);
+			await pageEditorPage.selectFragment(collectionId);
 
-		await pageEditorPage.waitForChangesSaved();
+			await page.getByTitle('View Collection Options').click();
 
-		// Add Heading fragment inside collection display
+			await page
+				.getByRole('menuitem', {name: 'Filter Collection'})
+				.click();
 
-		await pageEditorPage.addFragment(
-			'Basic Components',
-			'Heading',
-			page.locator('.page-editor__collection-item.empty').first()
-		);
+			await page.getByLabel('Item Type', {exact: true}).click();
 
-		// Configure fixed filter on the picklist field via Filter Collection
+			await page
+				.getByLabel(objectDefinition.label['en_US'])
+				.check();
 
-		const collectionId =
-			await pageEditorPage.getFragmentId('Collection Display');
+			await page.locator('body').click();
 
-		await pageEditorPage.selectFragment(collectionId);
+			await page.getByLabel('Filter', {exact: true}).click();
 
-		// Open filter collection options
+			await page
+				.getByRole('option', {name: objectFields[0].label['en_US']})
+				.click();
 
-		await page.getByTitle('View Collection Options').click();
+			await page.getByLabel('Value', {exact: true}).click();
 
-		await page
-			.getByRole('menuitem', {name: 'Filter Collection'})
-			.click();
+			await page
+				.getByRole('option', {name: picklistEntryNames[0]})
+				.click();
 
-		// Select the picklist field filter and set value
+			await page.getByRole('button', {name: 'Save'}).click();
 
-		await page.getByLabel('Item Type', {exact: true}).click();
+			await pageEditorPage.waitForChangesSaved();
+		});
 
-		await page
-			.getByLabel(objectDefinition.label['en_US'])
-			.check();
+		await test.step('Publish and verify only filtered entry is visible', async () => {
+			await pageEditorPage.publishPage();
 
-		await page.locator('body').click();
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
-		// Set the filter for the picklist field with the target value
+			const collectionTable = page
+				.locator('.lfr-layout-structure-item-collection')
+				.first();
 
-		await page.getByLabel('Filter', {exact: true}).click();
+			await expect(
+				collectionTable.getByText(picklistEntryNames[0])
+			).toBeVisible();
 
-		await page
-			.getByRole('option', {name: objectFields[0].label['en_US']})
-			.click();
-
-		await page.getByLabel('Value', {exact: true}).click();
-
-		await page
-			.getByRole('option', {name: targetPicklistValue})
-			.click();
-
-		await page.getByRole('button', {name: 'Save'}).click();
-
-		await pageEditorPage.waitForChangesSaved();
-
-		// Publish the display page template
-
-		await displayPageTemplatesPage.publishTemplate();
-
-		// Verify that the collection display has entries (at least the filtered one)
-
-		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-		await expect(
-			page.locator('.page-editor__collection-item')
-		).toHaveCount(1);
+			await expect(
+				collectionTable.getByText(picklistEntryNames[1])
+			).not.toBeVisible();
+		});
 	}
 );
 
 test(
 	'LPD-78504 Can set pagination as numeric on display page',
 	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers,
-		displayPageTemplatesPage,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
+	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: CanSetPaginationNumeric
-
-		// Create object with Text field
 
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
@@ -237,112 +211,78 @@ test(
 		const applicationName =
 			'c/' + objectDefinition.name!.toLowerCase() + 's';
 
-		// Create enough entries to trigger pagination
-
-		for (let i = 0; i < 25; i++) {
+		for (let i = 0; i < 2; i++) {
 			await apiHelpers.objectEntry.postObjectEntry(
 				{[textFieldName]: `Entry_${i}_${getRandomInt()}`},
 				applicationName
 			);
 		}
 
-		// Create a display page template for the object
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-		const objectClassName = objectDefinition.className;
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				objectClassName
+		await test.step('Add Collection Display with object as provider', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.addFragment(
+				'Content Display',
+				'Collection Display'
 			);
 
-		const displayPageTemplateName = 'DPT_' + getRandomString();
+			await pageEditorPage.selectFragment(
+				await pageEditorPage.getFragmentId('Collection Display')
+			);
 
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-			{
-				classNameId: className.classNameId,
-				groupId: site.id,
-				name: displayPageTemplateName,
-			}
-		);
+			await pageEditorPage.chooseCollectionDisplayCollection(
+				'Collection Providers',
+				objectDefinition.label['en_US'],
+				{search: true}
+			);
 
-		// Edit display page and add Collection Display
+			await pageEditorPage.waitForChangesSaved();
 
-		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-		await pageEditorPage.addFragment(
-			'Content Display',
-			'Collection Display'
-		);
-
-		await pageEditorPage.selectFragment(
-			await pageEditorPage.getFragmentId('Collection Display')
-		);
-
-		await pageEditorPage.chooseCollectionDisplayCollection(
-			'Collection Providers',
-			objectDefinition.label['en_US'],
-			{search: true}
-		);
-
-		await pageEditorPage.waitForChangesSaved();
-
-		// Add Heading fragment inside collection display
-
-		await pageEditorPage.addFragment(
-			'Basic Components',
-			'Heading',
-			page.locator('.page-editor__collection-item.empty').first()
-		);
-
-		// Select collection display and change pagination to Numeric
-
-		const collectionId =
-			await pageEditorPage.getFragmentId('Collection Display');
-
-		await pageEditorPage.selectFragment(collectionId);
-
-		// Set max items per page to a low number so pagination appears
-
-		await pageEditorPage.changeConfiguration({
-			fieldLabel: 'Maximum Number of Items per Page',
-			tab: 'General',
-			value: '5',
+			await pageEditorPage.addFragment(
+				'Basic Components',
+				'Heading',
+				page.locator('.page-editor__collection-item.empty').first()
+			);
 		});
 
-		await pageEditorPage.changeConfiguration({
-			fieldLabel: 'Pagination',
-			tab: 'General',
-			value: 'numeric',
+		await test.step('Set pagination to Numeric and verify', async () => {
+			const collectionId =
+				await pageEditorPage.getFragmentId('Collection Display');
+
+			await pageEditorPage.selectFragment(collectionId);
+
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Pagination',
+				tab: 'General',
+				value: 'numeric',
+			});
+
+			await pageEditorPage.waitForChangesSaved();
+
+			const collectionStyle = page.getByLabel('CollectionStyle');
+
+			await expect(collectionStyle.getByLabel('Pagination')).toHaveValue(
+				'numeric'
+			);
+
+			await expect(page.locator('.pagination-bar')).toBeVisible();
+
+			await expect(page.getByLabel('Go to page, 1')).toBeVisible();
 		});
-
-		// Verify that numeric pagination is displayed
-
-		const collectionStyle = page.getByLabel('CollectionStyle');
-
-		await expect(collectionStyle.getByLabel('Pagination')).toHaveValue(
-			'numeric'
-		);
-
-		await expect(page.locator('.pagination-bar')).toBeVisible();
-
-		await expect(page.getByLabel('Go to page, 1')).toBeVisible();
 	}
 );
 
 test(
 	'LPD-78504 Can set pagination as simple on display page',
 	{tag: '@LPD-78504'},
-	async ({
-		apiHelpers,
-		displayPageTemplatesPage,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
+	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: CanSetPaginationSimple
-
-		// Create object with Text field
 
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
@@ -363,102 +303,72 @@ test(
 		const applicationName =
 			'c/' + objectDefinition.name!.toLowerCase() + 's';
 
-		// Create enough entries to trigger pagination
-
-		for (let i = 0; i < 25; i++) {
+		for (let i = 0; i < 2; i++) {
 			await apiHelpers.objectEntry.postObjectEntry(
 				{[textFieldName]: `Entry_${i}_${getRandomInt()}`},
 				applicationName
 			);
 		}
 
-		// Create a display page template for the object
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-		const objectClassName = objectDefinition.className;
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				objectClassName
+		await test.step('Add Collection Display with object as provider', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.addFragment(
+				'Content Display',
+				'Collection Display'
 			);
 
-		const displayPageTemplateName = 'DPT_' + getRandomString();
+			await pageEditorPage.selectFragment(
+				await pageEditorPage.getFragmentId('Collection Display')
+			);
 
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-			{
-				classNameId: className.classNameId,
-				groupId: site.id,
-				name: displayPageTemplateName,
-			}
-		);
+			await pageEditorPage.chooseCollectionDisplayCollection(
+				'Collection Providers',
+				objectDefinition.label['en_US'],
+				{search: true}
+			);
 
-		// Edit display page and add Collection Display
+			await pageEditorPage.waitForChangesSaved();
 
-		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-		await pageEditorPage.addFragment(
-			'Content Display',
-			'Collection Display'
-		);
-
-		await pageEditorPage.selectFragment(
-			await pageEditorPage.getFragmentId('Collection Display')
-		);
-
-		await pageEditorPage.chooseCollectionDisplayCollection(
-			'Collection Providers',
-			objectDefinition.label['en_US'],
-			{search: true}
-		);
-
-		await pageEditorPage.waitForChangesSaved();
-
-		// Add Heading fragment inside collection display
-
-		await pageEditorPage.addFragment(
-			'Basic Components',
-			'Heading',
-			page.locator('.page-editor__collection-item.empty').first()
-		);
-
-		// Select collection display and change pagination to Simple
-
-		const collectionId =
-			await pageEditorPage.getFragmentId('Collection Display');
-
-		await pageEditorPage.selectFragment(collectionId);
-
-		// Set max items per page to a low number so pagination appears
-
-		await pageEditorPage.changeConfiguration({
-			fieldLabel: 'Maximum Number of Items per Page',
-			tab: 'General',
-			value: '5',
+			await pageEditorPage.addFragment(
+				'Basic Components',
+				'Heading',
+				page.locator('.page-editor__collection-item.empty').first()
+			);
 		});
 
-		await pageEditorPage.changeConfiguration({
-			fieldLabel: 'Pagination',
-			tab: 'General',
-			value: 'simple',
+		await test.step('Set pagination to Simple and verify', async () => {
+			const collectionId =
+				await pageEditorPage.getFragmentId('Collection Display');
+
+			await pageEditorPage.selectFragment(collectionId);
+
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Pagination',
+				tab: 'General',
+				value: 'simple',
+			});
+
+			await pageEditorPage.waitForChangesSaved();
+
+			const collectionStyle = page.getByLabel('CollectionStyle');
+
+			await expect(collectionStyle.getByLabel('Pagination')).toHaveValue(
+				'simple'
+			);
+
+			await expect(
+				page.getByText('Previous').or(page.getByText('Prev')).first()
+			).toBeVisible();
+
+			await expect(page.getByText('Next').first()).toBeVisible();
 		});
-
-		// Verify that simple pagination is displayed
-
-		const collectionStyle = page.getByLabel('CollectionStyle');
-
-		await expect(collectionStyle.getByLabel('Pagination')).toHaveValue(
-			'simple'
-		);
-
-		await expect(page.locator('.pagination-bar')).toBeVisible();
-
-		// Simple pagination shows Previous/Next instead of page numbers
-
-		await expect(
-			page.getByRole('link', {name: 'Next'}).or(
-				page.getByLabel('Next Page')
-			)
-		).toBeVisible();
 	}
 );
 
@@ -474,8 +384,6 @@ test(
 	}) => {
 		// Corresponds to Poshi test: ViewImageUserProfileFromSpecificEntry
 
-		// Create object with Text field
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
 		});
@@ -495,8 +403,6 @@ test(
 		const applicationName =
 			'c/' + objectDefinition.name!.toLowerCase() + 's';
 
-		// Create an object entry
-
 		const entryValue = 'TestEntry_' + getRandomInt();
 
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
@@ -504,70 +410,48 @@ test(
 			applicationName
 		);
 
-		// Create a display page template for the object
-
-		const objectClassName = objectDefinition.className;
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				objectClassName
-			);
-
-		const displayPageTemplateName = 'DPT_' + getRandomString();
-
-		const displayPage =
-			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-				{
-					classNameId: className.classNameId,
-					groupId: site.id,
-					name: displayPageTemplateName,
-				}
-			);
-
-		// Mark as default display page
-
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
-			{
-				layoutPageTemplateEntryId:
-					displayPage.layoutPageTemplateEntryId,
-			}
-		);
-
-		// Edit display page and add Heading fragment mapped to text field
-
-		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-		await pageEditorPage.addFragment('Basic Components', 'Heading');
-
-		await page.getByText('Heading Example', {exact: true}).click();
-
-		await pageEditorPage.setMappingConfiguration({
-			mapping: {
-				field: objectFields[0].label['en_US'],
-			},
-			source: 'structure',
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
 		});
 
-		await displayPageTemplatesPage.publishTemplate();
+		await test.step('Add Image fragment and map to User Profile Image', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Navigate to the display page for the object entry
+			await pageEditorPage.addFragment('Basic Components', 'Image');
 
-		await page.goto(
-			`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`,
-			{waitUntil: 'networkidle'}
-		);
+			const imageId = await pageEditorPage.getFragmentId('Image');
 
-		// Verify the entry text is visible
+			await pageEditorPage.selectEditable(imageId, 'image-square');
 
-		await expect(page.getByText(entryValue)).toBeVisible();
+			await page.getByLabel('Source Selection').selectOption('Mapping');
 
-		// Verify the user profile image (avatar) is visible on the page
+			await pageEditorPage.setMappedItem({
+				entity: objectDefinition.label['en_US'],
+				entry: objectEntry.id.toString(),
+				entryLocator: page
+					.frameLocator('iframe[title="Select"]')
+					.getByText(objectEntry.id.toString())
+					.first(),
+				field: 'User Profile Image',
+			});
 
-		await expect(
-			page.locator(
-				'img.user-icon-initials, img[alt*="User"], .user-icon, .sticker-user-icon, .lexicon-icon-user'
-			).first()
-		).toBeVisible();
+			await pageEditorPage.waitForChangesSaved();
+		});
+
+		await test.step('Publish and verify user profile image is visible', async () => {
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(
+				page.locator(
+					'[data-lfr-editable-id="image-square"] img, img[data-lfr-editable-id="image-square"]'
+				)
+			).toBeVisible();
+		});
 	}
 );

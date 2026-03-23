@@ -43,31 +43,35 @@ test(
 			type: 'objectDefinition',
 		});
 
-		await displayPageTemplatesPage.goto();
+		await test.step('Create a new blank display page template', async () => {
+			await displayPageTemplatesPage.goto();
 
-		await page
-			.getByRole('button', {name: 'New'})
-			.click();
+			await page
+				.getByRole('button', {name: 'New'})
+				.click();
 
-		await page
-			.getByRole('menuitem', {name: 'Display Page Template'})
-			.click();
+			await page
+				.getByRole('menuitem', {name: 'Display Page Template'})
+				.click();
 
-		await page.getByRole('button', {name: 'Blank'}).click();
+			await page.getByRole('button', {name: 'Blank'}).click();
+		});
 
-		const contentTypeSelect = page.getByLabel('Content Type');
+		await test.step('Verify unpublished object is not in content type options', async () => {
+			const contentTypeSelect = page.getByLabel('Content Type');
 
-		await expect(contentTypeSelect).toBeVisible();
+			await expect(contentTypeSelect).toBeVisible();
 
-		const options = contentTypeSelect.locator('option');
+			const options = contentTypeSelect.locator('option');
 
-		const optionTexts = await options.allTextContents();
+			const optionTexts = await options.allTextContents();
 
-		expect(
-			optionTexts.some(
-				(text) =>
-					text === objectDefinition.label['en_US']
-			)
-		).toBe(false);
+			expect(
+				optionTexts.some(
+					(text) =>
+						text === objectDefinition.label['en_US']
+				)
+			).toBe(false);
+		});
 	}
 );

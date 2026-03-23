@@ -7,6 +7,7 @@ import * as esbuild from 'esbuild';
 
 import getCustomBuildConfig from '../util/configuration/getCustomBuildConfig.mjs';
 import getNamedArguments from '../util/getNamedArguments.mjs';
+import print from '../util/print.mjs';
 
 const DEFAULT_PORT = 8081;
 
@@ -28,7 +29,12 @@ export default async function main() {
 			port: DEFAULT_PORT,
 		});
 
-		console.log(`Bundle served at 'localhost:${port}'`);
+		print(
+			0,
+			true,
+			print.info('\nINFO:'),
+			`Bundle served at 'localhost:${port}'\n`
+		);
 	}
 	else {
 		await Promise.all([

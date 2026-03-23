@@ -7,6 +7,8 @@ import fg from 'fast-glob';
 import fs from 'fs/promises';
 import path from 'path';
 
+import print from '../util/print.mjs';
+
 const HEADER = 'label,start,end,delta';
 
 export default async function main() {
@@ -17,10 +19,13 @@ export default async function main() {
 	}
 
 	if (!timingsDir) {
-		console.error(`
-❌ Please provide the path to the timings dir as an argument or set the LIFERAY_NPM_SCRIPTS_TIMING
-   environment variable.
-`);
+		print(
+			0,
+			true,
+			print.info('\nERROR:'),
+			`Please provide the path to the timings dir as an argument or set`,
+			`\n       the LIFERAY_NPM_SCRIPTS_TIMING environment variable.\n`
+		);
 
 		process.exit(2);
 	}
@@ -113,9 +118,7 @@ export default async function main() {
 
 	await fs.writeFile(filePath, report.data, 'utf-8');
 
-	console.log(`
-🏁 Wrote report file: ${filePath}
-`);
+	print(0, true, print.info('\nINFO:'), `Wrote report file: ${filePath}\n`);
 }
 
 function append(report, ...messages) {

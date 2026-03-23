@@ -9,6 +9,7 @@ import path from 'path';
 
 import getYarnWorkspaceProjects from '../util/getYarnWorkspaceProjects.mjs';
 import {BUNDLE_REPORTS_PATH} from '../util/locations.mjs';
+import print from '../util/print.mjs';
 
 export default async function main() {
 	const projectDirectories = await getYarnWorkspaceProjects();
@@ -69,9 +70,7 @@ export default async function main() {
 
 	await fs.writeFile(csvFile, lines.join('\n'));
 
-	console.log(`
-ℹ️  The report has been created at: ${csvFile}
-`);
+	print(0, true, print.info('\nINFO:'), `Wrote report file: ${csvFile}\n`);
 }
 
 async function getRootInputs(projectDirectories) {

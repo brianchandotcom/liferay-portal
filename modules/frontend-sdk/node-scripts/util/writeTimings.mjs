@@ -8,6 +8,7 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 
 import {MODULES_DIR} from './locations.mjs';
+import print from './print.mjs';
 
 export default async function writeTimings(start, endConfig) {
 	const {LIFERAY_NPM_SCRIPTS_TIMING} = process.env;
@@ -22,7 +23,13 @@ export default async function writeTimings(start, endConfig) {
 			`${projectDir}.csv`
 		);
 
-		console.log(`Appending timing information to: ${csvFilePath}`);
+		print(
+			0,
+			true,
+			print.info('INFO:'),
+			'Appending timing information to',
+			print.underline(csvFilePath)
+		);
 
 		try {
 			await fs.access(csvFilePath, constants.F_OK);

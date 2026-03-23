@@ -195,6 +195,7 @@ export default {
 	'create-template': 'Create Template',
 	'created-at': 'Created At',
 	'created-by': 'Created By',
+	'currency-code': 'Currency Code',
 	'customer-account': 'Customer Account',
 	'customer-dashboard': 'Customer Dashboard',
 	'customer-project': 'Customer Project',

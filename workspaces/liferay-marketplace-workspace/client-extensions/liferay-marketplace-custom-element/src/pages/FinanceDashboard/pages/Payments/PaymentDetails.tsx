@@ -82,16 +82,15 @@ const PaymentDetails = () => {
 			return;
 		}
 
-		const _formatCurrency = (
-			currencyCode: string,
-			price: number
-		): string => {
-			try {
-				return formatCurrency(currencyCode, price);
+		const _formatNumber = (price: number): string => {
+			if (!price) {
+				return '0.00';
 			}
-			catch {
-				return String(price);
-			}
+
+			return price.toLocaleString(undefined, {
+				maximumFractionDigits: 2,
+				minimumFractionDigits: 2,
+			});
 		};
 
 		const headers = [
@@ -101,6 +100,7 @@ const PaymentDetails = () => {
 			i18n.translate('net-price'),
 			i18n.translate('vat'),
 			i18n.translate('total'),
+			i18n.translate('currency-code'),
 		];
 
 		const rows = completeOrderItems.map(({orderItem, placedOrderItem}) => {
@@ -112,9 +112,10 @@ const PaymentDetails = () => {
 				placedOrderItem.name || '',
 				orderItem.account?.name || '',
 				placedOrderItem.quantity,
-				_formatCurrency(orderItem.currencyCode, finalPrice),
-				_formatCurrency(orderItem.currencyCode, vat),
-				_formatCurrency(orderItem.currencyCode, finalPriceWithTax),
+				_formatNumber(finalPrice),
+				_formatNumber(vat),
+				_formatNumber(finalPriceWithTax),
+				orderItem.currencyCode,
 			];
 		});
 

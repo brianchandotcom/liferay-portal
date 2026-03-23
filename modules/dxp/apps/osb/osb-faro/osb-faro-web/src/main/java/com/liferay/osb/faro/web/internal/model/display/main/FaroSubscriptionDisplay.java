@@ -412,6 +412,9 @@ public class FaroSubscriptionDisplay {
 				subscriptionProductName, ProductConstants.BASIC_PRODUCT_NAME) ||
 			StringUtil.equals(
 				subscriptionProductName,
+				ProductConstants.DATA_PLATFORM_PRODUCT_NAME) ||
+			StringUtil.equals(
+				subscriptionProductName,
 				ProductConstants.LXC_PRO_PRODUCT_NAME)) {
 
 			return true;

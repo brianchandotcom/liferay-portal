@@ -19,8 +19,7 @@ function check_health {
 
 function download_hotfix {
 	for file_url in \
-		"https://releases-cdn.liferay.com/dxp/hotfix/2025.q3.7/liferay-dxp-2025.q3.7-hotfix-16.zip" \
-		"https://releases-cdn.liferay.com/tools/patching-tool/patching-tool-4.0.9.zip"
+	"https://releases-cdn.liferay.com/dxp/hotfix/2026.q1.0-lts/liferay-dxp-2026.q1.0-lts-hotfix-11.zip"
 	do
 		local hotfix_file_name
 

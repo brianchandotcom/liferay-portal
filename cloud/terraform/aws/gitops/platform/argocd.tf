@@ -149,8 +149,7 @@ resource "kubernetes_namespace" "argocd" {
 			local.common_labels,
 			{
 				"pod-security.kubernetes.io/enforce"="restricted"
-			}
-		)
+			})
 		name=var.argocd_namespace
 	}
 }

@@ -880,20 +880,21 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				(DeleteObjectBulkSelectionAction)bulkAction;
 
 			if (!Validator.isBlank(deleteBulkAction.getClassName())) {
-				ObjectDefinition objectDefinition =
+				ObjectDefinition cmsBulkActionTaskObjectDefinition =
 					_objectDefinitionLocalService.
 						getObjectDefinitionByExternalReferenceCode(
 							"L_CMS_BULK_ACTION_TASK",
 							contextCompany.getCompanyId());
 
-				ObjectDefinition bulkActionObjectDefinition =
+				ObjectDefinition objectDefinition =
 					_objectDefinitionLocalService.
-						getObjectDefinitionByClassName(
-							objectDefinition.getCompanyId(),
+						fetchObjectDefinitionByClassName(
+							cmsBulkActionTaskObjectDefinition.getCompanyId(),
 							deleteBulkAction.getClassName());
 
-				if (StringUtil.equals(
-						bulkActionObjectDefinition.getExternalReferenceCode(),
+				if ((objectDefinition != null) &&
+					Objects.equals(
+						objectDefinition.getExternalReferenceCode(),
 						"L_CMP_TASK")) {
 
 					return "DeleteTaskBulkAction";

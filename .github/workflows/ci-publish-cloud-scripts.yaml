@@ -48,6 +48,7 @@ jobs:
                         --gzip \
                         --verbose \
                         cloud/scripts/setup_aws.sh \
+                        cloud/scripts/versions.tfvars \
                         cloud/terraform/aws/eks/* \
                         cloud/terraform/aws/gitops/platform/* \
                         cloud/terraform/aws/gitops/resources/* \
@@ -66,5 +67,6 @@ on:
             -   cloud/terraform/aws/eks/*
             -   cloud/terraform/aws/gitops/platform/*
             -   cloud/terraform/aws/gitops/resources/*
+            -   cloud/terraform/aws/grafana/*
 permissions:
     id-token: write

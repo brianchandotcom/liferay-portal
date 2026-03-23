@@ -8,10 +8,19 @@ _SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 _ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
 
+_VERSIONS_TFVARS_FILE="${_SCRIPTS_DIR}/versions.tfvars"
+
 function main {
 	if [ "${#}" -ne 1 ]
 	then
 		echo "Usage: ${0} <configuration-json-file>"
+
+		exit 1
+	fi
+
+	if [ ! -f "${_VERSIONS_TFVARS_FILE}" ]
+	then
+		echo "${_VERSIONS_TFVARS_FILE} does not exist."
 
 		exit 1
 	fi
@@ -95,7 +104,10 @@ function _get_terraform_apply_args {
 		auto_approve=$(jq --raw-output '.options.auto_approve' "${configuration_json_file}")
 	fi
 
-	local apply_args=("-var-file=${_SCRIPTS_DIR}/global_terraform.tfvars")
+	local apply_args=(
+		"-var-file=${_VERSIONS_TFVARS_FILE}"
+		"-var-file=${_SCRIPTS_DIR}/global_terraform.tfvars"
+	)
 
 	if [[ "${auto_approve}" == "true" ]]
 	then

@@ -259,7 +259,7 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 
 	@Override
 	public void reindex(long companyId) throws SearchException {
-		_indexerWriter.reindex(new String[] {String.valueOf(companyId)});
+		_indexerWriter.reindexCompany(companyId);
 	}
 
 	@Override

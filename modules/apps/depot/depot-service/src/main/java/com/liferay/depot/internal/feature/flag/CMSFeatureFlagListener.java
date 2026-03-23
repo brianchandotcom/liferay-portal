@@ -5,6 +5,7 @@
 
 package com.liferay.depot.internal.feature.flag;
 
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.internal.util.DepotRoleUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -39,7 +40,7 @@ public class CMSFeatureFlagListener implements FeatureFlagListener {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
-			for (String name : DepotRoleUtil.DEPOT_ROLE_NAMES) {
+			for (String name : DepotRolesConstants.DEPOT_ROLE_NAMES) {
 				Role role = _roleLocalService.fetchRole(companyId, name);
 
 				if (role == null) {

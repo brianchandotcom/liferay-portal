@@ -7,7 +7,6 @@ package com.liferay.depot.internal.instance.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotRolesConstants;
-import com.liferay.depot.internal.util.DepotRoleUtil;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
@@ -88,7 +87,7 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 				DepotRolesConstants.ASSET_LIBRARY_MEMBER,
 				List.of(ActionKeys.VIEW));
 
-			for (String name : DepotRoleUtil.DEPOT_ROLE_NAMES) {
+			for (String name : DepotRolesConstants.DEPOT_ROLE_NAMES) {
 				_assertRoleResourcePermissions(
 					company.getCompanyId(), Role.class.getName(), name,
 					List.of(ActionKeys.VIEW));

@@ -23,4 +23,10 @@ public class DepotRolesConstants {
 
 	public static final String ASSET_LIBRARY_OWNER = "Asset Library Owner";
 
+	public static final String[] DEPOT_ROLE_NAMES = {
+		ASSET_LIBRARY_ADMINISTRATOR, ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+		ASSET_LIBRARY_CONTENT_REVIEWER, ASSET_LIBRARY_MEMBER,
+		ASSET_LIBRARY_OWNER
+	};
+
 }

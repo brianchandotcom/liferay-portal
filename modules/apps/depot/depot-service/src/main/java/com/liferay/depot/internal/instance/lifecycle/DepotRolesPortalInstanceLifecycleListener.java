@@ -46,7 +46,7 @@ public class DepotRolesPortalInstanceLifecycleListener
 			company.getCompanyId(),
 			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
 
-		for (String name : DepotRoleUtil.DEPOT_ROLE_NAMES) {
+		for (String name : DepotRolesConstants.DEPOT_ROLE_NAMES) {
 			Role role = _getOrCreateRole(company.getCompanyId(), name);
 
 			_resourceLocalService.addResources(

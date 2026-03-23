@@ -206,13 +206,13 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public void reindex(String className, long classPK) throws SearchException {
-		_indexer.reindex(className, classPK);
+	public void reindex(long companyId) throws SearchException {
+		_indexer.reindex(companyId);
 	}
 
 	@Override
-	public void reindex(String[] ids) throws SearchException {
-		_indexer.reindex(ids);
+	public void reindex(String className, long classPK) throws SearchException {
+		_indexer.reindex(className, classPK);
 	}
 
 	@Override

@@ -258,13 +258,13 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	}
 
 	@Override
-	public void reindex(String className, long classPK) throws SearchException {
-		_indexerWriter.reindex(classPK);
+	public void reindex(long companyId) throws SearchException {
+		_indexerWriter.reindex(new String[] {String.valueOf(companyId)});
 	}
 
 	@Override
-	public void reindex(String[] ids) throws SearchException {
-		_indexerWriter.reindex(ids);
+	public void reindex(String className, long classPK) throws SearchException {
+		_indexerWriter.reindex(classPK);
 	}
 
 	@Override

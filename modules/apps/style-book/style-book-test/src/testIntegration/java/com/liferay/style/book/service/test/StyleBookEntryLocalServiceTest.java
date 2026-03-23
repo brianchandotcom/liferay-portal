@@ -6,6 +6,7 @@
 package com.liferay.style.book.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -154,6 +155,54 @@ public class StyleBookEntryLocalServiceTest {
 		Assert.assertNull(
 			_styleBookEntryLocalService.fetchStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId()));
+	}
+
+	@Test
+	public void testNamespacedFrontendTokensValues() throws Exception {
+		String namespacedJSON = JSONUtil.put(
+			"clay:primaryColor",
+			JSONUtil.put(
+				"cssVariableMapping", "--clay-primary"
+			).put(
+				"value", "#fff"
+			)
+		).put(
+			"theme:primaryColor",
+			JSONUtil.put(
+				"cssVariableMapping", "--primary-color"
+			).put(
+				"value", "#000"
+			)
+		).toString();
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), false, namespacedJSON,
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), _serviceContext);
+
+		StyleBookEntry fetchedStyleBookEntry =
+			_styleBookEntryLocalService.getStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId());
+
+		Assert.assertEquals(
+			namespacedJSON, fetchedStyleBookEntry.getFrontendTokensValues());
+
+		String updatedNamespacedJSON = JSONUtil.put(
+			"clay:primaryColor",
+			JSONUtil.put(
+				"cssVariableMapping", "--clay-primary"
+			).put(
+				"value", "#000"
+			)
+		).toString();
+
+		styleBookEntry = _styleBookEntryLocalService.updateFrontendTokensValues(
+			styleBookEntry.getStyleBookEntryId(), updatedNamespacedJSON);
+
+		Assert.assertEquals(
+			updatedNamespacedJSON, styleBookEntry.getFrontendTokensValues());
 	}
 
 	@DeleteAfterTestRun

@@ -70,260 +70,242 @@ test(
 		let remoteSite: Site;
 		let site: Site;
 
-			await test.step('Setup remote staging and pages', async () => {
-				site = await apiHelpers.headlessSite.createSite({
-					name: `site-${getRandomString()}`,
-				});
-
-				apiHelpers.data.push({id: site.id, type: 'site'});
-
-				remoteSite = await remoteApiHelpers.headlessSite.createSite({
-					name: site.name,
-				});
-
-				remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
-
-				await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
-					groupId: site.id,
-					remoteGroupId: remoteSite.id,
-					remotePort,
-				});
+		await test.step('Setup remote staging and pages', async () => {
+			site = await apiHelpers.headlessSite.createSite({
+				name: `site-${getRandomString()}`,
 			});
 
-			await test.step('Create a hierarchy of pages on the local site', async () => {
-				layouts = await createLayoutHierarchy({
-					apiHelpers,
-					pageNodes: [
-						{
-							children: [
-								{
-									children: [{title: 'Page 111'}],
-									title: 'Page 11',
-								},
-								{title: 'Page 12'},
-							],
-							title: 'Page 1',
-						},
-						{
-							children: [{title: 'Page 21'}, {title: 'Page 22'}],
-							title: 'Page 2',
-						},
-						{
-							children: [{title: 'Page 31'}, {title: 'Page 32'}],
-							title: 'Page 3',
-						},
-					],
-					siteId: site.id,
-				});
+			apiHelpers.data.push({id: site.id, type: 'site'});
+
+			remoteSite = await remoteApiHelpers.headlessSite.createSite({
+				name: site.name,
 			});
 
-			await test.step('Add two Web Content Display portlets to each page of the local site', async () => {
-				for (const layout of layouts) {
-					await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
 
-					await widgetPagePage.addPortlet('Web Content Display');
-					await widgetPagePage.addPortlet('Web Content Display');
-				}
+			await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
+				groupId: site.id,
+				remoteGroupId: remoteSite.id,
+				remotePort,
 			});
+		});
 
-			const webContentTitle = getRandomString();
-			const pageNumbers = [1, 11, 111, 12, 2, 21, 22, 3, 31, 32];
-
-			let structure: any;
-			let templateKey: string;
-
-			await test.step('Create a data structure and template for page links', async () => {
-				const structureName = getRandomString();
-				const fields: Array<any> = pageNumbers.flatMap((num) => [
-					{name: `Openpage${num}`, repeatable: false},
-					{name: `URL${num}`, repeatable: false},
-				]);
-
-				const dataDefinition = getDataStructureDefinition({
-					defaultLanguageId: 'en_US',
-					fields,
-					name: structureName,
-				});
-
-				structure = await apiHelpers.dataEngine.createStructure(
-					site.id,
-					dataDefinition
-				);
-
-				const templateScript = pageNumbers
-					.map((number) => {
-						return `<p><a href="\${URL${number}.getData()}">\${Openpage${number}.getData()}</a></p>`;
-					})
-					.join('\n');
-				const templateName = 'template1';
-
-				await journalEditTemplatePage.goto(site.friendlyUrlPath);
-				await journalEditTemplatePage.selectStructure(structureName);
-				await journalEditTemplatePage.editTemplate(
-					templateName,
-					templateScript
-				);
-				await journalEditTemplatePage.saveTemplate();
-				await journalEditTemplatePage.selectTemplateToEdit(
-					templateName
-				);
-
-				templateKey = await journalEditTemplatePage.getDDMTemplateKey();
-			});
-
-			await test.step('Create a web content article with page links', async () => {
-				const contentFields: Array<{name: string; value: string}> =
-					layouts.flatMap((layout, index) => {
-						const pageNum = pageNumbers[index];
-
-						return [
+		await test.step('Create a hierarchy of pages on the local site', async () => {
+			layouts = await createLayoutHierarchy({
+				apiHelpers,
+				pageNodes: [
+					{
+						children: [
 							{
-								name: `Openpage${pageNum}`,
-								value: layout.nameCurrentValue,
+								children: [{title: 'Page 111'}],
+								title: 'Page 11',
 							},
-							{
-								name: `URL${pageNum}`,
-								value: `/web${site.friendlyUrlPath}${layout.friendlyURL}`,
-							},
-						];
-					});
-
-				await apiHelpers.jsonWebServicesJournal.addWebContent({
-					contentFields,
-					ddmStructureId: structure.id,
-					ddmTemplateKey: templateKey,
-					groupId: site.id,
-					titleMap: {en_US: webContentTitle},
-				});
-			});
-
-			let structure2: any;
-			let templateKey2: string;
-
-			await test.step('Create a data structure and template for individual page content', async () => {
-				const structureName2 = getRandomString();
-				const dataDefinition2 = getDataStructureDefinition({
-					defaultLanguageId: 'en_US',
-					fields: [
-						{name: 'Content1', repeatable: false},
-						{name: 'Content2', repeatable: false},
-					],
-					name: structureName2,
-				});
-
-				structure2 = await apiHelpers.dataEngine.createStructure(
-					site.id,
-					dataDefinition2
-				);
-
-				await journalEditTemplatePage.goto(site.friendlyUrlPath);
-				await journalEditTemplatePage.selectStructure(structureName2);
-
-				const templateScript2 =
-					'<h1>${Content1.getData()}</h1>\n' +
-					'<p>${Content2.getData()}</p>';
-				const templateName2 = 'template2';
-				await journalEditTemplatePage.editTemplate(
-					templateName2,
-					templateScript2
-				);
-				await journalEditTemplatePage.saveTemplate();
-				await journalEditTemplatePage.selectTemplateToEdit(
-					templateName2
-				);
-
-				templateKey2 =
-					await journalEditTemplatePage.getDDMTemplateKey();
-			});
-
-			await test.step('Create individual web content articles for each page', async () => {
-				await webContentDisplayPage.gotoWebContentAdmin(site.name);
-
-				for (const num of pageNumbers) {
-					await apiHelpers.jsonWebServicesJournal.addWebContent({
-						contentFields: [
-							{name: `Content1`, value: `Title-${num}`},
-							{
-								name: `Content2`,
-								value: `Text Content-${num}`,
-							},
+							{title: 'Page 12'},
 						],
-						ddmStructureId: structure2.id,
-						ddmTemplateKey: templateKey2,
-						groupId: site.id,
-						titleMap: {en_US: `Title-${num}`},
-					});
+						title: 'Page 1',
+					},
+					{
+						children: [{title: 'Page 21'}, {title: 'Page 22'}],
+						title: 'Page 2',
+					},
+					{
+						children: [{title: 'Page 31'}, {title: 'Page 32'}],
+						title: 'Page 3',
+					},
+				],
+				siteId: site.id,
+			});
+		});
 
-					await reloadUntilVisible({
-						myLocator: page.getByRole('link', {
-							name: `Title-${num}`,
-						}),
-						page,
-					});
-				}
+		await test.step('Add two Web Content Display portlets to each page of the local site', async () => {
+			for (const layout of layouts) {
+				await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+				await widgetPagePage.addPortlet('Web Content Display');
+				await widgetPagePage.addPortlet('Web Content Display');
+			}
+		});
+
+		const webContentTitle = getRandomString();
+		const pageNumbers = [1, 11, 111, 12, 2, 21, 22, 3, 31, 32];
+
+		let structure: any;
+		let templateKey: string;
+
+		await test.step('Create a data structure and template for page links', async () => {
+			const structureName = getRandomString();
+			const fields: Array<any> = pageNumbers.flatMap((num) => [
+				{name: `Openpage${num}`, repeatable: false},
+				{name: `URL${num}`, repeatable: false},
+			]);
+
+			const dataDefinition = getDataStructureDefinition({
+				defaultLanguageId: 'en_US',
+				fields,
+				name: structureName,
 			});
 
-			await test.step('Add web content articles to the display portlets on each page of the local site', async () => {
-				for (const [i, layout] of layouts.entries()) {
-					await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			structure = await apiHelpers.dataEngine.createStructure(
+				site.id,
+				dataDefinition
+			);
 
-					const webContentPortlets = page.locator(
-						'#wrapper, [id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible'
-					);
+			const templateScript = pageNumbers
+				.map((number) => {
+					return `<p><a href="\${URL${number}.getData()}">\${Openpage${number}.getData()}</a></p>`;
+				})
+				.join('\n');
+			const templateName = 'template1';
 
-					await expect(async () => {
-						await page.reload();
-						await webContentDisplayPage.addWebContentWithDisplay({
-							customLocator: webContentPortlets.nth(1),
-							pageType: 'content',
-							waitAfterAddingWebcontent: true,
-							webContentName: webContentTitle,
-						});
-					}).toPass();
+			await journalEditTemplatePage.goto(site.friendlyUrlPath);
+			await journalEditTemplatePage.selectStructure(structureName);
+			await journalEditTemplatePage.editTemplate(
+				templateName,
+				templateScript
+			);
+			await journalEditTemplatePage.saveTemplate();
+			await journalEditTemplatePage.selectTemplateToEdit(templateName);
 
-					await expect(async () => {
-						await page.reload();
-						await webContentDisplayPage.addWebContentWithDisplay({
-							customLocator: webContentPortlets.nth(2),
-							pageType: 'content',
-							waitAfterAddingWebcontent: true,
-							webContentName: `Title-${pageNumbers[i]}`,
-						});
-					}).toPass();
-				}
-			});
+			templateKey = await journalEditTemplatePage.getDDMTemplateKey();
+		});
 
-			await test.step('Publish to live and verify content and links on the remote site', async () => {
-				await remoteStagingPage.publishToLive({
-					layoutFriendlyURL: layouts[0].friendlyURL,
-					siteFriendlyUrl: site.friendlyUrlPath,
+		await test.step('Create a web content article with page links', async () => {
+			const contentFields: Array<{name: string; value: string}> =
+				layouts.flatMap((layout, index) => {
+					const pageNum = pageNumbers[index];
+
+					return [
+						{
+							name: `Openpage${pageNum}`,
+							value: layout.nameCurrentValue,
+						},
+						{
+							name: `URL${pageNum}`,
+							value: `/web${site.friendlyUrlPath}${layout.friendlyURL}`,
+						},
+					];
 				});
 
-				const remoteUrl = remoteApiHelpers.baseUrl.substring(
-					0,
-					remoteApiHelpers.baseUrl.length - 3
-				);
-
-				await remotePage.goto(
-					`${remoteUrl}/web${remoteSite.friendlyUrlPath}${layouts[0].friendlyURL}`
-				);
-
-				for (const num of [111, 21, 3]) {
-					await clickAndExpectToBeVisible({
-						target: remotePage.locator('h1', {
-							hasText: `Title-${num}`,
-						}),
-						trigger: remotePage.getByRole('link', {
-							exact: true,
-							name: `Page ${num}`,
-						}),
-					});
-
-					await expect(remotePage).toHaveURL(
-						new RegExp(`/web/${site.name}/page-${num}`)
-					);
-				}
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				contentFields,
+				ddmStructureId: structure.id,
+				ddmTemplateKey: templateKey,
+				groupId: site.id,
+				titleMap: {en_US: webContentTitle},
 			});
+		});
+
+		let structure2: any;
+		let templateKey2: string;
+
+		await test.step('Create a data structure and template for individual page content', async () => {
+			const structureName2 = getRandomString();
+			const dataDefinition2 = getDataStructureDefinition({
+				defaultLanguageId: 'en_US',
+				fields: [
+					{name: 'Content1', repeatable: false},
+					{name: 'Content2', repeatable: false},
+				],
+				name: structureName2,
+			});
+
+			structure2 = await apiHelpers.dataEngine.createStructure(
+				site.id,
+				dataDefinition2
+			);
+
+			await journalEditTemplatePage.goto(site.friendlyUrlPath);
+			await journalEditTemplatePage.selectStructure(structureName2);
+
+			const templateScript2 =
+				'<h1>${Content1.getData()}</h1>\n' +
+				'<p>${Content2.getData()}</p>';
+			const templateName2 = 'template2';
+			await journalEditTemplatePage.editTemplate(
+				templateName2,
+				templateScript2
+			);
+			await journalEditTemplatePage.saveTemplate();
+			await journalEditTemplatePage.selectTemplateToEdit(templateName2);
+
+			templateKey2 = await journalEditTemplatePage.getDDMTemplateKey();
+		});
+
+		await test.step('Create individual web content articles for each page', async () => {
+			await webContentDisplayPage.gotoWebContentAdmin(site.name);
+
+			for (const num of pageNumbers) {
+				await apiHelpers.jsonWebServicesJournal.addWebContent({
+					contentFields: [
+						{name: `Content1`, value: `Title-${num}`},
+						{
+							name: `Content2`,
+							value: `Text Content-${num}`,
+						},
+					],
+					ddmStructureId: structure2.id,
+					ddmTemplateKey: templateKey2,
+					groupId: site.id,
+					titleMap: {en_US: `Title-${num}`},
+				});
+
+				await reloadUntilVisible({
+					myLocator: page.getByRole('link', {
+						name: `Title-${num}`,
+					}),
+					page,
+				});
+			}
+		});
+
+		await test.step('Add web content articles to the display portlets on each page of the local site', async () => {
+			for (const [i, layout] of layouts.entries()) {
+				await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+				const webContentPortlets = page.locator(
+					'[id^="portlet-topper-toolbar_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]:visible'
+				);
+
+				await webContentDisplayPage.addWebContentWithDisplay({
+					customLocator: webContentPortlets.nth(0),
+					pageType: 'content',
+					webContentName: webContentTitle,
+				});
+
+				await webContentDisplayPage.addWebContentWithDisplay({
+					customLocator: webContentPortlets.nth(1),
+					pageType: 'content',
+					webContentName: `Title-${pageNumbers[i]}`,
+				});
+			}
+		});
+
+		await test.step('Publish to live and verify content and links on the remote site', async () => {
+			await remoteStagingPage.publishToLive({
+				layoutFriendlyURL: layouts[0].friendlyURL,
+				siteFriendlyUrl: site.friendlyUrlPath,
+			});
+
+			await remotePage.goto(
+				`/web${remoteSite.friendlyUrlPath}${layouts[0].friendlyUrlPath}`
+			);
+
+			for (const num of [111, 21, 3]) {
+				await clickAndExpectToBeVisible({
+					target: remotePage.locator('h1', {
+						hasText: `Title-${num}`,
+					}),
+					trigger: remotePage.getByRole('link', {
+						exact: true,
+						name: `Page ${num}`,
+					}),
+				});
+
+				await expect(remotePage).toHaveURL(
+					new RegExp(`/web/${site.name}/page-${num}`)
+				);
+			}
+		});
 	}
 );
 

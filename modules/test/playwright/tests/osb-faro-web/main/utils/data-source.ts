@@ -5,6 +5,7 @@
 
 import {Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {faroConfig} from '../faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './navigation';
 
@@ -41,11 +42,11 @@ export async function createDataSource(page) {
 
 	await page.getByRole('link', {name: 'Settings'}).click();
 
-	await page.getByRole('button', {name: 'Add Data Source'}).click();
-
-	await page.getByRole('menuitem', {name: 'Liferay DXP'}).click();
-
-	await page.waitForTimeout(1000);
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Liferay DXP'}),
+		trigger: page.getByRole('button', {name: 'Add Data Source'}),
+	});
 
 	const token = await page
 		.locator('.onboarding-modal-root input')

@@ -9,9 +9,12 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
+import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	connectToAnalyticsCloud,
 	disconnectFromAnalyticsCloud,
@@ -27,42 +30,32 @@ export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
 	loginAnalyticsCloudTest(),
-	loginTest()
+	loginTest(),
+	systemSettingsPageTest
 );
 
 async function changeCookiePreference({
 	enableCookieBanner,
 	enableExplicitCookieConsentMode,
 	page,
+	systemSettingsPage,
 }: {
 	enableCookieBanner?: boolean;
 	enableExplicitCookieConsentMode?: boolean;
 	page: Page;
+	systemSettingsPage: SystemSettingsPage;
 }) {
-	await page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
-
-	await page.getByRole('tab', {name: 'Control Panel'}).click();
-
-	await page.getByRole('menuitem', {name: 'Instance Settings'}).click();
-
-	await page.getByRole('link', {name: 'Privacy'}).click();
+	await systemSettingsPage.goToSystemSetting('Privacy', 'Consent Manager');
 
 	const cookieBannerCheckbox = await page.getByLabel('Enabled');
 
-	await page.waitForTimeout(3000);
-
 	if (enableCookieBanner) {
 		await cookieBannerCheckbox.check();
-	}
-	else {
-		await cookieBannerCheckbox.uncheck();
-	}
 
-	const explicitCookieConsentModeCheckbox = await page.getByLabel(
-		'Explicit Cookie Consent Mode'
-	);
+		const explicitCookieConsentModeCheckbox = await page.getByLabel(
+			'Explicit Cookie Consent Mode'
+		);
 
-	if (enableCookieBanner) {
 		if (enableExplicitCookieConsentMode) {
 			await explicitCookieConsentModeCheckbox.check();
 		}
@@ -70,14 +63,17 @@ async function changeCookiePreference({
 			await explicitCookieConsentModeCheckbox.uncheck();
 		}
 	}
+	else {
+		await cookieBannerCheckbox.uncheck();
+	}
 
-	const submitButton = await page.$(
-		'button[data-qa-id="submitConfiguration"]'
-	);
+	const publishButton = page
+		.getByRole('button', {name: 'Save'})
+		.or(page.getByRole('button', {name: 'Update'}));
 
-	await submitButton.click();
+	publishButton.click();
 
-	await page.waitForTimeout(3000);
+	await waitForAlert(page, `Success:Your request completed successfully.`);
 }
 
 async function connectACToDXP({
@@ -148,12 +144,14 @@ test.describe(
 
 		test('When Cookie Preference Handling and Explicit Cookie Consent Mode are both Enabled, AC tracking should be disabled by default and only be enabled as soon the user accepts the performance cookies', async ({
 			page,
+			systemSettingsPage,
 		}) => {
 			await test.step('Enable the cookie banner and explicit consent mode', async () => {
 				await changeCookiePreference({
 					enableCookieBanner: true,
 					enableExplicitCookieConsentMode: true,
 					page,
+					systemSettingsPage,
 				});
 			});
 
@@ -174,12 +172,14 @@ test.describe(
 
 		test('When Cookie Preference Handling and Explicit Cookie Consent Mode are both Enabled, AC tracking should be disabled by default and remain disabled if end user did not accept the perfomance cookies', async ({
 			page,
+			systemSettingsPage,
 		}) => {
 			await test.step('Enable the cookie banner and explicit consent mode', async () => {
 				await changeCookiePreference({
 					enableCookieBanner: true,
 					enableExplicitCookieConsentMode: true,
 					page,
+					systemSettingsPage,
 				});
 			});
 
@@ -200,12 +200,14 @@ test.describe(
 
 		test('When Cookie Preference Handling is Enabled and Explicit Cookie Consent Mode is not Enabled, AC tracking should be enabled by default until the user rejects the performance cookies', async ({
 			page,
+			systemSettingsPage,
 		}) => {
 			await test.step('Enable the cookie banner and Disabled explicit consent mode', async () => {
 				await changeCookiePreference({
 					enableCookieBanner: true,
 					enableExplicitCookieConsentMode: false,
 					page,
+					systemSettingsPage,
 				});
 			});
 
@@ -226,12 +228,14 @@ test.describe(
 
 		test('When Cookie Preference Handling is Enabled and Explicit Cookie Consent Mode is not Enabled, AC tracking should be enabled by default and remain enabled if end user accepts the perfomance cookies', async ({
 			page,
+			systemSettingsPage,
 		}) => {
 			await test.step('Enable the cookie banner and Disabled explicit consent mode', async () => {
 				await changeCookiePreference({
 					enableCookieBanner: true,
 					enableExplicitCookieConsentMode: false,
 					page,
+					systemSettingsPage,
 				});
 			});
 

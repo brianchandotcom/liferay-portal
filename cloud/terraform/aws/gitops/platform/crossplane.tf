@@ -39,12 +39,11 @@ resource "helm_release" "crossplane" {
 
 resource "kubernetes_namespace" "crossplane" {
 	metadata {
-		name=var.crossplane_namespace
 		labels=merge(
 			local.common_labels,
 			{
 				"pod-security.kubernetes.io/enforce"="restricted"
-			}
-		)
+			})
+		name=var.crossplane_namespace
 	}
 }

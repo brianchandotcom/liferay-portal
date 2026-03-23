@@ -55,12 +55,12 @@ public class ConfigurationPortalInstanceLifecycleListener
 	public void portalInstanceRegistered(Company company) throws Exception {
 		if (!PropsValues.DATABASE_PARTITION_ENABLED ||
 			(!PortalInstances.isCompanyInCopyProcess() &&
-			 !PortalInstances.isCompanyInInsertionProcess())) {
+			 !PortalInstances.isCompanyInImportProcess())) {
 
 			return;
 		}
 
-		if (PortalInstances.isCompanyInInsertionProcess()) {
+		if (PortalInstances.isCompanyInImportProcess()) {
 			Map<String, String> configurations =
 				DBPartitionUtil.getConfigurations(company.getCompanyId());
 

@@ -248,8 +248,8 @@ public class PortalInstances {
 		return PortalInstancePool.getDefaultCompanyId();
 	}
 
-	public static Long getInsertionInProcessCompanyId() {
-		return _insertionInProcessCompanyId;
+	public static Long getImportInProcessCompanyId() {
+		return _importInProcessCompanyId;
 	}
 
 	/**
@@ -376,8 +376,8 @@ public class PortalInstances {
 		return _companyIdsInDeletionProcess.contains(companyId);
 	}
 
-	public static boolean isCompanyInInsertionProcess() {
-		if (_insertionInProcessCompanyId != null) {
+	public static boolean isCompanyInImportProcess() {
+		if (_importInProcessCompanyId != null) {
 			return true;
 		}
 
@@ -439,17 +439,17 @@ public class PortalInstances {
 		return () -> _copyInProcessCompanyId = null;
 	}
 
-	public static SafeCloseable setInsertionInProcessCompanyIdWithSafeCloseable(
+	public static SafeCloseable setImportInProcessCompanyIdWithSafeCloseable(
 		long companyId) {
 
-		if (_insertionInProcessCompanyId != null) {
+		if (_importInProcessCompanyId != null) {
 			throw new UnsupportedOperationException(
-				"Company in insertion process company ID is not null");
+				"Company in import process company ID is not null");
 		}
 
-		_insertionInProcessCompanyId = companyId;
+		_importInProcessCompanyId = companyId;
 
-		return () -> _insertionInProcessCompanyId = null;
+		return () -> _importInProcessCompanyId = null;
 	}
 
 	private static long _getCompanyIdByHost(
@@ -570,7 +570,7 @@ public class PortalInstances {
 	private static final List<Long> _companyIdsInDeletionProcess =
 		new CopyOnWriteArrayList<>();
 	private static Long _copyInProcessCompanyId;
-	private static Long _insertionInProcessCompanyId;
+	private static Long _importInProcessCompanyId;
 	private static final Set<String> _virtualHostsIgnoreHosts;
 	private static final Set<String> _virtualHostsIgnorePaths;
 

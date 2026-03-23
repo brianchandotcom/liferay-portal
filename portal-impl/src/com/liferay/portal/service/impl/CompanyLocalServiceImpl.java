@@ -378,7 +378,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		SafeCloseable safeCloseable1 =
-			PortalInstances.setInsertionInProcessCompanyIdWithSafeCloseable(
+			PortalInstances.setImportInProcessCompanyIdWithSafeCloseable(
 				companyId);
 
 		try {

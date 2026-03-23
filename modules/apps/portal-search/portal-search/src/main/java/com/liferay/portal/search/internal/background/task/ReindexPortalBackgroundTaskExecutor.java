@@ -30,7 +30,10 @@ import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.internal.SearchEngineInitializer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -81,75 +84,143 @@ public class ReindexPortalBackgroundTaskExecutor
 		long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
 		ExecutorService executorService =
 			_searchEngineHelper.getDocumentsProducerExecutorService();
-		List<Future<?>> futures = new ArrayList<>();
 
 		try (SafeCloseable safeCloseable1 = SearchContext.openBatchMode()) {
-			for (long companyId : companyIds) {
-				List<Indexer<?>> indexers = _serviceTrackerMap.getService(
-					companyId == CompanyConstants.SYSTEM);
+			List<SearchEngineInitializer> searchEngineInitializers =
+				_prepareSearchEngineInitializers(
+					backgroundTaskId, companyIds, executionMode,
+					executorService);
 
-				futures.add(
-					executorService.submit(
-						() -> {
-							try (SafeCloseable safeCloseable2 =
-									BackgroundTaskThreadLocal.
-										setBackgroundTaskIdWithSafeCloseable(
-											backgroundTaskId)) {
+			for (Future<Void> future :
+					executorService.invokeAll(
+						_sortReindexCallables(
+							backgroundTaskId, searchEngineInitializers))) {
 
-								_reindexCompany(
-									companyId, companyIds, executionMode,
-									executorService, indexers);
-
-								return null;
-							}
-						}));
+				future.get();
 			}
 
-			for (Future<?> future : futures) {
-				future.get();
+			_completeSearchEngineInitializers(
+				companyIds, executionMode, searchEngineInitializers);
+		}
+	}
+
+	private void _completeSearchEngineInitializers(
+		long[] companyIds, String executionMode,
+		List<SearchEngineInitializer> searchEngineInitializers) {
+
+		for (SearchEngineInitializer searchEngineInitializer :
+				searchEngineInitializers) {
+
+			long companyId = searchEngineInitializer.getCompanyId();
+
+			try {
+				searchEngineInitializer.complete();
+			}
+			finally {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					ReindexBackgroundTaskConstants.PORTAL_END, companyId,
+					companyIds);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Finished reindexing company ", companyId,
+							" with execution mode ", executionMode));
+				}
 			}
 		}
 	}
 
-	private void _reindexCompany(
-		long companyId, long[] companyIds, String executionMode,
-		ExecutorService executorService, List<Indexer<?>> indexers) {
+	private List<SearchEngineInitializer> _prepareSearchEngineInitializers(
+			long backgroundTaskId, long[] companyIds, String executionMode,
+			ExecutorService executorService)
+		throws Exception {
 
-		ReindexStatusMessageSenderUtil.sendStatusMessage(
-			ReindexBackgroundTaskConstants.PORTAL_START, companyId, companyIds);
+		List<Future<SearchEngineInitializer>> futures = new ArrayList<>();
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Start reindexing company ", companyId,
-					" with execution mode ", executionMode));
+		for (long companyId : companyIds) {
+			List<Indexer<?>> indexers = _serviceTrackerMap.getService(
+				companyId == CompanyConstants.SYSTEM);
+
+			futures.add(
+				executorService.submit(
+					() -> {
+						try (SafeCloseable safeCloseable =
+								BackgroundTaskThreadLocal.
+									setBackgroundTaskIdWithSafeCloseable(
+										backgroundTaskId)) {
+
+							ReindexStatusMessageSenderUtil.sendStatusMessage(
+								ReindexBackgroundTaskConstants.PORTAL_START,
+								companyId, companyIds);
+
+							if (_log.isInfoEnabled()) {
+								_log.info(
+									StringBundler.concat(
+										"Start reindexing company ", companyId,
+										" with execution mode ",
+										executionMode));
+							}
+
+							return new SearchEngineInitializer(
+								companyId,
+								_concurrentReindexManagerSnapshot.get(),
+								executionMode, executorService,
+								_indexNameBuilder, indexers, _jsonFactory,
+								_searchEngineAdapter,
+								_syncReindexManagerSnapshot.get());
+						}
+					}));
 		}
 
-		try {
-			SearchEngineInitializer searchEngineInitializer =
-				new SearchEngineInitializer(
-					companyId, _concurrentReindexManagerSnapshot.get(),
-					executionMode, executorService, _indexNameBuilder, indexers,
-					_jsonFactory, _searchEngineAdapter,
-					_syncReindexManagerSnapshot.get());
+		List<SearchEngineInitializer> searchEngineInitializers =
+			new ArrayList<>();
 
-			searchEngineInitializer.reindex();
+		for (Future<SearchEngineInitializer> future : futures) {
+			searchEngineInitializers.add(future.get());
 		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-		finally {
-			ReindexStatusMessageSenderUtil.sendStatusMessage(
-				ReindexBackgroundTaskConstants.PORTAL_END, companyId,
-				companyIds);
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Finished reindexing company ", companyId,
-						" with execution mode ", executionMode));
+		return searchEngineInitializers;
+	}
+
+	private List<Callable<Void>> _sortReindexCallables(
+		long backgroundTaskId,
+		List<SearchEngineInitializer> searchEngineInitializers) {
+
+		List<Callable<Void>> callables = new ArrayList<>();
+		Map<Callable<Void>, Long> callableCounts = new HashMap<>();
+
+		for (SearchEngineInitializer searchEngineInitializer :
+				searchEngineInitializers) {
+
+			Map<Indexer<?>, Long> reindexEntryCounts =
+				searchEngineInitializer.getReindexEntryCounts();
+
+			for (Map.Entry<Indexer<?>, Long> entry :
+					reindexEntryCounts.entrySet()) {
+
+				Callable<Void> callable = () -> {
+					try (SafeCloseable safeCloseable =
+							BackgroundTaskThreadLocal.
+								setBackgroundTaskIdWithSafeCloseable(
+									backgroundTaskId)) {
+
+						searchEngineInitializer.reindexIndexer(entry.getKey());
+					}
+
+					return null;
+				};
+
+				callables.add(callable);
+				callableCounts.put(callable, entry.getValue());
 			}
 		}
+
+		callables.sort(
+			(callable1, callable2) -> Long.compare(
+				callableCounts.get(callable2), callableCounts.get(callable1)));
+
+		return callables;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

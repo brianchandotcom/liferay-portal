@@ -271,7 +271,7 @@ export default function SaveButtons({
 									'save-as-draft-with-permissions'
 								)
 					}
-					type="button"
+					type={articleId ? 'submit' : 'button'}
 				>
 					{saveButtonLabel}
 				</ClayButton>

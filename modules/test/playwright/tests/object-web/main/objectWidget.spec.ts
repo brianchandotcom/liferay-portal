@@ -5,43 +5,46 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
-import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
-	apiHelpersTest,
 	dataApiHelpersTest,
-	editObjectDefinitionPagesTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
 	objectPagesTest,
-	pagesAdminPagesTest
+	pageViewModePagesTest
 );
 
-test.fixme(
+test(
 	'LPD-78504 Can add object portlet as a widget on a page',
 	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+	async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+		site,
+		widgetPagePage,
+	}) => {
+		// Corresponds to Poshi test: CanAddObjectPortletWidget
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						businessType: 'Text',
-						DBType: 'String',
-						label: {en_US: 'Custom Field'},
-						name: 'customField',
-						required: false,
-					},
-				] as any,
+				objectFields,
 				status: {code: 0},
 			});
 
@@ -50,19 +53,56 @@ test.fixme(
 			type: 'objectDefinition',
 		});
 
-		await viewObjectEntriesPage.goto(objectDefinition.className);
+		await test.step('Enable "Show Widget in Page Builder" and save', async () => {
+			await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+			await editObjectDetailsPage.goToDetailsTab();
+
+			await expect(
+				page.getByRole('switch', {
+					name: 'Show Widget in Page Builder',
+				})
+			).toBeChecked();
+
+			await editObjectDetailsPage.saveObjectDefinition();
+
+			await waitForAlert(page, 'Success:');
+		});
+
+		await test.step('Create a widget page and add the object portlet', async () => {
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+			);
+
+			await widgetPagePage.addPortlet(
+				objectDefinition.pluralLabel['en_US']
+			);
+		});
+
+		await test.step('Verify the portlet is displayed with empty state', async () => {
+			await expect(
+				page.getByText(objectDefinition.pluralLabel['en_US']).first()
+			).toBeVisible();
+
+			await expect(page.getByText('No Results Found')).toBeVisible();
+		});
 	}
 );
 
-test.fixme(
+test(
 	'LPD-78504 Widget button is displayed on object details page',
 	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, editObjectDetailsPage}) => {
+	async ({apiHelpers, editObjectDetailsPage, page}) => {
+		// Corresponds to Poshi test: CanDisplayWidgetButton
+
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
+				status: {code: 2},
 			});
 
 		apiHelpers.data.push({
@@ -70,27 +110,36 @@ test.fixme(
 			type: 'objectDefinition',
 		});
 
-		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+		await test.step('Navigate to object details and verify widget toggle is visible', async () => {
+			await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
 
-		await expect(page.locator('body')).toBeVisible();
+			await editObjectDetailsPage.goToDetailsTab();
+
+			await expect(
+				page.getByText('Show Widget in Page Builder', {exact: true})
+			).toBeVisible();
+		});
 	}
 );
 
-test.fixme(
+test(
 	'LPD-78504 Cannot add object portlet as widget when widget button is disabled',
 	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+	async ({
+		apiHelpers,
+		page,
+		site,
+		widgetPagePage,
+	}) => {
+		// Corresponds to Poshi test: CannotAddObjectPortletWhenWidgetDisabled
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						businessType: 'Text',
-						DBType: 'String',
-						label: {en_US: 'Custom Field'},
-						name: 'customField',
-						required: false,
-					},
-				] as any,
+				objectFields,
 				status: {code: 0},
 			});
 
@@ -99,27 +148,52 @@ test.fixme(
 			type: 'objectDefinition',
 		});
 
-		await viewObjectEntriesPage.goto(objectDefinition.className);
+		await test.step('Search for the object portlet on a widget page and verify it is not available', async () => {
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+			);
+
+			await widgetPagePage.openAddPanel();
+
+			await page.getByLabel('Widgets', {exact: true}).click();
+
+			await page
+				.getByRole('textbox', {name: 'Search Form'})
+				.fill(objectDefinition.pluralLabel['en_US']);
+
+			await expect(
+				page.locator('.sidebar-body__add-panel__tab-item', {
+					hasText: objectDefinition.pluralLabel['en_US'],
+				})
+			).not.toBeVisible();
+		});
 	}
 );
 
-test.fixme(
+test(
 	'LPD-78504 Object portlet widget disappears from page when widget button is disabled',
 	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+	async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+		site,
+		widgetPagePage,
+	}) => {
+		// Corresponds to Poshi test: ObjectPortletWidgetDisappearsWhenWidgetDisabled
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						businessType: 'Text',
-						DBType: 'String',
-						label: {en_US: 'Custom Field'},
-						name: 'customField',
-						required: false,
-					},
-				] as any,
+				objectFields,
 				status: {code: 0},
 			});
 
@@ -128,19 +202,74 @@ test.fixme(
 			type: 'objectDefinition',
 		});
 
-		await viewObjectEntriesPage.goto(objectDefinition.className);
+		let layout: any;
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await test.step('Enable "Show Widget in Page Builder" and save', async () => {
+			await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+			await editObjectDetailsPage.goToDetailsTab();
+
+			const widgetToggle = page.getByRole('switch', {
+				name: 'Show Widget in Page Builder',
+			});
+
+			await expect(widgetToggle).toBeChecked();
+
+			await editObjectDetailsPage.saveObjectDefinition();
+
+			await waitForAlert(page, 'Success:');
+		});
+
+		await test.step('Create a widget page and add the object portlet', async () => {
+			layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+			);
+
+			await widgetPagePage.addPortlet(
+				objectDefinition.pluralLabel['en_US']
+			);
+		});
+
+		await test.step('Disable "Show Widget in Page Builder" and save', async () => {
+			await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+			await editObjectDetailsPage.goToDetailsTab();
+
+			await page.getByRole('switch', {
+				name: 'Show Widget in Page Builder',
+			}).uncheck();
+
+			await editObjectDetailsPage.saveObjectDefinition();
+
+			await waitForAlert(page, 'Success:');
+		});
+
+		await test.step('Navigate back to widget page and verify warning message', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+			);
+
+			await expect(
+				page.getByText('This object is not available.')
+			).toBeVisible();
+		});
 	}
 );
 
-test.fixme(
+test(
 	'LPD-78504 Widget button is enabled by default on object details',
 	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, editObjectDetailsPage}) => {
+	async ({apiHelpers, editObjectDetailsPage, page}) => {
+		// Corresponds to Poshi test: WidgetButtonEnabledByDefault
+
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
+				status: {code: 2},
 			});
 
 		apiHelpers.data.push({
@@ -148,8 +277,16 @@ test.fixme(
 			type: 'objectDefinition',
 		});
 
-		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+		await test.step('Navigate to object details and verify widget toggle is checked by default', async () => {
+			await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
 
-		await expect(page.locator('body')).toBeVisible();
+			await editObjectDetailsPage.goToDetailsTab();
+
+			await expect(
+				page.getByRole('switch', {
+					name: 'Show Widget in Page Builder',
+				})
+			).toBeChecked();
+		});
 	}
 );

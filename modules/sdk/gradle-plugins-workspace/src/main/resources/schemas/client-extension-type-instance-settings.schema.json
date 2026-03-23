@@ -148,7 +148,7 @@
 					"type": "string"
 				},
 				"pid": {
-					"const": "com.liferay.ai.hub.configuration.AIHubConfiguration",
+					"const": "com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration",
 					"title": "AI Hub Configuration"
 				},
 				"serviceURL": {
@@ -2368,7 +2368,7 @@
 			"title": "SEO"
 		},
 		{
-			"description": "Configure when automatic propagation is triggered for site templates.",
+			"description": "Site Templates Configuration",
 			"properties": {
 				"cancelPropagationImportTask": {
 					"default": true,
@@ -2378,7 +2378,7 @@
 				},
 				"pid": {
 					"const": "com.liferay.layout.set.prototype.configuration.LayoutSetPrototypeConfiguration",
-					"description": "Configure site template propagation settings.",
+					"description": "Site Templates Configuration",
 					"title": "Site Templates"
 				}
 			},
@@ -4847,7 +4847,7 @@
 				"com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal.configuration.AMBackwardsCompatibilityHtmlContentTransformerConfiguration",
 				"com.liferay.adaptive.media.image.internal.configuration.AMImageCompanyConfiguration",
 				"com.liferay.ai.creator.openai.configuration.AICreatorOpenAICompanyConfiguration",
-				"com.liferay.ai.hub.configuration.AIHubConfiguration",
+				"com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration",
 				"com.liferay.analytics.settings.configuration.AnalyticsConfiguration",
 				"com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration",
 				"com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerCompanyConfiguration",

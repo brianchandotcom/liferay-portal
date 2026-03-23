@@ -100,6 +100,30 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 				"copy-to"
 			));
 		fdsBulkActionDropdownItems.add(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"time"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "expire")
+			).build(
+				"expire"
+			));
+		fdsBulkActionDropdownItems.add(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"upload"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "export-for-translation")
+			).build(
+				"export-for-translation"
+			));
+		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "download", "download",
 				LanguageUtil.get(_httpServletRequest, "download"), null, null,
@@ -114,18 +138,6 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 				null, "pencil", "edit-tags",
 				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
 				"edit-tags", null));
-		fdsBulkActionDropdownItems.add(
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"time"
-			).setLabel(
-				LanguageUtil.get(_httpServletRequest, "expire")
-			).build(
-				"expire"
-			));
 		fdsBulkActionDropdownItems.add(
 			FDSActionDropdownItemBuilder.setHighlighted(
 				true

@@ -97,6 +97,18 @@ public abstract class BaseContentsSectionDisplayContext
 				"expire"
 			));
 		fdsBulkActionDropdownItems.add(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"upload"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "export-for-translation")
+			).build(
+				"export-for-translation"
+			));
+		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				null, "pencil", "edit-categories",
 				LanguageUtil.get(httpServletRequest, "edit-categories"), "post",

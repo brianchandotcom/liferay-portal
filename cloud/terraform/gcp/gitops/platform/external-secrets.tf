@@ -41,6 +41,6 @@ resource "helm_release" "external_secrets" {
 				}
 			}),
 	]
-	version="1.0.0"
+	version=var.external_secrets_helm_chart_version
 	wait=true
 }

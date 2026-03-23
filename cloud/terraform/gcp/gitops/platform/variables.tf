@@ -1,9 +1,18 @@
+variable "argo_workflows_helm_chart_version" {
+	type=string
+}
 variable "argo_workflows_namespace" {
 	default="argo-workflows-system"
 	type=string
 }
+variable "argocd_helm_chart_version" {
+	type=string
+}
 variable "argocd_namespace" {
 	default="argocd-system"
+	type=string
+}
+variable "crossplane_helm_chart_version" {
 	type=string
 }
 variable "crossplane_namespace" {
@@ -11,6 +20,9 @@ variable "crossplane_namespace" {
 	type=string
 }
 variable "deployment_name" {
+	type=string
+}
+variable "external_secrets_helm_chart_version" {
 	type=string
 }
 variable "external_secrets_namespace" {

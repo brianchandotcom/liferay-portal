@@ -29,6 +29,6 @@ resource "helm_release" "crossplane" {
 				}
 			})
 	]
-	version="2.1.3"
+	version=var.crossplane_helm_chart_version
 	wait=true
 }

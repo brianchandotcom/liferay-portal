@@ -194,6 +194,9 @@ public class AgentInstanceResourceTest
 			).put(
 				"externalReferenceCode", "L_LIFERAY_AI_HUB_MCP_SERVER"
 			).put(
+				"r_accountToAIHubMCPServers_accountEntryId",
+				aiHubAccountEntry.getAccountEntryId()
+			).put(
 				"url", "http://localhost:8080/o/mcp"
 			).build(),
 			ServiceContextTestUtil.getServiceContext(
@@ -401,15 +404,10 @@ public class AgentInstanceResourceTest
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"context",
-				JSONUtil.put(
-					"question", "Is the \"get_openapis\" tool available?")
-			).put(
-				"type", "AI Decision Node With Tool Workflow Definition"
-			).toString(),
-			"ai-hub/v1.0/agent-instances", Http.Method.POST);
+		JSONObject jsonObject = _postAgentInstance(
+			"Is the \"get_openapis\" tool available?", "question",
+			RandomTestUtil.randomString(),
+			"AI Decision Node With Tool Workflow Definition");
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -672,17 +670,9 @@ public class AgentInstanceResourceTest
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
 			List.of(countDownLatch), lines, "agent-instances/subscribe");
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"context",
-				JSONUtil.put(
-					"userMessage", "Is the \"get_openapi\" tool available?")
-			).put(
-				"sseEventSinkKey", sseEventSinkKey
-			).put(
-				"type", "LLM Node With Tool Workflow Definition"
-			).toString(),
-			"ai-hub/v1.0/agent-instances", Http.Method.POST);
+		_postAgentInstance(
+			"Is the \"get_openapi\" tool available?", "userMessage",
+			sseEventSinkKey, "LLM Node With Tool Workflow Definition");
 
 		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 

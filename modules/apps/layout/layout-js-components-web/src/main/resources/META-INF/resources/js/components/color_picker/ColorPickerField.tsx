@@ -126,10 +126,10 @@ export default function ColorPickerField({
 				) : (
 					<ClayColorPicker.Field
 						ariaLabels={{
-							selectColor: Liferay.Language.get('select-a-color'),
+							selectColor: Liferay.Language.get('select-color'),
 							selectionIs: sub(
 								Liferay.Language.get('color-selection-is-x'),
-								color
+								value
 							),
 						}}
 						disabled={disabled}

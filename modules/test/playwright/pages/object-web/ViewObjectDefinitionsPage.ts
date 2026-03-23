@@ -89,9 +89,11 @@ export class ViewObjectDefinitionsPage {
 		objectDefinitionLabel: string,
 		placeholder?: string
 	) {
-		await this.page
-			.getByPlaceholder(placeholder ?? 'Search')
-			.fill(objectDefinitionLabel);
+		const input = this.page.getByRole('searchbox', {
+			name: placeholder ?? 'Search',
+		});
+
+		await input.fill(objectDefinitionLabel);
 
 		await this.page.keyboard.press('Enter');
 

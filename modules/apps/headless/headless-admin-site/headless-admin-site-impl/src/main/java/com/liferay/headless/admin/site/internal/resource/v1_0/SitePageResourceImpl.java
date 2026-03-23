@@ -260,7 +260,8 @@ public class SitePageResourceImpl
 				contextCompany.getCompanyId(), siteExternalReferenceCode));
 
 		if (!layout.isTypeContent()) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"Page specifications cannot be applied to non-content pages");
 		}
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
@@ -403,7 +404,9 @@ public class SitePageResourceImpl
 		}
 
 		if (layout.isPrivateLayout() != privateLayout) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The private page setting does not match the target page's " +
+					"privacy");
 		}
 
 		_validateSitePageLayout(layout);
@@ -423,7 +426,8 @@ public class SitePageResourceImpl
 					 layout.getType(),
 					 SitePageTypeUtil.toInternalType(sitePage.getType()))) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page type does not match the target page type");
 		}
 
 		return _toSitePage(_updateLayout(layout, serviceContext, sitePage));
@@ -478,7 +482,9 @@ public class SitePageResourceImpl
 		if (!Objects.equals(
 				externalReferenceCode, sitePage.getExternalReferenceCode())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The external reference code does not match the target " +
+					"page's external reference code");
 		}
 
 		ServiceContext serviceContext = _getServiceContext(groupId, sitePage);
@@ -641,7 +647,9 @@ public class SitePageResourceImpl
 			serviceContext);
 
 		if (layout.isPrivateLayout() != privateLayout) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The private page setting does not match the target page's " +
+					"privacy");
 		}
 
 		return layout.getLayoutId();
@@ -771,37 +779,43 @@ public class SitePageResourceImpl
 		if ((sitePage.getType() == SitePage.Type.CONTENT_PAGE) &&
 			!(pageSettings instanceof ContentPageSettings)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page type does not match the page settings type");
 		}
 
 		if ((sitePage.getType() == SitePage.Type.EMBEDDED_PAGE) &&
 			!(pageSettings instanceof EmbeddedPageSettings)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page type does not match the page settings type");
 		}
 
 		if ((sitePage.getType() == SitePage.Type.LINK_TO_PAGE_PAGE) &&
 			!(pageSettings instanceof LinkToPagePageSettings)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page type does not match the page settings type");
 		}
 
 		if ((sitePage.getType() == SitePage.Type.LINK_TO_URL_PAGE) &&
 			!(pageSettings instanceof LinkToURLPageSettings)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page type does not match the page settings type");
 		}
 
 		if ((sitePage.getType() == SitePage.Type.PAGE_SET_PAGE) &&
 			!(pageSettings instanceof PageSetPageSettings)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page type does not match the page settings type");
 		}
 
 		if ((sitePage.getType() == SitePage.Type.WIDGET_PAGE) &&
 			!(pageSettings instanceof WidgetPageSettings)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page type does not match the page settings type");
 		}
 
 		String queryString = StringPool.BLANK;
@@ -1220,7 +1234,9 @@ public class SitePageResourceImpl
 			publishedPageSpecification = pageSpecifications[0];
 		}
 		else {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The number of page specifications does not match the page " +
+					"type requirements");
 		}
 
 		if ((publishedPageSpecification.getExternalReferenceCode() != null) &&
@@ -1245,7 +1261,8 @@ public class SitePageResourceImpl
 		if (layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
 			layout.isTypeUtility()) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"This page type cannot be modified through this endpoint");
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -1253,7 +1270,8 @@ public class SitePageResourceImpl
 				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 
 		if (layoutPageTemplateEntry != null) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"This page type cannot be modified through this endpoint");
 		}
 	}
 

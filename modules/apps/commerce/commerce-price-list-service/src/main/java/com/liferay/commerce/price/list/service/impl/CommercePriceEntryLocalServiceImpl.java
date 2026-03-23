@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -178,16 +177,30 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 
-		String fetchedUnitOfMeasureKey = _getUnitOfMeasureKey(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = _getUnitOfMeasureKey(
 			cpInstanceId, unitOfMeasureKey);
 
-		commercePriceEntry.setPricingQuantity(
-			_getPricingQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
+		if (cpInstanceUnitOfMeasure != null) {
+			commercePriceEntry.setPricingQuantity(
+				cpInstanceUnitOfMeasure.getPricingQuantity());
+
+			BigDecimal incrementalOrderQuantity =
+				cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
+
+			commercePriceEntry.setQuantity(
+				incrementalOrderQuantity.setScale(
+					cpInstanceUnitOfMeasure.getPrecision(),
+					RoundingMode.HALF_UP));
+			commercePriceEntry.setUnitOfMeasureKey(
+				cpInstanceUnitOfMeasure.getKey());
+		}
+		else {
+			commercePriceEntry.setPricingQuantity(null);
+			commercePriceEntry.setQuantity(null);
+			commercePriceEntry.setUnitOfMeasureKey(null);
+		}
 
 		commercePriceEntry.setPromoPrice(promoPrice);
-		commercePriceEntry.setQuantity(
-			_getQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
-		commercePriceEntry.setUnitOfMeasureKey(fetchedUnitOfMeasureKey);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -712,16 +725,30 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 
-		String fetchedUnitOfMeasureKey = _getUnitOfMeasureKey(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = _getUnitOfMeasureKey(
 			cpInstanceId, unitOfMeasureKey);
 
-		commercePriceEntry.setPricingQuantity(
-			_getPricingQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
+		if (cpInstanceUnitOfMeasure != null) {
+			commercePriceEntry.setPricingQuantity(
+				cpInstanceUnitOfMeasure.getPricingQuantity());
+
+			BigDecimal incrementalOrderQuantity =
+				cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
+
+			commercePriceEntry.setQuantity(
+				incrementalOrderQuantity.setScale(
+					cpInstanceUnitOfMeasure.getPrecision(),
+					RoundingMode.HALF_UP));
+			commercePriceEntry.setUnitOfMeasureKey(
+				cpInstanceUnitOfMeasure.getKey());
+		}
+		else {
+			commercePriceEntry.setPricingQuantity(null);
+			commercePriceEntry.setQuantity(null);
+			commercePriceEntry.setUnitOfMeasureKey(null);
+		}
 
 		commercePriceEntry.setPromoPrice(promoPrice);
-		commercePriceEntry.setQuantity(
-			_getQuantity(cpInstanceId, fetchedUnitOfMeasureKey));
-		commercePriceEntry.setUnitOfMeasureKey(fetchedUnitOfMeasureKey);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -993,75 +1020,24 @@ public class CommercePriceEntryLocalServiceImpl
 		);
 	}
 
-	private BigDecimal _getPricingQuantity(
-		long cpInstanceId, String unitOfMeasureKey) {
-
-		if (Validator.isBlank(unitOfMeasureKey) || (cpInstanceId == 0)) {
-			return null;
-		}
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
-				cpInstanceId, unitOfMeasureKey);
-
-		if (cpInstanceUnitOfMeasure == null) {
-			return null;
-		}
-
-		return cpInstanceUnitOfMeasure.getPricingQuantity();
-	}
-
-	private BigDecimal _getQuantity(
-		long cpInstanceId, String unitOfMeasureKey) {
-
-		if (Validator.isBlank(unitOfMeasureKey) || (cpInstanceId == 0)) {
-			return null;
-		}
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
-				cpInstanceId, unitOfMeasureKey);
-
-		if (cpInstanceUnitOfMeasure == null) {
-			return null;
-		}
-
-		BigDecimal incrementalOrderQuantity =
-			cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
-
-		return incrementalOrderQuantity.setScale(
-			cpInstanceUnitOfMeasure.getPrecision(), RoundingMode.HALF_UP);
-	}
-
-	private String _getUnitOfMeasureKey(
+	private CPInstanceUnitOfMeasure _getUnitOfMeasureKey(
 		long cpInstanceId, String unitOfMeasureKey) {
 
 		if (!Validator.isBlank(unitOfMeasureKey)) {
-			return unitOfMeasureKey;
+			return _cpInstanceUnitOfMeasureLocalService.
+				fetchCPInstanceUnitOfMeasure(cpInstanceId, unitOfMeasureKey);
 		}
 
-		int cpInstanceUnitOfMeasuresCount =
+		int count =
 			_cpInstanceUnitOfMeasureLocalService.
 				getCPInstanceUnitOfMeasuresCount(cpInstanceId);
 
-		if ((cpInstanceUnitOfMeasuresCount != 1) ||
-			!Validator.isBlank(unitOfMeasureKey)) {
-
-			return null;
+		if (count == 1) {
+			return _cpInstanceUnitOfMeasureLocalService.
+				fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
 		}
 
-		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
-			_cpInstanceUnitOfMeasureLocalService.getCPInstanceUnitOfMeasures(
-				cpInstanceId, 0, 1, null);
-
-		if (ListUtil.isEmpty(cpInstanceUnitOfMeasures)) {
-			return null;
-		}
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-			cpInstanceUnitOfMeasures.get(0);
-
-		return cpInstanceUnitOfMeasure.getKey();
+		return null;
 	}
 
 	private void _reindexCPDefinition(long cpDefinitionId)

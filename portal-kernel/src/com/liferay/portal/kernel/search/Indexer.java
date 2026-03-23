@@ -136,10 +136,10 @@ public interface Indexer<T> {
 	@Bufferable
 	public void reindex(Collection<T> objects) throws SearchException;
 
+	public void reindex(long companyId) throws SearchException;
+
 	@Bufferable
 	public void reindex(String className, long classPK) throws SearchException;
-
-	public void reindex(String[] ids) throws SearchException;
 
 	@Bufferable
 	public void reindex(T object) throws SearchException;

@@ -413,6 +413,28 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
+	public void reindex(long companyId) throws SearchException {
+		if (IndexWriterHelperUtil.isIndexReadOnly() ||
+			IndexWriterHelperUtil.isIndexReadOnly(getClassName()) ||
+			!isIndexerEnabled()) {
+
+			return;
+		}
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			doReindex(companyId);
+		}
+		catch (SearchException searchException) {
+			throw searchException;
+		}
+		catch (Exception exception) {
+			throw new SearchException(exception);
+		}
+	}
+
+	@Override
 	public void reindex(String className, long classPK) throws SearchException {
 		try {
 			if (IndexWriterHelperUtil.isIndexReadOnly() ||
@@ -431,31 +453,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 						"Unable to index ", className, " ", classPK),
 					noSuchModelException);
 			}
-		}
-		catch (SearchException searchException) {
-			throw searchException;
-		}
-		catch (Exception exception) {
-			throw new SearchException(exception);
-		}
-	}
-
-	@Override
-	public void reindex(String[] ids) throws SearchException {
-		if (IndexWriterHelperUtil.isIndexReadOnly() ||
-			IndexWriterHelperUtil.isIndexReadOnly(getClassName()) ||
-			!isIndexerEnabled()) {
-
-			return;
-		}
-
-		long companyId = (ids.length > 0) ? GetterUtil.getLong(ids[0]) :
-			CompanyThreadLocal.getCompanyId();
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
-
-			doReindex(ids);
 		}
 		catch (SearchException searchException) {
 			throw searchException;
@@ -1113,10 +1110,10 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		indexer.postProcessSearchQuery(searchQuery, searchContext);
 	}
 
+	protected abstract void doReindex(long companyId) throws Exception;
+
 	protected abstract void doReindex(String className, long classPK)
 		throws Exception;
-
-	protected abstract void doReindex(String[] ids) throws Exception;
 
 	protected abstract void doReindex(T object) throws Exception;
 

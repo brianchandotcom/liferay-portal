@@ -62,11 +62,7 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 			keyValues,
 			selectedData
 		) as TBulkActionTaskDTO;
-		this.postURL = composeCreateTaskURL(
-			apiURL,
-			selectedData,
-			type === 'DownloadBulkAction'
-		);
+		this.postURL = composeCreateTaskURL(apiURL, selectedData, type);
 		this.selectedData = selectedData as IBulkActionFDSData;
 		this.type = type;
 	}

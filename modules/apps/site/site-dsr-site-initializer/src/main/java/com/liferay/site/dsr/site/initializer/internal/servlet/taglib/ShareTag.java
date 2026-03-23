@@ -32,7 +32,7 @@ public class ShareTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		if (_canShare) {
+		if (_hasUpdateModelResourcePermission) {
 			return super.doEndTag();
 		}
 
@@ -52,9 +52,11 @@ public class ShareTag extends IncludeTag {
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			if (!ObjectEntryServiceUtil.hasModelResourcePermission(
-					themeDisplay.getUser(), _roomId, ActionKeys.UPDATE)) {
+			_hasUpdateModelResourcePermission =
+				ObjectEntryServiceUtil.hasModelResourcePermission(
+					themeDisplay.getUser(), _roomId, ActionKeys.UPDATE);
 
+			if (!_hasUpdateModelResourcePermission) {
 				return SKIP_BODY;
 			}
 		}
@@ -65,8 +67,6 @@ public class ShareTag extends IncludeTag {
 
 			return SKIP_BODY;
 		}
-
-		_canShare = true;
 
 		return super.doStartTag();
 	}
@@ -115,8 +115,8 @@ public class ShareTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_canShare = false;
 		_groupId = 0;
+		_hasUpdateModelResourcePermission = false;
 		_roomId = 0;
 	}
 
@@ -135,8 +135,8 @@ public class ShareTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(ShareTag.class);
 
-	private boolean _canShare;
 	private long _groupId;
+	private boolean _hasUpdateModelResourcePermission;
 	private long _roomId;
 
 }

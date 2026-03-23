@@ -175,7 +175,7 @@ public class FileSystemStore implements Store {
 				path, BasicFileAttributes.class);
 
 			if (basicFileAttributes.size() == 0) {
-				return _emptyUnsyncByteArrayInputStream;
+				return _unsyncByteArrayInputStream;
 			}
 
 			return Files.newInputStream(path);
@@ -390,7 +390,7 @@ public class FileSystemStore implements Store {
 		FileSystemStore.class);
 
 	private static final UnsyncByteArrayInputStream
-		_emptyUnsyncByteArrayInputStream = new UnsyncByteArrayInputStream(
+		_unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(
 			new byte[0]);
 
 	private final File _rootDir;

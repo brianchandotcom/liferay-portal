@@ -623,7 +623,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	}
 
 	private void _testPostAssetLibraryWithNoSettings() throws Exception {
-		AssetLibrary randomAssetLibraryNoSettings = randomAssetLibrary(false);
+		AssetLibrary randomAssetLibraryNoSettings = _randomAssetLibrary(false);
 
 		AssetLibrary postedAssetLibraryNoSettings =
 			assetLibraryResource.postAssetLibrary(randomAssetLibraryNoSettings);

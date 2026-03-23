@@ -1,0 +1,817 @@
+@component-name = "portal-bpm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-151765 - Verify is possible to associate each types of Accounts with Custom Object (Bussiness, Guest and Person)"
+	@priority = 5
+	test CanAssociateAnyTypeOfAccount {
+		property portal.acceptance = "true";
+
+		Account.openAccountsAdmin();
+
+		Account.addBusinessAccount(
+			accountDescription = "Bussines Account Description",
+			accountName = "Bussines Account Name");
+
+		Navigator.gotoBack();
+
+		Account.addPersonAccount(accountName = "Person Account Name");
+
+		Navigator.gotoBack();
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Guest Account Description",
+			accountEntryName = "Guest Account Name",
+			accountEntryType = "Guest");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		// Workaround for LPS-193897
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		CreateObject.selectTitleField(fieldLabel = "Type");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		for (var typeLabel : list "business,person,guest") {
+			LexiconEntry.gotoAdd();
+
+			WaitForSPARefresh();
+
+			Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
+
+			Click(
+				key_picklistOption = ${typeLabel},
+				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+		}
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		for (var typeLabel : list "business,person,guest") {
+			ObjectPortlet.viewEntry(entry = ${typeLabel});
+		}
+	}
+
+	@description = "LPS-151765 - Verify if is possible to create Custom Action on System Object Account"
+	@priority = 4
+	test CanCreateActionOnSystemAccount {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionLabel = "Action Label",
+			actionName = "ActionName",
+			thenAction = "Webhook",
+			urlAction = "http://localhost:8080",
+			whenAction = "On After Add");
+
+		ObjectAdmin.assertObjectActions(
+			actionActive = "Yes",
+			actionLabel = "Action Label");
+	}
+
+	@description = "LPS-151765 - Verify if is possible to create Relationship one to many on System Object Account and to relate with the Custom Object"
+	@priority = 4
+	test CanCreateRelationshipRelatedWithCustomObject {
+		Account.openAccountsAdmin();
+
+		Account.addBusinessAccount(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		AssertElementPresent(
+			key_relatedObject = "CustomObject",
+			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
+	}
+
+	@description = "LPS-151765 - Verify if Cascade deletion type of Relationship One to Many can delete and you also will delete the child related entry (if you also have permissions for it)"
+	@priority = 4
+	test CanDeleteRelationshipWhenDeletionTypeIsCascade {
+		Account.openAccountsAdmin();
+
+		Account.addBusinessAccount(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts for Test");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			deletionType = "cascade",
+			objectName_1 = "CustomObject",
+			objectName_2 = "AccountEntry",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Test",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "Edit",
+			objectLabel = "Layout Test");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = 1,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		PortletEntry.save();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject",
+			value = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Test Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.deleteEntry(entry = "Entry Test");
+
+		Account.openAccountsAdmin();
+
+		if (IsElementPresent(key_rowEntry = "Accounts for Test", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+			Refresh();
+
+			WaitForSPARefresh();
+		}
+
+		LexiconEntry.viewNoEntry(rowEntry = "Accounts for Test");
+	}
+
+	@description = "LPS-151765 - Verify if is not possible to delete the fields on System Object Account"
+	@priority = 5
+	test CannotDeleteDefaultFields {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		ObjectAdmin.goToFieldsTab();
+
+		for (var label : list "Name,Description,Type") {
+			AssertElementNotPresent(
+				key_value = ${label},
+				locator1 = "ObjectAdmin#BODY_VERTICAL_ELLIPSIS");
+
+			AssertElementNotPresent(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+		}
+	}
+
+	@description = "LPS-151765 - Verify it's not possible to delete an entry if the relationship is one to many with prevent deletion type"
+	@priority = 4
+	test CannotDeleteEntryWhenDeletionTypeIsPrevent {
+		Account.openAccountsAdmin();
+
+		Account.addBusinessAccount(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test 153532");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153532",
+			objectName = "CustomObject153532",
+			pluralLabelName = "Custom Objects 153532");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153532");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject153532",
+			objectName_2 = "AccountEntry",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout 153532",
+			objectName = "CustomObject153532");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153532");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "Edit",
+			objectLabel = "Layout 153532");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = 1,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		PortletEntry.save();
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153532");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject153532",
+			value = "Entry A");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153532");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153532");
+
+		Click(
+			key_entry = "Entry A",
+			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+		Button.click(button = "Delete");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#MODAL_CONTENT",
+			value1 = "Deletion Not Possible The prevent deletion type in the object relationship Relationship with object definition AccountEntry is preventing this object entry from being deleted");
+
+		Button.click(button = "Close");
+
+		ObjectPortlet.viewEntry(entry = "Entry A");
+	}
+
+	@description = "LPS-151765 - Verify if Disassociate deletion type of Relationship One to Many can delete normally and nothing happens with the child"
+	@priority = 4
+	test CannotDeleteRelationshipWhenDeletionTypeIsDisassociate {
+		Account.openAccountsAdmin();
+
+		Account.addBusinessAccount(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts for Test");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			deletionType = "disassociate",
+			objectName_1 = "CustomObject",
+			objectName_2 = "AccountEntry",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Test",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "Edit",
+			objectLabel = "Layout Test");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = 1,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		PortletEntry.save();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject",
+			value = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Test Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.deleteEntry(entry = "Entry Test");
+
+		Account.openAccountsAdmin();
+
+		Search.searchCP(searchTerm = "Accounts for Test");
+
+		LexiconEntry.viewEntryName(rowEntry = "Accounts for Test");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Accounts for Test",
+			rowStatus = "Active");
+	}
+
+	@description = "LPS-151765 - Verify if is not possible to edit default fields on System Object Account"
+	@priority = 5
+	test CannotEditDefaultFields {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		ObjectAdmin.goToFieldsTab();
+
+		for (var label : list "Name,Description,Type") {
+			ObjectAdmin.goToFieldsDetails(label = ${label});
+
+			AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
+
+			AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
+
+			Refresh();
+		}
+	}
+
+	@description = "LPS-151765 - Verify if is possible a Custom User to view the System Object Account, if it to have permission"
+	@priority = 4
+	test CanUserViewSystemAccountWhenAllowed {
+		JSONRole.addRegularRole(roleKey = "Regular Role");
+
+		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = ${resourceAction},
+				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
+				roleTitle = "Regular Role");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.object.model.ObjectDefinition",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		AssertElementPresent(
+			key_labelName = "Account",
+			locator1 = "CreateObject#OBJECT_NAME");
+	}
+
+	@description = "LPS-151765 - Verify if is possible to choose by Description Field on entries, when Title Field is Description"
+	@priority = 4
+	test CanViewDescriptionOnFieldEntry {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Test Business Account Description",
+			accountEntryName = "Test Business Account",
+			accountEntryType = "Business",
+			externalReferenceCode = 02);
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153528",
+			objectName = "CustomObject153528",
+			pluralLabelName = "Custom Objects 153528");
+
+		// Workaround for LPS-193897
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153528");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject153528",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153528");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		CreateObject.selectTitleField(fieldLabel = "Description");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153528");
+
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Test Business Account Description");
+
+		PortletEntry.save();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153528");
+
+		ObjectPortlet.viewEntry(entry = "Test Business Account Description");
+	}
+
+	@description = "LPS-151765 - Verify if there are the fields Name, Description and Type as default on System Object Account"
+	@priority = 5
+	test CanViewFieldsLabelByDefault {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		ObjectAdmin.goToFieldsTab();
+
+		for (var label : list "Name,Description,Type") {
+			ObjectAdmin.assertObjectField(
+				fieldLabel = ${label},
+				fieldType = "Text");
+		}
+	}
+
+	@description = "LPS-151765 - Verify if the fields Name and Type are mandatory on System Object Account"
+	@priority = 4
+	test CanViewNameAndTypeAsMandatoryFields {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		ObjectAdmin.goToFieldsTab();
+
+		for (var label : list "Name,Type") {
+			ObjectAdmin.goToFieldsDetails(label = ${label});
+
+			AssertTextEquals(
+				key_labelName = "Type",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+				value1 = "Text");
+
+			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
+
+			Refresh();
+		}
+	}
+
+	@description = "LPS-151765 - Verify if is possible to choose by Name Field on entries, when Title Field is Name"
+	@priority = 4
+	test CanViewNameOnFieldEntry {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Test Business Account Description",
+			accountEntryName = "Test Business Account",
+			accountEntryType = "Business",
+			externalReferenceCode = 01);
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153527",
+			objectName = "CustomObject153527",
+			pluralLabelName = "Custom Objects 153527");
+
+		// Workaround for LPS-193897
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153527");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject153527",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153527");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
+
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Test Business Account");
+
+		PortletEntry.save();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
+
+		ObjectPortlet.viewEntry(entry = "Test Business Account");
+	}
+
+	@description = "LPS-151765 - Verify if is possible to view the Relationship by Account on Custom Object Entries with Custom View"
+	@priority = 4
+	test CanViewRelationshipOnCustomObjectEntriesWithCustomView {
+		task ("Create new Account (via API") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+		}
+
+		task ("Create a Custom Object (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 153530",
+				objectName = "CustomObject153530",
+				pluralLabelName = "Custom Objects 153530");
+
+			// Workaround for LPS-193897
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject153530");
+		}
+
+		task ("Go to Account, select title field by Name, and Create relationship with Custom Object (via UI)") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Account");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectAdmin.addObjectRelationshipViaUI(
+				label = "Relationship",
+				object = "Custom Object 153530",
+				type = "One to Many");
+		}
+
+		task ("Publish the Custom Object (via API)") {
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153530");
+		}
+
+		task ("Go to Custom Object, and add Custom View with relationship") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 153530");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "ID,Relationship");
+
+			PortletEntry.save();
+		}
+
+		task ("Go to Custom Objects entries, and add relationship by Account") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject153530");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Account Name");
+
+			PortletEntry.save();
+		}
+
+		task ("Assert that Account is present on entries table") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject153530");
+
+			ObjectPortlet.viewEntry(entry = "Account Name");
+		}
+	}
+
+	@description = "LPS-151765 - Verify if is possible to choose by Type Field on entries, when Title Field is Type"
+	@priority = 4
+	test CanViewTypeOnFieldEntry {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Test Business Account Description",
+			accountEntryName = "Test Business Account",
+			accountEntryType = "Business",
+			externalReferenceCode = 03);
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153526",
+			objectName = "CustomObject153526",
+			pluralLabelName = "Custom Objects 153526");
+
+		// Workaround for LPS-193897
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153526");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject153526",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153526");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		CreateObject.selectTitleField(fieldLabel = "Type");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
+
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "business");
+
+		PortletEntry.save();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
+
+		ObjectPortlet.viewEntry(entry = "business");
+	}
+
+	@description = "LPS-151765 - Verify if is possible to edit Title Field the System Object Account"
+	@priority = 4
+	test EditTitleFieldOnSystemAccount {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		CreateObject.selectTitleField(fieldLabel = "Type");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		AssertTextEquals(
+			key_labelName = "Entry Title Field",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "Type");
+	}
+
+	@description = "LPS-151765 - Verify if the Widget option is disable on System Object Account"
+	@priority = 4
+	test WidgetButtonDisabledByDefault {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
+	}
+
+}

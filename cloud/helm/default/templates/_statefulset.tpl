@@ -219,6 +219,9 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
+    labels:
+        app: {{ include "liferay.name" .root }}{{ $suffix }}
+        {{- include "liferay.labels" .root | nindent 8 }}
     name: {{ include "liferay.name" .root }}-https-redirect
     namespace: {{ include "liferay.namespace" .root }}
 spec:
@@ -243,6 +246,9 @@ spec:
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
+    labels:
+        app: {{ include "liferay.name" .root }}{{ $suffix }}
+        {{- include "liferay.labels" .root | nindent 8 }}
     name: {{ include "liferay.name" .root }}-hash-policy
     namespace: {{ include "liferay.namespace" .root }}
 spec:

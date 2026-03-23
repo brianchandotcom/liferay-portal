@@ -1,0 +1,95 @@
+@component-name = "portal-bpm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-135388 - Verify it is possible to search for an object's entry with the search experience in collection providers"
+	@priority = 4
+	test CanSearchForObjectEntryOnSearchExperience {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 145750",
+			objectName = "CustomObject145750",
+			pluralLabelName = "Custom Objects 145750");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject145750");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject145750");
+
+		for (var fieldEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject145750",
+				value = ${fieldEntry});
+		}
+
+		Navigator.openURL();
+
+		ContentPages.addPage(pageName = "Blank Display Page");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects 145750");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			selectedName = "Custom Objects 145750",
+			styleDisplay = "Table");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			dropTarget = "Header",
+			fragmentName = "Collection Filter",
+			targetFragmentName = "Collection Display");
+
+		PageEditor.editCollectionFilter(
+			fragmentName = "Collection Filter",
+			targetCollection = "Custom Objects 145750");
+
+		PageEditor.editCollectionFilter(
+			filter = "Keywords",
+			fragmentName = "Collection Filter");
+
+		PageEditor.publish();
+
+		Navigator.gotoPage(pageName = "Blank Display Page");
+
+		Page.searchInCollectionFilter(searchTerm = "A");
+
+		AssertElementPresent(
+			key_entries = "A",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
+
+		AssertElementNotPresent(
+			key_entries = "B",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
+	}
+
+}

@@ -1,0 +1,279 @@
+@component-name = "portal-bpm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Picklist type for table view on the Display Page"
+	@priority = 4
+	test CanDefineFixedFilterForPicklistType {
+		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
+
+		for (var itemsName : list "1,2") {
+			Picklist.addPicklistItemViaAPI(
+				itemKey = ${itemsName},
+				itemName = "Item Test ${itemsName}",
+				picklistName = "Custom Picklist");
+		}
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 315",
+			objectName = "CustomObject315",
+			pluralLabelName = "Custom Objects 315");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 315");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Custom Picklist",
+			fieldType = "Picklist");
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject315");
+
+		for (var entryName : list "1,2") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject315");
+
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				labelName = "Field Picklist",
+				picklistOption = "Item Test ${entryName}");
+		}
+
+		Navigator.openURL();
+
+		ContentPages.addPage(pageName = "Blank Display Page");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects 315");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			selectedName = "Custom Objects 315",
+			styleDisplay = "Table");
+
+		PageEditor.gotoEllipsisMenuItemInItemSelector(
+			fieldLabel = "Collection",
+			menuItem = "Filter Collection");
+
+		Click(locator1 = "ObjectAdmin#VIEW_SHEET_ON_DEFINE_PERMISSIONS");
+
+		Click(
+			key_fieldLabel = "Field Picklist",
+			locator1 = "VisualizeObjectDisplayPage#SELECT_CHOOSE_AN_OPTION_FIELD");
+
+		Select(
+			key_fieldLabel = "Field Picklist",
+			locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM_IN_FILTER_COLLECTION",
+			value1 = "Item Test 1");
+
+		Click(locator1 = "Button#SAVE");
+
+		PageEditor.publish();
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "View",
+			pageName = "Blank Display Page");
+
+		AssertElementPresent(
+			key_entries = "Item Test 1",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
+
+		AssertElementNotPresent(
+			key_entries = "Item Test 2",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Numeric"
+	@priority = 4
+	test CanSetPaginationNumeric {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 316",
+			objectName = "CustomObject316",
+			pluralLabelName = "Custom Objects 316");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject316");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject316");
+
+		for (var entryName : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject316",
+				value = "Entry ${entryName}");
+		}
+
+		ContentPages.addPage(pageName = "Numeric Pagination");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects 316");
+
+		Refresh();
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Basic Components",
+			entryTitle = "",
+			fragmentName = "Heading");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			pagination = "Numeric",
+			selectedName = "Custom Objects 316");
+
+		PageEditor.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Numeric Pagination",
+			siteName = "Guest");
+
+		PageEditor.assertPaginationNumericTypeIsDisplayed(pageNumberList = 1);
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Simple"
+	@priority = 4
+	test CanSetPaginationSimple {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 317",
+			objectName = "CustomObject317",
+			pluralLabelName = "Custom Objects 317");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject317");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject317");
+
+		for (var entryName : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject317",
+				value = "Entry ${entryName}");
+		}
+
+		ContentPages.addPage(pageName = "Simple Pagination");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects 317");
+
+		Refresh();
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Basic Components",
+			entryTitle = "",
+			fragmentName = "Heading");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			pagination = "Simple",
+			selectedName = "Custom Objects 317");
+
+		PageEditor.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Simple Pagination",
+			siteName = "Guest");
+
+		PageEditor.assertPaginationSimpleTypeIsDisplayed();
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify if it's possible map and view the image of user Profile in a Fragment of Display Page"
+	@priority = 4
+	test ViewImageUserProfileFromSpecificEntry {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 327",
+			objectName = "CustomObject327",
+			pluralLabelName = "Custom Objects 327");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject327");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject327");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject327",
+			value = "Test text");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Image");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Image",
+			id = "image-square");
+
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects 327");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "User Profile Image");
+
+		PageEditor.publish();
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "View",
+			pageName = "Test Content Page Name");
+
+		PageEditor.viewFragmentEditableImage(
+			id = "image-square",
+			imageDescription = "",
+			imageFileName = "");
+	}
+
+}

@@ -261,6 +261,10 @@ export class ObjectFieldsPage {
 				await this.selectDefaultValue(defaultValue);
 			}
 
+			if (objectFieldBusinessType === 'Picklist') {
+				await this.selectDefaultValue(defaultValue);
+			}
+
 			if (objectFieldBusinessType === 'Date') {
 				await this.iframeLocator
 					.getByPlaceholder('__/__/____')

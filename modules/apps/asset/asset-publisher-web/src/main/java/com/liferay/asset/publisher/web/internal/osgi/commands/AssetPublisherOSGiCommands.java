@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AssetPublisherOSGiCommands implements OSGiCommands {
 
-	@Descriptor("Create a collection from manual and dynamic Asset Publishers")
+	@Descriptor("Create a collection from manual and dynamic asset publishers")
 	public void migratePortletPreferences() throws PortalException {
 		_companyLocalService.forEachCompanyId(this::_migratePortletPreferences);
 	}
@@ -93,16 +93,19 @@ public class AssetPublisherOSGiCommands implements OSGiCommands {
 		String selectionStyle = jxPortletPreferences.getValue(
 			"selectionStyle", "dynamic");
 
-		long scopeGroupId = _getScopeGroupId(layout);
-		long userId = layout.getUserId();
+		String instanceId = PortletIdCodec.decodeInstanceId(portletId);
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);
-		serviceContext.setScopeGroupId(scopeGroupId);
-		serviceContext.setUserId(userId);
 
-		String instanceId = PortletIdCodec.decodeInstanceId(portletId);
+		long scopeGroupId = _getScopeGroupId(layout);
+
+		serviceContext.setScopeGroupId(scopeGroupId);
+
+		long userId = layout.getUserId();
+
+		serviceContext.setUserId(userId);
 
 		if (Objects.equals(
 				selectionStyle,

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,8 +30,10 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -79,8 +82,9 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				}
 
 				if (!Files.isDirectory(companyIdPath)) {
-					throw new VerifyException(
-						companyIdPath + " is not a directory");
+					_verifyMessages.add(companyIdPath + " is not a directory");
+
+					continue;
 				}
 
 				if (advancedFileSystemStore &&
@@ -96,7 +100,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 					continue;
 				}
 
-				throw new VerifyException(
+				_verifyMessages.add(
 					StringBundler.concat(
 						advancedFileSystemStore ? "Advanced file" : "File",
 						" system store directory structure ", rootDirPath,
@@ -104,19 +108,25 @@ public class PreupgradeVerifyStoreFileSystemStructure
 			}
 		}
 		catch (IOException ioException) {
-			throw new VerifyException(
+			_log.error(ioException);
+
+			_verifyMessages.add(
 				StringBundler.concat(
 					"Unable to verify ",
 					advancedFileSystemStore ? "advanced" : "",
-					" system store directory structure ", rootDirPath),
-				ioException);
+					" system store directory structure ", rootDirPath));
 		}
 
 		if (!companyIds.isEmpty()) {
-			throw new VerifyException(
+			_verifyMessages.add(
 				StringBundler.concat(
 					"Missing directories in ", rootDirPath, " for companies: ",
 					companyIds));
+		}
+
+		if (ListUtil.isNotEmpty(_verifyMessages)) {
+			throw new VerifyException(
+				StringUtil.merge(_verifyMessages, StringPool.COMMA_AND_SPACE));
 		}
 	}
 
@@ -161,6 +171,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				companyIdPath)) {
 
+			boolean validPath = true;
+
 			for (Path repositoryIdPath : directoryStream) {
 				if (_isExcludedPath(repositoryIdPath) ||
 					_isSystemCompanyRepositoryIdPath(repositoryIdPath)) {
@@ -173,17 +185,19 @@ public class PreupgradeVerifyStoreFileSystemStructure
 						"Unexpected file " + repositoryIdPath +
 							" in advanced file system structure");
 
-					return false;
+					validPath = false;
+
+					continue;
 				}
 
 				if (!_hasAdvancedFileSystemStructureRepositoryIdPath(
 						repositoryIdPath)) {
 
-					return false;
+					validPath = false;
 				}
 			}
 
-			return true;
+			return validPath;
 		}
 	}
 
@@ -193,6 +207,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				repositoryIdPath)) {
+
+			boolean validPath = true;
 
 			for (Path fileNamePath : directoryStream) {
 				if (_isExcludedPath(fileNamePath)) {
@@ -204,7 +220,9 @@ public class PreupgradeVerifyStoreFileSystemStructure
 						"Unexpected file " + fileNamePath +
 							" in advanced file system structure");
 
-					return false;
+					validPath = false;
+
+					continue;
 				}
 
 				String fileName = String.valueOf(fileNamePath.getFileName());
@@ -213,7 +231,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 					if (!_hasAdvancedFileSystemStructureRepositoryIdPath(
 							fileNamePath)) {
 
-						return false;
+						validPath = false;
 					}
 				}
 				else if ((fileName.length() > 2) &&
@@ -225,11 +243,11 @@ public class PreupgradeVerifyStoreFileSystemStructure
 							" name has more than 2 characters and no ",
 							"extension in advanced file system structure"));
 
-					return false;
+					validPath = false;
 				}
 			}
 
-			return true;
+			return validPath;
 		}
 	}
 
@@ -238,6 +256,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				companyIdPath)) {
+
+			boolean validPath = true;
 
 			for (Path repositoryIdPath : directoryStream) {
 				if (_isExcludedPath(repositoryIdPath) ||
@@ -250,18 +270,19 @@ public class PreupgradeVerifyStoreFileSystemStructure
 					_log.error(
 						"Unexpected file " + repositoryIdPath +
 							" in file system structure");
+					validPath = false;
 
-					return false;
+					continue;
 				}
 
 				if (!_hasFileSystemStructureRepositoryIdPath(
 						repositoryIdPath)) {
 
-					return false;
+					validPath = false;
 				}
 			}
 
-			return true;
+			return validPath;
 		}
 	}
 
@@ -281,6 +302,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				fileNamePath)) {
+
+			boolean validPath = true;
 
 			for (Path versionLabelPath : directoryStream) {
 				if (_isExcludedPath(versionLabelPath) ||
@@ -304,11 +327,11 @@ public class PreupgradeVerifyStoreFileSystemStructure
 						"Unexpected file " + versionLabelPath +
 							" not matching version label pattern");
 
-					return false;
+					validPath = false;
 				}
 			}
 
-			return true;
+			return validPath;
 		}
 	}
 
@@ -318,6 +341,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				repositoryIdPath)) {
+
+			boolean validPath = true;
 
 			for (Path fileNamePath : directoryStream) {
 				if (_isExcludedPath(fileNamePath)) {
@@ -329,15 +354,17 @@ public class PreupgradeVerifyStoreFileSystemStructure
 						"Unexpected file " + fileNamePath +
 							" in file system structure");
 
-					return false;
+					validPath = false;
+
+					continue;
 				}
 
 				if (!_hasFileSystemStructureFileNamePath(fileNamePath)) {
-					return false;
+					validPath = false;
 				}
 			}
 
-			return true;
+			return validPath;
 		}
 	}
 
@@ -356,5 +383,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 	private static final Set<String> _excludedFileNames = new HashSet<>(
 		Arrays.asList(".DS_Store"));
+
+	private final List<String> _verifyMessages = new ArrayList<>();
 
 }

@@ -35,9 +35,9 @@ public class DesignLibraryResourcesDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/search/v1.0/search?page=1&pageSize=20&emptySearch=true" +
-			"&filter=cmsRoot eq true and cmsSection eq 'files'&nestedFields=" +
-				"embedded";
+		return "/o/search/v1.0/search?cmsRoot=true&cmsSection='files'" +
+			"&emptySearch=true&filter=cmsRoot eq true and cmsSection eq " +
+				"'files'&nestedFields=embedded&page=1&pageSize=20";
 	}
 
 	public Map<String, Object> getBreadcrumbProps(long designLibraryEntryId)

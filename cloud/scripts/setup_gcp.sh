@@ -27,6 +27,8 @@ function main {
 	terraform_args="$(_get_terraform_apply_args "${1}")"
 
 	_set_up_gcp_gke "${terraform_args}"
+
+	_set_up_gcp_gitops "${terraform_args}"
 }
 
 function _generate_tfvars {
@@ -130,6 +132,18 @@ function _set_up_gcp_gke {
 		--project "$(terraform output -raw project_id)"
 
 	echo "Google GKE cluster setup complete."
+
+	_popd
+}
+
+function _set_up_gcp_gitops {
+	_pushd "${_ROOT_CLOUD_DIR}/terraform/gcp/gitops/platform"
+
+	echo "Setting up the Google GCP GitOps platform."
+
+	_terraform_init_and_apply "." "${1}"
+
+	echo "Google GCP GitOps platform setup complete."
 
 	_popd
 }

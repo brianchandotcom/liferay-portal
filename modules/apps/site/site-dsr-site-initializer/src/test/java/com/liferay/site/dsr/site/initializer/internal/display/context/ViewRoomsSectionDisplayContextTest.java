@@ -304,7 +304,8 @@ public class ViewRoomsSectionDisplayContextTest {
 	}
 
 	private void _assertEquals(
-		Map<String, ?> expectedMap, Map<String, ?> actualMap) {
+			Map<String, ?> expectedMap, Map<String, ?> actualMap)
+		throws Exception {
 
 		Assert.assertEquals(
 			actualMap.toString(), expectedMap.size(), actualMap.size());

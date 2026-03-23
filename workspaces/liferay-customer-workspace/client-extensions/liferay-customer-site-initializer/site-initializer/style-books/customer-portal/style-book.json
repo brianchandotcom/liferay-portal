@@ -2,5 +2,6 @@
 	"defaultStyleBookEntry": true,
 	"frontendTokensValuesPath": "frontend-tokens-values.json",
 	"name": "Customer Portal",
+	"themeId": "Dialect",
 	"thumbnailPath": "thumbnail.png"
 }

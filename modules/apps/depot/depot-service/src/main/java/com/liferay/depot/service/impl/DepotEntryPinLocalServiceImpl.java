@@ -69,6 +69,18 @@ public class DepotEntryPinLocalServiceImpl
 	}
 
 	@Override
+	public DepotEntryPin fetchGroupDepotEntryPin(long groupId, long userId) {
+		DepotEntry depotEntry = _depotEntryPersistence.fetchByGroupId(groupId);
+
+		if (depotEntry == null) {
+			return null;
+		}
+
+		return depotEntryPinPersistence.fetchByU_D(
+			userId, depotEntry.getDepotEntryId());
+	}
+
+	@Override
 	public List<DepotEntryPin> getDepotEntryDepotEntryPins(
 		long depotEntryId, int start, int end) {
 

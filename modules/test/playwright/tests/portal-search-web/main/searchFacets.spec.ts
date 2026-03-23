@@ -41,7 +41,10 @@ test.describe('Category Facet', () => {
 					name: `${siteName}-${count}`,
 				});
 
-				apiHelpers.data.push({id: newSite.id, type: 'site'});
+				apiHelpers.data.push({
+					id: newSite.externalReferenceCode,
+					type: 'site',
+				});
 			}
 		});
 

@@ -79,7 +79,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -138,7 +138,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -218,7 +218,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await applicationsMenuPage.goToSite(site.name);
 		await productMenuPage.goToPages();
@@ -279,7 +279,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -398,7 +398,7 @@ testFlagsEnabled(
 			name: siteName,
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,

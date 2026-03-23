@@ -94,7 +94,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await contactsCenterPage.createPage(apiHelpers, site.id, {
 			title: 'contact',
@@ -233,7 +233,7 @@ testAdmin(
 			name: 'Site' + getRandomInt(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			siteId: site.id,
@@ -358,7 +358,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const folder = await apiHelpers.headlessDelivery.postDocumentFolder(
 			site.id
@@ -464,7 +464,7 @@ testAdmin(
 			name: 'Site' + getRandomInt(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const role =
 			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
@@ -581,7 +581,7 @@ testAdmin(
 			name: 'Site' + getRandomInt(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const folder = await apiHelpers.headlessDelivery.postDocumentFolder(
 			site.id
@@ -701,7 +701,7 @@ testAdmin(
 			title: 'Page' + getRandomInt(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const attachment1 = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
@@ -875,7 +875,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const blog = await apiHelpers.headlessDelivery.postBlog(site.id, {
 			headline: 'Blog' + getRandomInt(),
@@ -1023,7 +1023,7 @@ testAdmin(
 			name: 'Site' + getRandomInt(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			siteId: site.id,
@@ -1131,7 +1131,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const formTitle = 'Form' + getRandomInt();
 		const textFieldLabel = 'Text Field';
@@ -1266,7 +1266,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const folder = await apiHelpers.headlessDelivery.postDocumentFolder(
 			site.id
@@ -1412,7 +1412,7 @@ testAdmin(
 			name: 'Site' + getRandomInt(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await apiHelpers.headlessDelivery.postBlog(site.id, {
 			headline: getRandomString(),
@@ -1540,7 +1540,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const documentA = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
@@ -1712,7 +1712,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const announcementsPage =
 			await userAssociatedDataAnnouncementPage.createAnnouncementPage(
@@ -1812,7 +1812,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const document = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
@@ -2035,7 +2035,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await apiHelpers.headlessDelivery.postBlog(site.id, {
 			headline: 'Blog' + getRandomInt(),
@@ -2167,7 +2167,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const blog1 = await apiHelpers.headlessDelivery.postBlog(site.id, {
 			headline: 'Blog' + getRandomInt(),
@@ -2247,7 +2247,7 @@ testAdmin(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const blog = await apiHelpers.headlessDelivery.postBlog(site.id, {
 			headline: 'Blog' + getRandomInt(),

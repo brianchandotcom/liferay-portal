@@ -142,7 +142,7 @@ test('LPD-22038 Set up the default site permissions for pages', async ({
 		name: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	await setupSiteDefaultPermissions({
 		defaultPermissionsSiteConfigurationPage,
@@ -215,7 +215,7 @@ test('LPD-22040 Check default permissions for pages', async ({
 		name: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	let layout = await apiHelpers.headlessDelivery.createSitePage({
 		siteId: site.id,
@@ -328,7 +328,7 @@ test('LPD-35542 Default Permissions changes Unlock the values checked', async ({
 		name: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		siteId: site.id,

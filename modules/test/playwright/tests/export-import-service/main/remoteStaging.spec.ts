@@ -64,7 +64,7 @@ test(
 			name: 'Site Name',
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -78,7 +78,10 @@ test(
 			name: 'Remote Site Name',
 		});
 
-		remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
+		remoteApiHelpers.data.push({
+			id: remoteSite.externalReferenceCode,
+			type: 'site',
+		});
 
 		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 			groupId: site.id,

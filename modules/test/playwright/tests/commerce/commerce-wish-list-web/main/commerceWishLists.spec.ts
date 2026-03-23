@@ -67,7 +67,7 @@ test('LPD-34906 Verify wishlist visibility rules', async ({
 		name: 'WishListsSite',
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([

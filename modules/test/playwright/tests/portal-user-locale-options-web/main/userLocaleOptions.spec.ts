@@ -28,7 +28,7 @@ test('LPD-46913 Language should change properly for admins even if the site does
 		name: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	await siteSettingsLocalizationPage.goto(site.friendlyUrlPath);
 

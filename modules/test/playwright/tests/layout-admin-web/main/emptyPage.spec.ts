@@ -90,9 +90,7 @@ test('Empty pages show correct label in UI and correct alert in view mode', asyn
 
 	await expect(page.getByText('"type": "empty"')).toBeVisible();
 
-	const output = await page
-		.locator("//b[text() = 'Output']/following-sibling::pre")
-		.textContent();
+	const output = await serverAdministrationPage.getScriptOutput();
 
 	const layout = JSON.parse(output);
 

@@ -15,6 +15,7 @@ export class ServerAdministrationPage {
 	private readonly executeButton: Locator;
 	private readonly scriptBox: Locator;
 	private readonly scriptLink: Locator;
+	private readonly scriptOutput: Locator;
 
 	constructor(page: Page) {
 		this.uiElementsPage = new UIElementsPage(page);
@@ -23,6 +24,7 @@ export class ServerAdministrationPage {
 		this.executeButton = page.getByRole('button', {name: 'Execute'});
 		this.scriptBox = page.getByLabel('Script', {exact: true});
 		this.scriptLink = page.getByRole('link', {name: 'Script'});
+		this.scriptOutput = page.locator('b:text-is("Output") + pre');
 	}
 
 	async executeAction(action: EActions) {
@@ -42,5 +44,9 @@ export class ServerAdministrationPage {
 		await this.executeButton.click();
 		await this.uiElementsPage.anySuccessAlert.waitFor({state: 'visible'});
 		await this.uiElementsPage.anySuccessAlert.waitFor({state: 'hidden'});
+	}
+
+	async getScriptOutput(): Promise<string | null> {
+		return await this.scriptOutput.textContent();
 	}
 }

@@ -7,6 +7,7 @@ import {ReporterDescription, defineConfig, devices} from '@playwright/test';
 
 import 'dotenv/config';
 
+import {liferayConfig} from './liferay.config';
 import {config as accessibilityMenuWeb} from './tests/accessibility-menu-web/main/config';
 import {config as accountAdminWebConfig} from './tests/account-admin-web/main/config';
 import {config as addressWebConfig} from './tests/address-web/main/config';
@@ -424,9 +425,7 @@ export default defineConfig({
 	timeout: 90 * 1000,
 	use: {
 		...devices['Desktop Chrome'],
-		baseURL: process.env.PORTAL_URL
-			? process.env.PORTAL_URL
-			: 'http://localhost:8080',
+		baseURL: liferayConfig.environment.baseUrl,
 		screenshot: 'only-on-failure',
 		trace: 'retain-on-failure',
 	},

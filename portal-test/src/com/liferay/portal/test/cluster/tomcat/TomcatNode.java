@@ -70,6 +70,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.catalina.startup.Bootstrap;
 
@@ -133,12 +134,12 @@ public class TomcatNode {
 		return _execute(clusterExecutable, _testBundleInstalled);
 	}
 
-	public String getLiferayHome() {
-		return _liferayHome;
-	}
-
 	public int getConnectorPort() {
 		return _connectorPort;
+	}
+
+	public String getLiferayHome() {
+		return _liferayHome;
 	}
 
 	public int getNodeId() {
@@ -344,6 +345,19 @@ public class TomcatNode {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public void wait(long timeout, TimeUnit timeUnit) throws Exception {
+		ProcessChannel<String> processChannel = _processChannel;
+
+		if (processChannel == null) {
+			return;
+		}
+
+		NoticeableFuture<?> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
+
+		noticeableFuture.get(timeout, timeUnit);
 	}
 
 	public interface ClusterExecutable<V extends Serializable>

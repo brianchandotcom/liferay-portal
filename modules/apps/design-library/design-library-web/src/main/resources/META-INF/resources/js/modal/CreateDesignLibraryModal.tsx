@@ -8,7 +8,7 @@ import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
 import {openToast} from 'frontend-js-components-web';
-import {createPortletURL, fetch, navigate, sub} from 'frontend-js-web';
+import {createPortletURL, navigate, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {FieldText, maxLength, required, validate} from '../components/forms';

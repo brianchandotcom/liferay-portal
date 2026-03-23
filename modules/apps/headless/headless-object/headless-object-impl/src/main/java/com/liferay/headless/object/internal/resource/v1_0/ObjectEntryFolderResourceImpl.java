@@ -598,16 +598,34 @@ public class ObjectEntryFolderResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (parameters.containsKey("siteId")) {
-			return getScopeScopeKeyObjectEntryFoldersPage(
-				parameters.get(
-					"siteId"
-				).toString(),
-				false, search, null, filter, pagination, sorts);
+		if (!parameters.containsKey("siteId")) {
+			throw new NotSupportedException(
+				"One of the following parameters must be specified: [siteId]");
 		}
 
-		throw new NotSupportedException(
-			"One of the following parameters must be specified: [siteId]");
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (filter != null) {
+			booleanFilter.add(filter, BooleanClauseOccur.MUST);
+		}
+
+		booleanFilter.add(
+			new TermFilter(
+				"externalReferenceCode",
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS),
+			BooleanClauseOccur.MUST_NOT);
+
+		booleanFilter.add(
+			new TermFilter(
+				"externalReferenceCode",
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES),
+			BooleanClauseOccur.MUST_NOT);
+
+		return getScopeScopeKeyObjectEntryFoldersPage(
+			parameters.get(
+				"siteId"
+			).toString(),
+			false, search, null, booleanFilter, pagination, sorts);
 	}
 
 	@Override

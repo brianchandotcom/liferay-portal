@@ -78,7 +78,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, CHECK_SOURCE_FORMATTING_TASK_NAME, FormatSourceTask.class);
 
-		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
+		formatSourceTask.onlyIf(_getSkipIfExecutingParentTaskSpec(project));
 		formatSourceTask.setAutoFix(false);
 		formatSourceTask.setDescription(
 			"Checks the source formatting of this project.");
@@ -94,7 +94,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
 
-		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
+		formatSourceTask.onlyIf(_getSkipIfExecutingParentTaskSpec(project));
 		formatSourceTask.setDescription(
 			"Runs Liferay Source Formatter to format the project files.");
 		formatSourceTask.setGroup("formatting");
@@ -193,36 +193,30 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 			});
 	}
 
-	private static final Spec<Task> _skipIfExecutingParentTaskSpec =
-		new Spec<Task>() {
+	private Spec<Task> _getSkipIfExecutingParentTaskSpec(Project project) {
+		Gradle gradle = project.getGradle();
 
-			@Override
-			public boolean isSatisfiedBy(Task task) {
-				Project project = task.getProject();
+		return task -> {
+			TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
 
-				Gradle gradle = project.getGradle();
+			Project parentProject = project;
 
-				TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
+			while ((parentProject = parentProject.getParent()) != null) {
+				TaskContainer parentProjectTaskContainer =
+					parentProject.getTasks();
 
-				Project parentProject = project;
+				Task parentProjectTask = parentProjectTaskContainer.findByName(
+					task.getName());
 
-				while ((parentProject = parentProject.getParent()) != null) {
-					TaskContainer parentProjectTaskContainer =
-						parentProject.getTasks();
+				if ((parentProjectTask != null) &&
+					taskExecutionGraph.hasTask(parentProjectTask)) {
 
-					Task parentProjectTask =
-						parentProjectTaskContainer.findByName(task.getName());
-
-					if ((parentProjectTask != null) &&
-						taskExecutionGraph.hasTask(parentProjectTask)) {
-
-						return false;
-					}
+					return false;
 				}
-
-				return true;
 			}
 
+			return true;
 		};
+	}
 
 }

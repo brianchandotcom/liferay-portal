@@ -392,13 +392,17 @@ export class PageEditorPage {
 		await field.waitFor();
 
 		if (valueFromStylebook) {
-			await field
-				.getByLabel('Value from Stylebook', {exact: true})
+			await field.getByLabel('Select Color', {exact: true}).click();
+
+			await this.page
+				.getByRole('tab', {name: 'Value from Stylebook'})
 				.click();
 
-			const valueButton = this.page.getByTitle(value as string, {
-				exact: true,
-			});
+			const valueButton = this.page
+				.locator('.show')
+				.getByTitle(value as string, {
+					exact: true,
+				});
 
 			await valueButton.click();
 		}

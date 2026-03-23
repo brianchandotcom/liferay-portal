@@ -9,7 +9,6 @@ import com.liferay.osb.faro.engine.client.model.AssetSummary;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
-import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AssetSummaryDisplay;
 import com.liferay.petra.string.StringPool;
@@ -29,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcos Martins
  */
-@Component(service = {AssetSummaryController.class, FaroController.class})
+@Component(service = AssetSummaryController.class)
 @Path("/{groupId}/asset-summary")
 @Produces(MediaType.APPLICATION_JSON)
 public class AssetSummaryController extends BaseFaroController {

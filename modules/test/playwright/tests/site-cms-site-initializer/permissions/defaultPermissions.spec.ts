@@ -734,6 +734,11 @@ test(
 
 			await contentsPage.saveContent();
 
+			await waitForAlert(
+				page,
+				`Success:${contentName} was published successfully.`
+			);
+
 			await clickMenuItem('Permissions', page, contentName);
 
 			let childContentPermissions = [

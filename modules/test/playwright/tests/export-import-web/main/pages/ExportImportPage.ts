@@ -211,6 +211,20 @@ export class ExportImportPage {
 		});
 	}
 
+	async checkAllPortlets() {
+		const portletListContainer = this.portletListContainer;
+
+		await portletListContainer.waitFor({state: 'attached'});
+
+		const checkBoxes = portletListContainer.locator(
+			'input[type="checkbox"]:visible'
+		);
+
+		for (const checkbox of await checkBoxes.all()) {
+			await checkbox.check();
+		}
+	}
+
 	async uncheckPortlets() {
 		const portletListContainer = this.portletListContainer;
 
@@ -227,11 +241,13 @@ export class ExportImportPage {
 
 	async export({
 		dateFilter,
+		exportAllPortlets = false,
 		includePermissions = false,
 		portletLabels,
 		taskName = `Export-${getRandomString()}`,
 	}: {
 		dateFilter?: DateFilter;
+		exportAllPortlets?: boolean;
 		includePermissions?: boolean;
 		portletLabels?: string[];
 		taskName?: string;
@@ -240,7 +256,10 @@ export class ExportImportPage {
 
 		await this.title.fill(taskName);
 
-		if (portletLabels) {
+		if (exportAllPortlets) {
+			await this.checkAllPortlets();
+		}
+		else if (portletLabels) {
 			await this.uncheckPortlets();
 
 			for (const portletLabel of portletLabels) {

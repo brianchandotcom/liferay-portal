@@ -70,8 +70,7 @@ resource "kubernetes_namespace" "argo_workflows" {
 			local.common_labels,
 			{
 				"pod-security.kubernetes.io/enforce"="restricted"
-			}
-		)
+			})
 		name=var.argo_workflows_namespace
 	}
 }

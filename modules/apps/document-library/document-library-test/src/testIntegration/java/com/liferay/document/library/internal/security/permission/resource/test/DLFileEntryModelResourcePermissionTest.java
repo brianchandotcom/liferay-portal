@@ -126,7 +126,7 @@ public class DLFileEntryModelResourcePermissionTest {
 	}
 
 	@Test
-	public void testCheckWithPermissionsViewDynamicInheritanceWithNoParentFolderPermissionAndFileAsAttachment()
+	public void testCheckWithPermissionsViewDynamicInheritanceWithNoParentFolderPermissionAndWithClassName()
 		throws Exception {
 
 		Repository repository = DLAppTestUtil.addRepository(

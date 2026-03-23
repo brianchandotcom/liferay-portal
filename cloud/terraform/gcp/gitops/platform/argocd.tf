@@ -156,7 +156,7 @@ resource "kubernetes_secret" "argocd_secret" {
 	lifecycle {
 		ignore_changes=[
 			data,
-			metadata.labels,
+			metadata[0].labels,
 		]
 	}
 	metadata {

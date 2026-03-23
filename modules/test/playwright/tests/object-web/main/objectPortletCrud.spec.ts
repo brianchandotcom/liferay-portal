@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
@@ -12,7 +11,8 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
-import getRandomString from '../../../utils/getRandomString';
+import createUserWithPermissions from '../../../utils/createUserWithPermissions';
+import {performUserSwitch} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 const test = mergeTests(
@@ -110,9 +110,42 @@ test(
 
 		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['VIEW_CONTROL_PANEL'],
+					primaryKey: company.companyId,
+					resourceName: '90',
+					scope: 1,
+				},
+				{
+					actionIds: [
+						'ACCESS_IN_CONTROL_PANEL',
+						'CONFIGURATION',
+						'PERMISSIONS',
+						'PREFERENCES',
+						'VIEW',
+					] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await expect(
+			page.getByRole('heading', {name: objectDefinition.label['en_US']})
+		).toBeVisible();
 	}
 );
 
@@ -138,7 +171,9 @@ test.fixme(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'PrecisionDecimal',
@@ -149,6 +184,10 @@ test.fixme(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('123.123456')).toBeVisible();
 	}
 );
 
@@ -174,11 +213,19 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await page.getByLabel('Boolean', {exact: true}).check();
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Yes')).toBeVisible();
 	}
 );
 
@@ -204,7 +251,9 @@ test.fixme(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'Date',
@@ -215,6 +264,10 @@ test.fixme(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Jan 1, 2001')).toBeVisible();
 	}
 );
 
@@ -240,7 +293,9 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'Decimal',
@@ -251,6 +306,10 @@ test(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('1.23')).toBeVisible();
 	}
 );
 
@@ -277,7 +336,23 @@ test.fixme(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: 'Field',
+			objectFieldValue: 'Test Entry',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Test Entry')).toBeVisible();
 	}
 );
 
@@ -303,7 +378,9 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'Text',
@@ -314,6 +391,10 @@ test(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('String Entry')).toBeVisible();
 	}
 );
 
@@ -339,7 +420,9 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'Integer',
@@ -350,6 +433,10 @@ test(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('123456789')).toBeVisible();
 	}
 );
 
@@ -375,7 +462,9 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'LongInteger',
@@ -386,6 +475,10 @@ test(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('1234567891234567')).toBeVisible();
 	}
 );
 
@@ -409,9 +502,48 @@ test(
 
 		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['VIEW_CONTROL_PANEL'],
+					primaryKey: company.companyId,
+					resourceName: '90',
+					scope: 1,
+				},
+				{
+					actionIds: [
+						'ACCESS_IN_CONTROL_PANEL',
+						'CONFIGURATION',
+						'PERMISSIONS',
+						'PREFERENCES',
+						'VIEW',
+					] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['ADD_OBJECT_ENTRY'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com.liferay.object#${objectDefinition.id}`,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'Text',
@@ -422,6 +554,10 @@ test(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Test Entry')).toBeVisible();
 	}
 );
 
@@ -429,6 +565,8 @@ test.fixme(
 	'LPD-78504 Can add Picklist entry on layout',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		// Requires picklist setup (addPicklistViaAPI, addPicklistItemViaAPI)
+		// and then adding entry with the picklist field selected
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
@@ -447,7 +585,9 @@ test.fixme(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await expect(
+			page.getByRole('heading', {name: objectDefinition.label['en_US']})
+		).toBeVisible();
 	}
 );
 
@@ -473,7 +613,9 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'Text',
@@ -484,6 +626,10 @@ test(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('@~!& ^%$&_-')).toBeVisible();
 	}
 );
 
@@ -509,7 +655,9 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'Text',
@@ -527,10 +675,11 @@ test(
 	}
 );
 
-test(
+test.fixme(
 	'LPD-78504 Can apply permission only to specific site when scoped by site',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		// Requires creating 2 sites and applying site-scoped permissions
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
@@ -550,7 +699,9 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await expect(
+			page.getByRole('heading', {name: objectDefinition.label['en_US']})
+		).toBeVisible();
 	}
 );
 
@@ -576,7 +727,15 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: 'Field',
+			objectFieldValue: 'Test Entry',
+		});
 
 		await page.getByRole('button', {name: 'Cancel'}).click();
 
@@ -611,6 +770,21 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Field', {exact: true}).clear();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: 'Field',
+			objectFieldValue: 'Test Entry 2',
+		});
+
+		await viewObjectEntriesPage.cancelObjectEntryButton.click();
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Test Entry 2')).not.toBeVisible();
+
 		await expect(page.getByText('Test Entry')).toBeVisible();
 	}
 );
@@ -642,7 +816,19 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Test text')).toBeVisible();
+		await expect(
+			page.getByRole('columnheader').getByText('ID')
+		).toBeVisible();
+
+		await page.getByLabel('Manage Columns Visibility').click();
+
+		await page.getByRole('menuitem', {name: 'ID'}).click();
+
+		await page.keyboard.press('Escape');
+
+		await expect(
+			page.getByRole('columnheader').getByText('ID')
+		).not.toBeVisible();
 	}
 );
 
@@ -674,6 +860,14 @@ test(
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await expect(page.getByText('Test text')).toBeVisible();
+
+		await viewObjectEntriesPage.frontendDatasetActions.click();
+
+		await viewObjectEntriesPage.frontendDatasetDeleteAction.click();
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await expect(page.getByText('No Results Found')).toBeVisible();
 	}
 );
 
@@ -702,9 +896,40 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's'
 		);
 
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW', 'DELETE'] as any[],
+					primaryKey: company.companyId,
+					resourceName: objectDefinition.className,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Text test')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetActions.click();
+
+		await viewObjectEntriesPage.frontendDatasetDeleteAction.click();
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await expect(page.getByText('No Results Found')).toBeVisible();
 	}
 );
 
@@ -735,7 +960,24 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('123.654321')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Field', {exact: true}).clear();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: 'Field',
+			objectFieldValue: '1.12345678',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('1.12345678')).toBeVisible();
+
+		await expect(page.getByText('123.654321')).not.toBeVisible();
 	}
 );
 
@@ -766,7 +1008,19 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('No')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Field', {exact: true}).check();
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Yes')).toBeVisible();
+
+		await expect(page.getByText('No')).not.toBeVisible();
 	}
 );
 
@@ -797,7 +1051,22 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Jan 1, 2001')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Field', {exact: true}).clear();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: 'Field',
+			objectFieldValue: '02/02/2002',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Feb 2, 2002')).toBeVisible();
 	}
 );
 
@@ -828,7 +1097,24 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('1.23')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Field', {exact: true}).clear();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: 'Field',
+			objectFieldValue: '4.56',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('4.56')).toBeVisible();
+
+		await expect(page.getByText('1.23')).not.toBeVisible();
 	}
 );
 
@@ -859,7 +1145,24 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('321')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Field', {exact: true}).clear();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: 'Field',
+			objectFieldValue: '123456',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('123456')).toBeVisible();
+
+		await expect(page.getByText('321')).not.toBeVisible();
 	}
 );
 
@@ -890,7 +1193,24 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('987654321')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Field', {exact: true}).clear();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: 'Field',
+			objectFieldValue: '1234567891234567',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('1234567891234567')).toBeVisible();
+
+		await expect(page.getByText('987654321')).not.toBeVisible();
 	}
 );
 
@@ -898,6 +1218,7 @@ test.fixme(
 	'LPD-78504 Can edit Picklist entry on layout',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		// Requires picklist setup and picklist field creation via UI
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
@@ -916,7 +1237,9 @@ test.fixme(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await expect(
+			page.getByRole('heading', {name: objectDefinition.label['en_US']})
+		).toBeVisible();
 	}
 );
 
@@ -947,7 +1270,24 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Text test')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Field', {exact: true}).clear();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: 'Field',
+			objectFieldValue: 'Update test',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Update test')).toBeVisible();
+
+		await expect(page.getByText('Text test')).not.toBeVisible();
 	}
 );
 
@@ -971,9 +1311,42 @@ test(
 
 		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['VIEW_CONTROL_PANEL'],
+					primaryKey: company.companyId,
+					resourceName: '90',
+					scope: 1,
+				},
+				{
+					actionIds: [
+						'ACCESS_IN_CONTROL_PANEL',
+						'CONFIGURATION',
+						'PERMISSIONS',
+						'PREFERENCES',
+						'VIEW',
+					] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await expect(
+			page.getByLabel(`Add ${objectDefinition.label['en_US']}`)
+		).not.toBeVisible();
 	}
 );
 
@@ -1002,9 +1375,38 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's'
 		);
 
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'] as any[],
+					primaryKey: company.companyId,
+					resourceName: objectDefinition.className,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await expect(page.getByText('Text test')).toBeVisible();
+
+		await expect(
+			viewObjectEntriesPage.frontendDatasetActions
+		).not.toBeVisible();
 	}
 );
 
@@ -1033,9 +1435,44 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's'
 		);
 
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['VIEW_CONTROL_PANEL'],
+					primaryKey: company.companyId,
+					resourceName: '90',
+					scope: 1,
+				},
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'] as any[],
+					primaryKey: company.companyId,
+					resourceName: objectDefinition.className,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Text test')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(
+			page.getByLabel('Custom Field', {exact: true})
+		).toBeDisabled();
 	}
 );
 
@@ -1059,9 +1496,39 @@ test(
 
 		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
+		await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Text test'},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['ADD_OBJECT_ENTRY'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com.liferay.object#${objectDefinition.id}`,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await expect(page.getByText('Text test')).not.toBeVisible();
 	}
 );
 
@@ -1085,9 +1552,33 @@ test(
 
 		apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
+		await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Test Entry'},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await expect(page.getByText('Test Entry')).not.toBeVisible();
 	}
 );
 
@@ -1099,8 +1590,11 @@ test(
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
 					{
-						businessType: 'Text',
 						DBType: 'String',
+						businessType: 'Text',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
 						label: {en_US: 'Text'},
 						name: 'textField',
 						required: false,
@@ -1120,8 +1614,19 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Test text 1')).toBeVisible();
-		await expect(page.getByText('Test text 2')).toBeVisible();
+		const textHeader = page.locator('thead th').filter({hasText: 'Text'});
+
+		await textHeader.click();
+
+		const rows = page.locator('table tbody tr');
+
+		await expect(rows.first()).toContainText('Test text 1');
+		await expect(rows.last()).toContainText('Test text 2');
+
+		await textHeader.click();
+
+		await expect(rows.first()).toContainText('Test text 2');
+		await expect(rows.last()).toContainText('Test text 1');
 	}
 );
 
@@ -1133,8 +1638,11 @@ test(
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
 					{
-						businessType: 'Text',
 						DBType: 'String',
+						businessType: 'Text',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
 						label: {en_US: 'Text'},
 						name: 'textField',
 						required: false,
@@ -1157,8 +1665,13 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Test 1')).toBeVisible();
-		await expect(page.getByText('Entry 2')).toBeVisible();
+		await page.getByPlaceholder('Search').fill('Entry 2');
+
+		await page.getByPlaceholder('Search').press('Enter');
+
+		await expect(page.locator('table').getByText('Entry 2')).toBeVisible();
+
+		await expect(page.locator('table').getByText('Test 1')).not.toBeVisible();
 	}
 );
 
@@ -1187,9 +1700,51 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's'
 		);
 
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW', 'UPDATE'] as any[],
+					primaryKey: company.companyId,
+					resourceName: objectDefinition.className,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Text test')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Custom Field', {exact: true}).clear();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: 'Custom Field',
+			objectFieldValue: 'Test 2',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Text test')).not.toBeVisible();
+
+		await expect(page.getByText('Test 2')).toBeVisible();
 	}
 );
 
@@ -1220,7 +1775,13 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('123.123456')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(page.getByLabel('Field', {exact: true})).toBeVisible();
+
+		await expect(page.getByLabel('Field', {exact: true})).toHaveValue(
+			'123.123456'
+		);
 	}
 );
 
@@ -1251,7 +1812,11 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Yes')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(page.getByLabel('Field', {exact: true})).toBeVisible();
+
+		await expect(page.getByLabel('Field', {exact: true})).toBeChecked();
 	}
 );
 
@@ -1282,7 +1847,13 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Jan 1, 2001')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(page.getByLabel('Field', {exact: true})).toBeVisible();
+
+		await expect(page.getByLabel('Field', {exact: true})).toHaveValue(
+			'01/01/2001'
+		);
 	}
 );
 
@@ -1313,7 +1884,13 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('1.54')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(page.getByLabel('Field', {exact: true})).toBeVisible();
+
+		await expect(page.getByLabel('Field', {exact: true})).toHaveValue(
+			'1.54'
+		);
 	}
 );
 
@@ -1344,7 +1921,13 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('12345')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(page.getByLabel('Field', {exact: true})).toBeVisible();
+
+		await expect(page.getByLabel('Field', {exact: true})).toHaveValue(
+			'12345'
+		);
 	}
 );
 
@@ -1375,7 +1958,13 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('12345678')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(page.getByLabel('Field', {exact: true})).toBeVisible();
+
+		await expect(page.getByLabel('Field', {exact: true})).toHaveValue(
+			'12345678'
+		);
 	}
 );
 
@@ -1404,6 +1993,31 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's'
 		);
 
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'] as any[],
+					primaryKey: company.companyId,
+					resourceName: objectDefinition.className,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await expect(page.getByText('Test Entry')).toBeVisible();
@@ -1414,6 +2028,7 @@ test.fixme(
 	'LPD-78504 Can view Picklist entry and label on layout',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		// Requires picklist setup and picklist field creation via UI
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
@@ -1432,11 +2047,13 @@ test.fixme(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByRole('heading', {name: objectDefinition.label['en_US']})).toBeVisible();
+		await expect(
+			page.getByRole('heading', {name: objectDefinition.label['en_US']})
+		).toBeVisible();
 	}
 );
 
-test.fixme(
+test(
 	'LPD-78504 Can view String entry and label on layout',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
@@ -1463,7 +2080,13 @@ test.fixme(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Text Test')).toBeVisible();
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(page.getByLabel('Field', {exact: true})).toBeVisible();
+
+		await expect(page.getByLabel('Field', {exact: true})).toHaveValue(
+			'Text Test'
+		);
 	}
 );
 
@@ -1494,7 +2117,7 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Text test')).toBeVisible();
+		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
 	}
 );
 
@@ -1525,8 +2148,17 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('ID').first()).toBeVisible();
-		await expect(page.getByText('Status').first()).toBeVisible();
+		await expect(
+			page.getByRole('columnheader').getByText('ID')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('columnheader').getByText('Field')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('columnheader').getByText('Status')
+		).toBeVisible();
 	}
 );
 
@@ -1614,7 +2246,9 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.label['en_US']);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldBusinessType: 'Text',
@@ -1644,8 +2278,11 @@ test(
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
 					{
-						businessType: 'Text',
 						DBType: 'String',
+						businessType: 'Text',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
 						label: {en_US: 'Field'},
 						name: 'textField',
 						required: false,
@@ -1663,7 +2300,13 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Test text')).toBeVisible();
+		await page.getByPlaceholder('Search').fill('Lorem ipsum');
+
+		await page.getByPlaceholder('Search').press('Enter');
+
+		await expect(
+			page.getByText('No Results Found')
+		).toBeVisible();
 	}
 );
 

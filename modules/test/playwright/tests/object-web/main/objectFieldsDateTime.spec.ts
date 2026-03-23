@@ -11,7 +11,10 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {getObjectEntryUIDateTimeFormat} from './utils/dateFormat';
+import {
+	getFDSDateTimeFormat,
+	getObjectEntryUIDateTimeFormat,
+} from './utils/dateFormat';
 import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
@@ -32,6 +35,10 @@ test(
 			objectFieldBusinessTypes: ['DateTime'],
 		});
 
+		objectFields[0].objectFieldSettings = [
+			{name: 'timeStorage', value: 'useInputAsEntered'},
+		];
+
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields,
@@ -49,11 +56,11 @@ test(
 			objectDefinition.label['en_US']
 		);
 
-		const date = new Date();
+		const entryDate = new Date(2023, 5, 1, 9, 0);
 
 		await viewObjectEntriesPage.fillObjectEntry({
 			objectFieldLabel: objectFields[0].label['en_US'],
-			objectFieldValue: getObjectEntryUIDateTimeFormat(date),
+			objectFieldValue: getObjectEntryUIDateTimeFormat(entryDate),
 		});
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
@@ -63,7 +70,7 @@ test(
 		await viewObjectEntriesPage.backButton.click();
 
 		await expect(
-			viewObjectEntriesPage.frontendDatasetItems.first()
+			page.getByRole('cell', {name: getFDSDateTimeFormat(entryDate)})
 		).toBeVisible();
 	}
 );
@@ -92,7 +99,7 @@ test(
 		const fieldName = objectFields[0].name;
 
 		await apiHelpers.objectEntry.postObjectEntry(
-			{[fieldName]: '2025-01-15T10:00:00Z'},
+			{[fieldName]: '2023-06-01T12:00:00.000Z'},
 			applicationName
 		);
 
@@ -100,7 +107,7 @@ test(
 
 		await viewObjectEntriesPage.frontendDatasetItems.first().click();
 
-		const newDate = new Date();
+		const updateDate = new Date(2024, 6, 2, 22, 0);
 
 		const objectFieldLabel = page.getByLabel(
 			objectFields[0].label['en_US']
@@ -108,9 +115,7 @@ test(
 
 		await objectFieldLabel.clear();
 
-		await objectFieldLabel.fill(
-			getObjectEntryUIDateTimeFormat(newDate)
-		);
+		await objectFieldLabel.fill(getObjectEntryUIDateTimeFormat(updateDate));
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
@@ -119,7 +124,7 @@ test(
 		await viewObjectEntriesPage.backButton.click();
 
 		await expect(
-			viewObjectEntriesPage.frontendDatasetItems.first()
+			page.getByRole('cell', {name: getFDSDateTimeFormat(updateDate)})
 		).toBeVisible();
 	}
 );

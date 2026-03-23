@@ -11,6 +11,23 @@ export function getFDSDateFormat(date: Date) {
 	}).format(date);
 }
 
+export function getFDSDateTimeFormat(date: Date, timeZone?: string) {
+	const options: Intl.DateTimeFormatOptions = {
+		day: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		month: 'short',
+		second: 'numeric',
+		year: 'numeric',
+	};
+
+	if (timeZone) {
+		options.timeZone = timeZone;
+	}
+
+	return new Intl.DateTimeFormat('en-US', options).format(date);
+}
+
 export function getObjectEntryAPIDateFormat(date: Date) {
 	return new Intl.DateTimeFormat('en-CA', {
 		day: '2-digit',

@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {sub} from 'frontend-js-web';
 import React, {useRef} from 'react';
 
 type Props = {
@@ -29,8 +30,11 @@ export default function TokenButton({
 
 	return (
 		<ClayButton
-			aria-label={label}
-			className="align-items-center border-0 c-focus-inset d-flex font-weight-normal layout__color-picker__token-button text-body w-100"
+			aria-label={sub(
+				Liferay.Language.get('select-color.-color-selected-x'),
+				label
+			)}
+			className="align-items-center border-0 d-flex font-weight-normal layout__color-picker__token-button text-body w-100"
 			displayType="secondary"
 			onClick={onClick}
 			ref={triggerRef}

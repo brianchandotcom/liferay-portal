@@ -7,6 +7,7 @@ package com.liferay.exportimport.internal.lar;
 
 import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -90,6 +91,23 @@ public class DeletionSystemEventImporterImpl
 		Element sitePortletsElement = rootElement.element("site-portlets");
 
 		if (sitePortletsElement == null) {
+			if (ExportImportThreadLocal.
+					isPortletDataDeletionImportInProcess()) {
+
+				String portletId = portletDataContext.getPortletId();
+
+				PortletDataHandler portletDataHandler =
+					_portletDataHandlerProvider.provide(
+						portletDataContext.getCompanyId(), portletId);
+
+				if (portletDataHandler instanceof
+						BatchEnginePortletDataHandler) {
+
+					portletDataHandler.deleteData(
+						portletDataContext, portletId, null);
+				}
+			}
+
 			return;
 		}
 

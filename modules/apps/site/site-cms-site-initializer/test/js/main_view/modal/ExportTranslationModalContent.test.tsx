@@ -12,12 +12,20 @@ import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 import ExportTranslationModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/ExportTranslationModalContent';
+import {exportTranslationBulkAction} from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/exportTranslationBulkAction';
 
 const mockCloseModal = jest.fn();
 
 jest.mock('frontend-js-components-web', () => ({
 	openToast: jest.fn(),
 }));
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/exportTranslationBulkAction',
+	() => ({
+		exportTranslationBulkAction: jest.fn(() => Promise.resolve()),
+	})
+);
 
 jest.mock('frontend-js-web', () => ({
 	...(jest.requireActual('frontend-js-web') as any),
@@ -82,7 +90,11 @@ const DEFAULT_PROPS = {
 	itemId: 123,
 };
 
-const renderComponent = (props = DEFAULT_PROPS) => {
+const renderComponent = (
+	props: React.ComponentProps<
+		typeof ExportTranslationModalContent
+	> = DEFAULT_PROPS
+) => {
 	return render(<ExportTranslationModalContent {...props} />);
 };
 
@@ -180,6 +192,33 @@ describe('ExportTranslationModalContent', () => {
 					}),
 				})
 			);
+		});
+	});
+
+	it('calls exportTranslationBulkAction when selectedData is provided and the export button is clicked', async () => {
+		const selectedData = {items: [], selectAll: true};
+		const {getByLabelText, getByText} = renderComponent({
+			...DEFAULT_PROPS,
+			apiURL: '/api/test',
+			selectedData,
+		});
+
+		fireEvent.click(getByLabelText('Spanish (Spain)'));
+		fireEvent.click(getByLabelText('French (France)'));
+
+		fireEvent.click(getByText('export'));
+
+		await waitFor(() => {
+			expect(exportTranslationBulkAction).toHaveBeenCalledWith({
+				apiURL: '/api/test',
+				keyValues: {
+					sourceLanguageId: 'en_US',
+					targetLanguageIds: ['es_ES', 'fr_FR'],
+					xliffMimeType: 'application/xliff+xml',
+				},
+				selectedData,
+				type: 'ExportTranslationBulkAction',
+			});
 		});
 	});
 });

@@ -1065,7 +1065,7 @@ test.describe('Schedule Publication', () => {
 				'[name="ObjectEntry_displayDate"]'
 			);
 
-			await expect(displayDateHiddenInput).not.toBeInViewport();
+			await expect(displayDateHiddenInput).toHaveValue('');
 
 			await page.getByRole('button', {name: 'Schedule'}).click();
 
@@ -1097,7 +1097,7 @@ test.describe('Schedule Publication', () => {
 
 			await page.getByRole('button', {name: 'Cancel'}).click();
 
-			await expect(displayDateHiddenInput).not.toBeInViewport();
+			await expect(displayDateHiddenInput).toHaveValue('');
 
 			// Schedule the publication
 

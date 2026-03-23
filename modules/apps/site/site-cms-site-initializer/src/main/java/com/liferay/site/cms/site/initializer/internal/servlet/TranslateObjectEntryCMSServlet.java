@@ -82,6 +82,21 @@ public class TranslateObjectEntryCMSServlet extends BaseCMSServlet {
 		}
 	}
 
+	@Override
+	protected void doPost(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException, ServletException {
+
+		try {
+			_exportObjectEntryTranslation(
+				httpServletRequest, httpServletResponse);
+		}
+		catch (PortalException portalException) {
+			throw new ServletException(portalException);
+		}
+	}
+
 	private void _exportObjectEntryTranslation(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

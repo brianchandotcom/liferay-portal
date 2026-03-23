@@ -42,14 +42,19 @@ export default function ({maxValue, namespace}) {
 	const priceRangeButton = document.getElementById(
 		`${namespace}priceRangeButton`
 	);
-	priceRangeButton.addEventListener('click', handleSubmitPriceRange);
+
+	if (priceRangeButton) {
+		priceRangeButton.addEventListener('click', handleSubmitPriceRange);
+	}
 
 	return {
 		dispose() {
-			priceRangeButton.removeEventListener(
-				'click',
-				handleSubmitPriceRange
-			);
+			if (priceRangeButton) {
+				priceRangeButton.removeEventListener(
+					'click',
+					handleSubmitPriceRange
+				);
+			}
 		},
 	};
 }

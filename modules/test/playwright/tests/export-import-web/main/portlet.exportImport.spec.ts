@@ -21,7 +21,7 @@ import {portletExportImportPageTest} from './fixtures/portletExportImportPageTes
 export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-35443': {enabled: true},
+		'LPD-36105': {enabled: true},
 	}),
 	globalMenuPagesTest,
 	loginTest(),
@@ -64,9 +64,10 @@ test('Can import object with different classname via portlet', async ({
 			trigger: viewObjectDefinitionsPage.page.getByLabel('Options'),
 		});
 
-		objectDefinitionsFilePath = await portletExportImportPage.exportLARFile(
-			/Objects-\d+\.portlet\.lar/
-		);
+		({filePath: objectDefinitionsFilePath} =
+			await portletExportImportPage.exportLARFile({
+				fileNamePattern: /Objects-\d+\.portlet\.lar/,
+			}));
 	});
 
 	await test.step('Create and download Object Entry LAR', async () => {
@@ -85,9 +86,10 @@ test('Can import object with different classname via portlet', async ({
 			trigger: page.getByLabel('Options'),
 		});
 
-		objectEntriesFilePath = await portletExportImportPage.exportLARFile(
-			/ObjectDefinition\d+-\d+\.portlet\.lar/
-		);
+		({filePath: objectEntriesFilePath} =
+			await portletExportImportPage.exportLARFile({
+				fileNamePattern: /ObjectDefinition\d+-\d+\.portlet\.lar/,
+			}));
 	});
 
 	let virtualInstanceApiHelpers: DataApiHelpers;
@@ -138,12 +140,9 @@ test('Can import object with different classname via portlet', async ({
 			trigger: page.getByLabel('Options'),
 		});
 
-		await portletExportImportPage.importLARFile(objectDefinitionsFilePath);
-		await expect(
-			portletExportImportPage.frame
-				.getByRole('cell', {name: 'Successful'})
-				.first()
-		).toBeVisible();
+		await portletExportImportPage.importLARFile({
+			filePath: objectDefinitionsFilePath,
+		});
 	});
 
 	await test.step('Import Object Entry into Virtual Instance & Verify', async () => {
@@ -166,12 +165,9 @@ test('Can import object with different classname via portlet', async ({
 
 		expect(beforeImportingTotalCount).toBe(0);
 
-		await portletExportImportPage.importLARFile(objectEntriesFilePath);
-		await expect(
-			portletExportImportPage.frame
-				.getByRole('cell', {name: 'Successful'})
-				.first()
-		).toBeVisible();
+		await portletExportImportPage.importLARFile({
+			filePath: objectEntriesFilePath,
+		});
 
 		const {totalCount: afterImportingTotalCount} =
 			await virtualInstanceApiHelpers.objectEntry.getObjectDefinitionObjectEntries(
@@ -181,3 +177,76 @@ test('Can import object with different classname via portlet', async ({
 		expect(afterImportingTotalCount).toBe(1);
 	});
 });
+
+test(
+	'Can import custom company scoped object entry deletions via portlet',
+	{tag: '@LPD-82880'},
+	async ({apiHelpers, globalMenuPage, page, portletExportImportPage}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				panelCategoryKey: 'control_panel.object',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: '', textField: objectDefinition.name},
+			`${normalizeRestPath(objectDefinition.restContextPath)}`
+		);
+
+		await apiHelpers.objectEntry.deleteObjectEntry(
+			normalizeRestPath(objectDefinition.restContextPath),
+			String(objectEntry.id)
+		);
+
+		await globalMenuPage.goToObjectDefinition(objectDefinition.name);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Export / Import'}),
+			trigger: page.getByLabel('Options'),
+		});
+
+		const {filePath: deletionsLARFilePath} =
+			await portletExportImportPage.exportLARFile({
+				fileNamePattern: /ObjectDefinition\d+-\d+\.portlet\.lar/,
+				includeDeletions: true,
+			});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				externalReferenceCode: objectEntry.externalReferenceCode,
+				textField: objectEntry.textField,
+			},
+			`${normalizeRestPath(objectDefinition.restContextPath)}`
+		);
+
+		await globalMenuPage.goToObjectDefinition(objectDefinition.name);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Export / Import'}),
+			trigger: page.getByLabel('Options'),
+		});
+
+		await portletExportImportPage.importLARFile({
+			filePath: deletionsLARFilePath,
+			includeDeletions: true,
+		});
+
+		expect(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: `${normalizeRestPath(objectDefinition.restContextPath)}`,
+				externalReferenceCode: objectEntry.externalReferenceCode,
+			})
+		).toEqual({status: 'NOT_FOUND'});
+	}
+);

@@ -62,6 +62,7 @@ export enum PaymentStatus {
 
 export const orderTypeLabel = {
 	[OrderTypes.ADDONS]: 'Add-Ons',
+	[OrderTypes.AI_HUB]: 'AI Hub',
 	[OrderTypes.CLIENT_EXTENSION]: 'Client Extension',
 	[OrderTypes.CLOUD_APP]: 'Cloud',
 	[OrderTypes.CMP]: 'Content Marketing Platform',

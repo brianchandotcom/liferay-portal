@@ -719,6 +719,94 @@ test.describe('Schedule Panel', () => {
 			await contentsPage.deleteContent(title);
 		}
 	);
+
+	test(
+		'Expire and review dates are shown in the correct timezone',
+		{tag: '@LPD-78815'},
+		async ({assetsPage, contentsPage, page}) => {
+
+			// Create a Web Content
+
+			await contentsPage.goto();
+
+			await contentsPage.createContent('Basic Web Content');
+
+			await contentsPage.openSidePanel('Schedule');
+
+			const title = getRandomString();
+
+			await page.getByPlaceholder('New Basic Web Content').fill(title);
+
+			// Fill the input
+
+			const nextYear = new Date().getFullYear() + 1;
+
+			const expireCheckbox = page.getByLabel('Never Expire');
+
+			await expireCheckbox.uncheck();
+
+			const expirationDateField = page.getByRole('textbox', {
+				name: 'Expiration Date',
+			});
+
+			await expirationDateField.fill(`05/12/${nextYear} 12:55 PM`);
+
+			const reviewCheckbox = page.getByLabel('Never Review');
+
+			await reviewCheckbox.uncheck();
+
+			const reviewDateField = page.getByRole('textbox', {
+				name: 'Review Date',
+			});
+
+			await reviewDateField.fill(`05/12/${nextYear} 12:57 PM`);
+
+			// Publish the content
+
+			await contentsPage.publishButton.click();
+
+			const content = page.locator('.table-list-title a', {
+				hasText: title,
+			});
+
+			await expect(content).toBeAttached();
+
+			await content.click();
+
+			await contentsPage.openSidePanel('Schedule');
+
+			await expect(expirationDateField).toHaveValue(
+				`05/12/${nextYear} 12:55 PM`
+			);
+			await expect(reviewDateField).toHaveValue(
+				`05/12/${nextYear} 12:57 PM`
+			);
+
+			await assetsPage.gotoAll();
+
+			await assetsPage.execItemAction({
+				action: 'Show Details',
+				filter: title,
+			});
+
+			await expect(
+				page.getByRole('heading', {name: title})
+			).toBeVisible();
+
+			await expect(
+				page.getByText(`05/12/${nextYear}, 12:55 PM`)
+			).toBeVisible();
+			await expect(
+				page.getByText(`05/12/${nextYear}, 12:57 PM`)
+			).toBeVisible();
+
+			// Delete content
+
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent(title);
+		}
+	);
 });
 
 test.describe('Categorization Panel', () => {

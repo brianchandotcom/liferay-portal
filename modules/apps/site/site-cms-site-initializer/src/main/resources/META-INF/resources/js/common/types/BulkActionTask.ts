@@ -132,6 +132,11 @@ export interface IBulkActionType {
 		keywordsToRemove?: string[];
 	};
 	ExpireObjectBulkSelectionAction: {};
+	ExportTranslationBulkAction: {
+		sourceLanguageId: string;
+		targetLanguageIds: string;
+		version: string;
+	};
 	MoveObjectBulkSelectionAction: {
 		objectEntryFolderId: number;
 	};
@@ -161,6 +166,7 @@ export interface IBulkActionTaskType {
 	EditObjectCategoriesBulkSelectionAction: string;
 	EditObjectTagsBulkSelectionAction: string;
 	ExpireObjectBulkSelectionAction: string;
+	ExportTranslationBulkAction: string;
 	MoveObjectBulkSelectionAction: string;
 	PermissionObjectBulkSelectionAction: string;
 	ResetPermissionObjectBulkSelectionAction: string;

@@ -37,6 +37,7 @@ module.exports = {
 		'numeral',
 		'object-hash',
 		'qs',
+		'react-router',
 		'react-text-mask',
 		'text-mask-addons',
 		'text-mask-core',

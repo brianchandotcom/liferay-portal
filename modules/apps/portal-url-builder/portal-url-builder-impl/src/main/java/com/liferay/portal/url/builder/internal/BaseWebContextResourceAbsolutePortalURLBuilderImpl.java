@@ -56,7 +56,7 @@ public abstract class BaseWebContextResourceAbsolutePortalURLBuilderImpl<T>
 			}
 		}
 		else if (cachingStrategy ==
-					cachingStrategy.USE_ONE_HASH_PER_WEB_CONTEXT) {
+					CachingStrategy.USE_ONE_HASH_PER_WEB_CONTEXT) {
 
 			String servletContextHash =
 				hashedFilesRegistry.getServletContextHash(webContextName);

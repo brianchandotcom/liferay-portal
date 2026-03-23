@@ -80,6 +80,7 @@ public class TestScriptGenerator {
 		sb.append("\t\texit 1\n");
 		sb.append("\tfi\n\n");
 		sb.append("\tcd \"${base_dir}\" || exit 1\n\n");
+		sb.append("\techo \"\"\n");
 		sb.append("\techo \"This script was generated on branch ");
 		sb.append(_gitWorkingDirectory.getCurrentBranchName());
 		sb.append(" (");
@@ -101,6 +102,7 @@ public class TestScriptGenerator {
 		sb.append(upstreamMasterAheadBehindDescription);
 
 		sb.append(" upstream/master.\"\n");
+		sb.append("\techo \"\"\n");
 
 		if (upstreamMasterAheadBehindDescription.contains("behind")) {
 			sb.append("\techo \"Warning: Your branch is behind ");
@@ -167,6 +169,7 @@ public class TestScriptGenerator {
 			sb.append(" \"results_output\" || exit_code=1\n\n");
 		}
 
+		sb.append("\techo \"\"\n");
 		sb.append("\techo \"Results:\"\n");
 		sb.append("\techo \"\"\n");
 		sb.append("\techo -e \"${results_output}\"\n\n");
@@ -176,7 +179,8 @@ public class TestScriptGenerator {
 		sb.append("\tlocal command_exit_code=\"\"\n");
 		sb.append("\tlocal command_start_time=${SECONDS}\n\n");
 		sb.append("\techo \"\"\n");
-		sb.append("\techo \"Running: ${1}\"\n\n");
+		sb.append("\techo \"Running: ${1}\"\n");
+		sb.append("\techo \"\"\n\n");
 		sb.append("\t(\n");
 		sb.append("\t\teval \"${1}\"\n");
 		sb.append("\t)\n\n");

@@ -29,7 +29,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -673,10 +672,6 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	@Reference
 	private LayoutPageTemplateCollectionService
 		_layoutPageTemplateCollectionService;
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

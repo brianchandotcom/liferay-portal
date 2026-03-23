@@ -46,7 +46,7 @@ public class AccountEntryResourcePermissionUpgradeProcess
 		_resourceActionLocalService.checkResourceActions(
 			AccountEntry.class.getName(),
 			Arrays.asList(
-				AccountActionKeys.ASSIGN_USERS, AccountActionKeys.ADD_USER,
+                AccountActionKeys.ADD_USER, AccountActionKeys.ASSIGN_USERS,
 				AccountActionKeys.UNASSIGN_USERS,
 				AccountActionKeys.UPDATE_USERS, AccountActionKeys.VIEW_USERS),
 			true);

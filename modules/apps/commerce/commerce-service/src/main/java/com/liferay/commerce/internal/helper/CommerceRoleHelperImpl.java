@@ -259,7 +259,6 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			groupResourceActionIds.put(
 				AccountEntry.class.getName(),
 				new String[] {
-					ActionKeys.UPDATE, ActionKeys.VIEW,
 					AccountActionKeys.ADD_USER, AccountActionKeys.ASSIGN_USERS,
 					AccountActionKeys.INVITE_USER,
 					AccountActionKeys.MANAGE_ADDRESSES,
@@ -269,6 +268,7 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 					AccountActionKeys.VIEW_ACCOUNT_ROLES,
 					AccountActionKeys.VIEW_ORGANIZATIONS,
 					AccountActionKeys.VIEW_USERS,
+                    ActionKeys.UPDATE, ActionKeys.VIEW,
 					CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS,
 					CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS
 				});
@@ -302,7 +302,6 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			groupResourceActionIds.put(
 				AccountEntry.class.getName(),
 				new String[] {
-					ActionKeys.UPDATE, ActionKeys.VIEW,
 					AccountActionKeys.ADD_USER, AccountActionKeys.ASSIGN_USERS,
 					AccountActionKeys.INVITE_USER,
 					AccountActionKeys.MANAGE_ADDRESSES,
@@ -312,7 +311,8 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 					AccountActionKeys.VIEW_ACCOUNT_ROLES,
 					AccountActionKeys.VIEW_ORGANIZATIONS,
 					AccountActionKeys.VIEW_USERS,
-					CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS,
+                    ActionKeys.UPDATE, ActionKeys.VIEW,
+                    CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS,
 					CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS
 				});
 			groupResourceActionIds.put(

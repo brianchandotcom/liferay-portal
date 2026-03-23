@@ -216,6 +216,25 @@ export function createCSV({fieldMappingMaps, fileVersionId, groupId, name}) {
 	});
 }
 
+export function createDemandbase({credentials, groupId, name, status}) {
+	const data = pickBy(
+		{
+			credentials,
+			status
+		},
+		Boolean
+	);
+
+	return sendRequest({
+		data: {
+			...data,
+			name
+		},
+		method: 'POST',
+		path: `contacts/${groupId}/data_source/demandbase`
+	});
+}
+
 export function createLiferay({
 	credentials,
 	fieldMappingMaps,
@@ -292,6 +311,33 @@ export function updateCSV({fieldMappingMaps, groupId, id, name, status}) {
 		},
 		method: 'PATCH',
 		path: `contacts/${groupId}/data_source/${id}/csv`
+	});
+}
+
+export function updateDemandbase({
+	channelsConfiguration,
+	credentials,
+	groupId,
+	id,
+	name,
+	status
+}) {
+	const data = pickBy(
+		{
+			channelsConfiguration,
+			credentials,
+			status
+		},
+		Boolean
+	);
+
+	return sendRequest({
+		data: {
+			...data,
+			name
+		},
+		method: 'PATCH',
+		path: `contacts/${groupId}/data_source/${id}/demandbase`
 	});
 }
 

@@ -11,8 +11,6 @@ resource "helm_release" "crossplane" {
 			{
 				podSecurityContextCrossplane=local.default_crossplane_pod_security_context
 				podSecurityContextRBACManager=local.default_crossplane_pod_security_context
-				securityContextCrossplane=local.default_crossplane_container_security_context
-				securityContextRBACManager=local.default_crossplane_container_security_context
 				resourcesCrossplane={
 					limits={
 						memory="2Gi"
@@ -31,6 +29,8 @@ resource "helm_release" "crossplane" {
 						memory="256Mi"
 					}
 				}
+				securityContextCrossplane=local.default_crossplane_container_security_context
+				securityContextRBACManager=local.default_crossplane_container_security_context
 			})
 	]
 	version=var.crossplane_helm_chart_version

@@ -130,7 +130,6 @@ resource "kubernetes_manifest" "function_auto_ready_runtime_config" {
 							containers=[
 								{
 									name="package-runtime"
-									securityContext=local.default_crossplane_container_security_context
 									resources={
 										limits={
 											memory="256Mi"
@@ -140,6 +139,7 @@ resource "kubernetes_manifest" "function_auto_ready_runtime_config" {
 											memory="128Mi"
 										}
 									}
+									securityContext=local.default_crossplane_container_security_context
 								},
 							],
 							securityContext=local.default_crossplane_pod_security_context
@@ -187,7 +187,6 @@ resource "kubernetes_manifest" "function_go_templating_runtime_config" {
 							containers=[
 								{
 									name="package-runtime"
-									securityContext=local.default_crossplane_container_security_context
 									resources={
 										limits={
 											memory="512Mi"
@@ -197,6 +196,7 @@ resource "kubernetes_manifest" "function_go_templating_runtime_config" {
 											memory="128Mi"
 										}
 									}
+									securityContext=local.default_crossplane_container_security_context
 								},
 							],
 							securityContext=local.default_crossplane_pod_security_context
@@ -244,7 +244,6 @@ resource "kubernetes_manifest" "function_tag_manager_runtime_config" {
 							containers=[
 								{
 									name="package-runtime"
-									securityContext=local.default_crossplane_container_security_context
 									resources={
 										limits={
 											memory="256Mi"
@@ -254,6 +253,7 @@ resource "kubernetes_manifest" "function_tag_manager_runtime_config" {
 											memory="128Mi"
 										}
 									}
+									securityContext=local.default_crossplane_container_security_context
 								},
 							],
 							securityContext=local.default_crossplane_pod_security_context

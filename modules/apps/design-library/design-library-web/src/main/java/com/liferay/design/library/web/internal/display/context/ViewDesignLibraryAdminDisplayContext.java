@@ -71,7 +71,11 @@ public class ViewDesignLibraryAdminDisplayContext {
 					DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY, "{id}"
 				).buildString(),
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
-				null, null, "link"));
+				null, null, "link"),
+			new FDSActionDropdownItem(
+				"{actions.delete.href}", "trash", "delete",
+				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
+				"delete", null));
 	}
 
 	public Map<String, Object> getFDSAdditionalProps() {

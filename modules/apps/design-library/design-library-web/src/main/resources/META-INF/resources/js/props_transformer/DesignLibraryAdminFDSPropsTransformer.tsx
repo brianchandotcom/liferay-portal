@@ -5,9 +5,11 @@
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
+import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
 import CreateDesignLibraryModal from '../modal/CreateDesignLibraryModal';
+import confirmAndDeleteEntryAction from './actions/confirmAndDeleteEntryAction';
 import {
 	FromNowDateTimeRenderer,
 	LinkRenderer,
@@ -73,6 +75,48 @@ export default function DesignLibraryAdminFDSPropsTransformer({
 		},
 		hideManagementBarInEmptyState: true,
 		id,
+		onActionDropdownItemClick: ({
+			action,
+			event,
+			itemData,
+		}: {
+			action: {
+				data: {
+					id: string;
+				};
+			};
+			event: Event;
+			itemData: {
+				actions: {
+					delete: {href: string; method: string};
+				};
+				name: string;
+			};
+		}) => {
+			if (action.data.id === 'delete') {
+				event?.preventDefault();
+
+				confirmAndDeleteEntryAction({
+					bodyHTML: Liferay.Language.get(
+						'delete-design-library-confirmation-body'
+					),
+					deleteAction: itemData.actions.delete,
+					loadData: () => {
+						navigate(window.location.href);
+					},
+					successMessage: sub(
+						Liferay.Language.get('x-was-successfully-deleted'),
+						`<strong>${Liferay.Util.escapeHTML(itemData.name)}</strong>`
+					),
+					title: sub(
+						Liferay.Language.get(
+							'delete-design-library-confirmation-title'
+						),
+						itemData.name
+					),
+				});
+			}
+		},
 		views: [
 			{
 				contentRenderer: 'table',

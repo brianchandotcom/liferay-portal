@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -103,8 +103,12 @@ public class ViewRoomStrutsActionTest {
 		).thenReturn(
 			"/web/" + randomFriendlyURL
 		);
+	}
 
-		ReflectionTestUtil.setFieldValue(PortalUtil.class, "_portal", _portal);
+	@After
+	public void tearDown() {
+		_portalUtilMockedStatic.close();
+		_groupPermissionUtilMockedStatic.close();
 	}
 
 	@Test
@@ -173,8 +177,8 @@ public class ViewRoomStrutsActionTest {
 			false
 		);
 
-		Mockito.when(
-			_portal.getOriginalServletRequest(Mockito.any())
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.getOriginalServletRequest(Mockito.any())
 		).thenReturn(
 			mockHttpServletRequest
 		);
@@ -214,6 +218,8 @@ public class ViewRoomStrutsActionTest {
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
 		Mockito.mock(ObjectDefinitionLocalService.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
+	private final MockedStatic<PortalUtil> _portalUtilMockedStatic =
+		Mockito.mockStatic(PortalUtil.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 	@InjectMocks

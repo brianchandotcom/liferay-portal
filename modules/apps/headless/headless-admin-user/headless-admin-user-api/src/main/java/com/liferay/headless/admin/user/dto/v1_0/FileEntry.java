@@ -208,6 +208,47 @@ public class FileEntry implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getPreviewURL() {
+		if (_previewURLSupplier != null) {
+			previewURL = _previewURLSupplier.get();
+
+			_previewURLSupplier = null;
+		}
+
+		return previewURL;
+	}
+
+	public void setPreviewURL(String previewURL) {
+		this.previewURL = previewURL;
+
+		_previewURLSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPreviewURL(
+		UnsafeSupplier<String, Exception> previewURLUnsafeSupplier) {
+
+		_previewURLSupplier = () -> {
+			try {
+				return previewURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String previewURL;
+
+	@JsonIgnore
+	private Supplier<String> _previewURLSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getThumbnailURL() {
 		if (_thumbnailURLSupplier != null) {
 			thumbnailURL = _thumbnailURLSupplier.get();
@@ -327,6 +368,22 @@ public class FileEntry implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		String previewURL = getPreviewURL();
+
+		if (previewURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"previewURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(previewURL));
 
 			sb.append("\"");
 		}

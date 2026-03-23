@@ -92,6 +92,20 @@ public class FileEntrySerDes {
 			sb.append("\"");
 		}
 
+		if (fileEntry.getPreviewURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"previewURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileEntry.getPreviewURL()));
+
+			sb.append("\"");
+		}
+
 		if (fileEntry.getThumbnailURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -154,6 +168,13 @@ public class FileEntrySerDes {
 			map.put("name", String.valueOf(fileEntry.getName()));
 		}
 
+		if (fileEntry.getPreviewURL() == null) {
+			map.put("previewURL", null);
+		}
+		else {
+			map.put("previewURL", String.valueOf(fileEntry.getPreviewURL()));
+		}
+
 		if (fileEntry.getThumbnailURL() == null) {
 			map.put("thumbnailURL", null);
 		}
@@ -191,6 +212,9 @@ public class FileEntrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "previewURL")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "thumbnailURL")) {
 				return false;
 			}
@@ -223,6 +247,11 @@ public class FileEntrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					fileEntry.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "previewURL")) {
+				if (jsonParserFieldValue != null) {
+					fileEntry.setPreviewURL((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "thumbnailURL")) {

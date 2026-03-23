@@ -80,8 +80,6 @@ public class TestScriptGenerator {
 		sb.append("\t\texit 1\n");
 		sb.append("\tfi\n\n");
 		sb.append("\tcd \"${base_dir}\" || exit 1\n\n");
-		sb.append("\techo \"Running local tests.\"\n");
-		sb.append("\techo \"\"\n");
 		sb.append("\techo \"This script was generated on branch ");
 		sb.append(_gitWorkingDirectory.getCurrentBranchName());
 		sb.append(" (");
@@ -203,16 +201,18 @@ public class TestScriptGenerator {
 		sb.append("\t\tlocal exit_code=\"\"\n\n");
 		sb.append("\t\tlocal command=\"${command_name}[0]\"\n");
 		sb.append("\t\tlocal command_dir=\"${command_name}[1]\"\n\n");
-		sb.append("\t\techo \"");
-		sb.append(_SEPARATOR);
+		sb.append("\t\tif [ \"${!command_dir}\" != \"./\" ] && ");
+		sb.append("[ \"${!command_dir}\" != \"./.\" ]\n");
+		sb.append("\t\tthen\n");
+		sb.append("\t\t\techo \"Running: cd ${!command_dir#./} && ${!command}");
 		sb.append("\"\n");
-		sb.append("\t\techo \"Executing command [$((${i} + 1))/");
-		sb.append("${#commands_list[@]}]: [${!command_dir}] ${!command}\"\n");
-		sb.append("\t\techo \"");
-		sb.append(_SEPARATOR);
-		sb.append("\"\n\n");
+		sb.append("\t\telse\n");
+		sb.append("\t\t\techo \"Running: ${!command}\"\n");
+		sb.append("\t\tfi\n\n");
+		sb.append("\t\techo\"\"\n\n");
 		sb.append("\t\t(\n");
-		sb.append("\t\t\tif [ \"${!command_dir}\" != \"./\" ]\n");
+		sb.append("\t\t\tif [ \"${!command_dir}\" != \"./\" ] && ");
+		sb.append("[ \"${!command_dir}\" != \"./.\" ]\n");
 		sb.append("\t\t\tthen\n");
 		sb.append("\t\t\t\tcd \"${!command_dir}\"\n");
 		sb.append("\t\t\tfi\n\n");
@@ -230,45 +230,33 @@ public class TestScriptGenerator {
 		sb.append("\t\tfi\n\n");
 		sb.append("\t\techo \"\"\n");
 		sb.append("\tdone\n\n");
-		sb.append("\techo \"\"\n");
-		sb.append("\techo \"");
-		sb.append(_SEPARATOR);
-		sb.append("\"\n");
-		sb.append("\techo \"Summary of results (Total time: ");
-		sb.append(
-			"$(_format_duration $((${SECONDS} - ${total_start_time})))):\"\n");
-		sb.append("\techo \"Current branch is ");
-		sb.append(upstreamMasterAheadBehindDescription);
-		sb.append(" upstream/master.\"\n");
-		sb.append("\techo \"");
-		sb.append(_SEPARATOR);
-		sb.append("\"\n\n");
+		sb.append("\techo \"Results:\"\n");
+		sb.append("\techo \"\"\n\n");
 		sb.append("\tfor i in \"${!commands_list[@]}\"\n");
 		sb.append("\tdo\n");
 		sb.append("\t\tlocal command_name=\"${commands_list[${i}]}\"\n\n");
 		sb.append("\t\tlocal command=\"${command_name}[0]\"\n");
 		sb.append("\t\tlocal command_dir=\"${command_name}[1]\"\n\n");
-		sb.append("\t\tif [ \"${results[${i}]}\" == \"SUCCESS\" ]\n");
+		sb.append("\t\tif [ \"${!command_dir}\" != \"./\" ] && ");
+		sb.append("[ \"${!command_dir}\" != \"./.\" ]\n");
 		sb.append("\t\tthen\n");
-		sb.append("\t\t\tlocal icon=\"✓\"\n");
+		sb.append("\t\t\techo \"cd ${!command_dir#./} && ${!command}\"\n");
 		sb.append("\t\telse\n");
-		sb.append("\t\t\tlocal icon=\"✗\"\n");
+		sb.append("\t\t\techo \"${!command}\"\n");
 		sb.append("\t\tfi\n\n");
-		sb.append("\t\tprintf \"[${icon}] %-7s (%s) - %s\\n\" ");
-		sb.append("\"${results[${i}]}\" \"${durations[${i}]}\" ");
-		sb.append("\"${!command_dir}\"\n");
-		sb.append("\t\tprintf \"    Command: %s\\n\\n\" \"${!command}\"\n");
+		sb.append("\t\techo \"    ${results[${i}]} in ${durations[${i}]}\"\n");
+		sb.append("\t\techo \"\"\n");
 		sb.append("\tdone\n\n");
-		sb.append("\techo \"");
-		sb.append(_SEPARATOR);
-		sb.append("\"\n");
-		sb.append("\techo \"\"\n\n");
+		sb.append("\tlocal total_duration=$(_format_duration ");
+		sb.append("$((${SECONDS} - ${total_start_time})))\n\n");
 		sb.append("\tif [ \"${failed_commands}\" -eq 0 ]\n");
 		sb.append("\tthen\n");
-		sb.append("\t\techo \"All commands executed successfully.\"\n\n");
+		sb.append("\t\techo \"All commands executed successfully in ");
+		sb.append("${total_duration}\"\n\n");
 		sb.append("\t\texit 0\n");
 		sb.append("\telse\n");
-		sb.append("\t\techo \"${failed_commands} command(s) failed.\"\n\n");
+		sb.append("\t\techo \"${failed_commands} command(s) failed in ");
+		sb.append("${total_duration}\"\n\n");
 		sb.append("\t\texit 1\n");
 		sb.append("\tfi\n");
 		sb.append("}\n\n");
@@ -294,18 +282,6 @@ public class TestScriptGenerator {
 	public GitWorkingDirectory getGitWorkingDirectory() {
 		return _gitWorkingDirectory;
 	}
-
-	private static String _getSeparator(int length) {
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < length; i++) {
-			sb.append("=");
-		}
-
-		return sb.toString();
-	}
-
-	private static final String _SEPARATOR = _getSeparator(80);
 
 	private static final String _TEST_SUITE_NAME = "relevant-local";
 

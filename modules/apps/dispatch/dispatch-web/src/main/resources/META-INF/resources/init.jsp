@@ -48,8 +48,10 @@ page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="jakarta.portlet.PortletURL" %>
@@ -67,9 +69,17 @@ page import="java.util.TimeZone" %>
 <portlet:defineObjects />
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redirect", currentURL));
 
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+if (Validator.isNull(redirect)) {
+	redirect = currentURL;
+}
+
+String backURL = PortalUtil.escapeRedirect(ParamUtil.getString(request, "backURL", redirect));
+
+if (Validator.isNull(backURL)) {
+	backURL = redirect;
+}
 
 Format fastDateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone("UTC"));
 %>

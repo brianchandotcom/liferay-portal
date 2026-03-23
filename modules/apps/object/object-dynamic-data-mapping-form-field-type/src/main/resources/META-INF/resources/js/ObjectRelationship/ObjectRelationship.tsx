@@ -191,9 +191,7 @@ export default function ObjectRelationship({
 			if (!parameterObjectFieldName || parameterObjectFieldId) {
 				newURL = parameterObjectFieldId
 					? apiURL.replace(/{\w+}/, String(parameterObjectFieldId))
-					: `${apiURL}?pageSize=-1${
-							searchTerm ? `&search=${searchTerm}` : ''
-						}`;
+					: `${apiURL}${searchTerm ? `?search=${searchTerm}` : ''}`;
 			}
 
 			if (!newURL || newURL === url) {

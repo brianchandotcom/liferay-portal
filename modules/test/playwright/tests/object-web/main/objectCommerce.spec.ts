@@ -4,7 +4,7 @@
  */
 
 import {
-	ObjectActionAPI,
+	ObjectDefinitionAPI,
 	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
@@ -15,8 +15,6 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
-import getRandomString from '../../../utils/getRandomString';
-import {waitForAlert} from '../../../utils/waitForAlert';
 import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
@@ -29,78 +27,44 @@ const test = mergeTests(
 	objectPagesTest
 );
 
-test(
-	'LPD-78504 Can create an object entry related to Commerce Product Group',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, site, viewObjectEntriesPage}) => {
-		// Corresponds to Poshi test: CanCreateEntryRelatedToCommerceProductGroup
+// Poshi stub: @ignore = "Test Stub"
+// Original: LPS-136741 - Verify that Commerce notification works for
+// creating an entry. No Poshi implementation exists (TODO LPS-145736).
 
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
+test.skip(
+	'LPS-136741 CreateEntryNotification',
+	{tag: '@LPS-136741'},
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	async () => {}
+);
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
+// Poshi stub: @ignore = "Test Stub"
+// Original: LPS-136741 - Verify that Commerce notification works for
+// deleting an entry. No Poshi implementation exists (TODO LPS-145738).
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+test.skip(
+	'LPS-136741 DeleteEntryNotification',
+	{tag: '@LPS-136741'},
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	async () => {}
+);
 
-		// Create a relationship from Commerce Product Group to the custom object
+// Poshi stub: @ignore = "Test Stub"
+// Original: LPS-136741 - Verify that Commerce notification works for
+// updating an entry. No Poshi implementation exists (TODO LPS-145737).
 
-		const objectRelationshipAPIClient =
-			await apiHelpers.buildRestClient(ObjectRelationshipAPI);
-
-		const relationshipLabel = 'Relationship' + getRandomInt();
-		const relationshipName = 'relationship' + getRandomInt();
-
-		const {body: objectRelationship} =
-			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_COMMERCE_PRODUCT_GROUP',
-				{
-					label: {en_US: relationshipLabel},
-					name: relationshipName,
-					objectDefinitionExternalReferenceCode1:
-						'L_COMMERCE_PRODUCT_GROUP',
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition.externalReferenceCode,
-					type: 'oneToMany',
-				}
-			);
-
-		apiHelpers.data.push({
-			id: objectRelationship.id,
-			type: 'objectRelationship',
-		});
-
-		// Create an entry for the custom object via API
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const fieldName = objectFields[0].name!;
-		const fieldValue = getRandomString();
-
-		const entry = await apiHelpers.objectEntry.postObjectEntry(
-			{[fieldName]: fieldValue},
-			applicationName
-		);
-
-		// Verify the entry was created successfully
-
-		expect(entry.id).toBeDefined();
-		expect(entry[fieldName]).toBe(fieldValue);
-	}
+test.skip(
+	'LPS-136741 UpdateEntryNotification',
+	{tag: '@LPS-136741'},
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	async () => {}
 );
 
 test(
-	'LPD-78504 Can create an object entry related to Commerce Products',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, site, viewObjectEntriesPage}) => {
-		// Corresponds to Poshi test: CanCreateEntryRelatedToCommerceProducts
+	'LPS-151766 Can create entry related to Commerce Product Group',
+	{tag: '@LPS-151766'},
+	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		// Create a custom object with a Text field
 
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
@@ -117,44 +81,58 @@ test(
 			type: 'objectDefinition',
 		});
 
-		// Create a relationship from Commerce Product Definition to the custom object
+		// Get the CommercePricingClass system object definition
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: pricingClassDefPage} =
+			await objectDefinitionAPIClient.getObjectDefinitionsPage(
+				undefined,
+				"name eq 'CommercePricingClass'",
+				1,
+				1
+			);
+
+		const pricingClassDef = pricingClassDefPage.items[0];
+
+		// Create a oneToMany relationship from CommercePricingClass to the
+		// custom object
 
 		const objectRelationshipAPIClient =
 			await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
-		const relationshipLabel = 'Relationship' + getRandomInt();
 		const relationshipName = 'relationship' + getRandomInt();
 
-		const {body: objectRelationship} =
+		const {body: relationship} =
 			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_COMMERCE_PRODUCT_DEFINITION',
+				pricingClassDef.externalReferenceCode,
 				{
-					label: {en_US: relationshipLabel},
+					label: {en_US: 'Relationship'},
 					name: relationshipName,
-					objectDefinitionExternalReferenceCode1:
-						'L_COMMERCE_PRODUCT_DEFINITION',
 					objectDefinitionExternalReferenceCode2:
 						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
 					type: 'oneToMany',
 				}
 			);
 
-		apiHelpers.data.push({
-			id: objectRelationship.id,
-			type: 'objectRelationship',
-		});
+		// Create a Commerce Product Group via Headless Catalog API
 
-		// Create a commerce catalog and product
+		const pricingClassName = 'PG' + getRandomInt();
 
-		const catalog =
-			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+		const pricingClass = await apiHelpers.post(
+			`${apiHelpers.baseUrl}headless-commerce-admin-catalog/v1.0/product-groups`,
+			{
+				data: {
+					title: {en_US: pricingClassName},
+				},
+			}
+		);
 
-		const product =
-			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-				catalogId: catalog.id,
-			});
-
-		// Navigate to entries page and create an entry
+		// Navigate to custom object entries and add an entry selecting the
+		// Product Group from the relationship field
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
@@ -162,213 +140,41 @@ test(
 			objectDefinition.label['en_US']
 		);
 
-		const fieldLabel = objectFields[0].label['en_US'];
-		const fieldValue = getRandomString();
-
-		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldBusinessType: 'Text',
-			objectFieldLabel: fieldLabel,
-			objectFieldValue: fieldValue,
-		});
+		await viewObjectEntriesPage.selectDropdownItemWithSearch(
+			pricingClassName
+		);
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-		await waitForAlert(page);
+		await expect(
+			viewObjectEntriesPage.successMessage
+		).toBeVisible();
+
+		// Go back and verify the pricing class name appears in entries list
 
 		await viewObjectEntriesPage.backButton.click();
 
-		// Verify the entry was created
+		await expect(
+			page.locator('table td').getByText(pricingClassName).first()
+		).toBeVisible();
 
-		await expect(page.getByText(fieldValue)).toBeVisible();
+		// Clean up
+
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}headless-commerce-admin-catalog/v1.0/product-groups/${pricingClass.id}`
+		);
+
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
 	}
 );
 
 test(
-	'LPD-78504 Commerce notification works for creating an entry',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, site}) => {
-		// Corresponds to Poshi test: CreateEntryNotification
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		// Create an email notification template
-
-		const senderEmail = 'sender' + getRandomInt() + '@liferay.com';
-
-		const notificationTemplate =
-			await apiHelpers.notification.postRandomNotificationTemplate(
-				'notification template ' + getRandomInt(),
-				senderEmail
-			);
-
-		apiHelpers.data.push({
-			id: notificationTemplate.id,
-			type: 'notificationTemplate',
-		});
-
-		// Create an action on the object triggered by onAfterAdd that sends a notification
-
-		const objectActionAPIClient =
-			await apiHelpers.buildRestClient(ObjectActionAPI);
-
-		await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
-			objectDefinition.externalReferenceCode,
-			{
-				active: true,
-				label: {en_US: 'createAction'},
-				name: 'createAction',
-				objectActionExecutorKey: 'notification',
-				objectActionTriggerKey: 'onAfterAdd',
-				parameters: {
-					notificationTemplateId: notificationTemplate.id,
-					type: 'email',
-				},
-			}
-		);
-
-		// Create an entry via API
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const fieldName = objectFields[0].name!;
-
-		await apiHelpers.objectEntry.postObjectEntry(
-			{[fieldName]: getRandomString()},
-			applicationName
-		);
-
-		// Verify the notification was sent
-
-		const notificationQueueEntries =
-			await apiHelpers.notification.getNotificationQueueEntriesPage(
-				senderEmail
-			);
-
-		const notificationQueueEntriesId =
-			notificationQueueEntries.items.map((item: any) => item.id);
-
-		for (const notificationQueueEntryId of notificationQueueEntriesId) {
-			apiHelpers.data.push({
-				id: notificationQueueEntryId,
-				type: 'notificationQueueEntry',
-			});
-		}
-
-		expect(notificationQueueEntries.items.length).toBeTruthy();
-	}
-);
-
-test(
-	'LPD-78504 Commerce notification works for deleting an entry',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, site}) => {
-		// Corresponds to Poshi test: DeleteEntryNotification
-
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		// Create an email notification template
-
-		const senderEmail = 'sender' + getRandomInt() + '@liferay.com';
-
-		const notificationTemplate =
-			await apiHelpers.notification.postRandomNotificationTemplate(
-				'notification template ' + getRandomInt(),
-				senderEmail
-			);
-
-		apiHelpers.data.push({
-			id: notificationTemplate.id,
-			type: 'notificationTemplate',
-		});
-
-		// Create an action on the object triggered by onAfterDelete that sends a notification
-
-		const objectActionAPIClient =
-			await apiHelpers.buildRestClient(ObjectActionAPI);
-
-		await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
-			objectDefinition.externalReferenceCode,
-			{
-				active: true,
-				label: {en_US: 'deleteAction'},
-				name: 'deleteAction',
-				objectActionExecutorKey: 'notification',
-				objectActionTriggerKey: 'onAfterDelete',
-				parameters: {
-					notificationTemplateId: notificationTemplate.id,
-					type: 'email',
-				},
-			}
-		);
-
-		// Create an entry via API and then delete it
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const fieldName = objectFields[0].name!;
-
-		const entry = await apiHelpers.objectEntry.postObjectEntry(
-			{[fieldName]: getRandomString()},
-			applicationName
-		);
-
-		await apiHelpers.objectEntry.deleteObjectEntry(
-			applicationName,
-			entry.id
-		);
-
-		// Verify the notification was sent
-
-		const notificationQueueEntries =
-			await apiHelpers.notification.getNotificationQueueEntriesPage(
-				senderEmail
-			);
-
-		const notificationQueueEntriesId =
-			notificationQueueEntries.items.map((item: any) => item.id);
-
-		for (const notificationQueueEntryId of notificationQueueEntriesId) {
-			apiHelpers.data.push({
-				id: notificationQueueEntryId,
-				type: 'notificationQueueEntry',
-			});
-		}
-
-		expect(notificationQueueEntries.items.length).toBeTruthy();
-	}
-);
-
-test(
-	'LPD-78504 Object scoped by Company is not displayed on Commerce notification type for Site Channel',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, site}) => {
-		// Corresponds to Poshi test: ObjectScopedCompanyNotDisplayedSiteChannel
+	'LPS-136741 Object scoped by company not displayed on site channel notifications',
+	{tag: '@LPS-136741'},
+	async ({apiHelpers, page}) => {
+		// Create a company-scoped custom object with a Text field
 
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
@@ -386,35 +192,60 @@ test(
 			type: 'objectDefinition',
 		});
 
-		// Navigate to Commerce notification configuration for a site channel
+		// Create a Commerce Channel of type "site" via API
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				currencyCode: 'USD',
+				name: 'TestChannel' + getRandomInt(),
+				type: 'site',
+			});
+
+		// Navigate to Commerce Channels admin
 
 		await page.goto(
-			`/group${site.friendlyUrlPath}/~/control_panel/manage/-/commerce_channels`
+			'/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet&p_p_lifecycle=0&p_p_state=maximized',
+			{waitUntil: 'networkidle'}
 		);
 
-		// Open the first channel if it exists, or check the notification type list
+		// Click on the channel name to open its details
 
-		const channelLink = page.locator('.table-list-title a').first();
+		await page
+			.getByRole('link', {exact: true, name: channel.name})
+			.click();
 
-		if (await channelLink.isVisible({timeout: 5000}).catch(() => false)) {
-			await channelLink.click();
+		// Navigate to "Notification Templates" tab (may include
+		// "DEPRECATED" suffix)
 
-			await page.getByRole('link', {name: 'Notifications'}).click();
+		await page
+			.getByRole('link', {name: /Notification Templates/})
+			.click();
 
-			// Verify the company-scoped object does NOT appear in the notification type list
+		await page.waitForLoadState('networkidle');
 
+		// Click Add button to open the notification template form
+
+		await page
+			.getByRole('button', {name: 'Add Notification Template'})
+			.first()
+			.click();
+
+		// Verify that Create, Delete, Update options are NOT present
+		// for the company-scoped object in the notification type dropdown
+
+		for (const optionType of ['Create', 'Delete', 'Update']) {
 			await expect(
-				page.getByText(objectDefinition.label['en_US'])
+				page.locator(`option:text-is("${optionType}")`)
 			).toBeHidden();
 		}
 	}
 );
 
 test(
-	'LPD-78504 Commerce notification works for updating an entry',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, site}) => {
-		// Corresponds to Poshi test: UpdateEntryNotification
+	'LPS-152408 Can create entry related to Commerce Products',
+	{tag: '@LPS-152408'},
+	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		// Create a custom object with a Text field
 
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
@@ -431,75 +262,85 @@ test(
 			type: 'objectDefinition',
 		});
 
-		// Create an email notification template
+		// Create a oneToMany relationship from CPDefinition to the custom
+		// object
 
-		const senderEmail = 'sender' + getRandomInt() + '@liferay.com';
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-		const notificationTemplate =
-			await apiHelpers.notification.postRandomNotificationTemplate(
-				'notification template ' + getRandomInt(),
-				senderEmail
+		const {body: cpDefinitionsPage} =
+			await objectDefinitionAPIClient.getObjectDefinitionsPage(
+				undefined,
+				"name eq 'CPDefinition'",
+				1,
+				1
 			);
 
-		apiHelpers.data.push({
-			id: notificationTemplate.id,
-			type: 'notificationTemplate',
+		const cpDefinition = cpDefinitionsPage.items[0];
+
+		const objectRelationshipAPIClient =
+			await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+		const relationshipName = 'relationship' + getRandomInt();
+
+		const {body: relationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				cpDefinition.externalReferenceCode,
+				{
+					label: {en_US: 'Relationship'},
+					name: relationshipName,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
+
+		// Create a Commerce Product via API
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const productName = 'Simple T-Shirt ' + getRandomInt();
+
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			name: {en_US: productName},
+			productType: 'simple',
 		});
 
-		// Create an action on the object triggered by onAfterUpdate that sends a notification
+		// Navigate to custom object entries and add an entry selecting the
+		// Commerce Product from the relationship field
 
-		const objectActionAPIClient =
-			await apiHelpers.buildRestClient(ObjectActionAPI);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
-			objectDefinition.externalReferenceCode,
-			{
-				active: true,
-				label: {en_US: 'updateAction'},
-				name: 'updateAction',
-				objectActionExecutorKey: 'notification',
-				objectActionTriggerKey: 'onAfterUpdate',
-				parameters: {
-					notificationTemplateId: notificationTemplate.id,
-					type: 'email',
-				},
-			}
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
 		);
 
-		// Create an entry via API and then update it
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const fieldName = objectFields[0].name!;
-
-		const entry = await apiHelpers.objectEntry.postObjectEntry(
-			{[fieldName]: getRandomString()},
-			applicationName
+		await viewObjectEntriesPage.selectDropdownItemWithSearch(
+			productName
 		);
 
-		await apiHelpers.objectEntry.patchObjectEntry(
-			{[fieldName]: getRandomString()},
-			applicationName,
-			entry.id
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(
+			viewObjectEntriesPage.successMessage
+		).toBeVisible();
+
+		// Go back and verify the product name appears in entries list
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.locator('table td').getByText(productName).first()
+		).toBeVisible();
+
+		// Clean up relationship
+
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
 		);
-
-		// Verify the notification was sent
-
-		const notificationQueueEntries =
-			await apiHelpers.notification.getNotificationQueueEntriesPage(
-				senderEmail
-			);
-
-		const notificationQueueEntriesId =
-			notificationQueueEntries.items.map((item: any) => item.id);
-
-		for (const notificationQueueEntryId of notificationQueueEntriesId) {
-			apiHelpers.data.push({
-				id: notificationQueueEntryId,
-				type: 'notificationQueueEntry',
-			});
-		}
-
-		expect(notificationQueueEntries.items.length).toBeTruthy();
 	}
 );

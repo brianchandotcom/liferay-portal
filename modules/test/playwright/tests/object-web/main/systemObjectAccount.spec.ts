@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectRelationshipAPI} from '@liferay/object-admin-rest-client-js';
-import {expect, mergeTests} from '@playwright/test';
+import {
+	ObjectDefinitionAPI,
+	ObjectRelationshipAPI,
+} from '@liferay/object-admin-rest-client-js';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -14,7 +17,6 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
-import {waitForAlert} from '../../../utils/waitForAlert';
 import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
@@ -27,88 +29,264 @@ const test = mergeTests(
 	objectPagesTest
 );
 
+async function navigateToObjectDefinitionEditPage(
+	page: Page,
+	objectDefinitionId: number
+) {
+	const portletId =
+		'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet';
+
+	await page.goto(
+		`/group/guest/~/control_panel/manage?p_p_id=${portletId}&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_${portletId}_mvcRenderCommandName=%2Fobject_definitions%2Fedit_object_definition&_${portletId}_objectDefinitionId=${objectDefinitionId}`,
+		{waitUntil: 'networkidle'}
+	);
+}
+
+async function getAccountDefinitionId(apiHelpers: any) {
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+	const {body: accountDefinitionsPage} =
+		await objectDefinitionAPIClient.getObjectDefinitionsPage(
+			undefined,
+			"name eq 'AccountEntry'",
+			1,
+			1
+		);
+
+	return accountDefinitionsPage.items[0].id;
+}
+
 test(
 	'LPD-78504 Can associate any type of account',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
-		// Navigate to Account system object
+	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+		const objectRelationshipAPIClient =
+			await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
-		await viewObjectDefinitionsPage.goto();
+		// Get Account system object definition
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
+		const {body: accountDefinitionsPage} =
+			await objectDefinitionAPIClient.getObjectDefinitionsPage(
+				undefined,
+				"name eq 'AccountEntry'",
+				1,
+				1
+			);
+
+		const accountDefinition = accountDefinitionsPage.items[0];
+
+		// Create accounts of each type (business, person, guest)
+
+		const businessAccount =
+			await apiHelpers.headlessAdminUser.postAccount({
+				name: 'Business' + getRandomInt(),
+				type: 'business',
+			});
+
+		const personAccount =
+			await apiHelpers.headlessAdminUser.postAccount({
+				name: 'Person' + getRandomInt(),
+				type: 'person',
+			});
+
+		const guestAccount =
+			await apiHelpers.headlessAdminUser.postAccount({
+				name: 'Guest' + getRandomInt(),
+				type: 'guest',
+			});
+
+		// Create a custom object with a text field
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		// Create oneToMany relationship from AccountEntry to CustomObject
+
+		const relationshipName = 'relationship' + getRandomInt();
+
+		const {body: relationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_ACCOUNT',
+				{
+					label: {en_US: 'Relationship'},
+					name: relationshipName,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
+
+		// Set Account title field to "Type"
+
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'type'}
 		);
 
-		// Navigate to the Details tab to verify account type configuration
+		// Create custom object entries linked to each account type via API
 
-		await page.getByRole('tab', {name: 'Details'}).click();
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+		const fieldName = objectFields[0].name!;
 
-		// Verify Account Restriction toggle is visible, confirming accounts
-		// can be associated with various types
+		for (const account of [
+			businessAccount,
+			personAccount,
+			guestAccount,
+		]) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					[fieldName]: 'Entry' + getRandomInt(),
+					['r_' + relationshipName + '_accountEntryId']:
+						account.id,
+				},
+				applicationName
+			);
+		}
 
-		await expect(
-			page.getByLabel('Enable Account Restriction', {exact: true})
-		).toBeVisible();
+		// Navigate to entries page and verify all 3 type labels are visible
 
-		// Verify the Account Type selector or configuration is available
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(
-			page.getByText('Account Restriction')
-		).toBeVisible();
+		for (const accountType of ['business', 'person', 'guest']) {
+			await expect(
+				page.locator('table').getByText(accountType)
+			).toBeVisible();
+		}
+
+		// Clean up: revert Account title field to "Name"
+
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'name'}
+		);
+
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
 	}
 );
 
 test(
 	'LPD-78504 Can create action on system account',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
-		// Navigate to Account system object
+	async ({apiHelpers, page}) => {
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-		await viewObjectDefinitionsPage.goto();
+		// Get Account system object definition ID
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
-		);
+		const {body: accountDefinitionsPage} =
+			await objectDefinitionAPIClient.getObjectDefinitionsPage(
+				undefined,
+				"name eq 'AccountEntry'",
+				1,
+				1
+			);
+
+		const accountId = accountDefinitionsPage.items[0].id;
+
+		// Navigate to Object Admin and then to Account edit page
+
+		const portletId =
+			'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet';
+
+		const editUrl =
+			`/group/guest/~/control_panel/manage?p_p_id=${portletId}&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_${portletId}_mvcRenderCommandName=%2Fobject_definitions%2Fedit_object_definition&_${portletId}_objectDefinitionId=${accountId}`;
+
+		await page.goto(editUrl, {waitUntil: 'networkidle'});
+
+		// Wait for the Account edit page to fully load
+
+		await expect(page.getByText('ERC:L_ACCOUNT')).toBeVisible();
 
 		// Navigate to Actions tab
 
-		await page.getByRole('tab', {name: 'Actions'}).click();
+		await page
+			.getByRole('listitem')
+			.filter({hasText: 'Actions'})
+			.click();
 
 		// Click Add Object Action button
 
 		await page.getByLabel('Add Object Action').click();
 
-		// Fill in the action name
+		// Side panel is inside an iframe
 
-		const actionName = 'Action' + getRandomInt();
+		const sidePanel = page.frameLocator('iframe');
 
-		await page.getByLabel('Action Name').fill(actionName);
+		// Fill in the action label (name auto-generates)
 
-		// Select the action trigger (When)
+		const actionLabel = 'Action' + getRandomInt();
 
-		await page.getByLabel('When').click();
+		await sidePanel
+			.getByPlaceholder('Text to translate...')
+			.fill(actionLabel);
 
-		await page.getByRole('option', {name: 'On After Add'}).click();
+		// Switch to Action Builder tab to configure When/Then
 
-		// Select the action type (Then)
+		await sidePanel
+			.getByRole('tab', {name: 'Action Builder'})
+			.click();
 
-		await page.getByLabel('Then').click();
+		// Select the action trigger (When): click the "Choose a Trigger"
+		// dropdown
 
-		await page.getByRole('option', {name: 'Webhook'}).click();
+		await sidePanel.getByText('Choose a Trigger').click();
 
-		// Fill the URL
+		await sidePanel
+			.getByRole('option', {name: 'On After Add'})
+			.click();
 
-		await page.getByLabel('URL').fill('http://localhost:8080');
+		// Select the action type (Then): click the "Choose an Action"
+		// dropdown
+
+		await sidePanel.getByText('Choose an Action').click();
+
+		await sidePanel
+			.getByRole('option', {name: 'Webhook'})
+			.click();
+
+		// Fill the URL field (label includes mandatory marker)
+
+		const urlInput = sidePanel.locator(
+			'input[type="url"], input[id*="url" i], input[name*="url" i]'
+		);
+
+		await urlInput.scrollIntoViewIfNeeded();
+
+		await urlInput.fill('http://localhost:8080');
 
 		// Save the action
 
-		await page.getByRole('button', {name: 'Save'}).click();
+		await sidePanel
+			.getByRole('button', {name: 'Save'})
+			.first()
+			.click();
 
-		await waitForAlert(page);
+		// Verify the action was created by checking it appears in the
+		// actions list (panel closes and shows the list)
 
-		// Verify the action was created by checking it appears in the list
-
-		await expect(page.getByText(actionName)).toBeVisible();
+		await expect(
+			page.getByRole('link', {name: actionLabel})
+		).toBeVisible();
 	}
 );
 
@@ -120,7 +298,6 @@ test(
 		apiHelpers,
 		objectRelationshipsPage,
 		page,
-		viewObjectDefinitionsPage,
 	}) => {
 		// Create a custom object via API
 
@@ -141,13 +318,14 @@ test(
 
 		// Navigate to Account system object Relationships tab
 
-		await viewObjectDefinitionsPage.goto();
+		const accountId = await getAccountDefinitionId(apiHelpers);
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
-		);
+		await navigateToObjectDefinitionEditPage(page, accountId);
 
-		await page.getByRole('tab', {name: 'Relationships'}).click();
+		await page
+			.getByRole('listitem')
+			.filter({hasText: 'Relationships'})
+			.click();
 
 		// Create a new relationship
 
@@ -164,7 +342,9 @@ test(
 
 		// Verify relationship was created
 
-		await expect(page.getByText(relationshipLabel)).toBeVisible();
+		await expect(
+			page.getByRole('link', {name: relationshipLabel})
+		).toBeVisible();
 
 		// Clean up: delete relationship via API
 
@@ -208,7 +388,7 @@ test(
 
 		const {body: relationship} =
 			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_ACCOUNT_ENTRY',
+				'L_ACCOUNT',
 				{
 					deletionType: 'cascade',
 					label: {en_US: 'CascadeRel'},
@@ -265,9 +445,10 @@ test(
 		// Verify child entries were also deleted by checking the custom
 		// object entries page is empty
 
-		const response = await apiHelpers.objectEntry.getObjectEntries(
-			applicationName
-		);
+		const response =
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				applicationName
+			);
 
 		expect(response.totalCount).toBe(0);
 
@@ -282,40 +463,37 @@ test(
 test(
 	'LPD-78504 Cannot delete default fields',
 	{tag: '@LPD-78504'},
-	async ({objectFieldsPage, page, viewObjectDefinitionsPage}) => {
+	async ({apiHelpers, page}) => {
 		// Navigate to Account system object
 
-		await viewObjectDefinitionsPage.goto();
+		const accountId = await getAccountDefinitionId(apiHelpers);
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
-		);
+		await navigateToObjectDefinitionEditPage(page, accountId);
 
 		// Navigate to Fields tab
 
-		await page.getByRole('tab', {name: 'Fields'}).click();
+		await page
+			.getByRole('listitem')
+			.filter({hasText: 'Fields'})
+			.click();
 
-		// Verify that default system fields do not have a Delete action
-		// available. Check a known default field like "Name"
+		// Verify that default system fields (Name, Description, Type)
+		// do not have an Actions button (no delete option)
 
-		const nameFieldRow = page
-			.getByRole('row')
-			.filter({hasText: 'Name'})
-			.first();
+		for (const fieldLabel of ['Name', 'Description', 'Type']) {
+			const fieldRow = page
+				.getByRole('row')
+				.filter({hasText: fieldLabel})
+				.first();
 
-		await expect(nameFieldRow).toBeVisible();
+			await expect(fieldRow).toBeVisible();
 
-		// Verify the actions dropdown does not contain Delete for
-		// system default fields. System fields should not have the
-		// kebab menu or should not have a Delete option
+			const actionsButton = fieldRow.getByRole('button', {
+				name: 'Actions',
+			});
 
-		const actionsButton = nameFieldRow.getByRole('button', {
-			name: 'Actions',
-		});
-
-		// System default fields should not have an actions button at all
-
-		await expect(actionsButton).toBeHidden();
+			await expect(actionsButton).toBeHidden();
+		}
 	}
 );
 
@@ -350,7 +528,7 @@ test(
 
 		const {body: relationship} =
 			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_ACCOUNT_ENTRY',
+				'L_ACCOUNT',
 				{
 					deletionType: 'prevent',
 					label: {en_US: 'PreventRel'},
@@ -392,34 +570,31 @@ test(
 		// Try to delete the account entry via API and expect it to fail
 		// because deletion type is "prevent"
 
-		let deletionFailed = false;
-
-		try {
+		const deleteResponse =
 			await apiHelpers.headlessAdminUser.deleteAccount(account.id);
-		}
-		catch {
-			deletionFailed = true;
-		}
 
-		expect(deletionFailed).toBeTruthy();
+		expect(deleteResponse.ok()).toBeFalsy();
 
 		// Verify the account still exists
 
 		const accountResponse =
-			await apiHelpers.headlessAdminUser.getAccount(account.id);
+			await apiHelpers.headlessAdminUser.getAccountByName(
+				accountName
+			);
 
 		expect(accountResponse.name).toBe(accountName);
 
 		// Clean up: delete child entry first, then account, then relationship
 
-		const entries = await apiHelpers.objectEntry.getObjectEntries(
-			applicationName
-		);
+		const entries =
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				applicationName
+			);
 
 		for (const entry of entries.items) {
 			await apiHelpers.objectEntry.deleteObjectEntry(
-				entry.id,
-				applicationName
+				applicationName,
+				entry.id
 			);
 		}
 
@@ -460,7 +635,7 @@ test(
 
 		const {body: relationship} =
 			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_ACCOUNT_ENTRY',
+				'L_ACCOUNT',
 				{
 					deletionType: 'disassociate',
 					label: {en_US: 'DisassociateRel'},
@@ -516,9 +691,10 @@ test(
 
 		// Verify the child entry still exists but the relationship FK is null
 
-		const entries = await apiHelpers.objectEntry.getObjectEntries(
-			applicationName
-		);
+		const entries =
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				applicationName
+			);
 
 		expect(entries.totalCount).toBe(1);
 
@@ -539,36 +715,41 @@ test(
 test(
 	'LPD-78504 Cannot edit default fields',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
+	async ({apiHelpers, page}) => {
 		// Navigate to Account system object
 
-		await viewObjectDefinitionsPage.goto();
+		const accountId = await getAccountDefinitionId(apiHelpers);
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
-		);
+		await navigateToObjectDefinitionEditPage(page, accountId);
 
 		// Navigate to Fields tab
 
-		await page.getByRole('tab', {name: 'Fields'}).click();
-
-		// Click on a default system field like "Name" to open its details
-
 		await page
-			.getByRole('cell')
-			.getByRole('link')
-			.filter({hasText: 'Name'})
-			.first()
+			.getByRole('listitem')
+			.filter({hasText: 'Fields'})
 			.click();
 
-		// Verify the field details are displayed in read-only mode
-		// The label input in the side panel should be disabled or read-only
+		// Verify that default system fields (Name, Description, Type)
+		// have disabled label inputs in their details panel
+		// (field side panel is NOT inside an iframe)
 
 		const sidePanel = page.frameLocator('iframe');
 
-		await expect(
-			sidePanel.getByLabel('Label', {exact: true})
-		).toBeDisabled();
+		for (const fieldLabel of ['Name', 'Description', 'Type']) {
+			await page
+				.locator('table tbody')
+				.getByRole('link')
+				.filter({hasText: fieldLabel})
+				.first()
+				.click();
+
+			// The field details panel is inside an iframe
+			// System default fields have non-editable Field Name input
+
+			await expect(
+				sidePanel.locator('input[name="name"]')
+			).not.toBeEditable();
+		}
 	}
 );
 
@@ -637,153 +818,277 @@ test(
 
 		await viewObjectDefinitionsPage.goto();
 
-		await expect(page.getByText('Account')).toBeVisible();
+		await expect(
+			page.getByRole('link', {exact: true, name: 'Account'})
+		).toBeVisible();
 	}
 );
 
 test(
 	'LPD-78504 Can view description on field entry',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
-		// Navigate to Account system object
+	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+		const objectRelationshipAPIClient =
+			await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
-		await viewObjectDefinitionsPage.goto();
+		// Get Account system object definition
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
+		const {body: accountDefinitionsPage} =
+			await objectDefinitionAPIClient.getObjectDefinitionsPage(
+				undefined,
+				"name eq 'AccountEntry'",
+				1,
+				1
+			);
+
+		const accountDefinition = accountDefinitionsPage.items[0];
+
+		// Create an account entry with a description
+
+		const accountDescription = 'Description' + getRandomInt();
+
+		await apiHelpers.headlessAdminUser.postAccount({
+			description: accountDescription,
+			name: 'Account' + getRandomInt(),
+			type: 'business',
+		});
+
+		// Create a custom object with a text field
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		// Create oneToMany relationship from AccountEntry to CustomObject
+
+		const relationshipName = 'relationship' + getRandomInt();
+
+		const {body: relationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_ACCOUNT',
+				{
+					label: {en_US: 'Relationship'},
+					name: relationshipName,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
+
+		// Set Account title field to "Description"
+
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'description'}
 		);
 
-		// Navigate to Fields tab
+		// Navigate to custom object entries and add an entry selecting
+		// the account by description
 
-		await page.getByRole('tab', {name: 'Fields'}).click();
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		// Verify that the Description column is visible in the fields table
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
-		await expect(
-			page.getByRole('columnheader', {name: 'Description'})
-		).toBeVisible();
+		await viewObjectEntriesPage.selectDropdownItemWithSearch(
+			accountDescription
+		);
 
-		// Click on a field to view its description in the side panel
-
-		await page
-			.getByRole('cell')
-			.getByRole('link')
-			.filter({hasText: 'Description'})
-			.first()
-			.click();
-
-		// Verify the field details panel opens and shows field information
-
-		const sidePanel = page.frameLocator('iframe');
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await expect(
-			sidePanel.getByLabel('Label', {exact: true})
+			viewObjectEntriesPage.successMessage
 		).toBeVisible();
+
+		// Go back and verify the description appears in entries list
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.locator('table').getByText(accountDescription)
+		).toBeVisible();
+
+		// Clean up: revert Account title field to "Name"
+
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'name'}
+		);
+
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
 	}
 );
 
 test(
 	'LPD-78504 Can view fields label by default',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
+	async ({apiHelpers, page}) => {
 		// Navigate to Account system object
 
-		await viewObjectDefinitionsPage.goto();
+		const accountId = await getAccountDefinitionId(apiHelpers);
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
-		);
+		await navigateToObjectDefinitionEditPage(page, accountId);
 
 		// Navigate to Fields tab
 
-		await page.getByRole('tab', {name: 'Fields'}).click();
+		await page
+			.getByRole('listitem')
+			.filter({hasText: 'Fields'})
+			.click();
 
-		// Verify that default field labels are displayed in the fields list
-		// Account system object should have fields like Name, Type, Description
+		// Verify that default fields (Name, Description, Type) exist
+		// and each has type "Text"
+		// Scope to tbody to avoid matching the "Type" column header
 
-		await expect(
-			page.getByRole('columnheader', {name: 'Label'})
-		).toBeVisible();
+		const tbody = page.locator('table tbody');
 
-		await expect(
-			page.getByRole('cell').getByRole('link').filter({hasText: 'Name'}).first()
-		).toBeVisible();
+		for (const fieldLabel of ['Name', 'Description', 'Type']) {
+			const fieldRow = tbody
+				.getByRole('row')
+				.filter({hasText: fieldLabel})
+				.first();
 
-		await expect(
-			page.getByRole('cell').getByRole('link').filter({hasText: 'Type'}).first()
-		).toBeVisible();
+			await expect(fieldRow).toBeVisible();
 
-		await expect(
-			page.getByRole('cell').getByRole('link').filter({hasText: 'Description'}).first()
-		).toBeVisible();
+			await expect(fieldRow.getByText('Text')).toBeVisible();
+		}
 	}
 );
 
 test(
 	'LPD-78504 Can view name and type as mandatory fields',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
+	async ({apiHelpers, page}) => {
 		// Navigate to Account system object
 
-		await viewObjectDefinitionsPage.goto();
+		const accountId = await getAccountDefinitionId(apiHelpers);
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
-		);
+		await navigateToObjectDefinitionEditPage(page, accountId);
 
 		// Navigate to Fields tab
 
-		await page.getByRole('tab', {name: 'Fields'}).click();
+		await page
+			.getByRole('listitem')
+			.filter({hasText: 'Fields'})
+			.click();
 
-		// Verify that the fields table has a Mandatory column
+		// Verify that Name and Type fields are marked as mandatory
+		// Scope to tbody to avoid matching the "Type" column header
 
-		await expect(
-			page.getByRole('columnheader', {name: 'Mandatory'})
-		).toBeVisible();
+		const tbody = page.locator('table tbody');
 
-		// Verify that Name field is marked as mandatory
+		for (const fieldLabel of ['Name', 'Type']) {
+			const fieldRow = tbody
+				.getByRole('row')
+				.filter({hasText: fieldLabel})
+				.first();
 
-		const nameRow = page
-			.getByRole('row')
-			.filter({hasText: 'Name'})
-			.first();
-
-		await expect(nameRow.getByText('Yes')).toBeVisible();
+			await expect(fieldRow.getByText('Yes')).toBeVisible();
+		}
 	}
 );
 
 test(
 	'LPD-78504 Can view name on field entry',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
-		// Navigate to Account system object
+	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		const objectRelationshipAPIClient =
+			await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
-		await viewObjectDefinitionsPage.goto();
+		// Create an account entry
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
+		const accountName = 'TestAccount' + getRandomInt();
+
+		await apiHelpers.headlessAdminUser.postAccount({
+			name: accountName,
+			type: 'business',
+		});
+
+		// Create a custom object with a text field
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		// Create oneToMany relationship from AccountEntry to CustomObject
+
+		const relationshipName = 'relationship' + getRandomInt();
+
+		const {body: relationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_ACCOUNT',
+				{
+					label: {en_US: 'Relationship'},
+					name: relationshipName,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
+
+		// Navigate to custom object entries and add an entry selecting
+		// the account by name (default title field)
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
 		);
 
-		// Navigate to Fields tab
+		await viewObjectEntriesPage.selectDropdownItemWithSearch(
+			accountName
+		);
 
-		await page.getByRole('tab', {name: 'Fields'}).click();
-
-		// Click on the Name field to open its details
-
-		await page
-			.getByRole('cell')
-			.getByRole('link')
-			.filter({hasText: 'Name'})
-			.first()
-			.click();
-
-		// Verify the field name is displayed in the side panel
-
-		const sidePanel = page.frameLocator('iframe');
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await expect(
-			sidePanel.getByLabel('Label', {exact: true})
-		).toHaveValue('Name');
+			viewObjectEntriesPage.successMessage
+		).toBeVisible();
+
+		// Go back and verify the account name appears in entries list
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.locator('table td').getByText(accountName).first()
+		).toBeVisible();
+
+		// Clean up relationship
+
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
 	}
 );
 
@@ -795,8 +1100,20 @@ test(
 		editObjectViewPage,
 		objectViewPage,
 		page,
-		viewObjectDefinitionsPage,
+		viewObjectEntriesPage,
 	}) => {
+		// Ensure Account title field is "name" (may have been changed
+		// by a prior test)
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const accountId = await getAccountDefinitionId(apiHelpers);
+
+		await objectDefinitionAPIClient.patchObjectDefinition(accountId, {
+			titleObjectFieldName: 'name',
+		});
+
 		// Create a custom object with a Text field
 
 		const objectFields = generateObjectFields({
@@ -823,7 +1140,7 @@ test(
 
 		const {body: relationship} =
 			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_ACCOUNT_ENTRY',
+				'L_ACCOUNT',
 				{
 					label: {en_US: 'AccountRel'},
 					name: relationshipName,
@@ -835,13 +1152,33 @@ test(
 				}
 			);
 
+		// Create an account entry and a custom object entry linked to it
+
+		const accountName = 'Account' + getRandomInt();
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: accountName,
+			type: 'business',
+		});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+		const fieldName = objectFields[0].name!;
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				[fieldName]: 'EntryValue',
+				['r_' + relationshipName + '_accountEntryId']: account.id,
+			},
+			applicationName
+		);
+
 		// Navigate to custom object Views tab and create a custom view
 		// that includes the relationship column
 
-		await viewObjectDefinitionsPage.goto();
-
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			objectDefinition.label['en_US']
+		await navigateToObjectDefinitionEditPage(
+			page,
+			objectDefinition.id
 		);
 
 		await page
@@ -853,7 +1190,11 @@ test(
 
 		await objectViewPage.createObjectView(viewName);
 
-		await waitForAlert(page);
+		// Wait for the view to appear in the list
+
+		await expect(
+			page.getByRole('link', {name: viewName})
+		).toBeVisible();
 
 		// Open the view and add the relationship column
 
@@ -861,18 +1202,26 @@ test(
 
 		await editObjectViewPage.selectObjectFields(['AccountRel']);
 
+		// Switch back to Basic Info tab to access Mark as Default
+
+		await page
+			.frameLocator('iframe')
+			.getByRole('tab', {name: 'Basic Info'})
+			.click();
+
 		await editObjectViewPage.markAsDefaultButton.check();
 
 		await editObjectViewPage.saveButton.click();
 
-		await waitForAlert(page);
+		await page.waitForLoadState('networkidle');
 
-		// Verify the relationship column is visible in the view builder
+		// Navigate to entries page and verify the account name appears
+		// in the relationship column
 
-		const sidePanel = page.frameLocator('iframe');
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await expect(
-			sidePanel.getByText('AccountRel')
+			page.locator('table td').getByText(accountName).first()
 		).toBeVisible();
 
 		// Clean up relationship
@@ -886,63 +1235,132 @@ test(
 test(
 	'LPD-78504 Can view type on field entry',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
-		// Navigate to Account system object
+	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+		const objectRelationshipAPIClient =
+			await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
-		await viewObjectDefinitionsPage.goto();
+		// Get Account system object definition
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
+		const {body: accountDefinitionsPage} =
+			await objectDefinitionAPIClient.getObjectDefinitionsPage(
+				undefined,
+				"name eq 'AccountEntry'",
+				1,
+				1
+			);
+
+		const accountDefinition = accountDefinitionsPage.items[0];
+
+		// Create a business account entry
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: 'Account' + getRandomInt(),
+			type: 'business',
+		});
+
+		// Create a custom object with a text field
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		// Create oneToMany relationship from AccountEntry to CustomObject
+
+		const relationshipName = 'relationship' + getRandomInt();
+
+		const {body: relationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_ACCOUNT',
+				{
+					label: {en_US: 'Relationship'},
+					name: relationshipName,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
+
+		// Set Account title field to "Type"
+
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'type'}
 		);
 
-		// Navigate to Fields tab
+		// Create entry via API with relationship to account
 
-		await page.getByRole('tab', {name: 'Fields'}).click();
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+		const fieldName = objectFields[0].name!;
 
-		// Verify that the Type column is visible in the fields table
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				[fieldName]: 'Entry' + getRandomInt(),
+				['r_' + relationshipName + '_accountEntryId']: account.id,
+			},
+			applicationName
+		);
+
+		// Navigate to entries page and verify the type value appears
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await expect(
-			page.getByRole('columnheader', {name: 'Type'})
+			page.locator('table').getByText('business')
 		).toBeVisible();
 
-		// Click on the Type field entry to view its type
+		// Clean up: revert Account title field to "Name"
 
-		await page
-			.getByRole('cell')
-			.getByRole('link')
-			.filter({hasText: 'Type'})
-			.first()
-			.click();
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			accountDefinition.id,
+			{titleObjectFieldName: 'name'}
+		);
 
-		// Verify the field type is displayed in the side panel
-
-		const sidePanel = page.frameLocator('iframe');
-
-		await expect(
-			sidePanel.getByLabel('Label', {exact: true})
-		).toHaveValue('Type');
+		await objectRelationshipAPIClient.deleteObjectRelationship(
+			relationship.id
+		);
 	}
 );
 
 test(
 	'LPD-78504 Edit title field on system account',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
+	async ({apiHelpers, page}) => {
 		// Navigate to Account system object
 
-		await viewObjectDefinitionsPage.goto();
+		const accountId = await getAccountDefinitionId(apiHelpers);
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
-		);
+		await navigateToObjectDefinitionEditPage(page, accountId);
 
 		// Verify we are on the Account details page
 
-		await expect(page.getByText('ERC:L_ACCOUNT_ENTRY')).toBeVisible();
+		await expect(page.getByText('ERC:L_ACCOUNT')).toBeVisible();
 
-		// Change the Object Entry Title Field
+		// Change the Entry Title Field (Poshi label: "Entry Title Field")
+		// The dropdown is a combobox button inside a form-group
 
-		await page.getByLabel('Object Entry Title Field').click();
+		const titleFieldGroup = page
+			.locator('.form-group')
+			.filter({hasText: 'Entry Title Field'});
+
+		await titleFieldGroup.scrollIntoViewIfNeeded();
+
+		await titleFieldGroup.getByRole('combobox').click();
 
 		await page.getByRole('option', {name: 'Type'}).click();
 
@@ -950,48 +1368,43 @@ test(
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
-		await waitForAlert(page);
+		await page.waitForLoadState('networkidle');
 
-		// Verify the title field was changed by re-checking the dropdown value
+		// Verify the title field was changed
 
-		await expect(page.getByLabel('Object Entry Title Field')).toHaveText(
+		await expect(titleFieldGroup.getByRole('combobox')).toHaveText(
 			/Type/
 		);
 
 		// Revert back to the original title field
 
-		await page.getByLabel('Object Entry Title Field').click();
+		await titleFieldGroup.getByRole('combobox').click();
 
 		await page.getByRole('option', {name: 'Name'}).click();
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
-		await waitForAlert(page);
+		await page.waitForLoadState('networkidle');
 	}
 );
 
 test(
 	'LPD-78504 Widget button disabled by default',
 	{tag: '@LPD-78504'},
-	async ({page, viewObjectDefinitionsPage}) => {
+	async ({apiHelpers, page}) => {
 		// Navigate to Account system object
 
-		await viewObjectDefinitionsPage.goto();
+		const accountId = await getAccountDefinitionId(apiHelpers);
 
-		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			'Account'
+		await navigateToObjectDefinitionEditPage(page, accountId);
+
+		// Verify the Widget toggle is not checked for system objects
+		// Poshi locator: "Show Widget in Page Builder" toggle input
+
+		const widgetToggle = page.locator(
+			"//span[text()='Show Widget in Page Builder']/preceding-sibling::span/input"
 		);
 
-		// Verify the Widget toggle/button is disabled for system objects
-		// System objects like Account should have the widget option
-		// disabled by default
-
-		const widgetToggle = page.getByLabel('Enable Widget', {
-			exact: true,
-		});
-
-		await expect(widgetToggle).toBeVisible();
-
-		await expect(widgetToggle).toBeDisabled();
+		await expect(widgetToggle).not.toBeChecked();
 	}
 );

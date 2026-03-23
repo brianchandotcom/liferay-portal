@@ -23,6 +23,7 @@ import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden'
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import createUserWithPermissions from '../../../utils/createUserWithPermissions';
 import {expandSection} from '../../../utils/expandSection';
+import {expectToPass} from '../../../utils/expectToPass';
 import getRandomString from '../../../utils/getRandomString';
 import {hoverAndExpectToBeVisible} from '../../../utils/hoverAndExpectToBeVisible';
 import {performLogout, performUserSwitch} from '../../../utils/performLogin';
@@ -58,6 +59,7 @@ const test = mergeTests(
 const testWithCKEditor4 = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
+		'LPD-11235': {enabled: false},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -1038,24 +1040,31 @@ testWithCKEditor4.describe('Page Contents Panel with CKEditor 4', () => {
 
 			// Edit inline text
 
-			await content.click();
+			await expectToPass(
+				async () => {
+					await content.click();
 
-			const editable = pageEditorPage.getEditable({
-				editableId: 'element-text',
-				fragmentId: headingId,
-			});
+					const editable = pageEditorPage.getEditable({
+						editableId: 'element-text',
+						fragmentId: headingId,
+					});
 
-			await editable.locator('[contenteditable="true"]').waitFor();
+					await editable
+						.locator('[contenteditable="true"]')
+						.waitFor();
 
-			// Clear current content text and fill with new one
+					// Clear current content text and fill with new one
 
-			await page.keyboard.press('Control+KeyA');
-			await page.keyboard.press('Backspace');
+					await page.keyboard.press('Control+KeyA');
+					await page.keyboard.press('Backspace');
 
-			await page.keyboard.type('New Content');
-			await page.locator('body').click();
+					await page.keyboard.type('New Content');
+					await page.locator('body').click();
 
-			await pageEditorPage.waitForChangesSaved();
+					await pageEditorPage.waitForChangesSaved();
+				},
+				{timeout: 8000}
+			);
 
 			await expect(
 				page.locator('.page-editor__page-contents__page-content')

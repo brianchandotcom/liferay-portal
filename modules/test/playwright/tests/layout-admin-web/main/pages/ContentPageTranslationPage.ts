@@ -272,6 +272,8 @@ export class ContentPageTranslationPage {
 					.locator('.management-bar .dropdown-toggle')
 					.nth(1),
 			});
+
+			await this.page.locator('.col-md-6').getByText(to).waitFor();
 		}
 	}
 

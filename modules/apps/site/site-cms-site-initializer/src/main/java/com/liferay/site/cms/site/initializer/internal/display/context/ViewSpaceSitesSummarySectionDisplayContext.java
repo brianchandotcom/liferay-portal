@@ -25,7 +25,7 @@ import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUti
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +61,11 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 			CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
 	}
 
-	public CreationMenu getCreationMenu() {
+	public CreationMenu getCreationMenu() throws Exception {
+		if (!_hasConnectSitesPermission()) {
+			return new CreationMenu();
+		}
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "connectSites");
@@ -87,7 +91,13 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 		).build();
 	}
 
-	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws Exception {
+
+		if (!_hasConnectSitesPermission()) {
+			return Collections.emptyList();
+		}
+
 		return ListUtil.fromArray(
 			_getSearchableFDSActionDropdownItem(true),
 			_getSearchableFDSActionDropdownItem(false),

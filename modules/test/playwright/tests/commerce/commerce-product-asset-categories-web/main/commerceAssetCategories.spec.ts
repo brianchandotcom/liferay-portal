@@ -33,7 +33,7 @@ test('LPD-3381 Error message is shown when saving an existing override category 
 		templateType: 'site-initializer',
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const pageName = 'Placed Orders';
 

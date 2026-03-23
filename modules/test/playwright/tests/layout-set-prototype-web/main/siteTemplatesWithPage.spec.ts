@@ -81,13 +81,13 @@ test(
 
 		const siteName: string = 'Site-' + getRandomString();
 
-		const siteId = await sitesPage.createSite({
+		const {externalReferenceCode, siteId} = await sitesPage.createSite({
 			isCustom: true,
 			siteName,
 			templateName: siteTemplateName,
 		});
 
-		apiHelpers.data.push({id: siteId, type: 'site'});
+		apiHelpers.data.push({id: externalReferenceCode, type: 'site'});
 
 		// Check the Edit button of the dropdown is not visible
 
@@ -200,13 +200,13 @@ test(
 
 		const siteName = 'Site-' + getRandomString();
 
-		const siteId = await sitesPage.createSite({
+		const {externalReferenceCode} = await sitesPage.createSite({
 			isCustom: true,
 			siteName,
 			templateName: siteTemplateName,
 		});
 
-		apiHelpers.data.push({id: siteId, type: 'site'});
+		apiHelpers.data.push({id: externalReferenceCode, type: 'site'});
 
 		// Add new page on created site
 

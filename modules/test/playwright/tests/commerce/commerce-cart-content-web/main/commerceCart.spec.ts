@@ -112,7 +112,7 @@ test('LPD-29864 Cart updates when order is open', async ({apiHelpers}) => {
 		name: 'Cart Site',
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,

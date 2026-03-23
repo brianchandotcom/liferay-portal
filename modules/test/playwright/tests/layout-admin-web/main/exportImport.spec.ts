@@ -85,7 +85,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: siteB.id, type: 'site'});
+		apiHelpers.data.push({id: siteB.externalReferenceCode, type: 'site'});
 
 		// Import the site A into the site B
 
@@ -232,7 +232,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: siteB.id, type: 'site'});
+		apiHelpers.data.push({id: siteB.externalReferenceCode, type: 'site'});
 
 		// Import the site A into the site B
 
@@ -424,7 +424,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: siteB.id, type: 'site'});
+		apiHelpers.data.push({id: siteB.externalReferenceCode, type: 'site'});
 
 		// Import the site A into the site B
 

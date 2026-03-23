@@ -207,12 +207,12 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 	const site1 = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
 	});
-	apiHelpers.data.push({id: site1.id, type: 'site'});
+	apiHelpers.data.push({id: site1.externalReferenceCode, type: 'site'});
 
 	const site2 = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
 	});
-	apiHelpers.data.push({id: site2.id, type: 'site'});
+	apiHelpers.data.push({id: site2.externalReferenceCode, type: 'site'});
 
 	await changeTrackingPage.workOnPublication(ctCollection);
 

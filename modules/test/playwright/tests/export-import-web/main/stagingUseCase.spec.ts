@@ -79,7 +79,7 @@ test(
 		});
 
 		apiHelpers.data.push({
-			id: site.id,
+			id: site.externalReferenceCode,
 			type: 'site',
 		});
 
@@ -108,7 +108,7 @@ test(
 		});
 
 		apiHelpers.data.push({
-			id: site.id,
+			id: site.externalReferenceCode,
 			type: 'site',
 		});
 
@@ -213,7 +213,7 @@ test(
 		});
 
 		apiHelpers.data.push({
-			id: site.id,
+			id: site.externalReferenceCode,
 			type: 'site',
 		});
 
@@ -281,7 +281,7 @@ test('Staging only approved content goes to live', async ({
 		name: `site-${getRandomString()}`,
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const layout1 = await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
@@ -441,7 +441,7 @@ test(
 			name: 'site-' + getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -565,7 +565,7 @@ test(
 			name: 'site-' + getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
@@ -651,7 +651,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const document = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
@@ -705,7 +705,7 @@ test('Staging publish template with smoke', async ({
 		name: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
@@ -773,7 +773,7 @@ test('A page created in staging is published to live', async ({
 		name: 'site-' + getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	await stagingPage.goto(site.name);
 	await stagingPage.enableLocalStaging();
@@ -829,7 +829,7 @@ test('Content selection is empty after initial publication to live when using th
 		name: 'site-' + getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	await apiHelpers.headlessAdminSite.createPage(site.externalReferenceCode, {
 		name_i18n: {en_US: getRandomString()},

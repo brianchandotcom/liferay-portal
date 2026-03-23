@@ -389,7 +389,7 @@ export async function completedVirtualOrderItemSetUp(
 		name: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -494,7 +494,7 @@ export async function initializerSetUp(
 		templateType: 'site-initializer',
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const channels =
 		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(

@@ -44,7 +44,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site1.id, type: 'site'});
+		apiHelpers.data.push({id: site1.externalReferenceCode, type: 'site'});
 
 		const commerceChannel1 =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
@@ -66,7 +66,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site2.id, type: 'site'});
+		apiHelpers.data.push({id: site2.externalReferenceCode, type: 'site'});
 
 		const commerceChannel2 =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
@@ -131,7 +131,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site1.id, type: 'site'});
+		apiHelpers.data.push({id: site1.externalReferenceCode, type: 'site'});
 
 		const channelName1 = getRandomString();
 
@@ -151,7 +151,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site2.id, type: 'site'});
+		apiHelpers.data.push({id: site2.externalReferenceCode, type: 'site'});
 
 		const channelName2 = getRandomString();
 

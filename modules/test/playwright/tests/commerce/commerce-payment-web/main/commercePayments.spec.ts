@@ -43,7 +43,7 @@ test('LPD-5742 Can view payments list admin page', async ({
 		name: 'Payment Site',
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,

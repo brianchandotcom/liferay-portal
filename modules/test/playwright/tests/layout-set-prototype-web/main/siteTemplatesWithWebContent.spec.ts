@@ -103,14 +103,14 @@ test(
 
 		const siteName = getRandomString();
 
-		const siteId = await sitesPage.createSite({
+		const {externalReferenceCode} = await sitesPage.createSite({
 			isCustom: true,
 			siteName,
 			templateName: layoutSetPrototype.nameCurrentValue,
 		});
 
 		apiHelpers.data.push({
-			id: siteId,
+			id: externalReferenceCode,
 			type: 'site',
 		});
 

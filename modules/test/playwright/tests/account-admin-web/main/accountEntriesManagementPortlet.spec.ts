@@ -263,7 +263,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site2.id, type: 'site'});
+		apiHelpers.data.push({id: site2.externalReferenceCode, type: 'site'});
 
 		const layout2 = await createWidgetPage(apiHelpers, site2.id);
 

@@ -1038,7 +1038,7 @@ test(
 			name: getRandomString(),
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const role =
 			await apiHelpers.headlessAdminUser.getRoleByName(

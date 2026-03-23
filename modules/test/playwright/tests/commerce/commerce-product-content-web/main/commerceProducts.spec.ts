@@ -346,7 +346,7 @@ test('COMMERCE-8153 Verify the visibility rules', async ({
 		name: 'ProductDetailsSite',
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,
@@ -501,7 +501,7 @@ test('LPD-33807 Mapped product add to cart', async ({
 		name: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
@@ -999,7 +999,7 @@ test('LPD-39067 Can product media and relation show correct date format', async 
 		name: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const document1 = await apiHelpers.headlessDelivery.postDocument(
 		site.id,

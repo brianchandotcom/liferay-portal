@@ -52,7 +52,10 @@ test(
 				templateType: 'site-initializer',
 			});
 
-			apiHelpers.data.push({id: site.id, type: 'site'});
+			apiHelpers.data.push({
+				id: site.externalReferenceCode,
+				type: 'site',
+			});
 
 			await globalMenuPage.goToSite('Minium');
 		});

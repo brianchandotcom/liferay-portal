@@ -70,7 +70,7 @@ const testWithClaritySiteInitializerFF = mergeTests(
 
 		expect(site.name).toBeDefined();
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await stagingPage.goto(site.name);
 
@@ -125,7 +125,10 @@ const testWithClaritySiteInitializerFF = mergeTests(
 				templateType: 'site-initializer',
 			});
 
-			apiHelpers.data.push({id: site1.id, type: 'site'});
+			apiHelpers.data.push({
+				id: site1.externalReferenceCode,
+				type: 'site',
+			});
 		});
 
 		await test.step('Export the site 1', async () => {
@@ -141,7 +144,10 @@ const testWithClaritySiteInitializerFF = mergeTests(
 				name: getRandomString(),
 			});
 
-			apiHelpers.data.push({id: site2.id, type: 'site'});
+			apiHelpers.data.push({
+				id: site2.externalReferenceCode,
+				type: 'site',
+			});
 		});
 
 		await test.step('Delete the existing utility pages on site 2', async () => {
@@ -308,7 +314,10 @@ testWithClaritySiteInitializerFF(
 						templateType: 'site-initializer',
 					});
 
-					apiHelpers.data.push({id: site1.id, type: 'site'});
+					apiHelpers.data.push({
+						id: site1.externalReferenceCode,
+						type: 'site',
+					});
 				}
 			);
 
@@ -369,7 +378,10 @@ testWithClaritySiteInitializerFF(
 						name: getRandomString(),
 					});
 
-					apiHelpers.data.push({id: site2.id, type: 'site'});
+					apiHelpers.data.push({
+						id: site2.externalReferenceCode,
+						type: 'site',
+					});
 				}
 			);
 

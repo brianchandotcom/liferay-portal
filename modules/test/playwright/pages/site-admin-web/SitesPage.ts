@@ -59,7 +59,7 @@ export class SitesPage {
 		isCustom: boolean;
 		siteName: string;
 		templateName: string;
-	}): Promise<string> {
+	}): Promise<{externalReferenceCode: string; siteId: string}> {
 		await this.addSiteButton.click();
 
 		if (isCustom) {
@@ -79,11 +79,19 @@ export class SitesPage {
 		await this.page.waitForURL(/(.)settings(.)/);
 		await this.page.getByRole('link', {name: 'Site Configuration'}).click();
 		await this.page.getByLabel('Site ID').waitFor({state: 'visible'});
+
 		const siteId = await this.page
 			.getByLabel('Site ID')
 			.getAttribute('value');
 
-		return siteId as string;
+		const externalReferenceCode = await this.page
+			.getByLabel('External Reference Code')
+			.getAttribute('value');
+
+		return {
+			externalReferenceCode: externalReferenceCode as string,
+			siteId: siteId as string,
+		};
 	}
 
 	async deleteAllSites() {

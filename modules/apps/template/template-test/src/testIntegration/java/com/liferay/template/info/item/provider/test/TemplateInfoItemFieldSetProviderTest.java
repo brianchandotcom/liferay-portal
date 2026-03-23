@@ -150,8 +150,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		CompanyTestUtil.resetCompanyLocales(
 			_company.getCompanyId(),
-			Arrays.asList(
-				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.US);
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);

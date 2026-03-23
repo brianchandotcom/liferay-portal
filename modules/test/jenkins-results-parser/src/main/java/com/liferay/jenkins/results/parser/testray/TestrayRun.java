@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
 
 import java.io.File;
@@ -142,7 +143,7 @@ public class TestrayRun {
 	}
 
 	protected TestrayRun(
-		TestrayBuild testrayBuild, String batchName,
+		TestrayBuild testrayBuild, String batchName, String testSuiteName,
 		List<File> propertiesFiles) {
 
 		_testrayBuild = testrayBuild;
@@ -159,7 +160,7 @@ public class TestrayRun {
 				JenkinsResultsParserUtil.getProperties(propertiesFiles.get(i)));
 		}
 
-		initializeFactorsByBatchName(batchName);
+		initializeFactorsByBatchName(batchName, testSuiteName);
 
 		JSONObject jsonObject = null;
 
@@ -218,6 +219,10 @@ public class TestrayRun {
 		}
 
 		for (String factorNameKey : _getFactorNameKeys()) {
+			if (factorNameKey.equals("search_engine")) {
+				continue;
+			}
+
 			String factoryName = _getFactorName(factorNameKey);
 			String factoryValue = _getFactorValue(batchName, factorNameKey);
 
@@ -229,9 +234,17 @@ public class TestrayRun {
 
 			factors.add(new Factor(factoryName, factoryValue));
 		}
+
+		BatchTestClassGroup batchTestClassGroup =
+			axisTestClassGroup.getBatchTestClassGroup();
+
+		_addSearchEngineFactor(
+			batchName, batchTestClassGroup.getTestSuiteName());
 	}
 
-	protected void initializeFactorsByBatchName(String batchName) {
+	protected void initializeFactorsByBatchName(
+		String batchName, String testSuiteName) {
+
 		factors = new ArrayList<>();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(batchName)) {
@@ -239,6 +252,10 @@ public class TestrayRun {
 		}
 
 		for (String factorNameKey : _getFactorNameKeys()) {
+			if (factorNameKey.equals("search_engine")) {
+				continue;
+			}
+
 			String factoryName = _getFactorName(factorNameKey);
 			String factoryValue = _getFactorValue(batchName, factorNameKey);
 
@@ -250,6 +267,8 @@ public class TestrayRun {
 
 			factors.add(new Factor(factoryName, factoryValue));
 		}
+
+		_addSearchEngineFactor(batchName, testSuiteName);
 	}
 
 	protected void initializeFactorsByJSONObject(JSONObject jsonObject) {
@@ -287,6 +306,26 @@ public class TestrayRun {
 	}
 
 	protected List<Factor> factors;
+
+	private void _addSearchEngineFactor(
+		String batchName, String testSuiteName) {
+
+		String searchEngineFactorValue = _getSearchEngineFactorValue(
+			batchName, testSuiteName);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(searchEngineFactorValue)) {
+			return;
+		}
+
+		String searchEngineFactorName = _getFactorName("search_engine");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(searchEngineFactorName)) {
+			return;
+		}
+
+		factors.add(
+			new Factor(searchEngineFactorName, searchEngineFactorValue));
+	}
 
 	private String _getFactorName(String factorNameKey) {
 		String factorName = JenkinsResultsParserUtil.getProperty(
@@ -363,6 +402,85 @@ public class TestrayRun {
 		}
 
 		return factorValue;
+	}
+
+	private String _getSearchEngineFactorValue(
+		String batchName, String testSuiteName) {
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(batchName) &&
+			!(batchName.startsWith("functional") ||
+			  batchName.startsWith("modules-integration") ||
+			  batchName.startsWith("modules-unit"))) {
+
+			return _properties.getProperty("search.engine.default");
+		}
+
+		String searchEngine = null;
+		String searchEngineVersion = null;
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
+			searchEngine = _properties.getProperty(
+				"search.engine[" + testSuiteName + "]");
+
+			searchEngineVersion = _properties.getProperty(
+				"search.engine.version[" + testSuiteName + "]");
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(searchEngine) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(batchName)) {
+
+			if (batchName.contains("opensearch2")) {
+				searchEngine = "opensearch2";
+			}
+			else if (batchName.contains("remote-elasticsearch")) {
+				searchEngine = "remote-elasticsearch";
+			}
+			else if (batchName.contains("solr")) {
+				searchEngine = "solr";
+			}
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(searchEngineVersion) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(searchEngine)) {
+
+			searchEngineVersion = _properties.getProperty(
+				"search.engine.version[" + searchEngine + "]");
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(searchEngine)) {
+			return _properties.getProperty("search.engine.default");
+		}
+
+		String searchEngineFactorValue = _toTitleCase(searchEngine);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(searchEngineVersion)) {
+			searchEngineFactorValue += " " + searchEngineVersion;
+		}
+
+		return searchEngineFactorValue;
+	}
+
+	private String _toTitleCase(String name) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+			return name;
+		}
+
+		String[] words = name.split("-");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String word : words) {
+			if (sb.length() > 0) {
+				sb.append(" ");
+			}
+
+			if (word.length() > 0) {
+				sb.append(Character.toUpperCase(word.charAt(0)));
+				sb.append(word.substring(1));
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private static final String _PROPERTY_KEY_FACTOR_NAME =

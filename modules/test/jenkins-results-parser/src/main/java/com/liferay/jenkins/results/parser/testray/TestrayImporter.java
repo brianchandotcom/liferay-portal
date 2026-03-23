@@ -1388,13 +1388,15 @@ public class TestrayImporter {
 
 		TestrayRun testrayRun;
 
+		String testSuiteName = _topLevelBuildReport.getTestSuiteName();
+
 		if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
 			testrayRun = TestrayFactory.newTestrayRun(
 				testrayBuild, axisTestClassGroup, job.getJobPropertiesFiles());
 		}
 		else {
 			testrayRun = TestrayFactory.newTestrayRun(
-				testrayBuild, axisTestClassGroup.getBatchName(),
+				testrayBuild, axisTestClassGroup.getBatchName(), testSuiteName,
 				job.getJobPropertiesFiles());
 		}
 
@@ -1534,8 +1536,6 @@ public class TestrayImporter {
 
 			Element propertiesElement = testcaseElement.addElement(
 				"properties");
-
-			String testSuiteName = _topLevelBuildReport.getTestSuiteName();
 
 			if (testSuiteName.equals("upstream-dxp")) {
 				if (testrayCaseResult instanceof

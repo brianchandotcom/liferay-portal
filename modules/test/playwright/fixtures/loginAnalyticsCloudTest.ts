@@ -5,15 +5,14 @@
 
 import {expect, test} from '@playwright/test';
 
+import {getHeader} from '../helpers/ApiHelpers';
 import {faroConfig} from '../tests/osb-faro-web/main/faro.config';
-import createTempFile, {readTempFile} from '../utils/createTempFile';
+
 export interface Login {
 	password: string;
 	sessionId: string;
 	user: string;
 }
-
-let loggedIn = false;
 
 function loginAnalyticsCloudTest() {
 	const fixtureImpl = test.extend<{
@@ -21,40 +20,41 @@ function loginAnalyticsCloudTest() {
 	}>({
 		loginAnalyticsCloud: [
 			async ({page}, use) => {
-				const user = faroConfig.user.login;
+				const loginUrl = faroConfig.environment.baseUrl;
 				const password = faroConfig.user.password;
+				const user = faroConfig.user.login;
 
-				if (!loggedIn) {
-					const storageStatePath = createTempFile(
-						'analyticsCloudStorageState.json'
-					);
+				const params = new URLSearchParams({
+					login: faroConfig.user.login,
+					password,
+					rememberMe: 'true',
+				});
 
-					await page.goto(faroConfig.environment.baseUrl);
+				try {
+					await page.goto(loginUrl);
 
-					await page.getByRole('button', {name: 'Sign In'}).click();
+					const url = `${loginUrl}/c/portal/login`;
 
-					await page.getByLabel('Email Address').fill(user);
-					await page.getByLabel('Password').fill(password);
-					await page.getByLabel('Remember Me').check();
+					await expect
+						.poll(async () => {
+							const response = await page.request.post(url, {
+								data: params.toString(),
+								headers: await getHeader(
+									page,
+									'application/x-www-form-urlencoded'
+								),
+							});
 
-					await page.getByRole('button', {name: 'Sign In'}).click();
+							return response.status();
+						})
+						.toBe(200);
 
-					await expect(page.getByText('Your Workspaces')).toBeVisible(
-						{
-							timeout: 100 * 1000,
-						}
-					);
-
-					await page.context().storageState({path: storageStatePath});
-
-					loggedIn = true;
+					await page.goto(loginUrl);
 				}
-				else {
-					const {cookies} = JSON.parse(
-						readTempFile('analyticsCloudStorageState.json')
-					);
+				catch (error) {
+					error.message = `Login via API failed\n\n${error.message}`;
 
-					await page.context().addCookies(cookies);
+					throw error;
 				}
 
 				const cookies = await page.context().cookies();

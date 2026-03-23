@@ -912,7 +912,8 @@ public class CloudBucketUtil {
 	private static final Pattern _s3ObjectPathPattern = Pattern.compile(
 		"s3://(?<bucketName>[^/]+)/(?<objectPath>.+)");
 	private static final Pattern _signedURLPattern = Pattern.compile(
-		"https:\\/\\/storage.googleapis.com\\/.*");
+		"https:\\/\\/([a-zA-Z\\d-]+\\.)?storage\\." +
+			"(cloud\\.google\\.com|googleapis\\.com)\\/.*");
 
 	static {
 		_buildProperties = new Properties() {

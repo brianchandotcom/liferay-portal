@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -163,9 +164,10 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			CalendarNotificationTemplate existingCalendarNotificationTemplate =
-				fetchStagedModelByUuidAndGroupId(
-					calendarNotificationTemplate.getUuid(),
-					portletDataContext.getScopeGroupId());
+				_fetchExistingCalendarNotificationTemplate(
+					body, calendarId, calendarNotificationTemplate,
+					notificationTemplateType, notificationType,
+					portletDataContext);
 
 			if (existingCalendarNotificationTemplate == null) {
 				serviceContext.setUuid(calendarNotificationTemplate.getUuid());
@@ -206,6 +208,39 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 
 		portletDataContext.importClassedModel(
 			calendarNotificationTemplate, importedCalendarNotificationTemplate);
+	}
+
+	private CalendarNotificationTemplate
+		_fetchExistingCalendarNotificationTemplate(
+			String body, long calendarId,
+			CalendarNotificationTemplate calendarNotificationTemplate,
+			NotificationTemplateType notificationTemplateType,
+			NotificationType notificationType,
+			PortletDataContext portletDataContext) {
+
+		CalendarNotificationTemplate existingCalendarNotificationTemplate =
+			fetchStagedModelByUuidAndGroupId(
+				calendarNotificationTemplate.getUuid(),
+				portletDataContext.getScopeGroupId());
+
+		if (existingCalendarNotificationTemplate == null) {
+			existingCalendarNotificationTemplate =
+				_calendarNotificationTemplateLocalService.
+					fetchCalendarNotificationTemplate(
+						calendarId, notificationType, notificationTemplateType);
+		}
+
+		if (existingCalendarNotificationTemplate == null) {
+			return null;
+		}
+
+		if (Objects.equals(
+				body, existingCalendarNotificationTemplate.getBody())) {
+
+			return existingCalendarNotificationTemplate;
+		}
+
+		return null;
 	}
 
 	@Reference

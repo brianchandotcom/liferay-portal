@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.headless.admin.user.dto.v1_0.SharedAsset;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -38,10 +39,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -75,7 +78,9 @@ public class SharedAssetDTOConverterTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -158,7 +163,7 @@ public class SharedAssetDTOConverterTest {
 				).name(
 					ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS
 				).value(
-					"txt"
+					"png"
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
@@ -204,12 +209,23 @@ public class SharedAssetDTOConverterTest {
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
+			FileUtil.getBytes(
+				SharedAssetDTOConverterTest.class, "dependencies/sample.png"),
+			null, null, null, _serviceContext);
+
+		Assert.assertEquals(
+			StringPool.BLANK, _dlURLHelper.getThumbnailSrc(fileEntry, null));
+
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), 0,
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 			HashMapBuilder.<String, Serializable>put(
-				"file", _fileEntry.getFileEntryId()
+				"file", fileEntry.getFileEntryId()
 			).build(),
 			_serviceContext);
 
@@ -231,8 +247,17 @@ public class SharedAssetDTOConverterTest {
 		com.liferay.headless.admin.user.dto.v1_0.FileEntry file =
 			sharedAsset.getFile();
 
-		Assert.assertEquals((Long)_fileEntry.getFileEntryId(), file.getId());
-		Assert.assertEquals(_fileEntry.getFileName(), file.getName());
+		Assert.assertEquals(
+			fileEntry.getExternalReferenceCode(),
+			file.getExternalReferenceCode());
+		Assert.assertEquals((Long)fileEntry.getFileEntryId(), file.getId());
+		Assert.assertNotNull(file.getLink());
+		Assert.assertEquals(fileEntry.getFileName(), file.getName());
+		Assert.assertEquals(
+			_dlURLHelper.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK),
+			file.getPreviewURL());
+		Assert.assertNull(file.getThumbnailURL());
 	}
 
 	private SharingEntry _addSharingEntry(String className, long classPK)
@@ -247,6 +272,9 @@ public class SharedAssetDTOConverterTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private DLURLHelper _dlURLHelper;
 
 	private FileEntry _fileEntry;
 

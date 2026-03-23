@@ -1,7 +1,8 @@
 {
 	"options": {
 		"auto_approve": false,
-		"parallelism": 10
+		"parallelism": 10,
+		"provider": "gcp"
 	},
 	"variables": {
 		"deployment_name": "liferay-gcp-test",

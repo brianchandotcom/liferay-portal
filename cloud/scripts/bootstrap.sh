@@ -122,14 +122,21 @@ function _get_provider {
 
 	local provider
 
-	provider=$(jq -r ".provider // empty" "${config_file}")
+	provider=$(jq -r ".options.provider // empty" "${config_file}")
 
 	if [ -z "${provider}" ]
 	then
-		echo "No provider is specified in ${config_file}." >&2
+		provider=$(jq -r ".provider // empty" "${config_file}")
 
-		exit 1
-	elif [ "${provider}" != "aws" ] && [ "${provider}" != "gcp" ]
+		if [ -z "${provider}" ]
+		then
+			echo "No provider is specified in ${config_file}." >&2
+
+			exit 1
+		fi
+	fi
+
+	if [ "${provider}" != "aws" ] && [ "${provider}" != "gcp" ]
 	then
 		echo "Unsupported provider ${provider} was specified in ${config_file}." >&2
 

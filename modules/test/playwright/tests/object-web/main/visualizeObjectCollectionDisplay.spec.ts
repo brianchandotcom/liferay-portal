@@ -37,8 +37,6 @@ test(
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: CanDisplayEntriesOnTableFormat
 
-		// Create object with Text fields
-
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text', 'Text'],
 		});
@@ -59,8 +57,6 @@ test(
 		const applicationName =
 			'c/' + objectDefinition.name!.toLowerCase() + 's';
 
-		// Create object entries
-
 		const entries = [];
 
 		for (let i = 0; i < 3; i++) {
@@ -75,75 +71,73 @@ test(
 			entries.push(entry);
 		}
 
-		// Create a content page
-
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition(),
 			siteId: site.id,
 			title: getRandomString(),
 		});
 
-		// Go to edit mode and add Collection Display
+		await test.step('Add Collection Display with object as provider and Table style', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			await pageEditorPage.addFragment(
+				'Content Display',
+				'Collection Display'
+			);
 
-		await pageEditorPage.addFragment(
-			'Content Display',
-			'Collection Display'
-		);
+			await pageEditorPage.selectFragment(
+				await pageEditorPage.getFragmentId('Collection Display')
+			);
 
-		// Select Collection Display fragment and choose the object as provider
+			await pageEditorPage.chooseCollectionDisplayCollection(
+				'Collection Providers',
+				objectDefinition.label['en_US'],
+				{search: true}
+			);
 
-		await pageEditorPage.selectFragment(
-			await pageEditorPage.getFragmentId('Collection Display')
-		);
+			await pageEditorPage.waitForChangesSaved();
 
-		await pageEditorPage.chooseCollectionDisplayCollection(
-			'Collection Providers',
-			objectDefinition.label['en_US'],
-			{search: true}
-		);
+			const collectionId =
+				await pageEditorPage.getFragmentId('Collection Display');
 
-		await pageEditorPage.waitForChangesSaved();
+			await pageEditorPage.selectFragment(collectionId);
 
-		// Change Style Display to Table
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Style Display',
+				tab: 'General',
+				value: 'Table',
+			});
 
-		const collectionId =
-			await pageEditorPage.getFragmentId('Collection Display');
-
-		await pageEditorPage.selectFragment(collectionId);
-
-		await pageEditorPage.changeConfiguration({
-			fieldLabel: 'Style Display',
-			tab: 'General',
-			value: 'Table',
+			await pageEditorPage.waitForChangesSaved();
 		});
 
-		await pageEditorPage.waitForChangesSaved();
+		await test.step('Verify entries are displayed in table format in editor', async () => {
+			await expect(
+				page.locator(
+					'.lfr-layout-structure-item-collection table, .table'
+				).first()
+			).toBeVisible();
+		});
 
-		// Verify that entries are displayed in table format
+		await test.step('Publish and verify entries in view mode', async () => {
+			await pageEditorPage.publishPage();
 
-		await expect(
-			page.locator(
-				'.lfr-layout-structure-item-collection table, .table'
-			).first()
-		).toBeVisible();
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
-		// Publish the page
+			const collectionTable = page
+				.locator('.lfr-layout-structure-item-collection')
+				.first();
 
-		await pageEditorPage.publishPage();
+			await expect(collectionTable.locator('table').first()).toBeVisible();
 
-		// Navigate to view mode and verify table is displayed
-
-		await page.goto(
-			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
-
-		await expect(
-			page.locator(
-				'.lfr-layout-structure-item-collection table, .table'
-			).first()
-		).toBeVisible();
+			for (const entry of entries) {
+				await expect(
+					collectionTable.getByText(entry[field1Name])
+				).toBeVisible();
+			}
+		});
 	}
 );
 
@@ -152,8 +146,6 @@ test(
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		// Corresponds to Poshi test: ObjectDisplayedToCollectionProdiver
-
-		// Create a published object definition
 
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
@@ -170,67 +162,55 @@ test(
 			type: 'objectDefinition',
 		});
 
-		// Create a content page
-
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition(),
 			siteId: site.id,
 			title: getRandomString(),
 		});
 
-		// Go to edit mode and add Collection Display
+		await test.step('Add Collection Display and open collection selection modal', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			await pageEditorPage.addFragment(
+				'Content Display',
+				'Collection Display'
+			);
 
-		await pageEditorPage.addFragment(
-			'Content Display',
-			'Collection Display'
-		);
+			await pageEditorPage.selectFragment(
+				await pageEditorPage.getFragmentId('Collection Display')
+			);
 
-		// Select Collection Display fragment
+			await page
+				.getByLabel('Select Collection', {exact: true})
+				.click();
+		});
 
-		await pageEditorPage.selectFragment(
-			await pageEditorPage.getFragmentId('Collection Display')
-		);
+		await test.step('Search for the object in Collection Providers and verify it appears', async () => {
+			const iframe = page.frameLocator('iframe[title="Select"]');
 
-		// Open the collection selection modal
+			await iframe.getByRole('link', {name: 'Collection Providers'}).click();
 
-		await page
-			.getByLabel('Select Collection', {exact: true})
-			.click();
+			await expect(async () => {
+				await iframe
+					.getByPlaceholder('Search for')
+					.fill(objectDefinition.label['en_US']);
 
-		const iframe = page.frameLocator('iframe[title="Select"]');
+				await expect(
+					iframe.getByPlaceholder('Search for')
+				).toHaveValue(objectDefinition.label['en_US']);
+			}).toPass();
 
-		// Navigate to Collection Providers tab
-
-		await iframe.getByRole('link', {name: 'Collection Providers'}).click();
-
-		// Search for the object by name
-
-		await expect(async () => {
 			await iframe
-				.getByPlaceholder('Search for')
-				.fill(objectDefinition.label['en_US']);
+				.getByLabel('Search for', {exact: true})
+				.click();
 
 			await expect(
-				iframe.getByPlaceholder('Search for')
-			).toHaveValue(objectDefinition.label['en_US']);
-		}).toPass();
+				iframe.getByRole('button', {
+					name: `Select ${objectDefinition.label['en_US']}`,
+				})
+			).toBeVisible();
 
-		await iframe
-			.getByLabel('Search for', {exact: true})
-			.click();
-
-		// Verify the object appears in the list of collection providers
-
-		await expect(
-			iframe.getByRole('button', {
-				name: `Select ${objectDefinition.label['en_US']}`,
-			})
-		).toBeVisible();
-
-		// Close the modal
-
-		await page.keyboard.press('Escape');
+			await page.keyboard.press('Escape');
+		});
 	}
 );

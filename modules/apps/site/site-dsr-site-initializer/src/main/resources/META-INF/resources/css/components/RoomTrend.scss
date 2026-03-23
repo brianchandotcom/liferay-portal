@@ -1,0 +1,57 @@
+@import 'atlas-variables';
+
+.room-trend {
+	.gauge-container {
+		position: relative;
+		width: 150px;
+	}
+
+	&-button {
+		height: 40px;
+		width: 153px;
+
+		&.btn-secondary {
+			background: $gray-200;
+			border: 1px solid $border-color;
+			border-radius: 4px;
+			color: $gray-600;
+
+			&.no-hover {
+				cursor: default;
+
+				&:active,
+				&:hover,
+				&:focus {
+					background-color: $gray-200;
+					border-color: $border-color;
+					box-shadow: none;
+				}
+			}
+		}
+
+		&-text {
+			color: $gray-900;
+		}
+	}
+
+	&-pointer {
+		bottom: 0;
+		height: 50px;
+		left: calc(40% - 5px);
+		position: absolute;
+		transform-origin: 50% 90%;
+		transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+		width: 10px;
+		will-change: transform;
+		z-index: 10;
+	}
+
+	&-semicircle {
+		display: block;
+		width: 80%;
+	}
+
+	p {
+		font-size: 14px;
+	}
+}

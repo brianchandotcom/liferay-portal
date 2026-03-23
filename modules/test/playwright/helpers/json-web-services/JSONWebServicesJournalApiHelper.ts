@@ -19,7 +19,10 @@ type TFolder = {
 type TWebContent = {
 	articleId?: string;
 	content?: string;
-	contentFields?: Array<any>;
+	contentFields?: Array<{
+		name: string;
+		value: string;
+	}>;
 	ddmStructureId: number | string;
 	ddmTemplateKey?: string;
 	description?: string;
@@ -128,30 +131,31 @@ export class JSONWebServicesJournalApiHelper {
 			...(webContent || {}),
 		};
 
-		if (webContent.contentFields) {
-			let content = '<root>\n';
-			for (const cont of webContent.contentFields) {
-				content += `<dynamic-element field-reference="${cont.name}" index-type="keyword" name="${cont.name}" type="text">
-					<dynamic-content><![CDATA[${cont.value}]]></dynamic-content>
-					</dynamic-element>\n`;
-			}
-			content += '</root>';
+		let content = '';
 
-			urlSearchParams.append('content', content);
+		if (webContent.contentFields) {
+			content = `<root>
+				${webContent.contentFields
+					.map(
+						({
+							name,
+							value,
+						}) => `<dynamic-element field-reference="${name}" index-type="keyword" name="${name}" type="text">
+					<dynamic-content><![CDATA[${value}]]></dynamic-content>
+					</dynamic-element>`
+					)
+					.join('\n')}
+			</root>`;
 		}
 		else if (webContent.content) {
-			urlSearchParams.append(
-				'content',
-				`<root>
+			content = `<root>
 					<dynamic-element field-reference="content" index-type="text" name="content" type="rich_text">
 					<dynamic-content><![CDATA[<p>${webContent.content}</p>]]></dynamic-content>
 					</dynamic-element>
-				</root>`
-			);
+				</root>`;
 		}
-		else {
-			urlSearchParams.append('content', '');
-		}
+
+		urlSearchParams.append('content', content);
 
 		urlSearchParams.append(
 			'descriptionMap',

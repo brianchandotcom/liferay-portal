@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page, expect} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
@@ -143,7 +143,7 @@ export class WebContentDisplayPage {
 		pageType?: 'content' | 'widget';
 		webContentName?: string;
 	} = {}) {
-		await this.webContentDisplay.waitFor({state: 'visible'});
+		await this.webContentDisplay.waitFor();
 		await this.webContentDisplayContent.hover();
 		await this.webContentDisplayContent.click();
 
@@ -176,17 +176,17 @@ export class WebContentDisplayPage {
 
 		if (webContentName) {
 			await this.selectWebContentInConfigurationFrame
-				.getByText(webContentName)
+				.getByText(webContentName, {exact: true})
 				.hover();
 
 			// Wait for the Item Selector's nested iframe to resolve the selection
 
 			await clickAndExpectToBeVisible({
 				target: this.configurationFrameChangeButton,
-				trigger:
-					this.selectWebContentInConfigurationFrame.getByText(
-						webContentName
-					),
+				trigger: this.selectWebContentInConfigurationFrame.getByText(
+					webContentName,
+					{exact: true}
+				),
 			});
 		}
 		else {

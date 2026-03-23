@@ -137,8 +137,7 @@ public abstract class BaseLicenseTestCase {
 
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("<?xml version=\"1.0\"?>");
-		sb.append("<license><product-id>");
+		sb.append("<?xml version=\"1.0\"?><license><product-id>");
 		sb.append(getCMPProductId());
 		sb.append("</product-id><product-name>");
 		sb.append(_CMP_PRODUCT_NAME);
@@ -184,10 +183,9 @@ public abstract class BaseLicenseTestCase {
 
 		long currentTimeMillis = System.currentTimeMillis();
 
-		StringBundler sb = new StringBundler(20);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("<?xml version=\"1.0\"?>");
-		sb.append("<license><account-name>");
+		sb.append("<?xml version=\"1.0\"?><license><account-name>");
 		sb.append(_ENTERPRISE_ACCOUNT_NAME);
 		sb.append("</account-name><product-id>");
 		sb.append(getPortalProductId());

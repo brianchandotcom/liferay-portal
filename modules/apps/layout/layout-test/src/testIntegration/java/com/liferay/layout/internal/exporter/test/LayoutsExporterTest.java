@@ -7,11 +7,15 @@ package com.liferay.layout.internal.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.exporter.LayoutsExporter;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -64,7 +68,26 @@ public class LayoutsExporterTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					null, RandomTestUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					serviceContext);
+
+		_layoutPageTemplateCollectionId =
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+
 		_user = UserTestUtil.addCompanyAdminUser(_company);
+
+		_layoutPageTemplateCollectionMessage = StringBundler.concat(
+			"User ", _user.getUserId(), " must have VIEW permission for ",
+			LayoutPageTemplateCollection.class.getName(), " ",
+			_layoutPageTemplateCollectionId);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -91,6 +114,36 @@ public class LayoutsExporterTest {
 
 		if (_group != null) {
 			_groupLocalService.deleteGroup(_group);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-82698")
+	public void testExportLayoutPageTemplateCollections() throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		try {
+			_layoutsExporter.exportLayoutPageTemplateCollections(
+				new long[] {_layoutPageTemplateCollectionId});
+
+			Assert.fail();
+		}
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
+
+			Assert.assertTrue(
+				message,
+				message.contains(_layoutPageTemplateCollectionMessage));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
 		}
 	}
 
@@ -133,10 +186,13 @@ public class LayoutsExporterTest {
 	@Inject
 	private static GroupLocalService _groupLocalService;
 
+	private static long _layoutPageTemplateCollectionId;
+
 	@Inject
 	private static LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
 
+	private static String _layoutPageTemplateCollectionMessage;
 	private static long _layoutPageTemplateEntryId;
 
 	@Inject

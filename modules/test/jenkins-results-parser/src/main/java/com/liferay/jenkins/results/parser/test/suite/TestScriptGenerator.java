@@ -129,35 +129,27 @@ public class TestScriptGenerator {
 		for (RelevantRule relevantRule :
 				relevantRuleEngine.getMatchingRelevantRules(null)) {
 
-			for (RelevantRule.TestScriptCommand testScriptCommandObj :
+			for (RelevantRule.TestScriptCommand testScriptCommand :
 					relevantRule.getTestScriptCommands()) {
 
-				String testScriptCommand = testScriptCommandObj.getCommand();
+				String command = testScriptCommand.getCommand();
 
-				if (testScriptCommand == null) {
+				if (command == null) {
 					continue;
 				}
 
-				String testScriptCommandDir =
-					testScriptCommandObj.getCommandDir();
+				String commandDir = testScriptCommand.getCommandDir();
 
-				String relativeDir = "./";
-
-				if (testScriptCommandDir != null) {
-					relativeDir = "./" + testScriptCommandDir;
+				if ((commandDir != null) && !commandDir.equals(".")) {
+					command = "cd " + commandDir + " && " + command;
 				}
 
-				testScriptCommand = testScriptCommand.replace('\\', '/');
-				relativeDir = relativeDir.replace('\\', '/');
+				command = command.replace('\\', '/');
 
-				String escapedCommand = testScriptCommand.replace("\"", "\\\"");
-
-				String escapedDir = relativeDir.replace("\"", "\\\"");
+				command = command.replace("\"", "\\\"");
 
 				commands.add(
-					JenkinsResultsParserUtil.combine(
-						"\t\t\"", escapedCommand, "\"\n\t\t\"", escapedDir,
-						"\""));
+					JenkinsResultsParserUtil.combine("\"", command, "\""));
 			}
 		}
 

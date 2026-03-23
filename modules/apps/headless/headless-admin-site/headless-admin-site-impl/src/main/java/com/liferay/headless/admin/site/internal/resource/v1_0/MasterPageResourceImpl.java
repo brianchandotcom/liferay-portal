@@ -110,7 +110,7 @@ public class MasterPageResourceImpl
 
 			@Override
 			public String getKey() {
-				return LayoutPageTemplateEntry.class.getName() + "#" +
+				return LayoutPageTemplateEntry.class.getName() + "-" +
 					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT;
 			}
 

@@ -80,6 +80,24 @@ const ClassicEditor = ({
 					};
 				}
 
+				const editorWrapper = editor.ui.element;
+
+				editor.on(
+					'change:isReadOnly',
+					(_event, _propertyName, isReadOnly) => {
+						if (isReadOnly) {
+							editorWrapper?.classList.add('lfr-ck-disabled');
+						}
+						else {
+							editorWrapper?.classList.remove('lfr-ck-disabled');
+						}
+					}
+				);
+
+				if (editor.isReadOnly) {
+					editorWrapper?.classList.add('lfr-ck-disabled');
+				}
+
 				onReady?.(editor);
 			}}
 		/>

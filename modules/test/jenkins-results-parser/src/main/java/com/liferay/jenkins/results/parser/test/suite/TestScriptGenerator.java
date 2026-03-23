@@ -101,7 +101,6 @@ public class TestScriptGenerator {
 		sb.append(upstreamMasterAheadBehindDescription);
 
 		sb.append(" upstream/master.\"\n");
-		sb.append("\techo \"\"\n");
 
 		if (upstreamMasterAheadBehindDescription.contains("behind")) {
 			sb.append("\techo \"Warning: Your branch is behind ");

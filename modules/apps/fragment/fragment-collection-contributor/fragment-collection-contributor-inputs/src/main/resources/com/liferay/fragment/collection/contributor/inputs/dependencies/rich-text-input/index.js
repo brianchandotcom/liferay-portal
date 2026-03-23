@@ -74,7 +74,6 @@ else {
 		editorPromise.then((editor) => {
 			if (Liferay.FeatureFlags['LPD-11235']) {
 				editor.enableReadOnlyMode('read-only');
-				editor.ui.element.classList.add('lfr-ck-disabled');
 			}
 			else {
 				editor.setReadOnly(true);

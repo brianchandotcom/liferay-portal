@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.site.teams.web.internal.search.EditSiteTeamAssignmentsUserRowChecker;
+import com.liferay.site.teams.web.internal.search.SiteTeamUserRowChecker;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
@@ -72,8 +72,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 	}
 
 	public RowChecker getRowChecker() {
-		return new EditSiteTeamAssignmentsUserRowChecker(
-			renderResponse, _teamId);
+		return new SiteTeamUserRowChecker(renderResponse, _teamId);
 	}
 
 	public String getTabs1() {

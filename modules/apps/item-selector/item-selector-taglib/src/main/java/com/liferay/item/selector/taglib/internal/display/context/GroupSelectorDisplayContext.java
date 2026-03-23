@@ -111,7 +111,9 @@ public class GroupSelectorDisplayContext {
 
 			List<String> parts = StringUtil.split(criterion);
 
-			if (parts.contains("file") || parts.contains("image")) {
+			if (parts.contains("file") || parts.contains("folder") ||
+				parts.contains("image")) {
+
 				groupItemSelectorProviderTypes.remove("space-depot");
 
 				break;

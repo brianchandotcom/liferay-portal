@@ -176,6 +176,58 @@ public class LayoutsExporterTest {
 		}
 	}
 
+	@Test
+	@TestInfo("LPD-82698")
+	public void testExportLayoutPageTemplateEntriesAndLayoutPageTemplateCollections()
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		try {
+			_layoutsExporter.
+				exportLayoutPageTemplateEntriesAndLayoutPageTemplateCollections(
+					new long[0], new long[] {_layoutPageTemplateCollectionId});
+
+			Assert.fail();
+		}
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
+
+			Assert.assertTrue(
+				message,
+				message.contains(_layoutPageTemplateCollectionMessage));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		try {
+			_layoutsExporter.
+				exportLayoutPageTemplateEntriesAndLayoutPageTemplateCollections(
+					new long[] {_layoutPageTemplateEntryId}, new long[0]);
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			Assert.assertEquals(
+				_layoutPageTemplateEntryMessage,
+				principalException.getMessage());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+	}
+
 	private static Company _company;
 
 	@Inject

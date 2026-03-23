@@ -12,6 +12,7 @@ import {
 	IBulkActionTaskStarterDTO,
 	IBulkActionType,
 } from '../../../common/types/BulkActionTask';
+import {downloadBlob} from '../../../common/utils/downloadBlob';
 import {displayErrorToast} from '../../../common/utils/toastUtil';
 import {BulkActionTaskStarter} from '../../bulk_actions_monitor/services/BulkActionTaskStarter';
 
@@ -90,15 +91,7 @@ export async function triggerAssetDownloadBulkAction(
 				type: 'success',
 			});
 
-			const blob = response.blob();
-			const blobURL = URL.createObjectURL(await blob);
-
-			const link = document.createElement('a');
-			link.href = blobURL;
-
-			link.click();
-
-			URL.revokeObjectURL(blobURL);
+			downloadBlob(response.blob());
 		}
 	});
 }

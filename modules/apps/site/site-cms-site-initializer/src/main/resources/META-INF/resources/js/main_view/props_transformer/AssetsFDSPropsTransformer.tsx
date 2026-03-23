@@ -564,6 +564,28 @@ export default function AssetsFDSPropsTransformer({
 					type: 'DownloadBulkAction',
 				});
 			}
+			else if (action?.data?.id === 'export-for-translation') {
+				openCMSModal({
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						ExportTranslationModalContent({
+							apiURL: otherProps.apiURL,
+							availableExportFileFormats:
+								additionalProps.availableExportFileFormats,
+							availableSourceLocales:
+								additionalProps.availableLocales,
+							availableTargetLocales:
+								additionalProps.availableLocales,
+							closeModal,
+							defaultSourceLanguageId:
+								Liferay.ThemeDisplay.getLanguageId(),
+							selectedData,
+						}),
+				});
+			}
 			else if (
 				action?.data?.id === 'edit-default-permissions-by-role'
 			) {

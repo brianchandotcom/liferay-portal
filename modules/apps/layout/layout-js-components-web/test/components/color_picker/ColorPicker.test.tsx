@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -19,7 +19,7 @@ const TOKEN_VALUES = {
 		editorType: 'ColorPicker',
 		label: 'Blue',
 		name: 'blue',
-		tokenCategoryLabel: 'Category1',
+		tokenCategoryLabel: 'Category 1',
 		tokenSetLabel: 'TokenSet 1',
 		value: '#4b9fff',
 	},
@@ -27,7 +27,7 @@ const TOKEN_VALUES = {
 		editorType: 'ColorPicker',
 		label: 'Dark Blue',
 		name: 'darkBlue',
-		tokenCategoryLabel: 'Category1',
+		tokenCategoryLabel: 'Category 1',
 		tokenSetLabel: 'TokenSet 1',
 		value: '#00008b',
 	},
@@ -35,7 +35,7 @@ const TOKEN_VALUES = {
 		editorType: 'ColorPicker',
 		label: 'Green',
 		name: 'green',
-		tokenCategoryLabel: 'Category 2',
+		tokenCategoryLabel: 'Category 1',
 		tokenSetLabel: 'TokenSet 1',
 		value: '#9be169',
 	},
@@ -43,13 +43,18 @@ const TOKEN_VALUES = {
 		editorType: 'ColorPicker',
 		label: 'Orange',
 		name: 'orange',
-		tokenCategoryLabel: 'Category 1',
+		tokenCategoryLabel: 'Category 2',
 		tokenSetLabel: 'TokenSet 2',
 		value: '#ffb46e',
 	},
 };
 
 const FIELD: Field = {label: INPUT_NAME, name: INPUT_NAME};
+
+jest.mock('frontend-js-web', () => ({
+	...(jest.requireActual('frontend-js-web') as any),
+	sub: (str: string, arg: string) => str.replace('x', arg),
+}));
 
 const renderColorPicker = ({
 	onValueSelect = () => {},
@@ -117,28 +122,41 @@ describe('ColorPicker', () => {
 	});
 
 	describe('When the value is an existing token', () => {
-		afterEach(() => {
-			Liferay.FeatureFlags['LPD-40054'] = false;
-		});
-
-		beforeEach(() => {
-			Liferay.FeatureFlags['LPD-40054'] = true;
-		});
-
 		it('renders the dropdown color picker', () => {
 			const {getByLabelText, getByTitle} = renderColorPicker();
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
-			expect(getByLabelText('Green')).toBeInTheDocument();
+			expect(
+				getByLabelText('select-color.-color-selected-Green')
+			).toBeInTheDocument();
 		});
 
 		it('shows action buttons when the color picker is clicked', async () => {
 			const {baseElement, getByLabelText} = renderColorPicker();
 
-			await userEvent.click(getByLabelText('Green'));
+			await userEvent.click(
+				getByLabelText('select-color.-color-selected-Green')
+			);
 
 			expect(baseElement.querySelector(COLOR_PICKER_CLASS)).toHaveClass(
 				'hovered'
+			);
+		});
+
+		it('shows the Value From Stylebook button as selected', async () => {
+			renderColorPicker();
+
+			await userEvent.click(
+				screen.getByLabelText('select-color.-color-selected-Green')
+			);
+
+			expect(screen.getByText('value-from-stylebook')).toHaveAttribute(
+				'aria-selected',
+				'true'
+			);
+			expect(screen.getByText('custom')).toHaveAttribute(
+				'aria-selected',
+				'false'
 			);
 		});
 
@@ -147,7 +165,7 @@ describe('ColorPicker', () => {
 				renderColorPicker();
 
 			await userEvent.click(getByTitle('detach-style'));
-			await userEvent.click(getByLabelText('select-a-color'));
+			await userEvent.click(getByLabelText('select-color'));
 			await userEvent.click(getByText('value-from-stylebook'));
 
 			expect(baseElement.querySelector('input')).toHaveValue('9BE169');
@@ -170,7 +188,7 @@ describe('ColorPicker', () => {
 				value: '#fff',
 			});
 
-			await userEvent.click(getByLabelText('select-a-color'));
+			await userEvent.click(getByLabelText('select-color'));
 			await userEvent.click(getByText('value-from-stylebook'));
 
 			expect(getByTitle('Orange')).toBeDisabled();
@@ -188,7 +206,7 @@ describe('ColorPicker', () => {
 				value: '#fff',
 			});
 
-			await userEvent.click(getByLabelText('select-a-color'));
+			await userEvent.click(getByLabelText('select-color'));
 			await userEvent.click(getByText('value-from-stylebook'));
 
 			expect(getByTitle('Orange')).toBeDisabled();
@@ -208,17 +226,36 @@ describe('ColorPicker', () => {
 			).toBeInTheDocument();
 		});
 
+		it('shows the Custom button as selected', async () => {
+			renderColorPicker({
+				value: '#ffb46e',
+			});
+
+			await userEvent.click(screen.getByLabelText('select-color'));
+
+			expect(screen.getByText('value-from-stylebook')).toHaveAttribute(
+				'aria-selected',
+				'false'
+			);
+			expect(screen.getByText('custom')).toHaveAttribute(
+				'aria-selected',
+				'true'
+			);
+		});
+
 		it('changes to dropdown color picker and focus it when value from stylebook button is clicked', async () => {
 			const {getByLabelText, getByText, getByTitle} = renderColorPicker({
 				value: '#fff',
 			});
 
-			await userEvent.click(getByLabelText('select-a-color'));
+			await userEvent.click(getByLabelText('select-color'));
 			await userEvent.click(getByText('value-from-stylebook'));
 			await userEvent.click(getByTitle('Blue'));
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
-			expect(getByLabelText('Blue')).toBeInTheDocument();
+			expect(
+				getByLabelText('select-color.-color-selected-Blue')
+			).toBeInTheDocument();
 		});
 
 		it('sets a token if the written value is an existing token', async () => {
@@ -231,7 +268,9 @@ describe('ColorPicker', () => {
 			await onTypeValue(baseElement.querySelector('input')!, 'green');
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
-			expect(getByLabelText('Green')).toBeInTheDocument();
+			expect(
+				getByLabelText('select-color.-color-selected-Green')
+			).toBeInTheDocument();
 		});
 
 		it('sets the previous value when the input value is removed', async () => {
@@ -389,6 +428,91 @@ describe('ColorPicker', () => {
 			await onTypeValue(baseElement.querySelector('input')!, 'aliceblue');
 
 			expect(baseElement.querySelector('input')).toHaveValue('aliceblue');
+		});
+	});
+
+	describe('Filter a Value from Stylebook', () => {
+		const goToStylebookTab = async () => {
+			await userEvent.click(
+				screen.getByLabelText('select-color.-color-selected-Green')
+			);
+			await userEvent.click(screen.getByText('value-from-stylebook'));
+		};
+
+		it('filters by category', async () => {
+			renderColorPicker();
+
+			await goToStylebookTab();
+
+			const searchForm = screen.getByLabelText('search-form');
+
+			await onTypeValue(searchForm as HTMLInputElement, 'Category 2');
+
+			await waitFor(() => {
+				expect(
+					screen.queryByText('Category 1')
+				).not.toBeInTheDocument();
+				expect(screen.queryByText('Category 2')).toBeInTheDocument();
+			});
+		});
+
+		it('filters by tokenSet', async () => {
+			renderColorPicker();
+
+			await goToStylebookTab();
+
+			const searchForm = screen.getByLabelText('search-form');
+
+			await onTypeValue(searchForm as HTMLInputElement, 'tokenset 2');
+
+			await waitFor(() => {
+				expect(
+					screen.queryByText('Category 1')
+				).not.toBeInTheDocument();
+				expect(
+					screen.queryByText('TokenSet 1')
+				).not.toBeInTheDocument();
+				expect(screen.queryByText('Category 2')).toBeInTheDocument();
+				expect(screen.queryByText('TokenSet 2')).toBeInTheDocument();
+			});
+		});
+
+		it('filters by color', async () => {
+			renderColorPicker();
+
+			await goToStylebookTab();
+
+			const searchForm = screen.getByLabelText('search-form');
+
+			await onTypeValue(searchForm as HTMLInputElement, 'dark blue');
+
+			await waitFor(() => {
+				expect(screen.queryByText('Category 1')).toBeInTheDocument();
+				expect(screen.queryByText('TokenSet 1')).toBeInTheDocument();
+				expect(screen.queryByTitle('Dark Blue')).toBeInTheDocument();
+				expect(
+					screen.queryByText('Category 2')
+				).not.toBeInTheDocument();
+				expect(
+					screen.queryByText('TokenSet 2')
+				).not.toBeInTheDocument();
+				expect(screen.queryByTitle('Green')).not.toBeInTheDocument();
+			});
+		});
+
+		it('shows empty results', async () => {
+			renderColorPicker();
+
+			await goToStylebookTab();
+
+			const searchForm = screen.getByLabelText('search-form');
+
+			await onTypeValue(searchForm as HTMLInputElement, 'Color 123');
+
+			const noResultsMessage =
+				await screen.findByText('no-results-found');
+
+			expect(noResultsMessage).toBeInTheDocument();
 		});
 	});
 });

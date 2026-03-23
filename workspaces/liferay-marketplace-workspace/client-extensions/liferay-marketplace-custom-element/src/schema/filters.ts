@@ -12,6 +12,7 @@ import {
 	OrderTypes,
 	OrderWorkflowStatusCode,
 	PaymentStatus,
+	orderTypeLabel,
 } from '../enums/Order';
 import {ProductType, ProductWorkflowStatusCode} from '../enums/Product';
 import i18n from '../i18n';
@@ -251,6 +252,10 @@ const filterSchema = {
 				name: 'orderTypeExternalReferenceCode',
 				options: [
 					{
+						label: i18n.translate('ai-hub'),
+						value: OrderTypes.AI_HUB,
+					},
+					{
 						label: i18n.translate('client-extension'),
 						value: OrderTypes.CLIENT_EXTENSION,
 					},
@@ -259,8 +264,16 @@ const filterSchema = {
 						value: OrderTypes.CLOUD_APP,
 					},
 					{
+						label: orderTypeLabel[OrderTypes.CMP],
+						value: OrderTypes.CMP,
+					},
+					{
 						label: i18n.translate('composite-app'),
 						value: OrderTypes.COMPOSITE_APP,
+					},
+					{
+						label: orderTypeLabel[OrderTypes.DXP],
+						value: OrderTypes.DXP,
 					},
 					{
 						label: i18n.translate('dxp-app'),

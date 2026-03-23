@@ -1,0 +1,11 @@
+compact: true
+directory:
+    -   .
+download-external-modules: true
+framework:
+    -   helm
+    -   kubernetes
+    -   secrets
+    -   terraform
+quiet: true
+soft-fail: false

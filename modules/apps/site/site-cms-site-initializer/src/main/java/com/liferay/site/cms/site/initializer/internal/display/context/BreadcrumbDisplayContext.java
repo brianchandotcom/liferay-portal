@@ -6,6 +6,8 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryPin;
+import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
@@ -45,9 +47,11 @@ import java.util.Map;
 public class BreadcrumbDisplayContext {
 
 	public BreadcrumbDisplayContext(
-		long groupId, GroupLocalService groupLocalService,
+		DepotEntryPinLocalService depotEntryPinLocalService, long groupId,
+		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, String size) {
 
+		_depotEntryPinLocalService = depotEntryPinLocalService;
 		_groupId = groupId;
 		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
@@ -76,6 +80,55 @@ public class BreadcrumbDisplayContext {
 					if (permissionChecker.hasPermission(
 							group, DepotEntry.class.getName(),
 							group.getClassPK(), ActionKeys.UPDATE)) {
+
+						DepotEntryPin depotEntryPin =
+							_depotEntryPinLocalService.fetchGroupDepotEntryPin(
+								_groupId, _themeDisplay.getUserId());
+
+						if (depotEntryPin == null) {
+							unsafeConsumer.accept(
+								JSONUtil.put(
+									"href",
+									StringBundler.concat(
+										"/o/headless-asset-library/v1.0",
+										"/asset-libraries/",
+										group.getExternalReferenceCode(),
+										"/pins")
+								).put(
+									"label",
+									LanguageUtil.get(
+										_httpServletRequest,
+										"pin-to-product-menu")
+								).put(
+									"redirect", _themeDisplay.getURLCurrent()
+								).put(
+									"symbolLeft", "pin"
+								).put(
+									"target", "asyncPut"
+								));
+						}
+						else {
+							unsafeConsumer.accept(
+								JSONUtil.put(
+									"href",
+									StringBundler.concat(
+										"/o/headless-asset-library/v1.0",
+										"/asset-libraries/",
+										group.getExternalReferenceCode(),
+										"/pins")
+								).put(
+									"label",
+									LanguageUtil.get(
+										_httpServletRequest,
+										"unpin-from-product-menu")
+								).put(
+									"redirect", _themeDisplay.getURLCurrent()
+								).put(
+									"symbolLeft", "unpin"
+								).put(
+									"target", "asyncDelete"
+								));
+						}
 
 						unsafeConsumer.accept(
 							JSONUtil.put(
@@ -262,6 +315,7 @@ public class BreadcrumbDisplayContext {
 		return jsonArray;
 	}
 
+	private final DepotEntryPinLocalService _depotEntryPinLocalService;
 	private final long _groupId;
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;

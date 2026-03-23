@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -49,11 +50,15 @@ public class BreadcrumbComponentSectionFragmentRenderer
 
 		BreadcrumbDisplayContext breadcrumbDisplayContext =
 			new BreadcrumbDisplayContext(
+				_depotEntryPinLocalService,
 				InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
 				httpServletRequest, CMSSpaceConstants.SPACE_STICKER_MD);
 
 		return breadcrumbDisplayContext.getProps();
 	}
+
+	@Reference
+	private DepotEntryPinLocalService _depotEntryPinLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

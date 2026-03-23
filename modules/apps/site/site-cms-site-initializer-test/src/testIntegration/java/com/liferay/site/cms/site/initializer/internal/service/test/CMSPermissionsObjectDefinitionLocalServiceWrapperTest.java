@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -74,66 +73,27 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
 	}
 
-	private void _assertCMSAdministratorObjectDefinitionPermissions(
-			ObjectDefinition objectDefinition)
+	private void _assertResourcePermission(
+			String actionId, long classPK, String resourceName, Role role)
 		throws Exception {
-
-		Role cmsAdministratorRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(),
-				objectDefinition.getResourceName(),
+				TestPropsValues.getCompanyId(), resourceName,
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(classPK),
+				role.getRoleId(), actionId));
+	}
+
+	private void _assertResourcePermission(
+			String actionId, String resourceName, Role role)
+		throws Exception {
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(), resourceName,
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(TestPropsValues.getCompanyId()),
-				cmsAdministratorRole.getRoleId(),
-				ObjectActionKeys.ADD_OBJECT_ENTRY));
-
-		for (String actionId :
-				List.of(
-					ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-					ActionKeys.UPDATE, ActionKeys.VIEW)) {
-
-			Assert.assertTrue(
-				_resourcePermissionLocalService.hasResourcePermission(
-					TestPropsValues.getCompanyId(),
-					objectDefinition.getClassName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(TestPropsValues.getCompanyId()),
-					cmsAdministratorRole.getRoleId(), actionId));
-		}
-	}
-
-	private void _assertObjectDefinitionViewPermission(
-			ObjectDefinition objectDefinition, String roleName)
-		throws Exception {
-
-		Role role = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), roleName);
-
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(),
-				ObjectDefinition.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(objectDefinition.getObjectDefinitionId()),
-				role.getRoleId(), ActionKeys.VIEW));
-	}
-
-	private long _getObjectFolderId(String objectFolderExternalReferenceCode)
-		throws Exception {
-
-		if (Validator.isNull(objectFolderExternalReferenceCode)) {
-			return 0;
-		}
-
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
-				objectFolderExternalReferenceCode,
-				TestPropsValues.getCompanyId());
-
-		return objectFolder.getObjectFolderId();
+				role.getRoleId(), actionId));
 	}
 
 	private ObjectDefinition _publishCustomObjectDefinition(long objectFolderId)
@@ -167,8 +127,7 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 	}
 
 	private void _testPublishCustomObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
-			_getObjectFolderId(null));
+		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(0);
 
 		Role cmsAdministratorRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
@@ -198,14 +157,43 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 			String objectFolderExternalReferenceCode)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
-			_getObjectFolderId(objectFolderExternalReferenceCode));
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
+				objectFolderExternalReferenceCode,
+				TestPropsValues.getCompanyId());
 
-		_assertCMSAdministratorObjectDefinitionPermissions(objectDefinition);
-		_assertObjectDefinitionViewPermission(
-			objectDefinition, RoleConstants.GUEST);
-		_assertObjectDefinitionViewPermission(
-			objectDefinition, RoleConstants.USER);
+		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
+			objectFolder.getObjectFolderId());
+
+		Role cmsAdministratorRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+		_assertResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			objectDefinition.getResourceName(), cmsAdministratorRole);
+		_assertResourcePermission(
+			ActionKeys.DELETE, objectDefinition.getClassName(),
+			cmsAdministratorRole);
+		_assertResourcePermission(
+			ActionKeys.PERMISSIONS, objectDefinition.getClassName(),
+			cmsAdministratorRole);
+		_assertResourcePermission(
+			ActionKeys.UPDATE, objectDefinition.getClassName(),
+			cmsAdministratorRole);
+		_assertResourcePermission(
+			ActionKeys.VIEW, objectDefinition.getClassName(),
+			cmsAdministratorRole);
+
+		_assertResourcePermission(
+			ActionKeys.VIEW, objectDefinition.getObjectDefinitionId(),
+			ObjectDefinition.class.getName(),
+			_roleLocalService.getRole(
+				TestPropsValues.getCompanyId(), RoleConstants.GUEST));
+		_assertResourcePermission(
+			ActionKeys.VIEW, objectDefinition.getObjectDefinitionId(),
+			ObjectDefinition.class.getName(),
+			_roleLocalService.getRole(
+				TestPropsValues.getCompanyId(), RoleConstants.USER));
 	}
 
 	@Inject

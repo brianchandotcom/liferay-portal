@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
@@ -13,7 +14,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -38,7 +38,7 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
 		String externalReferenceCode, long groupId,
 		HttpServletRequest httpServletRequest, Language language,
-		ModelResourcePermission<User> userModelResourcePermission) {
+		ModelResourcePermission<DepotEntry> depotEntryModelResourcePermission) {
 
 		_depotEntryService = depotEntryService;
 		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
@@ -46,7 +46,7 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
-		_userModelResourcePermission = userModelResourcePermission;
+		_depotEntryModelResourcePermission = depotEntryModelResourcePermission;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -144,19 +144,19 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 	}
 
 	private boolean _hasConnectSitesPermission() throws Exception {
-		return _userModelResourcePermission.contains(
-			_themeDisplay.getPermissionChecker(), _themeDisplay.getUserId(),
-			ActionKeys.UPDATE);
+		return _depotEntryModelResourcePermission.contains(
+			_themeDisplay.getPermissionChecker(), _groupId, ActionKeys.UPDATE);
 	}
 
 	private final DepotEntryGroupRelLocalService
 		_depotEntryGroupRelLocalService;
+	private final ModelResourcePermission<DepotEntry>
+		_depotEntryModelResourcePermission;
 	private final DepotEntryService _depotEntryService;
 	private final String _externalReferenceCode;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final ThemeDisplay _themeDisplay;
-	private final ModelResourcePermission<User> _userModelResourcePermission;
 
 }

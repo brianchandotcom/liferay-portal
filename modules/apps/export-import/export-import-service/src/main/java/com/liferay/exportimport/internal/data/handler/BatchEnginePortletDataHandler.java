@@ -426,7 +426,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						portletDataContext.getSourceGroupId()));
 
 			if (inputStream == null) {
-				return portletPreferences;
+				continue;
 			}
 
 			BatchEngineImportTask batchEngineDeleteTask =

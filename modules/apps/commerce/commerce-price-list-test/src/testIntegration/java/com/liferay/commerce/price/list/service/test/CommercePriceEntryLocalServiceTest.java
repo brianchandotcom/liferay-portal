@@ -689,8 +689,9 @@ public class CommercePriceEntryLocalServiceTest {
 			commercePriceEntry.getUnitOfMeasureKey());
 
 		Assert.assertTrue(
-			BigDecimalUtil.eq(cpInstanceUnitOfMeasure1.getPricingQuantity(),
-			commercePriceEntry.getPricingQuantity()));
+			BigDecimalUtil.eq(
+				cpInstanceUnitOfMeasure1.getPricingQuantity(),
+				commercePriceEntry.getPricingQuantity()));
 
 		BigDecimal scale = incrementalOrderQuantity.setScale(
 			cpInstanceUnitOfMeasure1.getPrecision(), RoundingMode.HALF_UP);
@@ -735,10 +736,12 @@ public class CommercePriceEntryLocalServiceTest {
 					commercePriceList.getGroupId()));
 
 		Assert.assertTrue(
-			BigDecimalUtil.eq(cpInstanceUnitOfMeasure2.getPricingQuantity(),
-			commercePriceEntry.getPricingQuantity()));
+			BigDecimalUtil.eq(
+				cpInstanceUnitOfMeasure2.getPricingQuantity(),
+				commercePriceEntry.getPricingQuantity()));
 		Assert.assertTrue(
-			BigDecimalUtil.eq(incrementalOrderQuantity, commercePriceEntry.getQuantity()));
+			BigDecimalUtil.eq(
+				incrementalOrderQuantity, commercePriceEntry.getQuantity()));
 		Assert.assertEquals(
 			cpInstanceUnitOfMeasure2.getKey(),
 			commercePriceEntry.getUnitOfMeasureKey());

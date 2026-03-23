@@ -191,6 +191,7 @@ public class CommercePriceEntryLocalServiceImpl
 				incrementalOrderQuantity.setScale(
 					cpInstanceUnitOfMeasure.getPrecision(),
 					RoundingMode.HALF_UP));
+
 			commercePriceEntry.setUnitOfMeasureKey(
 				cpInstanceUnitOfMeasure.getKey());
 		}
@@ -739,6 +740,7 @@ public class CommercePriceEntryLocalServiceImpl
 				incrementalOrderQuantity.setScale(
 					cpInstanceUnitOfMeasure.getPrecision(),
 					RoundingMode.HALF_UP));
+
 			commercePriceEntry.setUnitOfMeasureKey(
 				cpInstanceUnitOfMeasure.getKey());
 		}

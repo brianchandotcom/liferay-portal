@@ -7,7 +7,7 @@ provider "google" {
 	region=var.region
 }
 provider "helm" {
-	kubernetes {
+	kubernetes={
 		host="https://connectgateway.googleapis.com/v1/projects/${local.project_number}/locations/global/gkeMemberships/${var.deployment_name}-membership"
 		token=data.google_client_config.default.access_token
 	}
@@ -24,11 +24,11 @@ terraform {
 		}
 		helm={
 			source="hashicorp/helm"
-			version="~> 2.17"
+			version="~> 3.1"
 		}
 		kubernetes={
 			source="hashicorp/kubernetes"
-			version="~> 2.35"
+			version="~> 2.36.0"
 		}
 		time={
 			source="hashicorp/time"

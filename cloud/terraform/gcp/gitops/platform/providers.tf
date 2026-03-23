@@ -10,7 +10,7 @@ provider "google" {
 	region=var.region
 }
 provider "helm" {
-	kubernetes {
+	kubernetes={
 		host="https://connectgateway.googleapis.com/v1/projects/${data.google_project.project.number}/locations/global/gkeMemberships/${var.deployment_name}-membership"
 		token=data.google_client_config.default.access_token
 	}

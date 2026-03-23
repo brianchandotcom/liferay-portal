@@ -310,6 +310,9 @@ export type TLoadDataParams = {
 export interface IFrontendDataSetProps {
 	actionParameterName?: string;
 	additionalAPIURLParameters?: string;
+	additionalAPIURLParametersTransformer?: (
+		loadDataParams: TLoadDataParams
+	) => string | undefined;
 	apiURL?: string;
 	appURL?: string;
 	atom?: Atom<IFDSState>;

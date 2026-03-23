@@ -71,6 +71,7 @@ import {loadData} from './utils/loadData';
 // @ts-ignore
 
 import {logError} from './utils/logError';
+import {transformAdditionalAPIURLParameters} from './utils/transformAdditionalAPIURLParameters';
 import {
 	EConfigInURLBehavior,
 	EConfigInURLKeys,
@@ -101,6 +102,7 @@ const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
 const FrontendDataSetContent = ({
 	actionParameterName,
 	additionalAPIURLParameters: initialAdditionalAPIURLParameters,
+	additionalAPIURLParametersTransformer,
 	apiURL,
 	appURL,
 	atom,
@@ -670,7 +672,7 @@ const FrontendDataSetContent = ({
 				? sorts.filter((sort: TSort) => sort.active)
 				: sorts;
 
-		return loadData({
+		const loadDataParams = {
 			additionalAPIURLParameters,
 			apiURL,
 			currentURL,
@@ -679,9 +681,18 @@ const FrontendDataSetContent = ({
 			page: pageNumber,
 			searchParam: unfrozenGlobalFDSState.search.query,
 			sorts: activeSorts,
+		};
+
+		return loadData({
+			...loadDataParams,
+			additionalAPIURLParameters: transformAdditionalAPIURLParameters(
+				loadDataParams,
+				additionalAPIURLParametersTransformer
+			),
 		});
 	}, [
 		additionalAPIURLParameters,
+		additionalAPIURLParametersTransformer,
 		apiURL,
 		currentURL,
 		globalFDSState,

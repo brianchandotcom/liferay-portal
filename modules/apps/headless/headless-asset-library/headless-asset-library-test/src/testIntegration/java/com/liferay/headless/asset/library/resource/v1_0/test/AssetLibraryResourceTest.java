@@ -241,7 +241,6 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				}
 			});
 		_testPostAssetLibrary(new MimeTypeLimit[0]);
-
 		_testPostAssetLibraryWithNoSettings();
 
 		AssetLibrary randomAssetLibrary = randomAssetLibrary();

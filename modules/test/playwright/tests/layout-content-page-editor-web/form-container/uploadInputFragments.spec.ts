@@ -381,7 +381,10 @@ test.describe('File Upload Fragment', () => {
 			);
 
 			await expect(
-				fileUploadInput.getByRole('button', {name: 'Upload'})
+				fileUploadInput.getByRole('button', {
+					exact: true,
+					name: 'Upload',
+				})
 			).toBeVisible();
 		}
 	);

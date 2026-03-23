@@ -19,7 +19,6 @@ import React, {
 
 import SpaceService from '../../../common/services/SpaceService';
 import {Space} from '../../../common/types/Space';
-import dateFormat from '../../../common/utils/dateFormat';
 import {displayErrorToast} from '../../../common/utils/toastUtil';
 import {SpaceSticker} from '../../../index';
 import {
@@ -27,22 +26,10 @@ import {
 	IAssetTypeInfoPanelContext,
 } from '../context';
 import ObjectEntryService from '../services/ObjectEntryService';
-import {getAssetLanguages} from '../util';
+import {formatDate, getAssetLanguages} from '../util';
 import {ASSET_TYPE, L_FILES} from '../util/constants';
 
 const AssetMetadata = () => {
-	const DATE_PATTERN = useMemo(
-		() => ({
-			day: '2-digit',
-			hour: '2-digit',
-			minute: '2-digit',
-			month: '2-digit',
-			timeZone: Liferay.ThemeDisplay.getTimeZone(),
-			year: 'numeric',
-		}),
-		[]
-	);
-
 	const {actions, asset, type}: IAssetTypeInfoPanelContext = useContext(
 		AssetTypeInfoPanelContext
 	);
@@ -219,10 +206,7 @@ const AssetMetadata = () => {
 
 					<p className="d-block">
 						{sub(Liferay.Language.get('x-by-x'), [
-							dateFormat(
-								DATE_PATTERN,
-								asset.dateCreated as string
-							),
+							formatDate(asset.dateCreated as string),
 							asset.creator?.name,
 						])}
 					</p>
@@ -234,7 +218,7 @@ const AssetMetadata = () => {
 					</p>
 
 					<p className="d-block">
-						{dateFormat(DATE_PATTERN, asset.dateModified as string)}
+						{formatDate(asset.dateModified as string)}
 					</p>
 				</div>
 
@@ -247,10 +231,7 @@ const AssetMetadata = () => {
 								</p>
 
 								<p className="d-block">
-									{dateFormat(
-										DATE_PATTERN,
-										asset?.displayDate as string
-									)}
+									{formatDate(asset?.displayDate)}
 								</p>
 							</div>
 						)}
@@ -262,10 +243,7 @@ const AssetMetadata = () => {
 
 							<p className="d-block">
 								{asset?.expirationDate
-									? dateFormat(
-											DATE_PATTERN,
-											asset?.expirationDate as string
-										)
+									? formatDate(asset?.expirationDate)
 									: Liferay.Language.get('never-expire')}
 							</p>
 						</div>
@@ -277,10 +255,7 @@ const AssetMetadata = () => {
 
 							<p className="d-block">
 								{asset?.reviewDate
-									? dateFormat(
-											DATE_PATTERN,
-											asset?.reviewDate as string
-										)
+									? formatDate(asset?.reviewDate)
 									: Liferay.Language.get('never-review')}
 							</p>
 						</div>

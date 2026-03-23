@@ -155,9 +155,9 @@ public class TestScriptGenerator {
 			}
 		}
 
-		int total = commands.size();
+		int commandCount = commands.size();
 
-		if (total == 0) {
+		if (commandCount == 0) {
 			System.out.println("No test commands to execute.");
 
 			return;

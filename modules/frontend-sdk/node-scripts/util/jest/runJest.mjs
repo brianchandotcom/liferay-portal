@@ -20,10 +20,10 @@ const SILENT_FLAG = '--silent';
 
 export default async function runJest({
 	cliFlags = [],
-	cwd: projectDir,
+	projectPath,
 	execaConfig = {},
 }) {
-	const CONFIG_PATH = path.join(projectDir, CONFIG_NAME);
+	const CONFIG_PATH = path.join(projectPath, CONFIG_NAME);
 
 	const hasForceDebug = cliFlags.includes(FORCE_DEBUG_FLAG);
 
@@ -38,6 +38,7 @@ export default async function runJest({
 
 	try {
 		const config = {
+			cwd: projectPath,
 			env: {
 				...process.env,
 				...execaConfig.env,
@@ -46,20 +47,20 @@ export default async function runJest({
 			...execaConfig,
 		};
 
-		let userConfig = await getUserConfig('jest', {cwd: projectDir});
+		let userConfig = await getUserConfig('jest', {cwd: projectPath});
 
 		userConfig = JSON.parse(
-			JSON.stringify(userConfig).replace('<rootDir>', projectDir)
+			JSON.stringify(userConfig).replace('<rootDir>', projectPath)
 		);
 
 		await fs.writeFile(
 			CONFIG_PATH,
 			JSON.stringify(
 				merge.all([
-					getJestConfig({rootDir: projectDir}),
+					getJestConfig({rootDir: projectPath}),
 					{
 						moduleNameMapper: await getJestModuleNameMapper({
-							cwd: projectDir,
+							cwd: projectPath,
 						}),
 					},
 					userConfig,
@@ -73,12 +74,15 @@ export default async function runJest({
 
 		const childProcess = $(
 			config
-		)`jest --projects ${projectDir} --config ${CONFIG_PATH} ${cliFlags}`;
+		)`jest --passWithNoTests --projects ${projectPath} --config ${CONFIG_PATH} ${cliFlags}`;
 
 		result = await childProcess;
 	}
 	catch (error) {
-		result = error;
+		result = {
+			failed: true,
+			all: error.toString(),
+		};
 	}
 	finally {
 		if (await fileExists(CONFIG_PATH)) {

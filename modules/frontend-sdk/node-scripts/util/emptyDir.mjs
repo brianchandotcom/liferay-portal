@@ -9,7 +9,7 @@ import fileExists from './fileExists.mjs';
 
 export default async function emptyDir(dir) {
 	if (await fileExists(dir)) {
-		await fs.rmdir(dir, {recursive: true});
+		await fs.rm(dir, {recursive: true});
 	}
 
 	await fs.mkdir(dir, {recursive: true});

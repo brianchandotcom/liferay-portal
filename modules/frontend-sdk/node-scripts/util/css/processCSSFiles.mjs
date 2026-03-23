@@ -9,7 +9,8 @@ import path from 'path';
 import rtlcss from 'rtlcss';
 
 import calculateFileHash from '../calculateFileHash.mjs';
-import {BUILD_RESOURCES_PATH, SRC_PATH} from '../locations.mjs';
+import {BUILD_RESOURCES_PATH, PORTAL_DIR, SRC_PATH} from '../locations.mjs';
+import print from '../print.mjs';
 
 export default async function processCSSFiles() {
 	const cssFiles = await fg(['**/*.css'], {absolute: true, cwd: SRC_PATH});
@@ -26,8 +27,13 @@ export default async function processCSSFiles() {
 
 			const lapse = performance.now() - start;
 
-			console.log(
-				`⌛ Processing of ${cssFile} took: ${(lapse / 1000).toFixed(3)} s`
+			print(
+				0,
+				true,
+				print.info('INFO:'),
+				`Processing of`,
+				print.underline(path.relative(PORTAL_DIR, cssFile)),
+				`took ${(lapse / 1000).toFixed(3)} seconds.`
 			);
 		})
 	);

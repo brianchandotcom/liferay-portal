@@ -8,6 +8,5 @@ module.exports = {
 		'@liferay/no-dynamic-require': 'off',
 		'@liferay/no-extraneous-dependencies': 'off',
 		'@liferay/portal/no-global-fetch': 'off',
-		'no-console': 'off',
 	},
 };

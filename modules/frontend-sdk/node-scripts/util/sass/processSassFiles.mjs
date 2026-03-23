@@ -13,8 +13,10 @@ import calculateFileHash from '../calculateFileHash.mjs';
 import {
 	BUILD_RESOURCES_PATH,
 	BUILD_SASS_CACHE_PATH,
+	PORTAL_DIR,
 	SRC_PATH,
 } from '../locations.mjs';
+import print from '../print.mjs';
 import projectScopeRequire from '../projectScopeRequire.mjs';
 import runSass from './util/runSass.mjs';
 
@@ -46,8 +48,11 @@ export default async function processSassFiles() {
 			BUILD_RESOURCES_PATH
 		))
 	) {
-		console.log(
-			'⚠️ No .scss files were modified: skipping Sass compilation'
+		print(
+			0,
+			false,
+			print.info('INFO:'),
+			'No .scss files were modified: skipping Sass compilation.'
 		);
 
 		return;
@@ -70,8 +75,13 @@ export default async function processSassFiles() {
 
 			const lapse = performance.now() - start;
 
-			console.log(
-				`⌛ Sass for ${entryFile} took: ${(lapse / 1000).toFixed(3)} s`
+			print(
+				0,
+				true,
+				print.info('INFO:'),
+				'Sass compilation for',
+				print.underline(path.relative(PORTAL_DIR, entryFile)),
+				`took ${(lapse / 1000).toFixed(3)} seconds.`
 			);
 		})
 	);

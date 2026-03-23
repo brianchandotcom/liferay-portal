@@ -8,6 +8,7 @@ import path from 'path';
 
 import getNamedArguments from '../util/getNamedArguments.mjs';
 import {MODULES_DIR, PORTAL_DIR} from './locations.mjs';
+import print from './print.mjs';
 import runGitLsFiles from './runGitLsFiles.mjs';
 
 /**
@@ -40,10 +41,12 @@ export default async function getModifiedFiles(currentDir) {
 	}
 	else {
 		if (currentBranch || localChanges) {
-			console.error(`
-❌ Arguments --current-branch or --local-changes are not valid when formatting a single project.
-`);
-
+			print(
+				0,
+				true,
+				print.error('\nERROR:'),
+				'Arguments --current-branch or --local-changes are not valid when formatting a single project.\n'
+			);
 			process.exit(2);
 		}
 
@@ -75,6 +78,8 @@ async function runGitUtil(gitType) {
 	})`ant git-util -Dgit.type=${gitType}`;
 
 	if (process.env['DEBUG_GIT_UTIL']) {
+
+		// eslint-disable-next-line no-console
 		console.log(stdout);
 	}
 

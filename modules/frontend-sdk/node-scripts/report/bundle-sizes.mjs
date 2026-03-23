@@ -13,6 +13,7 @@ import {
 	MODULES_DIR,
 	SRC_PATH,
 } from '../util/locations.mjs';
+import print from '../util/print.mjs';
 import getBundleSizes from '../util/report/getBundleSizes.mjs';
 
 export default async function main() {
@@ -63,9 +64,7 @@ export default async function main() {
 
 	await fs.writeFile(csvFile, lines.join('\n'));
 
-	console.log(`
-ℹ️  The report has been created at: ${csvFile}
-`);
+	print(0, true, print.info('\nINFO:'), `Wrote report file: ${csvFile}\n`);
 }
 
 function getInternalBundleSizes(bundleSizes) {

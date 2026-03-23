@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 
 import {MODULES_DIR} from './locations.mjs';
+import print from './print.mjs';
 
 /**
  * Returns a list of workspaces.
@@ -45,7 +46,12 @@ export default async function getYarnWorkspaceProjects() {
 		);
 	}
 	catch (error) {
-		console.log(`getYarnWorkspaceProjects(): error \`${error}\``);
+		print(
+			0,
+			true,
+			print.error('\nERROR:'),
+			`Could not retrieve the list of yarn workspace projects: ${error}.\n`
+		);
 	}
 	finally {
 		process.chdir(cwd);

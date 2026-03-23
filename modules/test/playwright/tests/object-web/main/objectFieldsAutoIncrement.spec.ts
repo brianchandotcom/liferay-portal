@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
@@ -75,10 +76,9 @@ test(
 				{
 					businessType: 'AutoIncrement',
 					objectFieldSettings: [
-						{
-							name: 'initialValue',
-							value: 'HAT-1',
-						},
+						{name: 'prefix', value: 'HAT-'} as any,
+						{name: 'initialValue', value: '1'},
+						{name: 'suffix', value: ''} as any,
 					],
 				},
 				'Text',
@@ -96,25 +96,35 @@ test(
 			type: 'objectDefinition',
 		});
 
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const textFieldName = objectFields[1].name;
-
-		await apiHelpers.objectEntry.postObjectEntry(
-			{[textFieldName]: 'TestEntry'},
-			applicationName
-		);
+		const autoIncrementFieldLabel = objectFields[0].label['en_US'];
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.frontendDatasetItems.first().click();
-
-		const autoIncrementInput = page.getByLabel(
-			objectFields[0].label['en_US']
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
 		);
 
-		await expect(autoIncrementInput).toBeVisible();
+		await expect(
+			page
+				.locator('.ddm-field')
+				.filter({hasText: autoIncrementFieldLabel})
+		).not.toBeVisible();
 
-		await expect(autoIncrementInput).toBeDisabled();
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		const autoIncrementInput = page
+			.locator('.ddm-field')
+			.filter({hasText: autoIncrementFieldLabel})
+			.locator('input[readonly]');
+
+		await expect(autoIncrementInput).toBeVisible();
+		await expect(autoIncrementInput).toHaveAttribute('readonly', '');
+		await expect(autoIncrementInput).toHaveValue('HAT-1');
 	}
 );

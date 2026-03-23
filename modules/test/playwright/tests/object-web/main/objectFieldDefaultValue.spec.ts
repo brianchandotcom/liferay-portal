@@ -147,11 +147,11 @@ test(
 		await objectFieldsPage.useDefaultValueToggle.check({timeout: 1000});
 
 		await objectFieldsPage.iframeLocator
-			.getByRole('radio', {name: 'Expression Builder'})
-			.check();
+			.getByRole('button', {name: 'Expression Builder'})
+			.click();
 
 		await objectFieldsPage.iframeLocator
-			.getByLabel('Default ValueMandatory')
+			.getByPlaceholder('Create an expression.')
 			.fill(textFieldName);
 
 		await objectFieldsPage.editFieldSaveButton.click();
@@ -174,7 +174,7 @@ test(
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await expect(
-			page.locator('td').getByText(firstItemName, {exact: true})
+			page.locator('td').getByText(firstItemName, {exact: true}).first()
 		).toBeVisible();
 	}
 );

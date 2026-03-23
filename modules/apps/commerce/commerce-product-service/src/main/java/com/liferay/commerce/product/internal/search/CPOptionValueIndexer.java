@@ -133,15 +133,13 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 	}
 
 	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_cpOptionValueLocalService.getCPOptionValue(classPK));
+	protected void doReindex(long companyId) throws Exception {
+		_reindexCPOptionValues(companyId);
 	}
 
 	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexCPOptionValues(companyId);
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(_cpOptionValueLocalService.getCPOptionValue(classPK));
 	}
 
 	private void _reindexCPOptionValues(long companyId) throws Exception {

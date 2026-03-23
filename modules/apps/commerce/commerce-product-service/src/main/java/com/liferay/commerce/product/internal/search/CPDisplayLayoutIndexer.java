@@ -226,15 +226,13 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 	}
 
 	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_cpDisplayLayoutLocalService.getCPDisplayLayout(classPK));
+	protected void doReindex(long companyId) throws Exception {
+		_reindexCPDisplayLayouts(companyId);
 	}
 
 	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexCPDisplayLayouts(companyId);
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(_cpDisplayLayoutLocalService.getCPDisplayLayout(classPK));
 	}
 
 	private void _reindexCPDisplayLayouts(long companyId) throws Exception {

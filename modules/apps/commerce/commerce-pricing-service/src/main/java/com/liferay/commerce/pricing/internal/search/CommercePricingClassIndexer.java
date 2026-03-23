@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
@@ -113,16 +112,14 @@ public class CommercePricingClassIndexer
 	}
 
 	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(
-			_commercePricingClassLocalService.getCommercePricingClass(classPK));
+	protected void doReindex(long companyId) throws Exception {
+		_reindexCommercePricingClasses(companyId);
 	}
 
 	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexCommercePricingClasses(companyId);
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(
+			_commercePricingClassLocalService.getCommercePricingClass(classPK));
 	}
 
 	private void _reindexCommercePricingClasses(long companyId)

@@ -175,6 +175,18 @@ public class PatcherFixIndexer extends BaseIndexer<PatcherFix> {
 	}
 
 	@Override
+	protected void doReindex(long companyId) throws Exception {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_patcherFixLocalService.getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			this::safeGetDocument);
+
+		indexableActionableDynamicQuery.performActions();
+	}
+
+	@Override
 	protected void doReindex(PatcherFix patcherFix) throws Exception {
 		_indexWriterHelper.updateDocument(
 			patcherFix.getCompanyId(), getDocument(patcherFix));
@@ -188,20 +200,6 @@ public class PatcherFixIndexer extends BaseIndexer<PatcherFix> {
 		if (patcherFix != null) {
 			doReindex(patcherFix);
 		}
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_patcherFixLocalService.getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference

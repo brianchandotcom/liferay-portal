@@ -158,17 +158,15 @@ public class CommerceTierPriceEntryIndexer
 	}
 
 	@Override
+	protected void doReindex(long companyId) throws Exception {
+		_reindexCommerceTierPriceEntries(companyId);
+	}
+
+	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(
 			_commerceTierPriceEntryLocalService.getCommerceTierPriceEntry(
 				classPK));
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexCommerceTierPriceEntries(companyId);
 	}
 
 	private void _reindexCommerceTierPriceEntries(long companyId)

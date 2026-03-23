@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.trash.TrashHelper;
@@ -99,15 +98,13 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	}
 
 	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_wikiNodeLocalService.getNode(classPK));
+	protected void doReindex(long companyId) throws Exception {
+		_reindexEntries(companyId);
 	}
 
 	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_reindexEntries(companyId);
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(_wikiNodeLocalService.getNode(classPK));
 	}
 
 	@Override

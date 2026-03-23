@@ -11,7 +11,10 @@ import {openToast} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {IBulkActionFDSData} from '../../common/types/BulkActionTask';
+import {downloadBlob} from '../../common/utils/downloadBlob';
 import {displayErrorToast} from '../../common/utils/toastUtil';
+import {exportTranslationBulkAction} from '../props_transformer/actions/exportTranslationBulkAction';
 
 type FileFormat = {
 	displayName: string;
@@ -131,19 +134,23 @@ const TargetLocale = ({
 };
 
 export default function ExportTranslationModalContent({
+	apiURL,
 	availableExportFileFormats = [],
 	availableSourceLocales = [],
 	availableTargetLocales = [],
 	closeModal,
 	defaultSourceLanguageId,
 	itemId,
+	selectedData,
 }: {
+	apiURL?: string;
 	availableExportFileFormats: FileFormat[];
 	availableSourceLocales: Locale[];
 	availableTargetLocales: Locale[];
 	closeModal: () => void;
 	defaultSourceLanguageId: string;
-	itemId: number;
+	itemId?: number;
+	selectedData?: IBulkActionFDSData;
 }) {
 	const [exportMimeType, setExportMimeType] = useState(
 		availableExportFileFormats[0].mimeType
@@ -161,6 +168,21 @@ export default function ExportTranslationModalContent({
 		const version = availableExportFileFormats
 			.find((format) => format.mimeType === exportMimeType)
 			?.displayName.split(' ')[1] as string;
+
+		if (selectedData) {
+			return exportTranslationBulkAction({
+				apiURL,
+				keyValues: {
+					sourceLanguageId,
+					targetLanguageIds: selectedTargetLanguageIds,
+					xliffMimeType: exportMimeType,
+				},
+				selectedData,
+				type: 'ExportTranslationBulkAction',
+			}).then(() => {
+				closeModal();
+			});
+		}
 
 		const params = new URLSearchParams({
 			sourceLanguageId,
@@ -191,15 +213,7 @@ export default function ExportTranslationModalContent({
 					type: 'success',
 				});
 
-				const blob = response.blob();
-				const blobURL = URL.createObjectURL(await blob);
-
-				const link = document.createElement('a');
-				link.href = blobURL;
-
-				link.click();
-
-				URL.revokeObjectURL(blobURL);
+				downloadBlob(response.blob());
 
 				closeModal();
 			}

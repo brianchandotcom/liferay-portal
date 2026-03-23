@@ -84,12 +84,6 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 			return;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Found " + businessEventsJSONArray.length() +
-					" business events to notify");
-		}
-
 		for (int i = 0; i < businessEventsJSONArray.length(); i++) {
 			JSONObject businessEventJSONObject =
 				businessEventsJSONArray.getJSONObject(i);
@@ -106,47 +100,11 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				continue;
 			}
 
-			String regionFilterString = StringPool.BLANK;
-
-			try {
-				regionFilterString = _getRegionFilterString(
-					koroneikiAccountJSONObject);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception);
-				}
-			}
-
-			String subscriptionFilterString = StringBundler.concat(
-				"type eq 'businessEvent' and (contains(filter, '",
-				escapeFilterValue(accountExternalReferenceCode), "')",
-				regionFilterString, ") and active eq true");
-
-			JSONArray subscriptionsJSONArray =
-				_notificationSubscriptionService.
-					getNotificationSubscriptionsJSONArray(
-						subscriptionFilterString);
+			JSONArray subscriptionsJSONArray = _getSubscriptionsJSONArray(
+				koroneikiAccountJSONObject);
 
 			if (subscriptionsJSONArray.length() == 0) {
 				continue;
-			}
-
-			long businessEventId = businessEventJSONObject.getLong("id");
-
-			String businessEventVersions = StringPool.BLANK;
-
-			try {
-				businessEventVersions = _getBusinessEventVersions(
-					fromDate, businessEventId);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to fetch business event versions for " +
-							"business event " + businessEventId,
-						exception);
-				}
 			}
 
 			JSONObject templatePayloadJSONObject = new JSONObject();
@@ -155,7 +113,8 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				"BUSINESSEVENT_ACTIVITY_HISTORY_PAGE_LINK",
 				String.format(
 					"%s/project/#/%s/business-events/%s/activity-history",
-					portalURL, accountExternalReferenceCode, businessEventId)
+					portalURL, accountExternalReferenceCode,
+					businessEventJSONObject.getLong("id"))
 			).put(
 				"BUSINESSEVENT_EVENTTYPE",
 				businessEventJSONObject.getJSONObject(
@@ -173,7 +132,9 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				"BUSINESSEVENT_TARGETGOLIVEDATETIME",
 				businessEventJSONObject.optString("targetGoLiveDateTime")
 			).put(
-				"BUSINESSEVENT_VERSIONS", businessEventVersions
+				"BUSINESSEVENT_VERSIONS",
+				_getBusinessEventVersions(
+					fromDate, businessEventJSONObject.getLong("id"))
 			).put(
 				"PROJECT_NAME", koroneikiAccountJSONObject.optString("name")
 			);
@@ -216,8 +177,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 	}
 
 	private String _getBusinessEventVersions(
-			String fromDate, long businessEventId)
-		throws Exception {
+		String fromDate, long businessEventId) {
 
 		String filterString = String.format(
 			NotificationSubscriptionConstants.
@@ -225,17 +185,31 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 					" eq '%s' and dateModified gt %s",
 			businessEventId, fromDate);
 
-		JSONObject jsonObject = new JSONObject(
-			get(
-				getAuthorization(),
-				UriComponentsBuilder.fromPath(
-					"/o/c/businesseventversions"
-				).queryParam(
-					"filter", filterString
-				).queryParam(
-					"sort", "dateModified:desc"
-				).build(
-				).toUri()));
+		JSONObject jsonObject = null;
+
+		try {
+			jsonObject = new JSONObject(
+				get(
+					getAuthorization(),
+					UriComponentsBuilder.fromPath(
+						"/o/c/businesseventversions"
+					).queryParam(
+						"filter", filterString
+					).queryParam(
+						"sort", "dateModified:desc"
+					).build(
+					).toUri()));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fetch business event versions for business " +
+						"event " + businessEventId,
+					exception);
+			}
+
+			return StringPool.BLANK;
+		}
 
 		JSONArray businessEventVersionsJSONArray = jsonObject.getJSONArray(
 			"items");
@@ -246,8 +220,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("<h4>Recent Updates:</h4>");
-		sb.append("<ul>");
+		sb.append("<h4>Recent Updates:</h4><ul>");
 
 		for (int i = 0; i < businessEventVersionsJSONArray.length(); i++) {
 			JSONObject businessEventVersionJSONObject =
@@ -282,43 +255,52 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 		return sb.toString();
 	}
 
-	private String _getRegionFilterString(JSONObject koroneikiAccountJSONObject)
+	private JSONArray _getSubscriptionsJSONArray(
+			JSONObject koroneikiAccountJSONObject)
 		throws Exception {
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("active eq true and type eq 'businessEvent' and ");
+		sb.append("(contains(filter, '");
+		sb.append(
+			escapeFilterValue(
+				koroneikiAccountJSONObject.getString("accountKey")));
+		sb.append("')");
 
 		String region = koroneikiAccountJSONObject.getString("region");
 
-		if (Validator.isNull(region)) {
-			return StringPool.BLANK;
-		}
+		if (Validator.isNotNull(region)) {
+			region = region.toUpperCase(
+			).replace(
+				StringPool.SPACE, StringPool.UNDERLINE
+			);
 
-		region = region.toUpperCase(
-		).replace(
-			" ", StringPool.UNDERLINE
-		);
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(" or contains(filter, '");
-		sb.append(region);
-		sb.append(":RSM')");
-
-		boolean hasTAMServiceSubscription = _hasTAMServiceSubscription(
-			koroneikiAccountJSONObject.getString("accountKey"));
-
-		if (hasTAMServiceSubscription) {
 			sb.append(" or contains(filter, '");
 			sb.append(region);
-			sb.append(":CX_LEAD')");
+			sb.append(":RSM')");
+
+			boolean hasTAMServiceSubscription = _hasTAMServiceSubscription(
+				koroneikiAccountJSONObject.getString("accountKey"));
+
+			if (hasTAMServiceSubscription) {
+				sb.append(" or contains(filter, '");
+				sb.append(region);
+				sb.append(":CX_LEAD')");
+			}
 		}
 
-		return sb.toString();
+		sb.append(")");
+
+		return _notificationSubscriptionService.
+			getNotificationSubscriptionsJSONArray(sb.toString());
 	}
 
 	private boolean _hasTAMServiceSubscription(
 			String accountExternalReferenceCode)
 		throws Exception {
 
-		JSONObject accountSubscriptionsJSONObject = new JSONObject(
+		JSONObject jsonObject = new JSONObject(
 			get(
 				getAuthorization(),
 				UriComponentsBuilder.fromPath(
@@ -332,8 +314,8 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				).build(
 				).toUri()));
 
-		JSONArray accountSubscriptionsJSONArray =
-			accountSubscriptionsJSONObject.getJSONArray("items");
+		JSONArray accountSubscriptionsJSONArray = jsonObject.getJSONArray(
+			"items");
 
 		if (accountSubscriptionsJSONArray.length() > 0) {
 			return true;

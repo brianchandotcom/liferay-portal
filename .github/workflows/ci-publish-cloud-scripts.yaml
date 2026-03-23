@@ -57,14 +57,64 @@ jobs:
                     gcloud storage cp \
                         /tmp/liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz \
                         ${GCS_PATH}
+    publish-liferay-gcp-bootstrap:
+        if: ${{github.repository == 'liferay/liferay-portal'}}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   name: Authenticate to Google Cloud
+                uses: google-github-actions/auth@v2
+                with:
+                    service_account: ${{secrets.GCP_SA}}
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+            -   name: Set up Google Cloud CLI
+                uses: google-github-actions/setup-gcloud@v2
+                with:
+                    project_id: ${{secrets.GCP_PROJECT_ID}}
+            -   name: Set up variables
+                run: |
+                    CURRENT_VERSION="$(jq -r '."liferay-gcp-bootstrap"' ./cloud/scripts/versions.json)"
+
+                    echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
+
+                    GCS_PATH="gs://liferay-cloud-native-bootstrap/bootstrap/liferay-gcp-bootstrap/liferay-gcp-bootstrap-${CURRENT_VERSION}.tar.gz"
+
+                    echo "GCS_PATH=${GCS_PATH}" >> ${GITHUB_ENV}
+            -   id: verify_version
+                name: Verify version
+                run: |
+                    if ! gsutil --quiet stat ${GCS_PATH}
+                    then
+                        echo "Verified version ${CURRENT_VERSION}."
+
+                        echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
+
+                        echo "should_publish=true" >> ${GITHUB_OUTPUT}
+                    else
+                        echo "Version ${CURRENT_VERSION} already exists. Skipping publish."
+                    fi
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Package and push GCP bootstrap scripts
+                run: |
+                    tar \
+                        --create \
+                        --file /tmp/liferay-gcp-bootstrap-${CURRENT_VERSION}.tar.gz \
+                        --gzip \
+                        --verbose \
+                        cloud/scripts/setup_gcp.sh \
+                        cloud/terraform/gcp/gke/* \
+                        cloud/terraform/gcp/gitops/platform/*
+
+                    gcloud storage cp \
+                        /tmp/liferay-gcp-bootstrap-${CURRENT_VERSION}.tar.gz \
+                        ${GCS_PATH}
 on:
     push:
         branches:
             -   master
         paths:
             -   .github/workflows/ci-publish-cloud-scripts.yaml
-            -   cloud/scripts/bootstrap.sh
             -   cloud/scripts/versions.json
-            -   cloud/scripts/versions.tfvars
 permissions:
     id-token: write

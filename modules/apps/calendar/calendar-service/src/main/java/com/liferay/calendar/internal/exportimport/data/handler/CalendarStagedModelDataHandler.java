@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -189,8 +190,8 @@ public class CalendarStagedModelDataHandler
 		Calendar importedCalendar = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			Calendar existingCalendar = fetchStagedModelByUuidAndGroupId(
-				calendar.getUuid(), portletDataContext.getScopeGroupId());
+			Calendar existingCalendar = _fetchExistingCalendar(
+				calendar, portletDataContext);
 
 			if (existingCalendar == null) {
 				serviceContext.setUuid(calendar.getUuid());
@@ -210,6 +211,13 @@ public class CalendarStagedModelDataHandler
 					calendar.getColor(), calendar.isDefaultCalendar(),
 					calendar.isEnableComments(), calendar.isEnableRatings(),
 					serviceContext);
+
+				importedCalendar.setUuid(calendar.getUuid());
+				importedCalendar.setCreateDate(calendar.getCreateDate());
+				importedCalendar.setModifiedDate(calendar.getModifiedDate());
+
+				importedCalendar = _calendarLocalService.updateCalendar(
+					importedCalendar);
 			}
 		}
 		else {
@@ -223,6 +231,32 @@ public class CalendarStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(calendar, importedCalendar);
+	}
+
+	private Calendar _fetchExistingCalendar(
+		Calendar calendar, PortletDataContext portletDataContext) {
+
+		Calendar existingCalendar = fetchStagedModelByUuidAndGroupId(
+			calendar.getUuid(), portletDataContext.getScopeGroupId());
+
+		if (existingCalendar != null) {
+			return existingCalendar;
+		}
+
+		existingCalendar = _fetchExistingCalendar(
+			portletDataContext.getCompanyId(),
+			portletDataContext.getScopeGroupId(),
+			calendar.getName(calendar.getDefaultLanguageId()));
+
+		if ((existingCalendar == null) ||
+			!StringUtil.equals(
+				existingCalendar.getName(calendar.getDefaultLanguageId()),
+				calendar.getName(calendar.getDefaultLanguageId()))) {
+
+			return null;
+		}
+
+		return existingCalendar;
 	}
 
 	private Calendar _fetchExistingCalendar(

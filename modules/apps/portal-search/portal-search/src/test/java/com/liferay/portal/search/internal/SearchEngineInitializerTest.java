@@ -6,10 +6,17 @@
 package com.liferay.portal.search.internal;
 
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
 import com.liferay.portal.search.index.ConcurrentReindexManager;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -43,6 +50,13 @@ public class SearchEngineInitializerTest {
 	public void setUp() {
 		_searchEngineHelperUtilMockedStatic = Mockito.mockStatic(
 			SearchEngineHelperUtil.class);
+
+		Mockito.when(
+			_searchEngineAdapter.execute(
+				Mockito.any(GetIndexIndexRequest.class))
+		).thenReturn(
+			Mockito.mock(GetIndexIndexResponse.class)
+		);
 	}
 
 	@After
@@ -93,14 +107,40 @@ public class SearchEngineInitializerTest {
 		_verify(0, 0, 1, 0, 0, 0);
 	}
 
-	private void _reindex(String executionMode, List<Indexer<?>> indexers) {
+	private void _reindex(String executionMode, List<Indexer<?>> indexers)
+		throws Exception {
+
 		SearchEngineInitializer searchEngineInitializer =
 			new SearchEngineInitializer(
 				RandomTestUtil.randomLong(), _concurrentReindexManager,
 				executionMode,
 				_portalExecutorManager.getPortalExecutor(
 					SearchEngineInitializer.class.getName()),
-				null, indexers, null, null, _syncReindexManager);
+				new IndexNameBuilder() {
+
+					@Override
+					public String getIndexName(long companyId) {
+						return String.valueOf(companyId);
+					}
+
+					@Override
+					public String getIndexNamePrefix() {
+						return "";
+					}
+
+				},
+				indexers,
+				new JSONFactoryImpl() {
+
+					@Override
+					public JSONObject createJSONObject(String json)
+						throws JSONException {
+
+						return super.createJSONObject("{index:{}}");
+					}
+
+				},
+				_searchEngineAdapter, _syncReindexManager);
 
 		searchEngineInitializer.reindex();
 	}
@@ -148,6 +188,8 @@ public class SearchEngineInitializerTest {
 		Mockito.mock(ConcurrentReindexManager.class);
 	private final PortalExecutorManager _portalExecutorManager = Mockito.mock(
 		PortalExecutorManager.class);
+	private final SearchEngineAdapter _searchEngineAdapter = Mockito.mock(
+		SearchEngineAdapter.class);
 	private MockedStatic<SearchEngineHelperUtil>
 		_searchEngineHelperUtilMockedStatic;
 	private final SyncReindexManager _syncReindexManager = Mockito.mock(

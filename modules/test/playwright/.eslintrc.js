@@ -11,7 +11,6 @@ const config = {
 		node: true,
 	},
 	extends: ['plugin:@liferay/general'],
-	ignorePatterns: ['!*', 'copyright.js'],
 	parserOptions: {
 		ecmaFeatures: {
 			jsx: true,

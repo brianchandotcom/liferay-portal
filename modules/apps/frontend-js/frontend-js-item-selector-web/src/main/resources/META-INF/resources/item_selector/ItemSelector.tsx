@@ -11,6 +11,7 @@ import {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import {InternalDispatch, useControlledState} from '@clayui/shared';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web';
 import {fetch, getObjectValueFromPath} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
@@ -267,10 +268,7 @@ function ItemSelector<T extends Record<string, any>>({
 	} = useResource({
 		fetch: async (link) => {
 			const result = await fetch(link, {
-				headers: {
-					'Accept-Language':
-						Liferay.ThemeDisplay.getBCP47LanguageId(),
-				},
+				headers: DEFAULT_FETCH_HEADERS,
 			});
 
 			const contentType = result.headers.get('Content-Type') || '';

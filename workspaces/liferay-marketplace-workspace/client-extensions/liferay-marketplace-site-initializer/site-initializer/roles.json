@@ -79,12 +79,12 @@
 				"scope": 1
 			},
 			{
-				"actionId": "MANAGE_COMMERCE_ORDERS",
+				"actionId": "MANAGE_COMMERCE_ORDER_PRICES",
 				"resource": "com.liferay.commerce.order",
 				"scope": 1
 			},
 			{
-				"actionId": "MANAGE_COMMERCE_ORDER_PRICES",
+				"actionId": "MANAGE_COMMERCE_ORDERS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 1
 			},

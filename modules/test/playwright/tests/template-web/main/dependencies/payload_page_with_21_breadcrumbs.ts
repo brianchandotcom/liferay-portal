@@ -565,7 +565,6 @@ export function data(
 				],
 			},
 		],
-		taxonomyCategoryItemExternalReferences: [],
 		type: 'WidgetPage',
 		uuid: '29a682f0-6755-9283-70f2-11d913aaa1ab',
 	};

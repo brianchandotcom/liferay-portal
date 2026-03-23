@@ -74,27 +74,19 @@ export class DataSetPage {
 		timeout?: number;
 	}) {
 		const item = this.getRow(filter);
+
 		const button = item.getByRole('button', {
 			name: `${filter} Actions`,
 		});
 
-		await button.click({timeout});
-
-		const dropdownId = await button.getAttribute('aria-controls');
-
-		const dropdownMenu = this.page
-			.locator(`#${dropdownId}`)
-			.filter({has: this.page.getByRole('menu')});
-		await dropdownMenu.waitFor({timeout});
-
-		const dropdownMenuActionItem = dropdownMenu
-			.getByRole('menuitem', {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
 				name: action,
-			})
-			.first();
-
-		await dropdownMenuActionItem.waitFor({timeout});
-		await dropdownMenuActionItem.click({timeout});
+			}),
+			timeout,
+			trigger: button,
+		});
 	}
 
 	async changeVisualizationMode(

@@ -1280,7 +1280,7 @@ public class EditableFragmentEntryProcessorTest {
 			LocaleUtil.US, FragmentEntryLinkConstants.VIEW);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			element.attr("data-analytics-object-definition-categories"));
+			element.attr("data-analytics-asset-categories"));
 
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
@@ -1299,7 +1299,7 @@ public class EditableFragmentEntryProcessorTest {
 			jsonObject.getString("name"));
 
 		jsonArray = JSONFactoryUtil.createJSONArray(
-			element.attr("data-analytics-object-definition-tags"));
+			element.attr("data-analytics-asset-tags"));
 
 		jsonObject = jsonArray.getJSONObject(0);
 

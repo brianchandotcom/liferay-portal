@@ -159,8 +159,7 @@ public class AnalyticsAttributesUtil {
 				_log);
 
 			element.attr(
-				"data-analytics-object-definition-categories",
-				jsonArray.toString());
+				"data-analytics-asset-categories", jsonArray.toString());
 		}
 
 		element.attr(
@@ -210,9 +209,7 @@ public class AnalyticsAttributesUtil {
 				),
 				_log);
 
-			element.attr(
-				"data-analytics-object-definition-tags",
-				jsonArray.toString());
+			element.attr("data-analytics-asset-tags", jsonArray.toString());
 		}
 
 		element.attr(

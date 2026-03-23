@@ -3,10 +3,10 @@
 exports[`Routes should match Routes snapshot 1`] = `
 Object {
   "ASSETS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets",
-  "ASSETS_BLOGS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/:assetType(blogs)?",
-  "ASSETS_BLOGS_KNOWN_INDIVIDUALS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/:assetType(blogs)?/:assetId/known-individuals/:touchpoint/:title?",
-  "ASSETS_BLOGS_OVERVIEW": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/:assetType(blogs)?/:assetId/page/:touchpoint/:title?",
-  "ASSETS_BLOGS_ROUTES": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/:assetType(blogs)?/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?",
+  "ASSETS_BLOGS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/blogs",
+  "ASSETS_BLOGS_KNOWN_INDIVIDUALS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/blogs/:assetId/known-individuals/:touchpoint/:title?",
+  "ASSETS_BLOGS_OVERVIEW": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/blogs/:assetId/page/:touchpoint/:title?",
+  "ASSETS_BLOGS_ROUTES": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/blogs/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?",
   "ASSETS_CUSTOM": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/custom",
   "ASSETS_CUSTOM_DASHBOARD": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/custom/:id/page/:touchpoint/:title?",
   "ASSETS_DOCUMENTS_AND_MEDIA": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/documents-and-media",
@@ -17,6 +17,8 @@ Object {
   "ASSETS_FORMS_KNOWN_INDIVIDUALS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/forms/:assetId/known-individuals/:touchpoint/:title?",
   "ASSETS_FORMS_OVERVIEW": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/forms/:assetId/page/:touchpoint/:title?",
   "ASSETS_FORMS_ROUTES": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/forms/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?",
+  "ASSETS_OBJECT_ENTRY": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/object-entry",
+  "ASSETS_OBJECT_ENTRY_OVERVIEW": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/object-entry/:assetId/page/:touchpoint/:title?",
   "ASSETS_WEB_CONTENT": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/web-content",
   "ASSETS_WEB_CONTENT_KNOWN_INDIVIDUALS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/web-content/:assetId/known-individuals/:touchpoint/:title?",
   "ASSETS_WEB_CONTENT_OVERVIEW": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/assets/web-content/:assetId/page/:touchpoint/:title?",

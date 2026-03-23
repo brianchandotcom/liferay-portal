@@ -162,22 +162,28 @@ test('can create an object custom view using object relationship entry', async (
 
 	await page.getByRole('link', {name: objectViewName}).click();
 
-	editObjectViewPage.createFilter(
+	await editObjectViewPage.createFilter(
 		objectRelationshipLabel,
 		'Includes',
 		`${objectEntryResponse.id}`
 	);
 
 	await expect(
-		editObjectViewPage.sidePanel.getByText(`${objectRelationshipLabel}`)
+		editObjectViewPage.sidePanel
+			.locator('.lfr-object__object-builder-list-item-first-column')
+			.getByText(`${objectRelationshipLabel}`)
 	).toBeVisible();
 
 	await expect(
-		editObjectViewPage.sidePanel.getByText('Relationship', {exact: true})
+		editObjectViewPage.sidePanel
+			.locator('.lfr-object__object-builder-list-item-second-column')
+			.getByText('Relationship', {exact: true})
 	).toBeVisible();
 
 	await expect(
-		editObjectViewPage.sidePanel.getByText(`${objectEntryResponse.id}`)
+		editObjectViewPage.sidePanel
+			.locator('.lfr-object__object-builder-list-item-third-column')
+			.getByText(`${objectEntryResponse.id}`)
 	).toBeVisible();
 });
 
@@ -388,9 +394,19 @@ test('assert that the user is able to use the ERC field in Sort, on the Custom V
 
 	await viewObjectEntriesPage.goto(objectDefinition.className);
 
-	await expect(page.getByRole('cell').nth(2)).toHaveText(entry1);
+	await expect(page.locator('.cell-externalReferenceCode').nth(1)).toHaveText(
+		entry1
+	);
+	await expect(page.locator('.cell-externalReferenceCode').nth(2)).toHaveText(
+		entry2
+	);
 
 	await page.getByTitle('Sortable Column').dblclick();
 
-	await expect(page.getByRole('cell').nth(2)).toHaveText(entry2);
+	await expect(page.locator('.cell-externalReferenceCode').nth(1)).toHaveText(
+		entry2
+	);
+	await expect(page.locator('.cell-externalReferenceCode').nth(2)).toHaveText(
+		entry1
+	);
 });

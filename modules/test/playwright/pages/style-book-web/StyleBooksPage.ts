@@ -196,7 +196,7 @@ export class StyleBooksPage {
 			.locator('.style-book-editor__sidebar-content .form-control-select')
 			.click();
 
-		await this.page.getByText(category).click();
+		await this.page.getByRole('menuitem', {name: category}).click();
 	}
 
 	async updateTokenInput(label: string, value: string, section?: string) {
@@ -226,11 +226,9 @@ export class StyleBooksPage {
 			? this.page.locator('.panel').filter({hasText: section})
 			: this.page;
 
-		const labelLocator = '[aria-label="' + label + '"]';
-
 		const colorInput = parentElement
-			.locator(labelLocator)
-			.locator('.layout__color-picker__input');
+			.getByLabel(label, {exact: true})
+			.getByLabel('Color selection is');
 
 		await fillAndClickOutside(this.page, colorInput, colorHEX);
 	}

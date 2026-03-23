@@ -106,17 +106,17 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputFieldId": "ObjectField_ticketsIDs",
+										"inputFieldId": "ObjectField_ticketIds",
 										"inputHelpText": {
-											"en_US": "Provide the Ticket IDs to be prioritized.",
+											"en_US": "Provide the Ticket Ids to be prioritized.",
 											"es_ES": "Proporciona los identificadores de los tickets que quieras priorizar",
 											"ja_JP": "優先順位をつけるチケットIDを指定する",
-											"pt_BR": "Informe os IDs dos tickets a serem priorizados"
+											"pt_BR": "Informe os Ids dos tickets a serem priorizados"
 										},
 										"inputLabel": {
 											"es_ES": "Identificador del ticket",
-											"ja_JP": "チケットID",
-											"pt_BR": "ID do ticket"
+											"ja_JP": "チケットId",
+											"pt_BR": "Id do ticket"
 										},
 										"inputShowHelpText": true,
 										"placeholder": "",

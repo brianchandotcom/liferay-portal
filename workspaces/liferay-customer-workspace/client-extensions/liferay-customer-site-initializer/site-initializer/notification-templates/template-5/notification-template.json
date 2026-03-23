@@ -18,7 +18,7 @@
 		}
 	],
 	"subject": {
-		"en_US": "Support Ticket Escalation [%SUPPORTTICKETESCALATION_TICKETSIDS%]"
+		"en_US": "Support Ticket Escalation [%SUPPORTTICKETESCALATION_TICKETIDS%]"
 	},
 	"type": "email"
 }

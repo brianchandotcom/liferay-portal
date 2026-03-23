@@ -165,7 +165,7 @@ test(
 		await test.step('Click in the "Toggle editor ReadOnly mode" disables the editor: toolbar and content', async () => {
 			await toggleDisableEditorButton.click();
 
-			await page.waitForSelector('.lfr-ck-disabled');
+			await classicPage.toolbar.container.waitFor();
 
 			await expect(imageButton).toBeDisabled();
 			await expect(videoButton).toBeDisabled();

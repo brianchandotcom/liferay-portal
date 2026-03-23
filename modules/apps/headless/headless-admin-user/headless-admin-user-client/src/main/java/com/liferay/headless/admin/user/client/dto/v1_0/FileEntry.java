@@ -103,6 +103,27 @@ public class FileEntry implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getPreviewURL() {
+		return previewURL;
+	}
+
+	public void setPreviewURL(String previewURL) {
+		this.previewURL = previewURL;
+	}
+
+	public void setPreviewURL(
+		UnsafeSupplier<String, Exception> previewURLUnsafeSupplier) {
+
+		try {
+			previewURL = previewURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String previewURL;
+
 	public String getThumbnailURL() {
 		return thumbnailURL;
 	}

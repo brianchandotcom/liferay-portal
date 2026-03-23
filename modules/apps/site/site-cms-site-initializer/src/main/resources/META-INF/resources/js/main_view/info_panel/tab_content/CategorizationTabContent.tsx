@@ -39,6 +39,8 @@ const CategorizationTabContent = () => {
 
 			delete (data as Partial<IAssetObjectEntry>).actions;
 
+			delete (data as Partial<IAssetObjectEntry>).file;
+
 			setCurrentAsset(data);
 		}
 		catch (error) {

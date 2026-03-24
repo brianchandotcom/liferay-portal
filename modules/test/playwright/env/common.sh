@@ -300,7 +300,7 @@ function get_app_server_dir {
 }
 
 function get_client_extension_dir {
-	local clients_extension_name=${1}
+	local client_extension_name=${1}
 
 	local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces -type d | grep "${client_extension_name}$" | grep -v .releng | grep -v .npmscripts | grep -v dist | grep -v node_modules)
 
@@ -330,7 +330,7 @@ function get_client_extension_dirs {
 	then
 		for client_extension_name in $(cat ${client_extensions_list_file})
 		do
-			client_extension_dirs+=($(get_client_extension_dir))
+			client_extension_dirs+=($(get_client_extension_dir ${client_extension_name}))
 		done
 	fi
 

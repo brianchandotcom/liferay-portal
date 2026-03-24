@@ -195,7 +195,7 @@
 					"#cdata-value": [
 						"[",
 						"    {",
-						"        \"mcpServerExternalReferenceCode\": \"L_LIFERAY_MCP_SERVER\"",
+						"        \"mcpServerExternalReferenceCode\": \"L_LIFERAY_AI_HUB_MCP_SERVER\"",
 						"    }",
 						"]"
 					],

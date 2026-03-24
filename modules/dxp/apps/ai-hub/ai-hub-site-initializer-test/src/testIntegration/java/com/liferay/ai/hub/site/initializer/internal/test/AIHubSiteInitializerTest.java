@@ -93,7 +93,7 @@ public class AIHubSiteInitializerTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_MCP_SERVER", TestPropsValues.getCompanyId());
+					"L_AI_HUB_MCP_SERVER", TestPropsValues.getCompanyId());
 
 		Assert.assertTrue(objectDefinition.isApproved());
 		Assert.assertTrue(objectDefinition.isSystem());

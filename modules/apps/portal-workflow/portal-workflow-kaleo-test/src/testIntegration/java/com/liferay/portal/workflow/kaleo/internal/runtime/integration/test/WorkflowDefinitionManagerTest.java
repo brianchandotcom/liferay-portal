@@ -170,7 +170,8 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 					"tools",
 					JSONUtil.put(
 						JSONUtil.put(
-							"externalReferenceCode", "L_LIFERAY_MCP_SERVER")
+							"externalReferenceCode",
+							"L_LIFERAY_AI_HUB_MCP_SERVER")
 					).toString()),
 				_createWorkflowNodeSetting("userMessage", "User Message")),
 			workflowNode.getWorkflowNodeSettings());
@@ -277,7 +278,8 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 					"tools",
 					JSONUtil.put(
 						JSONUtil.put(
-							"externalReferenceCode", "L_LIFERAY_MCP_SERVER")
+							"externalReferenceCode",
+							"L_LIFERAY_AI_HUB_MCP_SERVER")
 					).toString()),
 				_createWorkflowNodeSetting("userMessage", "User Message")),
 			workflowNode.getWorkflowNodeSettings());

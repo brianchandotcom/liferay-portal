@@ -50,7 +50,7 @@ const ToolsSummary = () => {
 					className="mt-2"
 					component="textarea"
 					onChange={onToolsChanges()}
-					placeholder='[{"externalReferenceCode":"L_LIFERAY_MCP_SERVER"}]'
+					placeholder='[{"externalReferenceCode":"L_LIFERAY_AI_HUB_MCP_SERVER"}]'
 					type="text"
 					value={tools}
 				/>

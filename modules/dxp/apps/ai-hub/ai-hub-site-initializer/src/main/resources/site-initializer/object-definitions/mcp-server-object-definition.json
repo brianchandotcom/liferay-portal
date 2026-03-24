@@ -7,13 +7,13 @@
 	"enableLocalization": true,
 	"enableObjectEntryDraft": false,
 	"enableObjectEntryHistory": false,
-	"externalReferenceCode": "L_MCP_SERVER",
+	"externalReferenceCode": "L_AI_HUB_MCP_SERVER",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "MCP Server"
+		"en_US": "AI Hub MCP Server"
 	},
 	"modifiable": true,
-	"name": "MCPServer",
+	"name": "AIHubMCPServer",
 	"objectActions": [
 	],
 	"objectDefinitionSettings": [
@@ -124,17 +124,17 @@
 			"name": {
 				"en_US": "Main"
 			},
-			"objectDefinitionExternalReferenceCode": "L_MCP_SERVER",
+			"objectDefinitionExternalReferenceCode": "L_AI_HUB_MCP_SERVER",
 			"objectLayoutTabs": [
 				{
 					"name": {
-						"en_US": "MCP Server"
+						"en_US": "AI Hub MCP Server"
 					},
 					"objectLayoutBoxes": [
 						{
 							"collapsable": false,
 							"name": {
-								"en_US": "MCP Server"
+								"en_US": "AI Hub MCP Server"
 							},
 							"objectLayoutRows": [
 								{
@@ -196,7 +196,7 @@
 	"panelCategoryKey": "site_administration.configuration",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "MCP Servers"
+		"en_US": "AI Hub MCP Servers"
 	},
 	"portlet": true,
 	"scope": "site",

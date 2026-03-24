@@ -145,7 +145,7 @@ public class MCPToolProviderUtil {
 				companyId,
 				ObjectDefinitionLocalServiceUtil.
 					fetchObjectDefinitionByExternalReferenceCode(
-						"L_MCP_SERVER", companyId),
+						"L_AI_HUB_MCP_SERVER", companyId),
 				groupKey, null,
 				new DefaultDTOConverterContext(
 					false, Map.of(), dtoConverterRegistry, null, locale, null,

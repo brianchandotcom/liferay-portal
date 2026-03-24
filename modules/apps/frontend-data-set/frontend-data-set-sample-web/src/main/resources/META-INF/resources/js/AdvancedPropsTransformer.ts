@@ -112,7 +112,7 @@ export default function propsTransformer({
 			...props,
 			schema: {
 				...listSchema,
-				titleRenderer: 'customListTitleRenderer',
+				titleRendererName: 'customListTitleRenderer',
 			},
 		};
 

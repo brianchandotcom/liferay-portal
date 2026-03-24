@@ -62,13 +62,13 @@ const Title = ({
 	item,
 	itemId,
 	title,
-	titleRenderer,
+	titleRendererName,
 }: {
 	actions: IItemsActions[] | undefined;
 	item: any;
 	itemId: any;
 	title: string;
-	titleRenderer: string;
+	titleRendererName: string;
 }) => {
 	const {customRenderers, loadData, onItemsChange, openSidePanel} =
 		useContext(FrontendDataSetContext);
@@ -80,7 +80,7 @@ const Title = ({
 
 	if (title) {
 		const TitleRendererComponent = getListSectionRenderer({
-			rendererName: titleRenderer,
+			rendererName: titleRendererName,
 			customRenderers,
 		});
 
@@ -145,7 +145,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 			sticker,
 			symbol,
 			title,
-			titleRenderer,
+			titleRendererName,
 			tooltip,
 		} = schema;
 
@@ -239,7 +239,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 						item={item}
 						itemId={itemId}
 						title={title}
-						titleRenderer={titleRenderer}
+						titleRendererName={titleRendererName}
 					/>
 
 					{description && (

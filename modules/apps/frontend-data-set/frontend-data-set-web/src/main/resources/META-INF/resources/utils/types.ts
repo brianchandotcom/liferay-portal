@@ -262,7 +262,7 @@ export interface IListSchema {
 	sticker?: string;
 	symbol?: string;
 	title: string;
-	titleRenderer: string;
+	titleRendererName: string;
 	tooltip?: string;
 }
 

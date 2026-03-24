@@ -108,7 +108,7 @@ export class JSONWebServicesLayoutApiHelper {
 			);
 
 			await page.getByLabel(name, {exact: true}).click();
-			await page.getByLabel('Publish').click();
+			await page.getByLabel('Publish', {exact: true}).click();
 
 			expect(page.getByRole('heading', {name: 'Pages'})).toBeAttached();
 		}

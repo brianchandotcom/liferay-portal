@@ -1,6 +1,7 @@
 {
 	"active": true,
 	"externalReferenceCode": "C_SUPPORT_TICKET_ESCALATION",
+	"friendlyURLSeparator": "cpste",
 	"label": {
 		"en_US": "Support Ticket Escalation"
 	},
@@ -61,6 +62,7 @@
 			"type": "String"
 		}
 	],
+	"panelAppOrder": 310,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Support Ticket Escalations"

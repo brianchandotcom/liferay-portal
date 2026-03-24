@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_liferayExperienceCloudEnvironment_accountEntryId",
 	"externalReferenceCode": "C_LXC_ENVIRONMENT",
+	"friendlyURLSeparator": "cple",
 	"label": {
 		"en_US": "Liferay Experience Cloud Environment"
 	},
@@ -74,6 +75,7 @@
 			"required": true
 		}
 	],
+	"panelAppOrder": 270,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Liferay Experience Cloud Environments"

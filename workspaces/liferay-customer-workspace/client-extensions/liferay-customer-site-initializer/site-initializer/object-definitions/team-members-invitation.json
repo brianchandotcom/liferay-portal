@@ -1,5 +1,6 @@
 {
 	"externalReferenceCode": "C_TEAM_MEMBERS_INVITATION",
+	"friendlyURLSeparator": "cptmi",
 	"label": {
 		"en_US": "Team Members Invitation"
 	},
@@ -50,6 +51,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 320,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Team Members Invitation"

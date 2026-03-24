@@ -3,6 +3,7 @@
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToTicketAttachment_accountEntryId",
 	"enableObjectEntryDraft": true,
 	"externalReferenceCode": "C_TICKET_ATTACHMENT",
+	"friendlyURLSeparator": "cpta",
 	"label": {
 		"en_US": "Ticket Attachment"
 	},
@@ -129,6 +130,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 330,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Ticket Attachments"

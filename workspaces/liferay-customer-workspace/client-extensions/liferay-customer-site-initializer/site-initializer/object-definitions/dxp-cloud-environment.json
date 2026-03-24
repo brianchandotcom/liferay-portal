@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToDXPCloudEnvironment_accountEntryId",
 	"externalReferenceCode": "C_DXP_CLOUD_ENVIRONMENT",
+	"friendlyURLSeparator": "cpdce",
 	"label": {
 		"en_US": "DXP Cloud Environment"
 	},
@@ -52,6 +53,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 240,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "DXP Cloud Environments"

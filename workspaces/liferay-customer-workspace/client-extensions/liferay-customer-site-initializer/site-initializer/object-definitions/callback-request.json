@@ -1,5 +1,6 @@
 {
 	"externalReferenceCode": "C_CALLBACK_REQUEST",
+	"friendlyURLSeparator": "cpcr",
 	"label": {
 		"en_US": "Callback Request"
 	},
@@ -82,6 +83,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 210,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Callback Requests"

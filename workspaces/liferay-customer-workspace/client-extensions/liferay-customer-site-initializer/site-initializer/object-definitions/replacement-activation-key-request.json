@@ -1,5 +1,6 @@
 {
 	"externalReferenceCode": "C_REPLACEMENT_ACTIVATION_KEY_REQUEST",
+	"friendlyURLSeparator": "cprakr",
 	"label": {
 		"en_US": "Replacement Activation Key Request"
 	},
@@ -128,6 +129,7 @@
 			"type": "String"
 		}
 	],
+	"panelAppOrder": 300,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Replacement Activation Key Requests"

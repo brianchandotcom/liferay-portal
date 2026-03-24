@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountSubscriptionTerm_accountEntryId",
 	"externalReferenceCode": "C_ACCNT_SUB_TERM",
+	"friendlyURLSeparator": "cpast",
 	"label": {
 		"en_US": "Account Subscription Term"
 	},
@@ -107,6 +108,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 130,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Account Subscription Terms"

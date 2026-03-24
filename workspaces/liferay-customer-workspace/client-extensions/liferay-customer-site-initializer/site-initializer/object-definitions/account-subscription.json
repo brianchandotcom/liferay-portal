@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountSubscription_accountEntryId",
 	"externalReferenceCode": "C_ACCNT_SUB",
+	"friendlyURLSeparator": "cpasn",
 	"label": {
 		"en_US": "Account Subscription"
 	},
@@ -120,6 +121,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 110,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Account Subscriptions"

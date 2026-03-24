@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAdminDXPCloud_accountEntryId",
 	"externalReferenceCode": "C_ADMIN_DXP_CLOUD",
+	"friendlyURLSeparator": "cpadc",
 	"label": {
 		"en_US": "Admin DXP Cloud"
 	},
@@ -63,6 +64,7 @@
 			"required": true
 		}
 	],
+	"panelAppOrder": 140,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Admins DXP Cloud"

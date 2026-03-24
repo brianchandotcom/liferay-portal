@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToCloudNativeEnvironment_accountEntryId",
 	"externalReferenceCode": "C_CN_ENVIRONMENT",
+	"friendlyURLSeparator": "cpcne",
 	"label": {
 		"en_US": "Cloud Native Environment"
 	},
@@ -52,6 +53,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 220,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Cloud Native Environments"

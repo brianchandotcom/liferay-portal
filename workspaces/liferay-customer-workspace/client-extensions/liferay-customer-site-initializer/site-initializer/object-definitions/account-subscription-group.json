@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountSubscriptionGroup_accountEntryId",
 	"externalReferenceCode": "C_ACCNT_SUB_GROUP",
+	"friendlyURLSeparator": "cpasg",
 	"label": {
 		"en_US": "Account Subscription Group"
 	},
@@ -96,6 +97,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 120,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Account Subscription Groups"

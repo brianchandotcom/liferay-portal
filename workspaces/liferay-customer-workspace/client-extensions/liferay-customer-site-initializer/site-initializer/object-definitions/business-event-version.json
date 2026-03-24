@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToBusinessEventVersions_accountEntryId",
 	"externalReferenceCode": "C_BUSINESS_EVENT_VERSION",
+	"friendlyURLSeparator": "cpbev",
 	"label": {
 		"en_US": "Business Event Version"
 	},
@@ -50,6 +51,7 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "C_BUSINESS_EVENTS_FOLDER",
+	"panelAppOrder": 200,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Business Event Versions"

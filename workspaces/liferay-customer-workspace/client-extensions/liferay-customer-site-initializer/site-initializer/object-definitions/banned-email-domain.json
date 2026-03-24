@@ -1,5 +1,6 @@
 {
 	"externalReferenceCode": "C_BANNED_EMAIL_DOMAIN",
+	"friendlyURLSeparator": "cpbed",
 	"label": {
 		"en_US": "Banned Email Domain"
 	},
@@ -17,6 +18,7 @@
 			"required": true
 		}
 	],
+	"panelAppOrder": 180,
 	"pluralLabel": {
 		"en_US": "Banned Email Domains"
 	},

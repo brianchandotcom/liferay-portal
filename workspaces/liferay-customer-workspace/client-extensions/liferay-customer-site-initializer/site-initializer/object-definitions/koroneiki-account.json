@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToKoroneikiAccount_accountEntryId",
 	"externalReferenceCode": "C_KORONEIKI_ACCOUNT",
+	"friendlyURLSeparator": "cpka",
 	"label": {
 		"en_US": "Koroneiki Account"
 	},
@@ -371,6 +372,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 260,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Koroneiki Accounts"

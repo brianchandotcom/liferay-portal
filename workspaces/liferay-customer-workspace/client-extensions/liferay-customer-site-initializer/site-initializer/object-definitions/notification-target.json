@@ -1,5 +1,6 @@
 {
 	"externalReferenceCode": "C_NOTIFICATION_TARGET",
+	"friendlyURLSeparator": "cpnt",
 	"label": {
 		"en_US": "Notification Target"
 	},
@@ -37,6 +38,7 @@
 			"required": true
 		}
 	],
+	"panelAppOrder": 290,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Notification Targets"

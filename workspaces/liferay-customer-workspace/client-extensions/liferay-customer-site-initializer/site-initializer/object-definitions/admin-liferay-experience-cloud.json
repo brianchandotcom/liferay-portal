@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAdminLiferayExperienceCloud_accountEntryId",
 	"externalReferenceCode": "C_ADMIN_LXC",
+	"friendlyURLSeparator": "cpalec",
 	"label": {
 		"en_US": "Admin Liferay Experience Cloud"
 	},
@@ -52,6 +53,7 @@
 			"required": true
 		}
 	],
+	"panelAppOrder": 150,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Admins Liferay Experience Cloud"

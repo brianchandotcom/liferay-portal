@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAnalyticsCloudWorkspace_accountEntryId",
 	"externalReferenceCode": "C_AC_WORKSPACE",
+	"friendlyURLSeparator": "cpacw",
 	"label": {
 		"en_US": "Analytics Cloud Workspace"
 	},
@@ -96,6 +97,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 170,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Analytics Cloud Workspaces"

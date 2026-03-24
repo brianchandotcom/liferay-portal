@@ -1,5 +1,6 @@
 {
 	"externalReferenceCode": "C_DXPC_DATA_CENTER_REGION",
+	"friendlyURLSeparator": "cpddcr",
 	"label": {
 		"en_US": "DXPC Data Center Region"
 	},
@@ -28,6 +29,7 @@
 			"required": true
 		}
 	],
+	"panelAppOrder": 230,
 	"pluralLabel": {
 		"en_US": "DXPC Data Center Regions"
 	},

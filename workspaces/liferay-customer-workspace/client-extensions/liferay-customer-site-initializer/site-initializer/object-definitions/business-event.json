@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToBusinessEvents_accountEntryId",
 	"externalReferenceCode": "C_BUSINESS_EVENT",
+	"friendlyURLSeparator": "cpbet",
 	"label": {
 		"en_US": "Business Event"
 	},
@@ -280,6 +281,7 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "C_BUSINESS_EVENTS_FOLDER",
+	"panelAppOrder": 190,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Business Events"

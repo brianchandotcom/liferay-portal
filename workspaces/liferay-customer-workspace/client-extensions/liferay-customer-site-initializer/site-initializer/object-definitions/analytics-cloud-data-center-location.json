@@ -1,5 +1,6 @@
 {
 	"externalReferenceCode": "C_AC_DATA_CENTER_LOCATION",
+	"friendlyURLSeparator": "cpacdcl",
 	"label": {
 		"en_US": "Analytics Cloud Data Center Location"
 	},
@@ -28,6 +29,7 @@
 			"required": true
 		}
 	],
+	"panelAppOrder": 160,
 	"pluralLabel": {
 		"en_US": "Analytics Cloud Data Center Locations"
 	},

@@ -1,5 +1,6 @@
 {
 	"externalReferenceCode": "C_NOTIFICATION_SUBSCRIPTION",
+	"friendlyURLSeparator": "cpns",
 	"label": {
 		"en_US": "Notification Subscription"
 	},
@@ -62,6 +63,7 @@
 			"required": false
 		}
 	],
+	"panelAppOrder": 280,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Notification Subscriptions"

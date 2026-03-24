@@ -2,6 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountFlag_accountEntryId",
 	"externalReferenceCode": "C_ACCNT_FLAG",
+	"friendlyURLSeparator": "cpaf",
 	"label": {
 		"en_US": "Account Flag"
 	},
@@ -41,6 +42,7 @@
 			"required": true
 		}
 	],
+	"panelAppOrder": 100,
 	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Account Flags"

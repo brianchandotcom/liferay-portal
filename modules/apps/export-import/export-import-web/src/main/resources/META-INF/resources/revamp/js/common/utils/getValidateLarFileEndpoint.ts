@@ -3,13 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ApiHelper from '../../common/services/ApiHelper';
+import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 import {ENDPOINTS} from '../constants/endpoints';
 
-const getEndpointByScope = (
-	isCompanyGroup: boolean,
-	groupId?: number
-) => {
+const getEndpointByScope = (isCompanyGroup: boolean, groupId?: number) => {
 	return isCompanyGroup
 		? ENDPOINTS.VALIDATE_IMPORT_FILE
 		: ENDPOINTS.VALIDATE_SITE_IMPORT_FILE(groupId ?? 0);
@@ -20,12 +17,20 @@ export async function getValidateLarFileEndpoint({
 	groupId,
 	isCompanyGroup,
 	onProgress,
+	signal,
 }: {
 	file: File;
 	groupId?: number;
 	isCompanyGroup: boolean;
 	onProgress: (progressEvent: number) => void;
-}) {
+	signal?: AbortSignal;
+}): Promise<
+	RequestResult<{
+		errorMessages: string[];
+		success: boolean;
+		tempFilePath: string;
+	}>
+> {
 	const formData = new FormData();
 
 	formData.append('file', file);
@@ -39,6 +44,7 @@ export async function getValidateLarFileEndpoint({
 		formData,
 		(progressEvent) => {
 			onProgress(progressEvent);
-		}
+		},
+		signal
 	);
 }

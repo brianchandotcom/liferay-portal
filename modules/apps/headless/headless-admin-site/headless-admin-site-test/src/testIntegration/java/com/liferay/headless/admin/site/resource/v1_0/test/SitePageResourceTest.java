@@ -395,20 +395,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertPostSiteSitePagePageSpecificationProblemException(
 			"Page specifications cannot be applied to non-content pages",
 			LayoutTestUtil.addTypePortletLayout(testGroup));
+
 		_assertPostSiteSitePagePageSpecificationProblemException(
 			"This page type cannot be modified through this endpoint",
 			LayoutPageTemplateEntryTestUtil.
-				getBasicLayoutPageTemplateEntryLayout(serviceContext));
-		_assertPostSiteSitePagePageSpecificationProblemException(
-			"This page type cannot be modified through this endpoint",
+				getBasicLayoutPageTemplateEntryLayout(serviceContext),
 			LayoutPageTemplateEntryTestUtil.
-				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext));
-		_assertPostSiteSitePagePageSpecificationProblemException(
-			"This page type cannot be modified through this endpoint",
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
 			LayoutPageTemplateEntryTestUtil.
-				getMasterLayoutPageTemplateEntryLayout(serviceContext));
-		_assertPostSiteSitePagePageSpecificationProblemException(
-			"This page type cannot be modified through this endpoint",
+				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
 				serviceContext));
 	}
@@ -1069,6 +1064,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
 					}
 				}));
+	}
+
+	private void _assertPostSiteSitePagePageSpecificationProblemException(
+			String expectedTitle, Layout... layouts)
+		throws Exception {
+
+		for (Layout layout : layouts) {
+			_assertPostSiteSitePagePageSpecificationProblemException(
+				expectedTitle, layout);
+		}
 	}
 
 	private void _assertProblemException(

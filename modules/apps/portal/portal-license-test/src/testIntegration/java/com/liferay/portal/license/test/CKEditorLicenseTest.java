@@ -7,6 +7,7 @@ package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
@@ -179,6 +180,53 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
 		_assertCKEditorConfiguration(true, "custom.key");
+	}
+
+	@Test
+	public void testFreeTierLicensePrivateKeyInDatabase() throws Exception {
+		String privateLicenseKey = _getCKEditorPrivateLicenseKey();
+
+		_assertCKEditorConfiguration(false, privateLicenseKey);
+
+		deployFreeTierPortalLicense(Time.HOUR);
+
+		ConfigurationTestUtil.updateConfiguration(
+			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
+
+		_assertCKEditorConfiguration(false, privateLicenseKey);
+
+		ConfigurationTestUtil.updateConfiguration(
+			_CKEDITOR_CONFIG_ID,
+			() -> {
+				FileUtil.write(
+					_CKEDITOR_CONFIG_FILE, "licenseKey=\"custom.key\"");
+
+				assertPortalLicenseRegistered();
+			});
+
+		_assertCKEditorConfiguration(true, "custom.key");
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"update Configuration_ set dictionary = ? where " +
+					"configurationId = ?")) {
+
+			preparedStatement.setString(
+				1,
+				StringUtil.replace(
+					_readConfigurationFromDatabase(), "custom.key",
+					privateLicenseKey));
+			preparedStatement.setString(2, _CKEDITOR_CONFIG_ID);
+
+			preparedStatement.executeUpdate();
+		}
+
+		resetCheckInterval();
+
+		ConfigurationTestUtil.updateConfiguration(
+			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
+
+		_assertCKEditorConfiguration(false, privateLicenseKey);
 	}
 
 	private void _assertCKEditorConfiguration(

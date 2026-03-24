@@ -778,43 +778,20 @@ public class SitePageResourceImpl
 			return null;
 		}
 
-		if ((sitePage.getType() == SitePage.Type.CONTENT_PAGE) &&
-			!(pageSettings instanceof ContentPageSettings)) {
+		SitePage.Type type = sitePage.getType();
 
-			throw new IllegalArgumentException(
-				"The page type does not match the page settings type");
-		}
-
-		if ((sitePage.getType() == SitePage.Type.EMBEDDED_PAGE) &&
-			!(pageSettings instanceof EmbeddedPageSettings)) {
-
-			throw new IllegalArgumentException(
-				"The page type does not match the page settings type");
-		}
-
-		if ((sitePage.getType() == SitePage.Type.LINK_TO_PAGE_PAGE) &&
-			!(pageSettings instanceof LinkToPagePageSettings)) {
-
-			throw new IllegalArgumentException(
-				"The page type does not match the page settings type");
-		}
-
-		if ((sitePage.getType() == SitePage.Type.LINK_TO_URL_PAGE) &&
-			!(pageSettings instanceof LinkToURLPageSettings)) {
-
-			throw new IllegalArgumentException(
-				"The page type does not match the page settings type");
-		}
-
-		if ((sitePage.getType() == SitePage.Type.PAGE_SET_PAGE) &&
-			!(pageSettings instanceof PageSetPageSettings)) {
-
-			throw new IllegalArgumentException(
-				"The page type does not match the page settings type");
-		}
-
-		if ((sitePage.getType() == SitePage.Type.WIDGET_PAGE) &&
-			!(pageSettings instanceof WidgetPageSettings)) {
+		if (((type == SitePage.Type.CONTENT_PAGE) &&
+			 !(pageSettings instanceof ContentPageSettings)) ||
+			((type == SitePage.Type.EMBEDDED_PAGE) &&
+			 !(pageSettings instanceof EmbeddedPageSettings)) ||
+			((type == SitePage.Type.LINK_TO_PAGE_PAGE) &&
+			 !(pageSettings instanceof LinkToPagePageSettings)) ||
+			((type == SitePage.Type.LINK_TO_URL_PAGE) &&
+			 !(pageSettings instanceof LinkToURLPageSettings)) ||
+			((type == SitePage.Type.PAGE_SET_PAGE) &&
+			 !(pageSettings instanceof PageSetPageSettings)) ||
+			((type == SitePage.Type.WIDGET_PAGE) &&
+			 !(pageSettings instanceof WidgetPageSettings))) {
 
 			throw new IllegalArgumentException(
 				"The page type does not match the page settings type");

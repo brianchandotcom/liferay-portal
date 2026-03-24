@@ -1,2 +1,2 @@
 skip-check:
-  - CKV_SECRET_6
+    -   CKV_SECRET_6

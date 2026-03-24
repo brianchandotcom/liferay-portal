@@ -1,34 +1,35 @@
 definition {
 
 	@summary = "Default summary"
-	macro expandCategory(category = null) {
-		if (IsElementPresent(key_category = ${category}, locator1 = "ApplicationsMenu#COLLAPSED_CATEGORY")) {
-			Click(
-				key_category = ${category},
-				locator1 = "ApplicationsMenu#COLLAPSED_CATEGORY");
+	macro assertMenuButtonIsNotPresent() {
+		AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
+	}
 
-			WaitForElementNotPresent(
-				key_category = ${category},
-				locator1 = "ApplicationsMenu#COLLAPSED_CATEGORY");
-		}
+	@summary = "Default summary"
+	macro gotoLocalizedSite(site = null) {
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		Click(
+			key_site = ${site},
+			locator1 = "ApplicationsMenu#SITE_LINK");
 	}
 
 	@summary = "Default summary"
 	macro gotoPanel(panel = null) {
-		ApplicationsMenuHelper.openApplicationsMenu();
+		var key_panel = ${panel};
 
-		Click(
-			key_panel = ${panel},
-			locator1 = "ApplicationsMenu#PANEL");
+		Click(locator1 = "ApplicationsMenu#PANEL");
 
-		WaitForElementPresent(locator1 = "ApplicationsMenu#SIDE_NAVIGATION");
+		AssertElementPresent(locator1 = "ApplicationsMenu#ACTIVE_PANEL");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	@summary = "Default summary"
 	macro gotoPortlet(portlet = null, panel = null, category = null) {
-		ApplicationsMenu.gotoPanel(panel = ${panel});
+		ApplicationsMenuHelper.openApplicationsMenu();
 
-		ApplicationsMenu.expandCategory(category = ${category});
+		ApplicationsMenu.gotoPanel(panel = ${panel});
 
 		ApplicationsMenuHelper.gotoPortlet(
 			category = ${category},
@@ -39,12 +40,7 @@ definition {
 	macro gotoSite(site = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		if (IsElementPresent(key_site = ${site}, locator1 = "ApplicationsMenu#SITE_LINK")) {
-			Click(
-				key_site = ${site},
-				locator1 = "ApplicationsMenu#SITE_LINK");
-		}
-		else if (IsElementPresent(locator1 = "ApplicationsMenu#VIEW_ALL_LINK")) {
+		if (IsElementPresent(locator1 = "ApplicationsMenu#VIEW_ALL_LINK")) {
 			Click(locator1 = "ApplicationsMenu#VIEW_ALL_LINK");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -54,9 +50,35 @@ definition {
 			SiteSelector.selectSite(site = ${site});
 		}
 		else {
-			ApplicationsMenuHelper.closeApplicationsMenu();
+			Click(
+				key_site = ${site},
+				locator1 = "ApplicationsMenu#SITE_LINK");
+		}
+	}
 
-			Navigator.openSiteURL(siteName = ${site});
+	@summary = "Default summary"
+	macro gotoSiteViaViewAll(depotName = null, site = null) {
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ApplicationsMenuHelper.openWorkspace();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(depotName)) {
+			Navigator.gotoNavItem(navItem = "Asset Libraries");
+
+			LexiconCard.clickCard(card = ${depotName});
+		}
+		else {
+			Navigator.gotoNavItem(navItem = "All Sites");
+
+			SiteSelector.selectSite(site = ${site});
+
+			ProductMenuHelper.openProductMenu();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+				value1 = ${site});
 		}
 	}
 

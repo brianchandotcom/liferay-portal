@@ -16,4 +16,5 @@ import org.osgi.service.component.annotations.Component;
 public class CookiesConsentPreferenceUADExporter
 	extends BaseCookiesConsentPreferenceUADExporter {
 }
+
 // LIFERAY-SERVICE-BUILDER-HASH:-767519162

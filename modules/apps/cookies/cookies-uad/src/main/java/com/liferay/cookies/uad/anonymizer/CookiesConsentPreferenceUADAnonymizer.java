@@ -16,4 +16,5 @@ import org.osgi.service.component.annotations.Component;
 public class CookiesConsentPreferenceUADAnonymizer
 	extends BaseCookiesConsentPreferenceUADAnonymizer {
 }
+
 // LIFERAY-SERVICE-BUILDER-HASH:-1939853248

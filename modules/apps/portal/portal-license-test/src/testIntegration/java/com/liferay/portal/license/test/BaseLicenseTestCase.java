@@ -606,4 +606,24 @@ public abstract class BaseLicenseTestCase {
 
 	}
 
+	private static class WrapperClassLoader extends ClassLoader {
+
+		public WrapperClassLoader(ClassLoader classLoader) {
+			_classLoader = classLoader;
+		}
+
+		@Override
+		public boolean equals(Object object) {
+			return _classLoader.equals(object);
+		}
+
+		@Override
+		public int hashCode() {
+			return _classLoader.hashCode();
+		}
+
+		private final ClassLoader _classLoader;
+
+	}
+
 }

@@ -38,6 +38,7 @@
 			"taxonomyCategoryProperties"?: Array<TaxonomyCategoryProperty>;
 			"taxonomyCategoryUsageCount"?: number;
 			"taxonomyVocabularyId"?: number;
+			"uuid"?: string;
 			"viewableBy"?: 'Anyone' | 'Members' | 'Owner';
 
 		static "discriminator": string | undefined = undefined;
@@ -156,6 +157,11 @@
 			baseName: "taxonomyVocabularyId",
 			name: "taxonomyVocabularyId",
 			type: "number",
+		},
+		{
+			baseName: "uuid",
+			name: "uuid",
+			type: "string",
 		},
 		{
 			baseName: "viewableBy",

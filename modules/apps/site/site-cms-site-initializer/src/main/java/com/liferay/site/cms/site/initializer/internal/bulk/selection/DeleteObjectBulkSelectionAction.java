@@ -12,7 +12,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -60,29 +60,28 @@ public class DeleteObjectBulkSelectionAction
 		else {
 			ObjectEntryFolder objectEntryFolder = (ObjectEntryFolder)object;
 
-			_deleteObjectEntryFolder(user.getUserId(), objectEntryFolder);
+			_deleteObjectEntryFolder(objectEntryFolder);
 		}
 	}
 
-	private void _deleteObjectEntryFolder(
-			long userId, ObjectEntryFolder objectEntryFolder)
+	private void _deleteObjectEntryFolder(ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectEntryFolder.getCompanyId(), "LPD-17564") &&
 			objectEntryFolder.isTrashable(_trashHelper)) {
 
-			_objectEntryFolderLocalService.moveObjectEntryFolderToTrash(
-				userId, objectEntryFolder, new ServiceContext());
+			_objectEntryFolderService.moveObjectEntryFolderToTrash(
+				objectEntryFolder, new ServiceContext());
 		}
 		else {
-			_objectEntryFolderLocalService.deleteObjectEntryFolder(
+			_objectEntryFolderService.deleteObjectEntryFolder(
 				objectEntryFolder.getObjectEntryFolderId());
 		}
 	}
 
 	@Reference
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+	private ObjectEntryFolderService _objectEntryFolderService;
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;

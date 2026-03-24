@@ -79,14 +79,14 @@ public class ViewSpaceSitesSummarySectionDisplayContextTest
 			_depotEntry.getCompanyId(),
 			DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		_user = UserTestUtil.addUser();
 
 		_userGroupRoleLocalService.addUserGroupRoles(
 			_user.getUserId(), _depotEntry.getGroupId(),
 			new long[] {role.getRoleId()});
-
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
 	}
 
 	@After
@@ -98,7 +98,7 @@ public class ViewSpaceSitesSummarySectionDisplayContextTest
 	public void testGetCreationMenu() throws Exception {
 		CreationMenu creationMenu = ReflectionTestUtil.invoke(
 			_getViewSpaceSitesSummarySectionDisplayContext(
-				_getMockHttpServletRequest(
+				_getHttpServletRequest(
 					_depotEntry, TestPropsValues.getUser())),
 			"getCreationMenu", new Class<?>[0]);
 
@@ -109,7 +109,7 @@ public class ViewSpaceSitesSummarySectionDisplayContextTest
 
 		creationMenu = ReflectionTestUtil.invoke(
 			_getViewSpaceSitesSummarySectionDisplayContext(
-				_getMockHttpServletRequest(_depotEntry, _user)),
+				_getHttpServletRequest(_depotEntry, _user)),
 			"getCreationMenu", new Class<?>[0]);
 
 		Assert.assertTrue(creationMenu.isEmpty());
@@ -120,7 +120,7 @@ public class ViewSpaceSitesSummarySectionDisplayContextTest
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			ReflectionTestUtil.invoke(
 				_getViewSpaceSitesSummarySectionDisplayContext(
-					_getMockHttpServletRequest(
+					_getHttpServletRequest(
 						_depotEntry, TestPropsValues.getUser())),
 				"getFDSActionDropdownItems", new Class<?>[0]);
 
@@ -131,7 +131,7 @@ public class ViewSpaceSitesSummarySectionDisplayContextTest
 
 		fdsActionDropdownItems = ReflectionTestUtil.invoke(
 			_getViewSpaceSitesSummarySectionDisplayContext(
-				_getMockHttpServletRequest(_depotEntry, _user)),
+				_getHttpServletRequest(_depotEntry, _user)),
 			"getFDSActionDropdownItems", new Class<?>[0]);
 
 		Assert.assertTrue(fdsActionDropdownItems.isEmpty());
@@ -147,7 +147,7 @@ public class ViewSpaceSitesSummarySectionDisplayContextTest
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 	}
 
-	private HttpServletRequest _getMockHttpServletRequest(
+	private HttpServletRequest _getHttpServletRequest(
 			DepotEntry depotEntry, User user)
 		throws Exception {
 

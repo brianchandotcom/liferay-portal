@@ -18,6 +18,7 @@ import com.liferay.customer.permission.BusinessEventPermission;
 import com.liferay.customer.service.GoogleCloudFunctionService;
 import com.liferay.customer.service.JiraService;
 import com.liferay.customer.service.KoroneikiService;
+import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.net.URL;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -177,6 +180,38 @@ public class AccountsRestController extends BaseRestController {
 		catch (Exception exception) {
 			_log.error(
 				"Unable to update JSM business events for " +
+					externalReferenceCode,
+				exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/{externalReferenceCode}/synchronize")
+	public ResponseEntity<String> postSynchronize(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		try {
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+				koroneikiAccount = _koroneikiService.fetchAccount(
+					externalReferenceCode);
+
+			if (koroneikiAccount == null) {
+				return new ResponseEntity(
+					"Unable to find account with key " + externalReferenceCode,
+					HttpStatus.NOT_FOUND);
+			}
+
+			_updateAccount(jwt, koroneikiAccount);
+
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to synchronize account with key " +
 					externalReferenceCode,
 				exception);
 
@@ -455,6 +490,30 @@ public class AccountsRestController extends BaseRestController {
 		).put(
 			"ticketId", jiraSupportIssue.getKey()
 		);
+	}
+
+	private void _updateAccount(
+			Jwt jwt,
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+				koroneikiAccount)
+		throws Exception {
+
+		Account account = new Account();
+
+		account.setDescription(koroneikiAccount::getDescription);
+		account.setExternalReferenceCode(koroneikiAccount::getKey);
+		account.setName(
+			() -> StringUtil.shorten(koroneikiAccount.getName(), 99));
+
+		AccountResource accountResource = AccountResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
+
+		accountResource.putAccountByExternalReferenceCode(
+			koroneikiAccount.getKey(), account);
 	}
 
 	private void _updateAccountHeatTags(String externalReferenceCode)

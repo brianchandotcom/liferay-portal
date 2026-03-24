@@ -41,6 +41,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -618,7 +619,7 @@ public class SearchResponseResourceImplTest {
 	}
 
 	private Field _getField(String name, Object... object) {
-		return new Field() {
+		return new Field(null, Collections.emptyList()) {
 
 			public String getName() {
 				return name;

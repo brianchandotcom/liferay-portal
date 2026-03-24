@@ -28,12 +28,14 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -90,23 +92,32 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		resetLicenseData();
-		resetLifecycleAction();
+		TomcatCluster tomcatCluster = tomcatClusterTestRule.getTomcatCluster();
+
+		List<TomcatNode> tomcatNodes = tomcatCluster.getTomcatNodes();
+
+		for (TomcatNode tomcatNode : tomcatNodes) {
+			tomcatNode.stop();
+
+			tomcatNode.destroy();
+		}
+
+		tomcatNodes.clear();
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testEnterpriseLicense() throws Exception {
 		TomcatNode tomcatNode1 = _startTomcatNode();
 
 		int port1 = tomcatNode1.getConnectorPort();
 
-		tomcatNode1.syncExecute(() -> _test(port1));
+		tomcatNode1.syncExecute(() -> _testFreeTierLicense(port1));
 
 		TomcatNode tomcatNode2 = _startTomcatNode();
 
 		int port2 = tomcatNode2.getConnectorPort();
 
-		tomcatNode2.syncExecute(() -> _test(port2));
+		tomcatNode2.syncExecute(() -> _testFreeTierLicense(port2));
 
 		TomcatNode tomcatNode3 = _startTomcatNode();
 
@@ -114,7 +125,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		long timestamp = tomcatNode3.syncExecute(
 			() -> {
-				_test(port3);
+				_testFreeTierLicense(port3);
 
 				Method method = findMethod(
 					PortalClassLoaderUtil.getClassLoader(),
@@ -133,15 +144,129 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			tomcatNode3.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
-		TomcatNode.ClusterExecutable<Serializable> clusterExecutable = () -> {
-			Field field = findField(
-				PortalClassLoaderUtil.getClassLoader(),
-				getProperty("grace.period.end.field"));
+		TomcatNode tomcatNode4 = _startTomcatNode(
+			_getClusterExecutable(timestamp));
 
-			field.set(null, timestamp + (5L * Time.MINUTE));
+		Future<String> messageFuture4 = _testConsoleMessageListener.register(
+			tomcatNode4.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
+			_CONSOLE_KEY_NODE_EXCEEDED);
 
-			return null;
-		};
+		int port4 = tomcatNode4.getConnectorPort();
+
+		tomcatNode4.syncExecute(() -> _testFreeTierLicense(port4));
+
+		_testConsoleMessageListener.assertMessageListened(messageFuture1);
+		_testConsoleMessageListener.assertMessageListened(messageFuture2);
+		_testConsoleMessageListener.assertMessageListened(messageFuture3);
+		_testConsoleMessageListener.assertMessageListened(messageFuture4);
+
+		tomcatNode1.syncExecute(
+			() -> {
+				deployEnterprisePortalLicense(Time.HOUR);
+
+				return null;
+			});
+
+		tomcatNode2.syncExecute(
+			() -> {
+				deployEnterprisePortalLicense(Time.HOUR);
+
+				return null;
+			});
+
+		tomcatNode3.syncExecute(
+			() -> {
+				deployEnterprisePortalLicense(Time.HOUR);
+
+				return null;
+			});
+
+		tomcatNode4.syncExecute(
+			() -> {
+				deployEnterprisePortalLicense(Time.HOUR);
+
+				return null;
+			});
+
+		try {
+			tomcatNode4.wait(6L, TimeUnit.MINUTES);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof TimeoutException);
+		}
+
+		tomcatNode1.syncExecute(
+			() -> {
+				assertPortalLicenseRegistered(port1);
+
+				return null;
+			});
+
+		tomcatNode2.syncExecute(
+			() -> {
+				assertPortalLicenseRegistered(port2);
+
+				return null;
+			});
+
+		tomcatNode3.syncExecute(
+			() -> {
+				assertPortalLicenseRegistered(port3);
+
+				return null;
+			});
+
+		tomcatNode4.syncExecute(
+			() -> {
+				assertPortalLicenseRegistered(port4);
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testFreeTierLicense() throws Exception {
+		TomcatNode tomcatNode1 = _startTomcatNode();
+
+		int port1 = tomcatNode1.getConnectorPort();
+
+		tomcatNode1.syncExecute(() -> _testFreeTierLicense(port1));
+
+		TomcatNode tomcatNode2 = _startTomcatNode();
+
+		int port2 = tomcatNode2.getConnectorPort();
+
+		tomcatNode2.syncExecute(() -> _testFreeTierLicense(port2));
+
+		TomcatNode tomcatNode3 = _startTomcatNode();
+
+		int port3 = tomcatNode3.getConnectorPort();
+
+		long timestamp = tomcatNode3.syncExecute(
+			() -> {
+				_testFreeTierLicense(port3);
+
+				Method method = findMethod(
+					PortalClassLoaderUtil.getClassLoader(),
+					getProperty("timestamp.method"));
+
+				return (long)method.invoke(null);
+			});
+
+		Future<String> messageFuture1 = _testConsoleMessageListener.register(
+			tomcatNode1.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
+			_CONSOLE_KEY_NODE_EXCEEDED);
+		Future<String> messageFuture2 = _testConsoleMessageListener.register(
+			tomcatNode2.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
+			_CONSOLE_KEY_NODE_EXCEEDED);
+		Future<String> messageFuture3 = _testConsoleMessageListener.register(
+			tomcatNode3.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
+			_CONSOLE_KEY_NODE_EXCEEDED);
+
+		TomcatNode.ClusterExecutable<Serializable> clusterExecutable =
+			_getClusterExecutable(timestamp);
 
 		TomcatNode tomcatNode4 = _startTomcatNode(clusterExecutable);
 		TomcatNode tomcatNode5 = _startTomcatNode(clusterExecutable);
@@ -164,7 +289,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			tomcatNode4.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
-		tomcatNode4.syncExecute(() -> _test(port4));
+		tomcatNode4.syncExecute(() -> _testFreeTierLicense(port4));
 
 		_testConsoleMessageListener.assertMessageListened(messageFuture4);
 
@@ -174,7 +299,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			tomcatNode5.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
-		tomcatNode5.syncExecute(() -> _test(port5));
+		tomcatNode5.syncExecute(() -> _testFreeTierLicense(port5));
 
 		_testConsoleMessageListener.assertMessageListened(messageFuture5);
 
@@ -184,7 +309,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			tomcatNode6.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
-		tomcatNode6.syncExecute(() -> _test(port6));
+		tomcatNode6.syncExecute(() -> _testFreeTierLicense(port6));
 
 		_testConsoleMessageListener.assertMessageListened(messageFuture6);
 
@@ -227,6 +352,20 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		_testConsoleMessageListener.assertMessageListened(messageFuture3);
 	}
 
+	private TomcatNode.ClusterExecutable<Serializable> _getClusterExecutable(
+		long timestamp) {
+
+		return () -> {
+			Field field = findField(
+				PortalClassLoaderUtil.getClassLoader(),
+				getProperty("grace.period.end.field"));
+
+			field.set(null, timestamp + (5L * Time.MINUTE));
+
+			return null;
+		};
+	}
+
 	@SafeVarargs
 	private TomcatNode _startTomcatNode(
 			TomcatNode.ClusterExecutable<Serializable>...
@@ -264,7 +403,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		return tomcatNode;
 	}
 
-	private Serializable _test(int port) throws Exception {
+	private Serializable _testFreeTierLicense(int port) throws Exception {
 		Map<String, String> licenseProperties =
 			LicenseManagerUtil.getLicenseProperties("Portal");
 

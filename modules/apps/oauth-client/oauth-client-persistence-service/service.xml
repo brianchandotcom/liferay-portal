@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.oauth.client.persistence" short-no-such-exception-enabled="false">
 	<namespace>OAuthClient</namespace>
-	<entity local-service="true" name="OAuthClientASLocalMetadata" remote-service="true">
+	<entity external-reference-code="company" local-service="true" name="OAuthClientASLocalMetadata" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -50,7 +50,7 @@
 			<finder-column name="oAuthASLocalWellKnownURI" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="OAuthClientEntry" remote-service="true">
+	<entity external-reference-code="company" local-service="true" name="OAuthClientEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

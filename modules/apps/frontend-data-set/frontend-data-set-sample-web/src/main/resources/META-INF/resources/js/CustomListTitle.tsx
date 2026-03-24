@@ -10,7 +10,7 @@ import type {IItemsActions} from '@liferay/frontend-data-set-web';
 
 const ActionLinkRenderer = getFDSInternalCellRenderer('actionLink')?.component;
 
-const CustomListTitleRenderer = ({
+const CustomListTitle = ({
 	actions,
 	itemData,
 	itemId,
@@ -34,4 +34,4 @@ const CustomListTitleRenderer = ({
 	);
 };
 
-export default CustomListTitleRenderer;
+export default CustomListTitle;

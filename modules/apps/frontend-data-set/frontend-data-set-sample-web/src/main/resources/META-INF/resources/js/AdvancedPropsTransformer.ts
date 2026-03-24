@@ -9,7 +9,7 @@ import {openModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 
 import CustomAuthorTableCell from './CustomAuthorTableCell';
-import CustomListTitleRenderer from './CustomListTitleRenderer';
+import CustomListTitle from './CustomListTitle';
 import SampleInfoPanel from './SampleInfoPanel';
 import dummyUploader from './dummyUploader';
 import {advancedFDSAtom} from './utils/atoms';
@@ -55,7 +55,7 @@ export default function propsTransformer({
 	};
 
 	const customListTitleRenderer: IInternalRenderer = {
-		component: CustomListTitleRenderer,
+		component: CustomListTitle,
 		name: 'customListTitleRenderer',
 		type: 'internal',
 	};

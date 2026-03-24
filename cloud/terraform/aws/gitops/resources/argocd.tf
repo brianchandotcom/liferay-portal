@@ -162,7 +162,7 @@ resource "kubernetes_manifest" "infrastructure_appproject" {
 			description="ArgoCD project for Liferay could native infrastructure."
 			destinations=[
 				{
-					namespace="cluster-bootstrap"
+					namespace="cluster-bootstrap-system"
 					server="https://kubernetes.default.svc"
 				},
 				{

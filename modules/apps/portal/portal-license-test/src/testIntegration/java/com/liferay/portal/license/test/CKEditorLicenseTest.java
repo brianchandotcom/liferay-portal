@@ -147,6 +147,40 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 		_assertCKEditorConfiguration(false, privateLicenseKey);
 	}
 
+	@Test
+	public void testFreeTierLicenseCustomKey() throws Exception {
+		String privateLicenseKey = _getCKEditorPrivateLicenseKey();
+
+		_assertCKEditorConfiguration(false, privateLicenseKey);
+
+		deployFreeTierPortalLicense(Time.HOUR);
+
+		ConfigurationTestUtil.updateConfiguration(
+			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
+
+		assertPortalLicenseRegistered();
+
+		_assertCKEditorConfiguration(false, privateLicenseKey);
+
+		ConfigurationTestUtil.updateConfiguration(
+			_CKEDITOR_CONFIG_ID,
+			() -> {
+				FileUtil.write(
+					_CKEDITOR_CONFIG_FILE, "licenseKey=\"custom.key\"");
+
+				assertPortalLicenseRegistered();
+			});
+
+		_assertCKEditorConfiguration(true, "custom.key");
+
+		resetCheckInterval();
+
+		ConfigurationTestUtil.updateConfiguration(
+			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
+
+		_assertCKEditorConfiguration(true, "custom.key");
+	}
+
 	private void _assertCKEditorConfiguration(
 			boolean containsLicenseKey, String licenseKey)
 		throws Exception {

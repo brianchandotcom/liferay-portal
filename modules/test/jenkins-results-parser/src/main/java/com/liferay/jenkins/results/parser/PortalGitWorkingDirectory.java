@@ -289,7 +289,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException();
+			throw new RuntimeException(ioException);
 		}
 
 		String pluginsDir = JenkinsResultsParserUtil.getProperty(

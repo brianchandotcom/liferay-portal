@@ -85,6 +85,16 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
+	public void addBackgroundTaskAttachment(
+			long userId, long backgroundTaskId, String sourceFileName,
+			String title, File file)
+		throws PortalException {
+
+		_backgroundTaskLocalService.addBackgroundTaskAttachment(
+			userId, backgroundTaskId, sourceFileName, title, file);
+	}
+
+	@Override
 	public BackgroundTask amendBackgroundTask(
 		long backgroundTaskId, Map<String, Serializable> taskContextMap,
 		int status, ServiceContext serviceContext) {

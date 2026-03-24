@@ -9,20 +9,26 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -50,6 +56,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
@@ -76,6 +83,12 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 			).build(),
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
+
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		_cmsAdministratorUser = UserTestUtil.addUser(
+			_company, RoleConstants.CMS_ADMINISTRATOR);
 	}
 
 	@Test
@@ -86,11 +99,27 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 		_testGetProps(
 			ActionKeys.PERMISSIONS,
 			jsonArray -> _assertLabelsEquals(
-				jsonArray, "permissions", "default-permissions"));
+				jsonArray, "permissions", "default-permissions",
+				"edit-and-propagate-default-permissions"));
 		_testGetProps(
 			ActionKeys.UPDATE,
 			jsonArray -> _assertLabelsEquals(
-				jsonArray, "space-settings", "export", "import"));
+				jsonArray, "pin-to-product-menu", "space-settings", "export",
+				"import"));
+
+		_depotEntryPinLocalService.addDepotEntryPin(
+			_cmsAdministratorUser.getUserId(), _depotEntry.getDepotEntryId());
+
+		_testGetProps(
+			ActionKeys.UPDATE,
+			jsonArray -> _assertLabelsEquals(
+				jsonArray, "unpin-from-product-menu", "space-settings",
+				"export", "import"));
+
+		_testGetProps(
+			ActionKeys.VIEW,
+			jsonArray -> _assertLabelsEquals(
+				jsonArray, "view-members", "view-connected-sites"));
 	}
 
 	private void _assertLabelsEquals(
@@ -118,8 +147,7 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setCompany(_company);
 		themeDisplay.setPermissionChecker(
 			new SimplePermissionChecker() {
 
@@ -132,6 +160,7 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 
 			});
 		themeDisplay.setSiteGroupId(_depotEntry.getGroupId());
+		themeDisplay.setUser(_cmsAdministratorUser);
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
@@ -145,6 +174,9 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 		unsafeConsumer.accept((JSONArray)props.get("actionItems"));
 	}
 
+	private User _cmsAdministratorUser;
+	private Company _company;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -154,9 +186,15 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
+	@Inject
+	private DepotEntryPinLocalService _depotEntryPinLocalService;
+
 	@Inject(
 		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.BreadcrumbComponentSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

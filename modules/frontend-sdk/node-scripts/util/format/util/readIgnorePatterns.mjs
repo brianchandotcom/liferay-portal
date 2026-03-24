@@ -12,7 +12,7 @@ import fileExists from '../../fileExists.mjs';
  * @param {string} ignoreFileName path to ignore file
  * @return {Promise<string[]>} list of ignore patterns as accepted by `micromatch`
  */
-export default async function getIgnorePatterns(ignoreFileName) {
+export default async function readIgnorePatterns(ignoreFileName) {
 	if (!(await fileExists(ignoreFileName))) {
 		return [];
 	}

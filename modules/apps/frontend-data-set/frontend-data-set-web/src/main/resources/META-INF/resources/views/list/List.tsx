@@ -23,7 +23,7 @@ import {
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
 import {
-	IHeader,
+	IHeader, IInternalRenderer,
 	IItemsActions,
 	IListSchema,
 	IView,
@@ -38,7 +38,7 @@ const getListSectionRenderer = ({
 	rendererName: string;
 	customRenderers:
 		| {
-				listSection?: Array<TRenderer>;
+				listSection?: Array<IInternalRenderer>;
 				tableCell?: Array<TRenderer>;
 		  }
 		| undefined;

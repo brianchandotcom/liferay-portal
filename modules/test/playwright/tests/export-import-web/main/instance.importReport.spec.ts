@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
@@ -20,9 +19,6 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	exportImportPagesTest,
 	companyExportImportPageTest,
-	featureFlagsTest({
-		'LPD-35443': {enabled: true},
-	}),
 	loginTest()
 );
 

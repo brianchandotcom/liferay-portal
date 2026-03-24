@@ -31,13 +31,6 @@ export const test = mergeTests(
 	baseTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: false},
-	})
-);
-
-export const testWithHeadlessContentPagesFF = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-35443': {enabled: true},
 	}),
 	masterPagesPagesTest,
 	pageTemplatesPagesTest
@@ -106,7 +99,7 @@ test(
 	}
 );
 
-testWithHeadlessContentPagesFF(
+test(
 	'can see the correct counts of master page templates at site level',
 	{tag: ['@LPD-67433']},
 	async ({
@@ -146,20 +139,20 @@ testWithHeadlessContentPagesFF(
 	}
 );
 
-testWithHeadlessContentPagesFF(
-	'cannot see Site Pages checkbox',
-	async ({exportImportPage, productMenuPage}) => {
-		await productMenuPage.openProductMenuIfClosed();
-		await productMenuPage.goToPublishingExport();
-		await productMenuPage.page
-			.getByRole('link', {name: 'Custom Export'})
-			.click();
+test('cannot see Site Pages checkbox', async ({
+	exportImportPage,
+	productMenuPage,
+}) => {
+	await productMenuPage.openProductMenuIfClosed();
+	await productMenuPage.goToPublishingExport();
+	await productMenuPage.page
+		.getByRole('link', {name: 'Custom Export'})
+		.click();
 
-		await expect(
-			exportImportPage.page.getByLabel(/Site Pages\s+\d+\s+Items/)
-		).not.toBeVisible();
-	}
-);
+	await expect(
+		exportImportPage.page.getByLabel(/Site Pages\s+\d+\s+Items/)
+	).not.toBeVisible();
+});
 
 test('Can see deletion counts at site level', async ({
 	apiHelpers,

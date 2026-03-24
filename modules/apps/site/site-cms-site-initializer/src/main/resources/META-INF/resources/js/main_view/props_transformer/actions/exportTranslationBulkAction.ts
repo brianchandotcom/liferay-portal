@@ -50,7 +50,7 @@ export async function exportTranslationBulkAction(
 				type: 'success',
 			});
 
-			downloadBlob(response.blob());
+			await downloadBlob(response, 'export.zip');
 		}
 	});
 }

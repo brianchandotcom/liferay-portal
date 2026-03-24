@@ -91,7 +91,7 @@ export async function triggerAssetDownloadBulkAction(
 				type: 'success',
 			});
 
-			downloadBlob(response.blob());
+			await downloadBlob(response);
 		}
 	});
 }

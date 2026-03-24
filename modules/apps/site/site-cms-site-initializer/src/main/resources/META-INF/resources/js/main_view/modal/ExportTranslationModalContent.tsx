@@ -170,8 +170,21 @@ export default function ExportTranslationModalContent({
 			?.displayName.split(' ')[1] as string;
 
 		if (selectedData) {
+			const url = new URL(apiURL || '', window.location.origin);
+			const filter = url.searchParams.get('filter') || '';
+
+			const folderIdMatch = filter.match(/folderId eq (\d+)/);
+			const groupIdsMatch = filter.match(
+				/groupIds\/any\(g:g in \([\d, ]+\)\)/
+			);
+
+			const folderId = folderIdMatch ? folderIdMatch[1] : undefined;
+			const groupIds = groupIdsMatch ? groupIdsMatch[0] : undefined;
+
 			return exportTranslationBulkAction({
 				apiURL,
+				folderId,
+				groupIds,
 				keyValues: {
 					sourceLanguageId,
 					targetLanguageIds: selectedTargetLanguageIds,
@@ -213,7 +226,7 @@ export default function ExportTranslationModalContent({
 					type: 'success',
 				});
 
-				downloadBlob(response.blob());
+				await downloadBlob(response, 'export.zip');
 
 				closeModal();
 			}

@@ -13,6 +13,7 @@ import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {
@@ -135,6 +136,27 @@ test.describe(
 		tag: '@LPD-6540',
 	},
 	() => {
+		test.afterEach(async ({page, systemSettingsPage}) => {
+			await systemSettingsPage.goToSystemSetting(
+				'Privacy',
+				'Consent Manager'
+			);
+
+			await page
+				.getByRole('heading', {name: 'Consent Manager'})
+				.waitFor();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: systemSettingsPage.page.getByRole('menuitem', {
+					name: 'Reset Default Values',
+				}),
+				trigger: systemSettingsPage.page.getByRole('button', {
+					name: 'Actions',
+				}),
+			});
+		});
+
 		test.beforeEach(async ({apiHelpers, page}) => {
 			await connectACToDXP({
 				apiHelpers,

@@ -35,6 +35,13 @@ locals {
 			type="RuntimeDefault"
 		}
 	}
+	deploymentruntimeconfig_opentelemetry_annotations={
+		"instrumentation.opentelemetry.io/inject-dotnet"="false"
+		"instrumentation.opentelemetry.io/inject-java"="false"
+		"instrumentation.opentelemetry.io/inject-nodejs"="false"
+		"instrumentation.opentelemetry.io/inject-python"="false"
+		"sidecar.opentelemetry.io/inject"="false"
+	}
 	ecr_credentials_sync_image="alpine/k8s:1.29.1"
 	ecr_credentials_sync_schedule="0 */8 * * *"
 	ecr_credentials_sync_script=<<-EOT

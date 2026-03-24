@@ -119,6 +119,9 @@ resource "kubernetes_manifest" "function_auto_ready_runtime_config" {
 		}
 		spec={
 			deploymentTemplate={
+				metadata={
+					annotations=local.deploymentruntimeconfig_opentelemetry_annotations
+				}
 				spec={
 					selector={
 						matchLabels={
@@ -126,6 +129,9 @@ resource "kubernetes_manifest" "function_auto_ready_runtime_config" {
 						}
 					}
 					template={
+						metadata={
+							annotations=local.deploymentruntimeconfig_opentelemetry_annotations
+						}
 						spec={
 							containers=[
 								{
@@ -176,6 +182,9 @@ resource "kubernetes_manifest" "function_go_templating_runtime_config" {
 		}
 		spec={
 			deploymentTemplate={
+				metadata={
+					annotations=local.deploymentruntimeconfig_opentelemetry_annotations
+				}
 				spec={
 					selector={
 						matchLabels={
@@ -183,6 +192,9 @@ resource "kubernetes_manifest" "function_go_templating_runtime_config" {
 						}
 					}
 					template={
+						metadata={
+							annotations=local.deploymentruntimeconfig_opentelemetry_annotations
+						}
 						spec={
 							containers=[
 								{
@@ -233,6 +245,9 @@ resource "kubernetes_manifest" "function_tag_manager_runtime_config" {
 		}
 		spec={
 			deploymentTemplate={
+				metadata={
+					annotations=local.deploymentruntimeconfig_opentelemetry_annotations
+				}
 				spec={
 					selector={
 						matchLabels={
@@ -240,6 +255,9 @@ resource "kubernetes_manifest" "function_tag_manager_runtime_config" {
 						}
 					}
 					template={
+						metadata={
+							annotations=local.deploymentruntimeconfig_opentelemetry_annotations
+						}
 						spec={
 							containers=[
 								{

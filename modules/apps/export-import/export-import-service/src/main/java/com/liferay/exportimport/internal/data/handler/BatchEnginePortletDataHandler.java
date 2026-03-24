@@ -645,6 +645,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					setPortletDataContextWithSafeCloseable(
 						portletDataContext)) {
 
+			ExportImportThreadLocal.setPortletExportInProcess(true);
+
 			ManifestSummary manifestSummary =
 				portletDataContext.getManifestSummary();
 
@@ -680,6 +682,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				manifestSummary.addModelDeletionCount(
 					modelClassName, modelDeletionCount);
 			}
+		}
+		finally {
+			ExportImportThreadLocal.setPortletExportInProcess(false);
 		}
 	}
 

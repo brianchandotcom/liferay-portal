@@ -14,6 +14,7 @@ import {
 	FDS_INTERNAL_RENDERERS,
 	IClientExtensionRenderer,
 	IInternalRenderer,
+	getFDSInternalRenderer,
 } from '@liferay/frontend-data-set-web';
 import {InputLocalized, openModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
@@ -61,11 +62,7 @@ const getRendererLabel = ({
 }): string => {
 	let clientExtensionRenderer;
 
-	const internalRenderer = FDS_INTERNAL_RENDERERS.find(
-		(renderer: IInternalRenderer) => {
-			return renderer.name === rendererName;
-		}
-	);
+	const internalRenderer = getFDSInternalRenderer(rendererName);
 
 	if (internalRenderer?.label) {
 		return internalRenderer.label;
@@ -135,15 +132,15 @@ const EditTableSectionModalContent = ({
 	sortable: boolean;
 	tableSection: IDataSetTableSection;
 }) => {
-	const [selectedCellRenderer, setSelectedCellRenderer] = useState(
+	const [selectedRenderer, setSelectedRenderer] = useState(
 		tableSection.renderer ?? 'default'
 	);
 	const [tableSectionSortable, setTableSectionSortable] = useState<boolean>(
 		tableSection.sortable
 	);
 
-	const fdsInternalCellRendererNames = FDS_INTERNAL_RENDERERS.map(
-		(cellRenderer: IInternalRenderer) => cellRenderer.name
+	const fdsInternalRendererNames = FDS_INTERNAL_RENDERERS.map(
+		(renderer: IInternalRenderer) => renderer.name
 	);
 
 	const tableSectionTranslations = tableSection.label_i18n;
@@ -155,10 +152,8 @@ const EditTableSectionModalContent = ({
 	const editTableSection = async () => {
 		const body = {
 			label_i18n: i18nFieldLabels,
-			renderer: selectedCellRenderer,
-			rendererType: !fdsInternalCellRendererNames.includes(
-				selectedCellRenderer
-			)
+			renderer: selectedRenderer,
+			rendererType: !fdsInternalRendererNames.includes(selectedRenderer)
 				? 'clientExtension'
 				: 'internal',
 			sortable: tableSectionSortable,
@@ -238,10 +233,10 @@ const EditTableSectionModalContent = ({
 						displayType="secondary"
 						id={tableSectionRendererSelectId}
 					>
-						{selectedCellRenderer
+						{selectedRenderer
 							? getRendererLabel({
 									cetRenderers: cellClientExtensionRenderers,
-									rendererName: selectedCellRenderer,
+									rendererName: selectedRenderer,
 								})
 							: Liferay.Language.get('choose-an-option')}
 					</ClayButton>
@@ -316,7 +311,7 @@ const EditTableSectionModalContent = ({
 						cellRenderers={options}
 						namespace={namespace}
 						onItemClick={(item: string) =>
-							setSelectedCellRenderer(item)
+							setSelectedRenderer(item)
 						}
 					/>
 				</ClayForm.Group>

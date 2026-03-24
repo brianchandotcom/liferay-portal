@@ -1,6 +1,6 @@
-create table ConsentPreference (
+create table CookiesConsentPreference (
 	mvccVersion LONG default 0 not null,
-	consentPreferenceId LONG not null primary key,
+	cookiesConsentPreferenceId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,

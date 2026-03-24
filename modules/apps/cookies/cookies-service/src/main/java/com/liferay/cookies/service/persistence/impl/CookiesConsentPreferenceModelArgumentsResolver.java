@@ -5,9 +5,9 @@
 
 package com.liferay.cookies.service.persistence.impl;
 
-import com.liferay.cookies.model.ConsentPreferenceTable;
-import com.liferay.cookies.model.impl.ConsentPreferenceImpl;
-import com.liferay.cookies.model.impl.ConsentPreferenceModelImpl;
+import com.liferay.cookies.model.CookiesConsentPreferenceTable;
+import com.liferay.cookies.model.impl.CookiesConsentPreferenceImpl;
+import com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -18,19 +18,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The arguments resolver class for retrieving value from ConsentPreference.
+ * The arguments resolver class for retrieving value from CookiesConsentPreference.
  *
- * @author Brian Wing Shun Chan
+ * @author Christopher Kian
  * @generated
  */
 @Component(
 	property = {
-		"class.name=com.liferay.cookies.model.impl.ConsentPreferenceImpl",
-		"table.name=ConsentPreference"
+		"class.name=com.liferay.cookies.model.impl.CookiesConsentPreferenceImpl",
+		"table.name=CookiesConsentPreference"
 	},
 	service = ArgumentsResolver.class
 )
-public class ConsentPreferenceModelArgumentsResolver
+public class CookiesConsentPreferenceModelArgumentsResolver
 	implements ArgumentsResolver {
 
 	@Override
@@ -48,13 +48,15 @@ public class ConsentPreferenceModelArgumentsResolver
 			return null;
 		}
 
-		ConsentPreferenceModelImpl consentPreferenceModelImpl =
-			(ConsentPreferenceModelImpl)baseModel;
+		CookiesConsentPreferenceModelImpl cookiesConsentPreferenceModelImpl =
+			(CookiesConsentPreferenceModelImpl)baseModel;
 
-		long columnBitmask = consentPreferenceModelImpl.getColumnBitmask();
+		long columnBitmask =
+			cookiesConsentPreferenceModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(consentPreferenceModelImpl, columnNames, original);
+			return _getValue(
+				cookiesConsentPreferenceModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -65,15 +67,8 @@ public class ConsentPreferenceModelArgumentsResolver
 
 			for (String columnName : columnNames) {
 				finderPathColumnBitmask |=
-					consentPreferenceModelImpl.getColumnBitmask(columnName);
-			}
-
-			if (finderPath.isBaseModelResult() &&
-				(ConsentPreferencePersistenceImpl.
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
-						finderPath.getCacheName())) {
-
-				finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+					cookiesConsentPreferenceModelImpl.getColumnBitmask(
+						columnName);
 			}
 
 			_finderPathColumnBitmasksCache.put(
@@ -81,7 +76,8 @@ public class ConsentPreferenceModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(consentPreferenceModelImpl, columnNames, original);
+			return _getValue(
+				cookiesConsentPreferenceModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -89,16 +85,16 @@ public class ConsentPreferenceModelArgumentsResolver
 
 	@Override
 	public String getClassName() {
-		return ConsentPreferenceImpl.class.getName();
+		return CookiesConsentPreferenceImpl.class.getName();
 	}
 
 	@Override
 	public String getTableName() {
-		return ConsentPreferenceTable.INSTANCE.getTableName();
+		return CookiesConsentPreferenceTable.INSTANCE.getTableName();
 	}
 
 	private static Object[] _getValue(
-		ConsentPreferenceModelImpl consentPreferenceModelImpl,
+		CookiesConsentPreferenceModelImpl cookiesConsentPreferenceModelImpl,
 		String[] columnNames, boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];
@@ -108,11 +104,11 @@ public class ConsentPreferenceModelArgumentsResolver
 
 			if (original) {
 				arguments[i] =
-					consentPreferenceModelImpl.getColumnOriginalValue(
+					cookiesConsentPreferenceModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] = consentPreferenceModelImpl.getColumnValue(
+				arguments[i] = cookiesConsentPreferenceModelImpl.getColumnValue(
 					columnName);
 			}
 		}
@@ -123,12 +119,5 @@ public class ConsentPreferenceModelArgumentsResolver
 	private static final Map<FinderPath, Long> _finderPathColumnBitmasksCache =
 		new ConcurrentHashMap<>();
 
-	private static final long _ORDER_BY_COLUMNS_BITMASK;
-
-	static {
-		long orderByColumnsBitmask = 0;
-
-		_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
-	}
-
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-838596145

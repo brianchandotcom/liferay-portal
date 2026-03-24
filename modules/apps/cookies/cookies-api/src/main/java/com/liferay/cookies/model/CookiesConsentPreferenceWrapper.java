@@ -14,19 +14,22 @@ import java.util.Map;
 
 /**
  * <p>
- * This class is a wrapper for {@link ConsentPreference}.
+ * This class is a wrapper for {@link CookiesConsentPreference}.
  * </p>
  *
- * @author Brian Wing Shun Chan
- * @see ConsentPreference
+ * @author Christopher Kian
+ * @see CookiesConsentPreference
  * @generated
  */
-public class ConsentPreferenceWrapper
-	extends BaseModelWrapper<ConsentPreference>
-	implements ConsentPreference, ModelWrapper<ConsentPreference> {
+public class CookiesConsentPreferenceWrapper
+	extends BaseModelWrapper<CookiesConsentPreference>
+	implements CookiesConsentPreference,
+			   ModelWrapper<CookiesConsentPreference> {
 
-	public ConsentPreferenceWrapper(ConsentPreference consentPreference) {
-		super(consentPreference);
+	public CookiesConsentPreferenceWrapper(
+		CookiesConsentPreference cookiesConsentPreference) {
+
+		super(cookiesConsentPreference);
 	}
 
 	@Override
@@ -34,7 +37,8 @@ public class ConsentPreferenceWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("consentPreferenceId", getConsentPreferenceId());
+		attributes.put(
+			"cookiesConsentPreferenceId", getCookiesConsentPreferenceId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -54,10 +58,11 @@ public class ConsentPreferenceWrapper
 			setMvccVersion(mvccVersion);
 		}
 
-		Long consentPreferenceId = (Long)attributes.get("consentPreferenceId");
+		Long cookiesConsentPreferenceId = (Long)attributes.get(
+			"cookiesConsentPreferenceId");
 
-		if (consentPreferenceId != null) {
-			setConsentPreferenceId(consentPreferenceId);
+		if (cookiesConsentPreferenceId != null) {
+			setCookiesConsentPreferenceId(cookiesConsentPreferenceId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -104,14 +109,14 @@ public class ConsentPreferenceWrapper
 	}
 
 	@Override
-	public ConsentPreference cloneWithOriginalValues() {
+	public CookiesConsentPreference cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**
-	 * Returns the company ID of this consent preference.
+	 * Returns the company ID of this cookies consent preference.
 	 *
-	 * @return the company ID of this consent preference
+	 * @return the company ID of this cookies consent preference
 	 */
 	@Override
 	public long getCompanyId() {
@@ -119,19 +124,19 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Returns the consent preference ID of this consent preference.
+	 * Returns the cookies consent preference ID of this cookies consent preference.
 	 *
-	 * @return the consent preference ID of this consent preference
+	 * @return the cookies consent preference ID of this cookies consent preference
 	 */
 	@Override
-	public long getConsentPreferenceId() {
-		return model.getConsentPreferenceId();
+	public long getCookiesConsentPreferenceId() {
+		return model.getCookiesConsentPreferenceId();
 	}
 
 	/**
-	 * Returns the domain of this consent preference.
+	 * Returns the domain of this cookies consent preference.
 	 *
-	 * @return the domain of this consent preference
+	 * @return the domain of this cookies consent preference
 	 */
 	@Override
 	public String getDomain() {
@@ -139,9 +144,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Returns the expiration date of this consent preference.
+	 * Returns the expiration date of this cookies consent preference.
 	 *
-	 * @return the expiration date of this consent preference
+	 * @return the expiration date of this cookies consent preference
 	 */
 	@Override
 	public Date getExpirationDate() {
@@ -149,9 +154,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this consent preference.
+	 * Returns the mvcc version of this cookies consent preference.
 	 *
-	 * @return the mvcc version of this consent preference
+	 * @return the mvcc version of this cookies consent preference
 	 */
 	@Override
 	public long getMvccVersion() {
@@ -159,9 +164,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Returns the name of this consent preference.
+	 * Returns the name of this cookies consent preference.
 	 *
-	 * @return the name of this consent preference
+	 * @return the name of this cookies consent preference
 	 */
 	@Override
 	public String getName() {
@@ -169,9 +174,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Returns the primary key of this consent preference.
+	 * Returns the primary key of this cookies consent preference.
 	 *
-	 * @return the primary key of this consent preference
+	 * @return the primary key of this cookies consent preference
 	 */
 	@Override
 	public long getPrimaryKey() {
@@ -179,9 +184,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Returns the user ID of this consent preference.
+	 * Returns the user ID of this cookies consent preference.
 	 *
-	 * @return the user ID of this consent preference
+	 * @return the user ID of this cookies consent preference
 	 */
 	@Override
 	public long getUserId() {
@@ -189,9 +194,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Returns the user name of this consent preference.
+	 * Returns the user name of this cookies consent preference.
 	 *
-	 * @return the user name of this consent preference
+	 * @return the user name of this cookies consent preference
 	 */
 	@Override
 	public String getUserName() {
@@ -199,9 +204,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Returns the user uuid of this consent preference.
+	 * Returns the user uuid of this cookies consent preference.
 	 *
-	 * @return the user uuid of this consent preference
+	 * @return the user uuid of this cookies consent preference
 	 */
 	@Override
 	public String getUserUuid() {
@@ -209,9 +214,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Returns the value of this consent preference.
+	 * Returns the value of this cookies consent preference.
 	 *
-	 * @return the value of this consent preference
+	 * @return the value of this cookies consent preference
 	 */
 	@Override
 	public String getValue() {
@@ -224,9 +229,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the company ID of this consent preference.
+	 * Sets the company ID of this cookies consent preference.
 	 *
-	 * @param companyId the company ID of this consent preference
+	 * @param companyId the company ID of this cookies consent preference
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
@@ -234,19 +239,19 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the consent preference ID of this consent preference.
+	 * Sets the cookies consent preference ID of this cookies consent preference.
 	 *
-	 * @param consentPreferenceId the consent preference ID of this consent preference
+	 * @param cookiesConsentPreferenceId the cookies consent preference ID of this cookies consent preference
 	 */
 	@Override
-	public void setConsentPreferenceId(long consentPreferenceId) {
-		model.setConsentPreferenceId(consentPreferenceId);
+	public void setCookiesConsentPreferenceId(long cookiesConsentPreferenceId) {
+		model.setCookiesConsentPreferenceId(cookiesConsentPreferenceId);
 	}
 
 	/**
-	 * Sets the domain of this consent preference.
+	 * Sets the domain of this cookies consent preference.
 	 *
-	 * @param domain the domain of this consent preference
+	 * @param domain the domain of this cookies consent preference
 	 */
 	@Override
 	public void setDomain(String domain) {
@@ -254,9 +259,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the expiration date of this consent preference.
+	 * Sets the expiration date of this cookies consent preference.
 	 *
-	 * @param expirationDate the expiration date of this consent preference
+	 * @param expirationDate the expiration date of this cookies consent preference
 	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
@@ -264,9 +269,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the mvcc version of this consent preference.
+	 * Sets the mvcc version of this cookies consent preference.
 	 *
-	 * @param mvccVersion the mvcc version of this consent preference
+	 * @param mvccVersion the mvcc version of this cookies consent preference
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
@@ -274,9 +279,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the name of this consent preference.
+	 * Sets the name of this cookies consent preference.
 	 *
-	 * @param name the name of this consent preference
+	 * @param name the name of this cookies consent preference
 	 */
 	@Override
 	public void setName(String name) {
@@ -284,9 +289,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the primary key of this consent preference.
+	 * Sets the primary key of this cookies consent preference.
 	 *
-	 * @param primaryKey the primary key of this consent preference
+	 * @param primaryKey the primary key of this cookies consent preference
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -294,9 +299,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the user ID of this consent preference.
+	 * Sets the user ID of this cookies consent preference.
 	 *
-	 * @param userId the user ID of this consent preference
+	 * @param userId the user ID of this cookies consent preference
 	 */
 	@Override
 	public void setUserId(long userId) {
@@ -304,9 +309,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the user name of this consent preference.
+	 * Sets the user name of this cookies consent preference.
 	 *
-	 * @param userName the user name of this consent preference
+	 * @param userName the user name of this cookies consent preference
 	 */
 	@Override
 	public void setUserName(String userName) {
@@ -314,9 +319,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the user uuid of this consent preference.
+	 * Sets the user uuid of this cookies consent preference.
 	 *
-	 * @param userUuid the user uuid of this consent preference
+	 * @param userUuid the user uuid of this cookies consent preference
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
@@ -324,9 +329,9 @@ public class ConsentPreferenceWrapper
 	}
 
 	/**
-	 * Sets the value of this consent preference.
+	 * Sets the value of this cookies consent preference.
 	 *
-	 * @param value the value of this consent preference
+	 * @param value the value of this cookies consent preference
 	 */
 	@Override
 	public void setValue(String value) {
@@ -339,10 +344,11 @@ public class ConsentPreferenceWrapper
 	}
 
 	@Override
-	protected ConsentPreferenceWrapper wrap(
-		ConsentPreference consentPreference) {
+	protected CookiesConsentPreferenceWrapper wrap(
+		CookiesConsentPreference cookiesConsentPreference) {
 
-		return new ConsentPreferenceWrapper(consentPreference);
+		return new CookiesConsentPreferenceWrapper(cookiesConsentPreference);
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1449307652

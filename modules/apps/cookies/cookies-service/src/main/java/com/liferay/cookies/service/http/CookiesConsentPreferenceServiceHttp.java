@@ -7,7 +7,7 @@ package com.liferay.cookies.service.http;
 
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.cookies.service.ConsentPreferenceServiceUtil</code> service
+ * <code>com.liferay.cookies.service.CookiesConsentPreferenceServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
@@ -28,8 +28,9 @@ package com.liferay.cookies.service.http;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Christopher Kian
  * @generated
  */
-public class ConsentPreferenceServiceHttp {
+public class CookiesConsentPreferenceServiceHttp {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1214536879

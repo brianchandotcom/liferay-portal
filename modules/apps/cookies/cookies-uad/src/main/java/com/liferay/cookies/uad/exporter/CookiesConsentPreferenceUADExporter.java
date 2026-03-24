@@ -10,9 +10,10 @@ import com.liferay.user.associated.data.exporter.UADExporter;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Christopher Kian
  */
 @Component(service = UADExporter.class)
-public class ConsentPreferenceUADExporter
-	extends BaseConsentPreferenceUADExporter {
+public class CookiesConsentPreferenceUADExporter
+	extends BaseCookiesConsentPreferenceUADExporter {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-767519162

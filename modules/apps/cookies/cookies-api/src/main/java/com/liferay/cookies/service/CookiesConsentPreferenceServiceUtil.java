@@ -8,23 +8,23 @@ package com.liferay.cookies.service;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
- * Provides the remote service utility for ConsentPreference. This utility wraps
- * <code>com.liferay.cookies.service.impl.ConsentPreferenceServiceImpl</code> and is an
+ * Provides the remote service utility for CookiesConsentPreference. This utility wraps
+ * <code>com.liferay.cookies.service.impl.CookiesConsentPreferenceServiceImpl</code> and is an
  * access point for service operations in application layer code running on a
  * remote server. Methods of this service are expected to have security checks
  * based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
- * @author Brian Wing Shun Chan
- * @see ConsentPreferenceService
+ * @author Christopher Kian
+ * @see CookiesConsentPreferenceService
  * @generated
  */
-public class ConsentPreferenceServiceUtil {
+public class CookiesConsentPreferenceServiceUtil {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to <code>com.liferay.cookies.service.impl.ConsentPreferenceServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.cookies.service.impl.CookiesConsentPreferenceServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -36,12 +36,14 @@ public class ConsentPreferenceServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static ConsentPreferenceService getService() {
+	public static CookiesConsentPreferenceService getService() {
 		return _serviceSnapshot.get();
 	}
 
-	private static final Snapshot<ConsentPreferenceService> _serviceSnapshot =
-		new Snapshot<>(
-			ConsentPreferenceServiceUtil.class, ConsentPreferenceService.class);
+	private static final Snapshot<CookiesConsentPreferenceService>
+		_serviceSnapshot = new Snapshot<>(
+			CookiesConsentPreferenceServiceUtil.class,
+			CookiesConsentPreferenceService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:524828297

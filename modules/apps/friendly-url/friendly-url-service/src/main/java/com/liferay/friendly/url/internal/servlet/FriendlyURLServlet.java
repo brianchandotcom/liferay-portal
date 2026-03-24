@@ -7,7 +7,6 @@ package com.liferay.friendly.url.internal.servlet;
 
 import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration;
 import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfigurationProvider;
@@ -71,6 +70,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -1276,21 +1276,11 @@ public class FriendlyURLServlet extends HttpServlet {
 		return user;
 	}
 
-	private boolean _hasDepotEntryTypeSpace(User user) throws PortalException {
-		for (Group group : user.getGroups()) {
-			if (!group.isDepot()) {
-				continue;
-			}
-
-			DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
-				group.getGroupId());
-
-			if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
-				return true;
-			}
-		}
-
-		return false;
+	private boolean _hasDepotEntryTypeSpace(User user) {
+		return ListUtil.isNotEmpty(
+			depotEntryLocalService.getDepotEntryGroupIds(
+				user.getCompanyId(), user.getUserId(),
+				DepotConstants.TYPE_SPACE));
 	}
 
 	private boolean _isImpersonated(

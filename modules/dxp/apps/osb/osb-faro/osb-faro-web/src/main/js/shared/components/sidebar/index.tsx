@@ -6,11 +6,7 @@ import React from 'react';
 import SidebarItem from './SidebarItem';
 import UserDropdown, {Menus} from 'shared/components/user-dropdown';
 import {ACCOUNTS, Routes, SEGMENTS, toRoute} from 'shared/util/router';
-import {
-	DEVELOPER_MODE,
-	ENABLE_ACCOUNTS,
-	LANGUAGES
-} from 'shared/util/constants';
+import {DEVELOPER_MODE, LANGUAGES} from 'shared/util/constants';
 import {Link, matchPath} from 'react-router-dom';
 import {User} from 'shared/util/records';
 
@@ -77,7 +73,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 						type: SEGMENTS
 					})
 				},
-				ENABLE_ACCOUNTS && {
+				{
 					icon: 'ac_account',
 					label: Liferay.Language.get('accounts'),
 					route: Routes.CONTACTS_LIST_ACCOUNT,

@@ -10,7 +10,7 @@ import {
 	IConfigInURLUpdaterThunk,
 	IDataSetData,
 	IFDSState,
-	IInlineEditingSettings,
+	IInlineEditingSettings, IInternalRenderer,
 	IItemsActions,
 	TRenderer,
 	TSort,
@@ -25,7 +25,7 @@ export interface IFrontendDataSetContext {
 	createInlineItem: Function;
 	customDataRenderers?: Array<any>;
 	customRenderers?: {
-		listSection?: Array<TRenderer>;
+		listSection?: Array<IInternalRenderer>;
 		tableCell?: Array<TRenderer>;
 	};
 	executeAsyncItemAction: ({

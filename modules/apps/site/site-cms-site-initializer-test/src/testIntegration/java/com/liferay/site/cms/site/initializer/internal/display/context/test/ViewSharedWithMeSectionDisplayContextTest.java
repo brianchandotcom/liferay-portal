@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -34,6 +35,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -164,6 +166,53 @@ public class ViewSharedWithMeSectionDisplayContextTest
 	@Override
 	@Test
 	public void testGetCreationMenu() throws Exception {
+	}
+
+	@Test
+	public void testGetFDSActionDropdownItems() throws Exception {
+		List<FDSActionDropdownItem> fdsActionDropdownItems =
+			getFDSActionDropdownItems();
+
+		Assert.assertEquals(
+			fdsActionDropdownItems.toString(), 9,
+			fdsActionDropdownItems.size());
+
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(0), "view", "actionLink", "view", "get",
+			"item", null);
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(1), "share", "share", "share", "get",
+			"item", null);
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(2), "view", "view-file", "view", null,
+			"item", null);
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(3), "view", "view-content", "view",
+			"get", "item", null);
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(4), "pencil", "actionLinkEdit", "edit",
+			"get", "item", null);
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(5), "download", "download", "download",
+			"get", "item", null);
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(6), "view", "actionLinkFolder",
+			"view-folder", "get", "item",
+			HashMapBuilder.<String, Object>put(
+				"className", ObjectEntryFolder.class.getName()
+			).build());
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(7), "pencil", "edit-folder", "edit",
+			"get", "item",
+			HashMapBuilder.<String, Object>put(
+				"className", ObjectEntryFolder.class.getName()
+			).build());
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(8), "download", "download-folder",
+			"download", "get", "item",
+			HashMapBuilder.<String, Object>put(
+				"className", ObjectEntryFolder.class.getName()
+			).build());
 	}
 
 	@Override

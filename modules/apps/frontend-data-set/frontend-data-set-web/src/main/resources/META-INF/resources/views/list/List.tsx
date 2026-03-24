@@ -15,15 +15,16 @@ import React, {forwardRef, useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
-import ImageRenderer from '../../renderers/ImageRenderer';
 import FDSDndProvider from '../../dnd/FDSDndProvider';
 import useFDSDrop from '../../dnd/useFDSDrop';
+import ImageRenderer from '../../renderers/ImageRenderer';
 import {
 	ILocalizedItemDetails,
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
 import {
-	IHeader, IInternalRenderer,
+	IHeader,
+	IInternalRenderer,
 	IItemsActions,
 	IListSchema,
 	IView,
@@ -32,16 +33,16 @@ import {
 import ViewsContext from '../ViewsContext';
 
 const getListSectionRenderer = ({
-	rendererName,
 	customRenderers,
+	rendererName,
 }: {
-	rendererName: string;
 	customRenderers:
 		| {
 				listSection?: Array<IInternalRenderer>;
 				tableCell?: Array<TRenderer>;
 		  }
 		| undefined;
+	rendererName: string;
 }) => {
 	const listSectionRenderer = customRenderers?.listSection?.find(
 		(renderer: TRenderer) => renderer.name === rendererName
@@ -80,8 +81,8 @@ const Title = ({
 
 	if (title) {
 		const TitleRendererComponent = getListSectionRenderer({
-			rendererName: titleRendererName,
 			customRenderers,
+			rendererName: titleRendererName,
 		});
 
 		if (TitleRendererComponent) {
@@ -95,9 +96,7 @@ const Title = ({
 						onItemsChange={onItemsChange}
 						openSidePanel={openSidePanel}
 						options={null}
-						rootPropertyName={
-							localizedValue?.rootPropertyName
-						}
+						rootPropertyName={localizedValue?.rootPropertyName}
 						value={localizedValue?.value}
 						valuePath={localizedValue?.valuePath}
 					/>

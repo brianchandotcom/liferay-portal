@@ -385,7 +385,7 @@ table.publications-render-view {
 	}
 
 	td.publications-render-view-content-split iframe {
-		width: 1100px;
+		width: 200%;
 		zoom: 0.5;
 		-moz-transform: scale(0.5);
 		-moz-transform-origin: 0 0;
@@ -469,6 +469,10 @@ table.publications-render-view {
 		margin-bottom: 20px;
 	}
 
+	.c-slideout-push-end {
+		padding-right: 472px !important;
+	}
+
 	.management-bar {
 		.nav-item-expand {
 			flex-grow: 1;
@@ -499,6 +503,43 @@ table.publications-render-view {
 
 			.custom-control:only-child {
 				margin-bottom: 1rem;
+			}
+		}
+
+		.publications-layout-changes-sidebar {
+			.btn-group-spaced {
+				display: flex;
+				justify-content: flex-end;
+				margin: 16px;
+				margin-top: 0px;
+
+				button {
+					padding-bottom: 16px;
+					padding-left: 8px;
+					padding-right: 8px;
+					padding-top: 16px;
+				}
+			}
+
+			.c-slideout {
+				border-color: #e7e7ed;
+				border-radius: 0.25rem;
+				border-style: solid;
+				border-width: 0.0625rem;
+				margin-bottom: 16px;
+			}
+
+			.panel {
+				border-color: #e7e7ed;
+				border-radius: 0.25rem;
+				border-style: solid;
+				border-width: 0.0625rem;
+				margin-bottom: 0px;
+				padding: 16px;
+
+				.panel-header {
+					border-color: transparent;
+				}
 			}
 		}
 

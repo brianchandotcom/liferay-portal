@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
@@ -119,6 +120,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -602,6 +604,38 @@ public class ViewChangesDisplayContext {
 			}
 		).put(
 			"entryFromURL", ParamUtil.getString(_renderRequest, "entry")
+		).put(
+			"layoutContentChangesURL",
+			() -> {
+				if (!Objects.equals(
+						_portal.getClassNameId(Layout.class),
+						_modelClassNameId)) {
+
+					return null;
+				}
+
+				long ctEntryId = ParamUtil.getLong(_renderRequest, "ctEntryId");
+
+				if (ctEntryId == 0) {
+					CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+						_ctCollection.getCtCollectionId(), _modelClassNameId,
+						_modelClassPK);
+
+					if (ctEntry == null) {
+						return null;
+					}
+
+					ctEntryId = ctEntry.getCtEntryId();
+				}
+
+				ResourceURL dataURL = _renderResponse.createResourceURL();
+
+				dataURL.setParameter("ctEntryId", String.valueOf(ctEntryId));
+				dataURL.setResourceID(
+					"/change_tracking/get_layout_content_changes");
+
+				return dataURL.toString();
+			}
 		).put(
 			"modelData",
 			() -> {

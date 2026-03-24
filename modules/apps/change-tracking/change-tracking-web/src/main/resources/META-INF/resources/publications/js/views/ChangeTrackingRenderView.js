@@ -189,10 +189,13 @@ export default function ChangeTrackingRenderView({
 	description,
 	discardURL,
 	handleNavigation,
+	handleOpenSidePanel,
 	initialDataURL,
+	isOpenSidePanel,
 	moveChangesURL,
 	namespace,
 	parentEntries,
+	showChangesSidePanel,
 	showDropdown,
 	showHeader = true,
 	showWorkflow,
@@ -1023,22 +1026,39 @@ export default function ChangeTrackingRenderView({
 		}
 
 		return (
-			<div className="autofit-col">
-				<ClayDropDownWithItems
-					alignmentPosition={Align.BottomLeft}
-					items={dropdownItems}
-					spritemap={spritemap}
-					trigger={
+			<>
+				{showChangesSidePanel ? (
+					<div className="autofit-col">
 						<ClayButtonWithIcon
-							aria-label="more-actions"
-							displayType="unstyled"
+							aria-label="Open Layout Changes Side Panel"
+							aria-pressed={isOpenSidePanel ? true : false}
+							borderless
+							className={isOpenSidePanel ? 'active' : ''}
+							displayType="secondary"
+							onClick={handleOpenSidePanel}
 							small
 							spritemap={spritemap}
-							symbol="ellipsis-v"
+							symbol="columns"
 						/>
-					}
-				/>
-			</div>
+					</div>
+				) : null}
+				<div className="autofit-col">
+					<ClayDropDownWithItems
+						alignmentPosition={Align.BottomLeft}
+						items={dropdownItems}
+						spritemap={spritemap}
+						trigger={
+							<ClayButtonWithIcon
+								aria-label="more-actions"
+								displayType="unstyled"
+								small
+								spritemap={spritemap}
+								symbol="ellipsis-v"
+							/>
+						}
+					/>
+				</div>
+			</>
 		);
 	};
 

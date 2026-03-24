@@ -194,11 +194,8 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 		if (dirs.size() == 1) {
 			return _addRootTaskUpgradePluginsSDK(
 				project, UPGRADE_PLUGINS_SDK_TASK_NAME,
-				dirs.stream(
-				).findFirst(
-				).orElse(
-					null
-				),
+				dirs.iterator(
+				).next(),
 				pluginsSDKConfiguration);
 		}
 

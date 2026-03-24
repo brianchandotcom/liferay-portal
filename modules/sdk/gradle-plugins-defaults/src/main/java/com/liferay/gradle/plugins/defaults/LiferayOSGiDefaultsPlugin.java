@@ -4351,12 +4351,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureConfigurationNoCache(configuration);
 
-		File file = configuration.resolve(
-		).stream(
-		).findFirst(
-		).orElse(
-			null
-		);
+		Set<File> files = configuration.resolve();
+
+		if (files.size() != 1) {
+			throw new GradleException(
+				"Expected 1 file, but got " + files.size());
+		}
+
+		File file = files.iterator(
+		).next();
 
 		if (GradleUtil.isFromMavenLocal(project, file)) {
 			throw new GradleException(

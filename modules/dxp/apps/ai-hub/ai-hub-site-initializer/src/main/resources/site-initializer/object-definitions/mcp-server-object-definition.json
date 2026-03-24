@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountToAIHubMCPServers_accountEntryId",
 	"className": "com.liferay.object.model.ObjectDefinition#J8S4",
 	"enableCategorization": true,
 	"enableComments": false,
@@ -51,29 +53,6 @@
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "null",
-			"externalReferenceCode": "EXTERNAL_REFERENCE_CODE",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "External Reference Code"
-			},
-			"localized": false,
-			"name": "externalReferenceCode",
-			"objectFieldSettings": [
-			],
-			"readOnly": "false",
-			"readOnlyConditionExpression": "",
-			"required": true,
-			"state": false,
-			"system": true,
-			"type": "String",
-			"unique": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "null",
 			"externalReferenceCode": "TITLE",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -115,77 +94,39 @@
 			"system": true,
 			"type": "String",
 			"unique": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"defaultValue": "null",
+			"externalReferenceCode": "RELATIONSHIP",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Account to AI Hub MCP Server Object Entries"
+			},
+			"name": "r_accountToAIHubMCPServers_accountEntryId",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AccountEntry"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_accountToAIHubMCPServers_accountEntryERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS",
+			"readOnly": "false",
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
 		}
 	],
 	"objectFolderExternalReferenceCode": "default",
 	"objectLayouts": [
-		{
-			"defaultObjectLayout": true,
-			"name": {
-				"en_US": "Main"
-			},
-			"objectDefinitionExternalReferenceCode": "L_AI_HUB_MCP_SERVER",
-			"objectLayoutTabs": [
-				{
-					"name": {
-						"en_US": "AI Hub MCP Server"
-					},
-					"objectLayoutBoxes": [
-						{
-							"collapsable": false,
-							"name": {
-								"en_US": "AI Hub MCP Server"
-							},
-							"objectLayoutRows": [
-								{
-									"objectLayoutColumns": [
-										{
-											"objectFieldName": "authArguments",
-											"priority": 0,
-											"size": 12
-										}
-									],
-									"priority": 0
-								},
-								{
-									"objectLayoutColumns": [
-										{
-											"objectFieldName": "externalReferenceCode",
-											"priority": 0,
-											"size": 12
-										}
-									],
-									"priority": 0
-								},
-								{
-									"objectLayoutColumns": [
-										{
-											"objectFieldName": "title",
-											"priority": 0,
-											"size": 12
-										}
-									],
-									"priority": 0
-								},
-								{
-									"objectLayoutColumns": [
-										{
-											"objectFieldName": "url",
-											"priority": 0,
-											"size": 12
-										}
-									],
-									"priority": 0
-								}
-							],
-							"priority": 0,
-							"type": "regular"
-						}
-					],
-					"priority": 0
-				}
-			]
-		}
 	],
 	"objectRelationships": [
 	],
@@ -193,13 +134,13 @@
 	],
 	"objectViews": [
 	],
-	"panelCategoryKey": "site_administration.configuration",
+	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {
 		"en_US": "AI Hub MCP Servers"
 	},
 	"portlet": true,
-	"scope": "site",
+	"scope": "company",
 	"system": true,
 	"titleObjectFieldName": "title"
 }

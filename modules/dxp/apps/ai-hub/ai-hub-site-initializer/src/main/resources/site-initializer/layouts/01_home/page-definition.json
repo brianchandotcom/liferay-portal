@@ -345,7 +345,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "<p><strong>Do you want to leave feedback? <a href=\"#\">Talk with us →</a></strong></p>"
+																		"en_US": "<p><strong>Do you want to leave feedback? <a href=\"https://www.liferay.com/contact-us\">Talk with us →</a></strong></p>"
 																	}
 																}
 															}
@@ -573,7 +573,14 @@
 																		"buttonType": "primary",
 																		"fontColor": "#ffffff",
 																		"showIcon": true,
-																		"url": "#"
+																		"url": {
+																			"layout": {
+																				"groupId": "[$GROUP_ID$]",
+																				"layoutId": "[$LAYOUT_ID:Agents$]",
+																				"privateLayout": false,
+																				"title": "Agents"
+																			}
+																		}
 																	},
 																	"fragmentFields": [
 																		{

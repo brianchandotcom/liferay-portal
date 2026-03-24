@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -510,10 +511,7 @@ public class TaxonomyVocabularyResourceImpl
 				GetterUtil.getBoolean(
 					taxonomyVocabulary.getMultiValued(), true)),
 			_getVisibilityType(taxonomyVocabulary.getVisibilityType()),
-			ServiceContextBuilder.create(
-				siteId, contextHttpServletRequest,
-				taxonomyVocabulary.getViewableByAsString()
-			).build());
+			_getServiceContext(siteId, taxonomyVocabulary));
 
 		Group group = _groupLocalService.getGroup(siteId);
 
@@ -828,6 +826,19 @@ public class TaxonomyVocabularyResourceImpl
 		return objectDefinition.getLabelCurrentLanguageId();
 	}
 
+	private ServiceContext _getServiceContext(
+		Long siteId, TaxonomyVocabulary taxonomyVocabulary) {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			siteId, contextHttpServletRequest,
+			taxonomyVocabulary.getViewableByAsString()
+		).build();
+
+		serviceContext.setUuid(taxonomyVocabulary.getUuid());
+
+		return serviceContext;
+	}
+
 	private String _getSettings(
 		AssetType[] assetTypes, long groupId, boolean multiValued) {
 
@@ -1011,6 +1022,7 @@ public class TaxonomyVocabularyResourceImpl
 
 						return GroupUtil.getSiteId(group);
 					});
+				setUuid(assetVocabulary::getUuid);
 				setVisibilityType(
 					() -> {
 						int visibilityType =

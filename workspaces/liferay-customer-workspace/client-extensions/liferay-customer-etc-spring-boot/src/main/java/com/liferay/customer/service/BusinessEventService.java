@@ -32,7 +32,12 @@ public class BusinessEventService extends BaseService {
 
 	@Scheduled(cron = "${liferay.customer.business.event.cron}")
 	public void scheduled() {
-		_updateOverdueBusinessEvents();
+		try {
+			_updateOverdueBusinessEvents();
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
 
 		_businessEventNotificationService.sendNotifications();
 	}

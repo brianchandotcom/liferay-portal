@@ -41,6 +41,7 @@ import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,12 +108,21 @@ public class ObjectEntryFolderModelListener
 			return;
 		}
 
-		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
-			null, objectEntryFolder.getCompanyId(),
-			objectEntryFolder.getUserId(),
-			objectEntryFolder.getExternalReferenceCode(),
-			objectEntryFolder.getModelClassName(), defaultPermissionsJSONObject,
-			objectEntryFolder.getGroupId(), objectEntryFolder.getTreePath());
+		if (!Objects.equals(
+				objectEntryFolder.getExternalReferenceCode(),
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS) &&
+			!Objects.equals(
+				objectEntryFolder.getExternalReferenceCode(),
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)) {
+
+			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+				null, objectEntryFolder.getCompanyId(),
+				objectEntryFolder.getUserId(),
+				objectEntryFolder.getExternalReferenceCode(),
+				objectEntryFolder.getModelClassName(),
+				defaultPermissionsJSONObject, objectEntryFolder.getGroupId(),
+				objectEntryFolder.getTreePath());
+		}
 
 		JSONObject objectEntryFoldersJSONObject =
 			defaultPermissionsJSONObject.getJSONObject("OBJECT_ENTRY_FOLDERS");

@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -194,10 +192,8 @@ public class ViewSharedWithMeSectionDisplayContext {
 				"link"),
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "view", "view-file",
-				LanguageUtil.get(_httpServletRequest, "view"), null, null, null,
-				HashMapBuilder.<String, Object>put(
-					"className", _getCMSBasicDocumentClassName()
-				).build()),
+				LanguageUtil.get(_httpServletRequest, "view"), null, null,
+				null),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
@@ -267,26 +263,6 @@ public class ViewSharedWithMeSectionDisplayContext {
 			));
 	}
 
-	private String _getCMSBasicDocumentClassName() {
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionService.
-					fetchObjectDefinitionByExternalReferenceCode(
-						"L_CMS_BASIC_DOCUMENT", _themeDisplay.getCompanyId());
-
-			if (objectDefinition != null) {
-				return objectDefinition.getClassName();
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private String _getLayoutName() {
 		Layout layout = _themeDisplay.getLayout();
 
@@ -303,9 +279,6 @@ public class ViewSharedWithMeSectionDisplayContext {
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
 		};
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewSharedWithMeSectionDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final ObjectDefinitionService _objectDefinitionService;

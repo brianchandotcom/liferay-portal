@@ -15,7 +15,7 @@
 		<tag-class>com.liferay.site.dsr.site.initializer.internal.servlet.taglib.CommentsTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>roomId</name>
+			<name>groupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

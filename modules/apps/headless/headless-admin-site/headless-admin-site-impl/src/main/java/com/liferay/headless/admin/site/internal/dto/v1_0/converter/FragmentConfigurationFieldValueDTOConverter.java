@@ -482,8 +482,8 @@ public class FragmentConfigurationFieldValueDTOConverter
 		}
 		else {
 			colorPickerFragmentConfigurationFieldValue.setValue(
-				() -> GetterUtil.getString(
-					fragmentFragmentConfigurationFieldValue));
+				() -> Objects.toString(
+					fragmentFragmentConfigurationFieldValue, null));
 		}
 
 		return colorPickerFragmentConfigurationFieldValue;
@@ -656,8 +656,8 @@ public class FragmentConfigurationFieldValueDTOConverter
 		}
 		else {
 			lengthFragmentConfigurationFieldValue.setValue(
-				() -> GetterUtil.getString(
-					fragmentFragmentConfigurationFieldValue));
+				() -> Objects.toString(
+					fragmentFragmentConfigurationFieldValue, null));
 		}
 
 		return lengthFragmentConfigurationFieldValue;
@@ -773,8 +773,8 @@ public class FragmentConfigurationFieldValueDTOConverter
 		}
 		else {
 			selectFragmentConfigurationFieldValue.setValue(
-				() -> GetterUtil.getString(
-					fragmentFragmentConfigurationFieldValue));
+				() -> Objects.toString(
+					fragmentFragmentConfigurationFieldValue, null));
 		}
 
 		return selectFragmentConfigurationFieldValue;

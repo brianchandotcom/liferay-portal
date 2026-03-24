@@ -76,6 +76,11 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
+	public void testEmptyCKEditorFile() throws Exception {
+		assertPortalInvalidatedWithEmptyFile(getProperty("ckeditor.file.path"));
+	}
+
+	@Test
 	public void testEnterpriseLicense() throws Exception {
 		String privateLicenseKey = _getCKEditorPrivateLicenseKey();
 
@@ -227,6 +232,12 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
 		_assertCKEditorConfiguration(false, privateLicenseKey);
+	}
+
+	@Test
+	public void testMissingCKEditorFile() throws Exception {
+		assertPortalInvalidatedWithMissingFile(
+			getProperty("ckeditor.file.path"));
 	}
 
 	private void _assertCKEditorConfiguration(

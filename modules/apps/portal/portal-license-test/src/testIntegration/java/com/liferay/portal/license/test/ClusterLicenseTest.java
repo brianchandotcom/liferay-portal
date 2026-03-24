@@ -338,7 +338,9 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 				PortalClassLoaderUtil.getClassLoader(),
 				getProperty("grace.period.end.field"));
 
-			field.set(null, timestamp + (5L * Time.MINUTE));
+			field.setAccessible(true);
+
+			field.setLong(null, timestamp + (5L * Time.MINUTE));
 
 			return null;
 		};

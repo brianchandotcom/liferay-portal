@@ -134,10 +134,6 @@ public class TomcatNode {
 		return _execute(clusterExecutable, _testBundleInstalled);
 	}
 
-	public int getConnectorPort() {
-		return _connectorPort;
-	}
-
 	public String getLiferayHome() {
 		return _liferayHome;
 	}

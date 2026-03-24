@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -119,31 +120,19 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	}
 
 	public void assertPortalLicenseInvalid() throws Exception {
-		String response = hitHomePage("localhost", 8080);
+		String response = hitHomePage("localhost", getLocalPort());
 
 		Assert.assertTrue(response.contains(_INVALID_LICENSE_KEY));
 	}
 
 	public void assertPortalLicenseNotRegistered() throws Exception {
-		String response = hitHomePage("localhost", 8080);
-
-		Assert.assertTrue(response.contains(_NOT_REGISTERED_LICENSE_KEY));
-	}
-
-	public void assertPortalLicenseNotRegistered(int port) throws Exception {
-		String response = hitHomePage("localhost", port);
+		String response = hitHomePage("localhost", getLocalPort());
 
 		Assert.assertTrue(response.contains(_NOT_REGISTERED_LICENSE_KEY));
 	}
 
 	public void assertPortalLicenseRegistered() throws Exception {
-		String response = hitHomePage("localhost", 8080);
-
-		Assert.assertFalse(response.contains(_LICENSE_PAGE_KEY));
-	}
-
-	public void assertPortalLicenseRegistered(int port) throws Exception {
-		String response = hitHomePage("localhost", port);
+		String response = hitHomePage("localhost", getLocalPort());
 
 		Assert.assertFalse(response.contains(_LICENSE_PAGE_KEY));
 	}
@@ -437,6 +426,16 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 	protected String getCMPProductId() {
 		return getProperty("product.id.cmp");
+	}
+
+	protected int getLocalPort() {
+		int localPort = PortalUtil.getPortalLocalPort(false);
+
+		if (localPort == -1) {
+			localPort = 8080;
+		}
+
+		return localPort;
 	}
 
 	protected String getPortalProductId() {

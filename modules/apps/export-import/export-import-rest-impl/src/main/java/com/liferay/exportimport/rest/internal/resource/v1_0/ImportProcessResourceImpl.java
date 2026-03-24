@@ -6,8 +6,15 @@
 package com.liferay.exportimport.rest.internal.resource.v1_0;
 
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.rest.dto.v1_0.ImportProcess;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
+import com.liferay.exportimport.rest.dto.v1_0.ValidationResponse;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ImportProcessResource;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
@@ -19,18 +26,29 @@ import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.staging.StagingGroupHelper;
 
+import java.io.Serializable;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -115,6 +133,54 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			pagination,
 			_backgroundTaskLocalService.dynamicQueryCount(
 				_getDynamicQuery(creatorId, siteId, search, status)));
+	}
+
+	@Override
+	public ValidationResponse postScopeScopeKeyValidate(
+			String scopeKey, MultipartBody multipartBody)
+		throws Exception {
+
+		long groupId = GetterUtil.getLong(scopeKey);
+
+		PermissionUtil.checkPermission(contextCompany.getCompanyId(), groupId);
+
+		FileEntry fileEntry = _addTempFileEntry(groupId, multipartBody);
+
+		return _validateImportLayoutsFile(groupId, fileEntry);
+	}
+
+	@Override
+	public ValidationResponse postValidate(MultipartBody multipartBody)
+		throws Exception {
+
+		long groupId = _getCompanyGroupId();
+
+		PermissionUtil.checkPermission(contextCompany.getCompanyId(), groupId);
+
+		FileEntry fileEntry = _addTempFileEntry(groupId, multipartBody);
+
+		return _validateImportLayoutsFile(groupId, fileEntry);
+	}
+
+	private FileEntry _addTempFileEntry(
+			long groupId, MultipartBody multipartBody)
+		throws Exception {
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		String folderName = ImportProcessResource.class.getName();
+
+		String[] tempFileNames = _layoutService.getTempFileNames(
+			groupId, folderName);
+
+		for (String tempFileEntryName : tempFileNames) {
+			_layoutService.deleteTempFileEntry(
+				groupId, folderName, tempFileEntryName);
+		}
+
+		return _layoutService.addTempFileEntry(
+			groupId, folderName, binaryFile.getFileName(),
+			binaryFile.getInputStream(), binaryFile.getContentType());
 	}
 
 	private List<BackgroundTask> _getBackgroundTasks(
@@ -244,14 +310,86 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		};
 	}
 
+	private ValidationResponse _toValidationResponse(String messageKey) {
+		return new ValidationResponse() {
+			{
+				setErrorMessages(
+					() -> new String[] {
+						_language.get(
+							contextAcceptLanguage.getPreferredLocale(),
+							messageKey)
+					});
+				setSuccess(() -> false);
+			}
+		};
+	}
+
+	private ValidationResponse _validateImportLayoutsFile(
+			long groupId, FileEntry fileEntry)
+		throws Exception {
+
+		Map<String, Serializable> parameterMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildImportLayoutSettingsMap(
+					contextUser.getUserId(), groupId, false, null,
+					new HashMap<>(), contextAcceptLanguage.getPreferredLocale(),
+					contextUser.getTimeZone());
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.addExportImportConfiguration(
+				contextUser.getUserId(), groupId, null, null,
+				ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+				parameterMap, new ServiceContext());
+
+		try {
+			_exportImportLocalService.validateImportLayoutsFile(
+				exportImportConfiguration, fileEntry.getContentStream());
+
+			return new ValidationResponse() {
+				{
+					setFileEntryId(fileEntry::getFileEntryId);
+					setSuccess(() -> true);
+				}
+			};
+		}
+		catch (PortalException portalException) {
+			_layoutService.deleteTempFileEntry(
+				groupId, ImportProcessResource.class.getName(),
+				fileEntry.getFileName());
+
+			JSONObject jsonObject = _staging.getExceptionMessagesJSONObject(
+				contextAcceptLanguage.getPreferredLocale(), portalException,
+				exportImportConfiguration);
+
+			return _toValidationResponse(jsonObject.getString("message"));
+		}
+		finally {
+			_exportImportConfigurationLocalService.
+				deleteExportImportConfiguration(exportImportConfiguration);
+		}
+	}
+
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
+	@Reference
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportLocalService _exportImportLocalService;
 
 	@Reference
 	private Language _language;
 
 	@Reference
+	private LayoutService _layoutService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

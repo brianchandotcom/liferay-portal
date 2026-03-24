@@ -267,8 +267,8 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 					AccountActionKeys.VIEW_ADDRESSES,
 					AccountActionKeys.VIEW_ACCOUNT_ROLES,
 					AccountActionKeys.VIEW_ORGANIZATIONS,
-					AccountActionKeys.VIEW_USERS,
-                    ActionKeys.UPDATE, ActionKeys.VIEW,
+					AccountActionKeys.VIEW_USERS, ActionKeys.UPDATE,
+					ActionKeys.VIEW,
 					CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS,
 					CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS
 				});
@@ -310,9 +310,9 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 					AccountActionKeys.VIEW_ADDRESSES,
 					AccountActionKeys.VIEW_ACCOUNT_ROLES,
 					AccountActionKeys.VIEW_ORGANIZATIONS,
-					AccountActionKeys.VIEW_USERS,
-                    ActionKeys.UPDATE, ActionKeys.VIEW,
-                    CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS,
+					AccountActionKeys.VIEW_USERS, ActionKeys.UPDATE,
+					ActionKeys.VIEW,
+					CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS,
 					CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS
 				});
 			groupResourceActionIds.put(

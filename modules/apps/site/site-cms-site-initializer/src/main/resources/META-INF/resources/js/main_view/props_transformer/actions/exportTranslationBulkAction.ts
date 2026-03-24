@@ -9,14 +9,13 @@ import {fetch} from 'frontend-js-web';
 import {
 	IBulkActionTaskStarter,
 	IBulkActionTaskStarterDTO,
-	IBulkActionType,
 } from '../../../common/types/BulkActionTask';
 import {downloadBlob} from '../../../common/utils/downloadBlob';
 import {displayErrorToast} from '../../../common/utils/toastUtil';
 import {BulkActionTaskStarter} from '../../bulk_actions_monitor/services/BulkActionTaskStarter';
 
 export async function exportTranslationBulkAction(
-	dto: IBulkActionTaskStarterDTO<keyof IBulkActionType>
+	dto: IBulkActionTaskStarterDTO<'ExportTranslationBulkAction'>
 ): Promise<void> {
 	const bulkAction: IBulkActionTaskStarter = new BulkActionTaskStarter({
 		...dto,
@@ -32,7 +31,7 @@ export async function exportTranslationBulkAction(
 	return fetch(bulkAction.postURL, {
 		body: JSON.stringify(bulkAction.payload),
 		headers: new Headers({
-			'Accept': 'application/zip',
+			'Accept': dto.keyValues?.xliffMimeType || 'application/zip',
 			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 			'Content-Type': 'application/json',
 		}),

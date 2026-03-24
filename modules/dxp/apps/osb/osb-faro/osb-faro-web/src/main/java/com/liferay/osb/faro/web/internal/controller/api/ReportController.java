@@ -6,6 +6,7 @@
 package com.liferay.osb.faro.web.internal.controller.api;
 
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
+import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.util.DateUtil;
@@ -59,18 +60,28 @@ public class ReportController extends BaseFaroController {
 
 	@GET
 	@Path("{any:(?!/export.*).*}")
-	public Map<Object, Object> get(
-			@Context GroupInfo groupInfo, @Context UriInfo uriInfo)
+	public Object get(@Context GroupInfo groupInfo, @Context UriInfo uriInfo)
 		throws Exception {
 
 		FaroProject faroProject =
 			faroProjectLocalService.getFaroProjectByGroupId(
 				groupInfo.getGroupId());
 
-		return contactsEngineClient.get(
-			faroProject, _createHeaders(uriInfo.getBaseUri()),
-			"/api/" + uriInfo.getPath(), uriInfo.getQueryParameters(),
-			Map.class);
+		try {
+			return contactsEngineClient.get(
+				faroProject, _createHeaders(uriInfo.getBaseUri()),
+				"/api/" + uriInfo.getPath(), uriInfo.getQueryParameters(),
+				Map.class);
+		}
+		catch (FaroEngineClientException faroEngineClientException) {
+			_log.error(faroEngineClientException);
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				faroEngineClientException.getMessage());
+
+			return _reportControllerResponseFactory.create(
+				jsonObject.getString("message"), jsonObject.getInt("status"));
+		}
 	}
 
 	@GET
@@ -166,6 +177,15 @@ public class ReportController extends BaseFaroController {
 					"message", "Bad Request"
 				).build()
 			).build();
+		}
+		catch (FaroEngineClientException faroEngineClientException) {
+			_log.error(faroEngineClientException);
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				faroEngineClientException.getMessage());
+
+			return _reportControllerResponseFactory.create(
+				jsonObject.getString("message"), jsonObject.getInt("status"));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

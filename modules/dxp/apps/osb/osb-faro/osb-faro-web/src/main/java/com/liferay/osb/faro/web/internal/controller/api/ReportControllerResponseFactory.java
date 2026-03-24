@@ -20,7 +20,7 @@ import java.util.Map;
 public class ReportControllerResponseFactory {
 
 	public Response create(
-		Map<String, Object> responseMap, Response.Status responseStatus) {
+		Map<String, Object> responseMap, int responseStatusCode) {
 
 		Map<String, String> stringMap = new HashMap<>();
 
@@ -49,7 +49,7 @@ public class ReportControllerResponseFactory {
 		if (!Validator.isBlank(status)) {
 			stringMap.put("status", status);
 		}
-		else if (responseStatus != Response.Status.OK) {
+		else if (responseStatusCode != Response.Status.OK.getStatusCode()) {
 			stringMap.put("status", "ERROR");
 		}
 
@@ -58,7 +58,7 @@ public class ReportControllerResponseFactory {
 		if (!Validator.isBlank(message)) {
 			stringMap.put("message", message);
 		}
-		else if (status.equals("PENDING")) {
+		else if ((status != null) && status.equals("PENDING")) {
 			String previousStatus = MapUtil.getString(
 				responseMap, "previousStatus");
 
@@ -86,13 +86,13 @@ public class ReportControllerResponseFactory {
 						"will be created. Please come back later.");
 			}
 		}
-		else if (status.equals("RUNNING")) {
+		else if ((status != null) && status.equals("RUNNING")) {
 			stringMap.put(
 				"message",
 				"The data export file for this date range and type is being " +
 					"created. Please come back later.");
 		}
-		else if (status.equals("ERROR")) {
+		else if ((status != null) && status.equals("ERROR")) {
 			stringMap.put(
 				"message",
 				"The last data export for this date range and type failed. A " +
@@ -113,19 +113,29 @@ public class ReportControllerResponseFactory {
 		}
 
 		Response.ResponseBuilder responseBuilder = Response.status(
-			responseStatus);
+			responseStatusCode);
 
 		responseBuilder.entity(stringMap);
 
 		return responseBuilder.build();
 	}
 
-	public Response create(String message, Response.Status responseStatus) {
+	public Response create(
+		Map<String, Object> responseMap, Response.Status responseStatus) {
+
+		return create(responseMap, responseStatus.getStatusCode());
+	}
+
+	public Response create(String message, int responseStatusCode) {
 		return create(
 			HashMapBuilder.<String, Object>put(
 				"message", message
 			).build(),
-			responseStatus);
+			responseStatusCode);
+	}
+
+	public Response create(String message, Response.Status responseStatus) {
+		return create(message, responseStatus.getStatusCode());
 	}
 
 }

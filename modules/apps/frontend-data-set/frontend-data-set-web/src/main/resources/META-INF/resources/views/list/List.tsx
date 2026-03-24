@@ -31,11 +31,11 @@ import {
 } from '../../utils/types';
 import ViewsContext from '../ViewsContext';
 
-const getListSectionContentRenderer = ({
-	contentRendererName,
+const getListSectionRenderer = ({
+	rendererName,
 	customRenderers,
 }: {
-	contentRendererName: string;
+	rendererName: string;
 	customRenderers:
 		| {
 				listSection?: Array<TRenderer>;
@@ -43,15 +43,15 @@ const getListSectionContentRenderer = ({
 		  }
 		| undefined;
 }) => {
-	const listSectionContentRenderer = customRenderers?.listSection?.find(
-		(renderer: TRenderer) => renderer.name === contentRendererName
+	const listSectionRenderer = customRenderers?.listSection?.find(
+		(renderer: TRenderer) => renderer.name === rendererName
 	);
 
 	if (
-		listSectionContentRenderer?.type === 'internal' &&
-		listSectionContentRenderer.component
+		listSectionRenderer?.type === 'internal' &&
+		listSectionRenderer.component
 	) {
-		return listSectionContentRenderer.component;
+		return listSectionRenderer.component;
 	}
 
 	return null;
@@ -79,8 +79,8 @@ const Title = ({
 	);
 
 	if (title) {
-		const TitleRendererComponent = getListSectionContentRenderer({
-			contentRendererName: titleRenderer,
+		const TitleRendererComponent = getListSectionRenderer({
+			rendererName: titleRenderer,
 			customRenderers,
 		});
 

@@ -108,33 +108,24 @@ public class StyleBookUtilTest {
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				_layout);
 
-		Assert.assertEquals(
+		_testGetThemeName(
+			frontendTokenDefinition, locale,
+			FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE,
 			LanguageUtil.format(
 				locale, "x-theme",
-				frontendTokenDefinition.getThemeName(locale)),
-			StyleBookUtil.getThemeName(_layout, locale));
+				frontendTokenDefinition.getThemeName(locale)));
 
-		try {
-			ReflectionTestUtil.setFieldValue(
-				frontendTokenDefinition, "_themeType",
-				FrontendTokenDefinitionConstants.THEME_TYPE_THEME_CSS_CET);
+		_testGetThemeName(
+			frontendTokenDefinition, locale,
+			FrontendTokenDefinitionConstants.THEME_TYPE_THEME_CSS_CET,
+			LanguageUtil.format(
+				locale, "x-theme-css-client-extension",
+				frontendTokenDefinition.getThemeName(locale)));
 
-			String themeName = ReflectionTestUtil.invoke(
-				StyleBookUtil.class, "_getThemeName",
-				new Class<?>[] {FrontendTokenDefinition.class, Locale.class},
-				frontendTokenDefinition, locale);
-
-			Assert.assertEquals(
-				LanguageUtil.format(
-					locale, "x-theme-css-client-extension",
-					frontendTokenDefinition.getThemeName(locale)),
-				themeName);
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				frontendTokenDefinition, "_themeType",
-				FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE);
-		}
+		_testGetThemeName(
+			frontendTokenDefinition, locale,
+			FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL,
+			frontendTokenDefinition.getThemeName(locale));
 	}
 
 	@Test
@@ -148,6 +139,31 @@ public class StyleBookUtilTest {
 		Assert.assertFalse(
 			StyleBookUtil.isThemeInactive(
 				_layout.getCompanyId(), theme.getThemeId()));
+	}
+
+	private void _testGetThemeName(
+		FrontendTokenDefinition frontendTokenDefinition, Locale locale,
+		String themeType, String expectedThemeName) {
+
+		String initialThemeType = frontendTokenDefinition.getThemeType();
+
+		try {
+			ReflectionTestUtil.setFieldValue(
+				frontendTokenDefinition, "_themeType", themeType);
+
+			Assert.assertEquals(
+				expectedThemeName,
+				ReflectionTestUtil.<String>invoke(
+					StyleBookUtil.class, "_getThemeName",
+					new Class<?>[] {
+						FrontendTokenDefinition.class, Locale.class
+					},
+					frontendTokenDefinition, locale));
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				frontendTokenDefinition, "_themeType", initialThemeType);
+		}
 	}
 
 	@Inject

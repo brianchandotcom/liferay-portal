@@ -1,0 +1,39 @@
+[
+	{
+		"assetEntrySubtypeId": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
+		"title": "Announcements",
+		"unicodeProperties": {
+			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
+			"classNameIds": "com.liferay.journal.model.JournalArticle",
+			"classTypeIds": "classTypeIdsJournalArticleAssetRendererFactory",
+			"orderBy": [
+				{
+					"key": "orderByColumn1",
+					"value": "publishDate"
+				},
+				{
+					"key": "orderByType1",
+					"value": "DESC"
+				},
+				{
+					"key": "orderByType2",
+					"value": "ASC"
+				}
+			],
+			"query": [
+				{
+					"key": "queryAndOperator",
+					"value": "true"
+				},
+				{
+					"key": "queryContains",
+					"value": "true"
+				},
+				{
+					"key": "queryName",
+					"value": "assetTags"
+				}
+			]
+		}
+	}
+]

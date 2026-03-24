@@ -85,6 +85,12 @@
 					"label": "truncate-text",
 					"name": "truncateText",
 					"type": "checkbox"
+				},
+				{
+					"label": "Test ID",
+					"localizable": false,
+					"name": "textTestId",
+					"type": "text"
 				}
 			]
 		}

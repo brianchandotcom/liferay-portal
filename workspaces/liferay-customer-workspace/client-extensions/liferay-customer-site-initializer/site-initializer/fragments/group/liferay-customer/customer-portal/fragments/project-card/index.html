@@ -76,7 +76,7 @@
 [/#if]
 
 [#if projectCount == 1]
-	<div class="d-flex mb-3 project-card-access">
+	<div class="d-flex mb-3 project-card-access" data-testid="project-card-heading">
 		<h2 class="mr-3">${languageUtil.get(locale, "your-project")}</h2>
 	</div>
 [#elseif lastViewedProjectERC?has_content]
@@ -110,9 +110,9 @@
 		<div class="project-card-container">
 			<div class="d-flex justify-content-between project-card-name-section">
 				<div>
-					<h2 class="product-title">${project.name!}</h2>
+					<h2 class="product-title" data-testid="project-card-project-name">${project.name!}</h2>
 
-					<div class="font-weight-semi-bold">${project.code!}</div>
+					<div class="font-weight-semi-bold" data-testid="project-card-project-code">${project.code!}</div>
 				</div>
 
 				<div class="d-flex">
@@ -128,7 +128,7 @@
 						</div>
 					[/#if]
 
-					<div class="project-card-button">
+					<div class="project-card-button" data-testid="project-card-team-members-button">
 						<a class="btn btn-ghost btn-inverted btn-style-neutral cp-button medium" href="${projectMembersPath}" role="button">
 							<svg class="lexicon-icon lexicon-icon-users mr-2 my-0" role="presentation">
 								<use xlink:href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#users" />
@@ -179,7 +179,7 @@
 					<div>${languageUtil.get(locale, "support-region")}: <b>${project.region!}</b></div>
 				</div>
 
-				<div class="font-weight-bold project-details-button">
+				<div class="font-weight-bold project-details-button" data-testid="project-card-project-details-button">
 					<a class="align-items-center btn btn-unstyled d-inline-flex" href="${projectDetailsPath}" role="button">
 						${languageUtil.get(locale, "see-project-details")}
 

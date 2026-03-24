@@ -7,6 +7,7 @@ import EventAnalysisListCard from '../hocs/EventAnalysisListCard';
 import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
+import {FeatureName, useLimitReached} from 'shared/hooks/useLimitReached';
 import {fetchFeatureUsages} from 'shared/api/projects';
 import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
@@ -23,7 +24,7 @@ const List = () => {
 	const {empty, error, loading} = useDataSource();
 
 	const {
-		data: usageData = [],
+		data: usageData,
 		error: usageError,
 		loading: usageLoading,
 		refetch
@@ -32,20 +33,16 @@ const List = () => {
 		variables: {groupId}
 	});
 
-	const eventAnalysisUsage = usageData?.find(
-		item => item.name === 'Event Analysis'
-	);
-
-	const hasReachedLimit =
-		eventAnalysisUsage && eventAnalysisUsage.limit !== -1
-			? eventAnalysisUsage.currentUsage >= eventAnalysisUsage.limit
-			: false;
+	const hasLimitReached = useLimitReached({
+		data: usageData,
+		featureName: FeatureName.EventAnalysis
+	});
 
 	const pageAction = [
 		{
 			button: true,
 			disabled:
-				empty || error || usageLoading || usageError || hasReachedLimit,
+				empty || error || usageLoading || usageError || hasLimitReached,
 			displayType: 'primary',
 			href: toRoute(Routes.EVENT_ANALYSIS_CREATE, {channelId, groupId}),
 			label: Liferay.Language.get('create-analysis')
@@ -74,7 +71,7 @@ const List = () => {
 					<BasePage.Header.Section>
 						<BasePage.Header.PageActions actions={pageAction} />
 
-						{hasReachedLimit && (
+						{hasLimitReached && (
 							<ClayButton
 								borderless
 								className='ml-2'

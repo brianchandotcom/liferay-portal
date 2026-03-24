@@ -7,7 +7,7 @@ liferay-customer-etc-spring-boot-oahs:
     scopes:
         -   Liferay.Headless.Admin.List.Type.everything
         -   Liferay.Headless.Admin.Taxonomy.everything
-        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Headless.Admin.User.everything
         -   Liferay.Headless.Delivery.everything
         -   Liferay.Notification.REST.everything
         -   c_accountsubscription.everything.read

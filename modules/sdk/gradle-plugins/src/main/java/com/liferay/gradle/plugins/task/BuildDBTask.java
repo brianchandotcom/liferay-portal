@@ -25,7 +25,6 @@ import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -108,9 +107,7 @@ public class BuildDBTask extends JavaExec {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("db.database.name=" + getDatabaseName());
-		args.add(
-			"db.database.types=" +
-				CollectionUtils.join(",", getDatabaseTypes()));
+		args.add("db.database.types=" + String.join(",", getDatabaseTypes()));
 		args.add("db.sql.dir=" + FileUtil.getAbsolutePath(getSqlDir()));
 
 		return args;

@@ -33,7 +33,6 @@ import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -530,11 +529,11 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.impl.dir=" + _relativize(getImplDir()));
 		args.add(
 			"service.incubation.features=" +
-				CollectionUtils.join(",", getIncubationFeatures()));
+				String.join(",", getIncubationFeatures()));
 		args.add("service.input.file=" + _relativize(getInputFile()));
 		args.add(
 			"service.model.hints.configs=" +
-				CollectionUtils.join(",", getCompleteModelHintsConfigs()));
+				String.join(",", getCompleteModelHintsConfigs()));
 
 		File modelHintsFile = _getOptionalFile(
 			getModelHintsFile(), _modelHintsFile);
@@ -546,17 +545,17 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.props.util=" + getPropsUtil());
 		args.add(
 			"service.read.only.prefixes=" +
-				CollectionUtils.join(",", getReadOnlyPrefixes()));
+				String.join(",", getReadOnlyPrefixes()));
 		args.add(
 			"service.resource.actions.configs=" +
-				CollectionUtils.join(",", getResourceActionsConfigs()));
+				String.join(",", getResourceActionsConfigs()));
 		args.add("service.resources.dir=" + _relativize(getResourcesDir()));
 		args.add(
 			"service.spring.file=" +
 				_relativize(_getOptionalFile(getSpringFile(), _springFile)));
 		args.add(
 			"service.spring.namespaces=" +
-				CollectionUtils.join(",", getSpringNamespaces()));
+				String.join(",", getSpringNamespaces()));
 		args.add("service.sql.dir=" + _relativize(getSqlDir()));
 		args.add("service.sql.file=" + getSqlFileName());
 		args.add("service.sql.indexes.file=" + getSqlIndexesFileName());

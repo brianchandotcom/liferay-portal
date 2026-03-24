@@ -69,7 +69,6 @@ import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.TestTaskReports;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 import org.gradle.process.ExecSpec;
-import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
 
 /**
@@ -1219,7 +1218,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		if (!testNames.isEmpty()) {
 			gradleSystemProperties.put(
-				"test.name", CollectionUtils.join(",", testNames));
+				"test.name", String.join(",", testNames));
 		}
 
 		ExtensionContainer extensionContainer = project.getExtensions();

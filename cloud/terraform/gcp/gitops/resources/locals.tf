@@ -25,8 +25,8 @@ locals {
 	git_repo_infrastructure_separate_from_liferay=local.infrastructure_git_repo_url != var.liferay_git_repo_url
 	infrastructure_git_repo_url=coalesce(var.infrastructure_git_repo_config.url, var.liferay_git_repo_url)
 	secret_prefixes={
-		certificates="liferay/certificates/"
-		licenses="liferay/licenses/"
+		certificates="liferay-certificates-"
+		licenses="liferay-licenses-"
 	}
 	secret_store_name="${var.deployment_name}-secret-store"
 	secret_store_provider_default={

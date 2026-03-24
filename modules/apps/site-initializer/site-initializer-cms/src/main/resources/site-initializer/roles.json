@@ -157,6 +157,16 @@
 				"scope": 1
 			},
 			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.portal.kernel.model.User",
+				"scope": 1
+			},
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.portal.kernel.model.UserGroup",
+				"scope": 1
+			},
+			{
 				"actionId": "ACCESS_IN_CONTROL_PANEL",
 				"resource": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
 				"scope": 1

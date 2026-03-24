@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@clayui/alert": "^3.159.0",
 		"@clayui/button": "^3.159.0",
+		"@clayui/core": "^3.159.0",
 		"@clayui/date-picker": "^3.159.0",
 		"@clayui/form": "^3.159.0",
 		"@clayui/icon": "^3.159.0",
@@ -10,6 +11,7 @@
 		"@clayui/loading-indicator": "^3.159.0",
 		"@clayui/modal": "^3.159.0",
 		"@clayui/multi-step-nav": "^3.159.0",
+		"@clayui/progress-bar": "^3.159.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"classnames": "2.3.1",
@@ -17,7 +19,8 @@
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"jest-fetch-mock": "3.0.3",
-		"react": "18.2.0"
+		"react": "18.2.0",
+		"react-dropzone": "11.4.2"
 	},
 	"main": "js/index.ts",
 	"name": "exportimport-web",

@@ -926,15 +926,15 @@ test(
 	'Can search users who inherit membership based on user group membership',
 	{tag: ['@LPD-82822']},
 	async ({
-			   apiHelpers,
-			   page,
-			   selectUserGroupPage,
-			   selectUserPage,
-			   site,
-			   teamsPage,
-			   userGroupsPage,
-			   usersPage,
-		   }) => {
+		apiHelpers,
+		page,
+		selectUserGroupPage,
+		selectUserPage,
+		site,
+		teamsPage,
+		userGroupsPage,
+		usersPage,
+	}) => {
 		page.on('dialog', (dialog) => dialog.accept());
 
 		const user1 = await apiHelpers.headlessAdminUser.postUserAccount({

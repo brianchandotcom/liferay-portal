@@ -288,6 +288,7 @@ public class ObjectEntryModelListenerTest {
 
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				group.getGroupId(), false);
+
 			LayoutSetPrototype layoutSetPrototype =
 				_layoutSetPrototypeLocalService.
 					fetchLayoutSetPrototypeByUuidAndCompanyId(

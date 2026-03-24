@@ -103,7 +103,6 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
@@ -1081,10 +1080,6 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		Document document = multipartBody.getValueAsNullableInstance(
 			"document", Document.class);
 
-		if (document == null) {
-			throw new BadRequestException("Document not found in body");
-		}
-
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
 		if (binaryFile == null) {
@@ -1096,37 +1091,62 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		fileEntry = _moveDocument(
 			fileEntry.getFileEntryId(), document, fileEntry);
 
-		String fileName = null;
-		String title = null;
-		String urlTitle = null;
+		String contentType = binaryFile.getContentType();
+
+		if (contentType == null) {
+			contentType = fileEntry.getMimeType();
+		}
+
 		String description = null;
 		Date displayDate = null;
 		Date expirationDate = null;
+		String fileName = null;
+		String title = null;
+		String urlTitle = null;
 
-		if (document != null) {
-			fileName = document.getFileName();
-			title = document.getTitle();
-			urlTitle = document.getFriendlyUrlPath();
+		if (document == null) {
+			description = fileEntry.getDescription();
+			displayDate = fileEntry.getDisplayDate();
+			expirationDate = fileEntry.getExpirationDate();
+
+			fileName = binaryFile.getFileName();
+
+			if (fileName == null) {
+				fileName = fileEntry.getFileName();
+			}
+
+			title = fileEntry.getTitle();
+		}
+		else {
 			description = document.getDescription();
 			displayDate = document.getDatePublished();
 			expirationDate = document.getDateExpired();
-		}
 
-		if (fileName == null) {
-			fileName = binaryFile.getFileName();
-		}
+			fileName = document.getFileName();
 
-		if (title == null) {
-			title = fileEntry.getTitle();
+			if (fileName == null) {
+				fileName = binaryFile.getFileName();
+			}
+
+			if (fileName == null) {
+				fileName = fileEntry.getFileName();
+			}
+
+			title = document.getTitle();
+
+			if (title == null) {
+				title = fileEntry.getTitle();
+			}
+
+			urlTitle = document.getFriendlyUrlPath();
 		}
 
 		return _toDocument(
 			_dlAppService.updateFileEntry(
-				fileEntry.getFileEntryId(), fileName,
-				binaryFile.getContentType(), title, urlTitle, description, null,
-				DLVersionNumberIncrease.AUTOMATIC, binaryFile.getInputStream(),
-				binaryFile.getSize(), displayDate, expirationDate,
-				fileEntry.getReviewDate(),
+				fileEntry.getFileEntryId(), fileName, contentType, title,
+				urlTitle, description, null, DLVersionNumberIncrease.AUTOMATIC,
+				binaryFile.getInputStream(), binaryFile.getSize(), displayDate,
+				expirationDate, fileEntry.getReviewDate(),
 				_createServiceContext(
 					Constants.UPDATE, () -> new Long[0], () -> new String[0],
 					_getDLFileEntryType(

@@ -127,6 +127,13 @@ public class StyleBookUtil {
 				frontendTokenDefinition.getThemeName(locale));
 		}
 
+		if (Objects.equals(
+				frontendTokenDefinition.getThemeType(),
+				FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL)) {
+
+			return frontendTokenDefinition.getThemeName(locale);
+		}
+
 		return LanguageUtil.format(
 			locale, "x-theme-css-client-extension",
 			frontendTokenDefinition.getThemeName(locale));

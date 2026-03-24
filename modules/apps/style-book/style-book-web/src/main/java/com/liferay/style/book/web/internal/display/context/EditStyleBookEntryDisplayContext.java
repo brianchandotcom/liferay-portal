@@ -15,6 +15,7 @@ import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameCom
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.item.selector.LayoutItemSelectorCriterion;
 import com.liferay.layout.item.selector.LayoutItemSelectorReturnType;
@@ -71,6 +72,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -108,7 +110,8 @@ public class EditStyleBookEntryDisplayContext {
 				"/style_book/preview_fragment_collection"
 			).buildString()
 		).put(
-			"frontendTokenDefinition", _getFrontendTokenDefinitionJSONObject()
+			"frontendTokenDefinitions",
+			_getFrontendTokenDefinitionsJSONObjects()
 		).put(
 			"frontendTokensValues",
 			() -> {
@@ -169,6 +172,8 @@ public class EditStyleBookEntryDisplayContext {
 			"saveDraftURL", _getActionURL("/style_book/edit_style_book_entry")
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
+		).put(
+			"themeFrontendTokenDefinitionId", _styleBookEntry.getThemeId()
 		).put(
 			"themeName",
 			StyleBookUtil.getThemeName(
@@ -310,19 +315,37 @@ public class EditStyleBookEntryDisplayContext {
 		return fragmentCollectionsCount + fragmentCollectionContributors.size();
 	}
 
-	private JSONObject _getFrontendTokenDefinitionJSONObject()
+	private List<JSONObject> _getFrontendTokenDefinitionsJSONObjects()
 		throws Exception {
 
-		FrontendTokenDefinition frontendTokenDefinition =
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
+		List<FrontendTokenDefinition> frontendTokenDefinitions =
+			ListUtil.filter(
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
+					_themeDisplay.getCompanyId()),
+				frontendTokenDefinition ->
+					Objects.equals(
+						frontendTokenDefinition.getThemeId(),
+						_styleBookEntry.getThemeId()) ||
+					Objects.equals(
+						frontendTokenDefinition.getThemeType(),
+						FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL));
 
-		if (frontendTokenDefinition != null) {
-			return frontendTokenDefinition.getJSONObject(
-				_themeDisplay.getLocale());
-		}
+		return TransformUtil.transform(
+			frontendTokenDefinitions,
+			frontendTokenDefinition -> {
+				JSONObject jsonObject = frontendTokenDefinition.getJSONObject(
+					_themeDisplay.getLocale());
 
-		return JSONFactoryUtil.createJSONObject();
+				jsonObject.put(
+					"id", frontendTokenDefinition.getThemeId()
+				).put(
+					"name",
+					frontendTokenDefinition.getThemeName(
+						_themeDisplay.getLocale())
+				);
+
+				return jsonObject;
+			});
 	}
 
 	private JSONObject _getOptionJSONObject(int... layoutTypes) {

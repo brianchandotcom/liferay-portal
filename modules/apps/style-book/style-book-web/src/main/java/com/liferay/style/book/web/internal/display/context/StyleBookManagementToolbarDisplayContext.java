@@ -219,6 +219,13 @@ public class StyleBookManagementToolbarDisplayContext
 
 			if (Objects.equals(
 					frontendTokenDefinition.getThemeType(),
+					FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL)) {
+
+				continue;
+			}
+
+			if (Objects.equals(
+					frontendTokenDefinition.getThemeType(),
 					FrontendTokenDefinitionConstants.
 						THEME_TYPE_THEME_CSS_CET)) {
 

@@ -52,6 +52,10 @@ html#{$cadmin-selector} {
 				overflow-y: auto;
 				padding: 16px;
 
+				.style-book-editor__sidebar-theme-info-trigger:hover {
+					background-color: $cadmin-gray-100;
+				}
+
 				.form-group-sm label {
 					font-size: 12px;
 				}

@@ -231,6 +231,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			LayoutConstants.TYPE_CONTENT, null, serviceContext);
 
 		_assertDeleteSiteSitePageProblemException(
+			"This page type cannot be modified through this endpoint",
 			layout.fetchDraftLayout(),
 			LayoutPageTemplateEntryTestUtil.
 				getBasicLayoutPageTemplateEntryLayout(serviceContext),
@@ -322,6 +323,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			LayoutConstants.TYPE_CONTENT, null, serviceContext);
 
 		_assertPatchSiteSitePageProblemException(
+			"This page type cannot be modified through this endpoint",
 			serviceContext, layout.fetchDraftLayout(),
 			LayoutPageTemplateEntryTestUtil.
 				getBasicLayoutPageTemplateEntryLayout(serviceContext),
@@ -391,17 +393,22 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					contentPageSpecification));
 
 		_assertPostSiteSitePagePageSpecificationProblemException(
+			"Page specifications cannot be applied to non-content pages",
 			LayoutTestUtil.addTypePortletLayout(testGroup));
 		_assertPostSiteSitePagePageSpecificationProblemException(
+			null,
 			LayoutPageTemplateEntryTestUtil.
 				getBasicLayoutPageTemplateEntryLayout(serviceContext));
 		_assertPostSiteSitePagePageSpecificationProblemException(
+			"Page specifications cannot be applied to non-content pages",
 			LayoutPageTemplateEntryTestUtil.
 				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext));
 		_assertPostSiteSitePagePageSpecificationProblemException(
+			null,
 			LayoutPageTemplateEntryTestUtil.
 				getMasterLayoutPageTemplateEntryLayout(serviceContext));
 		_assertPostSiteSitePagePageSpecificationProblemException(
+			null,
 			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
 				serviceContext));
 	}
@@ -454,6 +461,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			LayoutConstants.TYPE_CONTENT, null, serviceContext);
 
 		_assertPutSiteSitePageProblemException(
+			"This page type cannot be modified through this endpoint",
 			serviceContext, layout.fetchDraftLayout(),
 			LayoutPageTemplateEntryTestUtil.
 				getBasicLayoutPageTemplateEntryLayout(serviceContext),
@@ -728,12 +736,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePage.getPageSettings() instanceof ContentPageSettings);
 	}
 
-	private void _assertDeleteSiteSitePageProblemException(Layout... layouts)
+	private void _assertDeleteSiteSitePageProblemException(
+			String expectedTitle, Layout... layouts)
 		throws Exception {
 
 		for (Layout layout : layouts) {
 			_assertProblemException(
-				null,
+				expectedTitle,
 				() -> sitePageResource.deleteSiteSitePage(
 					testGroup.getExternalReferenceCode(),
 					layout.getExternalReferenceCode()));
@@ -1019,33 +1028,36 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _assertPatchSiteSitePageProblemException(
-			ServiceContext serviceContext, Layout... layouts)
+			String expectedTitle, ServiceContext serviceContext,
+			Layout... layouts)
 		throws Exception {
 
 		for (Layout layout : layouts) {
 			_assertPatchSiteSitePageProblemException(
+				expectedTitle,
 				_getRandomSitePage(
 					layout.getExternalReferenceCode(), null, serviceContext,
 					SitePage.Type.CONTENT_PAGE, layout.getUuid()));
 		}
 	}
 
-	private void _assertPatchSiteSitePageProblemException(SitePage sitePage)
+	private void _assertPatchSiteSitePageProblemException(
+			String expectedTitle, SitePage sitePage)
 		throws Exception {
 
 		_assertProblemException(
-			null,
+			expectedTitle,
 			() -> sitePageResource.patchSiteSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _assertPostSiteSitePagePageSpecificationProblemException(
-			Layout layout)
+			String expectedTitle, Layout layout)
 		throws Exception {
 
 		_assertProblemException(
-			null,
+			expectedTitle,
 			() -> sitePageResource.postSiteSitePagePageSpecification(
 				testGroup.getExternalReferenceCode(),
 				layout.getExternalReferenceCode(),
@@ -1084,22 +1096,25 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _assertPutSiteSitePageProblemException(
-			ServiceContext serviceContext, Layout... layouts)
+			String expectedTitle, ServiceContext serviceContext,
+			Layout... layouts)
 		throws Exception {
 
 		for (Layout layout : layouts) {
 			_assertPutSiteSitePageProblemException(
+				expectedTitle,
 				_getRandomSitePage(
 					layout.getExternalReferenceCode(), null, serviceContext,
 					SitePage.Type.CONTENT_PAGE, layout.getUuid()));
 		}
 	}
 
-	private void _assertPutSiteSitePageProblemException(SitePage sitePage)
+	private void _assertPutSiteSitePageProblemException(
+			String expectedTitle, SitePage sitePage)
 		throws Exception {
 
 		_assertProblemException(
-			null,
+			expectedTitle,
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode(), false, sitePage));
@@ -2118,6 +2133,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			});
 
 		_assertPatchSiteSitePageProblemException(
+			"The page type does not match the target page type",
 			_getRandomSitePage(
 				sitePage.getExternalReferenceCode(), null, serviceContext,
 				_getRandomType(
@@ -2645,7 +2661,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				StringUtil.toLowerCase(RandomTestUtil.randomString())));
 
 		_assertProblemException(
-			null,
+			"The private page setting does not match the target page's privacy",
 			() -> sitePageResource.postSiteSitePage(
 				testGroup.getExternalReferenceCode(), !privateLayout,
 				_getRandomSitePage(
@@ -2937,13 +2953,23 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
 			putSitePage);
 
+		String expectedTitle =
+			"The page type does not match the target page type";
+
+		if (privateLayout) {
+			expectedTitle =
+				"The private page setting does not match the target page's " +
+					"privacy";
+		}
+
 		_assertPutSiteSitePageProblemException(
+			expectedTitle,
 			_getRandomSitePage(
-				sitePage.getExternalReferenceCode(), null, serviceContext,
+				putSitePage.getExternalReferenceCode(), null, serviceContext,
 				_getRandomType(
 					ListUtil.filter(
 						_types, curType -> !Objects.equals(curType, type))),
-				sitePage.getUuid()));
+				putSitePage.getUuid()));
 	}
 
 	private void _testPutSiteSitePage(

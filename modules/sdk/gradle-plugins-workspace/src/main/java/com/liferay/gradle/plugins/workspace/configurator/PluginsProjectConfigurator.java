@@ -42,7 +42,6 @@ import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
-import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -195,7 +194,12 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 		if (dirs.size() == 1) {
 			return _addRootTaskUpgradePluginsSDK(
 				project, UPGRADE_PLUGINS_SDK_TASK_NAME,
-				CollectionUtils.first(dirs), pluginsSDKConfiguration);
+				dirs.stream(
+				).findFirst(
+				).orElse(
+					null
+				),
+				pluginsSDKConfiguration);
 		}
 
 		Task task = project.task(UPGRADE_PLUGINS_SDK_TASK_NAME);

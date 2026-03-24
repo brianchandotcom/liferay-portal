@@ -67,7 +67,6 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.TaskProvider;
-import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -879,9 +878,15 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					Delete cleanArtifactsPublishCommandsDelete =
 						cleanArtifactsPublishCommandsTaskProvider.get();
 
+					Set<Object> deletePaths =
+						cleanArtifactsPublishCommandsDelete.getDelete();
+
 					writeArtifactPublishCommandsTask.setOutputDir(
-						CollectionUtils.first(
-							cleanArtifactsPublishCommandsDelete.getDelete()));
+						deletePaths.stream(
+						).findFirst(
+						).orElse(
+							null
+						));
 
 					_configureTaskWriteArtifactPublishCommandsOnlyIf(
 						project, writeArtifactPublishCommandsTask,
@@ -1058,10 +1063,16 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					Delete cleanArtifactsPublishCommandsDelete =
 						cleanArtifactsPublishCommandsTaskProvider.get();
 
+					Set<Object> deletePaths =
+						cleanArtifactsPublishCommandsDelete.getDelete();
+
 					File dir = GradleUtil.toFile(
 						currentProject,
-						CollectionUtils.first(
-							cleanArtifactsPublishCommandsDelete.getDelete()));
+						deletePaths.stream(
+						).findFirst(
+						).orElse(
+							null
+						));
 
 					mergeArtifactsPublishCommandsMergeFilesTask.doLast(
 						new Action<Task>() {

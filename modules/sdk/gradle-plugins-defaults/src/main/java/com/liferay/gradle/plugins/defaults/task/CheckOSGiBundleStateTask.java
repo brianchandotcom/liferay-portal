@@ -26,7 +26,6 @@ import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.CollectionUtils;
 
 import org.osgi.jmx.framework.BundleStateMBean;
 
@@ -59,7 +58,12 @@ public class CheckOSGiBundleStateTask extends DefaultTask {
 				null);
 
 			BundleStateMBean bundleStateMBean = JMX.newMBeanProxy(
-				mBeanServerConnection, CollectionUtils.first(objectNames),
+				mBeanServerConnection,
+				objectNames.stream(
+				).findFirst(
+				).orElse(
+					null
+				),
 				BundleStateMBean.class);
 
 			TabularData tabularData = bundleStateMBean.listBundles();

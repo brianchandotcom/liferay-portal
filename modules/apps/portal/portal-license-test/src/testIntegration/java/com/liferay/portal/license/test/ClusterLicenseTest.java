@@ -293,7 +293,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		_testConsoleMessageListener.assertMessageListened(messageFuture6);
 
-		TomcatNode tomcatNode7 = _startTomcatNode();
+		TomcatNode tomcatNode7 = _startTomcatNode(clusterExecutable);
 
 		Future<String> messageFuture7 = _testConsoleMessageListener.register(
 			tomcatNode7.getNodeId(), _CONSOLE_KEY_BEYOND_TEMPORARY_NODE,

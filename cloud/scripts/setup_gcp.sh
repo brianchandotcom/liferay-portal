@@ -137,13 +137,15 @@ function _set_up_gcp_gke {
 }
 
 function _set_up_gcp_gitops {
-	_pushd "${_ROOT_CLOUD_DIR}/terraform/gcp/gitops/platform"
+	_pushd "${_ROOT_CLOUD_DIR}/terraform/gcp/gitops"
 
-	echo "Setting up the Google GCP GitOps platform."
+	echo "Setting up the Google GCP GitOps infrastructure."
 
-	_terraform_init_and_apply "." "${1}"
+	_terraform_init_and_apply "./platform" "${1}"
 
-	echo "Google GCP GitOps platform setup complete."
+	_terraform_init_and_apply "./resources" "${1}"
+
+	echo "Google GCP GitOps infrastructure setup complete."
 
 	_popd
 }

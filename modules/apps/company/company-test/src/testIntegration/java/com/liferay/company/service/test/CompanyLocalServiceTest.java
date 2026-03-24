@@ -1642,18 +1642,16 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	private void _testUpdateMaxUsers(int maxUsers)
-		throws Exception {
-
+	private void _testUpdateMaxUsers(int maxUsers) throws Exception {
 		int originalMaxUsers = _company.getMaxUsers();
 
 		try (SafeCloseable safeCloseable =
-				 CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					 _company.getCompanyId())) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
 
 			_companyLocalService.updateCompany(
-				_company.getCompanyId(), _company.getVirtualHostname(), _company.getMx(),
-				maxUsers, _company.isActive());
+				_company.getCompanyId(), _company.getVirtualHostname(),
+				_company.getMx(), maxUsers, _company.isActive());
 
 			_company = _companyLocalService.getCompany(_company.getCompanyId());
 
@@ -1663,7 +1661,9 @@ public class CompanyLocalServiceTest {
 			if (_log.isDebugEnabled()) {
 				_log.debug(companyMaxUsersException);
 			}
+
 			_company = _companyLocalService.getCompany(_company.getCompanyId());
+
 			Assert.assertEquals(originalMaxUsers, _company.getMaxUsers());
 		}
 		finally {

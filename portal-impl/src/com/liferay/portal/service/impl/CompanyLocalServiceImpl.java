@@ -1982,7 +1982,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				"Max users should be equal or greater than 0");
 		}
 	}
-	
+
 	protected void validateMx(long companyId, String mx)
 		throws PortalException {
 

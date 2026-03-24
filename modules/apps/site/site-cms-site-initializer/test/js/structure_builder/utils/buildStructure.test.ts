@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	ObjectDefinition,
+	ObjectField,
+} from '../../../../src/main/resources/META-INF/resources/js/common/types/ObjectDefinition';
 import buildObjectDefinition from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildObjectDefinition';
 import buildStructure from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildStructure';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
@@ -174,6 +178,46 @@ function getChildren(fields: Field[]) {
 	return children;
 }
 
+function createObjectField(overrides: Partial<ObjectField> = {}): ObjectField {
+	return {
+		DBType: 'String',
+		businessType: 'Text',
+		externalReferenceCode: 'TEST',
+		indexed: false,
+		label: {en_US: 'Test'},
+		localized: false,
+		name: 'test',
+		required: false,
+		system: false,
+		...overrides,
+	} as ObjectField;
+}
+
+function createObjectDefinition(
+	overrides: Partial<ObjectDefinition> = {}
+): ObjectDefinition {
+	return {
+		enableComments: true,
+		enableFriendlyURLCustomization: true,
+		enableIndexSearch: true,
+		enableLocalization: true,
+		enableObjectEntryDraft: true,
+		enableObjectEntryHistory: true,
+		enableObjectEntrySchedule: true,
+		enableObjectEntryVersioning: true,
+		externalReferenceCode: 'TEST_ERC',
+		label: {en_US: 'Test'},
+		pluralLabel: {en_US: 'Tests'},
+		scope: 'depot',
+		status: {code: 0},
+		...overrides,
+	};
+}
+
+function getChildFieldNames(structure: ReturnType<typeof buildStructure>) {
+	return Array.from(structure.children.values()).map((child) => child.name);
+}
+
 describe('buildStructure', () => {
 	it('Maps object field business types to structure field types', () => {
 		const objectDefinition = buildObjectDefinition({
@@ -201,5 +245,140 @@ describe('buildStructure', () => {
 				expect.objectContaining({type})
 			);
 		}
+	});
+
+	it('Includes allowed system fields for L_CMS_BLOG and filters unknown ones', () => {
+		const objectDefinition = createObjectDefinition({
+			externalReferenceCode: 'L_CMS_BLOG',
+			objectFields: [
+				createObjectField({
+					externalReferenceCode: 'TITLE',
+					name: 'title',
+					system: true,
+				}),
+				createObjectField({
+					businessType: 'RichText',
+					externalReferenceCode: 'CONTENT',
+					name: 'content',
+					system: true,
+				}),
+				createObjectField({
+					externalReferenceCode: 'SUBTITLE',
+					name: 'subtitle',
+					system: true,
+				}),
+				createObjectField({
+					businessType: 'Attachment',
+					externalReferenceCode: 'COVER_IMAGE',
+					name: 'coverImage',
+					system: true,
+				}),
+				createObjectField({
+					externalReferenceCode: 'UNKNOWN_SYSTEM',
+					name: 'unknownSystemField',
+					system: true,
+				}),
+				createObjectField({
+					externalReferenceCode: 'CUSTOM',
+					name: 'customField',
+					system: false,
+				}),
+			],
+		});
+
+		const structure = buildStructure({
+			mainObjectDefinition: objectDefinition,
+			objectDefinitions: {},
+		});
+
+		const fieldNames = getChildFieldNames(structure);
+
+		expect(fieldNames).toContain('title');
+		expect(fieldNames).toContain('content');
+		expect(fieldNames).toContain('subtitle');
+		expect(fieldNames).toContain('coverImage');
+		expect(fieldNames).toContain('customField');
+		expect(fieldNames).not.toContain('unknownSystemField');
+	});
+
+	it('Includes allowed system fields for L_CMS_EXTERNAL_VIDEO and filters unknown ones', () => {
+		const objectDefinition = createObjectDefinition({
+			externalReferenceCode: 'L_CMS_EXTERNAL_VIDEO',
+			objectFields: [
+				createObjectField({
+					externalReferenceCode: 'TITLE',
+					name: 'title',
+					system: true,
+				}),
+				createObjectField({
+					externalReferenceCode: 'VIDEO_URL',
+					name: 'videoURL',
+					system: true,
+				}),
+				createObjectField({
+					externalReferenceCode: 'CONTENT',
+					name: 'content',
+					system: true,
+				}),
+			],
+		});
+
+		const structure = buildStructure({
+			mainObjectDefinition: objectDefinition,
+			objectDefinitions: {},
+		});
+
+		const fieldNames = getChildFieldNames(structure);
+
+		expect(fieldNames).toContain('title');
+		expect(fieldNames).toContain('videoURL');
+		expect(fieldNames).not.toContain('content');
+	});
+
+	it('Includes only title and file system fields for custom object definitions', () => {
+		const objectDefinition = createObjectDefinition({
+			externalReferenceCode: 'CUSTOM_OBJECT_ERC',
+			objectFields: [
+				createObjectField({
+					externalReferenceCode: 'TITLE',
+					name: 'title',
+					system: true,
+				}),
+				createObjectField({
+					businessType: 'Attachment',
+					externalReferenceCode: 'FILE',
+					name: 'file',
+					system: true,
+				}),
+				createObjectField({
+					externalReferenceCode: 'CONTENT',
+					name: 'content',
+					system: true,
+				}),
+				createObjectField({
+					externalReferenceCode: 'VIDEO_URL',
+					name: 'videoURL',
+					system: true,
+				}),
+				createObjectField({
+					externalReferenceCode: 'CUSTOM',
+					name: 'customField',
+					system: false,
+				}),
+			],
+		});
+
+		const structure = buildStructure({
+			mainObjectDefinition: objectDefinition,
+			objectDefinitions: {},
+		});
+
+		const fieldNames = getChildFieldNames(structure);
+
+		expect(fieldNames).toContain('title');
+		expect(fieldNames).toContain('file');
+		expect(fieldNames).toContain('customField');
+		expect(fieldNames).not.toContain('content');
+		expect(fieldNames).not.toContain('videoURL');
 	});
 });

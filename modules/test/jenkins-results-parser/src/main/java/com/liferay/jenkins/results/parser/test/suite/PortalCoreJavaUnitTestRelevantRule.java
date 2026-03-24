@@ -41,7 +41,7 @@ public class PortalCoreJavaUnitTestRelevantRule extends RelevantRule {
 		for (File modifiedDir : modifiedDirsList) {
 			String modifiedDirName = modifiedDir.getName();
 
-			if (_portalCoreDirs.contains(modifiedDirName)) {
+			if (_portalCoreDirNames.contains(modifiedDirName)) {
 				modifiedDirNames.add(modifiedDirName);
 			}
 		}
@@ -60,7 +60,7 @@ public class PortalCoreJavaUnitTestRelevantRule extends RelevantRule {
 		return testScriptCommands;
 	}
 
-	private static final Set<String> _portalCoreDirs = new HashSet<>(
+	private static final Set<String> _portalCoreDirNames = new HashSet<>(
 		Arrays.asList(
 			"portal-impl", "portal-kernel", "portal-test", "portal-web",
 			"support-tomcat", "util-bridges", "util-java", "util-slf4j",

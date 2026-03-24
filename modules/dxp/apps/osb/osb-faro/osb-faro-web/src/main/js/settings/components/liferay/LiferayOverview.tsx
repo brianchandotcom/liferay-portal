@@ -14,7 +14,7 @@ import {ClayInput} from '@clayui/form';
 import {close, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {ConnectLiferayDXPTokenFragment} from './ConnectLiferayDXPTokenFragment';
+import {CopyInputValue} from '../CopyInputValue';
 import {DataSource} from 'shared/util/records';
 import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
 import {DataSourceStatuses} from 'shared/util/constants';
@@ -233,10 +233,10 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 								</div>
 							</label>
 
-							<ConnectLiferayDXPTokenFragment
+							<CopyInputValue
 								addAlert={addAlert}
 								disabled={false}
-								token={token}
+								value={token}
 							/>
 						</>
 					)}

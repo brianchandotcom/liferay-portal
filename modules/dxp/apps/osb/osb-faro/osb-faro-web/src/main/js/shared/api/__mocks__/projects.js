@@ -39,3 +39,5 @@ export const fetchMany = jest.fn(() =>
 export const search = jest.fn(() =>
 	Promise.resolve(data.mockSearch(data.mockProject))
 );
+
+export const fetchFeatureUsages = jest.fn(() => Promise.resolve({}));

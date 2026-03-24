@@ -113,7 +113,7 @@ exports[`List should render 1`] = `
                         class="dropdown dropdown-root mr-2"
                       >
                         <button
-                          aria-controls="clay-dropdown-menu-1"
+                          aria-controls="clay-dropdown-menu-25"
                           aria-expanded="false"
                           aria-haspopup="true"
                           class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
@@ -155,7 +155,7 @@ exports[`List should render 1`] = `
                         class="dropdown dropdown-root"
                       >
                         <button
-                          aria-controls="clay-dropdown-menu-3"
+                          aria-controls="clay-dropdown-menu-27"
                           aria-expanded="false"
                           aria-haspopup="true"
                           class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
@@ -240,28 +240,32 @@ exports[`List should render 1`] = `
                       role="presentation"
                     >
                       <div
-                        class="dropdown"
+                        class="d-flex align-items-center"
                       >
-                        <button
-                          aria-controls="clay-dropdown-menu-4"
-                          aria-expanded="false"
-                          aria-haspopup="true"
-                          aria-label="Menu"
-                          class="dropdown-toggle button-root nav-btn p-2 rounded-lg btn btn-primary"
-                          type="button"
+                        <div
+                          class="dropdown"
                         >
-                          <span>
-                            New Segment
-                          </span>
-                          <svg
-                            class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
-                            role="presentation"
+                          <button
+                            aria-controls="clay-dropdown-menu-28"
+                            aria-expanded="false"
+                            aria-haspopup="true"
+                            aria-label="Menu"
+                            class="dropdown-toggle button-root p-2 rounded-lg btn btn-sm btn-primary"
+                            type="button"
                           >
-                            <use
-                              href="#caret-bottom"
-                            />
-                          </svg>
-                        </button>
+                            <span>
+                              New Segment
+                            </span>
+                            <svg
+                              class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
+                              role="presentation"
+                            >
+                              <use
+                                href="#caret-bottom"
+                              />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     </li>
                   </ul>
@@ -630,7 +634,7 @@ exports[`List should render 1`] = `
                             class="dropdown dropdown-action"
                           >
                             <button
-                              aria-controls="clay-dropdown-menu-5"
+                              aria-controls="clay-dropdown-menu-29"
                               aria-expanded="false"
                               aria-haspopup="true"
                               aria-label="Menu"
@@ -664,7 +668,7 @@ exports[`List should render 1`] = `
                   class="dropdown dropdown-root pagination-items-per-page"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-6"
+                    aria-controls="clay-dropdown-menu-30"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle button-root btn btn-sm btn-secondary"

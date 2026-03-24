@@ -72,10 +72,14 @@ public class OAuthClientASLocalMetadataCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", oAuthClientASLocalMetadataId=");
 		sb.append(oAuthClientASLocalMetadataId);
 		sb.append(", companyId=");
@@ -111,6 +115,22 @@ public class OAuthClientASLocalMetadataCacheModel
 			new OAuthClientASLocalMetadataImpl();
 
 		oAuthClientASLocalMetadataImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			oAuthClientASLocalMetadataImpl.setUuid("");
+		}
+		else {
+			oAuthClientASLocalMetadataImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			oAuthClientASLocalMetadataImpl.setExternalReferenceCode("");
+		}
+		else {
+			oAuthClientASLocalMetadataImpl.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+
 		oAuthClientASLocalMetadataImpl.setOAuthClientASLocalMetadataId(
 			oAuthClientASLocalMetadataId);
 		oAuthClientASLocalMetadataImpl.setCompanyId(companyId);
@@ -189,6 +209,8 @@ public class OAuthClientASLocalMetadataCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		oAuthClientASLocalMetadataId = objectInput.readLong();
 
@@ -210,6 +232,20 @@ public class OAuthClientASLocalMetadataCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(oAuthClientASLocalMetadataId);
 
@@ -266,6 +302,8 @@ public class OAuthClientASLocalMetadataCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
+	public String externalReferenceCode;
 	public long oAuthClientASLocalMetadataId;
 	public long companyId;
 	public long userId;
@@ -280,4 +318,4 @@ public class OAuthClientASLocalMetadataCacheModel
 	public String oAuthASMetadataJSON;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1301188829
+// LIFERAY-SERVICE-BUILDER-HASH:-1542087760

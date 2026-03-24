@@ -29,6 +29,12 @@ public class OAuthClientASLocalMetadataTable
 	public final Column<OAuthClientASLocalMetadataTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<OAuthClientASLocalMetadataTable, String> uuid =
+		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<OAuthClientASLocalMetadataTable, String>
+		externalReferenceCode = createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<OAuthClientASLocalMetadataTable, Long>
 		oAuthClientASLocalMetadataId = createColumn(
 			"oAuthClientASLocalMetadataId", Long.class, Types.BIGINT,
@@ -75,4 +81,4 @@ public class OAuthClientASLocalMetadataTable
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2113345096
+// LIFERAY-SERVICE-BUILDER-HASH:593670583

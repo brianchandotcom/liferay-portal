@@ -239,6 +239,27 @@ public class OAuthClientEntryLocalServiceUtil {
 			companyId, authServerWellKnownURI, clientId);
 	}
 
+	public static OAuthClientEntry fetchOAuthClientEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchOAuthClientEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the o auth client entry with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
+	 */
+	public static OAuthClientEntry fetchOAuthClientEntryByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchOAuthClientEntryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -257,6 +278,14 @@ public class OAuthClientEntryLocalServiceUtil {
 		long companyId) {
 
 		return getService().getCompanyOAuthClientEntries(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static
@@ -311,6 +340,30 @@ public class OAuthClientEntryLocalServiceUtil {
 
 		return getService().getOAuthClientEntry(
 			companyId, authServerWellKnownURI, clientId);
+	}
+
+	public static OAuthClientEntry getOAuthClientEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getOAuthClientEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the o auth client entry with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client entry
+	 * @throws PortalException if a matching o auth client entry could not be found
+	 */
+	public static OAuthClientEntry getOAuthClientEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getOAuthClientEntryByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	/**
@@ -377,4 +430,4 @@ public class OAuthClientEntryLocalServiceUtil {
 			OAuthClientEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1196147734
+// LIFERAY-SERVICE-BUILDER-HASH:1154000020

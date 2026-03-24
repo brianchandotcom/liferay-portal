@@ -5,10 +5,12 @@
 
 package com.liferay.oauth.client.persistence.service;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -210,6 +212,21 @@ public interface OAuthClientEntryLocalService
 		long companyId, String authServerWellKnownURI, String clientId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthClientEntry fetchOAuthClientEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
+	/**
+	 * Returns the o auth client entry with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthClientEntry fetchOAuthClientEntryByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -219,6 +236,10 @@ public interface OAuthClientEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuthClientEntry> getCompanyOAuthClientEntries(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -261,6 +282,24 @@ public interface OAuthClientEntryLocalService
 			long companyId, String authServerWellKnownURI, String clientId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthClientEntry getOAuthClientEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	/**
+	 * Returns the o auth client entry with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client entry
+	 * @throws PortalException if a matching o auth client entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuthClientEntry getOAuthClientEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -301,4 +340,4 @@ public interface OAuthClientEntryLocalService
 		OAuthClientEntry oAuthClientEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-412152741
+// LIFERAY-SERVICE-BUILDER-HASH:-1275340058

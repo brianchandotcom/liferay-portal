@@ -5,6 +5,11 @@
 
 package com.liferay.oauth.client.persistence.service.base;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
 import com.liferay.oauth.client.persistence.service.persistence.OAuthClientASLocalMetadataPersistence;
@@ -17,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
@@ -254,6 +261,41 @@ public abstract class OAuthClientASLocalMetadataLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the o auth client as local metadata with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client as local metadata's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata
+		fetchOAuthClientASLocalMetadataByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return oAuthClientASLocalMetadataPersistence.fetchByUuid_C_First(
+			uuid, companyId, null);
+	}
+
+	@Override
+	public OAuthClientASLocalMetadata
+		fetchOAuthClientASLocalMetadataByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return oAuthClientASLocalMetadataPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return oAuthClientASLocalMetadataPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	/**
 	 * Returns the o auth client as local metadata with the primary key.
 	 *
 	 * @param oAuthClientASLocalMetadataId the primary key of the o auth client as local metadata
@@ -316,6 +358,75 @@ public abstract class OAuthClientASLocalMetadataLocalServiceBaseImpl
 			"oAuthClientASLocalMetadataId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
+
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
+
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+				}
+
+			});
+
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<OAuthClientASLocalMetadata>() {
+
+				@Override
+				public void performAction(
+						OAuthClientASLocalMetadata oAuthClientASLocalMetadata)
+					throws PortalException {
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, oAuthClientASLocalMetadata);
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				PortalUtil.getClassNameId(
+					OAuthClientASLocalMetadata.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -358,6 +469,24 @@ public abstract class OAuthClientASLocalMetadataLocalServiceBaseImpl
 
 		return oAuthClientASLocalMetadataPersistence.findByPrimaryKey(
 			primaryKeyObj);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client as local metadata's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client as local metadata
+	 * @throws PortalException if a matching o auth client as local metadata could not be found
+	 */
+	@Override
+	public OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByUuidAndCompanyId(
+				String uuid, long companyId)
+		throws PortalException {
+
+		return oAuthClientASLocalMetadataPersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**
@@ -488,4 +617,4 @@ public abstract class OAuthClientASLocalMetadataLocalServiceBaseImpl
 		OAuthClientASLocalMetadataLocalServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-251135538
+// LIFERAY-SERVICE-BUILDER-HASH:-1979497271

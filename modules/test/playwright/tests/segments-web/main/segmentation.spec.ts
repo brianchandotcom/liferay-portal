@@ -79,15 +79,29 @@ test(
 			);
 
 			await usersAndOrganizationsPage.goToOrganizations();
-			await (
-				await usersAndOrganizationsPage.organizationsTable.rowActions(
-					organizationName
-				)
-			).click();
+
+			await expect(async () => {
+				await (
+					await usersAndOrganizationsPage.organizationsTable.rowActions(
+						organization.name
+					)
+				).click();
+
+				await expect(
+					usersAndOrganizationsPage.editOrganizationMenuItem
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
+
 			await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
 			await editOrganizationPage.countrySelect.selectOption('Spain');
 			await editOrganizationPage.regionSelect.selectOption('Madrid');
 			await editOrganizationPage.saveButton.click();
+
+			await waitForAlert(
+				page,
+				'Success:Your request completed successfully.'
+			);
 		});
 
 		await test.step('When a segment designer adds a segment and checks the user belongs to the segment', async () => {

@@ -134,8 +134,20 @@ public class CompanyDataCleanupPreupgradeProcessTest
 				"insert into ", tableName,
 				" (companyId, groupId, id_) values (null, ", groupId, ", 2)"));
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				CompanyDataCleanupPreupgradeProcess.class.getName(),
+				LoggerTestUtil.INFO)) {
+
 			upgrade();
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertTrue(
+				messages.contains(
+					StringBundler.concat(
+						"Table ", _dbInspector.normalizeName(tableName),
+						", 2 rows updated column companyId because it could ",
+						"be populated from table Group_")));
 
 			try (PreparedStatement preparedStatement =
 					_connection.prepareStatement(

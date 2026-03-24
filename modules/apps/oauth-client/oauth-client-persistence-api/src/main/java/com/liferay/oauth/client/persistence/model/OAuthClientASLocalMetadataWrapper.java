@@ -5,6 +5,7 @@
 
 package com.liferay.oauth.client.persistence.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -37,6 +38,8 @@ public class OAuthClientASLocalMetadataWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put(
 			"oAuthClientASLocalMetadataId", getOAuthClientASLocalMetadataId());
 		attributes.put("companyId", getCompanyId());
@@ -61,6 +64,19 @@ public class OAuthClientASLocalMetadataWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long oAuthClientASLocalMetadataId = (Long)attributes.get(
@@ -163,6 +179,16 @@ public class OAuthClientASLocalMetadataWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the external reference code of this o auth client as local metadata.
+	 *
+	 * @return the external reference code of this o auth client as local metadata
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -296,6 +322,16 @@ public class OAuthClientASLocalMetadataWrapper
 	}
 
 	/**
+	 * Returns the uuid of this o auth client as local metadata.
+	 *
+	 * @return the uuid of this o auth client as local metadata
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
+	/**
 	 * Returns <code>true</code> if this o auth client as local metadata is local well known enabled.
 	 *
 	 * @return <code>true</code> if this o auth client as local metadata is local well known enabled; <code>false</code> otherwise
@@ -328,6 +364,16 @@ public class OAuthClientASLocalMetadataWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the external reference code of this o auth client as local metadata.
+	 *
+	 * @param externalReferenceCode the external reference code of this o auth client as local metadata
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -462,9 +508,24 @@ public class OAuthClientASLocalMetadataWrapper
 		model.setUserUuid(userUuid);
 	}
 
+	/**
+	 * Sets the uuid of this o auth client as local metadata.
+	 *
+	 * @param uuid the uuid of this o auth client as local metadata
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override
@@ -476,4 +537,4 @@ public class OAuthClientASLocalMetadataWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:238113746
+// LIFERAY-SERVICE-BUILDER-HASH:1416264339

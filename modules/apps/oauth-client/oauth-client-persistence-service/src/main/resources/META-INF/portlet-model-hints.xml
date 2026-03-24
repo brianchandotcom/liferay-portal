@@ -3,6 +3,8 @@
 <model-hints>
 	<model name="com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="oAuthClientASLocalMetadataId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -26,6 +28,8 @@
 	</model>
 	<model name="com.liferay.oauth.client.persistence.model.OAuthClientEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="oAuthClientEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

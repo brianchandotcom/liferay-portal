@@ -6,10 +6,11 @@
 package com.liferay.oauth.client.persistence.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
 
@@ -28,7 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface OAuthClientEntryModel
-	extends AuditedModel, BaseModel<OAuthClientEntry>, MVCCModel, ShardedModel {
+	extends BaseModel<OAuthClientEntry>, ExternalReferenceCodeModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -65,6 +67,40 @@ public interface OAuthClientEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the uuid of this o auth client entry.
+	 *
+	 * @return the uuid of this o auth client entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this o auth client entry.
+	 *
+	 * @param uuid the uuid of this o auth client entry
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this o auth client entry.
+	 *
+	 * @return the external reference code of this o auth client entry
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this o auth client entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this o auth client entry
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the o auth client entry ID of this o auth client entry.
@@ -320,4 +356,4 @@ public interface OAuthClientEntryModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:30484475
+// LIFERAY-SERVICE-BUILDER-HASH:-601502993

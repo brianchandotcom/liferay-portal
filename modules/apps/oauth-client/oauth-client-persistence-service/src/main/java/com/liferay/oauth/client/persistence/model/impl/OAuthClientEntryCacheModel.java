@@ -69,10 +69,14 @@ public class OAuthClientEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", oAuthClientEntryId=");
 		sb.append(oAuthClientEntryId);
 		sb.append(", companyId=");
@@ -113,6 +117,22 @@ public class OAuthClientEntryCacheModel
 		OAuthClientEntryImpl oAuthClientEntryImpl = new OAuthClientEntryImpl();
 
 		oAuthClientEntryImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			oAuthClientEntryImpl.setUuid("");
+		}
+		else {
+			oAuthClientEntryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			oAuthClientEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			oAuthClientEntryImpl.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+
 		oAuthClientEntryImpl.setOAuthClientEntryId(oAuthClientEntryId);
 		oAuthClientEntryImpl.setCompanyId(companyId);
 		oAuthClientEntryImpl.setUserId(userId);
@@ -210,6 +230,8 @@ public class OAuthClientEntryCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		oAuthClientEntryId = objectInput.readLong();
 
@@ -234,6 +256,20 @@ public class OAuthClientEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(oAuthClientEntryId);
 
@@ -311,6 +347,8 @@ public class OAuthClientEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
+	public String externalReferenceCode;
 	public long oAuthClientEntryId;
 	public long companyId;
 	public long userId;
@@ -328,4 +366,4 @@ public class OAuthClientEntryCacheModel
 	public String tokenRequestParametersJSON;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2108411939
+// LIFERAY-SERVICE-BUILDER-HASH:269235767

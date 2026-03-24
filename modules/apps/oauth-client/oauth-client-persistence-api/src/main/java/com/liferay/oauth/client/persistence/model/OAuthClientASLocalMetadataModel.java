@@ -6,10 +6,11 @@
 package com.liferay.oauth.client.persistence.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
 
@@ -28,8 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface OAuthClientASLocalMetadataModel
-	extends AuditedModel, BaseModel<OAuthClientASLocalMetadata>, MVCCModel,
-			ShardedModel {
+	extends BaseModel<OAuthClientASLocalMetadata>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -66,6 +67,40 @@ public interface OAuthClientASLocalMetadataModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the uuid of this o auth client as local metadata.
+	 *
+	 * @return the uuid of this o auth client as local metadata
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this o auth client as local metadata.
+	 *
+	 * @param uuid the uuid of this o auth client as local metadata
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this o auth client as local metadata.
+	 *
+	 * @return the external reference code of this o auth client as local metadata
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this o auth client as local metadata.
+	 *
+	 * @param externalReferenceCode the external reference code of this o auth client as local metadata
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the o auth client as local metadata ID of this o auth client as local metadata.
@@ -283,4 +318,4 @@ public interface OAuthClientASLocalMetadataModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1404400046
+// LIFERAY-SERVICE-BUILDER-HASH:-833101794

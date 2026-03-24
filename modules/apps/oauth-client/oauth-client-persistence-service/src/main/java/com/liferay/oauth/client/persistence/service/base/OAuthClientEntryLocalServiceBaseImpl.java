@@ -5,6 +5,11 @@
 
 package com.liferay.oauth.client.persistence.service.base;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.oauth.client.persistence.service.persistence.OAuthClientEntryPersistence;
@@ -17,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
@@ -243,6 +250,38 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the o auth client entry with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
+	 */
+	@Override
+	public OAuthClientEntry fetchOAuthClientEntryByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return oAuthClientEntryPersistence.fetchByUuid_C_First(
+			uuid, companyId, null);
+	}
+
+	@Override
+	public OAuthClientEntry fetchOAuthClientEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return oAuthClientEntryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public OAuthClientEntry getOAuthClientEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return oAuthClientEntryPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	/**
 	 * Returns the o auth client entry with the primary key.
 	 *
 	 * @param oAuthClientEntryId the primary key of the o auth client entry
@@ -300,6 +339,72 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("oAuthClientEntryId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
+
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
+
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+				}
+
+			});
+
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<OAuthClientEntry>() {
+
+				@Override
+				public void performAction(OAuthClientEntry oAuthClientEntry)
+					throws PortalException {
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, oAuthClientEntry);
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				PortalUtil.getClassNameId(OAuthClientEntry.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -340,6 +445,23 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return oAuthClientEntryPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the o auth client entry with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client entry
+	 * @throws PortalException if a matching o auth client entry could not be found
+	 */
+	@Override
+	public OAuthClientEntry getOAuthClientEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return oAuthClientEntryPersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**
@@ -463,4 +585,4 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 		OAuthClientEntryLocalServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1314468526
+// LIFERAY-SERVICE-BUILDER-HASH:-1515181205

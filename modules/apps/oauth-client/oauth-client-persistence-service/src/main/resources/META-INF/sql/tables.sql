@@ -1,5 +1,7 @@
 create table OAuthClientASLocalMetadata (
 	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	oAuthClientASLocalMetadataId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -16,6 +18,8 @@ create table OAuthClientASLocalMetadata (
 
 create table OAuthClientEntry (
 	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	oAuthClientEntryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

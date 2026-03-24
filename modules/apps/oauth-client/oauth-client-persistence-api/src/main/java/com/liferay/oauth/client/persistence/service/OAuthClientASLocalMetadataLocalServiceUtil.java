@@ -266,6 +266,30 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 		return getService().fetchOAuthClientASLocalMetadata(localWellKnownURI);
 	}
 
+	public static OAuthClientASLocalMetadata
+		fetchOAuthClientASLocalMetadataByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return getService().
+			fetchOAuthClientASLocalMetadataByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client as local metadata's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata
+		fetchOAuthClientASLocalMetadataByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return getService().fetchOAuthClientASLocalMetadataByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -284,6 +308,14 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 
 		return getService().getCompanyOAuthClientASLocalMetadata(
 			companyId, start, end);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static
@@ -313,6 +345,33 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getOAuthClientASLocalMetadata(localWellKnownURI);
+	}
+
+	public static OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().
+			getOAuthClientASLocalMetadataByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the o auth client as local metadata with the matching UUID and company.
+	 *
+	 * @param uuid the o auth client as local metadata's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching o auth client as local metadata
+	 * @throws PortalException if a matching o auth client as local metadata could not be found
+	 */
+	public static OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByUuidAndCompanyId(
+				String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getOAuthClientASLocalMetadataByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	/**
@@ -427,4 +486,4 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 			OAuthClientASLocalMetadataLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1449746087
+// LIFERAY-SERVICE-BUILDER-HASH:-2087291659

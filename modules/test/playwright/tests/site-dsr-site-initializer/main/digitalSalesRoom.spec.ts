@@ -10,6 +10,7 @@ import {digitalSalesRoomPagesTest} from '../../../fixtures/digitalSalesRoomPages
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -347,5 +348,251 @@ test(
 		await expect(
 			digitalSalesRoomUsersPage.shareModalEmailInput
 		).toBeVisible();
+	}
+);
+
+test(
+	'Add comment',
+	{tag: '@LPD-76076'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+					roomName,
+					0,
+					false
+				)
+			).click();
+			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomsPage.viewMenuItem.click();
+
+		await expect(page.locator('.page-editor__sidebar')).not.toBeVisible();
+
+		const comment = getRandomString();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoomComment(comment);
+
+		await expect(editDigitalSalesRoomPage.commentTextarea).toBeVisible();
+		await expect(page.getByText('Test Test')).toBeVisible();
+		await expect(page.getByText(comment)).toBeVisible();
+	}
+);
+
+test(
+	'Delete comment',
+	{tag: '@LPD-76076'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+					roomName,
+					0,
+					false
+				)
+			).click();
+			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomsPage.viewMenuItem.click();
+
+		const comment = getRandomString();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoomComment(comment);
+
+		await expect(
+			editDigitalSalesRoomPage.commentActionsButton
+		).toBeVisible();
+
+		await editDigitalSalesRoomPage.commentActionsButton.click();
+		await editDigitalSalesRoomPage.commentDeleteButton.click();
+
+		await waitForAlert(page, 'Success:Your comment has been deleted.');
+
+		await expect(page.getByText(comment)).not.toBeVisible();
+	}
+);
+
+test(
+	'Edit comment',
+	{tag: '@LPD-76076'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+					roomName,
+					0,
+					false
+				)
+			).click();
+			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomsPage.viewMenuItem.click();
+
+		const comment = getRandomString();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoomComment(comment);
+
+		await editDigitalSalesRoomPage.commentActionsButton.click();
+		await editDigitalSalesRoomPage.commentEditButton.click();
+
+		const comment2 = getRandomString();
+
+		await editDigitalSalesRoomPage.editCommentTextarea.fill(comment2);
+		await editDigitalSalesRoomPage.commentEditSaveButton.click();
+
+		await waitForAlert(page, 'Success:Your comment has been edited.');
+
+		await expect(page.getByText(comment)).not.toBeVisible();
+		await expect(page.getByText(comment2)).toBeVisible();
+	}
+);
+
+test(
+	'Add reply to a comment',
+	{tag: '@LPD-76076'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+					roomName,
+					0,
+					false
+				)
+			).click();
+			await expect(digitalSalesRoomsPage.viewMenuItem).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomsPage.viewMenuItem.click();
+
+		const comment = getRandomString();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoomComment(comment);
+
+		await editDigitalSalesRoomPage.replyButton.click();
+
+		const commentReply = getRandomString();
+
+		await editDigitalSalesRoomPage.editCommentTextarea.fill(commentReply);
+		await editDigitalSalesRoomPage.commentEditSaveButton.click();
+
+		await waitForAlert(page, 'Success:Your comment has been posted.');
+
+		await expect(page.getByText(commentReply)).toBeVisible();
+		await expect(page.getByText(comment)).toBeVisible();
 	}
 );

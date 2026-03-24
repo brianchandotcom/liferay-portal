@@ -6,13 +6,24 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {getRandomInt} from '../../utils/getRandomInt';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export class EditDigitalSalesRoomPage {
 	readonly cancelButton: Locator;
+	readonly commentActionsButton: Locator;
+	readonly commentDeleteButton: Locator;
+	readonly commentEditButton: Locator;
+	readonly commentEditSaveButton: Locator;
+	readonly commentSaveButton;
+	readonly commentsButton: Locator;
+	readonly commentTextarea: Locator;
+	readonly editCommentTextarea: Locator;
 	readonly friendlyURLInput: Locator;
 	readonly nextButton: Locator;
 	readonly onboardingMenuItem: Locator;
 	readonly page: Page;
+	readonly replyButton: Locator;
+	readonly roomCommentsText: Locator;
 	readonly roomNameInput: Locator;
 	readonly saveButton: Locator;
 	readonly selectAccountInput: Locator;
@@ -24,12 +35,28 @@ export class EditDigitalSalesRoomPage {
 			exact: true,
 			name: 'Cancel',
 		});
+		this.commentActionsButton = page.getByRole('button', {name: 'Actions'});
+		this.commentDeleteButton = page.getByRole('menuitem', {name: 'Delete'});
+		this.commentEditButton = page.getByRole('menuitem', {name: 'Edit'});
+		this.commentEditSaveButton = page
+			.getByRole('button', {name: 'Save'})
+			.nth(1);
+		this.commentSaveButton = page.getByRole('button', {name: 'Save'});
+		this.commentsButton = page.getByLabel('Comments', {exact: true});
+		this.commentTextarea = page.getByRole('textbox', {
+			name: 'Add comment.',
+		});
+		this.editCommentTextarea = page
+			.getByRole('textbox', {name: 'Add comment.'})
+			.nth(1);
 		this.friendlyURLInput = page.getByLabel('Friendly URL');
 		this.nextButton = page.getByRole('button', {name: 'Next'});
 		this.onboardingMenuItem = page.getByRole('menuitem', {
 			name: 'Onboarding',
 		});
 		this.page = page;
+		this.replyButton = page.getByRole('button', {name: 'reply'});
+		this.roomCommentsText = page.getByText('Room Comments');
 		this.roomNameInput = page.getByLabel('Room Name');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.selectAccountInput = page.getByRole('combobox', {
@@ -78,5 +105,19 @@ export class EditDigitalSalesRoomPage {
 		await expect(
 			this.page.getByRole('heading', {name: 'Onboarding'})
 		).toBeVisible();
+	}
+
+	async addDigitalSalesRoomComment(comment: string) {
+		await this.commentsButton.click();
+
+		await expect(this.roomCommentsText).toBeVisible();
+
+		await this.commentTextarea.fill(comment);
+
+		await expect(this.commentSaveButton).not.toBeDisabled();
+
+		await this.commentSaveButton.click();
+
+		await waitForAlert(this.page, 'Success:Your comment has been posted.');
 	}
 }

@@ -70,12 +70,7 @@ export function composeCreateTaskURL(
 		}
 
 		if (groupIds) {
-			if (groupIds.startsWith('groupIds/any')) {
-				scopeFilter += ` and ${groupIds}`;
-			}
-			else {
-				scopeFilter += ` and groupIds/any(g:g in (${groupIds}))`;
-			}
+			scopeFilter += ` and ${groupIds}`;
 		}
 	}
 

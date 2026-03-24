@@ -139,7 +139,7 @@ test(
 	'Verify alert only appears if changing the value',
 	{tag: '@LPD-79710'},
 	async ({page}) => {
-		const enabledButton = await page.getByLabel('Enabled');
+		const enabledButton = await page.getByLabel('Enabled', {exact: true});
 
 		await enabledButton.setChecked(true);
 
@@ -184,7 +184,9 @@ test(
 				enabled: false,
 			});
 
-			await expect(page.getByLabel('Enabled')).not.toBeChecked();
+			await expect(
+				page.getByLabel('Enabled', {exact: true})
+			).not.toBeChecked();
 		});
 	}
 );
@@ -193,7 +195,7 @@ test(
 	'Verify Consent Renewal Period can be changed immediately after checking Enabled',
 	{tag: '@LPD-79710'},
 	async ({page}) => {
-		const enabledButton = await page.getByLabel('Enabled');
+		const enabledButton = await page.getByLabel('Enabled', {exact: true});
 
 		await enabledButton.setChecked(false);
 

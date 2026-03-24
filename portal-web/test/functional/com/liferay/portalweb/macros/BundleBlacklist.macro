@@ -25,7 +25,7 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		ApplicationsMenu.gotoPanel(panel = ${panel});
+		Navigator.gotoNavTab(navTab = ${panel});
 
 		AssertElementNotPresent(
 			key_category = ${category},

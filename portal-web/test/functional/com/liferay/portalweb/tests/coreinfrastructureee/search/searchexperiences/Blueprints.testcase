@@ -5364,10 +5364,10 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Experiences",
-			panel = "Applications",
-			portlet = "Blueprints");
+		ClickNoError(
+			key_category = "Search Experiences",
+			key_portlet = "Blueprints",
+			locator1 = "ApplicationsMenu#PORTLET");
 
 		Confirm.dismissAlert();
 
@@ -5375,12 +5375,10 @@ definition {
 			key_element = "Boost Tags Match",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
 
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Experiences",
-			panel = "Applications",
-			portlet = "Blueprints");
+		ClickNoError(
+			key_category = "Search Experiences",
+			key_portlet = "Blueprints",
+			locator1 = "ApplicationsMenu#PORTLET");
 
 		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
 
@@ -5445,10 +5443,10 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Experiences",
-			panel = "Applications",
-			portlet = "Blueprints");
+		ClickNoError(
+			key_category = "Search Experiences",
+			key_portlet = "Blueprints",
+			locator1 = "ApplicationsMenu#PORTLET");
 
 		Confirm.dismissAlert();
 
@@ -5458,10 +5456,10 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Experiences",
-			panel = "Applications",
-			portlet = "Blueprints");
+		ClickNoError(
+			key_category = "Search Experiences",
+			key_portlet = "Blueprints",
+			locator1 = "ApplicationsMenu#PORTLET");
 
 		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
 

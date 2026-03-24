@@ -191,7 +191,7 @@ export default function AgentDefinitionForm({
 						borderless
 						button
 						displayType="secondary"
-						href="/web/ai-hub/agents"
+						href={backURL}
 						small
 					>
 						{Liferay.Language.get('cancel')}

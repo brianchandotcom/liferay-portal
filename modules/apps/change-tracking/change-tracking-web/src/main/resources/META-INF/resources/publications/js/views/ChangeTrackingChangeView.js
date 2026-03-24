@@ -6,8 +6,9 @@
 import ClayEmptyState from '@clayui/empty-state';
 import ClayLayout from '@clayui/layout';
 import {createPortletURL, navigate as navigateUtil, sub} from 'frontend-js-web';
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
+import ChangeTrackingLayoutChangesSidePanel from './ChangeTrackingLayoutChangesSidePanel';
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
 export default function ChangeTrackingChangeView({
@@ -18,6 +19,7 @@ export default function ChangeTrackingChangeView({
 	defaultLocale,
 	discardURL,
 	entryFromURL,
+	layoutContentChangesURL,
 	modelData,
 	moveChangesURL,
 	namespace,
@@ -29,6 +31,10 @@ export default function ChangeTrackingChangeView({
 	const CHANGE_TYPE_ADDITION = 0;
 	const CHANGE_TYPE_DELETION = 1;
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
+
+	const containerRef = useRef(null);
+	const [openSidePanel, setOpenSidePanel] = useState(true);
+	const showChangesSidePanel = layoutContentChangesURL ? true : false;
 
 	const getNodeId = useCallback(
 		(modelKey) => {
@@ -377,11 +383,18 @@ export default function ChangeTrackingChangeView({
 		[moveChangesURL, setParameter]
 	);
 
+	const onOpenSidePanelChange = () => {
+		setOpenSidePanel(!openSidePanel);
+	};
+
 	const renderMainContent = () => {
 		return (
 			<div>
-				<div className="publications-changes-content row">
-					<div className="col-md-12">
+				<div
+					className="publications-changes-content row"
+					ref={containerRef}
+				>
+					<div className="col-md-12" style={{paddingRight: '0rem'}}>
 						{initialNode.modelClassNameId ? (
 							<ChangeTrackingRenderView
 								childEntries={initialNode.children}
@@ -394,10 +407,13 @@ export default function ChangeTrackingChangeView({
 								}
 								discardURL={getDiscardURL(initialNode)}
 								handleNavigation={(nodeId) => navigate(nodeId)}
+								handleOpenSidePanel={onOpenSidePanelChange}
 								initialDataURL={getDataURL(initialNode)}
+								isOpenSidePanel={openSidePanel}
 								moveChangesURL={getMoveChangesURL(initialNode)}
 								namespace={namespace}
 								parentEntries={initialNode.parents}
+								showChangesSidePanel={showChangesSidePanel}
 								showDropdown={initialNode.modelClassNameId}
 								showWorkflow={initialNode.showWorkflow}
 								spritemap={spritemap}
@@ -419,6 +435,17 @@ export default function ChangeTrackingChangeView({
 							</ClayLayout.Sheet>
 						)}
 					</div>
+
+					{showChangesSidePanel ? (
+						<ChangeTrackingLayoutChangesSidePanel
+							containerRef={containerRef}
+							handleOpenSidePanel={onOpenSidePanelChange}
+							isOpen={openSidePanel}
+							layoutContentChangesURL={layoutContentChangesURL}
+							namespace={namespace}
+							spritemap={spritemap}
+						/>
+					) : null}
 				</div>
 			</div>
 		);

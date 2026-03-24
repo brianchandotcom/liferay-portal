@@ -252,6 +252,7 @@ public class TaxonomyCategoryDTOConverter
 								false);
 						}));
 				setTaxonomyVocabularyId(assetCategory::getVocabularyId);
+				setUuid(assetCategory::getUuid);
 			}
 		};
 	}

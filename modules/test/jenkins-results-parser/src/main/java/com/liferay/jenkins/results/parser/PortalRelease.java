@@ -71,7 +71,29 @@ public class PortalRelease {
 		jsonObject.put(
 			"bundles_base_url", String.valueOf(_bundlesBaseURL)
 		).put(
+			"plugins_war_zip_url_string", _pluginsWarZipURLString
+		).put(
+			"portal_bundle_glassfish_url_string",
+			_portalBundleGlassFishURLString
+		).put(
+			"portal_bundle_jboss_url_string", _portalBundleJBossURLString
+		).put(
+			"portal_bundle_tomcat_url_string", _portalBundleTomcatURLString
+		).put(
+			"portal_bundle_wildfly_url_string", _portalBundleWildFlyURLString
+		).put(
+			"portal_dependencies_zip_url_string",
+			_portalDependenciesZipURLString
+		).put(
+			"portal_osgi_zip_url_string", _portalOSGiZipURLString
+		).put(
+			"portal_sql_zip_url_string", _portalSQLZipURLString
+		).put(
+			"portal_tools_zip_url_string", _portalToolsZipURLString
+		).put(
 			"portal_version", _portalVersion
+		).put(
+			"portal_war_url_string", _portalWarURLString
 		);
 
 		return jsonObject;
@@ -451,7 +473,27 @@ public class PortalRelease {
 			throw new RuntimeException(malformedURLException);
 		}
 
+		_pluginsWarZipURLString = jsonObject.optString(
+			"plugins_war_zip_url_string", null);
+		_portalBundleGlassFishURLString = jsonObject.optString(
+			"portal_bundle_glassfish_url_string", null);
+		_portalBundleJBossURLString = jsonObject.optString(
+			"portal_bundle_jboss_url_string", null);
+		_portalBundleTomcatURLString = jsonObject.optString(
+			"portal_bundle_tomcat_url_string", null);
+		_portalBundleWildFlyURLString = jsonObject.optString(
+			"portal_bundle_wildfly_url_string", null);
+		_portalDependenciesZipURLString = jsonObject.optString(
+			"portal_dependencies_zip_url_string", null);
+		_portalOSGiZipURLString = jsonObject.optString(
+			"portal_osgi_zip_url_string", null);
+		_portalSQLZipURLString = jsonObject.optString(
+			"portal_sql_zip_url_string", null);
+		_portalToolsZipURLString = jsonObject.optString(
+			"portal_tools_zip_url_string", null);
 		_portalVersion = jsonObject.getString("portal_version");
+		_portalWarURLString = jsonObject.optString(
+			"portal_war_url_string", null);
 
 		_initializeURLs();
 	}

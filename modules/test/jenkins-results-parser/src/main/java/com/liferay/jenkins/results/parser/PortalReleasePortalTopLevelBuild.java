@@ -132,6 +132,11 @@ public class PortalReleasePortalTopLevelBuild
 			if (JenkinsResultsParserUtil.isURL(portalWarURLString)) {
 				_portalRelease.setPortalWarURL(new URL(portalWarURLString));
 			}
+
+			BuildDatabase buildDatabase = getBuildDatabase();
+
+			buildDatabase.putPortalRelease(
+				_portalRelease.getPortalVersion(), _portalRelease);
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

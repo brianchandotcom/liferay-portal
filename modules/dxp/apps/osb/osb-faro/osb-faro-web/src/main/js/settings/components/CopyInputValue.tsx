@@ -6,7 +6,7 @@ import getCN from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 import {Alert} from 'shared/types';
 
-const ConnectLiferayDXPTokenFragment = ({addAlert, disabled, token}) => {
+const CopyInputValue = ({addAlert, disabled, value}) => {
 	const [isUrlCopied, setIsUrlCopied] = useState(false);
 	const [copyTitle, setCopyTitle] = useState(
 		Liferay.Language.get('click-to-copy')
@@ -51,9 +51,9 @@ const ConnectLiferayDXPTokenFragment = ({addAlert, disabled, token}) => {
 				<ClayInput.GroupItem prepend>
 					<ClayInput
 						disabled={disabled}
-						id='token'
+						id='value'
 						insetAfter
-						name='token'
+						name='value'
 						readOnly={!isUrlCopied}
 						type='text'
 						value={value ? value : Liferay.Language.get('loading')}
@@ -63,7 +63,7 @@ const ConnectLiferayDXPTokenFragment = ({addAlert, disabled, token}) => {
 				<ClayInput.GroupItem append shrink>
 					<ClayButton
 						aria-label={copyTitle}
-						data-clipboard-text={token}
+						data-clipboard-text={value}
 						disabled={disabled}
 						displayType={isUrlCopied ? 'success' : 'secondary'}
 						onClick={() => setIsUrlCopied(true)}
@@ -79,4 +79,4 @@ const ConnectLiferayDXPTokenFragment = ({addAlert, disabled, token}) => {
 	);
 };
 
-export {ConnectLiferayDXPTokenFragment};
+export {CopyInputValue};

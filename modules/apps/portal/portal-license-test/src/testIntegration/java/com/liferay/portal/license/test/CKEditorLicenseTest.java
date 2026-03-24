@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -71,6 +72,38 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 		if (_CKEDITOR_CONFIG_FILE.exists()) {
 			_CKEDITOR_CONFIG_FILE.delete();
 		}
+	}
+
+	@Test
+	public void testEnterpriseLicense() throws Exception {
+		String privateLicenseKey = _getCKEditorPrivateLicenseKey();
+
+		_assertCKEditorConfiguration(false, privateLicenseKey);
+
+		File binaryFile = deployEnterprisePortalLicense(Time.HOUR);
+
+		ConfigurationTestUtil.updateConfiguration(
+			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
+
+		_assertCKEditorConfiguration(true, privateLicenseKey);
+
+		binaryFile.delete();
+
+		LicenseManagerUtil.checkLicense(getPortalProductId());
+
+		assertLicensePropertiesNotExisted(getPortalProductId());
+
+		ConfigurationTestUtil.updateConfiguration(
+			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseNotRegistered);
+
+		_assertCKEditorConfiguration(true, privateLicenseKey);
+
+		deployFreeTierPortalLicense(Time.HOUR);
+
+		ConfigurationTestUtil.updateConfiguration(
+			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
+
+		_assertCKEditorConfiguration(false, privateLicenseKey);
 	}
 
 	@Test

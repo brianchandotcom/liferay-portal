@@ -269,6 +269,8 @@ spec:
                                 requests:
                                     cpu: 23m
                                     memory: 768Mi
+                            {{- include "crossplane-runtime-configs.containerSecurityContext" . | nindent 28 }}
+                    {{- include "crossplane-runtime-configs.podSecurityContext" . | nindent 20 }}
                     serviceAccountName: provider-aws-kms
     serviceAccountTemplate:
         metadata:

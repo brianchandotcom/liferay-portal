@@ -6,8 +6,8 @@
 package com.liferay.cookies.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.cookies.model.ConsentPreference;
-import com.liferay.cookies.service.ConsentPreferenceLocalService;
+import com.liferay.cookies.model.CookiesConsentPreference;
+import com.liferay.cookies.service.CookiesConsentPreferenceLocalService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -56,8 +56,8 @@ public class UserModelListenerTest {
 
 		String domain = RandomTestUtil.randomString();
 
-		ConsentPreference consentPreference =
-			_consentPreferenceLocalService.addConsentPreference(
+		CookiesConsentPreference cookiesConsentPreference =
+			_cookiesConsentPreferenceLocalService.addCookiesConsentPreference(
 				user.getUserId(), domain, RandomTestUtil.nextDate(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
@@ -65,12 +65,13 @@ public class UserModelListenerTest {
 
 		Assert.assertEquals(
 			Collections.emptyList(),
-			_consentPreferenceLocalService.getConsentPreferences(
-				consentPreference.getUserId(), domain));
+			_cookiesConsentPreferenceLocalService.getCookiesConsentPreferences(
+				cookiesConsentPreference.getUserId(), domain));
 	}
 
 	@Inject
-	private ConsentPreferenceLocalService _consentPreferenceLocalService;
+	private CookiesConsentPreferenceLocalService
+		_cookiesConsentPreferenceLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

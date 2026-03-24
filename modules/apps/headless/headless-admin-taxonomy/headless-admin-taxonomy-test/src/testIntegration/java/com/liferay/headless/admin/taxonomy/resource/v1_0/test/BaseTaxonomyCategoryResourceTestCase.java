@@ -240,6 +240,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		taxonomyCategory.setName(regex);
 		taxonomyCategory.setPath(regex);
 		taxonomyCategory.setSiteExternalReferenceCode(regex);
+		taxonomyCategory.setUuid(regex);
 
 		String json = TaxonomyCategorySerDes.toJSON(taxonomyCategory);
 
@@ -255,6 +256,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Assert.assertEquals(regex, taxonomyCategory.getPath());
 		Assert.assertEquals(
 			regex, taxonomyCategory.getSiteExternalReferenceCode());
+		Assert.assertEquals(regex, taxonomyCategory.getUuid());
 	}
 
 	@Test
@@ -5518,6 +5520,14 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("uuid", additionalAssertFieldName)) {
+				if (taxonomyCategory.getUuid() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (taxonomyCategory.getViewableBy() == null) {
 					valid = false;
@@ -5883,6 +5893,17 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				if (!Objects.deepEquals(
 						taxonomyCategory1.getTaxonomyVocabularyId(),
 						taxonomyCategory2.getTaxonomyVocabularyId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("uuid", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						taxonomyCategory1.getUuid(),
+						taxonomyCategory2.getUuid())) {
 
 					return false;
 				}
@@ -6460,6 +6481,52 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("uuid")) {
+			Object object = taxonomyCategory.getUuid();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("viewableBy")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -6527,6 +6594,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				siteId = testGroup.getGroupId();
 				taxonomyCategoryUsageCount = RandomTestUtil.randomInt();
 				taxonomyVocabularyId = RandomTestUtil.randomLong();
+				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

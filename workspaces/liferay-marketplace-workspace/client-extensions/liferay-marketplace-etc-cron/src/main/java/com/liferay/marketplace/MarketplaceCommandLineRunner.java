@@ -35,9 +35,12 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
 
-import java.time.*;
-
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -732,16 +735,30 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processProductFeedback() throws Exception {
+		ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
 
+		int windowSizeHours = 6;
 
-		LocalDateTime weekAgo = LocalDate.now().minusDays(7).atStartOfDay();
+		int windowIndex = now.getHour() / windowSizeHours;
 
-		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+		ZonedDateTime currentWindowStart = now.withHour(
+			windowIndex * windowSizeHours
+		).withMinute(
+			0
+		).withSecond(
+			0
+		).withNano(
+			0
+		);
 
-		String filter =
-				"orderType/any(x:(x eq 'CMP_BETA')) " +
-						"and createDate gt " + weekAgo.format(formatter) +
-						" and createDate lt " + weekAgo.plusHours(6).format(formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
+		String filter = String.format(
+			"orderTypeExternalReferenceCode eq '%s' and createDate ge %s and " +
+				"createDate lt %s",
+			"CMP_BETA",
+			formatter.format(currentWindowStart.minusHours(windowSizeHours)),
+			formatter.format(currentWindowStart));
 
 		Page<Order> page = _getOrdersPage(filter, -1, -1);
 
@@ -754,20 +771,26 @@ public class MarketplaceCommandLineRunner
 		}
 
 		for (Order order : page.getItems()) {
-			if (order.getTotalAmount() > 0) {
-				try{
-					post(
-						_liferayOAuth2AccessTokenManager.getAuthorization(
-								_liferayOAuthApplicationExternalReferenceCodes),
-						"",
-						UriComponentsBuilder.fromUriString(
-								_liferayMarketplaceEtcSpringBootURL + "/object/action/email/dispatch/" + orderId
-						).build(
-						).toUri());
+			try {
+				OrderItem[] orderItems = order.getOrderItems();
+
+				if (ArrayUtil.isEmpty(orderItems)) {
+					continue;
 				}
-				catch (Exception exception){
-					_log.error(exception);
+
+				OrderItem orderItem = orderItems[0];
+
+				if (orderItem.getOrderId() == null) {
+					continue;
 				}
+
+				_sendProductFeedback(orderItem.getSkuId());
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Error processing product feedback for order " +
+						order.getId(),
+					exception);
 			}
 		}
 	}
@@ -933,6 +956,33 @@ public class MarketplaceCommandLineRunner
 
 			_patchOrder(order.getId(), publisherSalesSummaryId);
 		}
+	}
+
+	private void _sendProductFeedback(Long skuId) throws Exception {
+		JSONObject bodyJSONObject = new JSONObject(
+		).put(
+			"modelCPDefinition",
+			new JSONObject(
+			).put(
+				"defaultLanguageId", "en_US"
+			).put(
+				"skuId", skuId
+			)
+		).put(
+			"modelDTOProduct", true
+		).put(
+			"objectActionTriggerKey", "onAfterAdd"
+		);
+
+		post(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
+			bodyJSONObject.toString(),
+			UriComponentsBuilder.fromUriString(
+				_liferayMarketplaceEtcSpringBootURL +
+					"/marketplace/product-feedback-notification"
+			).build(
+			).toUri());
 	}
 
 	private void _updateOrder(long orderId, int orderStatus) throws Exception {

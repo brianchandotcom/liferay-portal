@@ -26,11 +26,13 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.model.PublisherAssetLink;
+import com.liferay.marketplace.permission.DefaultServiceAccountPermission;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.ProvisioningService;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -42,6 +44,7 @@ import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 
 import java.net.URL;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -52,7 +55,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.logging.Log;
@@ -68,7 +70,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -439,6 +445,72 @@ public class MarketplaceRestController extends BaseRestController {
 		return publisherAssetLinks;
 	}
 
+	@PostMapping("product-feedback-notification")
+	private void _processProductFeedbackNotification(
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
+		throws Exception {
+
+		_defaultServiceAccountPermission.check(jwt);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("POST product feedback " + json);
+		}
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		if (!jsonObject.has("modelDTOProduct")) {
+			return;
+		}
+
+		String objectActionTriggerKey = jsonObject.getString(
+			"objectActionTriggerKey");
+
+		if (!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
+			return;
+		}
+
+		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
+			"modelCPDefinition");
+
+		Product product = _marketplaceService.getProductBySkuId(
+			modelCPDefinitionJSONObject.getLong("skuId"));
+
+		_marketplaceService.postNotificationQueueEntry(
+			null, "MARKETPLACE-PRODUCT-FEEDBACK",
+			new HashMapBuilder<String, Object>().put(
+				"[%APP_TYPE%]", product.getProductType()
+			).put(
+				"[%EMAIL_DESCRIPTION%]",
+				StringBundler.concat(
+					"<p>It has been a few weeks since you started using ",
+					"<b>CMP</b> Beta via the Marketplace. We hope it’s helping you ",
+					"streamline your Liferay operations. Could you spare ",
+					"<b>5 minutes</b> to let us know how we’re doing?</p>")
+			).put(
+				"[%ENVIROMENT%]", "liferay"
+			).put(
+				"[%CATALOG_NAME%]",
+				() -> {
+					Catalog catalog = product.getCatalog();
+
+					return catalog.getName();
+				}
+			).put(
+				"[%ORDER_ID%]", String.valueOf(product.getId())
+			).put(
+				"[%CPDEFINITION_NAME%]",
+				product.getName(
+				).get(
+					modelCPDefinitionJSONObject.getString("defaultLanguageId")
+				)
+			).put(
+				"[%CPDEFINITION_THUMBNAIL%]",
+				new URL(
+					"http://" + lxcDXPMainDomain + product.getThumbnail()
+				).toString()
+			).build());
+	}
+
 	private void _processPublisherAssetLink(
 			Product product, Map<String, String> productSpecificationsMap,
 			PublisherAssetLink publisherAssetLink)
@@ -585,6 +657,9 @@ public class MarketplaceRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceRestController.class);
+
+	@Autowired
+	private DefaultServiceAccountPermission _defaultServiceAccountPermission;
 
 	private final Set<String> _europeanCountriesISOCode = Set.of(
 		"AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR",

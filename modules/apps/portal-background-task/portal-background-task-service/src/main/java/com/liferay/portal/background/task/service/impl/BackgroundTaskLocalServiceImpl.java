@@ -155,6 +155,23 @@ public class BackgroundTaskLocalServiceImpl
 	}
 
 	@Override
+	public void addBackgroundTaskAttachment(
+			long userId, long backgroundTaskId, String sourceFileName,
+			String title, File file)
+		throws PortalException {
+
+		BackgroundTask backgroundTask = getBackgroundTask(backgroundTaskId);
+
+		Folder folder = backgroundTask.addAttachmentsFolder();
+
+		_portletFileRepository.addPortletFileEntry(
+			null, backgroundTask.getGroupId(), userId,
+			BackgroundTask.class.getName(), backgroundTask.getPrimaryKey(),
+			PortletKeys.BACKGROUND_TASK, folder.getFolderId(), file,
+			sourceFileName, title, ContentTypes.APPLICATION_ZIP, false);
+	}
+
+	@Override
 	public BackgroundTask amendBackgroundTask(
 		long backgroundTaskId, Map<String, Serializable> taskContextMap,
 		int status, ServiceContext serviceContext) {

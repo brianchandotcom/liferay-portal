@@ -47,9 +47,15 @@ liferay-default:
             -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PROTOCOL_PERIOD_ENABLED
                 value: "true"
     customEnvFrom:
-        x-liferay-aws:
+        x-liferay-aws-database:
             -   secretRef:
-                    name: managed-service-details
+                    name: database-connection-details
+        x-liferay-aws-doclib:
+            -   secretRef:
+                    name: doclib-connection-details
+        x-liferay-aws-opensearch:
+            -   secretRef:
+                    name: opensearch-connection-details
     customInitContainers:
         x-liferay-install-opensearch-modules:
             -   containerTemplate: |

@@ -1604,6 +1604,49 @@ spec:
                             {{- end -}}
                         {{- end -}}
 
+                        {{- if and $searchEndpoint $searchPassword $searchSpec.enabled }}
+                        ---
+                        apiVersion: kubernetes.m.crossplane.io/v1alpha1
+                        kind: Object
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $baseName }}-opensearch-connection-details-secret
+                                gotemplating.fn.crossplane.io/composition-resource-name: opensearch-connection-details-secret
+                            labels:
+                                app: liferay
+                                component: opensearch-connection-details-secret
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-opensearch-connection-details-secret
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                manifest:
+                                    apiVersion: v1
+                                    data:
+                                        OPENSEARCH_ENDPOINT: {{ $searchEndpoint | b64enc | quote }}
+                                        OPENSEARCH_PASSWORD: {{ $searchPassword | b64enc | quote }}
+                                        OPENSEARCH_USERNAME: {{ $search.resource.spec.forProvider.advancedSecurityOptions.masterUserOptions.masterUserName | b64enc | quote }}
+                                    kind: Secret
+                                    metadata:
+                                        labels:
+                                            app: liferay
+                                            component: opensearch-connection-details-secret
+                                            environmentId: {{ $environmentId }}
+                                            projectId: {{ $projectId }}
+                                        name: opensearch-connection-details
+                                        namespace: {{ $namespace }}
+                                        ownerReferences:
+                                            -   apiVersion: aws.liferay.com/v1alpha1
+                                                blockOwnerDeletion: true
+                                                controller: true
+                                                kind: LiferayInfrastructure
+                                                name: {{ .observed.composite.resource.metadata.name }}
+                                                uid: {{ .observed.composite.resource.metadata.uid }}
+                                    type: Opaque
+                            managementPolicies: {{ $managementPolicies }}
+                        {{- end -}}
+
                         {{- $storageName := "" -}}
                         {{- if kindIs "map" $storage -}}
                             {{- with $storage }}
@@ -1617,43 +1660,36 @@ spec:
                             {{- end -}}
                         {{- end -}}
 
-                        {{- if and $databaseAddress $databasePassword $databasePort $searchEndpoint $searchPassword $storageName }}
+                        {{- if $storageName }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object
                         metadata:
                             annotations:
-                                crossplane.io/external-name: {{ $baseName }}-managed-service-details-secret
-                                gotemplating.fn.crossplane.io/composition-resource-name: managed-service-details-secret
+                                crossplane.io/external-name: {{ $baseName }}-doclib-connection-details-secret
+                                gotemplating.fn.crossplane.io/composition-resource-name: doclib-connection-details-secret
                             labels:
                                 app: liferay
-                                component: managed-service-details-secret
+                                component: doclib-connection-details-secret
                                 environmentId: {{ $environmentId }}
                                 projectId: {{ $projectId }}
-                            name: {{ $baseName }}-managed-service-details-secret
+                            name: {{ $baseName }}-doclib-connection-details-secret
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
                                 manifest:
                                     apiVersion: v1
                                     data:
-                                        DATABASE_ENDPOINT: {{ $databaseAddress | b64enc | quote }}
-                                        DATABASE_PASSWORD: {{ $databasePassword | b64enc | quote }}
-                                        DATABASE_PORT: {{ $databasePort | default 5432 | b64enc | quote }}
-                                        DATABASE_USERNAME: {{ $database.resource.spec.forProvider.username | b64enc | quote }}
-                                        OPENSEARCH_ENDPOINT: {{ $searchEndpoint | b64enc | quote }}
-                                        OPENSEARCH_PASSWORD: {{ $searchPassword | b64enc | quote }}
-                                        OPENSEARCH_USERNAME: {{ $search.resource.spec.forProvider.advancedSecurityOptions.masterUserOptions.masterUserName | b64enc | quote }}
                                         S3_BUCKET_ID: {{ $storageName | b64enc | quote }}
                                         S3_BUCKET_REGION: {{ $storage.resource.spec.forProvider.region | b64enc | quote }}
                                     kind: Secret
                                     metadata:
                                         labels:
                                             app: liferay
-                                            component: managed-service-details-secret
+                                            component: doclib-connection-details-secret
                                             environmentId: {{ $environmentId }}
                                             projectId: {{ $projectId }}
-                                        name: managed-service-details
+                                        name: doclib-connection-details
                                         namespace: {{ $namespace }}
                                         ownerReferences:
                                             -   apiVersion: aws.liferay.com/v1alpha1

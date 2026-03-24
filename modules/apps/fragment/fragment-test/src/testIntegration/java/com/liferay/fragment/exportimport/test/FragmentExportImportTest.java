@@ -81,6 +81,9 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 			"fieldSets",
 			JSONUtil.put(
 				JSONUtil.put(
+					"customComponentModule",
+					"{SimpleInputField} from @liferay/fragment-impl/api"
+				).put(
 					"fields",
 					JSONUtil.put(
 						JSONUtil.put(

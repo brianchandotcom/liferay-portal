@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.product.navigation.personal.menu;
 
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -21,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 
@@ -99,27 +99,10 @@ public class CMSPersonalMenuEntry implements PersonalMenuEntry {
 			return true;
 		}
 
-		List<Group> groups = user.getGroups();
-
-		for (Group curGroup : groups) {
-			if (!curGroup.isDepot()) {
-				continue;
-			}
-
-			DepotEntry depotEntry =
-				_depotEntryLocalService.fetchGroupDepotEntry(
-					curGroup.getGroupId());
-
-			if (depotEntry == null) {
-				continue;
-			}
-
-			if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
-				return true;
-			}
-		}
-
-		return false;
+		return ListUtil.isNotEmpty(
+			_depotEntryLocalService.getDepotEntryGroupIds(
+				user.getCompanyId(), user.getUserId(),
+				DepotConstants.TYPE_SPACE));
 	}
 
 	@Reference

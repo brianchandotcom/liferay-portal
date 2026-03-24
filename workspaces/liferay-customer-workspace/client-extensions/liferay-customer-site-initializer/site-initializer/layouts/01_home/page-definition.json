@@ -207,17 +207,18 @@
 										"siteKey": "Customer Portal"
 									},
 									"fragmentConfig": {
+										"buttonTestId": "sign-in-button",
+										"buttonUrl": {
+											"en_US": {
+												"href": "/c/portal/login"
+											}
+										},
 										"iconLeft": false,
 										"iconRight": false,
 										"inverted": false,
 										"size": "medium",
 										"style": "primary",
-										"type": "solid",
-										"url": {
-											"en_US": {
-												"href": "/c/portal/login"
-											}
-										}
+										"type": "solid"
 									},
 									"fragmentFields": [
 										{
@@ -297,7 +298,8 @@
 										"definition": {
 											"cssClasses": [
 												"card",
-												"card-flat"
+												"card-flat",
+												"liferay-learn-card-test-class"
 											],
 											"fragmentLink": {
 												"href": {
@@ -432,7 +434,8 @@
 										"definition": {
 											"cssClasses": [
 												"card",
-												"card-flat"
+												"card-flat",
+												"release-notes-card-test-class"
 											],
 											"fragmentLink": {
 												"href": {

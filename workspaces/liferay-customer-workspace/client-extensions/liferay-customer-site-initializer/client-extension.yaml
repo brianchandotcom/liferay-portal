@@ -22,10 +22,12 @@ liferay-customer-site-initializer-oahs:
         -   c_koroneikiaccount.everything
         -   c_liferayexperiencecloudenvironment.everything
         -   Liferay.Headless.Admin.List.Type.everything
+        -   Liferay.Headless.Admin.Site.everything.read
         -   Liferay.Headless.Admin.Taxonomy.everything
         -   Liferay.Headless.Admin.User.everything
         -   Liferay.Headless.Commerce.Admin.Catalog.everything
         -   Liferay.Headless.Commerce.Admin.Channel.everything
         -   Liferay.Headless.Commerce.Admin.Order.everything
+        -   Liferay.Headless.Delivery.everything
         -   Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

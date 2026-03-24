@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Article</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldReference": "content",
+							"indexType": "text",
+							"label": {
+								"en_US": "Content"
+							},
+							"localizable": true,
+							"name": "content",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text"
+						},
+						{
+							"dataType": "string",
+							"fieldReference": "category",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Category"
+							},
+							"localizable": false,
+							"name": "category",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"content"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"category"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": ""
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

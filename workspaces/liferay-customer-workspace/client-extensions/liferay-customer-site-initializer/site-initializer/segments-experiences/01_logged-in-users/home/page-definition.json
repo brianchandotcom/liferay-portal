@@ -193,13 +193,15 @@
 										"siteKey": "Customer Portal"
 									},
 									"fragmentConfig": {
+										"buttonTestId": "contact-support-button",
+										"buttonUrl": {
+										},
 										"iconLeft": false,
 										"iconRight": false,
 										"inverted": false,
 										"size": "medium",
 										"style": "primary",
-										"type": "solid",
-										"url": ""
+										"type": "solid"
 									},
 									"fragmentFields": [
 										{
@@ -297,7 +299,8 @@
 										"definition": {
 											"cssClasses": [
 												"card",
-												"card-flat"
+												"card-flat",
+												"liferay-learn-card-test-class"
 											],
 											"fragmentLink": {
 												"href": {
@@ -432,7 +435,8 @@
 										"definition": {
 											"cssClasses": [
 												"card",
-												"card-flat"
+												"card-flat",
+												"release-notes-card-test-class"
 											],
 											"fragmentLink": {
 												"href": {
@@ -450,7 +454,7 @@
 																},
 																{
 																	"fieldName": "siteKey",
-																	"fieldValue": "Customer Portal"
+																	"fieldValue": "[$GROUP_KEY$]"
 																}
 															]
 														}
@@ -606,6 +610,7 @@
 										"siteKey": "Customer Portal"
 									},
 									"fragmentConfig": {
+										"textTestId": "announcements-heading",
 										"textType": "h2",
 										"truncateText": false
 									},
@@ -638,22 +643,23 @@
 										"siteKey": "Customer Portal"
 									},
 									"fragmentConfig": {
+										"buttonTestId": "announcements-view-all-button",
+										"buttonUrl": {
+											"en_US": {
+												"layout": {
+													"groupId": "[$GROUP_ID$]",
+													"layoutId": "[$LAYOUT_ID:Announcements$]",
+													"privateLayout": false,
+													"title": "Announcements"
+												}
+											}
+										},
 										"iconLeft": false,
 										"iconRight": true,
 										"inverted": false,
 										"size": "small",
 										"style": "primary",
-										"type": "solid",
-										"url": {
-											"en_US": {
-												"layout": {
-													"groupId": "[$GROUP_ID$]",
-													"layoutUuid": "4ff091a3-fb4d-ee7e-36cb-e9c537587a6c",
-													"privateLayout": false,
-													"title": "Announcements"
-												}
-											}
-										}
+										"type": "solid"
 									},
 									"fragmentFields": [
 										{
@@ -693,9 +699,10 @@
 						"definition": {
 							"collectionConfig": {
 								"collectionReference": {
-									"className": "com.liferay.asset.internal.info.collection.provider.RecentContentInfoCollectionProvider"
+									"className": "com.liferay.asset.list.model.AssetListEntry",
+									"classPK": "[$ASSET_LIST_ENTRY_ID:ANNOUNCEMENTS$]"
 								},
-								"collectionType": "CollectionProvider"
+								"collectionType": "Collection"
 							},
 							"collectionViewports": [
 								{
@@ -747,7 +754,7 @@
 											"fragmentLink": {
 												"href": {
 													"mapping": {
-														"fieldKey": "AssetEntry_displayPageURL",
+														"fieldKey": "displayPageURL",
 														"itemReference": {
 															"contextSource": "CollectionItem"
 														}
@@ -807,7 +814,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "AssetEntry_title",
+																				"fieldKey": "title",
 																				"itemReference": {
 																					"contextSource": "CollectionItem"
 																				}
@@ -839,7 +846,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "AssetEntry_description",
+																				"fieldKey": "description",
 																				"itemReference": {
 																					"contextSource": "CollectionItem"
 																				}
@@ -868,7 +875,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "AssetEntry_createDate",
+																				"fieldKey": "publishDate",
 																				"itemReference": {
 																					"contextSource": "CollectionItem"
 																				}
@@ -906,7 +913,7 @@
 																	"value": {
 																		"href": {
 																			"mapping": {
-																				"fieldKey": "LayoutPageTemplateEntry_38235",
+																				"fieldKey": "displayPageURL",
 																				"itemReference": {
 																					"contextSource": "CollectionItem"
 																				}
@@ -1092,17 +1099,18 @@
 														"siteKey": "Customer Portal"
 													},
 													"fragmentConfig": {
+														"buttonTestId": "subscribe-button",
+														"buttonUrl": {
+															"en_US": {
+																"href": "https://www.subscribepage.com/liferay"
+															}
+														},
 														"iconLeft": true,
 														"iconRight": false,
 														"inverted": true,
 														"size": "medium",
 														"style": "neutral",
-														"type": "ghost",
-														"url": {
-															"en_US": {
-																"href": "https://www.subscribepage.com/liferay"
-															}
-														}
+														"type": "ghost"
 													},
 													"fragmentFields": [
 														{

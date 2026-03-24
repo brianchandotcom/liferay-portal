@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Announcement</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldReference": "content",
+							"indexType": "text",
+							"label": {
+								"en_US": "Content"
+							},
+							"localizable": true,
+							"name": "content",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text"
+						},
+						{
+							"dataType": "",
+							"fieldReference": "button",
+							"label": {
+								"en_US": "Button"
+							},
+							"localizable": false,
+							"multiple": false,
+							"name": "button",
+							"nestedFields": [
+								{
+									"dataType": "string",
+									"fieldReference": "buttonText",
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Button Text"
+									},
+									"localizable": true,
+									"name": "buttonText",
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"type": "text"
+								},
+								{
+									"dataType": "string",
+									"fieldReference": "buttonURL",
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Button URL"
+									},
+									"localizable": true,
+									"name": "buttonURL",
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"type": "text"
+								}
+							],
+							"options": [
+							],
+							"repeatable": false,
+							"required": false,
+							"rows": [
+								{
+									"columns": [
+										{
+											"fields": [
+												"buttonText"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fields": [
+												"buttonURL"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"showLabel": true,
+							"type": "fieldset"
+						},
+						{
+							"dataType": "string",
+							"fieldReference": "category",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Category"
+							},
+							"localizable": false,
+							"name": "category",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"content"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"button"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"category"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": ""
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

@@ -101,6 +101,12 @@
 					"localizable": true,
 					"name": "buttonUrl",
 					"type": "url"
+				},
+				{
+					"label": "Test ID",
+					"localizable": false,
+					"name": "buttonTestId",
+					"type": "text"
 				}
 			]
 		}

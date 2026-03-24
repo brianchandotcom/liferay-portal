@@ -11,8 +11,13 @@ import {openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
 
+import {manageMembersAction} from '../../index';
 import DefaultPermissionModalContent from '../../main_view/default_permission/DefaultPermissionModalContent';
 import {DefaultPermissionModalContentProps} from '../../main_view/default_permission/DefaultPermissionTypes';
+import manageConnectedSitesAction, {
+	ManageConnectedSitesData,
+} from '../../main_view/props_transformer/actions/manageConnectedSitesAction';
+import {ManageMembersData} from '../../main_view/props_transformer/actions/manageMembersAction';
 import ApiHelper from '../services/ApiHelper';
 import {LogoColor} from '../types/Space';
 import {openCMSModal} from '../utils/openCMSModal';
@@ -25,6 +30,8 @@ export interface ActionDropdownItemProps {
 	confirmationTitle?: string;
 	defaultPermissionAdditionalProps?: DefaultPermissionModalContentProps;
 	href?: string;
+	manageConnectedSitesData?: ManageConnectedSitesData;
+	manageMembersData?: ManageMembersData;
 	redirect?: string;
 	size?: 'full-screen' | 'lg' | 'md' | 'sm';
 	successMessage?: string;
@@ -34,6 +41,8 @@ export interface ActionDropdownItemProps {
 		| 'asyncPut'
 		| 'defaultPermissionsModal'
 		| 'link'
+		| 'manageConnectedSitesModal'
+		| 'manageMembersModal'
 		| 'modal';
 }
 
@@ -59,6 +68,8 @@ function ActionDropdownItem({
 	defaultPermissionAdditionalProps,
 	href = '',
 	label,
+	manageConnectedSitesData,
+	manageMembersData,
 	redirect,
 	size = 'full-screen',
 	successMessage,
@@ -85,6 +96,12 @@ function ActionDropdownItem({
 				displayErrorToast(error);
 			}
 		}
+
+		const loadData = () => {
+			if (redirect) {
+				navigate(redirect);
+			}
+		};
 
 		if (target === 'asyncDelete') {
 			const {error} = await ApiHelper.delete(href);
@@ -113,6 +130,15 @@ function ActionDropdownItem({
 					}),
 				size: 'full-screen',
 			});
+		}
+		else if (
+			target === 'manageConnectedSitesModal' &&
+			manageConnectedSitesData
+		) {
+			manageConnectedSitesAction(manageConnectedSitesData, loadData);
+		}
+		else if (target === 'manageMembersModal' && manageMembersData) {
+			manageMembersAction(manageMembersData, loadData);
 		}
 		else if (target === 'modal') {
 			openCMSModal({

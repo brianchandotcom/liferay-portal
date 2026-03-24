@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -43,17 +44,22 @@ import java.util.Map;
 
 /**
  * @author Marco Galluzzi
+ * @author Roberto Díaz
  */
 public class BreadcrumbDisplayContext {
 
 	public BreadcrumbDisplayContext(
+		ModelResourcePermission<DepotEntry> depotEntryModelResourcePermission,
 		DepotEntryPinLocalService depotEntryPinLocalService, long groupId,
 		GroupLocalService groupLocalService,
+		ModelResourcePermission<Group> groupModelResourcePermission,
 		HttpServletRequest httpServletRequest, String size) {
 
+		_depotEntryModelResourcePermission = depotEntryModelResourcePermission;
 		_depotEntryPinLocalService = depotEntryPinLocalService;
 		_groupId = groupId;
 		_groupLocalService = groupLocalService;
+		_groupModelResourcePermission = groupModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
 		_size = GetterUtil.get(size, CMSSpaceConstants.SPACE_STICKER_LG);
 
@@ -165,6 +171,70 @@ public class BreadcrumbDisplayContext {
 								LanguageUtil.get(_httpServletRequest, "import")
 							).put(
 								"symbolLeft", "import"
+							));
+					}
+
+					if (permissionChecker.hasPermission(
+							group, DepotEntry.class.getName(),
+							group.getClassPK(), ActionKeys.VIEW)) {
+
+						unsafeConsumer.accept(
+							JSONUtil.put(
+								"href", StringPool.BLANK
+							).put(
+								"label",
+								LanguageUtil.get(
+									_httpServletRequest, "view-members")
+							).put(
+								"manageMembersData",
+								HashMapBuilder.<String, Object>put(
+									"assetLibraryCreatorUserId",
+									_themeDisplay.getUserId()
+								).put(
+									"externalReferenceCode",
+									group.getExternalReferenceCode()
+								).put(
+									"hasAssignMembersPermission",
+									_groupModelResourcePermission.contains(
+										permissionChecker, group.getGroupId(),
+										ActionKeys.ASSIGN_MEMBERS)
+								).put(
+									"title",
+									LanguageUtil.get(
+										_httpServletRequest, "all-members")
+								).build()
+							).put(
+								"redirect", _themeDisplay.getURLCurrent()
+							).put(
+								"symbolLeft", "users"
+							).put(
+								"target", "manageMembersModal"
+							));
+
+						unsafeConsumer.accept(
+							JSONUtil.put(
+								"href", StringPool.BLANK
+							).put(
+								"label",
+								LanguageUtil.get(
+									_httpServletRequest, "view-connected-sites")
+							).put(
+								"manageConnectedSitesData",
+								HashMapBuilder.<String, Object>put(
+									"externalReferenceCode",
+									group.getExternalReferenceCode()
+								).put(
+									"hasConnectSitesPermission",
+									_depotEntryModelResourcePermission.contains(
+										permissionChecker, group.getClassPK(),
+										ActionKeys.UPDATE)
+								).build()
+							).put(
+								"redirect", _themeDisplay.getURLCurrent()
+							).put(
+								"symbolLeft", "globe"
+							).put(
+								"target", "manageConnectedSitesModal"
 							));
 					}
 
@@ -341,9 +411,12 @@ public class BreadcrumbDisplayContext {
 		return jsonArray;
 	}
 
+	private final ModelResourcePermission<DepotEntry>
+		_depotEntryModelResourcePermission;
 	private final DepotEntryPinLocalService _depotEntryPinLocalService;
 	private final long _groupId;
 	private final GroupLocalService _groupLocalService;
+	private final ModelResourcePermission<Group> _groupModelResourcePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private final String _size;
 	private final ThemeDisplay _themeDisplay;

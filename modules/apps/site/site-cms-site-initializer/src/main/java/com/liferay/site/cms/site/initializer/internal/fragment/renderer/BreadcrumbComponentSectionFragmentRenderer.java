@@ -5,9 +5,12 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.display.context.BreadcrumbDisplayContext;
@@ -50,17 +53,27 @@ public class BreadcrumbComponentSectionFragmentRenderer
 
 		BreadcrumbDisplayContext breadcrumbDisplayContext =
 			new BreadcrumbDisplayContext(
-				_depotEntryPinLocalService,
+				_depotEntryModelResourcePermission, _depotEntryPinLocalService,
 				InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
-				httpServletRequest, CMSSpaceConstants.SPACE_STICKER_MD);
+				_groupModelResourcePermission, httpServletRequest,
+				CMSSpaceConstants.SPACE_STICKER_MD);
 
 		return breadcrumbDisplayContext.getProps();
 	}
+
+	@Reference(target = "(model.class.name=com.liferay.depot.model.DepotEntry)")
+	private ModelResourcePermission<DepotEntry>
+		_depotEntryModelResourcePermission;
 
 	@Reference
 	private DepotEntryPinLocalService _depotEntryPinLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Group)"
+	)
+	private ModelResourcePermission<Group> _groupModelResourcePermission;
 
 }

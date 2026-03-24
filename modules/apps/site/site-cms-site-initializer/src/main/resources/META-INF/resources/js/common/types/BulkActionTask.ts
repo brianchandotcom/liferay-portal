@@ -136,8 +136,8 @@ export interface IBulkActionType {
 	ExpireObjectBulkSelectionAction: {};
 	ExportTranslationBulkAction: {
 		sourceLanguageId: string;
-		targetLanguageIds: string;
-		version: string;
+		targetLanguageIds: string[];
+		xliffMimeType: string;
 	};
 	MoveObjectBulkSelectionAction: {
 		objectEntryFolderId: number;

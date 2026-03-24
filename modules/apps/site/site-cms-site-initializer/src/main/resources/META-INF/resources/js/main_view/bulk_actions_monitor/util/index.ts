@@ -23,7 +23,9 @@ import {
 export function composeCreateTaskURL(
 	apiURL: string,
 	{filters = [], searchQuery = '', selectAll = false}: IBulkActionFDSData,
-	type: keyof IBulkActionType
+	type: keyof IBulkActionType,
+	folderIdParam?: string,
+	groupIdsParam?: string
 ): string {
 	let url: string = URL_BULK_ACTION_TASK;
 
@@ -59,13 +61,18 @@ export function composeCreateTaskURL(
 		).searchParams.get('filter') || '';
 
 	if (type === 'ExportTranslationBulkAction') {
-		const folderIdMatch = scopeFilter.match(/folderId eq (\d+)/);
-		const groupIdsMatch = scopeFilter.match(
-			/groupIds\/any\(g:g in \([\d, ]+\)\)/
-		);
+		let folderId = folderIdParam;
+		let groupIds = groupIdsParam;
 
-		const folderId = folderIdMatch ? folderIdMatch[1] : '';
-		const groupIds = groupIdsMatch ? groupIdsMatch[0] : '';
+		if (!folderId || !groupIds) {
+			const folderIdMatch = scopeFilter.match(/folderId eq (\d+)/);
+			const groupIdsMatch = scopeFilter.match(
+				/groupIds\/any\(g:g in \([\d, ]+\)\)/
+			);
+
+			folderId = folderId || (folderIdMatch ? folderIdMatch[1] : '');
+			groupIds = groupIds || (groupIdsMatch ? groupIdsMatch[0] : '');
+		}
 
 		scopeFilter = `cmsRoot eq true and cmsSection eq 'contents' and status in (0, 2, 3)`;
 
@@ -74,7 +81,12 @@ export function composeCreateTaskURL(
 		}
 
 		if (groupIds) {
-			scopeFilter += ` and ${groupIds}`;
+			if (groupIds.startsWith('groupIds/any')) {
+				scopeFilter += ` and ${groupIds}`;
+			}
+			else {
+				scopeFilter += ` and groupIds/any(g:g in (${groupIds}))`;
+			}
 		}
 	}
 

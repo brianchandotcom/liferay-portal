@@ -79,6 +79,8 @@ export interface IBulkActionTaskStarterDTO<T extends keyof IBulkActionType> {
 	apiURL?: string;
 	dataSetId?: string;
 	entryClassName?: string;
+	folderId?: string;
+	groupIds?: string;
 	keyValues?: IBulkActionType[T];
 	onCreateError?:
 		| ((response: RequestResult<IBulkActionTaskPage>) => void)

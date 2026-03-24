@@ -5,6 +5,7 @@
 
 import {IInternalRenderer, replaceTokens} from '@liferay/frontend-data-set-web';
 import {sub} from 'frontend-js-web';
+import React from 'react';
 
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
@@ -35,14 +36,28 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 		customRenderers: {
 			tableCell: [
 				{
-					component: ({actions, itemData, options, value}) =>
-						AssetRenderer({
-							actions,
-							additionalProps,
-							itemData,
-							options,
-							value,
-						}),
+					component: ({actions, itemData, options, value}) => (
+						<AssetRenderer
+							actions={actions}
+							additionalProps={additionalProps}
+							itemData={itemData}
+							onViewClick={(item) => {
+								openCMSModal({
+									contentComponent: () =>
+										AssetNavigationModalContent({
+											additionalProps,
+											contentViewURL:
+												additionalProps.contentViewURL,
+											currentIndex: 0,
+											items: [item],
+										}),
+									size: 'full-screen',
+								});
+							}}
+							options={options}
+							value={value}
+						/>
+					),
 					name: 'assetRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

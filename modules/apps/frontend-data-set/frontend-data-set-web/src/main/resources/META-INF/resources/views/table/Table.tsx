@@ -24,9 +24,9 @@ import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
-import {getInternalRenderer} from '../../renderers/getInternalRenderer';
 import FDSDndProvider from '../../dnd/FDSDndProvider';
 import useFDSDrop from '../../dnd/useFDSDrop';
+import {getInternalRenderer} from '../../renderers/getInternalRenderer';
 import {
 	ILocalizedItemDetails,
 	getLocalizedValue,

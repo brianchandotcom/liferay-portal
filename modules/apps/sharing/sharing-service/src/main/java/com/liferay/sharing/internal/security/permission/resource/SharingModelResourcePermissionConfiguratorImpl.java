@@ -144,15 +144,20 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				String actionId)
 			throws PortalException {
 
-			if ((actionId != null) &&
-				actionId.startsWith(
-					ActionKeys.DOWNLOAD + StringPool.UNDERLINE)) {
-
-				actionId = ActionKeys.DOWNLOAD;
+			if (actionId == null) {
+				return null;
 			}
 
-			SharingEntryAction sharingEntryAction = _sharingEntryActions.get(
-				actionId);
+			SharingEntryAction sharingEntryAction = null;
+
+			if (actionId.startsWith(
+					ActionKeys.DOWNLOAD + StringPool.UNDERLINE)) {
+
+				sharingEntryAction = SharingEntryAction.DOWNLOAD;
+			}
+			else {
+				sharingEntryAction = _sharingEntryActions.get(actionId);
+			}
 
 			if (sharingEntryAction == null) {
 				return null;

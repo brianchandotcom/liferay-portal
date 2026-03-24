@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+    {{- if and .Values.network .Values.network.enabled .Values.network.hostnames }}
+    LIFERAY_COMPANY_PERIOD_DEFAULT_PERIOD_VIRTUAL_PERIOD_HOST_PERIOD_NAME: {{ index .Values.network.hostnames 0 | quote }}
+    LIFERAY_COMPANY_PERIOD_DEFAULT_PERIOD_WEB_PERIOD_ID: {{ index .Values.network.hostnames 0 | quote }}
+    LIFERAY_VIRTUAL_PERIOD_HOSTS_PERIOD_VALID_PERIOD_HOSTS: {{ join "," .Values.network.hostnames | quote }}
+    {{- end }}
+kind: ConfigMap
+metadata:
+    name: liferay-network
+    namespace: {{ .Release.Namespace }}

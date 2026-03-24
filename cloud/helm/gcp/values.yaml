@@ -1,0 +1,58 @@
+liferay-default:
+    configmap:
+        data:
+            com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration.config: |
+                bucketName="$[env:LIFERAY_GCS_BUCKET_NAME]"
+    customEnv:
+        x-liferay-gcp:
+            -   name: LIFERAY_DISABLE_TRIAL_LICENSE
+                value: "true"
+            -   name: LIFERAY_DL_PERIOD_STORE_PERIOD_IMPL
+                value: com.liferay.portal.store.gcs.GCSStore
+    customEnvFrom:
+        x-liferay-gcp:
+            -   configMapRef:
+                    name: liferay-company-domain-config
+            -   secretRef:
+                    name: managed-service-details
+    customLabels:
+        origin: liferay-gcp
+    customVolumeMounts:
+        x-liferay-gcp:
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration.config
+                name: liferay-configmap
+                subPath: com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration.config
+    network:
+        enabled: true
+        hostnames: []
+    podSecurityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+        seccompProfile:
+            type: RuntimeDefault
+    resources:
+        limits:
+            cpu: 4000m
+            memory: 12Gi
+        requests:
+            cpu: 500m
+            memory: 1.5Gi
+    securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+            drop:
+                -   ALL
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+            type: RuntimeDefault
+    volumeClaimTemplates:
+        -   metadata:
+                name: liferay-persistent-volume
+            spec:
+                accessModes:
+                    -   ReadWriteOnce
+                resources:
+                    requests:
+                        storage: 10Gi
+                storageClassName: standard-rwo

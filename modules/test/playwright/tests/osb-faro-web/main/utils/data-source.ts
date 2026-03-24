@@ -5,7 +5,6 @@
 
 import {Page, expect} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {faroConfig} from '../faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './navigation';
 
@@ -34,19 +33,23 @@ export async function checkDataSourceStatus({
 export async function createDataSource(page) {
 	await page.goto(faroConfig.environment.baseUrl);
 
-	await page
-		.getByRole('link', {
-			name: 'FARO-DEV-liferay',
-		})
-		.click();
+	await expect(async () => {
+		await page
+			.getByRole('link', {
+				name: 'FARO-DEV-liferay',
+			})
+			.click({timeout: 1000});
 
-	await page.getByRole('link', {name: 'Settings'}).click();
+		await page.getByRole('link', {name: 'Settings'}).click({timeout: 1000});
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('menuitem', {name: 'Liferay DXP'}),
-		trigger: page.getByRole('button', {name: 'Add Data Source'}),
-	});
+		await page
+			.getByRole('button', {name: 'Add Data Source'})
+			.click({timeout: 1000});
+
+		await page
+			.getByRole('menuitem', {name: 'Liferay DXP'})
+			.click({timeout: 1000});
+	}).toPass();
 
 	const input = page.locator('#token');
 

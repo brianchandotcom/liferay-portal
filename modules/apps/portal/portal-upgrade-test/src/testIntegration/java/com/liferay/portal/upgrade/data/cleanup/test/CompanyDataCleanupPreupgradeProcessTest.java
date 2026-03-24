@@ -146,8 +146,10 @@ public class CompanyDataCleanupPreupgradeProcessTest
 				messages.contains(
 					StringBundler.concat(
 						"Table ", _dbInspector.normalizeName(tableName),
-						", 2 rows updated column companyId because it could ",
-						"be populated from table Group_")));
+						", 2 rows updated column ",
+						_dbInspector.normalizeName("companyId"),
+						" because it could be populated from table ",
+						_dbInspector.normalizeName("Group_"))));
 
 			try (PreparedStatement preparedStatement =
 					_connection.prepareStatement(

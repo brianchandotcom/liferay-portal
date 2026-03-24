@@ -279,38 +279,37 @@ public class RelevantRule implements Comparable<RelevantRule> {
 
 	public static class TestScriptCommand {
 
-		public TestScriptCommand(String command, String commandDir) {
+		public TestScriptCommand(String command, String commandDirPath) {
 			_command = command;
-			_commandDir = commandDir;
+			_commandDirPath = commandDirPath;
 		}
 
 		public String getCommand() {
 			return _command;
 		}
 
-		public String getCommandDir() {
-			return _commandDir;
+		public String getCommandDirPath() {
+			return _commandDirPath;
 		}
 
 		private final String _command;
-		private final String _commandDir;
+		private final String _commandDirPath;
 
 	}
 
 	protected String getGradlePackageName(File moduleDir) {
-		String moduleDirFilePath = JenkinsResultsParserUtil.getCanonicalPath(
+		String moduleDirPath = JenkinsResultsParserUtil.getCanonicalPath(
 			moduleDir);
 
-		int index = moduleDirFilePath.indexOf("/modules/");
+		int index = moduleDirPath.indexOf("/modules/");
 
 		if (index == -1) {
 			return "";
 		}
 
-		String relativeModuleDirFilePath = moduleDirFilePath.substring(
-			index + 9);
+		String relativeModuleDirPath = moduleDirPath.substring(index + 9);
 
-		return ":" + relativeModuleDirFilePath.replace('/', ':');
+		return ":" + relativeModuleDirPath.replace('/', ':');
 	}
 
 	protected List<File> getModifiedDirsList(File rootDirectory) {

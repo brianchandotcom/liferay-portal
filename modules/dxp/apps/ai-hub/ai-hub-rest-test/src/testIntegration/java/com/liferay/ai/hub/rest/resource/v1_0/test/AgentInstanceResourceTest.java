@@ -158,7 +158,7 @@ public class AgentInstanceResourceTest
 		_mcpServerObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_MCP_SERVER", TestPropsValues.getCompanyId());
+					"L_AI_HUB_MCP_SERVER", TestPropsValues.getCompanyId());
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			List.of(
 				new LongTextObjectFieldBuilder(
@@ -192,7 +192,7 @@ public class AgentInstanceResourceTest
 					"userName", "test@liferay.com"
 				).toString()
 			).put(
-				"externalReferenceCode", "L_LIFERAY_MCP_SERVER"
+				"externalReferenceCode", "L_LIFERAY_AI_HUB_MCP_SERVER"
 			).put(
 				"url", "http://localhost:8080/o/mcp"
 			).build(),

@@ -265,6 +265,8 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 				_fragmentEntryLocalService.getFragmentEntryByUuidAndGroupId(
 					fragmentEntry.getUuid(), importedGroup.getGroupId());
 
+			Assert.assertEquals(
+				_configuration, importedGroupFragmentEntry.getConfiguration());
 			_assertContains(
 				"Original HTML Fragment", importedGroupFragmentEntry.getHtml());
 

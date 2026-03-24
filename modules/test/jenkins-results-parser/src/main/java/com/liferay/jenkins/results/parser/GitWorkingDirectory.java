@@ -3231,6 +3231,10 @@ public class GitWorkingDirectory {
 		String username = matcher.group("username");
 		String repositoryName = matcher.group("gitRepositoryName");
 
+        if(!repositoryName.contains("portal")){
+            return;
+        }
+
 		String compareURL = JenkinsResultsParserUtil.combine(
 			"https://api.github.com/repos/", username, "/", repositoryName,
 			"/compare/", _upstreamBranchName, "...", remoteGitRefName);

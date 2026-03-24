@@ -102,18 +102,6 @@ public class PatcherAccountIndexer extends BaseIndexer<PatcherAccount> {
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_patcherAccountLocalService.getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
-	}
-
-	@Override
 	protected void doReindex(PatcherAccount patcherAccount) throws Exception {
 		_indexWriterHelper.updateDocument(
 			patcherAccount.getCompanyId(), getDocument(patcherAccount));
@@ -127,6 +115,18 @@ public class PatcherAccountIndexer extends BaseIndexer<PatcherAccount> {
 		if (patcherAccount != null) {
 			doReindex(patcherAccount);
 		}
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_patcherAccountLocalService.getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			this::safeGetDocument);
+
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference

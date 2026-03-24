@@ -141,13 +141,13 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexCommerceCatalogs(companyId);
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(_commerceCatalogLocalService.getCommerceCatalog(classPK));
 	}
 
 	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_commerceCatalogLocalService.getCommerceCatalog(classPK));
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexCommerceCatalogs(companyId);
 	}
 
 	private void _reindexCommerceCatalogs(long companyId) throws Exception {

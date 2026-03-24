@@ -65,7 +65,7 @@ public class MBCategoryIndexerReindexTest {
 
 		mbCategoryIndexerFixture.searchNoOne(searchTerm);
 
-		mbCategoryIndexerFixture.reindex(mbCategory.getCompanyId());
+		mbCategoryIndexerFixture.reindexCompany(mbCategory.getCompanyId());
 
 		mbCategoryIndexerFixture.searchOnlyOne(searchTerm);
 	}

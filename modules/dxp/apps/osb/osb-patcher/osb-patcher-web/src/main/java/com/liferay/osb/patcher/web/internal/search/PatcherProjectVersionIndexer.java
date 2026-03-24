@@ -108,19 +108,6 @@ public class PatcherProjectVersionIndexer
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_patcherProjectVersionLocalService.
-				getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			this::safeGetDocument);
-
-		indexableActionableDynamicQuery.performActions();
-	}
-
-	@Override
 	protected void doReindex(PatcherProjectVersion patcherProjectVersion)
 		throws Exception {
 
@@ -138,6 +125,19 @@ public class PatcherProjectVersionIndexer
 		if (patcherProjectVersion != null) {
 			doReindex(patcherProjectVersion);
 		}
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_patcherProjectVersionLocalService.
+				getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			this::safeGetDocument);
+
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference

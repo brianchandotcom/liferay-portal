@@ -305,15 +305,15 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexCommercePriceLists(companyId);
-
-		_commercePriceListLocalService.cleanPriceListCache();
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(_commercePriceListLocalService.getCommercePriceList(classPK));
 	}
 
 	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_commercePriceListLocalService.getCommercePriceList(classPK));
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexCommercePriceLists(companyId);
+
+		_commercePriceListLocalService.cleanPriceListCache();
 	}
 
 	private long _getCatalogId(CommercePriceList commercePriceList)

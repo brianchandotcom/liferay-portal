@@ -413,28 +413,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public void reindex(long companyId) throws SearchException {
-		if (IndexWriterHelperUtil.isIndexReadOnly() ||
-			IndexWriterHelperUtil.isIndexReadOnly(getClassName()) ||
-			!isIndexerEnabled()) {
-
-			return;
-		}
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
-
-			doReindex(companyId);
-		}
-		catch (SearchException searchException) {
-			throw searchException;
-		}
-		catch (Exception exception) {
-			throw new SearchException(exception);
-		}
-	}
-
-	@Override
 	public void reindex(String className, long classPK) throws SearchException {
 		try {
 			if (IndexWriterHelperUtil.isIndexReadOnly() ||
@@ -473,6 +451,28 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			}
 
 			doReindex(object);
+		}
+		catch (SearchException searchException) {
+			throw searchException;
+		}
+		catch (Exception exception) {
+			throw new SearchException(exception);
+		}
+	}
+
+	@Override
+	public void reindexCompany(long companyId) throws SearchException {
+		if (IndexWriterHelperUtil.isIndexReadOnly() ||
+			IndexWriterHelperUtil.isIndexReadOnly(getClassName()) ||
+			!isIndexerEnabled()) {
+
+			return;
+		}
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			doReindexCompany(companyId);
 		}
 		catch (SearchException searchException) {
 			throw searchException;
@@ -1110,12 +1110,12 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		indexer.postProcessSearchQuery(searchQuery, searchContext);
 	}
 
-	protected abstract void doReindex(long companyId) throws Exception;
-
 	protected abstract void doReindex(String className, long classPK)
 		throws Exception;
 
 	protected abstract void doReindex(T object) throws Exception;
+
+	protected abstract void doReindexCompany(long companyId) throws Exception;
 
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {

@@ -73,16 +73,16 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexFormInstances(companyId);
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceLocalService.getFormInstance(classPK);
 
 		doReindex(ddmFormInstance);
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexFormInstances(companyId);
 	}
 
 	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;

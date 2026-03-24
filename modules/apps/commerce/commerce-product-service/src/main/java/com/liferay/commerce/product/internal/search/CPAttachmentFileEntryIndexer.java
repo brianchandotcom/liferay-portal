@@ -275,15 +275,15 @@ public class CPAttachmentFileEntryIndexer
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexCPAttachmentFileEntries(companyId);
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(
 			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
 				classPK));
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexCPAttachmentFileEntries(companyId);
 	}
 
 	private void _reindexCPAttachmentFileEntries(long companyId)

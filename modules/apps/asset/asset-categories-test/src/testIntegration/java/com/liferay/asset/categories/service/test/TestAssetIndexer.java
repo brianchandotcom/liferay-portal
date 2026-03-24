@@ -58,15 +58,15 @@ public class TestAssetIndexer extends BaseIndexer<Organization> {
 	}
 
 	@Override
-	protected void doReindex(long companyId) {
-	}
-
-	@Override
 	protected void doReindex(Organization organization) {
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) {
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) {
 	}
 
 	private String _className;

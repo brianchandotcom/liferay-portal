@@ -761,7 +761,7 @@ public class
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			AssetEntry.class.getName());
 
-		indexer.reindex(_group.getCompanyId());
+		indexer.reindexCompany(_group.getCompanyId());
 	}
 
 	@Inject

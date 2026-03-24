@@ -188,15 +188,15 @@ public class CommerceInventoryWarehouseIndexer
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexCommerceInventoryWarehouses(companyId);
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouse(classPK));
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexCommerceInventoryWarehouses(companyId);
 	}
 
 	@Override

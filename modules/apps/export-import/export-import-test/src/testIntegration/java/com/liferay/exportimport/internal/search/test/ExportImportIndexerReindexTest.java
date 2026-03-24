@@ -76,7 +76,7 @@ public class ExportImportIndexerReindexTest {
 
 		exportImportIndexerFixture.searchNoOne(searchTerm, locale, attributes);
 
-		exportImportIndexerFixture.reindex(
+		exportImportIndexerFixture.reindexCompany(
 			exportImportConfiguration.getCompanyId());
 
 		exportImportIndexerFixture.searchOnlyOne(searchTerm, attributes);

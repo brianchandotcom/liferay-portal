@@ -116,7 +116,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 						companyId, className, true);
 				}
 
-				indexer.reindex(companyId);
+				indexer.reindexCompany(companyId);
 
 				if (_isExecuteSyncReindex(executionMode)) {
 					SyncReindexManager syncReindexManager =

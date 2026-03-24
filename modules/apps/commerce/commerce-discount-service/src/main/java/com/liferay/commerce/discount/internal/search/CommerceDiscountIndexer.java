@@ -423,13 +423,13 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexCommerceDiscounts(companyId);
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(_commerceDiscountLocalService.getCommerceDiscount(classPK));
 	}
 
 	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_commerceDiscountLocalService.getCommerceDiscount(classPK));
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexCommerceDiscounts(companyId);
 	}
 
 	private void _reindexCommerceDiscounts(long companyId) throws Exception {

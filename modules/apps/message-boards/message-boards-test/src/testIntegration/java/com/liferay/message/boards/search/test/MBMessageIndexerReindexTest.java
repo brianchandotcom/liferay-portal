@@ -80,7 +80,7 @@ public class MBMessageIndexerReindexTest {
 
 		mbMessageIndexerFixture.searchNoOne(searchTerm);
 
-		mbMessageIndexerFixture.reindex(mbMessage.getCompanyId());
+		mbMessageIndexerFixture.reindexCompany(mbMessage.getCompanyId());
 
 		mbMessageIndexerFixture.searchOnlyOne(searchTerm);
 	}
@@ -100,7 +100,7 @@ public class MBMessageIndexerReindexTest {
 
 		mbMessageIndexerFixture.searchNoOne(searchTerm);
 
-		mbMessageIndexerFixture.reindex(mbMessage.getCompanyId());
+		mbMessageIndexerFixture.reindexCompany(mbMessage.getCompanyId());
 
 		mbMessageIndexerFixture.searchOnlyOne(searchTerm);
 	}

@@ -87,17 +87,17 @@ public abstract class BaseSearcher extends BaseIndexer<Object> {
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	protected void doReindex(Object object) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 

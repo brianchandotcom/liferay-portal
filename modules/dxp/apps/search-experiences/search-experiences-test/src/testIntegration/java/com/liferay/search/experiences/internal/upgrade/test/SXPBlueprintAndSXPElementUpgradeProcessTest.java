@@ -354,7 +354,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			String expectedTitle, IndexerFixture<?> indexerFixture)
 		throws Exception {
 
-		indexerFixture.reindex(_group.getCompanyId());
+		indexerFixture.reindexCompany(_group.getCompanyId());
 
 		List<Document> documents = ListUtil.fromArray(
 			indexerFixture.search(_user.getFullName()));

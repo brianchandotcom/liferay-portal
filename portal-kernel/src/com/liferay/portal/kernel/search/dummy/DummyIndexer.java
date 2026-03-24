@@ -158,15 +158,15 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	@Override
-	public void reindex(long companyId) {
-	}
-
-	@Override
 	public void reindex(Object object) {
 	}
 
 	@Override
 	public void reindex(String className, long classPK) {
+	}
+
+	@Override
+	public void reindexCompany(long companyId) {
 	}
 
 	@Override

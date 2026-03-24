@@ -70,7 +70,7 @@ public class MBThreadIndexerReindexTest {
 
 		mbThreadIndexerFixture.searchNoOne(searchTerm);
 
-		mbThreadIndexerFixture.reindex(thread.getCompanyId());
+		mbThreadIndexerFixture.reindexCompany(thread.getCompanyId());
 
 		mbThreadIndexerFixture.searchOnlyOne(searchTerm);
 	}
@@ -93,7 +93,7 @@ public class MBThreadIndexerReindexTest {
 
 		mbThreadIndexerFixture.searchNoOne(searchTerm);
 
-		mbThreadIndexerFixture.reindex(mbMessage.getCompanyId());
+		mbThreadIndexerFixture.reindexCompany(mbMessage.getCompanyId());
 
 		mbThreadIndexerFixture.searchOnlyOne(searchTerm);
 	}
@@ -116,7 +116,7 @@ public class MBThreadIndexerReindexTest {
 
 		mbThreadIndexerFixture.searchNoOne(searchTerm);
 
-		mbThreadIndexerFixture.reindex(mbMessage.getCompanyId());
+		mbThreadIndexerFixture.reindexCompany(mbMessage.getCompanyId());
 
 		mbThreadIndexerFixture.searchOnlyOne(searchTerm);
 	}

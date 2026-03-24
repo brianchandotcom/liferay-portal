@@ -61,8 +61,8 @@ public class IndexerFixture<T> {
 		}
 	}
 
-	public void reindex(long companyId) throws Exception {
-		_indexer.reindex(companyId);
+	public void reindexCompany(long companyId) throws Exception {
+		_indexer.reindexCompany(companyId);
 	}
 
 	public Document[] search(long userId, String keywords, Locale locale) {

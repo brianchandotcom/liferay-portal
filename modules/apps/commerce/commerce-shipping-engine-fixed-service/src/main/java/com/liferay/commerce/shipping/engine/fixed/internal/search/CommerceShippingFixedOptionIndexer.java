@@ -146,15 +146,15 @@ public class CommerceShippingFixedOptionIndexer
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexCommerceShippingFixedOptions(companyId);
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(
 			_commerceShippingFixedOptionLocalService.
 				getCommerceShippingFixedOption(classPK));
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexCommerceShippingFixedOptions(companyId);
 	}
 
 	@Override

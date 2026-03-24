@@ -362,7 +362,11 @@ public class ConfigurationModelIndexer
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
+	protected void doReindex(String className, long classPK) throws Exception {
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
 		Set<Document> documents = new HashSet<>();
 
 		Map<String, ConfigurationModel> configurationModels =
@@ -377,10 +381,6 @@ public class ConfigurationModelIndexer
 
 		_indexWriterHelper.updateDocuments(
 			CompanyConstants.SYSTEM, documents, false);
-	}
-
-	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
 	}
 
 	private static void _initialize(String osgiServiceIdentifier)

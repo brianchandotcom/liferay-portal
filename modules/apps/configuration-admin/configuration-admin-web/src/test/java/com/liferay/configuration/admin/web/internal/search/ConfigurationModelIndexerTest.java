@@ -53,7 +53,7 @@ public class ConfigurationModelIndexerTest {
 
 	@Test
 	public void testDoReindex() throws Exception {
-		_configurationModelIndexer.doReindex(0);
+		_configurationModelIndexer.doReindexCompany(0);
 
 		Mockito.verify(
 			_indexWriterHelper, Mockito.times(1)

@@ -88,7 +88,7 @@ public class UserIndexerReindexTest {
 
 		_indexerFixture.searchNoOne(searchTerm);
 
-		_indexerFixture.reindex(user.getCompanyId());
+		_indexerFixture.reindexCompany(user.getCompanyId());
 
 		_indexerFixture.searchOnlyOne(searchTerm);
 	}

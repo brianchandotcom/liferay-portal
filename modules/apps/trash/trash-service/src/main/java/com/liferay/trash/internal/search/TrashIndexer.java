@@ -188,15 +188,15 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 	}
 
 	@Override
-	protected void doReindex(long companyId) {
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) {
 	}
 
 	@Override
 	protected void doReindex(TrashEntry trashEntry) {
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) {
 	}
 
 	@Reference

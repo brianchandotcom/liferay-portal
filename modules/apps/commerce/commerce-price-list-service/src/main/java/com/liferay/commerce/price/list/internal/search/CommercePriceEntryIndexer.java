@@ -179,14 +179,14 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexCommercePriceEntries(companyId);
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(
 			_commercePriceEntryLocalService.getCommercePriceEntry(classPK));
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexCommercePriceEntries(companyId);
 	}
 
 	private void _reindexCommercePriceEntries(long companyId) throws Exception {

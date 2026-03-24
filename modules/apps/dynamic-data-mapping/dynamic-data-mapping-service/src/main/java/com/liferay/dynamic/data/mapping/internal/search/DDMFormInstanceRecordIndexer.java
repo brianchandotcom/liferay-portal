@@ -225,16 +225,16 @@ public class DDMFormInstanceRecordIndexer
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexFormInstanceRecords(companyId);
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		DDMFormInstanceRecord ddmFormInstanceRecord =
 			ddmFormInstanceRecordLocalService.getFormInstanceRecord(classPK);
 
 		doReindex(ddmFormInstanceRecord);
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexFormInstanceRecords(companyId);
 	}
 
 	protected ClassNameLocalService classNameLocalService;

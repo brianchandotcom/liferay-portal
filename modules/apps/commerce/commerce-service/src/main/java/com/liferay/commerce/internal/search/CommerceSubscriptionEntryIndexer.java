@@ -175,15 +175,15 @@ public class CommerceSubscriptionEntryIndexer
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexCommerceSubscriptionEntries(companyId);
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(
 			_commerceSubscriptionEntryLocalService.getCommerceSubscriptionEntry(
 				classPK));
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexCommerceSubscriptionEntries(companyId);
 	}
 
 	private void _reindexCommerceSubscriptionEntries(long companyId)

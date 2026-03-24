@@ -127,7 +127,7 @@ public class JournalArticleIndexerReindexTest {
 							indexAllArticleVersionsEnabled
 						).build())) {
 
-			_indexer.reindex(TestPropsValues.getCompanyId());
+			_indexer.reindexCompany(TestPropsValues.getCompanyId());
 		}
 	}
 

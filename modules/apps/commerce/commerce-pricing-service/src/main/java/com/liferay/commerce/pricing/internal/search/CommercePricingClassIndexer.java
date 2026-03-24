@@ -112,14 +112,14 @@ public class CommercePricingClassIndexer
 	}
 
 	@Override
-	protected void doReindex(long companyId) throws Exception {
-		_reindexCommercePricingClasses(companyId);
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(
 			_commercePricingClassLocalService.getCommercePricingClass(classPK));
+	}
+
+	@Override
+	protected void doReindexCompany(long companyId) throws Exception {
+		_reindexCommercePricingClasses(companyId);
 	}
 
 	private void _reindexCommercePricingClasses(long companyId)

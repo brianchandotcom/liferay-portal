@@ -69,7 +69,7 @@ public class LayoutIndexerReindexTest {
 
 		layoutIndexerFixture.searchNoOne(searchTerm, locale);
 
-		layoutIndexerFixture.reindex(layout.getCompanyId());
+		layoutIndexerFixture.reindexCompany(layout.getCompanyId());
 
 		layoutIndexerFixture.searchOnlyOne(searchTerm, locale);
 	}

@@ -2,11 +2,12 @@ import ClayAlert from '@clayui/alert';
 import ClayForm from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 import {Alert} from 'shared/types';
-import {ConnectLiferayDXPTokenFragment} from '../ConnectLiferayDXPTokenFragment';
+import {CopyInputValue} from '../../CopyInputValue';
 import {DataSourceStatuses} from 'shared/util/constants';
 import {disconnect, fetchToken} from 'shared/api/data-source';
 import {modalTypes} from 'shared/actions/modals';
 import {Routes, toRoute} from 'shared/util/router';
+import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {updateSearchParams} from 'settings/components/base-page/utis';
 import {useHistory} from 'react-router-dom';
@@ -54,8 +55,11 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 						if (token === nextToken) {
 							addAlert({
 								alertType: Alert.Types.Error,
-								message: Liferay.Language.get(
-									'first-paste-the-token-into-your-dxp-instance-in-order-to-continue-with-the-data-source-setup'
+								message: sub(
+									Liferay.Language.get(
+										'first-paste-the-token-into-your-x-instance-in-order-to-continue-with-the-data-source-setup'
+									),
+									[Liferay.Language.get('liferay-dxp')]
 								)
 							});
 						} else {
@@ -80,16 +84,19 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 			>
 				<label htmlFor='token'>
 					<Text weight='semi-bold'>
-						{Liferay.Language.get(
-							'copy-this-token-to-your-dxp-instance'
+						{sub(
+							Liferay.Language.get(
+								'copy-this-token-to-your-x-instance'
+							),
+							[Liferay.Language.get('liferay-dxp')]
 						)}
 					</Text>
 				</label>
 
-				<ConnectLiferayDXPTokenFragment
+				<CopyInputValue
 					addAlert={addAlert}
 					disabled={false}
-					token={token}
+					value={token}
 				/>
 
 				<WizardPageButtonGroup
@@ -124,17 +131,16 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 
 			<label htmlFor='token'>
 				<Text weight='semi-bold'>
-					{Liferay.Language.get(
-						'copy-this-token-to-your-dxp-instance'
+					{sub(
+						Liferay.Language.get(
+							'copy-this-token-to-your-x-instance'
+						),
+						[Liferay.Language.get('liferay-dxp')]
 					)}
 				</Text>
 			</label>
 
-			<ConnectLiferayDXPTokenFragment
-				addAlert={addAlert}
-				disabled
-				token={token}
-			/>
+			<CopyInputValue addAlert={addAlert} disabled value={token} />
 
 			<WizardPageButtonGroup
 				nextButtonLabel={Liferay.Language.get('continue')}
@@ -142,8 +148,11 @@ const ConnectLiferayDXPStep = ({addAlert, close, groupId, onNext, open}) => {
 					open(modalTypes.CONFIRMATION_MODAL, {
 						message: (
 							<Text as='p' size={4}>
-								{Liferay.Language.get(
-									'this-action-will-stop-syncing-data-from-your-dxp-instance-to-this-analytics-cloud-workspace.-the-data-that-was-already-synced-will-remain-available-in-the-properties-the-data-source-was-connected-to.-are-you-sure-you-want-to-continue'
+								{sub(
+									Liferay.Language.get(
+										'this-action-will-stop-syncing-data-from-your-x-instance-to-this-analytics-cloud-workspace.-the-data-that-was-already-synced-will-remain-available-in-the-properties-the-data-source-was-connected-to.-are-you-sure-you-want-to-continue'
+									),
+									[Liferay.Language.get('liferay-dxp')]
 								)}
 							</Text>
 						),

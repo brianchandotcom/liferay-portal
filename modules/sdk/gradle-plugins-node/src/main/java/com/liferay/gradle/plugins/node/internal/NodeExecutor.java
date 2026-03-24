@@ -33,7 +33,6 @@ import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.process.ExecSpec;
-import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -330,7 +329,7 @@ public class NodeExecutor {
 			return;
 		}
 
-		hosts = CollectionUtils.join(",", nonProxyHosts);
+		hosts = String.join(",", nonProxyHosts);
 
 		environment.put(_NO_PROXY_KEY, hosts);
 

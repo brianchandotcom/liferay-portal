@@ -37,7 +37,6 @@ import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
-import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -343,7 +342,7 @@ public class BuildCSSTask extends JavaExec {
 
 		args.add("--dir-names=" + _getDirNamesArg());
 
-		String excludes = CollectionUtils.join(",", getExcludes());
+		String excludes = String.join(",", getExcludes());
 
 		args.add("--excludes=" + excludes);
 
@@ -357,7 +356,7 @@ public class BuildCSSTask extends JavaExec {
 
 		args.add("--precision=" + getPrecision());
 
-		String rtlExcludedPathRegexps = CollectionUtils.join(
+		String rtlExcludedPathRegexps = String.join(
 			",", getRtlExcludedPathRegexps());
 
 		args.add("--rtl-excluded-path-regexps=" + rtlExcludedPathRegexps);

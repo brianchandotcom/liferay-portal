@@ -18,7 +18,6 @@ import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Exec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Internal;
-import org.gradle.util.CollectionUtils;
 
 /**
  * @author Peter Shin
@@ -38,7 +37,7 @@ public class DockerCopyTask extends Exec {
 		if (logger.isLifecycleEnabled()) {
 			logger.lifecycle(
 				"Running: {} {}", getExecutable(),
-				CollectionUtils.join(" ", _getCompleteArgs()));
+				String.join(" ", _getCompleteArgs()));
 		}
 
 		setArgs(_getCompleteArgs());

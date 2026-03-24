@@ -79,27 +79,41 @@ public class CompanyDataCleanupPreupgradeProcess
 			String normalizedTableName = dbInspector.normalizeName(
 				sourceTableName);
 
+			String updateSql = _getUpdateSQL(
+				companyIdColumnName, normalizedTableName, sourceColumnName,
+				targetColumnNames[0], targetTableName);
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(updateSql)) {
+
+				int count = preparedStatement.executeUpdate();
+
+				DataCleanupLoggingUtil.logUpdate(
+					_log, count, sourceTableName, companyIdColumnName, null,
+					"it could be populated from table " + targetTableName);
+			}
+		}
+
+		private String _getUpdateSQL(
+			String companyIdColumnName, String normalizedTableName,
+			String sourceColumnName, String targetColumnName,
+			String targetTableName) {
+
 			String setSubquery = StringBundler.concat(
 				"(select ", companyIdColumnName, " from ", targetTableName,
-				" where ", targetTableName, StringPool.PERIOD,
-				targetColumnNames[0], " = ", normalizedTableName,
-				StringPool.PERIOD, sourceColumnName, ")");
+				" where ", targetTableName, StringPool.PERIOD, targetColumnName,
+				" = ", normalizedTableName, StringPool.PERIOD, sourceColumnName,
+				")");
 
 			String existsSubquery = StringBundler.concat(
 				"exists (select 1 from ", targetTableName, " where ",
-				targetTableName, StringPool.PERIOD, targetColumnNames[0], " = ",
+				targetTableName, StringPool.PERIOD, targetColumnName, " = ",
 				normalizedTableName, StringPool.PERIOD, sourceColumnName, ")");
 
-			String sql = StringBundler.concat(
+			return StringBundler.concat(
 				"update ", normalizedTableName, " set ", companyIdColumnName,
 				" = ", setSubquery, " where coalesce(", companyIdColumnName,
 				", 0) = 0 and ", sourceColumnName, " > 0 and ", existsSubquery);
-
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(sql)) {
-
-				preparedStatement.executeUpdate();
-			}
 		}
 
 	}

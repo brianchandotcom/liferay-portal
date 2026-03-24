@@ -159,7 +159,10 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 						themeDisplay.getLocale(), "translate-x", title);
 				}
 
-				if (objectEntry.getVersion() > 0) {
+				if (Validator.isNotNull(
+						objectEntry.getTitleValue(
+							themeDisplay.getLanguageId(), true))) {
+
 					return language.format(
 						themeDisplay.getLocale(), "edit-x", title);
 				}

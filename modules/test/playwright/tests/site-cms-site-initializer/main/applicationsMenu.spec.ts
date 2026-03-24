@@ -26,6 +26,59 @@ const test = mergeTests(
 );
 
 test(
+	'Admin section is not visible for non-admin space members',
+	{tag: '@LPD-83160'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+		let space = null;
+		let user = null;
+
+		space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.jsonWebServicesUser.addGroupUsers(space.siteId, [
+			user.id,
+		]);
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName, 'test');
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await expect(
+			page
+				.locator('.vertical-navigation-fragment')
+				.getByRole('menuitem', {
+					name: 'Admin',
+				})
+		).not.toBeVisible();
+
+		await expect(
+			page
+				.locator('.vertical-navigation-fragment')
+				.getByRole('menuitem', {
+					name: 'Contents',
+				})
+		).toBeVisible();
+
+		await apiHelpers.headlessAdminUser.deleteUserAccount(user.id);
+		await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(space.id);
+	}
+);
+
+test(
 	'Can access to Spaces from the Applications Menu',
 	{tag: '@LPD-59033'},
 	async ({apiHelpers, page}) => {

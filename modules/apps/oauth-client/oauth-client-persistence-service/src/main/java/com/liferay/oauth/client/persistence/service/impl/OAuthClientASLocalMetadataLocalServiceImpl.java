@@ -66,7 +66,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			_parseAuthorizationServerMetadata(metadataJSON, wellKnownURISuffix);
 
 		return addOAuthClientASLocalMetadata(
-			userId,
+			null, userId,
 			String.valueOf(
 				authorizationServerMetadata.getAuthorizationEndpointURI()),
 			String.valueOf(authorizationServerMetadata.getIssuer()),
@@ -87,11 +87,12 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String authorizationEndpoint, String issuer,
-			String jwksURI, boolean localWellKnownEnabled,
-			String registrationEndpoint, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpoint, String userInfoEndpoint)
+			String externalReferenceCode, long userId,
+			String authorizationEndpoint, String issuer, String jwksURI,
+			boolean localWellKnownEnabled, String registrationEndpoint,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -108,6 +109,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			oAuthClientASLocalMetadataPersistence.create(
 				counterLocalService.increment());
 
+		oAuthClientASLocalMetadata.setExternalReferenceCode(
+			externalReferenceCode);
 		oAuthClientASLocalMetadata.setCompanyId(user.getCompanyId());
 		oAuthClientASLocalMetadata.setUserId(user.getUserId());
 		oAuthClientASLocalMetadata.setUserName(user.getFullName());

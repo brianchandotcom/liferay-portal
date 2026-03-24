@@ -295,7 +295,7 @@ public class FDSAdminDisplayContext {
 			});
 	}
 
-	public String getUserViewsDataSetsURL() {
+	public String getUserViewsURL() {
 		return _getDataProviderURL("userViews");
 	}
 

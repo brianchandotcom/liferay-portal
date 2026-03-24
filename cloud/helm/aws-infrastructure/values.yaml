@@ -54,6 +54,7 @@ search:
         volumeSize: 10Gi
     opensearch:
         autoSoftwareUpdateEnabled: true
+        enabled: true
         engineVersion: OpenSearch_2.15
         instanceCount: 2
         instanceType: t3.small.search

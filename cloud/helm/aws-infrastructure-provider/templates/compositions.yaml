@@ -1159,6 +1159,7 @@ spec:
                         {{- $searchSpec := $xr.spec.search.opensearch }}
                         {{- $searchRegion := $searchSpec.region | default $baseRegion }}
 
+                        {{- if $searchSpec.enabled }}
                         ---
                         apiVersion: opensearch.aws.m.upbound.io/v1beta1
                         kind: Domain
@@ -1470,6 +1471,7 @@ spec:
                                         projectId: {{ $projectId }}
                                 toPort: 443
                             managementPolicies: {{ $managementPolicies }}
+                        {{- end }}
                         `}}
                 kind: GoTemplate
                 source: Inline
@@ -1537,17 +1539,65 @@ spec:
                             {{- end -}}
                         {{- end -}}
 
+                        {{- if and $databaseAddress $databasePort }}
+                        ---
+                        apiVersion: kubernetes.m.crossplane.io/v1alpha1
+                        kind: Object
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $baseName }}-database-connection-details-secret
+                                gotemplating.fn.crossplane.io/composition-resource-name: database-connection-details-secret
+                            labels:
+                                app: liferay
+                                component: database-connection-details-secret
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-database-connection-details-secret
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                manifest:
+                                    apiVersion: v1
+                                    data:
+                                        DATABASE_ENDPOINT: {{ $databaseAddress | b64enc | quote }}
+                                        DATABASE_PASSWORD: {{ $databasePassword | b64enc | quote }}
+                                        DATABASE_PORT: {{ $databasePort | default 5432 | b64enc | quote }}
+                                        DATABASE_USERNAME: {{ $database.resource.spec.forProvider.username | b64enc | quote }}
+                                    kind: Secret
+                                    metadata:
+                                        labels:
+                                            app: liferay
+                                            component: database-connection-details-secret
+                                            environmentId: {{ $environmentId }}
+                                            projectId: {{ $projectId }}
+                                        name: database-connection-details
+                                        namespace: {{ $namespace }}
+                                        ownerReferences:
+                                            -   apiVersion: aws.liferay.com/v1alpha1
+                                                blockOwnerDeletion: true
+                                                controller: true
+                                                kind: LiferayInfrastructure
+                                                name: {{ .observed.composite.resource.metadata.name }}
+                                                uid: {{ .observed.composite.resource.metadata.uid }}
+                                    type: Opaque
+                            managementPolicies: {{ $managementPolicies }}
+                        {{- end -}}
+
                         {{- $searchEndpoint := "" -}}
                         {{- $searchPassword := "" -}}
-                        {{- if kindIs "map" $search -}}
-                            {{- with $search }}
-                                {{- with .connectionDetails }}
-                                    {{- $searchPassword = index . "attribute.advanced_security_options.0.master_user_options.0.master_user_password" | toString | b64dec -}}
-                                {{- end -}}
-                                {{- with .resource }}
-                                    {{- with .status }}
-                                        {{- with .atProvider }}
-                                            {{- $searchEndpoint = .endpoint | toString -}}
+
+                        {{- $searchSpec := $xr.spec.search.opensearch }}
+                        {{- if $searchSpec.enabled }}
+                            {{- if kindIs "map" $search -}}
+                                {{- with $search }}
+                                    {{- with .connectionDetails }}
+                                        {{- $searchPassword = index . "attribute.advanced_security_options.0.master_user_options.0.master_user_password" | toString | b64dec -}}
+                                    {{- end -}}
+                                    {{- with .resource }}
+                                        {{- with .status }}
+                                            {{- with .atProvider }}
+                                                {{- $searchEndpoint = .endpoint | toString -}}
+                                            {{- end -}}
                                         {{- end -}}
                                     {{- end -}}
                                 {{- end -}}
@@ -1616,14 +1666,25 @@ spec:
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
                         ---
+                        {{ $isDatabaseReady := false -}}
+                        {{- if and $databaseAddress $databasePassword $databasePort -}}
+                            {{- $isDatabaseReady = true -}}
+                        {{- end -}}
+
+                        {{- $isSearchReady := false -}}
+                        {{- if or (not $searchSpec.enabled) (and $searchEndpoint $searchPassword) -}}
+                            {{- $isSearchReady = true -}}
+                        {{- end -}}
+
+                        {{- $isStorageReady := false -}}
+                        {{- if $storageName -}}
+                            {{- $isStorageReady = true -}}
+                        {{- end }}
+
                         apiVersion: aws.liferay.com/v1alpha1
                         kind: LiferayInfrastructure
                         status:
-                        {{- if and $databaseAddress $databasePassword $databasePort $searchEndpoint $searchPassword $storageName }}
-                            managedServiceDetailsReady: true
-                        {{- else }}
-                            managedServiceDetailsReady: false
-                        {{- end }}
+                            managedServiceDetailsReady: {{ and $isDatabaseReady $isSearchReady $isStorageReady }}
                         `}}
                 kind: GoTemplate
                 source: Inline

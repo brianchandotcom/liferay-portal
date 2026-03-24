@@ -122,6 +122,8 @@ spec:
                                             properties:
                                                 autoSoftwareUpdateEnabled:
                                                     type: boolean
+                                                enabled:
+                                                    type: boolean
                                                 engineVersion:
                                                     type: string
                                                 instanceCount:

@@ -5,13 +5,31 @@
 
 import {ObjectField} from '../../common/types/ObjectDefinition';
 
-export default function isCustomObjectField(objectField: ObjectField) {
+const CMS_SYSTEM_OBJECT_FIELD_NAMES: Record<string, string[]> = {
+	L_CMS_BASIC_DOCUMENT: ['file', 'title'],
+	L_CMS_BASIC_WEB_CONTENT: ['content', 'title'],
+	L_CMS_BLOG: ['content', 'coverImage', 'subtitle', 'title'],
+	L_CMS_EXTERNAL_VIDEO: ['title', 'videoURL'],
+};
+
+const CUSTOM_OBJECT_SYSTEM_FIELD_NAMES = ['file', 'title'];
+
+export default function isCustomObjectField(
+	objectField: ObjectField,
+	objectDefinitionERC: string
+) {
 	if (objectField.businessType === 'Relationship') {
 		return false;
 	}
 
-	if (objectField.system && !['title', 'file'].includes(objectField.name)) {
-		return false;
+	if (objectField.system) {
+		const allowedSystemFields =
+			CMS_SYSTEM_OBJECT_FIELD_NAMES[objectDefinitionERC] ??
+			CUSTOM_OBJECT_SYSTEM_FIELD_NAMES;
+
+		if (!allowedSystemFields.includes(objectField.name)) {
+			return false;
+		}
 	}
 
 	return true;

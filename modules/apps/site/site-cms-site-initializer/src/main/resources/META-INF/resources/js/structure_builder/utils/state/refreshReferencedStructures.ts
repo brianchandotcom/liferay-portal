@@ -160,7 +160,10 @@ export default function refreshReferencedStructures({
 		).filter(
 			(objectField) =>
 				!childrenERCs.includes(objectField.externalReferenceCode) &&
-				isCustomObjectField(objectField)
+				isCustomObjectField(
+					objectField,
+					objectDefinition.externalReferenceCode
+				)
 		);
 
 		for (const objectField of newObjectFields) {

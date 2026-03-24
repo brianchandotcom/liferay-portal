@@ -74,7 +74,12 @@ export function buildChildren({
 	}
 
 	for (const objectField of objectFields) {
-		if (!isCustomObjectField(objectField)) {
+		if (
+			!isCustomObjectField(
+				objectField,
+				objectDefinition.externalReferenceCode
+			)
+		) {
 			continue;
 		}
 

@@ -13,10 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 /**
  * @author Gianmarco Brunialti Masera
  */
-public class ViewAnalyticsRoomStatisticsSectionDisplayContext
+public class ViewAnalyticsMostActiveVisitorsAnalyticsSectionDisplayContext
 	extends BaseAnalyticsSectionDisplayContext {
 
-	public ViewAnalyticsRoomStatisticsSectionDisplayContext(
+	public ViewAnalyticsMostActiveVisitorsAnalyticsSectionDisplayContext(
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition,
 		ObjectEntryService objectEntryService) {

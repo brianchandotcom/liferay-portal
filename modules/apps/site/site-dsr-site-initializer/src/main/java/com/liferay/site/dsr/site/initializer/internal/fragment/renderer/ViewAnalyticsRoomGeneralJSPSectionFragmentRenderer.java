@@ -11,7 +11,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.dsr.site.initializer.internal.display.context.ViewAnalyticsRoomGeneralSectionDisplayContext;
+import com.liferay.site.dsr.site.initializer.internal.display.context.ViewAnalyticsRoomGeneralAnalyticsSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = FragmentRenderer.class)
 public class ViewAnalyticsRoomGeneralJSPSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer
-		<ViewAnalyticsRoomGeneralSectionDisplayContext> {
+		<ViewAnalyticsRoomGeneralAnalyticsSectionDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
@@ -32,15 +32,16 @@ public class ViewAnalyticsRoomGeneralJSPSectionFragmentRenderer
 	}
 
 	@Override
-	protected ViewAnalyticsRoomGeneralSectionDisplayContext getDisplayContext(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+	protected ViewAnalyticsRoomGeneralAnalyticsSectionDisplayContext
+		getDisplayContext(
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return new ViewAnalyticsRoomGeneralSectionDisplayContext(
+		return new ViewAnalyticsRoomGeneralAnalyticsSectionDisplayContext(
 			httpServletRequest,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(

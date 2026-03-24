@@ -4,18 +4,65 @@
  */
 
 /**
+ * Gets the filename from the response headers.
+ *
+ * @param {Response} response
+ * @param {string} defaultFilename
+ */
+function getFilenameFromResponse(
+	response: Response,
+	defaultFilename: string = 'export.zip'
+): string {
+	const contentDisposition = response.headers.get('Content-Disposition');
+
+	if (contentDisposition) {
+		const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/);
+
+		if (filenameMatch && filenameMatch.length > 1) {
+			return filenameMatch[1];
+		}
+	}
+
+	return defaultFilename;
+}
+
+/**
  * Downloads a blob as a file.
  *
- * @param {Blob} blob
+ * @param {Response | Promise<Blob> | Blob} data
+ * @param {string} filename
  */
-export async function downloadBlob(blob: Promise<Blob> | Blob): Promise<void> {
-	const blobURL = URL.createObjectURL(await blob);
+export async function downloadBlob(
+	data: Response | Promise<Blob> | Blob,
+	filename?: string
+): Promise<void> {
+	let blob: Blob;
+	let finalFilename: string | undefined = filename;
+
+	if (data instanceof Response) {
+		finalFilename = finalFilename || getFilenameFromResponse(data);
+		blob = await data.blob();
+	}
+	else {
+		blob = await data;
+	}
+
+	if (!finalFilename) {
+		throw new Error('Filename is required');
+	}
+
+	const blobURL = URL.createObjectURL(blob);
 
 	const link = document.createElement('a');
 
 	link.href = blobURL;
+	link.download = finalFilename;
+
+	document.body.appendChild(link);
 
 	link.click();
+
+	document.body.removeChild(link);
 
 	URL.revokeObjectURL(blobURL);
 }

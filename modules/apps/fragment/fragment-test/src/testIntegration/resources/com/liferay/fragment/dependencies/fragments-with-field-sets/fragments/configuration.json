@@ -1,0 +1,9 @@
+{
+	"fieldSets": [
+		{
+			"customComponentModule": "{SimpleInputField} from @liferay/fragment-impl/api",
+			"fields": [
+			]
+		}
+	]
+}

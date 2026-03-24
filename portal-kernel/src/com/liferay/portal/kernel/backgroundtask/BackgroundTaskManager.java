@@ -47,6 +47,11 @@ public interface BackgroundTaskManager {
 			InputStream inputStream)
 		throws PortalException;
 
+	public void addBackgroundTaskAttachment(
+			long userId, long backgroundTaskId, String sourceFileName,
+			String title, File file)
+		throws PortalException;
+
 	public BackgroundTask amendBackgroundTask(
 		long backgroundTaskId, Map<String, Serializable> taskContextMap,
 		int status, ServiceContext serviceContext);

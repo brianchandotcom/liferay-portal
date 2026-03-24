@@ -104,6 +104,13 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 					ActionKeys.UPDATE, ActionKeys.VIEW
 				});
 
+			_resourcePermissionLocalService.addResourcePermission(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getPortletId(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(objectDefinition.getCompanyId()),
+				role.getRoleId(), ActionKeys.VIEW);
+
 			_setObjectDefinitionResourcePermissions(
 				objectDefinition, RoleConstants.GUEST);
 			_setObjectDefinitionResourcePermissions(

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "fds.data.provider.key=systemDataSets",
 	service = FDSDataProvider.class
 )
-public class SystemDataSetsDataProvider
+public class SystemDataSetsFDSDataProvider
 	implements FDSDataProvider<SystemDataSet> {
 
 	@Override

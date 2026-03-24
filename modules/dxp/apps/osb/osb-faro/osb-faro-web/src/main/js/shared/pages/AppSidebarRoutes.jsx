@@ -4,7 +4,7 @@ import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {ChannelContext} from 'shared/context/channel';
 import {connect} from 'react-redux';
-import {DEVELOPER_MODE, ENABLE_ACCOUNTS} from 'shared/util/constants';
+import {DEVELOPER_MODE} from 'shared/util/constants';
 import {DownloadReportProvider} from 'shared/components/download-report/DownloadReportContext';
 import {ENABLE_ASSET_OBJECT_ENTRY} from 'shared/util/constants';
 import {Routes} from 'shared/util/router';
@@ -170,7 +170,7 @@ const CommerceDashboard = lazy(() =>
 );
 
 const ROUTES = [
-	ENABLE_ACCOUNTS && {
+	{
 		data: AccountsList,
 		path: Routes.CONTACTS_LIST_ACCOUNT
 	},

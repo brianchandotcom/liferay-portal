@@ -409,10 +409,6 @@ export const DEVELOPER_MODE = FARO_DEV_MODE;
 
 export const ENABLE_ASSET_OBJECT_ENTRY = true;
 
-// LRAC-11571 Disable temporarily Accounts
-
-export const ENABLE_ACCOUNTS = false;
-
 export const ENABLE_ADD_TRIAL_WORKSPACE =
 	FARO_ENV === FaroEnv.Local || FARO_ENV === FaroEnv.Staging;
 

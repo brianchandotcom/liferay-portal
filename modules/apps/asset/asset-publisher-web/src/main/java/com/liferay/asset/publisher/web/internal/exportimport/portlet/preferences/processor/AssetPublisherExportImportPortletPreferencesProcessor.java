@@ -1191,7 +1191,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		String[] oldValues = portletPreferences.getValues(key, null);
 
-		if (oldValues == null) {
+		if ((oldValues == null) || (plid <= 0)) {
 			return;
 		}
 
@@ -1391,15 +1391,19 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			return;
 		}
 
-		StagedModelDataHandler<StagedGroup> stagedModelDataHandler =
-			(StagedModelDataHandler<StagedGroup>)
-				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-					StagedGroup.class.getName());
-
 		Element rootElement = portletDataContext.getImportDataRootElement();
 
 		Element groupIdMappingsElement = rootElement.element(
 			"group-id-mappings");
+
+		if (groupIdMappingsElement == null) {
+			return;
+		}
+
+		StagedModelDataHandler<StagedGroup> stagedModelDataHandler =
+			(StagedModelDataHandler<StagedGroup>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					StagedGroup.class.getName());
 
 		for (Element groupIdMappingElement :
 				groupIdMappingsElement.elements("group-id-mapping")) {
@@ -1408,11 +1412,15 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				portletDataContext, groupIdMappingElement);
 		}
 
+		Layout layout = layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return;
+		}
+
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
-
-		Layout layout = layoutLocalService.getLayout(plid);
 
 		List<String> newValues = TransformUtil.transformToList(
 			oldValues,

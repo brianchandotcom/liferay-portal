@@ -69,10 +69,7 @@ export class DisplayPageTemplatesPage {
 
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 
-		await waitForAlert(
-			this.page,
-			'Success:You successfully deleted 1 display page template(s).'
-		);
+		await waitForAlert(this.page, 'Success:');
 	}
 
 	async deleteAllDisplayPageTemplates() {

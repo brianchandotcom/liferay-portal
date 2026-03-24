@@ -40,7 +40,7 @@ import {unzipAndCheckFolder} from './utils/stagingUtil';
 const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-35443': {enabled: false},
+		'LPD-35443': {enabled: true},
 	}),
 	loginTest(),
 	assetPublisherPagesTest,

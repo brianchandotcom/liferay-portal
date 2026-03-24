@@ -13,6 +13,7 @@ import React, {useState} from 'react';
 
 import {IBulkActionFDSData} from '../../common/types/BulkActionTask';
 import {downloadBlob} from '../../common/utils/downloadBlob';
+import {getFolderIdAndGroupIdsFromFilter} from '../../common/utils/odataFilterUtil';
 import {displayErrorToast} from '../../common/utils/toastUtil';
 import {exportTranslationBulkAction} from '../props_transformer/actions/exportTranslationBulkAction';
 
@@ -171,15 +172,9 @@ export default function ExportTranslationModalContent({
 
 		if (selectedData) {
 			const url = new URL(apiURL || '', window.location.origin);
-			const filter = url.searchParams.get('filter') || '';
-
-			const folderIdMatch = filter.match(/folderId eq (\d+)/);
-			const groupIdsMatch = filter.match(
-				/groupIds\/any\(g:g in \([\d, ]+\)\)/
+			const {folderId, groupIds} = getFolderIdAndGroupIdsFromFilter(
+				url.searchParams.get('filter') || ''
 			);
-
-			const folderId = folderIdMatch ? folderIdMatch[1] : undefined;
-			const groupIds = groupIdsMatch ? groupIdsMatch[0] : undefined;
 
 			return exportTranslationBulkAction({
 				apiURL,

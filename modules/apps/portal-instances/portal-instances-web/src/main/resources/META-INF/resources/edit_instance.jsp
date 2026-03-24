@@ -34,6 +34,7 @@ renderResponse.setTitle(HtmlUtil.escape(selCompany.getWebId()));
 		<aui:input name="companyId" type="hidden" value="<%= companyId %>" />
 
 		<liferay-ui:error exception="<%= CompanyMxException.class %>" message="please-enter-a-valid-mail-domain" />
+		<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="please-enter-a-valid-max-users" />
 		<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
 		<liferay-ui:error exception="<%= CompanyWebIdException.class %>" message="please-enter-a-valid-web-id" />
 

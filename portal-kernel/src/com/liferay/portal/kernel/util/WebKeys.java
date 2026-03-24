@@ -541,6 +541,9 @@ public interface WebKeys {
 	public static final String RENDER_PORTLET_RESOURCE =
 		"RENDER_PORTLET_RESOURCE";
 
+	public static final String RENDERING_MAINTENANCE_UTILITY_PAGE =
+		"RENDERING_MAINTENANCE_UTILITY_PAGE";
+
 	public static final String REQUESTED_LAYOUT = "REQUESTED_LAYOUT";
 
 	public static final String RESOURCE_BUNDLE_LOADER =

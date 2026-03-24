@@ -1094,11 +1094,11 @@ public class MainServlet extends HttpServlet {
 
 		Object renderingMaintenanceUtilityPage =
 			httpServletRequest.getAttribute(
-				_RENDERING_MAINTENANCE_UTILITY_PAGE);
+				WebKeys.RENDERING_MAINTENANCE_UTILITY_PAGE);
 
 		if (renderingMaintenanceUtilityPage != null) {
 			httpServletRequest.removeAttribute(
-				_RENDERING_MAINTENANCE_UTILITY_PAGE);
+				WebKeys.RENDERING_MAINTENANCE_UTILITY_PAGE);
 
 			return false;
 		}
@@ -1362,9 +1362,6 @@ public class MainServlet extends HttpServlet {
 
 	private static final String _LIFERAY_PORTAL_REQUEST_HEADER =
 		"Liferay-Portal";
-
-	private static final String _RENDERING_MAINTENANCE_UTILITY_PAGE =
-		"RENDERING_MAINTENANCE_UTILITY_PAGE";
 
 	private static final Log _log = LogFactoryUtil.getLog(MainServlet.class);
 

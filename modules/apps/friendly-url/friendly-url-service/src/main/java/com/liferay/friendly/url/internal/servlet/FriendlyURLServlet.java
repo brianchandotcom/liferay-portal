@@ -678,7 +678,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					if (maintenanceLayout != null) {
 						try {
 							httpServletRequest.setAttribute(
-								_RENDERING_MAINTENANCE_UTILITY_PAGE,
+								WebKeys.RENDERING_MAINTENANCE_UTILITY_PAGE,
 								Boolean.TRUE);
 
 							RequestDispatcher requestDispatcher =
@@ -1407,10 +1407,6 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	private static final String _MAINTENANCE_MODE_GROUP_ID =
 		FriendlyURLServlet.class.getName() + "#MAINTENANCE_MODE_GROUP_ID";
-
-	private static final String _RENDERING_MAINTENANCE_UTILITY_PAGE =
-		FriendlyURLServlet.class.getName() +
-			"#RENDERING_MAINTENANCE_UTILITY_PAGE";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);

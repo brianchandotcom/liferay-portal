@@ -398,99 +398,99 @@ that may or may not be enforced with a unique index at the database level. Case
 	}
 
 	<#if !serviceBuilder.isVersionGTE_7_4_0()>
-	/**
-	 * Returns the last ${entity.humanName} in the ordered set where ${entityFinder.getHumanConditions(false)}.
-	 *
-	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
-	</#list>
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ${entity.humanName}
-	 * @throws ${noSuchEntity}Exception if a matching ${entity.humanName} could not be found
-	 */
-	@Override
-	public ${entity.name} findBy${entityFinder.name}_Last(
-
-	<#list entityColumns as entityColumn>
-		${entityColumn.type} ${entityColumn.name},
-	</#list>
-
-	OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
-		${entity.name} ${entity.variableName} = fetchBy${entityFinder.name}_Last(
+		/**
+		 * Returns the last ${entity.humanName} in the ordered set where ${entityFinder.getHumanConditions(false)}.
+		 *
+		<#list entityColumns as entityColumn>
+		 * @param ${entityColumn.name} the ${entityColumn.humanName}
+		</#list>
+		 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+		 * @return the last matching ${entity.humanName}
+		 * @throws ${noSuchEntity}Exception if a matching ${entity.humanName} could not be found
+		 */
+		@Override
+		public ${entity.name} findBy${entityFinder.name}_Last(
 
 		<#list entityColumns as entityColumn>
-			${entityColumn.name},
+			${entityColumn.type} ${entityColumn.name},
 		</#list>
 
-		orderByComparator);
+		OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
+			${entity.name} ${entity.variableName} = fetchBy${entityFinder.name}_Last(
 
-		if (${entity.variableName} != null) {
-			return ${entity.variableName};
+			<#list entityColumns as entityColumn>
+				${entityColumn.name},
+			</#list>
+
+			orderByComparator);
+
+			if (${entity.variableName} != null) {
+				return ${entity.variableName};
+			}
+
+			StringBundler sb = new StringBundler(${(entityColumns?size * 2) + 2});
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			<#list entityColumns as entityColumn>
+				sb.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
+				sb.append(${entityColumn.name});
+
+				<#if !entityColumn_has_next>
+					sb.append("}");
+				</#if>
+			</#list>
+
+			throw new ${noSuchEntity}Exception(sb.toString());
 		}
 
-		StringBundler sb = new StringBundler(${(entityColumns?size * 2) + 2});
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+		/**
+		 * Returns the last ${entity.humanName} in the ordered set where ${entityFinder.getHumanConditions(false)}.
+		 *
+		<#list entityColumns as entityColumn>
+		 * @param ${entityColumn.name} the ${entityColumn.humanName}
+		</#list>
+		 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+		 * @return the last matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
+		 */
+		@Override
+		public ${entity.name} fetchBy${entityFinder.name}_Last(
 
 		<#list entityColumns as entityColumn>
-			sb.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
-			sb.append(${entityColumn.name});
-
-			<#if !entityColumn_has_next>
-				sb.append("}");
-			</#if>
+			${entityColumn.type} ${entityColumn.name},
 		</#list>
 
-		throw new ${noSuchEntity}Exception(sb.toString());
-	}
+		OrderByComparator<${entity.name}> orderByComparator) {
+			int count = countBy${entityFinder.name}(
 
-	/**
-	 * Returns the last ${entity.humanName} in the ordered set where ${entityFinder.getHumanConditions(false)}.
-	 *
-	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
-	</#list>
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
-	 */
-	@Override
-	public ${entity.name} fetchBy${entityFinder.name}_Last(
+			<#list entityColumns as entityColumn>
+				${entityColumn.name}
 
-	<#list entityColumns as entityColumn>
-		${entityColumn.type} ${entityColumn.name},
-	</#list>
+				<#if entityColumn_has_next>
+					,
+				</#if>
+			</#list>
 
-	OrderByComparator<${entity.name}> orderByComparator) {
-		int count = countBy${entityFinder.name}(
+			);
 
-		<#list entityColumns as entityColumn>
-			${entityColumn.name}
+			if (count == 0) {
+				return null;
+			}
 
-			<#if entityColumn_has_next>
-				,
-			</#if>
-		</#list>
+			List<${entity.name}> list = findBy${entityFinder.name}(
 
-		);
+			<#list entityColumns as entityColumn>
+				${entityColumn.name},
+			</#list>
 
-		if (count == 0) {
+			count - 1, count, orderByComparator);
+
+			if (!list.isEmpty()) {
+				return list.get(0);
+			}
+
 			return null;
 		}
-
-		List<${entity.name}> list = findBy${entityFinder.name}(
-
-		<#list entityColumns as entityColumn>
-			${entityColumn.name},
-		</#list>
-
-		count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
 	</#if>
 
 	<#if !entityFinder.hasEntityColumn(entity.PKVariableName) && !serviceBuilder.isVersionGTE_7_4_0()>

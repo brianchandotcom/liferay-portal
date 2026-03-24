@@ -1,0 +1,14 @@
+database:
+    databaseVersion: POSTGRES_16
+    instanceType: db-custom-1-3840
+    storageGB: 20
+enabled: true
+endpoints: {}
+environmentId: ""
+gateway:
+    className: ""
+    name: ""
+projectId: ""
+search:
+    elasticsearch: {}
+storage: {}

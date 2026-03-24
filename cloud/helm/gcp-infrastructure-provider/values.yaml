@@ -1,0 +1,5 @@
+crossplaneNamespace: crossplane-system
+deploymentName: ""
+gcp:
+    projectId: ""
+    projectNumber: ""

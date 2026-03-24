@@ -27,6 +27,31 @@ jobs:
             chart_name: liferay-aws-infrastructure-provider
             registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
             working_directory: ./cloud/helm/aws-infrastructure-provider
+    publish-gcp:
+        if: ${{github.repository == 'liferay/liferay-portal'}}
+        needs: publish-default
+        secrets: inherit
+        uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
+        with:
+            chart_name: liferay-gcp
+            registry: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
+            working_directory: ./cloud/helm/gcp
+    publish-gcp-infrastructure:
+        if: ${{github.repository == 'liferay/liferay-portal'}}
+        secrets: inherit
+        uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
+        with:
+            chart_name: liferay-gcp-infrastructure
+            registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
+            working_directory: ./cloud/helm/gcp-infrastructure
+    publish-gcp-infrastructure-provider:
+        if: ${{github.repository == 'liferay/liferay-portal'}}
+        secrets: inherit
+        uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
+        with:
+            chart_name: liferay-gcp-infrastructure-provider
+            registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
+            working_directory: ./cloud/helm/gcp-infrastructure-provider
     publish-aws-marketplace:
         env:
             ECR_REGISTRY: 709825985650.dkr.ecr.us-east-1.amazonaws.com

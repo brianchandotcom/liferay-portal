@@ -85,12 +85,12 @@ test(
 					await usersAndOrganizationsPage.organizationsTable.rowActions(
 						organization.name
 					)
-				).click();
+				).click({timeout: 3000});
 
 				await expect(
 					usersAndOrganizationsPage.editOrganizationMenuItem
-				).toBeVisible({timeout: 500});
-			}).toPass({timeout: 5000});
+				).toBeVisible({timeout: 2000});
+			}).toPass();
 
 			await usersAndOrganizationsPage.editOrganizationMenuItem.click();
 

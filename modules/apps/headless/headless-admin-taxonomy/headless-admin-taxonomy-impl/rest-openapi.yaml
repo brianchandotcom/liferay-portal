@@ -328,6 +328,10 @@ components:
                         The `TaxonomyVocabulary` id, only if the category does not have a parent category.
                     format: int64
                     type: integer
+                uuid:
+                    description:
+                        The UUID of the category.
+                    type: string
                 viewableBy:
                     description:
                         A write-only property that specifies the category's default permissions.
@@ -461,6 +465,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                uuid:
+                    description:
+                        The UUID of the vocabulary.
+                    type: string
                 viewableBy:
                     description:
                         A write-only property that specifies the vocabulary's default permissions.

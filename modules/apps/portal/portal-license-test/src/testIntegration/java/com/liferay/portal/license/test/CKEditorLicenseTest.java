@@ -120,11 +120,9 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID,
-			() -> {
-				FileUtil.write(
-					_CKEDITOR_CONFIG_FILE,
-					"licenseKey=\"" + privateLicenseKey + "\"");
-			});
+			() -> FileUtil.write(
+				_CKEDITOR_CONFIG_FILE,
+				"licenseKey=\"" + privateLicenseKey + "\""));
 
 		_assertCKEditorConfiguration(true, privateLicenseKey);
 
@@ -137,11 +135,9 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID,
-			() -> {
-				FileUtil.write(
-					_CKEDITOR_CONFIG_FILE,
-					"licenseKey=\"" + privateLicenseKey + "\"");
-			});
+			() -> FileUtil.write(
+				_CKEDITOR_CONFIG_FILE,
+				"licenseKey=\"" + privateLicenseKey + "\""));
 
 		_assertCKEditorConfiguration(true, privateLicenseKey);
 

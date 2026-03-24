@@ -59,18 +59,7 @@ const test = mergeTests(
 	uiElementsPageTest
 );
 
-const testWithBatchStagingFF = mergeTests(
-	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-35443': {enabled: true},
-	}),
-	loginTest(),
-	stagingConfigurationPageTest,
-	stagingPageTest,
-	uiElementsPageTest
-);
-
-testWithBatchStagingFF(
+test(
 	'Object entries can not be staged through batch',
 	{tag: ['@LPD-70661', '@LPD-72343']},
 	async ({apiHelpers, stagingPage}) => {
@@ -110,7 +99,7 @@ testWithBatchStagingFF(
 	}
 );
 
-testWithBatchStagingFF(
+test(
 	'Taxonomy Categories can be staged through batch',
 	{tag: ['@LPD-76007']},
 	async ({apiHelpers, stagingPage}) => {
@@ -215,7 +204,7 @@ testWithBatchStagingFF(
 	}
 );
 
-testWithBatchStagingFF(
+test(
 	'Taxonomy Categories display controls on staging page',
 	{tag: ['@LPD-78848']},
 	async ({apiHelpers, page, stagingPage, uiElementsPage}) => {
@@ -775,85 +764,82 @@ test('Staging publish template with smoke', async ({
 	expect(page.getByText(webContentContent, {exact: true})).toBeVisible();
 });
 
-testWithBatchStagingFF(
-	'A page created in staging is published to live',
-	async ({apiHelpers, page, stagingPage}) => {
-		const site = await apiHelpers.headlessSite.createSite({
-			name: 'site-' + getRandomString(),
-		});
+test('A page created in staging is published to live', async ({
+	apiHelpers,
+	page,
+	stagingPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'site-' + getRandomString(),
+	});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.id, type: 'site'});
 
-		await stagingPage.goto(site.name);
-		await stagingPage.enableLocalStaging();
+	await stagingPage.goto(site.name);
+	await stagingPage.enableLocalStaging();
 
-		const company =
-			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
-				'liferay.com'
-			);
-
-		const stagingGroup =
-			await apiHelpers.jsonWebServicesGroup.getGroupByKey(
-				company.companyId,
-				`${site.name}-staging`
-			);
-
-		const layout = await apiHelpers.headlessAdminSite.createPage(
-			stagingGroup.externalReferenceCode,
-			{
-				name_i18n: {en_US: 'My Simple Page'},
-				type: 'WidgetPage',
-			}
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
 		);
 
-		await page.goto('/web' + stagingGroup.friendlyURL);
-		await page.getByText('Publish to Live').click();
-		await page
+	const stagingGroup = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+		company.companyId,
+		`${site.name}-staging`
+	);
+
+	const layout = await apiHelpers.headlessAdminSite.createPage(
+		stagingGroup.externalReferenceCode,
+		{
+			name_i18n: {en_US: 'My Simple Page'},
+			type: 'WidgetPage',
+		}
+	);
+
+	await page.goto('/web' + stagingGroup.friendlyURL);
+	await page.getByText('Publish to Live').click();
+	await page
+		.frameLocator(`iframe[title="Publish to Live"]`)
+		.getByText('Publish to Live')
+		.click();
+
+	await expect(
+		page
 			.frameLocator(`iframe[title="Publish to Live"]`)
-			.getByText('Publish to Live')
-			.click();
+			.getByText('Successful')
+	).toBeVisible();
 
-		await expect(
-			page
-				.frameLocator(`iframe[title="Publish to Live"]`)
-				.getByText('Successful')
-		).toBeVisible();
+	await page.goto('/group' + site.friendlyUrlPath);
 
-		await page.goto('/group' + site.friendlyUrlPath);
+	expect(
+		(
+			await apiHelpers.headlessAdminSite.getPage(
+				site.externalReferenceCode,
+				layout.externalReferenceCode
+			)
+		).externalReferenceCode
+	).toBe(layout.externalReferenceCode);
+});
 
-		expect(
-			(
-				await apiHelpers.headlessAdminSite.getPage(
-					site.externalReferenceCode,
-					layout.externalReferenceCode
-				)
-			).externalReferenceCode
-		).toBe(layout.externalReferenceCode);
-	}
-);
+test('Content selection is empty after initial publication to live when using the From Last Publish Date option', async ({
+	apiHelpers,
+	stagingPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'site-' + getRandomString(),
+	});
 
-testWithBatchStagingFF(
-	'Content selection is empty after initial publication to live when using the From Last Publish Date option',
-	async ({apiHelpers, stagingPage}) => {
-		const site = await apiHelpers.headlessSite.createSite({
-			name: 'site-' + getRandomString(),
-		});
+	apiHelpers.data.push({id: site.id, type: 'site'});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+	await apiHelpers.headlessAdminSite.createPage(site.externalReferenceCode, {
+		name_i18n: {en_US: getRandomString()},
+		type: 'WidgetPage',
+	});
 
-		await apiHelpers.headlessAdminSite.createPage(
-			site.externalReferenceCode,
-			{
-				name_i18n: {en_US: getRandomString()},
-				type: 'WidgetPage',
-			}
-		);
+	await stagingPage.goto(site.name);
+	await stagingPage.enableLocalStaging({stagedPortlets: 'all'});
 
-		await stagingPage.goto(site.name);
-		await stagingPage.enableLocalStaging({stagedPortlets: 'all'});
+	const contentItems = await stagingPage.getContentItems();
 
-		const contentItems = await stagingPage.getContentItems();
-
-		expect(contentItems.size).toEqual(0);
-	}
-);
+	expect(contentItems.size).toEqual(0);
+});

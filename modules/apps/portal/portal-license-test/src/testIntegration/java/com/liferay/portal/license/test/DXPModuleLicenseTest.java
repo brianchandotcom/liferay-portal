@@ -10,12 +10,10 @@ import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.util.Objects;
 
@@ -72,32 +70,7 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 
 	@Test
 	public void testEmptyBundlesFile() throws Exception {
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		PortalClassLoaderUtil.setClassLoader(
-			new WrapperClassLoader(classLoader) {
-
-				@Override
-				public InputStream getResourceAsStream(String name) {
-					if (name.equals(_getBundlesFilePath())) {
-						return InputStream.nullInputStream();
-					}
-
-					return classLoader.getResourceAsStream(name);
-				}
-
-			});
-
-		try {
-			assertPortalLicenseNotRegistered();
-
-			deployFreeTierPortalLicense(Time.HOUR);
-
-			assertPortalLicenseInvalid();
-		}
-		finally {
-			PortalClassLoaderUtil.setClassLoader(classLoader);
-		}
+		assertPortalInvalidatedWithEmptyFile(getProperty("bundles.file.path"));
 	}
 
 	@Test
@@ -206,36 +179,8 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 
 	@Test
 	public void testMissingBundlesFile() throws Exception {
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		PortalClassLoaderUtil.setClassLoader(
-			new WrapperClassLoader(classLoader) {
-
-				@Override
-				public InputStream getResourceAsStream(String name) {
-					if (name.equals(_getBundlesFilePath())) {
-						return null;
-					}
-
-					return classLoader.getResourceAsStream(name);
-				}
-
-			});
-
-		try {
-			assertPortalLicenseNotRegistered();
-
-			deployFreeTierPortalLicense(Time.HOUR);
-
-			assertPortalLicenseInvalid();
-		}
-		finally {
-			PortalClassLoaderUtil.setClassLoader(classLoader);
-		}
-	}
-
-	private String _getBundlesFilePath() {
-		return getProperty("bundles.file.path");
+		assertPortalInvalidatedWithMissingFile(
+			getProperty("bundles.file.path"));
 	}
 
 	private String _getDxpOnlyModuleSymbolicName() {

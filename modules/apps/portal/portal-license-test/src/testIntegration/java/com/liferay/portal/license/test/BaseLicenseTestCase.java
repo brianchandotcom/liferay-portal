@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.util.LicenseUtil;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
@@ -329,6 +331,68 @@ public abstract class BaseLicenseTestCase {
 					field.set(lifecycleAction, null);
 				}
 			}
+		}
+	}
+
+	protected void assertPortalInvalidatedWithEmptyFile(String filePath)
+		throws Exception {
+
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		PortalClassLoaderUtil.setClassLoader(
+			new WrapperClassLoader(classLoader) {
+
+				@Override
+				public InputStream getResourceAsStream(String name) {
+					if (name.equals(filePath)) {
+						return InputStream.nullInputStream();
+					}
+
+					return classLoader.getResourceAsStream(name);
+				}
+
+			});
+
+		try {
+			assertPortalLicenseNotRegistered();
+
+			deployEnterprisePortalLicense(Time.HOUR);
+
+			assertPortalLicenseInvalid();
+		}
+		finally {
+			PortalClassLoaderUtil.setClassLoader(classLoader);
+		}
+	}
+
+	protected void assertPortalInvalidatedWithMissingFile(String filePath)
+		throws Exception {
+
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		PortalClassLoaderUtil.setClassLoader(
+			new WrapperClassLoader(classLoader) {
+
+				@Override
+				public InputStream getResourceAsStream(String name) {
+					if (name.equals(filePath)) {
+						return null;
+					}
+
+					return classLoader.getResourceAsStream(name);
+				}
+
+			});
+
+		try {
+			assertPortalLicenseNotRegistered();
+
+			deployEnterprisePortalLicense(Time.HOUR);
+
+			assertPortalLicenseInvalid();
+		}
+		finally {
+			PortalClassLoaderUtil.setClassLoader(classLoader);
 		}
 	}
 

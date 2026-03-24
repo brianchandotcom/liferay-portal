@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 package com.liferay.cookies.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -9,7 +10,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Christopher Kian
  */
-public class NoSuchCookiesConsentPreferenceException extends NoSuchModelException {
+public class NoSuchCookiesConsentPreferenceException
+	extends NoSuchModelException {
 
 	public NoSuchCookiesConsentPreferenceException() {
 	}
@@ -18,7 +20,9 @@ public class NoSuchCookiesConsentPreferenceException extends NoSuchModelExceptio
 		super(msg);
 	}
 
-	public NoSuchCookiesConsentPreferenceException(String msg, Throwable throwable) {
+	public NoSuchCookiesConsentPreferenceException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

@@ -2,11 +2,11 @@ resource "google_project_iam_member" "secrets_accessor_permissions" {
 	condition {
 		expression=join(" || ", concat(
 			[
-				"resource.name.startsWith('projects/${var.project_id}/secrets/${local.secret_prefixes.certificates}')",
-				"resource.name.startsWith('projects/${var.project_id}/secrets/${local.secret_prefixes.licenses}')",
+				"resource.name.startsWith('projects/${data.google_project.project.number}/secrets/${local.secret_prefixes.certificates}')",
+				"resource.name.startsWith('projects/${data.google_project.project.number}/secrets/${local.secret_prefixes.licenses}')",
 			],
 			[
-				for git_repo_auth_config in local.git_repo_auth_configs : "resource.name.startsWith('projects/${var.project_id}/secrets/${git_repo_auth_config.credentials_secret_name}')"
+				for git_repo_auth_config in local.git_repo_auth_configs : "resource.name.startsWith('projects/${data.google_project.project.number}/secrets/${git_repo_auth_config.credentials_secret_name}')"
 			]
 		))
 		title="liferay_external_secrets_access"

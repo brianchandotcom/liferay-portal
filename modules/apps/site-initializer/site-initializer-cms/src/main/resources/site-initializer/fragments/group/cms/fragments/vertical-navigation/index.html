@@ -39,72 +39,74 @@
 	navItems
 ]
 	[#if navItems?has_content && ((displayDepth == 0) || (navItemLevel lte displayDepth))]
-		[#assign navItemsJSONArray = navItemsJSONArray + "[" /]
+		[#assign
+			firstNavItem = true
+			navItemsJSONArray = navItemsJSONArray + "["
+		/]
 
 		[#list navItems as navItem]
-			[#assign
-				navItemsJSONArray = navItemsJSONArray + "{"
-				navLayout = navItem.getLayout()!
-			/]
+			[#if navItem.isBrowsable() || navItem.getChildren()?has_content]
+				[#assign navLayout = navItem.getLayout()! /]
 
-			[#assign
-				navItemCSSClass = "nav-item"
-				navLinkCSSClass = "nav-link"
-			/]
+				[#if !firstNavItem]
+					[#assign navItemsJSONArray = navItemsJSONArray + "," /]
+				[/#if]
 
-			[#if navItem.getChildren()?has_content]
-				[#assign navItemCSSClass = "${navItemCSSClass} open" /]
-			[/#if]
-
-			[#if navItem.isChildSelected() || navItem.isSelected() || (navLayout.isChildSelected(true, layout))!false]
 				[#assign
-					activeKey = navItem.getLayoutId()
-					navLinkCSSClass = "${navLinkCSSClass} active"
+					firstNavItem = false
+					navItemCSSClass = "nav-item"
+					navItemsJSONArray = navItemsJSONArray + "{"
+					navLinkCSSClass = "nav-link"
 				/]
-			[/#if]
 
-			<li class="${navItemCSSClass}" role="none">
-				[#if navItem.isBrowsable()]
-					[#assign navItemsJSONArray = navItemsJSONArray + '"href": "${navItem.getRegularURL()!}",' /]
+				[#if navItem.getChildren()?has_content]
+					[#assign navItemCSSClass = "${navItemCSSClass} open" /]
+				[/#if]
 
-					<a class="${navLinkCSSClass}" href="${navItem.getRegularURL()!}" ${navItem.getTarget()}>
-						[@labelWithIcon navItem=navItem /]
-					</a>
-				[#elseif navItem.getChildren()?has_content]
+				[#if navItem.isChildSelected() || navItem.isSelected() || (navLayout.isChildSelected(true, layout))!false]
 					[#assign
-						expandedKeys = expandedKeys + (expandedKeys?length > 0)?then(",", "") + '"${navItem.getLayoutId()}"'
-						id = "navChildren" + navItem.getLayoutId()
+						activeKey = navItem.getLayoutId()
+						navLinkCSSClass = "${navLinkCSSClass} active"
 					/]
+				[/#if]
 
-					<button aria-controls="${id}" aria-expanded="true" class="btn btn-unstyled collapse-icon nav-link" disabled="disabled" role="menuitem" tabindex="-1" type="button">
-						[@labelWithIcon navItem=navItem /]
+				<li class="${navItemCSSClass}" role="none">
+					[#if navItem.isBrowsable()]
+						[#assign navItemsJSONArray = navItemsJSONArray + '"href": "${navItem.getRegularURL()!}",' /]
 
-						<span class="collapse-icon-closed">[@clay["icon"] symbol="angle-right-small" /]</span>
-						<span class="collapse-icon-open">[@clay["icon"] symbol="angle-down-small" /]</span>
-					</button>
-
-					<ul class="nav nav-stacked show" id="${id}" role="menu">
-						[#assign navItemsJSONArray = navItemsJSONArray + '"items": ' /]
-
-						[@buildNavigation
-							displayDepth=displayDepth
-							navItemLevel=(navItemLevel + 1)
-							navItems=navItem.getChildren()
+						<a class="${navLinkCSSClass}" href="${navItem.getRegularURL()!}" ${navItem.getTarget()}>
+							[@labelWithIcon navItem=navItem /]
+						</a>
+					[#else]
+						[#assign
+							expandedKeys = expandedKeys + (expandedKeys?length > 0)?then(",", "") + '"${navItem.getLayoutId()}"'
+							id = "navChildren" + navItem.getLayoutId()
 						/]
 
-						[#assign navItemsJSONArray = navItemsJSONArray + "," /]
-					</ul>
-				[#else]
-					[@labelWithIcon navItem=navItem /]
-				[/#if]
-			</li>
+						<button aria-controls="${id}" aria-expanded="true" class="btn btn-unstyled collapse-icon nav-link" disabled="disabled" role="menuitem" tabindex="-1" type="button">
+							[@labelWithIcon navItem=navItem /]
 
-			[#assign
-				navItemsJSONArray = navItemsJSONArray + '"icon": "${(navItem.getDisplayIcon??)?then(navItem.getDisplayIcon(), "")}", "id": "${navItem.getLayoutId()}", "label": "${navItem.getName()}"}'
-			/]
+							<span class="collapse-icon-closed">[@clay["icon"] symbol="angle-right-small" /]</span>
+							<span class="collapse-icon-open">[@clay["icon"] symbol="angle-down-small" /]</span>
+						</button>
 
-			[#if navItem?has_next]
-				[#assign navItemsJSONArray = navItemsJSONArray + "," /]
+						<ul class="nav nav-stacked show" id="${id}" role="menu">
+							[#assign navItemsJSONArray = navItemsJSONArray + '"items": ' /]
+
+							[@buildNavigation
+								displayDepth=displayDepth
+								navItemLevel=(navItemLevel + 1)
+								navItems=navItem.getChildren()
+							/]
+
+							[#assign navItemsJSONArray = navItemsJSONArray + "," /]
+						</ul>
+					[/#if]
+				</li>
+
+				[#assign
+					navItemsJSONArray = navItemsJSONArray + '"icon": "${(navItem.getDisplayIcon??)?then(navItem.getDisplayIcon(), "")}", "id": "${navItem.getLayoutId()}", "label": "${navItem.getName()}"}'
+				/]
 			[/#if]
 		[/#list]
 

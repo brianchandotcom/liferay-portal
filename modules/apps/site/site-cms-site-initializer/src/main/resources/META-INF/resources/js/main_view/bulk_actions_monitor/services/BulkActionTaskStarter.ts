@@ -39,6 +39,8 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 	constructor({
 		additionalData,
 		apiURL,
+		folderId,
+		groupIds,
 		keyValues,
 		onCreateError = null,
 		onCreateSuccess = null,
@@ -62,7 +64,13 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 			keyValues,
 			selectedData
 		) as TBulkActionTaskDTO;
-		this.postURL = composeCreateTaskURL(apiURL, selectedData, type);
+		this.postURL = composeCreateTaskURL(
+			apiURL,
+			selectedData,
+			type,
+			folderId,
+			groupIds
+		);
 		this.selectedData = selectedData as IBulkActionFDSData;
 		this.type = type;
 	}

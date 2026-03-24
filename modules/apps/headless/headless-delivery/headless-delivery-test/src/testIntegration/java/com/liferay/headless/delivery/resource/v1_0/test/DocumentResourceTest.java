@@ -269,6 +269,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	public void testPutDocument() throws Exception {
 		super.testPutDocument();
 
+		_testPutDocumentWithEmptyDocumentPartAndFileOnlyUpdate();
 		_testPutSiteDocumentByExternalReferenceCodeWithSameFolderId();
 		_testPutSiteDocumentWithFriendlyUrlPath();
 		_testPutSiteDocumentWithNoMultipartFiles();
@@ -816,6 +817,28 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		Assert.assertEquals(StringPool.BLANK, postDocument.getContentUrl());
 		Assert.assertEquals(
 			0, GetterUtil.getLong(postDocument.getSizeInBytes()));
+	}
+
+	private void _testPutDocumentWithEmptyDocumentPartAndFileOnlyUpdate()
+		throws Exception {
+
+		Document postDocument = testPutDocument_addDocument();
+
+		Document putDocument = documentResource.putDocument(
+			postDocument.getId(), null,
+			HashMapBuilder.<String, File>put(
+				"file",
+				() -> FileUtil.createTempFile("updated-content".getBytes())
+			).build());
+
+		Assert.assertEquals(
+			postDocument.getDateExpired(), putDocument.getDateExpired());
+		Assert.assertEquals(
+			postDocument.getDatePublished(), putDocument.getDatePublished());
+		Assert.assertEquals(
+			postDocument.getDescription(), putDocument.getDescription());
+		Assert.assertEquals(postDocument.getId(), putDocument.getId());
+		Assert.assertEquals(postDocument.getTitle(), putDocument.getTitle());
 	}
 
 	private void _testPutSiteDocumentByExternalReferenceCodeWithSameFolderId()

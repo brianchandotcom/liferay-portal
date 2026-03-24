@@ -95,7 +95,7 @@ test(
 		await productMenuPage.openProductMenuIfClosed();
 		await productMenuPage.goToPublishingExport();
 
-		uiElementsPage.clickNewButton();
+		await uiElementsPage.clickNewButton();
 
 		const deletionsLabelText =
 			await exportImportPage.deletionsLabel.textContent();
@@ -133,7 +133,7 @@ test(
 		await productMenuPage.openProductMenuIfClosed();
 		await productMenuPage.goToPublishingExport();
 
-		uiElementsPage.clickNewButton();
+		await uiElementsPage.clickNewButton();
 
 		await exportImportPage.expectPortletCounts(
 			/^\s*Pages\s*/,

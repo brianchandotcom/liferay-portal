@@ -6,13 +6,13 @@
 package com.liferay.cookies.uad.constants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Christopher Kian
  * @generated
  */
 public class CookiesUADConstants {
 
-	public static final String[] USER_ID_FIELD_NAMES_CONSENT_PREFERENCE = {
-		"userId"
-	};
+	public static final String[]
+		USER_ID_FIELD_NAMES_COOKIES_CONSENT_PREFERENCE = {"userId"};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-327675970

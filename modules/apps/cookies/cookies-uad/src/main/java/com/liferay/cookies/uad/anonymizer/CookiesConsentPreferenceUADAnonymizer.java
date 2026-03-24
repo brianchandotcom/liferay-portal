@@ -10,9 +10,10 @@ import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Christopher Kian
  */
 @Component(service = UADAnonymizer.class)
-public class ConsentPreferenceUADAnonymizer
-	extends BaseConsentPreferenceUADAnonymizer {
+public class CookiesConsentPreferenceUADAnonymizer
+	extends BaseCookiesConsentPreferenceUADAnonymizer {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1939853248

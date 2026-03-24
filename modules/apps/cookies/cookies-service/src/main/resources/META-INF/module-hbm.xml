@@ -2,9 +2,9 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.cookies.model.ConsentPreference" />
-	<class dynamic-update="true" name="com.liferay.cookies.model.impl.ConsentPreferenceImpl" table="ConsentPreference">
-		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="consentPreferenceId" type="long">
+	<import class="com.liferay.cookies.model.CookiesConsentPreference" />
+	<class dynamic-update="true" name="com.liferay.cookies.model.impl.CookiesConsentPreferenceImpl" table="CookiesConsentPreference">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="cookiesConsentPreferenceId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />

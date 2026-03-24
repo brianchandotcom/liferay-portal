@@ -6,7 +6,7 @@
 package com.liferay.cookies.service.persistence.impl.constants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Christopher Kian
  * @generated
  */
 public class CookiesPersistenceConstants {
@@ -21,3 +21,4 @@ public class CookiesPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-402691842

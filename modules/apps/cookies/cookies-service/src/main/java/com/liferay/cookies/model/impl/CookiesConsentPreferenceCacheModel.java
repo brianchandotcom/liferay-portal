@@ -5,7 +5,7 @@
 
 package com.liferay.cookies.model.impl;
 
-import com.liferay.cookies.model.ConsentPreference;
+import com.liferay.cookies.model.CookiesConsentPreference;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -19,13 +19,13 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing ConsentPreference in entity cache.
+ * The cache model class for representing CookiesConsentPreference in entity cache.
  *
- * @author Brian Wing Shun Chan
+ * @author Christopher Kian
  * @generated
  */
-public class ConsentPreferenceCacheModel
-	implements CacheModel<ConsentPreference>, Externalizable, MVCCModel {
+public class CookiesConsentPreferenceCacheModel
+	implements CacheModel<CookiesConsentPreference>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -33,16 +33,17 @@ public class ConsentPreferenceCacheModel
 			return true;
 		}
 
-		if (!(object instanceof ConsentPreferenceCacheModel)) {
+		if (!(object instanceof CookiesConsentPreferenceCacheModel)) {
 			return false;
 		}
 
-		ConsentPreferenceCacheModel consentPreferenceCacheModel =
-			(ConsentPreferenceCacheModel)object;
+		CookiesConsentPreferenceCacheModel cookiesConsentPreferenceCacheModel =
+			(CookiesConsentPreferenceCacheModel)object;
 
-		if ((consentPreferenceId ==
-				consentPreferenceCacheModel.consentPreferenceId) &&
-			(mvccVersion == consentPreferenceCacheModel.mvccVersion)) {
+		if ((cookiesConsentPreferenceId ==
+				cookiesConsentPreferenceCacheModel.
+					cookiesConsentPreferenceId) &&
+			(mvccVersion == cookiesConsentPreferenceCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -52,7 +53,7 @@ public class ConsentPreferenceCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, consentPreferenceId);
+		int hashCode = HashUtil.hash(0, cookiesConsentPreferenceId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -73,8 +74,8 @@ public class ConsentPreferenceCacheModel
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", consentPreferenceId=");
-		sb.append(consentPreferenceId);
+		sb.append(", cookiesConsentPreferenceId=");
+		sb.append(cookiesConsentPreferenceId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -95,60 +96,62 @@ public class ConsentPreferenceCacheModel
 	}
 
 	@Override
-	public ConsentPreference toEntityModel() {
-		ConsentPreferenceImpl consentPreferenceImpl =
-			new ConsentPreferenceImpl();
+	public CookiesConsentPreference toEntityModel() {
+		CookiesConsentPreferenceImpl cookiesConsentPreferenceImpl =
+			new CookiesConsentPreferenceImpl();
 
-		consentPreferenceImpl.setMvccVersion(mvccVersion);
-		consentPreferenceImpl.setConsentPreferenceId(consentPreferenceId);
-		consentPreferenceImpl.setCompanyId(companyId);
-		consentPreferenceImpl.setUserId(userId);
+		cookiesConsentPreferenceImpl.setMvccVersion(mvccVersion);
+		cookiesConsentPreferenceImpl.setCookiesConsentPreferenceId(
+			cookiesConsentPreferenceId);
+		cookiesConsentPreferenceImpl.setCompanyId(companyId);
+		cookiesConsentPreferenceImpl.setUserId(userId);
 
 		if (userName == null) {
-			consentPreferenceImpl.setUserName("");
+			cookiesConsentPreferenceImpl.setUserName("");
 		}
 		else {
-			consentPreferenceImpl.setUserName(userName);
+			cookiesConsentPreferenceImpl.setUserName(userName);
 		}
 
 		if (domain == null) {
-			consentPreferenceImpl.setDomain("");
+			cookiesConsentPreferenceImpl.setDomain("");
 		}
 		else {
-			consentPreferenceImpl.setDomain(domain);
+			cookiesConsentPreferenceImpl.setDomain(domain);
 		}
 
 		if (expirationDate == Long.MIN_VALUE) {
-			consentPreferenceImpl.setExpirationDate(null);
+			cookiesConsentPreferenceImpl.setExpirationDate(null);
 		}
 		else {
-			consentPreferenceImpl.setExpirationDate(new Date(expirationDate));
+			cookiesConsentPreferenceImpl.setExpirationDate(
+				new Date(expirationDate));
 		}
 
 		if (name == null) {
-			consentPreferenceImpl.setName("");
+			cookiesConsentPreferenceImpl.setName("");
 		}
 		else {
-			consentPreferenceImpl.setName(name);
+			cookiesConsentPreferenceImpl.setName(name);
 		}
 
 		if (value == null) {
-			consentPreferenceImpl.setValue("");
+			cookiesConsentPreferenceImpl.setValue("");
 		}
 		else {
-			consentPreferenceImpl.setValue(value);
+			cookiesConsentPreferenceImpl.setValue(value);
 		}
 
-		consentPreferenceImpl.resetOriginalValues();
+		cookiesConsentPreferenceImpl.resetOriginalValues();
 
-		return consentPreferenceImpl;
+		return cookiesConsentPreferenceImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		consentPreferenceId = objectInput.readLong();
+		cookiesConsentPreferenceId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -164,7 +167,7 @@ public class ConsentPreferenceCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(consentPreferenceId);
+		objectOutput.writeLong(cookiesConsentPreferenceId);
 
 		objectOutput.writeLong(companyId);
 
@@ -202,7 +205,7 @@ public class ConsentPreferenceCacheModel
 	}
 
 	public long mvccVersion;
-	public long consentPreferenceId;
+	public long cookiesConsentPreferenceId;
 	public long companyId;
 	public long userId;
 	public String userName;
@@ -212,3 +215,4 @@ public class ConsentPreferenceCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1354805450

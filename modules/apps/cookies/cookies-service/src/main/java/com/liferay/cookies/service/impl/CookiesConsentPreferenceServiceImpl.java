@@ -5,7 +5,7 @@
 
 package com.liferay.cookies.service.impl;
 
-import com.liferay.cookies.service.base.ConsentPreferenceLocalServiceBaseImpl;
+import com.liferay.cookies.service.base.CookiesConsentPreferenceServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
 import org.osgi.service.component.annotations.Component;
@@ -14,9 +14,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = "model.class.name=com.liferay.cookies.model.ConsentPreference",
+	property = {
+		"json.web.service.context.name=cookies",
+		"json.web.service.context.path=CookiesConsentPreference"
+	},
 	service = AopService.class
 )
-public class ConsentPreferenceLocalServiceImpl
-	extends ConsentPreferenceLocalServiceBaseImpl {
+public class CookiesConsentPreferenceServiceImpl
+	extends CookiesConsentPreferenceServiceBaseImpl {
 }

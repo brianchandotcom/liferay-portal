@@ -16,12 +16,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides the remote service interface for ConsentPreference. Methods of this
+ * Provides the remote service interface for CookiesConsentPreference. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
- * @author Brian Wing Shun Chan
- * @see ConsentPreferenceServiceUtil
+ * @author Christopher Kian
+ * @see CookiesConsentPreferenceServiceUtil
  * @generated
  */
 @AccessControlled
@@ -31,12 +31,12 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface ConsentPreferenceService extends BaseService {
+public interface CookiesConsentPreferenceService extends BaseService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.cookies.service.impl.ConsentPreferenceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the consent preference remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ConsentPreferenceServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.cookies.service.impl.CookiesConsentPreferenceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cookies consent preference remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CookiesConsentPreferenceServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**
@@ -47,3 +47,4 @@ public interface ConsentPreferenceService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1219631427

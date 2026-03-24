@@ -8,5 +8,5 @@ package com.liferay.cookies.model.impl;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConsentPreferenceImpl extends ConsentPreferenceBaseImpl {
+public class CookiesConsentPreferenceImpl extends CookiesConsentPreferenceBaseImpl {
 }

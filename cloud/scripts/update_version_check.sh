@@ -30,7 +30,7 @@ function _bump_bootstrap_version {
 
 	local git_blame_line
 
-	git_blame_line=$(_git_blame_line '"liferay-aws-bootstrap": ".*"$' "${versions_json_file}")
+	git_blame_line=$(_git_blame_line '"liferay-aws-bootstrap": ".*"' "${versions_json_file}")
 
 	sed --in-place "${git_blame_line}s/\"${1}\": .*/\"${1}\": \"${new_version}\"/" "${versions_json_file}"
 }
@@ -60,7 +60,7 @@ function _check_aws_bootstrap {
 
 	local git_blame_sha
 
-	git_blame_sha=$(_git_blame_sha '"liferay-aws-bootstrap": ".*"$' "${versions_json_file}")
+	git_blame_sha=$(_git_blame_sha '"liferay-aws-bootstrap": ".*"' "${versions_json_file}")
 
 	local aws_bootstrap_sources=(
 		"${_ROOT_CLOUD_DIR}/scripts/setup_aws.sh"

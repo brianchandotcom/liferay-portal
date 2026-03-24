@@ -36,20 +36,22 @@ export async function exportTranslationBulkAction(
 			'Content-Type': 'application/json',
 		}),
 		method: 'POST',
-	}).then(async (response): Promise<void> => {
-		if (!response.ok) {
-			displayErrorToast();
-		}
-		else {
-			openToast({
-				message: Liferay.Language.get(
-					'the-download-will-begin-shortly'
-				),
-				title: Liferay.Language.get('success'),
-				type: 'success',
-			});
+	})
+		.then(async (response): Promise<void> => {
+			if (!response.ok) {
+				displayErrorToast();
+			}
+			else {
+				openToast({
+					message: Liferay.Language.get(
+						'the-download-will-begin-shortly'
+					),
+					title: Liferay.Language.get('success'),
+					type: 'success',
+				});
 
-			await downloadBlob(response, 'export.zip');
-		}
-	});
+				await downloadBlob(response, 'export.zip');
+			}
+		})
+		.catch(() => displayErrorToast());
 }

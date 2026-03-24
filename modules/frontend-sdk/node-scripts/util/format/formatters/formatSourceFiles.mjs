@@ -3,19 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import fs from 'fs/promises';
+import childProcess from 'child_process';
 import micromatch from 'micromatch';
+import os from 'os';
 import path from 'path';
+import resolve from 'resolve';
 
+import ResolvablePromise from '../../ResolvablePromise.mjs';
 import getNamedArguments from '../../getNamedArguments.mjs';
 import {MODULES_DIR, PORTAL_DIR} from '../../locations.mjs';
-import print from '../../print.mjs';
+import print, {printDuration} from '../../print.mjs';
 import runGitLsFiles from '../../runGitLsFiles.mjs';
-import formatWithEslint from '../eslint/formatWithEslint.mjs';
-import formatScriptTagsWithPrettier from '../jsp/formatScriptTagsWithPrettier.mjs';
-import formatWithPrettier from '../prettier/formatWithPrettier.mjs';
-import formatWithStylelint from '../stylelint/formatWithStylelint.mjs';
-import getIgnorePatterns from '../util/getIgnorePatterns.mjs';
+import formatSourceFile from '../util/formatSourceFile.mjs';
+import readIgnorePatterns from '../util/readIgnorePatterns.mjs';
 
 const EXTENSIONS = ['graphql', 'js', 'jsp', 'jspf', 'mjs', 'scss', 'ts', 'tsx'];
 
@@ -25,13 +25,33 @@ const EXTENSIONS = ['graphql', 'js', 'jsp', 'jspf', 'mjs', 'scss', 'ts', 'tsx'];
  * @return {Promise<boolean>} true if all files are correctly formatted
  */
 export default async function formatSourceFiles(check, files) {
+	const start = Date.now();
+
 	const {emitSuppressed} = getNamedArguments({
 		emitSuppressed: '--emit-suppressed',
 	});
 
-	let checksPassed = true;
-
 	const filePaths = await getFilePaths(files);
+
+	// Gather read only info to be reused in all tasks
+
+	const ignorePatterns = await getIgnorePatterns();
+	const options = {
+		check,
+		emitSuppressed,
+	};
+
+	// Do not spawn workers if there's only one file
+
+	if (filePaths.length === 1) {
+		const [filePath] = filePaths;
+
+		return formatSourceFile(
+			filePath,
+			getSkip(filePath, ignorePatterns),
+			options
+		);
+	}
 
 	print(
 		1,
@@ -41,136 +61,56 @@ export default async function formatSourceFiles(check, files) {
 		)
 	);
 
-	const [
-		eslintIgnorePatterns,
-		prettierIgnorePatterns,
-		stylelintIgnorePatterns,
-	] = await Promise.all([
-		getIgnorePatterns(path.resolve(MODULES_DIR, '.eslintignore')),
-		getIgnorePatterns(path.resolve(MODULES_DIR, '.prettierignore')),
-		getIgnorePatterns(path.resolve(MODULES_DIR, '.stylelintignore')),
-	]);
+	// Task synchronization state
 
-	for (const filePath of filePaths) {
-		const source = await fs.readFile(filePath, 'utf8');
+	let nextFileIndex = 0;
+	const resultPromises = filePaths.map(() => ResolvablePromise.new());
 
-		if (!source.length) {
-			continue;
+	// Create worker child processes
+
+	const workers = os.cpus().map(() =>
+		childProcess.fork(
+			resolve.sync('../util/formatSourceFilesWorker.mjs', {
+				basedir: import.meta.dirname,
+			})
+		)
+	);
+
+	// Deliver tasks to worker processes and handle results
+
+	const sendTask = (worker) => {
+		if (nextFileIndex >= filePaths.length) {
+			return;
 		}
 
-		const portalRelativeFilePath = path.relative(PORTAL_DIR, filePath);
-		const modulesRelativeFilePath = path.relative(MODULES_DIR, filePath);
+		const fileIndex = nextFileIndex++;
+		const filePath = filePaths[fileIndex];
 
-		const isIncluded = (ignorePatterns) =>
-			!micromatch.isMatch(modulesRelativeFilePath, ignorePatterns, {
-				dot: true,
-			});
+		worker.send({
+			fileIndex,
+			filePath,
+			options,
+			skip: getSkip(filePath, ignorePatterns),
+		});
+	};
 
-		let transformedContent = source;
+	workers.forEach((worker) => {
+		worker.on('message', ({fileIndex, result}) => {
+			resultPromises[fileIndex].resolve(result);
 
-		try {
-			switch (path.extname(filePath)) {
-				case '.jsp':
-				case '.jspf': {
-					if (isIncluded(prettierIgnorePatterns)) {
-						transformedContent =
-							await formatScriptTagsWithPrettier(source);
-					}
-					break;
-				}
+			sendTask(worker);
+		});
 
-				case '.css':
-				case '.scss': {
-					if (isIncluded(prettierIgnorePatterns)) {
-						transformedContent = await formatWithPrettier(
-							transformedContent,
-							filePath
-						);
-					}
+		sendTask(worker);
+	});
 
-					if (isIncluded(stylelintIgnorePatterns)) {
-						const {errorsPresent, output} =
-							await formatWithStylelint(
-								transformedContent,
-								filePath
-							);
+	// Wait for results and check
 
-						if (!errorsPresent) {
-							checksPassed = false;
-						}
+	const results = await Promise.all(resultPromises);
 
-						transformedContent = output;
-					}
-					break;
-				}
+	printDuration(start, 1, 'Formatting with SF');
 
-				default: {
-					if (isIncluded(prettierIgnorePatterns)) {
-						transformedContent = await formatWithPrettier(
-							transformedContent,
-							filePath
-						);
-					}
-
-					if (isIncluded(eslintIgnorePatterns)) {
-						const {errorsPresent, output} = await formatWithEslint(
-							transformedContent,
-							filePath,
-							emitSuppressed
-						);
-
-						if (!errorsPresent) {
-							checksPassed = false;
-						}
-
-						transformedContent = output;
-					}
-					break;
-				}
-			}
-		}
-		catch (error) {
-			print(
-				2,
-				true,
-				print.error('ERROR:'),
-				'Unhandled error formatting file',
-				print.underline(portalRelativeFilePath)
-			);
-			print(3, true, error, '\n');
-
-			checksPassed = false;
-		}
-
-		if (transformedContent !== source) {
-			if (!check) {
-				await fs.writeFile(filePath, transformedContent);
-
-				print(
-					2,
-					false,
-					print.success('SUCCESS:'),
-					'Formatted file',
-					print.underline(portalRelativeFilePath),
-					'\n'
-				);
-			}
-			else {
-				print(
-					2,
-					true,
-					print.error('ERROR:'),
-					'File',
-					print.underline(portalRelativeFilePath),
-					'has format errors.\n'
-				);
-
-				checksPassed = false;
-			}
-		}
-	}
-
-	return checksPassed;
+	return !results.some((result) => !result);
 }
 
 /**
@@ -205,4 +145,37 @@ async function getFilePaths(files) {
 	filePaths = filePaths.map((file) => path.resolve(PORTAL_DIR, file));
 
 	return filePaths;
+}
+
+async function getIgnorePatterns() {
+	const [
+		eslintIgnorePatterns,
+		prettierIgnorePatterns,
+		stylelintIgnorePatterns,
+	] = await Promise.all([
+		readIgnorePatterns(path.resolve(MODULES_DIR, '.eslintignore')),
+		readIgnorePatterns(path.resolve(MODULES_DIR, '.prettierignore')),
+		readIgnorePatterns(path.resolve(MODULES_DIR, '.stylelintignore')),
+	]);
+
+	return {
+		eslint: eslintIgnorePatterns,
+		prettier: prettierIgnorePatterns,
+		stylelint: stylelintIgnorePatterns,
+	};
+}
+
+function getSkip(filePath, ignorePatterns) {
+	const modulesRelativeFilePath = path.relative(MODULES_DIR, filePath);
+
+	const isIncluded = (ignorePatterns) =>
+		!micromatch.isMatch(modulesRelativeFilePath, ignorePatterns, {
+			dot: true,
+		});
+
+	return {
+		eslint: isIncluded(ignorePatterns.eslint),
+		prettier: isIncluded(ignorePatterns.prettier),
+		stylelint: isIncluded(ignorePatterns.stylelint),
+	};
 }

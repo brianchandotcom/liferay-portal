@@ -4,17 +4,59 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import React from 'react';
+import React, {useState} from 'react';
+
+import {getValidateLarFileEndpoint} from '../../../common/utils/getValidateLarFileEndpoint';
+import {useWizard} from '../../../components/Wizard';
+import {FormikFieldFileSelector} from '../../../components/forms/formik/FormikFieldFileSelector';
 
 export default function FileSelectionStep() {
+	const [progress, setProgress] = useState<number>();
+	const {groupId, isCompanyGroup} = useWizard();
+
+	const handleUpload = (file: File, signal?: AbortSignal) =>
+		getValidateLarFileEndpoint({
+			file,
+			groupId,
+			isCompanyGroup,
+			onProgress: setProgress,
+			signal,
+		});
+
 	return (
 		<>
 			<ClayLayout.Sheet>
-				{Liferay.Language.get('import-details')}
+				<ClayLayout.SheetHeader className="mb-1">
+					<div className="mb-2 sheet-title">
+						{Liferay.Language.get('import-details')}
+					</div>
+				</ClayLayout.SheetHeader>
 			</ClayLayout.Sheet>
 
 			<ClayLayout.Sheet>
-				{Liferay.Language.get('file-upload')}
+				<ClayLayout.SheetHeader className="mb-1">
+					<div className="mb-2 sheet-title" id="fileSelector-label">
+						{Liferay.Language.get('file-upload')}
+					</div>
+
+					<div
+						className="sheet-text text-3"
+						id="fileSelector-description"
+					>
+						{Liferay.Language.get(
+							'select-and-upload-your-prepared-file'
+						)}
+					</div>
+				</ClayLayout.SheetHeader>
+
+				<FormikFieldFileSelector
+					aria-describedby="fileSelector-description"
+					aria-labelledby="fileSelector-label"
+					name="fileSelector"
+					progress={progress}
+					uploadRequest={handleUpload}
+					validExtensions=".lar"
+				/>
 			</ClayLayout.Sheet>
 		</>
 	);

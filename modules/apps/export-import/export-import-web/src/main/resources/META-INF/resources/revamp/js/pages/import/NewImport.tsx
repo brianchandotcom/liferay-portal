@@ -12,13 +12,28 @@ import DataSelectionStep from './steps/DataSelectionStep';
 import FileSelectionStep from './steps/FileSelectionStep';
 import SettingsStep from './steps/SettingsStep';
 
-export function NewImport({backURL}: {backURL: string}) {
+export function NewImport({
+	backURL,
+	groupId,
+	isCompanyGroup,
+}: {
+	backURL: string;
+	groupId: number;
+	isCompanyGroup: boolean;
+}) {
 	return (
-		<Wizard backURL={backURL}>
+		<Wizard
+			backURL={backURL}
+			groupId={groupId}
+			isCompanyGroup={isCompanyGroup}
+		>
 			<WizardStep
 				description={Liferay.Language.get(
 					'name-your-import-process-and-upload-your-file'
 				)}
+				initialValues={{
+					fileSelector: undefined,
+				}}
 				title={Liferay.Language.get('setup')}
 			>
 				<FileSelectionStep />

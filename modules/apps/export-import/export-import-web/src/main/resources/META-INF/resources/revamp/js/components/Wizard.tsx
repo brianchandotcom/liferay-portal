@@ -5,7 +5,7 @@
 
 import ClayMultiStepNav from '@clayui/multi-step-nav';
 import {Form, Formik, FormikConfig, FormikHelpers, FormikValues} from 'formik';
-import React, {ReactElement, useState} from 'react';
+import React, {ReactElement, createContext, useContext, useState} from 'react';
 
 import Footer from './Footer';
 import {FormikDebug} from './forms/formik';
@@ -20,6 +20,15 @@ interface WizardStepProps {
 	validate?: FormikConfig<FormikValues>['validate'];
 }
 
+const WizardContext = createContext({
+	groupId: -1,
+	isCompanyGroup: false,
+});
+
+export function useWizard() {
+	return useContext(WizardContext);
+}
+
 export function WizardStep({children}: WizardStepProps) {
 	return <>{children}</>;
 }
@@ -28,10 +37,14 @@ export function Wizard({
 	backURL,
 	children,
 	debug = process.env.NODE_ENV === 'development',
+	groupId,
+	isCompanyGroup,
 }: {
 	backURL: string;
 	children: React.ReactElement<WizardStepProps>[];
 	debug?: boolean;
+	groupId?: number;
+	isCompanyGroup?: boolean;
 }) {
 	const [stepNumber, setStepNumber] = useState(0);
 	const [formState, setFormState] = useState({});
@@ -126,7 +139,14 @@ export function Wizard({
 						)}
 					</header>
 
-					{step}
+					<WizardContext.Provider
+						value={{
+							groupId: groupId ?? 0,
+							isCompanyGroup: !!isCompanyGroup,
+						}}
+					>
+						{step}
+					</WizardContext.Provider>
 
 					<Footer
 						actionButton={actionButton}

@@ -219,6 +219,64 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
+	@TestInfo("LPD-81251")
+	public void testImportFragmentsWithFieldSets() throws Exception {
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 0, fragmentCollections.size());
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_file = _generateZipFile(_PATH_FRAGMENTS_WITH_FIELD_SETS + "fragments");
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _file,
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 1, fragmentCollections.size());
+
+		FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+		List<FragmentEntry> filteredFragmentEntries = ListUtil.filter(
+			_fragmentEntryLocalService.getFragmentEntries(
+				fragmentCollection.getFragmentCollectionId()),
+			fragmentEntry -> Objects.equals(
+				fragmentEntry.getName(), "Fragment With Field Sets"));
+
+		Assert.assertEquals(
+			filteredFragmentEntries.toString(), 1,
+			filteredFragmentEntries.size());
+
+		FragmentEntry fragmentEntry = filteredFragmentEntries.get(0);
+
+		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
+			fragmentEntry.getConfiguration());
+
+		JSONArray fieldSetsJSONArray = configurationJSONObject.getJSONArray(
+			"fieldSets");
+
+		JSONObject fieldSetJSONObject = fieldSetsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			"{SimpleInputField} from @liferay/fragment-impl/api",
+			fieldSetJSONObject.getString("customComponentModule"));
+	}
+
+	@Test
 	public void testImportFragmentsWithFolderResources() throws Exception {
 		File fileWithFolderResources = _generateZipFileWithFolderResources();
 
@@ -967,6 +1025,9 @@ public class FragmentsImporterTest {
 
 	private static final String _PATH_FRAGMENTS =
 		_PATH_DEPENDENCIES + "fragments/";
+
+	private static final String _PATH_FRAGMENTS_WITH_FIELD_SETS =
+		_PATH_DEPENDENCIES + "fragments-with-field-sets/";
 
 	private static final String _PATH_FRAGMENTS_WITH_FOLDER_RESOURCES =
 		_PATH_DEPENDENCIES + "fragments-with-folder-resources/";

@@ -1,0 +1,7 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "styles.css",
+	"htmlPath": "index.html",
+	"jsPath": "main.js",
+	"name": "Fragment With Field Sets"
+}

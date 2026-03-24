@@ -7,6 +7,9 @@ package com.liferay.site.cms.site.initializer.internal.model.listener;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.exception.ObjectDefinitionObjectFolderIdException;
+import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -16,6 +19,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,6 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ModelListener.class)
 public class ObjectDefinitionModelListener
 	extends BaseModelListener<ObjectDefinition> {
+
+	@Override
+	public void onBeforeCreate(ObjectDefinition objectDefinition)
+		throws ModelListenerException {
+
+		_validateCMSObjectDefinitionScope(objectDefinition);
+	}
 
 	@Override
 	public void onBeforeRemove(ObjectDefinition objectDefinition)
@@ -69,6 +80,40 @@ public class ObjectDefinitionModelListener
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
+		}
+	}
+
+	@Override
+	public void onBeforeUpdate(
+			ObjectDefinition originalObjectDefinition,
+			ObjectDefinition objectDefinition)
+		throws ModelListenerException {
+
+		if (originalObjectDefinition.isCMS() &&
+			!StringUtil.equals(
+				originalObjectDefinition.getObjectFolderExternalReferenceCode(),
+				objectDefinition.getObjectFolderExternalReferenceCode())) {
+
+			throw new ModelListenerException(
+				new ObjectDefinitionObjectFolderIdException(
+					"CMS object definitions cannot change their folder " +
+						"location"));
+		}
+
+		_validateCMSObjectDefinitionScope(objectDefinition);
+	}
+
+	private void _validateCMSObjectDefinitionScope(
+		ObjectDefinition objectDefinition) {
+
+		if (objectDefinition.isCMS() &&
+			!StringUtil.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_DEPOT)) {
+
+			throw new ModelListenerException(
+				new ObjectDefinitionScopeException(
+					"CMS object definitions can only have scope \"depot\""));
 		}
 	}
 

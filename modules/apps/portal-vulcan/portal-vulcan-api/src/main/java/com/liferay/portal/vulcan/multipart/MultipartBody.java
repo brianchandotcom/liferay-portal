@@ -8,8 +8,8 @@ package com.liferay.portal.vulcan.multipart;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.io.StreamUtil;
-
 import com.liferay.portal.kernel.util.Validator;
+
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.InternalServerErrorException;
 

@@ -11,18 +11,21 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -77,6 +80,7 @@ public class CMSPersonalMenuEntryTest {
 		_testIsShowAdminUser();
 		_testIsShowCMSAdminRole();
 		_testIsShowDepotEntryMemberUser();
+		_testIsShowDepotEntryMemberUserGroup();
 		_testIsShowWithoutPermissions();
 	}
 
@@ -136,6 +140,33 @@ public class CMSPersonalMenuEntryTest {
 		}
 	}
 
+	private void _testIsShowDepotEntryMemberUserGroup() throws Exception {
+		User user = UserTestUtil.addUser();
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.addGroupUserGroups(
+			_depotEntry.getGroupId(), new long[] {userGroup.getUserGroupId()});
+		_userGroupLocalService.addUserUserGroup(
+			user.getUserId(), userGroup.getUserGroupId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			Assert.assertTrue(
+				_personalMenuEntry.isShow(null, permissionChecker));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+
+			// Order matters, first the user, then the userGroup
+
+			_userGroupLocalService.deleteUserGroup(userGroup);
+		}
+	}
+
 	private void _testIsShowWithoutPermissions() throws Exception {
 		User user = UserTestUtil.addUser();
 
@@ -169,6 +200,9 @@ public class CMSPersonalMenuEntryTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

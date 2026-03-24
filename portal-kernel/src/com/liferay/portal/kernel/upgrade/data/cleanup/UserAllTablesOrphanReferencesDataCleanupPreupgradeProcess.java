@@ -199,7 +199,10 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					userId = resultSet.getLong(1);
 				}
 				else {
-					_log.error("No admin user found for company " + companyId);
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"No admin user found for company " + companyId);
+					}
 				}
 
 				_adminUserIds.put(companyId, userId);

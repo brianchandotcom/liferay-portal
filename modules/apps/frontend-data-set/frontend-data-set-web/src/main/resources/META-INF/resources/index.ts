@@ -5,21 +5,21 @@
 
 export {default as FrontendDataSet} from './FrontendDataSet';
 export {default as FrontendDataSetContext} from './FrontendDataSetContext';
-export {default as DateRenderer} from './cell_renderers/DateRenderer';
+export {default as DateRenderer} from './renderers/DateRenderer';
 
-export {default as DateTimeRenderer} from './cell_renderers/DateTimeRenderer';
+export {default as DateTimeRenderer} from './renderers/DateTimeRenderer';
 
-export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';
-
-// @ts-ignore
-
-export {default as LabelRenderer} from './cell_renderers/LabelRenderer';
+export {INTERNAL_RENDERERS as FDS_INTERNAL_RENDERERS} from './renderers/InternalRenderer';
 
 // @ts-ignore
 
-export {default as StatusRenderer} from './cell_renderers/StatusRenderer';
+export {default as LabelRenderer} from './renderers/LabelRenderer';
 
-export {getInternalCellRenderer as getFDSInternalCellRenderer} from './cell_renderers/getInternalCellRenderer';
+// @ts-ignore
+
+export {default as StatusRenderer} from './renderers/StatusRenderer';
+
+export {getInternalRenderer as getFDSInternalRenderer} from './renderers/getInternalRenderer';
 
 export {
 	DEFAULT_FETCH_HEADERS,

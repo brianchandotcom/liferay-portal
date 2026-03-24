@@ -7,6 +7,7 @@ package com.liferay.style.book.web.internal.display.context;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -218,6 +219,13 @@ public class StyleBookDisplayContext {
 		for (FrontendTokenDefinition frontendTokenDefinition :
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
 					themeDisplay.getCompanyId())) {
+
+			if (Objects.equals(
+					frontendTokenDefinition.getThemeType(),
+					FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL)) {
+
+				continue;
+			}
 
 			styleFromThemeStyleBookEntries.add(
 				StyleBookUtil.getStyleFromThemeStyleBookEntry(

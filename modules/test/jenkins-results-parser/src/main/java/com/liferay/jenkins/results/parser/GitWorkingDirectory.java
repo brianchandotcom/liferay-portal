@@ -774,8 +774,6 @@ public class GitWorkingDirectory {
 
 		String remoteGitRefName = remoteGitRef.getName();
 
-		_stitchHistory(remoteURL, remoteGitRefName);
-
 		if ((remoteGitRefName != null) && !remoteGitRefName.isEmpty()) {
 			sb.append(" ");
 			sb.append(remoteGitRefName);
@@ -788,25 +786,41 @@ public class GitWorkingDirectory {
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			retries, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 15, sb.toString());
+		long duration = 0;
 
-		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+		try {
+			GitUtil.ExecutionResult executionResult = executeBashCommands(
+				3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 30, sb.toString());
 
-		if (executionResult.getExitValue() != 0) {
-			System.out.println(executionResult.getStandardOut());
+			duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
-			System.out.println(executionResult.getStandardError());
+			if (executionResult.getExitValue() != 0) {
+				System.out.println(
+					gitBranchesSHAReportStringBuilder.toString());
 
-			System.out.println(gitBranchesSHAReportStringBuilder.toString());
+				throw new GitWorkingDirectoryRuntimeException(
+					this,
+					JenkinsResultsParserUtil.combine(
+						"Unable to fetch remote url ", remoteURL, " after ",
+						JenkinsResultsParserUtil.toDurationString(duration),
+						"\n", executionResult.getStandardError()));
+			}
+		}
+		catch (Exception exception) {
+			String exceptionMessage = exception.getMessage();
 
-			throw new GitWorkingDirectoryRuntimeException(
-				this,
-				JenkinsResultsParserUtil.combine(
-					"Unable to fetch remote Git ref ", remoteGitRefName,
-					" after ",
-					JenkinsResultsParserUtil.toDurationString(duration), "\n",
-					executionResult.getStandardError()));
+			if (exceptionMessage.contains("Timeout occurred")) {
+				Matcher matcher = GitRemote.getRemoteURLMatcher(remoteURL);
+
+				if (matcher.find()) {
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Unable to fetch branch history.\n",
+							"Please rebase with liferay/",
+							matcher.group("gitRepositoryName"), " ",
+							_upstreamBranchName, " and try again."));
+				}
+			}
 		}
 
 		System.out.println(
@@ -921,20 +935,41 @@ public class GitWorkingDirectory {
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 30, sb.toString());
+		long duration = 0;
 
-		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+		try {
+			GitUtil.ExecutionResult executionResult = executeBashCommands(
+				3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 30, sb.toString());
 
-		if (executionResult.getExitValue() != 0) {
-			System.out.println(gitBranchesSHAReportStringBuilder.toString());
+			duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
-			throw new GitWorkingDirectoryRuntimeException(
-				this,
-				JenkinsResultsParserUtil.combine(
-					"Unable to fetch remote url ", remoteURL, " after ",
-					JenkinsResultsParserUtil.toDurationString(duration), "\n",
-					executionResult.getStandardError()));
+			if (executionResult.getExitValue() != 0) {
+				System.out.println(
+					gitBranchesSHAReportStringBuilder.toString());
+
+				throw new GitWorkingDirectoryRuntimeException(
+					this,
+					JenkinsResultsParserUtil.combine(
+						"Unable to fetch remote url ", remoteURL, " after ",
+						JenkinsResultsParserUtil.toDurationString(duration),
+						"\n", executionResult.getStandardError()));
+			}
+		}
+		catch (Exception exception) {
+			String exceptionMessage = exception.getMessage();
+
+			if (exceptionMessage.contains("Timeout occurred")) {
+				Matcher matcher = GitRemote.getRemoteURLMatcher(remoteURL);
+
+				if (matcher.find()) {
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Unable to fetch branch history.\n",
+							"Please rebase with liferay/",
+							matcher.group("gitRepositoryName"), " ",
+							_upstreamBranchName, " and try again."));
+				}
+			}
 		}
 
 		System.out.println(
@@ -3337,80 +3372,6 @@ public class GitWorkingDirectory {
 		}
 
 		return result.getStandardOut();
-	}
-
-	private void _stitchHistory(String remoteURL, String remoteGitRefName) {
-		if (JenkinsResultsParserUtil.isNullOrEmpty(remoteGitRefName) ||
-			!remoteURL.contains("github.com")) {
-
-			return;
-		}
-
-		Matcher matcher = GitRemote.getRemoteURLMatcher(remoteURL);
-
-		if (!matcher.find()) {
-			return;
-		}
-
-		String username = matcher.group("username");
-		String repositoryName = matcher.group("gitRepositoryName");
-
-        if(!repositoryName.contains("portal")){
-            return;
-        }
-
-		String compareURL = JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", username, "/", repositoryName,
-			"/compare/", _upstreamBranchName, "...", remoteGitRefName);
-
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = JenkinsResultsParserUtil.toJSONObject(compareURL);
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-
-			return;
-		}
-
-		if (!jsonObject.has("merge_base_commit")) {
-			return;
-		}
-
-		JSONObject mergeBaseCommitJSONObject = jsonObject.getJSONObject(
-			"merge_base_commit");
-
-		String mergeBaseSHA = mergeBaseCommitJSONObject.getString("sha");
-
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			1, 0, 1000 * 10,
-			JenkinsResultsParserUtil.combine(
-				"git merge-base --is-ancestor ", mergeBaseSHA, " ",
-				_upstreamBranchName));
-
-		if (executionResult.getExitValue() == 0) {
-			return;
-		}
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Merge base ", mergeBaseSHA,
-				" is missing from local history. Deepening history..."));
-
-		executionResult = executeBashCommands(
-			1, 0, GitUtil.MILLIS_TIMEOUT,
-			JenkinsResultsParserUtil.combine(
-				"git fetch -f --no-tags ", remoteURL, " ", mergeBaseSHA, ":",
-				_upstreamBranchName));
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to fetch branch history.\n",
-					"Please rebase with liferay/", repositoryName, " ",
-					_upstreamBranchName, " and try again."));
-		}
 	}
 
 	private static final int _BRANCHES_DELETE_BATCH_SIZE = 5;

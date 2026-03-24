@@ -137,6 +137,10 @@ public class TomcatNode {
 		return _liferayHome;
 	}
 
+	public int getConnectorPort() {
+		return _connectorPort;
+	}
+
 	public Path getPortalExtPropertiesPath() {
 		return _portalExtPropertiesPath;
 	}

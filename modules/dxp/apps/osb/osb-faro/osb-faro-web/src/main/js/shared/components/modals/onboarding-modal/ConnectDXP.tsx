@@ -465,8 +465,11 @@ const TokenInput: FC<ITokenInputProps> = ({token}) => {
 		<>
 			<div className='mb-1'>
 				<Text weight='bold'>
-					{Liferay.Language.get(
-						'copy-this-token-to-your-dxp-instance'
+					{sub(
+						Liferay.Language.get(
+							'copy-this-token-to-your-x-instance'
+						),
+						[Liferay.Language.get('liferay-dxp')]
 					)}
 				</Text>
 			</div>

@@ -315,8 +315,11 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 									size={3}
 									weight='normal'
 								>
-									{Liferay.Language.get(
-										'this-is-analytics-cloud-callback-url-salesforce-will-redirect-to-after-a-user-authorizes-the-connection'
+									{sub(
+										Liferay.Language.get(
+											'this-is-analytics-cloud-callback-url-x-will-redirect-to-after-a-user-authorizes-the-connection'
+										),
+										[Liferay.Language.get('salesforce')]
 									)}
 								</Text>
 							</div>

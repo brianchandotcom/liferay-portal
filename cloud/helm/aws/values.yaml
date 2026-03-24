@@ -90,9 +90,11 @@ liferay-default:
 
                                     cp --verbose /opt/liferay/deploy/com.liferay.portal.search.opensearch2* /temp/liferay/deploy
 
+                                    echo "Install successful. Skipping download."
+
                                     return 0
                                 else
-                                    echo "No existing OpenSearch modules found in /opt/liferay/deploy"
+                                    echo "No existing OpenSearch modules found in folder /opt/liferay/deploy."
 
                                     return 1
                                 fi
@@ -101,13 +103,12 @@ liferay-default:
                             function main {
                                 mkdir --parents /temp/liferay/deploy
 
-                                rm --force --verbose "/temp/osgi/modules/com.liferay.portal.search.opensearch2"*
+                                install_existing_opensearch_modules
+                                local exit_code=$?
 
-                                if install_existing_opensearch_modules
+                                if [ "${exit_code}" -ne 0 ]
                                 then
-                                    echo "Install successful. Skipping download."
-                                else
-                                    echo "Triggering download for modules."
+                                    echo "Downloading OpenSearch modules."
                                     download_module "api"
                                     download_module "impl"
                                 fi

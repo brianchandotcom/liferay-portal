@@ -5879,9 +5879,7 @@ public class ServiceBuilder {
 			ClassLibraryBuilder classLibraryBuilder =
 				new SortedClassLibraryBuilder();
 
-			Class<?> clazz = getClass();
-
-			classLibraryBuilder.appendClassLoader(clazz.getClassLoader());
+			classLibraryBuilder.appendClassLoader(_negativeCachingClassLoader);
 
 			JavaProjectBuilder builder = new JavaProjectBuilder(
 				classLibraryBuilder);
@@ -8630,6 +8628,7 @@ public class ServiceBuilder {
 			Pattern.quote("(")));
 	private static final List<String> _highCardinalityColumnNames =
 		Arrays.asList("externalReferenceCode", "uuid_");
+	private static final ClassLoader _negativeCachingClassLoader;
 	private static final Pattern _setterPattern = Pattern.compile(
 		"public void set.*" + Pattern.quote("("));
 
@@ -8726,5 +8725,42 @@ public class ServiceBuilder {
 	private final Map<String, List<Entity>> _uadApplicationEntities =
 		new HashMap<>();
 	private String _uadDirName;
+
+	static {
+		ClassNotFoundException classNotFoundException =
+			new ClassNotFoundException() {
+
+				@Override
+				public Throwable fillInStackTrace() {
+					return this;
+				}
+
+			};
+
+		Set<String> missingClassNames = ConcurrentHashMap.newKeySet();
+
+		_negativeCachingClassLoader = new ClassLoader(
+			ServiceBuilder.class.getClassLoader()) {
+
+			@Override
+			public Class<?> loadClass(String name)
+				throws ClassNotFoundException {
+
+				if (missingClassNames.contains(name)) {
+					throw classNotFoundException;
+				}
+
+				try {
+					return super.loadClass(name);
+				}
+				catch (ClassNotFoundException classNotFoundException2) {
+					missingClassNames.add(name);
+
+					throw classNotFoundException2;
+				}
+			}
+
+		};
+	}
 
 }

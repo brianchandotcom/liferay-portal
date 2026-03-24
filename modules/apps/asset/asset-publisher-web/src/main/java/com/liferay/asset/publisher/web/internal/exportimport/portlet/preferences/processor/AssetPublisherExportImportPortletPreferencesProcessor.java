@@ -473,10 +473,15 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		long plid = portletDataContext.getPlid();
+
+		if (plid <= 0) {
+			return;
+		}
+
 		List<AssetEntry> assetEntries = null;
 
-		Layout layout = layoutLocalService.getLayout(
-			portletDataContext.getPlid());
+		Layout layout = layoutLocalService.getLayout(plid);
 
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle",
@@ -829,9 +834,15 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		long plid = portletDataContext.getPlid();
+
+		if (plid <= 0) {
+			return;
+		}
+
 		PortletPreferences originalPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layoutLocalService.getLayout(portletDataContext.getPlid()),
+				layoutLocalService.getLayout(plid),
 				portletDataContext.getPortletId());
 
 		String[] values = originalPortletPreferences.getValues(

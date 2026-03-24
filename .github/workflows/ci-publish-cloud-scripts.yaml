@@ -103,8 +103,8 @@ jobs:
                         --gzip \
                         --verbose \
                         cloud/scripts/setup_gcp.sh \
-                        cloud/terraform/gcp/gke/* \
-                        cloud/terraform/gcp/gitops/platform/*
+                        cloud/terraform/gcp/gitops/platform/* \
+                        cloud/terraform/gcp/gke/*
 
                     gcloud storage cp \
                         /tmp/liferay-gcp-bootstrap-${CURRENT_VERSION}.tar.gz \

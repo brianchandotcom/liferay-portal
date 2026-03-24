@@ -8,6 +8,8 @@ package com.liferay.portal.upgrade.data.cleanup;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -99,11 +101,27 @@ public class CompanyDataCleanupPreupgradeProcess
 			String sourceColumnName, String targetColumnName,
 			String targetTableName) {
 
+			if ((DBManagerUtil.getDBType() == DBType.MARIADB) ||
+				(DBManagerUtil.getDBType() == DBType.MYSQL)) {
+
+				return StringBundler.concat(
+					"update ", normalizedTableName, " inner join ",
+					targetTableName, " on ", targetTableName, StringPool.PERIOD,
+					targetColumnName, " = ", normalizedTableName,
+					StringPool.PERIOD, sourceColumnName, " set ",
+					normalizedTableName, StringPool.PERIOD, companyIdColumnName,
+					" = ", targetTableName, StringPool.PERIOD,
+					companyIdColumnName, " where coalesce(",
+					normalizedTableName, StringPool.PERIOD, companyIdColumnName,
+					", 0) = 0 and ", normalizedTableName, StringPool.PERIOD,
+					sourceColumnName, " > 0");
+			}
+
 			String setSubquery = StringBundler.concat(
-				"(select ", companyIdColumnName, " from ", targetTableName,
-				" where ", targetTableName, StringPool.PERIOD, targetColumnName,
-				" = ", normalizedTableName, StringPool.PERIOD, sourceColumnName,
-				")");
+				"(select distinct ", companyIdColumnName, " from ",
+				targetTableName, " where ", targetTableName, StringPool.PERIOD,
+				targetColumnName, " = ", normalizedTableName, StringPool.PERIOD,
+				sourceColumnName, ")");
 
 			String existsSubquery = StringBundler.concat(
 				"exists (select 1 from ", targetTableName, " where ",

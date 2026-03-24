@@ -228,7 +228,7 @@ public class WidgetInstanceLayoutStructureItemImporter
 	private String _getInstanceId(String widgetInstanceId, String widgetName) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(widgetName);
 
-		if (portlet.isInstanceable()) {
+		if ((portlet != null) && portlet.isInstanceable()) {
 			return widgetInstanceId;
 		}
 

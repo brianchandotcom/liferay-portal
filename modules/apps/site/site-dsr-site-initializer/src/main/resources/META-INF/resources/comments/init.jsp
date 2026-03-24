@@ -18,5 +18,10 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <liferay-theme:defineObjects />
 
 <%
+String addCommentURL = (String)request.getAttribute("liferay-site-dsr-site-initializer:comments:addCommentURL");
+String deleteCommentURL = (String)request.getAttribute("liferay-site-dsr-site-initializer:comments:deleteCommentURL");
+String editCommentURL = (String)request.getAttribute("liferay-site-dsr-site-initializer:comments:editCommentURL");
+Object editorConfig = (Object)request.getAttribute("liferay-site-dsr-site-initializer:comments:editorConfig");
+String getCommentsURL = (String)request.getAttribute("liferay-site-dsr-site-initializer:comments:getCommentsURL");
 long roomId = (long)request.getAttribute("liferay-site-dsr-site-initializer:comments:roomId");
 %>

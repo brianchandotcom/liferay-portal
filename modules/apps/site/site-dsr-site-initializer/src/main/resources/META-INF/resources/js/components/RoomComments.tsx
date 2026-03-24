@@ -5,9 +5,17 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {SidePanel} from '@clayui/core';
+import {CommentsPanel} from '@liferay/site-cms-site-initializer';
+import {LiferayEditorConfig} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useRef, useState} from 'react';
 
-function RoomComments({roomId}: {roomId: number}) {
+function RoomComments(props: {
+	addCommentURL: string;
+	deleteCommentURL: string;
+	editCommentURL: string;
+	editorConfig: LiferayEditorConfig;
+	getCommentsURL: string;
+}) {
 	const [open, setOpen] = useState(false);
 
 	const ref = useRef(null);
@@ -38,11 +46,7 @@ function RoomComments({roomId}: {roomId: number}) {
 				</SidePanel.Header>
 
 				<SidePanel.Body>
-					{open && (
-						<>
-							{Liferay.Language.get('room-comments')} {roomId}
-						</>
-					)}
+					{open && <CommentsPanel {...(props as any)} />}
 				</SidePanel.Body>
 			</SidePanel>
 		</>

@@ -403,13 +403,13 @@ public class SitePageResourceImpl
 					sitePage));
 		}
 
+		_validateSitePageLayout(layout);
+
 		if (layout.isPrivateLayout() != privateLayout) {
 			throw new IllegalArgumentException(
 				"The private page setting does not match the target page's " +
 					"privacy");
 		}
-
-		_validateSitePageLayout(layout);
 
 		ServiceContext serviceContext = _getServiceContext(
 			layout.getGroupId(), sitePage);

@@ -956,6 +956,145 @@ test(
 );
 
 test(
+	'Info Panel Categories tab generates a new Asset Version',
+	{tag: '@LPD-83267'},
+	async ({apiHelpers, assetsPage, infoPanelPage, page}) => {
+		const applicationName = 'cms/basic-documents';
+		let categoryLabel;
+		const categoryName = `category ${getRandomString()}`;
+		const file1Title = `title ${getRandomString()}`;
+		let objectEntry;
+		const spaceName = `Space ${getRandomString()}`;
+		let spaceExternalReferenceCode: string;
+		const vocabularyName = `vocabulary ${getRandomString()}`;
+
+		await test.step('Create a new Space', async () => {
+			const space =
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: spaceName,
+					settings: {},
+					type: 'Space',
+				});
+			spaceExternalReferenceCode = space.externalReferenceCode;
+		});
+
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const vocabularyId = await apiHelpers.headlessAdminTaxonomy
+			.postSiteTaxonomyVocabulary({
+				assetLibraries: [{id: -1}],
+				assetTypes: [
+					{
+						required: false,
+						subtype: 'AllAssetSubtypes',
+						type: 'AllAssetTypes',
+					},
+				],
+				name: vocabularyName,
+				siteId,
+				visibilityType: 'PUBLIC',
+			})
+			.then((response) => response.id);
+
+		await apiHelpers.headlessAdminTaxonomy
+			.postTaxonomyVocabularyTaxonomyCategory({
+				name: categoryName,
+				vocabularyId,
+			})
+			.then((response) => response.id);
+
+		try {
+			objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: file1Title,
+					},
+					title: file1Title,
+				},
+				applicationName,
+				spaceName
+			);
+
+			await test.step('Go to All Assets and open the Info Panel Categorization Tab', async () => {
+				await assetsPage.gotoAll();
+
+				await assetsPage.execItemAction({
+					action: 'Show Details',
+					filter: file1Title,
+				});
+
+				await expect(
+					page.getByRole('heading', {name: file1Title})
+				).toBeVisible();
+
+				await infoPanelPage.selectTab('Categorization').click();
+			});
+
+			await test.step('Add a new category to the file', async () => {
+				const categoriesAutocomplete =
+					page.getByPlaceholder('Add category');
+
+				await categoriesAutocomplete.fill(categoryName);
+
+				const option = page.getByRole('option', {name: categoryName});
+
+				await option.waitFor();
+				await option.click();
+
+				categoryLabel = page.locator('.label-item', {
+					hasText: categoryName,
+				});
+
+				await expect(categoryLabel).toBeAttached();
+			});
+
+			await test.step('Validate new version is generated', async () => {
+				await assetsPage.execItemAction({
+					action: 'View History',
+					filter: file1Title,
+				});
+
+				await expect(
+					page.getByRole('heading', {name: `"${file1Title}" History`})
+				).toBeVisible();
+
+				await page
+					.getByRole('button', {exact: true, name: file1Title})
+					.first()
+					.click();
+
+				await expect(
+					page.getByRole('heading', {
+						name: `${file1Title} (Version 2)`,
+					})
+				).toBeVisible();
+			});
+		}
+		finally {
+			if (objectEntry?.id) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					applicationName,
+					String(objectEntry.id)
+				);
+			}
+
+			await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
+				vocabularyId
+			);
+
+			if (spaceExternalReferenceCode) {
+				await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(
+					spaceExternalReferenceCode
+				);
+			}
+		}
+	}
+);
+
+test(
 	'Dragging and dropping files into the data set opens upload modal',
 	{tag: '@LPD-58618'},
 	async ({assetsPage, page}) => {

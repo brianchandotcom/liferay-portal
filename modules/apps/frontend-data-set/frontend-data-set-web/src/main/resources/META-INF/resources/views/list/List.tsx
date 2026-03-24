@@ -78,8 +78,6 @@ const Title = ({
 		title
 	);
 
-	const value = localizedValue?.value ?? undefined;
-
 	if (title) {
 		const TitleRendererComponent = getListSectionContentRenderer({
 			contentRendererName: titleRenderer,
@@ -87,8 +85,6 @@ const Title = ({
 		});
 
 		if (TitleRendererComponent) {
-			const valuePath = localizedValue?.valuePath ?? undefined;
-
 			return (
 				<ClayList.ItemTitle>
 					<TitleRendererComponent
@@ -100,16 +96,16 @@ const Title = ({
 						openSidePanel={openSidePanel}
 						options={null}
 						rootPropertyName={
-							localizedValue?.rootPropertyName ?? undefined
+							localizedValue?.rootPropertyName
 						}
-						value={value}
-						valuePath={valuePath}
+						value={localizedValue?.value}
+						valuePath={localizedValue?.valuePath}
 					/>
 				</ClayList.ItemTitle>
 			);
 		}
 
-		return <ClayList.ItemTitle>{value}</ClayList.ItemTitle>;
+		return <ClayList.ItemTitle>{localizedValue?.value}</ClayList.ItemTitle>;
 	}
 
 	return null;

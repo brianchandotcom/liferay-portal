@@ -6,34 +6,41 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import getRandomString from '../../../utils/getRandomString';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {getTempDir} from '../../../utils/temp';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
 export const baseTest = mergeTests(
 	dataApiHelpersTest,
+	displayPageTemplatesPagesTest,
 	exportImportPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	productMenuPageTest,
-	uiElementsPageTest
+	uiElementsPageTest,
+	masterPagesPagesTest,
+	pageTemplatesPagesTest,
+	pageEditorPagesTest,
+	pagesPagesTest
 );
 
 export const test = mergeTests(
 	baseTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: false},
-	}),
-	masterPagesPagesTest,
-	pageTemplatesPagesTest
+	})
 );
 
 test('can export at site level with custom export task name', async ({
@@ -221,3 +228,142 @@ test('Can see deletion counts at site level', async ({
 		exportImportPage.page.getByText(`${objectDefinition.name} 2 Deletions`)
 	).not.toBeVisible();
 });
+
+test(
+	'Can see the correct deletion counts for multiple registrations at site level',
+	{tag: ['@LPD-67433']},
+	async ({
+		displayPageTemplatesPage,
+		exportImportPage,
+		masterPagesPage,
+		pageEditorPage,
+		pageTemplatesPage,
+		productMenuPage,
+		site,
+		uiElementsPage,
+		utilityPagesPage,
+	}) => {
+		await test.step('Create and delete a display page template folder', async () => {
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateFolderName = getRandomString();
+
+			await displayPageTemplatesPage.createFolder(
+				displayPageTemplateFolderName,
+				getRandomString()
+			);
+			await displayPageTemplatesPage.deleteTemplate(
+				displayPageTemplateFolderName
+			);
+		});
+
+		await test.step('Create and delete a display page template', async () => {
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentSubtype: 'Basic Web Content',
+				contentType: 'Web Content Article',
+				name: displayPageTemplateName,
+			});
+			await displayPageTemplatesPage.deleteTemplate(
+				displayPageTemplateName
+			);
+		});
+
+		await test.step('Create and delete a master page', async () => {
+			await masterPagesPage.goto(site.friendlyUrlPath);
+
+			const masterPageName = getRandomString();
+
+			await masterPagesPage.createNewMaster(masterPageName);
+			await masterPagesPage.deleteMaster(masterPageName);
+		});
+
+		await test.step('Create and delete a page template set and a page template', async () => {
+			await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const pageTemplateCollectionName = getRandomString();
+
+			await pageTemplatesPage.addPageTemplateCollection(
+				pageTemplateCollectionName
+			);
+
+			await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const contentPageTemplateName = getRandomString();
+
+			await pageTemplatesPage.addContentPageTemplate(
+				contentPageTemplateName
+			);
+
+			await pageEditorPage.publishButton.click();
+
+			await waitForAlert(
+				pageTemplatesPage.page,
+				'Success:The page template was published successfully.'
+			);
+
+			await pageTemplatesPage.deletePageTemplate(contentPageTemplateName);
+			await pageTemplatesPage.deletePageTemplateCollection(
+				pageTemplateCollectionName
+			);
+		});
+
+		await test.step('Create and delete a utility page', async () => {
+			await utilityPagesPage.goto(site.friendlyUrlPath);
+
+			const utilityPageName = getRandomString();
+
+			await utilityPagesPage.createPage({
+				name: utilityPageName,
+				type: '404 Error',
+			});
+			await utilityPagesPage.markAsDefault(utilityPageName);
+			await utilityPagesPage.deletePage(utilityPageName);
+		});
+
+		await test.step('Assert deletion counts are correct', async () => {
+			await productMenuPage.openProductMenuIfClosed();
+			await productMenuPage.goToPublishingExport();
+
+			await uiElementsPage.clickNewButton();
+
+			await expect(
+				exportImportPage.page
+					.locator('label')
+					.filter({
+						has: exportImportPage.page.locator(':text-is("Pages")'),
+					})
+					.locator('.staging-taglib-checkbox-deletions')
+			).toBeHidden();
+
+			await exportImportPage.deletionsLabel.check();
+
+			await exportImportPage.expectPortletCounts(
+				'Pages',
+				{deletions: 6},
+				{
+					registrations: [
+						{
+							counts: {deletions: 1},
+							label: 'Display Page Template Folders',
+						},
+						{
+							counts: {deletions: 1},
+							label: 'Display Page Templates',
+						},
+						{counts: {deletions: 1}, label: 'Master Pages'},
+						{
+							counts: {deletions: 1},
+							label: /^\s*Page Templates\s*/,
+						},
+						{counts: {deletions: 1}, label: 'Page Template Sets'},
+						{counts: {deletions: 1}, label: 'Utility Pages'},
+					],
+				}
+			);
+		});
+	}
+);

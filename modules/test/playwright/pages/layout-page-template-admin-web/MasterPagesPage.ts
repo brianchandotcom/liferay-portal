@@ -7,6 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {zipFolder} from '../../utils/zip';
 import {PagesAdminPage} from '../layout-admin-web/PagesAdminPage';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
@@ -98,6 +99,29 @@ export class MasterPagesPage {
 		await templateCard.getByLabel('More actions').waitFor();
 
 		await templateCard.locator('.custom-control.custom-checkbox').waitFor();
+	}
+
+	async clickMoreActions(name: string, actionName: string) {
+		await this.page
+			.locator('.card-page-item')
+			.filter({hasText: name})
+			.getByLabel('More actions')
+			.click();
+
+		await this.page
+			.getByRole('menuitem', {
+				exact: true,
+				name: actionName,
+			})
+			.click();
+	}
+
+	async deleteMaster(name: string) {
+		await this.clickMoreActions(name, 'Delete');
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(this.page, 'Success:');
 	}
 
 	async editMaster(name: string) {

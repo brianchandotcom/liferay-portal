@@ -225,6 +225,113 @@ export class ExportImportPage {
 		}
 	}
 
+	async expectPortletCounts(
+		label: string | RegExp,
+		counts: {deletions?: number; items?: number},
+		{
+			registrations,
+		}: {
+			registrations?: Array<{
+				counts: {deletions?: number; items?: number};
+				label: string | RegExp;
+			}>;
+		} = {}
+	) {
+		if (registrations) {
+			if (typeof label === 'string') {
+				await this.page
+					.locator(
+						`button.content-link[data-portlettitle="${label}"]`
+					)
+					.click();
+			}
+			else {
+				const buttons = this.page.locator(
+					'button.content-link[data-portlettitle]'
+				);
+
+				await buttons.first().waitFor();
+
+				for (const button of await buttons.all()) {
+					const title = await button.evaluate(
+						(element) => element.dataset.portlettitle
+					);
+
+					if (title && label.test(title)) {
+						await button.click();
+						break;
+					}
+				}
+			}
+		}
+
+		for (const entry of [{counts, label}, ...(registrations ?? [])]) {
+			await this._assertPortletEntryCounts(entry.label, entry.counts);
+		}
+	}
+
+	async expectPortletAbsent(label: string | RegExp) {
+		const filter =
+			typeof label === 'string'
+				? {has: this.page.locator(`:text-is("${label}")`)}
+				: {hasText: label};
+
+		await expect(this.page.locator('label').filter(filter)).toHaveCount(0);
+	}
+
+	async expectPortletDeletionsHidden(label: string | RegExp) {
+		await this._assertPortletEntryCounts(label, {deletions: 'hidden'});
+	}
+
+	private async _assertPortletEntryCounts(
+		label: string | RegExp,
+		counts: {
+			deletions?: 'absent' | 'hidden' | number;
+			items?: 'absent' | number;
+		}
+	) {
+		const filter =
+			typeof label === 'string'
+				? {has: this.page.locator(`:text-is("${label}")`)}
+				: {hasText: label};
+
+		const labelLocator = this.page.locator('label').filter(filter);
+		const {deletions, items} = counts;
+
+		if (items !== undefined) {
+			const itemsLocator = labelLocator.locator(
+				'.staging-taglib-checkbox-items'
+			);
+
+			if (items === 'absent') {
+				await expect(itemsLocator).toHaveCount(0);
+			}
+			else {
+				await expect(itemsLocator).toBeVisible();
+				await expect(itemsLocator).toHaveText(`${items} Items`);
+			}
+		}
+
+		if (deletions !== undefined) {
+			const deletionsLocator = labelLocator.locator(
+				'.staging-taglib-checkbox-deletions'
+			);
+
+			if (deletions === 'absent') {
+				await expect(deletionsLocator).toHaveCount(0);
+			}
+			else if (deletions === 'hidden') {
+				await expect(deletionsLocator).toBeHidden();
+			}
+			else {
+				await expect(deletionsLocator).toBeVisible();
+				await expect(deletionsLocator).toHaveText(
+					`${deletions} Deletions`
+				);
+			}
+		}
+	}
+
 	async uncheckPortlets() {
 		const portletListContainer = this.portletListContainer;
 

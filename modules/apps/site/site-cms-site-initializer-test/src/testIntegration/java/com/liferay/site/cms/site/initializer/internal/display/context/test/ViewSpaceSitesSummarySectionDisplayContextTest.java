@@ -98,8 +98,7 @@ public class ViewSpaceSitesSummarySectionDisplayContextTest
 	public void testGetCreationMenu() throws Exception {
 		CreationMenu creationMenu = ReflectionTestUtil.invoke(
 			_getViewSpaceSitesSummarySectionDisplayContext(
-				_getHttpServletRequest(
-					_depotEntry, TestPropsValues.getUser())),
+				_getHttpServletRequest(_depotEntry, TestPropsValues.getUser())),
 			"getCreationMenu", new Class<?>[0]);
 
 		Assert.assertFalse(creationMenu.isEmpty());

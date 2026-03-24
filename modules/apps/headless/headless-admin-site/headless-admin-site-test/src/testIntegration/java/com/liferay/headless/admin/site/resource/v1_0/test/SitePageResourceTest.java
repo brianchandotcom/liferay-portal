@@ -396,19 +396,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"Page specifications cannot be applied to non-content pages",
 			LayoutTestUtil.addTypePortletLayout(testGroup));
 		_assertPostSiteSitePagePageSpecificationProblemException(
-			null,
+			"This page type cannot be modified through this endpoint",
 			LayoutPageTemplateEntryTestUtil.
 				getBasicLayoutPageTemplateEntryLayout(serviceContext));
 		_assertPostSiteSitePagePageSpecificationProblemException(
-			"Page specifications cannot be applied to non-content pages",
+			"This page type cannot be modified through this endpoint",
 			LayoutPageTemplateEntryTestUtil.
 				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext));
 		_assertPostSiteSitePagePageSpecificationProblemException(
-			null,
+			"This page type cannot be modified through this endpoint",
 			LayoutPageTemplateEntryTestUtil.
 				getMasterLayoutPageTemplateEntryLayout(serviceContext));
 		_assertPostSiteSitePagePageSpecificationProblemException(
-			null,
+			"This page type cannot be modified through this endpoint",
 			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
 				serviceContext));
 	}

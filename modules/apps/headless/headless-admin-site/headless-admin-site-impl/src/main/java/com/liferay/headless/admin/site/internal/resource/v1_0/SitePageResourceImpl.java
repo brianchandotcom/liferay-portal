@@ -259,6 +259,8 @@ public class SitePageResourceImpl
 			GroupUtil.getStagingAwareGroupId(
 				contextCompany.getCompanyId(), siteExternalReferenceCode));
 
+		_validateSitePageLayout(layout);
+
 		if (!layout.isTypeContent()) {
 			throw new IllegalArgumentException(
 				"Page specifications cannot be applied to non-content pages");

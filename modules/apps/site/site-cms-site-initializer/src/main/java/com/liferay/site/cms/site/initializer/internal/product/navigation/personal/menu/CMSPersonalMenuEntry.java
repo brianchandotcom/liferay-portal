@@ -59,10 +59,8 @@ public class CMSPersonalMenuEntry implements PersonalMenuEntry {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Group group = _groupLocalService.getGroup(
-			themeDisplay.getCompanyId(), GroupConstants.CMS);
-
-		return group.getDisplayURL(themeDisplay);
+		return themeDisplay.getPathFriendlyURLPublic() +
+			GroupConstants.CMS_FRIENDLY_URL + "/home";
 	}
 
 	@Override

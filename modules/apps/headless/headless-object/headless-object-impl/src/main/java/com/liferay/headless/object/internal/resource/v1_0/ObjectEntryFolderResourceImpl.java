@@ -16,6 +16,8 @@ import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.internal.odata.entity.v1_0.ObjectEntryFolderEntityModel;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
+import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
@@ -35,7 +37,9 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -274,16 +278,21 @@ public class ObjectEntryFolderResourceImpl
 		return SearchUtil.search(
 			HashMapBuilder.put(
 				"create",
-				addAction(
-					ActionKeys.ADD_FOLDER, "postScopeScopeKeyObjectEntryFolder",
-					com.liferay.object.model.ObjectEntryFolder.class.getName(),
-					groupId)
-			).put(
-				"get",
-				addAction(
-					ActionKeys.VIEW, "getScopeScopeKeyObjectEntryFoldersPage",
-					com.liferay.object.model.ObjectEntryFolder.class.getName(),
-					groupId)
+				() -> {
+					if (!_objectEntryFolderPortletResourcePermission.contains(
+							PermissionThreadLocal.getPermissionChecker(),
+							groupId,
+							ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER)) {
+
+						return null;
+					}
+
+					return addAction(
+						ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, null,
+						"postScopeScopeKeyObjectEntryFolder", null,
+						ObjectConstants.RESOURCE_NAME_OBJECT_ENTRY_FOLDER,
+						groupId);
+				}
 			).build(),
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {
@@ -1045,6 +1054,10 @@ public class ObjectEntryFolderResourceImpl
 	)
 	private ModelResourcePermission<com.liferay.object.model.ObjectEntryFolder>
 		_objectEntryFolderModelResourcePermission;
+
+	@Reference(target = "(resource.name=com.liferay.object.entry.folder)")
+	private PortletResourcePermission
+		_objectEntryFolderPortletResourcePermission;
 
 	@Reference
 	private ObjectEntryFolderService _objectEntryFolderService;

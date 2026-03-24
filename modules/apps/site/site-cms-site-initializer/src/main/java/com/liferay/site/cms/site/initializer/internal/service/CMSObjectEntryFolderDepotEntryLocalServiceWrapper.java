@@ -60,10 +60,10 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 				depotEntry.getCompanyId(), "LPD-17564") &&
 			(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
 
+			_addCMSDefaultPermissions(group);
+
 			ObjectEntryFolderUtil.addObjectEntryFolders(
 				depotEntry, _attachmentManager);
-
-			_addCMSDefaultPermissions(group);
 		}
 
 		return depotEntry;
@@ -82,10 +82,10 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 				depotEntry.getCompanyId(), "LPD-17564") &&
 			(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
 
+			_addCMSDefaultPermissions(depotEntry.getGroup());
+
 			ObjectEntryFolderUtil.addObjectEntryFolders(
 				depotEntry, _attachmentManager);
-
-			_addCMSDefaultPermissions(depotEntry.getGroup());
 		}
 
 		return depotEntry;

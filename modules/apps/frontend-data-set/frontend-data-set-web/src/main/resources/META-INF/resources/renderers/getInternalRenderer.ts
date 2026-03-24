@@ -5,10 +5,10 @@
 
 import {IInternalRenderer} from '../utils/types';
 import DefaultRenderer from './DefaultRenderer';
-import {INTERNAL_CELL_RENDERERS} from './InternalCellRenderer';
+import {INTERNAL_RENDERERS} from './InternalRenderer';
 
-export function getInternalCellRenderer(name: string): IInternalRenderer {
-	const renderer = INTERNAL_CELL_RENDERERS.find(
+export function getInternalRenderer(name: string): IInternalRenderer {
+	const renderer = INTERNAL_RENDERERS.find(
 		(renderer) => renderer.name === name
 	);
 

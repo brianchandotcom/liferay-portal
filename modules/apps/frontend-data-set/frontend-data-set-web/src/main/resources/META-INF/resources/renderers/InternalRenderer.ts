@@ -36,7 +36,7 @@ import QuantitySelectorRenderer from './QuantitySelectorRenderer';
 
 import StatusRenderer from './StatusRenderer';
 
-export const INTERNAL_CELL_RENDERERS: Array<IInternalRenderer> = [
+export const INTERNAL_RENDERERS: Array<IInternalRenderer> = [
 	{
 		component: ActionsLinkRenderer,
 		label: Liferay.Language.get('action-link'),

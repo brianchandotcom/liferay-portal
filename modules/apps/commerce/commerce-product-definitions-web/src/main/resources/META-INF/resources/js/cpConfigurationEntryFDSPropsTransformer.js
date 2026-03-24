@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FDS_INTERNAL_CELL_RENDERERS} from '@liferay/frontend-data-set-web';
+import {FDS_INTERNAL_RENDERERS} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
 import '../css/main.scss';
@@ -20,7 +20,7 @@ function render(props) {
 		rendererName = 'boolean';
 	}
 
-	const renderer = FDS_INTERNAL_CELL_RENDERERS.find(
+	const renderer = FDS_INTERNAL_RENDERERS.find(
 		(renderer) => renderer.name === rendererName
 	);
 

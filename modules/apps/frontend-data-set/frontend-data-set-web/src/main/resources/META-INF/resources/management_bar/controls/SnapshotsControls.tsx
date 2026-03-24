@@ -14,7 +14,14 @@ import {
 	openToast,
 } from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
-import React, {Ref, useContext, useRef, useState} from 'react';
+import React, {
+	Ref,
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {DEFAULT_FETCH_HEADERS} from '../../constants';
@@ -72,6 +79,74 @@ const SnapshotsControlsTrigger = React.forwardRef(
 	)
 );
 
+function SaveSnapshotModalBody({
+	initialLabel,
+	labelInputRef,
+	namespace,
+	onValidatedLabelChange,
+}: {
+	initialLabel: string;
+	labelInputRef: React.MutableRefObject<HTMLInputElement>;
+	namespace: string;
+	onValidatedLabelChange: (validatedLabel: () => null | string) => void;
+}) {
+	const [nameValidationError, setNameValidationError] = useState(false);
+
+	useEffect(() => {
+		onValidatedLabelChange(() => {
+			const label = labelInputRef.current?.value ?? '';
+			const trimmedLabel = label.trim();
+
+			if (!trimmedLabel) {
+				setNameValidationError(true);
+
+				return null;
+			}
+
+			setNameValidationError(false);
+
+			return trimmedLabel;
+		});
+
+		return () => {
+			onValidatedLabelChange(() => null);
+		};
+	}, [onValidatedLabelChange, labelInputRef]);
+
+	return (
+		<ClayForm.Group className={nameValidationError ? 'has-error' : ''}>
+			<label htmlFor={`${namespace}labelInput`}>
+				{Liferay.Language.get('name')}
+
+				<RequiredMark />
+			</label>
+
+			<ClayInput
+				autoFocus={true}
+				defaultValue={initialLabel}
+				id={`${namespace}labelInput`}
+				onChange={() => {
+					if (nameValidationError) {
+						setNameValidationError(false);
+					}
+				}}
+				ref={labelInputRef}
+				type="text"
+			/>
+
+			{nameValidationError && (
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>
+						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+						{Liferay.Language.get('this-field-is-required')}
+					</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
+			)}
+		</ClayForm.Group>
+	);
+}
+
 const SnapshotsControls = () => {
 	const {
 		globalFDSState,
@@ -111,28 +186,16 @@ const SnapshotsControls = () => {
 		defaultSnapshotItem;
 
 	const labelInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-
-	const SaveSnapshotModalBody = () => (
-		<ClayForm.Group>
-			<label htmlFor={`${namespace}labelInput`}>
-				{Liferay.Language.get('name')}
-
-				<RequiredMark />
-			</label>
-
-			<ClayInput
-				autoFocus={true}
-				defaultValue={
-					activeSnapshot?.erc !== DEFAULT_VIEW_ID
-						? activeSnapshot?.label
-						: ''
-				}
-				id={`${namespace}labelInput`}
-				ref={labelInputRef}
-				type="text"
-			/>
-		</ClayForm.Group>
+	const validatedLabelRef = useRef<() => null | string>(() => null);
+	const setValidatedLabel = useCallback(
+		(validatedLabel: () => null | string) => {
+			validatedLabelRef.current = validatedLabel;
+		},
+		[]
 	);
+	const activeSnapshotLabel = activeSnapshot.label ?? '';
+	const initialLabel =
+		activeSnapshot.erc !== DEFAULT_VIEW_ID ? activeSnapshotLabel : '';
 
 	const saveSnapshot = ({
 		label,
@@ -220,7 +283,14 @@ const SnapshotsControls = () => {
 
 	const openSaveSnapshotModal = () => {
 		openModal({
-			bodyComponent: SaveSnapshotModalBody,
+			bodyComponent: () => (
+				<SaveSnapshotModalBody
+					initialLabel={initialLabel}
+					labelInputRef={labelInputRef}
+					namespace={namespace ?? ''}
+					onValidatedLabelChange={setValidatedLabel}
+				/>
+			),
 			buttons: [
 				{
 					displayType: 'secondary',
@@ -230,8 +300,14 @@ const SnapshotsControls = () => {
 				{
 					label: Liferay.Language.get('save'),
 					onClick: ({processClose}) => {
+						const label = validatedLabelRef.current();
+
+						if (!label) {
+							return;
+						}
+
 						saveSnapshot({
-							label: labelInputRef.current.value,
+							label,
 							processClose,
 						});
 					},
@@ -298,7 +374,14 @@ const SnapshotsControls = () => {
 
 	const openRenameSnapshotModal = () => {
 		openModal({
-			bodyComponent: SaveSnapshotModalBody,
+			bodyComponent: () => (
+				<SaveSnapshotModalBody
+					initialLabel={initialLabel}
+					labelInputRef={labelInputRef}
+					namespace={namespace ?? ''}
+					onValidatedLabelChange={setValidatedLabel}
+				/>
+			),
 			buttons: [
 				{
 					displayType: 'secondary',
@@ -308,8 +391,14 @@ const SnapshotsControls = () => {
 				{
 					label: Liferay.Language.get('save'),
 					onClick: ({processClose}) => {
+						const label = validatedLabelRef.current();
+
+						if (!label) {
+							return;
+						}
+
 						renameActiveSnapshot({
-							label: labelInputRef.current?.value,
+							label,
 							processClose,
 						});
 					},

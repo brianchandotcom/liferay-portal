@@ -26,7 +26,7 @@ variable "infrastructure_git_repo_config" {
 	type=object(
 		{
 			auth=object({
-				credentials_secret_name=optional(string, "liferay/credentials/gitops")
+				credentials_secret_name=optional(string, "liferay-credentials-gitops")
 				github_app_id_property=optional(string, "github_app_id")
 				github_app_installation_id_property=optional(string, "github_app_installation_id")
 				github_app_private_key_property=optional(string, "github_app_private_key")
@@ -69,7 +69,7 @@ variable "liferay_git_repo_config" {
 	type=object(
 		{
 			auth=object({
-				credentials_secret_name=optional(string, "liferay/credentials/gitops")
+				credentials_secret_name=optional(string, "liferay-credentials-gitops")
 				github_app_id_property=optional(string, "github_app_id")
 				github_app_installation_id_property=optional(string, "github_app_installation_id")
 				github_app_private_key_property=optional(string, "github_app_private_key")

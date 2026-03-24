@@ -74,6 +74,17 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro goToCP2(site = null) {
+		Refresh();
+
+		Click(locator1 = "CP2NavigationMenu#APPLICATIONS_MENU_ACCOUNTS");
+
+		Click(
+			key_site = ${site},
+			locator1 = "ApplicationsMenu#SITE_LINK");
+	}
+
+	@summary = "Default summary"
 	macro goToProductActivation() {
 		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
 	}

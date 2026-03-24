@@ -7,15 +7,15 @@ import {ComponentType} from 'react';
 
 // @ts-ignore
 
-import InputCheckboxRenderer from '../cell_renderers/InputCheckboxRenderer';
+import InputCheckboxRenderer from '../renderers/InputCheckboxRenderer';
 
 // @ts-ignore
 
-import InputDateTimeRenderer from '../cell_renderers/InputDateTimeRenderer';
+import InputDateTimeRenderer from '../renderers/InputDateTimeRenderer';
 
 // @ts-ignore
 
-import InputTextRenderer from '../cell_renderers/InputTextRenderer';
+import InputTextRenderer from '../renderers/InputTextRenderer';
 
 const INPUT_RENDERERS: {[key: string]: ComponentType} = {
 	checkbox: InputCheckboxRenderer,

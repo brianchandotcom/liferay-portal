@@ -11,7 +11,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {
-	FDS_INTERNAL_CELL_RENDERERS,
+	FDS_INTERNAL_RENDERERS,
 	IClientExtensionRenderer,
 	IInternalRenderer,
 } from '@liferay/frontend-data-set-web';
@@ -61,7 +61,7 @@ const getRendererLabel = ({
 }): string => {
 	let clientExtensionRenderer;
 
-	const internalRenderer = FDS_INTERNAL_CELL_RENDERERS.find(
+	const internalRenderer = FDS_INTERNAL_RENDERERS.find(
 		(renderer: IInternalRenderer) => {
 			return renderer.name === rendererName;
 		}
@@ -142,7 +142,7 @@ const EditTableSectionModalContent = ({
 		tableSection.sortable
 	);
 
-	const fdsInternalCellRendererNames = FDS_INTERNAL_CELL_RENDERERS.map(
+	const fdsInternalCellRendererNames = FDS_INTERNAL_RENDERERS.map(
 		(cellRenderer: IInternalRenderer) => cellRenderer.name
 	);
 
@@ -195,7 +195,7 @@ const EditTableSectionModalContent = ({
 	const tableSectionLabelInputId = `${namespace}tableSectionLabelInput`;
 	const tableSectionRendererSelectId = `${namespace}tableSectionRendererSelectId`;
 
-	const options = FDS_INTERNAL_CELL_RENDERERS.map(
+	const options = FDS_INTERNAL_RENDERERS.map(
 		(renderer: IInternalRenderer) => ({
 			label: renderer.label!,
 			value: renderer.name!,

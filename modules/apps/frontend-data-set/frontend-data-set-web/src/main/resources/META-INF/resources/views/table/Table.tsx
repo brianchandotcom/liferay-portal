@@ -24,7 +24,7 @@ import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
-import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
+import {getInternalRenderer} from '../../renderers/getInternalRenderer';
 import FDSDndProvider from '../../dnd/FDSDndProvider';
 import useFDSDrop from '../../dnd/useFDSDrop';
 import {
@@ -682,7 +682,7 @@ function CellRenderer({
 			};
 		}
 
-		return getInternalCellRenderer(contentRenderer);
+		return getInternalRenderer(contentRenderer);
 	}, [customDataRenderers, customRenderers, field, modifiedFields]);
 
 	if (cellRenderer?.type === 'clientExtension') {

@@ -35,8 +35,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -182,6 +184,50 @@ public class AssetCategoryPortletDataHandlerTest
 				fetchAssetCategoryByExternalReferenceCode(
 					assetCategory.getExternalReferenceCode(),
 					stagingGroup.getGroupId()));
+	}
+
+	@Test
+	@TestInfo("LPD-83320")
+	public void testExportImportAssetCategoryPreservesName() throws Exception {
+		AssetVocabulary assetVocabulary = _addAssetVocabulary();
+
+		AssetCategory assetCategory1 = _addAssetCategory(assetVocabulary);
+
+		File larFile = _exportLayoutsAsFile();
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildImportLayoutSettingsMap(
+							TestPropsValues.getUser(), group2.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									AssetCategoriesAdminPortletKeys.
+										ASSET_CATEGORIES_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
+							).build()));
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, larFile);
+
+		AssetCategory assetCategory2 =
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					assetCategory1.getExternalReferenceCode(),
+					group2.getGroupId());
+
+		Assert.assertEquals(
+			assetCategory1.getTitle(LocaleUtil.getDefault()),
+			assetCategory2.getTitle(LocaleUtil.getDefault()));
 	}
 
 	@FeatureFlag("LPD-17564")

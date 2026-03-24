@@ -145,11 +145,7 @@ resource "helm_release" "argocd" {
 }
 resource "kubernetes_namespace" "argocd" {
 	metadata {
-		labels=merge(
-			local.common_labels,
-			{
-				"pod-security.kubernetes.io/enforce"="restricted"
-			})
+		labels=local.common_labels
 		name=var.argocd_namespace
 	}
 }

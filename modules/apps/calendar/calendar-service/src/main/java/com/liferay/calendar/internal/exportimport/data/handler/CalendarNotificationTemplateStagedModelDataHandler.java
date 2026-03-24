@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -165,7 +164,7 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 		if (portletDataContext.isDataStrategyMirror()) {
 			CalendarNotificationTemplate existingCalendarNotificationTemplate =
 				_fetchExistingCalendarNotificationTemplate(
-					body, calendarId, calendarNotificationTemplate,
+					calendarId, calendarNotificationTemplate,
 					notificationTemplateType, notificationType,
 					portletDataContext);
 
@@ -212,7 +211,7 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 
 	private CalendarNotificationTemplate
 		_fetchExistingCalendarNotificationTemplate(
-			String body, long calendarId,
+			long calendarId,
 			CalendarNotificationTemplate calendarNotificationTemplate,
 			NotificationTemplateType notificationTemplateType,
 			NotificationType notificationType,
@@ -230,17 +229,7 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 						calendarId, notificationType, notificationTemplateType);
 		}
 
-		if (existingCalendarNotificationTemplate == null) {
-			return null;
-		}
-
-		if (Objects.equals(
-				body, existingCalendarNotificationTemplate.getBody())) {
-
-			return existingCalendarNotificationTemplate;
-		}
-
-		return null;
+		return existingCalendarNotificationTemplate;
 	}
 
 	@Reference

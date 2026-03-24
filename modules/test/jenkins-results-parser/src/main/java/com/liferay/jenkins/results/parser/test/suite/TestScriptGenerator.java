@@ -140,10 +140,10 @@ public class TestScriptGenerator {
 					continue;
 				}
 
-				String commandDir = testScriptCommand.getCommandDir();
+				String commandDirPath = testScriptCommand.getCommandDirPath();
 
-				if ((commandDir != null) && !commandDir.equals(".")) {
-					command = "cd " + commandDir + " && " + command;
+				if ((commandDirPath != null) && !commandDirPath.equals(".")) {
+					command = "cd " + commandDirPath + " && " + command;
 				}
 
 				command = command.replace('\\', '/');

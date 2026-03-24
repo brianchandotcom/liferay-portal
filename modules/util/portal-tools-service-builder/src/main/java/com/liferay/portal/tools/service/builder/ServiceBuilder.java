@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.ModelHints;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.plugin.Version;
@@ -75,6 +76,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.lang.reflect.Proxy;
+
 import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
@@ -112,6 +115,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -1244,7 +1248,10 @@ public class ServiceBuilder {
 		boolean useTempFile = false;
 
 		if (!refFile.exists()) {
-			refFileName = String.valueOf(System.currentTimeMillis());
+			Thread currentThread = Thread.currentThread();
+
+			refFileName = StringBundler.concat(
+				System.currentTimeMillis(), "-", currentThread.getId());
 
 			refFile = new File(_TMP_DIR_NAME, refFileName);
 
@@ -2242,6 +2249,129 @@ public class ServiceBuilder {
 		return properties;
 	}
 
+	private static String _processModuleServiceFile(
+			Path baseDirPath, Path serviceXmlPath,
+			Map<String, String> arguments, String[] readOnlyPrefixes,
+			String[] resourceActionsConfigs)
+		throws Exception {
+
+		Path moduleDir = serviceXmlPath.getParent();
+
+		String moduleName = String.valueOf(moduleDir.getFileName());
+
+		String buildGradleContent = new String(
+			Files.readAllBytes(moduleDir.resolve("build.gradle")),
+			StandardCharsets.UTF_8);
+
+		Map<String, String> buildServiceProperties =
+			_parseBuildServiceProperties(buildGradleContent);
+
+		String apiDirValue = buildServiceProperties.get("apiDir");
+
+		if (apiDirValue == null) {
+			String apiModuleName =
+				moduleName.substring(0, moduleName.length() - 8) + "-api";
+
+			apiDirValue = "../" + apiModuleName + "/src/main/java";
+		}
+
+		Path apiDir = moduleDir.resolve(apiDirValue);
+		Path implDir = moduleDir.resolve("src/main/java");
+		Path resourcesDir = moduleDir.resolve("src/main/resources");
+
+		boolean autoNamespaceTables = GetterUtil.getBoolean(
+			buildServiceProperties.get("autoNamespaceTables"), true);
+
+		int databaseNameMaxLength = GetterUtil.getInteger(
+			buildServiceProperties.get("databaseNameMaxLength"), 30);
+
+		String[] incubationFeatures = StringUtil.split(
+			buildServiceProperties.getOrDefault(
+				"incubationFeatures",
+				arguments.get("service.incubation.features")));
+
+		Path hbmFile = resourcesDir.resolve("META-INF/module-hbm.xml");
+		Path springFile = resourcesDir.resolve(
+			"META-INF/spring/module-spring.xml");
+		Path modelHintsFile = resourcesDir.resolve(
+			"META-INF/portlet-model-hints.xml");
+		Path sqlDir = resourcesDir.resolve("META-INF/sql");
+
+		String testDirValue = buildServiceProperties.get("testDir");
+
+		String testDirName = null;
+
+		if (testDirValue != null) {
+			Path testDir = moduleDir.resolve(testDirValue);
+
+			if (Files.exists(testDir)) {
+				testDirName = testDir.toString();
+			}
+		}
+
+		String bundleSymbolicName = StringUtil.replace(moduleName, '-', '.');
+
+		String propsUtil = StringBundler.concat(
+			"com.liferay.", bundleSymbolicName, ".util.ServiceProps");
+
+		Set<String> resourceActionModels = readResourceActionModels(
+			implDir.toString(), resourcesDir.toString(),
+			resourceActionsConfigs);
+
+		ModelHintsImpl moduleModelHintsImpl = new ModelHintsImpl();
+
+		moduleModelHintsImpl.setModelHintsConfigs(
+			new String[] {
+				"classpath*:META-INF/portal-model-hints.xml",
+				"META-INF/portal-model-hints.xml",
+				"classpath*:META-INF/ext-model-hints.xml",
+				"classpath*:META-INF/portlet-model-hints.xml",
+				String.valueOf(modelHintsFile)
+			});
+
+		moduleModelHintsImpl.afterPropertiesSet();
+
+		_threadLocalModelHints.set(moduleModelHintsImpl);
+
+		try {
+			System.err.println("Processing " + moduleDir.getFileName());
+
+			new ServiceBuilder(
+				apiDir.toString(), true, autoNamespaceTables,
+				"com.liferay.util.bean.PortletBeanLocatorUtil", 1, true,
+				databaseNameMaxLength, hbmFile.toString(), implDir.toString(),
+				incubationFeatures, serviceXmlPath.toString(),
+				String.valueOf(modelHintsFile), true, "", propsUtil,
+				readOnlyPrefixes, resourceActionModels, resourcesDir.toString(),
+				springFile.toString(), new String[] {"beans"},
+				sqlDir.toString(), "tables.sql", "indexes.sql", "sequences.sql",
+				null, testDirName, null, true);
+
+			Path apiModuleDir = apiDir.getParent(
+			).getParent(
+			).getParent();
+
+			Path relativePath = baseDirPath.relativize(
+				apiModuleDir.normalize());
+
+			String gradleProjectPath = StringUtil.replace(
+				relativePath.toString(), File.separatorChar, ':');
+
+			return ":" + gradleProjectPath + ":baseline";
+		}
+		catch (Exception exception) {
+			System.err.println(
+				StringBundler.concat(
+					"Error processing ", moduleDir, ": ",
+					exception.getMessage()));
+
+			throw exception;
+		}
+		finally {
+			_threadLocalModelHints.remove();
+		}
+	}
+
 	private static List<String> _processModuleServiceFiles(
 			Path baseDirPath, Map<String, String> arguments)
 		throws Exception {
@@ -2312,125 +2442,53 @@ public class ServiceBuilder {
 
 		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
 
-		List<Exception> exceptions = new ArrayList<>();
-		List<String> apiModulePaths = new ArrayList<>();
+		modelHintsUtil.setModelHints(
+			(ModelHints)Proxy.newProxyInstance(
+				ModelHints.class.getClassLoader(),
+				new Class<?>[] {ModelHints.class},
+				(proxy, method, args) -> method.invoke(
+					_threadLocalModelHints.get(), args)));
+
+		Runtime runtime = Runtime.getRuntime();
+
+		int threadCount = Math.min(
+			serviceXmlPaths.size(), runtime.availableProcessors());
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			threadCount);
+
+		List<Future<String>> futures = new ArrayList<>();
 
 		for (Path serviceXmlPath : serviceXmlPaths) {
-			Path moduleDir = serviceXmlPath.getParent();
+			futures.add(
+				executorService.submit(
+					() -> _processModuleServiceFile(
+						baseDirPath, serviceXmlPath, arguments,
+						readOnlyPrefixes, resourceActionsConfigs)));
+		}
 
-			String moduleName = String.valueOf(moduleDir.getFileName());
+		executorService.shutdown();
 
-			String buildGradleContent = new String(
-				Files.readAllBytes(moduleDir.resolve("build.gradle")),
-				StandardCharsets.UTF_8);
+		List<String> apiModulePaths = new ArrayList<>();
+		List<Exception> exceptions = new ArrayList<>();
 
-			Map<String, String> buildServiceProperties =
-				_parseBuildServiceProperties(buildGradleContent);
+		for (Future<String> future : futures) {
+			try {
+				String baselineTask = future.get();
 
-			String apiDirValue = buildServiceProperties.get("apiDir");
-
-			if (apiDirValue == null) {
-				String apiModuleName =
-					moduleName.substring(0, moduleName.length() - 8) + "-api";
-
-				apiDirValue = "../" + apiModuleName + "/src/main/java";
-			}
-
-			Path apiDir = moduleDir.resolve(apiDirValue);
-			Path implDir = moduleDir.resolve("src/main/java");
-			Path resourcesDir = moduleDir.resolve("src/main/resources");
-
-			boolean autoNamespaceTables = GetterUtil.getBoolean(
-				buildServiceProperties.get("autoNamespaceTables"), true);
-
-			int databaseNameMaxLength = GetterUtil.getInteger(
-				buildServiceProperties.get("databaseNameMaxLength"), 30);
-
-			String[] incubationFeatures = StringUtil.split(
-				buildServiceProperties.getOrDefault(
-					"incubationFeatures",
-					arguments.get("service.incubation.features")));
-
-			Path hbmFile = resourcesDir.resolve("META-INF/module-hbm.xml");
-			Path springFile = resourcesDir.resolve(
-				"META-INF/spring/module-spring.xml");
-			Path modelHintsFile = resourcesDir.resolve(
-				"META-INF/portlet-model-hints.xml");
-			Path sqlDir = resourcesDir.resolve("META-INF/sql");
-
-			String testDirValue = buildServiceProperties.get("testDir");
-
-			String testDirName = null;
-
-			if (testDirValue != null) {
-				Path testDir = moduleDir.resolve(testDirValue);
-
-				if (Files.exists(testDir)) {
-					testDirName = testDir.toString();
+				if (baselineTask != null) {
+					apiModulePaths.add(baselineTask);
 				}
 			}
+			catch (ExecutionException executionException) {
+				Throwable throwable = executionException.getCause();
 
-			String bundleSymbolicName = StringUtil.replace(
-				moduleName, '-', '.');
-
-			String propsUtil = StringBundler.concat(
-				"com.liferay.", bundleSymbolicName, ".util.ServiceProps");
-
-			Set<String> resourceActionModels = readResourceActionModels(
-				implDir.toString(), resourcesDir.toString(),
-				resourceActionsConfigs);
-
-			ModelHintsImpl moduleModelHintsImpl = new ModelHintsImpl();
-
-			moduleModelHintsImpl.setModelHintsConfigs(
-				new String[] {
-					"classpath*:META-INF/portal-model-hints.xml",
-					"META-INF/portal-model-hints.xml",
-					"classpath*:META-INF/ext-model-hints.xml",
-					"classpath*:META-INF/portlet-model-hints.xml",
-					String.valueOf(modelHintsFile)
-				});
-
-			moduleModelHintsImpl.afterPropertiesSet();
-
-			modelHintsUtil.setModelHints(moduleModelHintsImpl);
-
-			try {
-				System.err.println("Processing " + moduleDir.getFileName());
-
-				new ServiceBuilder(
-					apiDir.toString(), true, autoNamespaceTables,
-					"com.liferay.util.bean.PortletBeanLocatorUtil", 1, true,
-					databaseNameMaxLength, hbmFile.toString(),
-					implDir.toString(), incubationFeatures,
-					serviceXmlPath.toString(), String.valueOf(modelHintsFile),
-					true, "", propsUtil, readOnlyPrefixes, resourceActionModels,
-					resourcesDir.toString(), springFile.toString(),
-					new String[] {"beans"}, sqlDir.toString(), "tables.sql",
-					"indexes.sql", "sequences.sql", null, testDirName, null,
-					true);
-
-				Path apiModuleDir = apiDir.getParent(
-				).getParent(
-				).getParent();
-
-				Path relativePath = baseDirPath.relativize(
-					apiModuleDir.normalize());
-
-				String gradleProjectPath = StringUtil.replace(
-					relativePath.toString(), File.separatorChar, ':');
-
-				String baselineTask = ":" + gradleProjectPath + ":baseline";
-
-				apiModulePaths.add(baselineTask);
-			}
-			catch (Exception exception) {
-				System.err.println(
-					StringBundler.concat(
-						"Error processing ", moduleDir, ": ",
-						exception.getMessage()));
-
-				exceptions.add(exception);
+				if (throwable instanceof Exception) {
+					exceptions.add((Exception)throwable);
+				}
+				else {
+					exceptions.add(new Exception(throwable));
+				}
 			}
 		}
 
@@ -5247,27 +5305,6 @@ public class ServiceBuilder {
 		return properties;
 	}
 
-	private Configuration _getConfiguration() {
-		if (_configuration != null) {
-			return _configuration;
-		}
-
-		_configuration = new Configuration(Configuration.VERSION_2_3_33);
-
-		_configuration.setNumberFormat("computer");
-
-		DefaultObjectWrapperBuilder defaultObjectWrapperBuilder =
-			new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_33);
-
-		_configuration.setObjectWrapper(defaultObjectWrapperBuilder.build());
-
-		_configuration.setTemplateLoader(
-			new ClassTemplateLoader(ServiceBuilder.class, StringPool.SLASH));
-		_configuration.setTemplateUpdateDelayMilliseconds(Long.MAX_VALUE);
-
-		return _configuration;
-	}
-
 	private Map<String, Object> _getContext() throws Exception {
 		Map<String, Object> context = HashMapBuilder.<String, Object>put(
 			"apiPackagePath", _apiPackagePath
@@ -8017,9 +8054,7 @@ public class ServiceBuilder {
 
 		_currentTplName = name;
 
-		Configuration configuration = _getConfiguration();
-
-		Template template = configuration.getTemplate(name);
+		Template template = _configuration.getTemplate(name);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -8619,7 +8654,7 @@ public class ServiceBuilder {
 		"<beans[^>]*>");
 	private static final Pattern _buildServicePropertyPattern = Pattern.compile(
 		"(\\w+)\\s*=\\s*(?:\"([^\"]*)\"|([\\w]+))");
-	private static Configuration _configuration;
+	private static final Configuration _configuration;
 	private static final Pattern _dtdVersionPattern = Pattern.compile(
 		".*service-builder_([^\\.]+)\\.dtd");
 	private static final Pattern _getterPattern = Pattern.compile(
@@ -8631,6 +8666,61 @@ public class ServiceBuilder {
 	private static final ClassLoader _negativeCachingClassLoader;
 	private static final Pattern _setterPattern = Pattern.compile(
 		"public void set.*" + Pattern.quote("("));
+	private static final ThreadLocal<ModelHints> _threadLocalModelHints =
+		new ThreadLocal<>();
+
+	static {
+		Configuration configuration = new Configuration(
+			Configuration.VERSION_2_3_33);
+
+		configuration.setNumberFormat("computer");
+
+		DefaultObjectWrapperBuilder defaultObjectWrapperBuilder =
+			new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_33);
+
+		configuration.setObjectWrapper(defaultObjectWrapperBuilder.build());
+
+		configuration.setTemplateLoader(
+			new ClassTemplateLoader(ServiceBuilder.class, StringPool.SLASH));
+		configuration.setTemplateUpdateDelayMilliseconds(Long.MAX_VALUE);
+
+		_configuration = configuration;
+
+		ClassNotFoundException classNotFoundException =
+			new ClassNotFoundException() {
+
+				@Override
+				public Throwable fillInStackTrace() {
+					return this;
+				}
+
+			};
+
+		Set<String> missingClassNames = ConcurrentHashMap.newKeySet();
+
+		_negativeCachingClassLoader = new ClassLoader(
+			ServiceBuilder.class.getClassLoader()) {
+
+			@Override
+			public Class<?> loadClass(String name)
+				throws ClassNotFoundException {
+
+				if (missingClassNames.contains(name)) {
+					throw classNotFoundException;
+				}
+
+				try {
+					return super.loadClass(name);
+				}
+				catch (ClassNotFoundException classNotFoundException) {
+					missingClassNames.add(name);
+
+					throw classNotFoundException;
+				}
+			}
+
+		};
+	}
 
 	private String _apiDirName;
 	private String _apiPackagePath;
@@ -8725,42 +8815,5 @@ public class ServiceBuilder {
 	private final Map<String, List<Entity>> _uadApplicationEntities =
 		new HashMap<>();
 	private String _uadDirName;
-
-	static {
-		ClassNotFoundException classNotFoundException =
-			new ClassNotFoundException() {
-
-				@Override
-				public Throwable fillInStackTrace() {
-					return this;
-				}
-
-			};
-
-		Set<String> missingClassNames = ConcurrentHashMap.newKeySet();
-
-		_negativeCachingClassLoader = new ClassLoader(
-			ServiceBuilder.class.getClassLoader()) {
-
-			@Override
-			public Class<?> loadClass(String name)
-				throws ClassNotFoundException {
-
-				if (missingClassNames.contains(name)) {
-					throw classNotFoundException;
-				}
-
-				try {
-					return super.loadClass(name);
-				}
-				catch (ClassNotFoundException classNotFoundException2) {
-					missingClassNames.add(name);
-
-					throw classNotFoundException2;
-				}
-			}
-
-		};
-	}
 
 }

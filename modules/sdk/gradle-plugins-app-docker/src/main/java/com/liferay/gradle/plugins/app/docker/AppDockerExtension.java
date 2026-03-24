@@ -23,7 +23,6 @@ import java.util.concurrent.Callable;
 import org.gradle.api.Project;
 import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
-import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -53,18 +52,15 @@ public class AppDockerExtension {
 
 		};
 
-		_subprojects = CollectionUtils.filter(
-			project.getSubprojects(),
-			new Spec<Project>() {
+		_subprojects = project.getSubprojects();
 
-				@Override
-				public boolean isSatisfiedBy(Project project) {
-					Set<Project> subprojects = project.getSubprojects();
-
-					return subprojects.isEmpty();
-				}
-
-			});
+		_subprojects = _subprojects.stream(
+		).filter(
+			subproject -> subproject.getSubprojects(
+			).isEmpty()
+		).collect(
+			Collectors.toSet()
+		);
 
 		_imageTags.add(
 			new ExecStandardOutputCallable(

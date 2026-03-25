@@ -76,7 +76,7 @@ public class UserViewsFDSDataProvider implements FDSDataProvider<UserView> {
 		int end = Math.min(
 			fdsPagination.getEndPosition(), sortedDataSetEntries.size());
 
-		if (start >= sortedDataSetEntries.size()) {
+		if ((start >= sortedDataSetEntries.size()) || (start >= end)) {
 			return Collections.emptyList();
 		}
 

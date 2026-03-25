@@ -17,6 +17,7 @@ import com.liferay.bulk.rest.dto.v1_0.DeleteObjectBulkSelectionAction;
 import com.liferay.bulk.rest.dto.v1_0.DueDateObjectBulkSelectionAction;
 import com.liferay.bulk.rest.dto.v1_0.EditObjectCategoriesBulkSelectionAction;
 import com.liferay.bulk.rest.dto.v1_0.EditObjectTagsBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.MoveObjectBulkSelectionAction;
 import com.liferay.bulk.rest.dto.v1_0.PermissionObjectBulkSelectionAction;
 import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
 import com.liferay.bulk.rest.dto.v1_0.StatusObjectBulkSelectionAction;
@@ -444,6 +445,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return _copyObjectBulkSelectionAction;
 		}
+		else if (BulkAction.Type.MOVE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			return _moveObjectBulkSelectionAction;
+		}
 		else if (BulkAction.Type.
 					DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION.equals(
 						type)) {
@@ -564,6 +570,16 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return hashMapWrapper.put(
 				"objectEntryFolderId", copyBulkAction.getObjectEntryFolderId()
+			).build();
+		}
+		else if (BulkAction.Type.MOVE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			MoveObjectBulkSelectionAction moveBulkAction =
+				(MoveObjectBulkSelectionAction)bulkAction;
+
+			return hashMapWrapper.put(
+				"objectEntryFolderId", moveBulkAction.getObjectEntryFolderId()
 			).build();
 		}
 		else if (BulkAction.Type.
@@ -1138,6 +1154,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	@Reference
 	private Localization _localization;
+
+	@Reference(target = "(bulk.selection.action.key=move.object)")
+	private BulkSelectionAction<Object> _moveObjectBulkSelectionAction;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -66,10 +66,6 @@ public class FragmentServiceConfigurationFormRenderer
 		throws IOException {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			String portletId = _portal.getPortletId(
 				(PortletRequest)httpServletRequest.getAttribute(
 					JavaConstants.JAKARTA_PORTLET_REQUEST));
@@ -90,7 +86,9 @@ public class FragmentServiceConfigurationFormRenderer
 					_portal.getLiferayPortletResponse(
 						(PortletResponse)httpServletRequest.getAttribute(
 							JavaConstants.JAKARTA_PORTLET_RESPONSE)),
-					scope, themeDisplay));
+					scope,
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY)));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(

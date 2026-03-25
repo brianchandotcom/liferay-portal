@@ -59,6 +59,14 @@ public class DBCopyTablesProcess {
 	public DBCopyTablesProcess(
 		DataSource sourceDataSource, DataSource targetDataSource) {
 
+		this(null, sourceDataSource, targetDataSource);
+	}
+
+	public DBCopyTablesProcess(
+		String partitionName, DataSource sourceDataSource,
+		DataSource targetDataSource) {
+
+		_partitionName = partitionName;
 		_sourceDataSource = sourceDataSource;
 		_targetDataSource = targetDataSource;
 	}
@@ -82,7 +90,9 @@ public class DBCopyTablesProcess {
 				StringBundler.concat(
 					"Source table ", targetTableName, " has ",
 					sourceColumnNames.size(), " but target table name has ",
-					targetColumnNames.size(), " columns"));
+					targetColumnNames.size(), " columns",
+					(_partitionName == null) ? StringPool.BLANK :
+						" in partition " + _partitionName));
 		}
 		else if (sourceColumnNames.size() < targetColumnNames.size()) {
 			Set<String> sourceColumnNamesSet = new TreeSet<String>(
@@ -545,6 +555,7 @@ public class DBCopyTablesProcess {
 
 	private static final int _SQL_TYPE_ORACLE_BINARY_DOUBLE = 101;
 
+	private final String _partitionName;
 	private final Map<String, List<String>> _sourceColumnNamesMap =
 		new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 	private final Map<String, Integer> _sourceColumnsType = new HashMap<>();

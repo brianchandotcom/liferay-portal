@@ -38,6 +38,13 @@ public class CTClosureImplTest {
 			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@Test
+	public void testCTClosureEmpty() {
+		CTClosure ctClosure = new CTClosureImpl(1, Collections.emptyMap());
+
+		Assert.assertSame(Collections.emptyMap(), ctClosure.getRootPKsMap());
+	}
+
+	@Test
 	public void testCTClosureImpl() {
 		Node node1 = new Node(1, 1);
 		Node node2 = new Node(2, 2);
@@ -108,6 +115,36 @@ public class CTClosureImplTest {
 			Collections.emptyMap(),
 			ctClosure.getChildPKsMap(
 				node5.getClassNameId(), node5.getPrimaryKey()));
+
+		Assert.assertSame(
+			Collections.emptyMap(), ctClosure.getChildPKsMap(99, 99));
+
+		Assert.assertEquals(
+			Collections.singletonMap(
+				node1.getClassNameId(),
+				Collections.singletonList(node1.getPrimaryKey())),
+			ctClosure.getParentPKsMap(
+				node2.getClassNameId(), node2.getPrimaryKey()));
+
+		Assert.assertEquals(
+			Collections.singletonMap(
+				node2.getClassNameId(),
+				Collections.singletonList(node2.getPrimaryKey())),
+			ctClosure.getParentPKsMap(
+				node3.getClassNameId(), node3.getPrimaryKey()));
+
+		Assert.assertSame(
+			Collections.emptyMap(),
+			ctClosure.getParentPKsMap(
+				node1.getClassNameId(), node1.getPrimaryKey()));
+
+		Assert.assertSame(
+			Collections.emptyMap(),
+			ctClosure.getParentPKsMap(
+				node5.getClassNameId(), node5.getPrimaryKey()));
+
+		Assert.assertSame(
+			Collections.emptyMap(), ctClosure.getParentPKsMap(99, 99));
 
 		Assert.assertEquals(
 			StringBundler.concat(

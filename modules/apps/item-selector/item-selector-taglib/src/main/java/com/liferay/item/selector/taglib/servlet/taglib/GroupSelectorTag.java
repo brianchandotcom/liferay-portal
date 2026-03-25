@@ -135,7 +135,7 @@ public class GroupSelectorTag extends IncludeTag {
 			_getKeywords(httpServletRequest), startAndEnd[0], startAndEnd[1]);
 
 		if (groups == null) {
-			new ArrayList<>();
+			return new ArrayList<>();
 		}
 
 		return groups;

@@ -82,11 +82,6 @@ public class SiteNavigationMenuExportImportTest
 
 		_publishAllLayouts();
 
-		_siteNavigationMenuLocalService.
-			getSiteNavigationMenuByExternalReferenceCode(
-				_siteNavigationMenu.getExternalReferenceCode(),
-				_liveGroup.getGroupId());
-
 		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			_layout.getUuid(), _liveGroup.getGroupId(),
 			_layout.isPrivateLayout());
@@ -216,11 +211,6 @@ public class SiteNavigationMenuExportImportTest
 				new String[] {_siteNavigationMenu.getExternalReferenceCode()}));
 
 		_publishAllLayouts();
-
-		_siteNavigationMenuLocalService.
-			getSiteNavigationMenuByExternalReferenceCode(
-				_siteNavigationMenu.getExternalReferenceCode(),
-				_liveGroup.getGroupId());
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesLocalService.getPreferences(

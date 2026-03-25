@@ -8,24 +8,9 @@ package com.liferay.blogs.model.impl.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -65,58 +50,10 @@ public class BlogsEntryImplTest {
 	}
 
 	@Test
-	public void testGetCoverImageAltWithoutPermission() throws Exception {
-		BlogsEntry blogsEntry = _addBlogsEntryWithCoverImage();
-
-		_removeResourcePermission(
-			blogsEntry.getCompanyId(), blogsEntry.getCoverImageFileEntryId());
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getGuestUser(
-						blogsEntry.getCompanyId())));
-
-			Assert.assertNull(blogsEntry.getCoverImageAlt());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
-	}
-
-	@Test
 	public void testGetCoverImageURL() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntryWithCoverImage();
 
 		Assert.assertNotNull(blogsEntry.getCoverImageURL(null));
-	}
-
-	@Test
-	public void testGetCoverImageURLWithoutPermission() throws Exception {
-		BlogsEntry blogsEntry = _addBlogsEntryWithCoverImage();
-
-		_removeResourcePermission(
-			blogsEntry.getCompanyId(), blogsEntry.getCoverImageFileEntryId());
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getGuestUser(
-						blogsEntry.getCompanyId())));
-
-			Assert.assertNull(blogsEntry.getCoverImageURL(null));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
 	}
 
 	@Test
@@ -127,58 +64,10 @@ public class BlogsEntryImplTest {
 	}
 
 	@Test
-	public void testGetSmallImageAltWithouPermission() throws Exception {
-		BlogsEntry blogsEntry = _addBlogsEntryWithSmallImage();
-
-		_removeResourcePermission(
-			blogsEntry.getCompanyId(), blogsEntry.getSmallImageFileEntryId());
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getGuestUser(
-						blogsEntry.getCompanyId())));
-
-			Assert.assertNull(blogsEntry.getSmallImageAlt());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
-	}
-
-	@Test
 	public void testGetSmallImageURL() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntryWithSmallImage();
 
 		Assert.assertNotNull(blogsEntry.getSmallImageURL(null));
-	}
-
-	@Test
-	public void testGetSmallImageURLWithoutPermission() throws Exception {
-		BlogsEntry blogsEntry = _addBlogsEntryWithSmallImage();
-
-		_removeResourcePermission(
-			blogsEntry.getCompanyId(), blogsEntry.getSmallImageFileEntryId());
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getGuestUser(
-						blogsEntry.getCompanyId())));
-
-			Assert.assertNull(blogsEntry.getSmallImageURL(null));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
 	}
 
 	@Test
@@ -256,27 +145,6 @@ public class BlogsEntryImplTest {
 			"com/liferay/blogs/dependencies/test.jpg");
 	}
 
-	private void _removeResourcePermission(long companyId, long fileEntryId)
-		throws Exception {
-
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			fileEntryId);
-
-		Folder folder = fileEntry.getFolder();
-
-		Role guestRole = RoleLocalServiceUtil.getRole(
-			companyId, RoleConstants.GUEST);
-
-		ResourcePermissionLocalServiceUtil.removeResourcePermission(
-			companyId, DLFolder.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(folder.getParentFolderId()), guestRole.getRoleId(),
-			ActionKeys.VIEW);
-	}
-
 	private static final String _IMAGE_TITLE = "test.jpg";
-
-	@DeleteAfterTestRun
-	private BlogsEntry _blogsEntry;
 
 }

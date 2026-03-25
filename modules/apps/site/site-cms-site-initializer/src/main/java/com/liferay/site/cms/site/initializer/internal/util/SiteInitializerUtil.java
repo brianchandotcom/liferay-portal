@@ -11,20 +11,24 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.site.cms.site.initializer.util.RoleUtil;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.List;
@@ -79,6 +83,12 @@ public class SiteInitializerUtil {
 			ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 
 			siteInitializer.initialize(group.getGroupId());
+
+			_addResourcePermissions(
+				companyId, group.getGroupId(), user.getUserId());
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);
@@ -87,6 +97,17 @@ public class SiteInitializerUtil {
 
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	private static void _addResourcePermissions(
+			long companyId, long groupId, long userId)
+		throws Exception {
+
+		Role role = RoleUtil.getOrAddCMSAdministratorRole(companyId, userId);
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			companyId, Layout.class.getName(), ResourceConstants.SCOPE_GROUP,
+			String.valueOf(groupId), role.getRoleId(), ActionKeys.UPDATE);
 	}
 
 	private static User _getUser(long companyId) throws PortalException {

@@ -224,10 +224,10 @@ public class SiteNavigationMenuExportImportTest
 				"siteNavigationMenuExternalReferenceCode", StringPool.BLANK));
 		Assert.assertNull(
 			portletPreferences.getValue(
-				"siteNavigationMenuGroupExternalReferenceCode", null));
+				"rootMenuItemExternalReferenceCode", null));
 		Assert.assertNull(
 			portletPreferences.getValue(
-				"rootMenuItemExternalReferenceCode", null));
+				"siteNavigationMenuGroupExternalReferenceCode", null));
 	}
 
 	@Test
@@ -295,14 +295,13 @@ public class SiteNavigationMenuExportImportTest
 		String portletInstanceId, Portlet portlet, String portletPreferences) {
 
 		_portletPreferencesLocalService.addPortletPreferences(
-			_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, PortletKeys.PREFS_PLID_SHARED,
-			portletInstanceId, portlet, portletPreferences);
-
-		_portletPreferencesLocalService.addPortletPreferences(
 			_stagingGroup.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 			portletInstanceId, portlet, PortletConstants.DEFAULT_PREFERENCES);
+		_portletPreferencesLocalService.addPortletPreferences(
+			_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, PortletKeys.PREFS_PLID_SHARED,
+			portletInstanceId, portlet, portletPreferences);
 	}
 
 	private String _getPortletPreferencesXML(String name, String[] values) {

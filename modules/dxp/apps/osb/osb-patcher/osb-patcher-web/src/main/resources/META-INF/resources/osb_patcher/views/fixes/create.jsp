@@ -8,6 +8,8 @@
 <%@ include file="/osb_patcher/views/init.jsp" %>
 
 <%
+String patcherFixName = ParamUtil.getString(request, "patcherFixName");
+long patcherProjectVersionId = ParamUtil.getLong(request, "patcherProjectVersionId");
 String redirect = ParamUtil.getString(request, "redirect");
 %>
 
@@ -42,10 +44,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		</aui:select>
 
-		<aui:select label="project-version" name="patcherProjectVersionId" required="<%= true %>" />
+		<aui:select label="project-version" name="patcherProjectVersionId" required="<%= true %>" value="<%= patcherProjectVersionId %>" />
 
 		<div>
-			<aui:input label="content" name="patcherFixName" type="textarea" />
+			<aui:input label="content" name="patcherFixName" type="textarea" value="<%= patcherFixName %>" />
 
 			<react:component
 				module="{PopoverTooltip} from osb-patcher-web"
@@ -54,6 +56,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 						"label", LanguageUtil.get(request, "content")
 					).put(
 						"name", "patcherFixName"
+					).put(
+						"tickets", patcherFixName
 					).build()
 				%>'
 			/>
@@ -103,5 +107,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 			select,
 			<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject(themeDisplay.getCompanyId()) %>
 		);
+
+		var patcherProjectVersionId = '<%= patcherProjectVersionId %>';
+
+		if (patcherProjectVersionId > 0) {
+			A.one('#<portlet:namespace />patcherProjectVersionId').val(
+				patcherProjectVersionId
+			);
+		}
 	});
 </aui:script>

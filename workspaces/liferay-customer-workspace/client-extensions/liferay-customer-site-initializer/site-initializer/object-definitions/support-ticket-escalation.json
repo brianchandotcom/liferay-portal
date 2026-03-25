@@ -51,13 +51,13 @@
 		},
 		{
 			"DBType": "String",
-			"externalReferenceCode": "C_SUPPORT_TICKET_ESCALATION_ticketsIDs",
+			"externalReferenceCode": "C_SUPPORT_TICKET_ESCALATION_ticketIds",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Tickets ID's"
+				"en_US": "Ticket IDs"
 			},
-			"name": "ticketsIDs",
+			"name": "ticketIds",
 			"required": true,
 			"type": "String"
 		}

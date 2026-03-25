@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.PreupgradeVerifyDatabasePrivileges;
 import com.liferay.portal.verify.VerifyProcess;
@@ -60,10 +62,15 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		_db = DBManagerUtil.getDB();
 		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 			PortalInstancePool.getDefaultCompanyId());
+		_logCapture = LoggerTestUtil.configureLog4JLogger(
+			PreupgradeVerifyDatabasePrivileges.class.getName(),
+			LoggerTestUtil.OFF);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
+		_logCapture.close();
+
 		if (_safeCloseable != null) {
 			_safeCloseable.close();
 		}
@@ -369,6 +376,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	private static Connection _connection;
 	private static DataSource _dataSource;
 	private static DB _db;
+	private static LogCapture _logCapture;
 	private static SafeCloseable _safeCloseable;
 	private static DataSource _testUserDataSource;
 

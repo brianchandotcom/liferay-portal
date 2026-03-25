@@ -481,7 +481,8 @@ public class ClusterGeneralTest implements Serializable {
 		throws Exception {
 
 		SystemBundleUtil.callService(
-			"com.liferay.portal.feature.flag.FeatureFlagsBagProvider",
+			"com.liferay.feature.flag.web.internal.feature.flag." +
+				"FeatureFlagsBagProvider",
 			featureFlagsBagProvider -> {
 				ReflectionTestUtil.invoke(
 					featureFlagsBagProvider, "setEnabled",

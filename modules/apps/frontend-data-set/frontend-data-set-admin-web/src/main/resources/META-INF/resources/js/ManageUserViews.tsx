@@ -235,7 +235,7 @@ export default function ManageUserViews({
 				itemLabel: 'name',
 				items: [],
 				label: Liferay.Language.get('created-by'),
-				multiple: false,
+				multiple: true,
 				type: 'selection',
 			},
 			{
@@ -248,7 +248,7 @@ export default function ManageUserViews({
 				itemLabel: 'label',
 				items: [],
 				label: Liferay.Language.get('data-set'),
-				multiple: false,
+				multiple: true,
 				type: 'selection',
 			},
 			{

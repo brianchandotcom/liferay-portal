@@ -5,6 +5,7 @@
 
 package com.liferay.portal.feature.flag.model;
 
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.feature.flag.manager.FeatureFlagPreferencesManager;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,6 +27,10 @@ public class PreferenceAwareFeatureFlag extends FeatureFlagWrapper {
 
 	@Override
 	public boolean isEnabled() {
+		if (StartupHelperUtil.isUpgrading()) {
+			return super.isEnabled();
+		}
+
 		Boolean enabled = _enabled;
 
 		if (enabled == null) {

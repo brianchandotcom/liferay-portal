@@ -10,6 +10,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -90,20 +91,20 @@ public class ViewProjectsSectionDisplayContextTest
 			fdsActionDropdownItems.toString(), 6,
 			fdsActionDropdownItems.size());
 
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"pencil", "edit", "Edit", "get", fdsActionDropdownItems.get(0));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"view", "actionLink", "View", null, fdsActionDropdownItems.get(1));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"bell-on", "subscribe", "Watch Project", "post",
 			fdsActionDropdownItems.get(2));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"bell-off", "unsubscribe", "Stop Watching Project", "post",
 			fdsActionDropdownItems.get(3));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"users", "view-members", "View Members", null,
 			fdsActionDropdownItems.get(4));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"trash", "delete", "Delete", null, fdsActionDropdownItems.get(5));
 	}
 

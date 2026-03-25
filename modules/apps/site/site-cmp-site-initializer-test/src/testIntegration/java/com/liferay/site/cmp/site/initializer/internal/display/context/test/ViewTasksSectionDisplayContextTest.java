@@ -12,6 +12,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectDefinition;
@@ -180,7 +181,7 @@ public class ViewTasksSectionDisplayContextTest
 			fdsActionDropdownItems.toString(), 1,
 			fdsActionDropdownItems.size());
 
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			null, "workflow-transition", null, null,
 			fdsActionDropdownItems.get(0));
 
@@ -193,38 +194,38 @@ public class ViewTasksSectionDisplayContextTest
 			fdsActionDropdownItems.toString(), 10,
 			fdsActionDropdownItems.size());
 
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"pencil", "edit", "Edit", "get",
 			Collections.singletonMap(
 				"entryClassName", objectDefinition.getClassName()),
 			fdsActionDropdownItems.get(0));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"view", "actionLink", "View", null,
 			Collections.singletonMap(
 				"entryClassName", objectDefinition.getClassName()),
 			fdsActionDropdownItems.get(1));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"bell-on", "subscribe", "Watch Task", "post",
 			fdsActionDropdownItems.get(2));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"bell-off", "unsubscribe", "Stop Watching Task", "post",
 			fdsActionDropdownItems.get(3));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			null, "assign-to", "Assign to...", "get",
 			Collections.singletonMap(
 				"entryClassName", objectDefinition.getClassName()),
 			fdsActionDropdownItems.get(4));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"trash", "delete", "Delete", null,
 			Collections.singletonMap(
 				"entryClassName", objectDefinition.getClassName()),
 			fdsActionDropdownItems.get(5));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"view", "actionLinkWorkflowTask", "View", null,
 			Collections.singletonMap(
 				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN),
 			fdsActionDropdownItems.get(6));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			null, "assignToMeWorkflowTask", "Assign to Me", null,
 			HashMapBuilder.<String, Object>put(
 				"embedded.assignedToMe", false
@@ -234,7 +235,7 @@ public class ViewTasksSectionDisplayContextTest
 				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
 			fdsActionDropdownItems.get(7));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			null, "assignToWorkflowTask", "Assign to...", null,
 			HashMapBuilder.<String, Object>put(
 				"embedded.completed", false
@@ -242,7 +243,7 @@ public class ViewTasksSectionDisplayContextTest
 				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
 			fdsActionDropdownItems.get(8));
-		assertFDSActionDropdownItem(
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"date-time", "updateDueDateWorkflowTask", "Update Due Date", null,
 			HashMapBuilder.<String, Object>put(
 				"embedded.completed", false

@@ -26,10 +26,10 @@ import '../css/DataSets.scss';
 
 interface IManageUserViewsProps {
 	currentURL: string;
-	getUserViewsURL: string;
 	namespace: string;
 	portletId: string;
 	systemDataSetEntries: Array<{name: string; title: string}>;
+	userViewsURL: string;
 }
 
 interface IDataSetLabelsContextValue {
@@ -93,10 +93,10 @@ const DataSetNameRenderer = ({itemData}: {itemData: {fdsName?: string}}) => {
 
 export default function ManageUserViews({
 	currentURL,
-	getUserViewsURL,
 	namespace,
 	portletId,
 	systemDataSetEntries = [],
+	userViewsURL,
 }: IManageUserViewsProps) {
 	const apiURL = getDataSetSnapshotResourceURL();
 
@@ -239,7 +239,7 @@ export default function ManageUserViews({
 				type: 'selection',
 			},
 			{
-				apiURL: getUserViewsURL,
+				apiURL: userViewsURL,
 				autocompleteEnabled: true,
 				entityFieldType: 'string',
 				id: 'fdsName',
@@ -258,7 +258,7 @@ export default function ManageUserViews({
 				type: 'dateRange',
 			},
 		],
-		[getUserViewsURL]
+		[userViewsURL]
 	);
 
 	return (

@@ -76,6 +76,10 @@ public class DBCopyTablesProcessTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		if (System.getProperty("database.postgresql.driver") == null) {
+			return;
+		}
+
 		AutoBatchPreparedStatementUtil.stop();
 
 		DataSourceFactoryUtil.destroyDataSource(_targetDataSource);

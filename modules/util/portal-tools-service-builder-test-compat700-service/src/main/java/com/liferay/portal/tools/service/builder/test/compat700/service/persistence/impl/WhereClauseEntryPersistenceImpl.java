@@ -1485,4 +1485,4 @@ public class WhereClauseEntryPersistenceImpl
 		WhereClauseEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1405639443
+// LIFERAY-SERVICE-BUILDER-HASH:-1372795249

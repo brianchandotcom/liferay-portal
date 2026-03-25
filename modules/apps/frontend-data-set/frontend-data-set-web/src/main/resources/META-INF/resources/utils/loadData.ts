@@ -11,7 +11,7 @@ import {
 	CUSTOM_FIELD_NAME_PREFIX,
 	DEFAULT_FETCH_HEADERS,
 } from '../constants';
-import {TLoadDataParams, TSort} from './types';
+import {ILoadDataArgs, TSort} from './types';
 
 function applyCustomFieldOdataFormat(key: string) {
 	return key.startsWith(CUSTOM_FIELD_NAME_PREFIX)
@@ -56,7 +56,7 @@ export async function loadData({
 	page = 1,
 	searchParam,
 	sorts,
-}: TLoadDataParams) {
+}: ILoadDataArgs) {
 	const fullUrl = apiURL.startsWith('/')
 		? Liferay.ThemeDisplay.getPortalURL() +
 			Liferay.ThemeDisplay.getPathContext() +

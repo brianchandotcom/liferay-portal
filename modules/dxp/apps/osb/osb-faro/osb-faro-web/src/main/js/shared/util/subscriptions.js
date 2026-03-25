@@ -350,6 +350,7 @@ export function formatPlanData(subscriptionIMap) {
 export function isBasicPlan(currentPlan) {
 	return (
 		PLAN_TYPES[currentPlan.name] === 'basic' ||
+		PLAN_TYPES[currentPlan.name] === 'dataPlatform' ||
 		PLAN_TYPES[currentPlan.name] === 'lxcPro'
 	);
 }

@@ -9,7 +9,7 @@ import ClayModal from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {Action} from './FolderItemSelectorModalContent';
+import {FolderAction} from './FolderItemSelectorModalContent';
 
 export type Option = 'keep' | 'replace';
 
@@ -19,7 +19,7 @@ export default function DuplicatedAssetFolderNamesModalContent({
 	itemData,
 	onContinueClick,
 }: {
-	action: Action;
+	action: FolderAction;
 	closeModal: () => void;
 	itemData: ItemData;
 	onContinueClick: (option: Option) => void;

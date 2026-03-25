@@ -555,7 +555,9 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 	}
 
-	private Map<String, Object> _processFieldNameValueMap(Map<String, Object> map) {
+	private Map<String, Object> _processFieldNameValueMap(
+		Map<String, Object> map) {
+
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
 			entry.setValue(_processValue(entry.getValue()));
 		}
@@ -564,7 +566,15 @@ public class BatchEngineImportTaskExecutorImpl
 	}
 
 	private Object _processValue(Object value) {
-		if (value instanceof String valueString) {
+		if (value instanceof List) {
+			List<Object> list = (List<Object>)value;
+
+			list.replaceAll(this::_processValue);
+		}
+		else if (value instanceof Map) {
+			_processFieldNameValueMap((Map<String, Object>)value);
+		}
+		else if (value instanceof String valueString) {
 			for (BatchEngineContentProcessor batchEngineContentProcessor :
 					_batchEngineContentProcessors) {
 
@@ -572,14 +582,6 @@ public class BatchEngineImportTaskExecutorImpl
 			}
 
 			return valueString;
-		}
-		else if (value instanceof Map) {
-			_processFieldNameValueMap((Map<String, Object>)value);
-		}
-		else if (value instanceof List) {
-			List<Object> list = (List<Object>)value;
-
-			list.replaceAll(this::_processValue);
 		}
 
 		return value;

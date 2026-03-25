@@ -12,12 +12,17 @@ import {openActionNotAllowedModal} from '../../../common/utils/openActionNotAllo
 import FolderItemSelectorModalContent from '../../modal/FolderItemSelectorModalContent';
 import {AdditionalProps} from '../AssetsFDSPropsTransformer';
 
-const copyBulkAction = ({
+/**
+ * Common logic for folder item selector bulk actions (move/copy).
+ */
+const folderItemSelectorBulkAction = ({
+	action,
 	additionalProps,
 	apiURL,
 	dataSetId,
 	selectedData,
 }: {
+	action: 'copy' | 'move';
 	additionalProps: AdditionalProps;
 	apiURL?: string;
 	dataSetId?: string;
@@ -41,8 +46,9 @@ const copyBulkAction = ({
 	);
 
 	if (hasFileOrFolder && hasContent) {
+		const actionType = action === 'move' ? 'move' : 'copy';
 		const message = Liferay.Language.get(
-			'assets-with-different-content-types-cannot-be-copied-together.-select-assets-with-the-same-content-type-and-try-again'
+			`assets-with-different-content-types-cannot-be-${actionType}-together.-select-assets-with-the-same-content-type-and-try-again`
 		);
 
 		return openActionNotAllowedModal({message});
@@ -54,7 +60,7 @@ const copyBulkAction = ({
 
 		FolderItemSelectorModalContent,
 		{
-			action: 'copy',
+			action,
 			apiURL,
 			assetLibraries: additionalProps.candidateAssetLibraries,
 			dataSetId,
@@ -77,4 +83,4 @@ const copyBulkAction = ({
 	);
 };
 
-export default copyBulkAction;
+export default folderItemSelectorBulkAction;

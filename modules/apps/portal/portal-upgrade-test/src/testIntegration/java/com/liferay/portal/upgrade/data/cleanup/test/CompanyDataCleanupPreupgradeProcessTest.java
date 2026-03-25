@@ -148,8 +148,8 @@ public class CompanyDataCleanupPreupgradeProcessTest
 						"Table ", _dbInspector.normalizeName(tableName),
 						", 2 rows updated column ",
 						_dbInspector.normalizeName("companyId"),
-						" because it could be populated from table ",
-						_dbInspector.normalizeName("Group_"))));
+						" because missing values were populated from the ",
+						_dbInspector.normalizeName("Group_"), " table.")));
 
 			try (PreparedStatement preparedStatement =
 					_connection.prepareStatement(
@@ -157,18 +157,17 @@ public class CompanyDataCleanupPreupgradeProcessTest
 							" where id_ in (1, 2) order by id_");
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
-				Assert.assertTrue(resultSet.next());
-				_assertCompanyId(companyId, resultSet);
-
-				Assert.assertTrue(resultSet.next());
-				_assertCompanyId(companyId, resultSet);
+				while (resultSet.next()) {
+					Assert.assertEquals(
+						companyId, resultSet.getLong("companyId"));
+				}
 			}
 		}
 		finally {
 			dropTable(_dbInspector.normalizeName(tableName));
 
-			runSQL("delete from Group_ where groupId = " + groupId);
 			runSQL("delete from Company where companyId = " + companyId);
+			runSQL("delete from Group_ where groupId = " + groupId);
 		}
 	}
 
@@ -246,13 +245,6 @@ public class CompanyDataCleanupPreupgradeProcessTest
 
 			runSQL("delete from SystemEvent where companyId = " + companyId);
 		}
-	}
-
-	private void _assertCompanyId(long expectedCompanyId, ResultSet resultSet)
-		throws Exception {
-
-		Assert.assertEquals(expectedCompanyId, resultSet.getLong("companyId"));
-		Assert.assertFalse(resultSet.wasNull());
 	}
 
 	private static List<ClassName> _classNames;

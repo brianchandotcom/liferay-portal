@@ -117,16 +117,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		TomcatNode tomcatNode3 = _startTomcatNode();
 
-		long timestamp = tomcatNode3.syncExecute(
-			() -> {
-				_testFreeTierLicense();
-
-				Method method = findMethod(
-					PortalClassLoaderUtil.getClassLoader(),
-					getProperty("timestamp.method"));
-
-				return (long)method.invoke(null);
-			});
+		tomcatNode3.syncExecute(this::_testFreeTierLicense);
 
 		Future<String> messageFuture1 = _testConsoleMessageListener.register(
 			tomcatNode1.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
@@ -139,7 +130,8 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
 		TomcatNode tomcatNode4 = _startTomcatNode(
-			_getClusterExecutable(timestamp));
+			_getClusterExecutable(
+				tomcatNode3.syncExecute(this::_getTimeStamp)));
 
 		Future<String> messageFuture4 = _testConsoleMessageListener.register(
 			tomcatNode4.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
@@ -152,33 +144,10 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		_testConsoleMessageListener.assertMessageListened(messageFuture3);
 		_testConsoleMessageListener.assertMessageListened(messageFuture4);
 
-		tomcatNode1.syncExecute(
-			() -> {
-				deployEnterprisePortalLicense(Time.HOUR);
-
-				return null;
-			});
-
-		tomcatNode2.syncExecute(
-			() -> {
-				deployEnterprisePortalLicense(Time.HOUR);
-
-				return null;
-			});
-
-		tomcatNode3.syncExecute(
-			() -> {
-				deployEnterprisePortalLicense(Time.HOUR);
-
-				return null;
-			});
-
-		tomcatNode4.syncExecute(
-			() -> {
-				deployEnterprisePortalLicense(Time.HOUR);
-
-				return null;
-			});
+		tomcatNode1.syncExecute(this::_deployEnterpriseLicense);
+		tomcatNode2.syncExecute(this::_deployEnterpriseLicense);
+		tomcatNode3.syncExecute(this::_deployEnterpriseLicense);
+		tomcatNode4.syncExecute(this::_deployEnterpriseLicense);
 
 		try {
 			tomcatNode4.wait(6L, TimeUnit.MINUTES);
@@ -189,33 +158,10 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			Assert.assertTrue(exception instanceof TimeoutException);
 		}
 
-		tomcatNode1.syncExecute(
-			() -> {
-				assertPortalLicenseRegistered();
-
-				return null;
-			});
-
-		tomcatNode2.syncExecute(
-			() -> {
-				assertPortalLicenseRegistered();
-
-				return null;
-			});
-
-		tomcatNode3.syncExecute(
-			() -> {
-				assertPortalLicenseRegistered();
-
-				return null;
-			});
-
-		tomcatNode4.syncExecute(
-			() -> {
-				assertPortalLicenseRegistered();
-
-				return null;
-			});
+		tomcatNode1.syncExecute(this::_assertPortalLicenseRegistered);
+		tomcatNode2.syncExecute(this::_assertPortalLicenseRegistered);
+		tomcatNode3.syncExecute(this::_assertPortalLicenseRegistered);
+		tomcatNode4.syncExecute(this::_assertPortalLicenseRegistered);
 	}
 
 	@Test
@@ -230,16 +176,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		TomcatNode tomcatNode3 = _startTomcatNode();
 
-		long timestamp = tomcatNode3.syncExecute(
-			() -> {
-				_testFreeTierLicense();
-
-				Method method = findMethod(
-					PortalClassLoaderUtil.getClassLoader(),
-					getProperty("timestamp.method"));
-
-				return (long)method.invoke(null);
-			});
+		tomcatNode3.syncExecute(this::_testFreeTierLicense);
 
 		Future<String> messageFuture1 = _testConsoleMessageListener.register(
 			tomcatNode1.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
@@ -252,7 +189,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
 		TomcatNode.ClusterExecutable<Serializable> clusterExecutable =
-			_getClusterExecutable(timestamp);
+			_getClusterExecutable(tomcatNode3.syncExecute(this::_getTimeStamp));
 
 		TomcatNode tomcatNode4 = _startTomcatNode(clusterExecutable);
 		TomcatNode tomcatNode5 = _startTomcatNode(clusterExecutable);
@@ -330,6 +267,18 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		_testConsoleMessageListener.assertMessageListened(messageFuture3);
 	}
 
+	private Serializable _assertPortalLicenseRegistered() throws Exception {
+		assertPortalLicenseRegistered();
+
+		return null;
+	}
+
+	private Serializable _deployEnterpriseLicense() throws Exception {
+		deployEnterprisePortalLicense(Time.HOUR);
+
+		return null;
+	}
+
 	private TomcatNode.ClusterExecutable<Serializable> _getClusterExecutable(
 		long timestamp) {
 
@@ -344,6 +293,14 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 			return null;
 		};
+	}
+
+	private long _getTimeStamp() throws Exception {
+		Method method = findMethod(
+			PortalClassLoaderUtil.getClassLoader(),
+			getProperty("timestamp.method"));
+
+		return (long)method.invoke(null);
 	}
 
 	@SafeVarargs
@@ -396,9 +353,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		assertLicensePropertiesExisted(getPortalProductId());
 
-		assertPortalLicenseRegistered();
-
-		return null;
+		return _assertPortalLicenseRegistered();
 	}
 
 	private static final String _CONSOLE_KEY_BEYOND_TEMPORARY_NODE =

@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Asset Categories API
 Bundle-SymbolicName: com.liferay.asset.categories.api
 Bundle-Version: 3.1.9
-Export-Package: com.liferay.asset.categories.configuration
+Export-Package:\
+	com.liferay.asset.categories.configuration,\
+	com.liferay.asset.categories.thread.local

@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.feature.flag.manager;
+package com.liferay.feature.flag.web.internal.manager;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -14,9 +13,13 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortalPreferencesWrapper;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Drew Brokke
  */
+@Component(service = FeatureFlagPreferencesManager.class)
 public class FeatureFlagPreferencesManager {
 
 	public Boolean isEnabled(long companyId, String key) {
@@ -59,7 +62,7 @@ public class FeatureFlagPreferencesManager {
 		return portalPreferencesWrapper.getPortalPreferencesImpl();
 	}
 
-	@BeanReference(type = PortalPreferencesLocalService.class)
+	@Reference
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 }

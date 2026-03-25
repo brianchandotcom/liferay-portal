@@ -4051,7 +4051,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		);
 
 		let apiCalls = 0;
-		let apiUrl = '';
+		let apiURL = '';
 
 		page.on('request', (request) => {
 			if (
@@ -4061,7 +4061,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				request.method() === 'GET'
 			) {
 				apiCalls++;
-				apiUrl = request.url();
+				apiURL = request.url();
 			}
 		});
 
@@ -4080,7 +4080,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		);
 
 		expect(apiCalls).toBe(1);
-		expect(apiUrl).not.toContain('pageSize=-1');
+		expect(apiURL).not.toContain('pageSize=-1');
 	});
 
 	test('verify that its not possible to paste file on richText field', async ({

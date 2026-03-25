@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'd0ac054fdacb791f08677a96c3d447da466604c5d44f04db0be4d424c91a5b82',
+	hash: '8f7ad233a79e46a050110ae46d6c75b86290020668579e6f8022e6938752311f',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -158,7 +158,7 @@ module.exports = {
 			'react-flow-renderer',
 			'react-helmet',
 			'graphiql',
-			'graphiql/graphiql.css',
+			'graphiql/style.css',
 			'axe-core',
 			'clipboard',
 			'cropperjs',

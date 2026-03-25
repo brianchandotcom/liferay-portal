@@ -7,6 +7,7 @@ import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
+import URLConstants from 'shared/util/url-constants';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
 import {ProjectStates} from 'shared/util/constants';
 import {PropTypes} from 'prop-types';
@@ -22,6 +23,7 @@ export default class WorkspaceListItem extends React.Component {
 		corpProjectName: PropTypes.string,
 		disabled: PropTypes.bool,
 		groupId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+		hasLimitReached: PropTypes.bool,
 		history: PropTypes.object,
 		href: PropTypes.string,
 		isJoinableProjects: PropTypes.bool,
@@ -122,7 +124,7 @@ export default class WorkspaceListItem extends React.Component {
 
 	renderAction() {
 		const {
-			props: {isJoinableProjects},
+			props: {hasLimitReached, isJoinableProjects},
 			state: {projectState}
 		} = this;
 
@@ -141,6 +143,20 @@ export default class WorkspaceListItem extends React.Component {
 				>
 					{Liferay.Language.get('activate')}
 				</ClayButton>
+			);
+		}
+
+		if (hasLimitReached) {
+			return (
+				<ClayLink
+					button
+					className='button-root btn btn-secondary ml-3'
+					href={URLConstants.ContactSales}
+					small
+					target='_blank'
+				>
+					{Liferay.Language.get('contact-sales')}
+				</ClayLink>
 			);
 		}
 
@@ -189,7 +205,7 @@ export default class WorkspaceListItem extends React.Component {
 
 	renderMessage() {
 		const {
-			props: {accountName, isJoinableProjects, planInfo},
+			props: {accountName, hasLimitReached, isJoinableProjects, planInfo},
 			state: {projectState}
 		} = this;
 
@@ -210,6 +226,16 @@ export default class WorkspaceListItem extends React.Component {
 							'workspace-has-been-deactivated.-please-click-activate-to-reactivate'
 						)}
 					</div>
+				</div>
+			);
+		}
+
+		if (hasLimitReached) {
+			return (
+				<div className='workspace-info text-secondary'>
+					{Liferay.Language.get(
+						'access-to-liferay-data-platform-has-been-restricted-because-your-workspace-has-reached-the-known-individuals-or-page-view-limit-please-contact-sales-to-proceed'
+					)}
 				</div>
 			);
 		}
@@ -261,7 +287,14 @@ export default class WorkspaceListItem extends React.Component {
 
 	render() {
 		const {
-			props: {className, disabled, href, isJoinableProjects, name},
+			props: {
+				className,
+				disabled,
+				hasLimitReached,
+				href,
+				isJoinableProjects,
+				name
+			},
 			state: {loading, projectState}
 		} = this;
 
@@ -281,14 +314,23 @@ export default class WorkspaceListItem extends React.Component {
 		const contentClasses = getCN('button-root', 'workspace-link', {
 			'border-button': !isJoinableProjects,
 			'request-workspace': isJoinableProjects,
+			'workspace-limit-reached': hasLimitReached,
 			'workspace-unavailable': !available || deactivated
 		});
 
-		const buttonAction = available
-			? {href}
-			: {onClick: this.handleGetProjectState};
+		const buttonAction = () => {
+			if (available && !hasLimitReached) {
+				return {href};
+			}
 
-		const Button = href ? ClayLink : ClayButton;
+			if (hasLimitReached) {
+				return {};
+			}
+
+			return {onClick: this.handleGetProjectState};
+		};
+
+		const Button = href && !hasLimitReached ? ClayLink : ClayButton;
 
 		return (
 			<li className={classes} key={name}>
@@ -300,7 +342,7 @@ export default class WorkspaceListItem extends React.Component {
 						className={contentClasses}
 						disabled={disabled || loading}
 						displayType='unstyled'
-						{...buttonAction}
+						{...buttonAction()}
 					>
 						{this.renderContent()}
 					</Button>

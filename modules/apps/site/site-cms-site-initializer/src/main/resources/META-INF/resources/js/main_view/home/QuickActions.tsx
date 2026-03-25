@@ -4,7 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {navigate} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React, {MouseEvent} from 'react';
 
 import {AssetLibrary} from '../../common/types/AssetLibrary';
@@ -65,6 +65,10 @@ export default function QuickActions({
 					>
 						<button
 							className="btn flex-fill pb-3 pl-4 pr-4 pt-3 quick-action text-left w-100"
+							data-canonical-name={sub(
+								Liferay.Language.get('quick-action-x'),
+								quickAction.title
+							)}
 							onClick={(event) =>
 								handleActionClick(event, quickAction)
 							}

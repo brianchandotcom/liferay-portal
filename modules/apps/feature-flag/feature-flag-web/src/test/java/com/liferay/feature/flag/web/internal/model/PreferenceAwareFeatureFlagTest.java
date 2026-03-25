@@ -5,9 +5,7 @@
 
 package com.liferay.feature.flag.web.internal.model;
 
-import com.liferay.portal.feature.flag.manager.FeatureFlagPreferencesManager;
-import com.liferay.portal.feature.flag.model.FeatureFlagImpl;
-import com.liferay.portal.feature.flag.model.PreferenceAwareFeatureFlag;
+import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

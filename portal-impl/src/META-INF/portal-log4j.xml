@@ -77,7 +77,7 @@
 		<Logger level="ERROR" name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.cluster" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.dao.db.BaseDBProcess" />
-		<Logger level="WARN" name="com.liferay.portal.kernel.dao.db.DuplicateUniqueFinderRowsCleaner" />
+		<Logger level="INFO" name="com.liferay.portal.kernel.dao.db.DuplicateUniqueFinderRowsCleaner" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.dao.orm.QueryUtil" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil" />

@@ -10,6 +10,8 @@ import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
 import {StickerConfig} from '../../../common/types/StickerConfig';
 import {openFindAndReplaceModal} from './openFindAndReplaceModal';
 
+const EXPIRED_STATUS_CODE = 3;
+
 export async function handleFindAndReplace({
 	availableLocales,
 	dataSetId,
@@ -41,7 +43,7 @@ export async function handleFindAndReplace({
 	openFindAndReplaceModal({
 		availableLocales,
 		dataSetId,
-		fdsItems,
+		fdsItems: normalizeFdsItems(fdsItems),
 		search: normalizeSearch(search),
 		stickerConfig,
 	});
@@ -59,6 +61,12 @@ function getSearchFromURL(dataSetId: string): string | null {
 	}
 
 	return config.q || null;
+}
+
+function normalizeFdsItems(fdsItems: ISearchAssetObjectEntry[]) {
+	return fdsItems.filter(
+		(item) => item.embedded.status.code !== EXPIRED_STATUS_CODE
+	);
 }
 
 function normalizeSearch(search: string): string {

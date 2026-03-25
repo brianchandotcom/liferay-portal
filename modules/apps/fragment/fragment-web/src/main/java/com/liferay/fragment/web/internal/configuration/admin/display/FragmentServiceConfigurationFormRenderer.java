@@ -66,6 +66,10 @@ public class FragmentServiceConfigurationFormRenderer
 		throws IOException {
 
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/fragment_service_configuration.jsp");
+
 			String portletId = _portal.getPortletId(
 				(PortletRequest)httpServletRequest.getAttribute(
 					JavaConstants.JAKARTA_PORTLET_REQUEST));
@@ -89,10 +93,6 @@ public class FragmentServiceConfigurationFormRenderer
 					scope,
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY)));
-
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/fragment_service_configuration.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

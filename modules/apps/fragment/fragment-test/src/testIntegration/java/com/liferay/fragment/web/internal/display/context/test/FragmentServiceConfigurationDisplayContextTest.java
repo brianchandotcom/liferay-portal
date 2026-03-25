@@ -159,11 +159,6 @@ public class FragmentServiceConfigurationDisplayContextTest {
 			ContentLayoutTestUtil.getMockHttpServletRequest(
 				_company, _group, _layout);
 
-		mockHttpServletRequest.setRequestURI(StringPool.SLASH);
-
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			new MockLiferayPortletRenderRequest(mockHttpServletRequest);
-
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_CONFIG,
 			ProxyUtil.newProxyInstance(
@@ -178,10 +173,11 @@ public class FragmentServiceConfigurationDisplayContextTest {
 				}));
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_REQUEST,
-			mockLiferayPortletRenderRequest);
+			new MockLiferayPortletRenderRequest(mockHttpServletRequest));
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
+		mockHttpServletRequest.setRequestURI(StringPool.SLASH);
 
 		return mockHttpServletRequest;
 	}

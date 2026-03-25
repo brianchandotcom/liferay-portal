@@ -12,6 +12,10 @@
 	title="error"
 />
 
+<%
+String addPatcherFixWindow = null;
+%>
+
 <liferay-ui:error exception="<%= PatcherScanException.class %>">
 
 	<%
@@ -33,6 +37,17 @@
 			<br /><br />
 
 			<liferay-ui:message arguments="<%= tickets %>" key="there-was-no-match-found-in-our-fix-catalog-for-the-following-fixes-x" />
+
+			<portlet:renderURL var="addPatcherFixURL">
+				<portlet:param name="mvcRenderCommandName" value="/patcher/add_fixes" />
+				<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(arguments[0]) %>" />
+				<portlet:param name="patcherProjectVersionId" value="<%= String.valueOf(arguments[1]) %>" />
+				<portlet:param name="patcherFixName" value="<%= tickets %>" />
+			</portlet:renderURL>
+
+			<%
+			addPatcherFixWindow = "window.open('" + HtmlUtil.escapeJS(addPatcherFixURL) + "');";
+			%>
 
 			<c:if test="<%= (arguments.length > 3) && (arguments[3] instanceof List) %>">
 				<br /><br />
@@ -88,6 +103,16 @@
 		</c:otherwise>
 	</c:choose>
 </liferay-ui:error>
+
+<c:if test="<%= Validator.isNotNull(addPatcherFixWindow) %>">
+	<aui:button-row>
+		<clay:button
+			displayType="primary"
+			label='<%= LanguageUtil.get(request, "create-missing-fixes") %>'
+			onClick="<%= addPatcherFixWindow %>"
+		/>
+	</aui:button-row>
+</c:if>
 
 <liferay-ui:error exception="<%= PortalException.class %>">
 

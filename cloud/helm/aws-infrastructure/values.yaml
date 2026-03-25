@@ -28,6 +28,8 @@ orphanOnDelete: false
 overlay: {}
 search:
     elasticsearch:
+        enabled: false
+        nodeCount: 1
         podSecurityContext:
             fsGroup: 1000
             runAsGroup: 1000
@@ -42,6 +44,8 @@ search:
                     -   ALL
             privileged: false
             readOnlyRootFilesystem: true
+        version: 8.12.0
+        volumeSize: 10Gi
     opensearch:
         autoSoftwareUpdateEnabled: true
         engineVersion: OpenSearch_2.15

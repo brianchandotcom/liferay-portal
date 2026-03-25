@@ -29,7 +29,9 @@ function getFirstDayOfWeek(
 	return FIRST_DAY_OF_WEEK_MAP[locale] ?? 0;
 }
 
-function getWeekdaysShort(locale = Liferay.ThemeDisplay.getBCP47LanguageId()) {
+function getWeekdaysShort(
+	locale = Liferay.ThemeDisplay.getBCP47LanguageId()
+): readonly string[] {
 	if (locale in WEEKDAYS_SHORT_MAP) {
 		return WEEKDAYS_SHORT_MAP[locale as keyof typeof WEEKDAYS_SHORT_MAP];
 	}

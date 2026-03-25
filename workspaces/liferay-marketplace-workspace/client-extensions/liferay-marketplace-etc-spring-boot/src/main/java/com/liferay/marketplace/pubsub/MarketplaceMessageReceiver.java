@@ -15,6 +15,7 @@ import com.liferay.headless.admin.user.client.custom.field.CustomValue;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
@@ -43,6 +44,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
+
+import org.springframework.http.HttpStatus;
 
 /**
  * @author Caleb Hall
@@ -73,7 +76,11 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			if (Objects.equals(
 					_topicName,
 					MarketplaceConstants.
-						PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_CREATE)) {
+						PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_CREATE) ||
+				Objects.equals(
+					_topicName,
+					MarketplaceConstants.
+						PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_UPDATE)) {
 
 				com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
 					koroneikiAccount =
@@ -83,22 +90,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 									"account"
 								).toString());
 
-				_processKoroneikiAccountCreate(koroneikiAccount);
-			}
-			else if (Objects.equals(
-						_topicName,
-						MarketplaceConstants.
-							PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_UPDATE)) {
-
-				com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
-					koroneikiAccount =
-						com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
-							Account.toDTO(
-								jsonObject.getJSONObject(
-									"account"
-								).toString());
-
-				_processKoroneikiAccountUpdate(koroneikiAccount);
+				_processKoroneikiAccount(ackReplyConsumer, koroneikiAccount);
 			}
 			else if (Objects.equals(
 						_topicName,
@@ -209,39 +201,82 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			PostalAddress.class);
 	}
 
-	private void _processKoroneikiAccountCreate(
+	private UserAccount _getUserAccount(String emailAddress) throws Exception {
+		Page<UserAccount> userAccountsPage =
+			_marketplaceService.getUserAccountsPage(
+				"emailAddress eq '" + emailAddress + "'", Pagination.of(1, 1),
+				"", "");
+
+		for (UserAccount userAccount : userAccountsPage.getItems()) {
+			if (Objects.equals(emailAddress, userAccount.getEmailAddress())) {
+				return userAccount;
+			}
+		}
+
+		return null;
+	}
+
+	private void _processKoroneikiAccount(
+			AckReplyConsumer ackReplyConsumer,
 			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
 				koroneikiAccount)
 		throws Exception {
 
-		Account account = _getAccount(koroneikiAccount.getKey());
+		for (ExternalLink externalLink : koroneikiAccount.getExternalLinks()) {
+			if (Objects.equals(externalLink.getDomain(), "salesforce") &&
+				Objects.equals(externalLink.getEntityName(), "project")) {
+				_log.info("Skipping over account {" + koroneikiAccount.getKey() + "} because it is a project \n");
 
-		if (account != null) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Account \"" + koroneikiAccount.getKey() +
-						"\" not found in Marketplace");
+				ackReplyConsumer.ack();
+
+				return;
 			}
-
-			_processKoroneikiAccountUpdate(koroneikiAccount);
-
-			return;
 		}
+
+		Account account = _getAccount(koroneikiAccount.getKey());
 
 		AccountResource accountResource =
 			_marketplaceService.getAccountResource();
 
-		account = accountResource.postAccount(
-			new Account() {
-				{
-					setCustomFields(() -> _getCustomFields(koroneikiAccount));
-					setDescription(koroneikiAccount::getDescription);
-					setExternalReferenceCode(koroneikiAccount::getKey);
-					setName(koroneikiAccount::getName);
-					setPostalAddresses(
-						() -> _getPostalAddresses(koroneikiAccount));
+		if (account == null) {
+			HttpInvoker.HttpResponse httpResponse =
+				accountResource.postAccountHttpResponse(
+					new Account() {
+						{
+							setCustomFields(
+								() -> _getCustomFields(koroneikiAccount));
+							setDescription(koroneikiAccount::getDescription);
+							setExternalReferenceCode(koroneikiAccount::getKey);
+							setName(koroneikiAccount::getName);
+						}
+					});
+
+			int statusCode = httpResponse.getStatusCode();
+
+			if ((statusCode / 100) == 2) {
+				account = Account.toDTO(httpResponse.getContent());
+			}
+			else if ((statusCode == HttpStatus.CONFLICT.value()) ||
+					 (statusCode == HttpStatus.BAD_REQUEST.value())) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Ran into a race condition (HTTP " + statusCode +
+							" ) nacking to retry later");
 				}
-			});
+
+				ackReplyConsumer.nack();
+
+				return;
+			}
+			else {
+				throw new Exception(
+					StringBundler.concat(
+						"Failed to process account for ",
+						koroneikiAccount.getKey(), ". HTTP ", statusCode, " - ",
+						httpResponse.getContent()));
+			}
+		}
 
 		com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page<Contact>
 			contactsPage = _koroneikiService.getContactsPage(
@@ -252,44 +287,52 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		for (Contact contact : contactsPage.getItems()) {
 			String emailAddress = contact.getEmailAddress();
 
-			Page<UserAccount> userAccountsPage =
-				_marketplaceService.getUserAccountsPage(
-					"emailAddress eq '" + emailAddress + "'",
-					Pagination.of(1, 1), "", "");
+			UserAccount userAccount = _getUserAccount(emailAddress);
 
-			if (userAccountsPage.fetchFirstItem() == null) {
-				_marketplaceService.postUserAccount(
-					new UserAccount() {
-						{
-							setEmailAddress(contact::getEmailAddress);
-							setFamilyName(contact::getLastName);
-							setGivenName(contact::getFirstName);
-						}
-					});
+			if (userAccount == null) {
+				HttpInvoker.HttpResponse httpResponse =
+					_marketplaceService.postUserAccountHttpResponse(
+						new UserAccount() {
+							{
+								setEmailAddress(contact::getEmailAddress);
+								setFamilyName(contact::getLastName);
+								setGivenName(contact::getFirstName);
+							}
+						});
+
+				int statusCode = httpResponse.getStatusCode();
+
+				if ((statusCode / 100) == 2) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Creating user with email address: " +
+								emailAddress);
+					}
+
+					_marketplaceService.postAccountUserAccountByEmailAddress(
+						account.getId(), emailAddress);
+				}
+				else if ((statusCode == HttpStatus.CONFLICT.value()) ||
+						 (statusCode == HttpStatus.BAD_REQUEST.value())) {
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Another thread is processing user: " +
+								emailAddress);
+					}
+				}
+				else {
+					throw new Exception(
+						StringBundler.concat(
+							"Failed to process user account for ", emailAddress,
+							". HTTP ", statusCode, " - ",
+							httpResponse.getContent()));
+				}
 			}
-
-			_marketplaceService.postAccountUserAccountByEmailAddress(
-				account.getId(), emailAddress);
-		}
-	}
-
-	private void _processKoroneikiAccountUpdate(
-			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
-				koroneikiAccount)
-		throws Exception {
-
-		Account account = _getAccount(koroneikiAccount.getKey());
-
-		if (account == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Account \"" + koroneikiAccount.getKey() +
-						"\" not found in Marketplace");
+			else {
+				_marketplaceService.postAccountUserAccountByEmailAddress(
+					account.getId(), emailAddress);
 			}
-
-			_processKoroneikiAccountCreate(koroneikiAccount);
-
-			return;
 		}
 
 		PostalAddressResource postalAddressResource =
@@ -308,9 +351,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			postalAddressResource.postAccountPostalAddress(
 				account.getId(), postalAddress);
 		}
-
-		AccountResource accountResource =
-			_marketplaceService.getAccountResource();
 
 		accountResource.patchAccount(
 			account.getId(),

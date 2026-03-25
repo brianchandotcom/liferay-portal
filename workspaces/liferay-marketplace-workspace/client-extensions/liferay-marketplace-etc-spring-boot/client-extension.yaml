@@ -5,6 +5,7 @@ liferay-marketplace-etc-spring-boot-oahs:
     .serviceScheme: http
     name: Liferay Marketplace Etc Spring Boot OAuth Application Headless Server
     scopes:
+        -   Liferay.Headless.Admin.Address.everything
         -   Liferay.Headless.Admin.User.everything
         -   Liferay.Headless.Admin.Workflow.everything
         -   Liferay.Headless.Commerce.Admin.Catalog.everything

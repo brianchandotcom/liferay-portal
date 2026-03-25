@@ -27,10 +27,6 @@ public class ProvisioningHubService extends BaseService {
 	public void provision(Order order, ProductPurchase productPurchase)
 		throws Exception {
 
-		if (1 == 1) {
-			return;
-		}
-
 		Product product = productPurchase.getProduct();
 
 		if (Objects.equals(product.getName(), "Liferay Data Platform")) {
@@ -55,23 +51,23 @@ public class ProvisioningHubService extends BaseService {
 	}
 
 	private String _getServerLocation(String dataCenterLocation) {
-		if (Objects.equals(dataCenterLocation, "asiasouth1")) {
+		if (Objects.equals(dataCenterLocation, "asia-south1")) {
 			return "asia-south1-ac5-c1";
 		}
 
-		if (Objects.equals(dataCenterLocation, "europewest2")) {
+		if (Objects.equals(dataCenterLocation, "europe-west2")) {
 			return "europe-west2-ac2-c1";
 		}
 
-		if (Objects.equals(dataCenterLocation, "europewest3")) {
+		if (Objects.equals(dataCenterLocation, "europe-west3")) {
 			return "europe-west3-ac3-c1";
 		}
 
-		if (Objects.equals(dataCenterLocation, "southamericaeast1")) {
+		if (Objects.equals(dataCenterLocation, "southamerica-east1")) {
 			return "southamerica-east1-ac1-c1";
 		}
 
-		if (Objects.equals(dataCenterLocation, "uswest1")) {
+		if (Objects.equals(dataCenterLocation, "us-west1")) {
 			return "us-west1-ac4-c1";
 		}
 

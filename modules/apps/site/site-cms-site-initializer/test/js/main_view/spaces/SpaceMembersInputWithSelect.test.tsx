@@ -299,7 +299,10 @@ describe('SpaceMembersInputWithSelect', () => {
 		).not.toBeInTheDocument();
 
 		expect(mockFetch).toHaveBeenCalledWith(
-			expect.stringContaining(`id+ne+%27123%27`)
+			expect.stringContaining(`id+ne+%27123%27`),
+			expect.objectContaining({
+				headers: expect.any(Object),
+			})
 		);
 	});
 
@@ -332,7 +335,10 @@ describe('SpaceMembersInputWithSelect', () => {
 		).not.toBeInTheDocument();
 
 		expect(mockFetch).toHaveBeenCalledWith(
-			expect.stringContaining(`userGroupId+ne+%27123%27`)
+			expect.stringContaining(`userGroupId+ne+%27123%27`),
+			expect.objectContaining({
+				headers: expect.any(Object),
+			})
 		);
 	});
 });

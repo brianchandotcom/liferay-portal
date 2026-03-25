@@ -46,6 +46,9 @@ const testBaseProps = {
 	actions: [testActionBase, testActionFolder],
 	additionalProps: testAdditionalProps,
 	itemData: {
+		actions: {
+			update: {},
+		},
 		embedded: {
 			systemProperties: {
 				objectDefinitionBrief: {

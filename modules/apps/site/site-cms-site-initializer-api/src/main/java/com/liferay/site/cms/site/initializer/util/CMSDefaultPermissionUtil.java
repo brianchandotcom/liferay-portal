@@ -17,12 +17,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -49,39 +43,22 @@ public class CMSDefaultPermissionUtil {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_DEFAULT_PERMISSION", companyId);
 
-		ObjectEntry objectEntry =
-			ObjectEntryLocalServiceUtil.addOrUpdateObjectEntry(
-				externalReferenceCode, 0, userId,
-				objectDefinition.getObjectDefinitionId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				HashMapBuilder.<String, Serializable>put(
-					"classExternalReferenceCode", classExternalReferenceCode
-				).put(
-					"className", className
-				).put(
-					"defaultPermissions",
-					defaultPermissionsJSONObject.toString()
-				).put(
-					"depotGroupId", depotGroupId
-				).put(
-					"treePath", treePath
-				).build(),
-				new ServiceContext());
-
-		Role cmsAdministratorRole = RoleLocalServiceUtil.getRole(
-			companyId, RoleConstants.CMS_ADMINISTRATOR);
-
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			companyId, objectDefinition.getClassName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(objectEntry.getObjectEntryId()),
-			cmsAdministratorRole.getRoleId(),
-			new String[] {
-				ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW
-			});
-
-		return objectEntry;
+		return ObjectEntryLocalServiceUtil.addOrUpdateObjectEntry(
+			externalReferenceCode, 0, userId,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			HashMapBuilder.<String, Serializable>put(
+				"classExternalReferenceCode", classExternalReferenceCode
+			).put(
+				"className", className
+			).put(
+				"defaultPermissions", defaultPermissionsJSONObject.toString()
+			).put(
+				"depotGroupId", depotGroupId
+			).put(
+				"treePath", treePath
+			).build(),
+			new ServiceContext());
 	}
 
 	public static ObjectEntry fetchObjectEntry(

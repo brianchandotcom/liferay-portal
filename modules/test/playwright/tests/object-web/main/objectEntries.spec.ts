@@ -2738,70 +2738,68 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await waitForAlert(page);
 	});
 
-	test(
-	'can prevent duplicate value when creating an entry with unique values', async ({
+	test('can prevent duplicate value when creating an entry with unique values', async ({
 		apiHelpers,
 		page,
 		viewObjectEntriesPage,
 	}) => {
-			const objectFieldLabel = 'textField';
+		const objectFieldLabel = 'textField';
 
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: [
-					{
-						businessType: 'Text',
-						label: {en_US: objectFieldLabel},
-						name: objectFieldLabel,
-						objectFieldSettings: [
-							{
-								name: 'uniqueValues',
-								value: true,
-							},
-						],
-						unique: true,
-					},
-				],
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: [
+				{
+					businessType: 'Text',
+					label: {en_US: objectFieldLabel},
+					name: objectFieldLabel,
+					objectFieldSettings: [
+						{
+							name: 'uniqueValues',
+							value: true,
+						},
+					],
+					unique: true,
+				},
+			],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
 			});
 
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
 
-			const applicationName =
-				'c/' + objectDefinition.name.toLowerCase() + 's';
+		await apiHelpers.objectEntry.postObjectEntry(
+			{[objectFieldLabel]: 'UniqueTestValue'},
+			applicationName
+		);
 
-			await apiHelpers.objectEntry.postObjectEntry(
-				{[objectFieldLabel]: 'UniqueTestValue'},
-				applicationName
-			);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-			await viewObjectEntriesPage.goto(objectDefinition.className);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
-			await viewObjectEntriesPage.clickAddObjectEntry(
-				objectDefinition.label['en_US']
-			);
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel,
+			objectFieldValue: 'UniqueTestValue',
+		});
 
-			await viewObjectEntriesPage.fillObjectEntry({
-				objectFieldLabel: objectFieldLabel,
-				objectFieldValue: 'UniqueTestValue',
-			});
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
-
-			await waitForAlert(
-				page,
-				'Error:The textField is already in use. Please enter a unique textField.',
-				{type: 'danger'}
-			);
-		}
-	);
+		await waitForAlert(
+			page,
+			'Error:The textField is already in use. Please enter a unique textField.',
+			{type: 'danger'}
+		);
+	});
 
 	test('can prevent duplicate value when editing an existing entry with unique values', async ({
 		apiHelpers,
@@ -2838,7 +2836,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'objectDefinition',
 		});
 
-		const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
 
 		await apiHelpers.objectEntry.postObjectEntry(
 			{[objectFieldLabel]: 100},
@@ -3430,10 +3429,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 		viewObjectEntriesPage,
 	}) => {
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
-	
+
 		const objectDefinitionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-	
+
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
@@ -3442,7 +3441,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			],
 		});
-	
+
 		const {body: objectDefinition} =
 			await objectDefinitionAPIClient.postObjectDefinition({
 				active: true,
@@ -3455,20 +3454,20 @@ test.describe('Manage object entries through View Object Entries', () => {
 				scope: 'company',
 				status: {code: 0},
 			});
-	
+
 		apiHelpers.data.push({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
-	
+
 		await viewObjectEntriesPage.goto(objectDefinition.className);
-	
+
 		await viewObjectEntriesPage.clickAddObjectEntry(
 			objectDefinition.label['en_US']
 		);
-	
+
 		const translationButton = page.getByRole('button', {name: 'en-us'});
-	
+
 		await expect(translationButton).toHaveCount(0);
 	});
 

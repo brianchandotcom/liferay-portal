@@ -1679,7 +1679,9 @@ test.describe('Unique localized object fields', () => {
 
 			await page.getByRole('button', {name: 'en-us'}).click();
 
-			await page.getByRole('menuitem', {name: 'português (Brasil)'}).click();
+			await page
+				.getByRole('menuitem', {name: 'português (Brasil)'})
+				.click();
 
 			await viewObjectEntriesPage.fillObjectEntry({
 				objectFieldLabel,

@@ -719,7 +719,7 @@ public class DisplayPageTemplateFolderResourceTest
 				parentDisplayPageTemplateFolder.getExternalReferenceCode());
 
 		try {
-			_displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
+			displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),
 				putDisplayPageTemplateFolder.getExternalReferenceCode(),
 				putDisplayPageTemplateFolder);
@@ -735,7 +735,7 @@ public class DisplayPageTemplateFolderResourceTest
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			_displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
+			displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),
 				putDisplayPageTemplateFolder.getExternalReferenceCode(),
 				putDisplayPageTemplateFolder);

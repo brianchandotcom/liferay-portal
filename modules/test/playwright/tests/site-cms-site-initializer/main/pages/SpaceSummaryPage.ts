@@ -67,6 +67,26 @@ export class SpaceSummaryPage {
 			.waitFor();
 	}
 
+	async addRoleToSpaceMember(roleName: string, userName: string) {
+		await this.viewAllMembersLink.click();
+
+		await this.page.getByRole('dialog').waitFor();
+
+		const userRow = this.page
+			.getByRole('listitem')
+			.filter({hasText: userName});
+
+		await userRow.getByRole('button', {name: 'Space Member'}).click();
+
+		await this.page
+			.getByRole('checkbox', {
+				name: roleName,
+			})
+			.check();
+
+		await this.closeButton.click();
+	}
+
 	async addUserOrUserGroup(name: string, type: UserOrUserGroupType) {
 		await this.viewAllMembersLink.click();
 

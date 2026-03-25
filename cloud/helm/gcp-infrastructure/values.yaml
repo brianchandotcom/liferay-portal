@@ -10,7 +10,7 @@ gateway:
     name: ""
 license:
     externalSecretName: ""
-    targetSecretName: "liferay-license"
+    targetSecretName: liferay-license
 projectId: ""
 search:
     elasticsearch:

@@ -19,7 +19,7 @@ module.exports = {
 		'react-flow-renderer',
 		'react-helmet',
 		'graphiql',
-		'graphiql/graphiql.css',
+		'graphiql/style.css',
 		'axe-core',
 		'clipboard',
 		'cropperjs',

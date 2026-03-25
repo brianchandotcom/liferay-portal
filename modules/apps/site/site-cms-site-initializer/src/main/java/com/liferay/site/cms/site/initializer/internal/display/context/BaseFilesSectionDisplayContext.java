@@ -69,6 +69,18 @@ public abstract class BaseFilesSectionDisplayContext
 			).setHref(
 				"#"
 			).setIcon(
+				"move-folder"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "move-to")
+			).build(
+				"move-to"
+			));
+		fdsBulkActionDropdownItems.add(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
 				"copy"
 			).setLabel(
 				LanguageUtil.get(httpServletRequest, "copy-to")

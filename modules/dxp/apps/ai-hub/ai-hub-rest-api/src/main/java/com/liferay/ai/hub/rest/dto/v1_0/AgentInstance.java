@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -35,17 +35,17 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Task")
+@GraphQLName("AgentInstance")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Task")
-public class Task implements Serializable {
+@XmlRootElement(name = "AgentInstance")
+public class AgentInstance implements Serializable {
 
-	public static Task toDTO(String json) {
-		return ObjectMapperUtil.readValue(Task.class, json);
+	public static AgentInstance toDTO(String json) {
+		return ObjectMapperUtil.readValue(AgentInstance.class, json);
 	}
 
-	public static Task unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Task.class, json);
+	public static AgentInstance unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(AgentInstance.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -217,13 +217,13 @@ public class Task implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Task)) {
+		if (!(object instanceof AgentInstance)) {
 			return false;
 		}
 
-		Task task = (Task)object;
+		AgentInstance agentInstance = (AgentInstance)object;
 
-		return Objects.equals(toString(), task.toString());
+		return Objects.equals(toString(), agentInstance.toString());
 	}
 
 	@Override
@@ -305,7 +305,7 @@ public class Task implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.Task",
+		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.AgentInstance",
 		name = "x-class-name"
 	)
 	public String xClassName;

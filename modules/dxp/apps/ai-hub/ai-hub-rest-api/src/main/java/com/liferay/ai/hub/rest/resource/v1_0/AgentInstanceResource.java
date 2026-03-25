@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.dto.v1_0.AgentInstance;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -42,14 +42,16 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface TaskResource {
+public interface AgentInstanceResource {
 
-	public void getTaskSubscribe(jakarta.ws.rs.sse.SseEventSink sseEventSink)
+	public void getAgentInstanceSubscribe(
+			jakarta.ws.rs.sse.SseEventSink sseEventSink)
 		throws Exception;
 
-	public Task postTask(Task task) throws Exception;
+	public AgentInstance postAgentInstance(AgentInstance agentInstance)
+		throws Exception;
 
-	public Response postTaskBatch(String callbackURL, Object object)
+	public Response postAgentInstanceBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -122,7 +124,7 @@ public interface TaskResource {
 	@ProviderType
 	public interface Builder {
 
-		public TaskResource build();
+		public AgentInstanceResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

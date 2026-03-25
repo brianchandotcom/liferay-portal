@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.Task;
-import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
+import com.liferay.ai.hub.rest.dto.v1_0.AgentInstance;
+import com.liferay.ai.hub.rest.resource.v1_0.AgentInstanceResource;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -65,23 +65,25 @@ import java.util.Set;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BaseTaskResourceImpl
-	implements EntityModelResource, TaskResource,
-			   VulcanBatchEngineTaskItemDelegate<Task> {
+public abstract class BaseAgentInstanceResourceImpl
+	implements AgentInstanceResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<AgentInstance> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub/v1.0/tasks/subscribe'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub/v1.0/agent-instances/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Task")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AgentInstance")
+		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/tasks/subscribe")
+	@jakarta.ws.rs.Path("/agent-instances/subscribe")
 	@jakarta.ws.rs.Produces("text/event-stream")
 	@Override
-	public void getTaskSubscribe(
+	public void getAgentInstanceSubscribe(
 			@jakarta.ws.rs.core.Context jakarta.ws.rs.sse.SseEventSink
 				sseEventSink)
 		throws Exception {
@@ -90,24 +92,28 @@ public abstract class BaseTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/tasks' -d $'{"context": ___, "sseEventSinkKey": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/agent-instances' -d $'{"context": ___, "sseEventSinkKey": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Task")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AgentInstance")
+		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/tasks")
+	@jakarta.ws.rs.Path("/agent-instances")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Task postTask(Task task) throws Exception {
-		return new Task();
+	public AgentInstance postAgentInstance(AgentInstance agentInstance)
+		throws Exception {
+
+		return new AgentInstance();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/tasks/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/agent-instances/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -118,14 +124,16 @@ public abstract class BaseTaskResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Task")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AgentInstance")
+		}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/tasks/batch")
+	@jakarta.ws.rs.Path("/agent-instances/batch")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
-	public Response postTaskBatch(
+	public Response postAgentInstanceBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -144,47 +152,53 @@ public abstract class BaseTaskResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
-				Task.class.getName(), callbackURL, null, object)
+				AgentInstance.class.getName(), callbackURL, null, object)
 		).build();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<Task> tasks, Map<String, Serializable> parameters)
+			Collection<AgentInstance> agentInstances,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<Task, Task, Exception> taskUnsafeFunction = null;
+		UnsafeFunction<AgentInstance, AgentInstance, Exception>
+			agentInstanceUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			taskUnsafeFunction = task -> postTask(task);
+			agentInstanceUnsafeFunction = agentInstance -> postAgentInstance(
+				agentInstance);
 		}
 
-		if (taskUnsafeFunction == null) {
+		if (agentInstanceUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
-					"\" is not supported for Task");
+					"\" is not supported for AgentInstance");
 		}
 
 		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(tasks, taskUnsafeFunction);
+			contextBatchUnsafeBiConsumer.accept(
+				agentInstances, agentInstanceUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(tasks, taskUnsafeFunction::apply);
+			contextBatchUnsafeConsumer.accept(
+				agentInstances, agentInstanceUnsafeFunction::apply);
 		}
 		else {
-			for (Task task : tasks) {
-				taskUnsafeFunction.apply(task);
+			for (AgentInstance agentInstance : agentInstances) {
+				agentInstanceUnsafeFunction.apply(agentInstance);
 			}
 		}
 	}
 
 	@Override
 	public void delete(
-			Collection<Task> tasks, Map<String, Serializable> parameters)
+			Collection<AgentInstance> agentInstances,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -208,7 +222,7 @@ public abstract class BaseTaskResourceImpl
 	}
 
 	public String getResourceName() {
-		return "Task";
+		return "AgentInstance";
 	}
 
 	public String getVersion() {
@@ -216,7 +230,7 @@ public abstract class BaseTaskResourceImpl
 	}
 
 	@Override
-	public Page<Task> read(
+	public Page<AgentInstance> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
@@ -260,7 +274,8 @@ public abstract class BaseTaskResourceImpl
 
 	@Override
 	public void update(
-			Collection<Task> tasks, Map<String, Serializable> parameters)
+			Collection<AgentInstance> agentInstances,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -280,7 +295,8 @@ public abstract class BaseTaskResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<Task>, UnsafeFunction<Task, Task, Exception>, Exception>
+			<Collection<AgentInstance>,
+			 UnsafeFunction<AgentInstance, AgentInstance, Exception>, Exception>
 				contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -288,7 +304,8 @@ public abstract class BaseTaskResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<Task>, UnsafeConsumer<Task, Exception>, Exception>
+			<Collection<AgentInstance>,
+			 UnsafeConsumer<AgentInstance, Exception>, Exception>
 				contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -798,11 +815,12 @@ public abstract class BaseTaskResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<Task>, UnsafeFunction<Task, Task, Exception>, Exception>
+		<Collection<AgentInstance>,
+		 UnsafeFunction<AgentInstance, AgentInstance, Exception>, Exception>
 			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<Task>, UnsafeConsumer<Task, Exception>, Exception>
-			contextBatchUnsafeConsumer;
+		<Collection<AgentInstance>, UnsafeConsumer<AgentInstance, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -823,6 +841,6 @@ public abstract class BaseTaskResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseTaskResourceImpl.class);
+		LogFactoryUtil.getLog(BaseAgentInstanceResourceImpl.class);
 
 }

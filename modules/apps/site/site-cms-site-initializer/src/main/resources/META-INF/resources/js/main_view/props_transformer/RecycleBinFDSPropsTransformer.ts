@@ -76,10 +76,12 @@ export default function RecycleBinFDSPropsTransformer({
 			itemData: ItemData;
 			loadData: () => {};
 		}) {
+			const title =
+				itemData.embedded.title ||
+				Liferay.Language.get('untitled-asset');
+
 			if (action.data.id === 'delete') {
-				const formattedItemLabel = getFormattedLabel(
-					itemData.embedded.title
-				);
+				const formattedItemLabel = getFormattedLabel(title);
 				const confirmationText = sub(
 					Liferay.Language.get(
 						'you-are-about-to-permanently-delete-x-this-action-cannot-be-undone'
@@ -88,14 +90,14 @@ export default function RecycleBinFDSPropsTransformer({
 				);
 
 				const displaySuccessToast = () => {
-					return displayDeleteSuccessToast(itemData.embedded.title);
+					return displayDeleteSuccessToast(title);
 				};
 
 				openGenericFDSDeleteConfirmationModal(
 					confirmationText,
 					itemData.actions?.delete?.method,
 					itemData.actions?.delete?.href,
-					itemData.embedded.title,
+					title,
 					loadData,
 					displaySuccessToast
 				);
@@ -103,7 +105,7 @@ export default function RecycleBinFDSPropsTransformer({
 
 			if (action.data.id === 'restore') {
 				await restoreItemAction(
-					itemData.embedded.title,
+					title,
 					loadData,
 					itemData.actions?.restore.method,
 					itemData.actions?.restore.href

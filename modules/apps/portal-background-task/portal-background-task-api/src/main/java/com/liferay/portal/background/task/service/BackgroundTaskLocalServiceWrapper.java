@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -94,6 +94,16 @@ public class BackgroundTaskLocalServiceWrapper
 
 		_backgroundTaskLocalService.addBackgroundTaskAttachment(
 			userId, backgroundTaskId, fileName, inputStream);
+	}
+
+	@Override
+	public void addBackgroundTaskAttachment(
+			long userId, long backgroundTaskId, String sourceFileName,
+			String title, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_backgroundTaskLocalService.addBackgroundTaskAttachment(
+			userId, backgroundTaskId, sourceFileName, title, file);
 	}
 
 	@Override
@@ -810,4 +820,4 @@ public class BackgroundTaskLocalServiceWrapper
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-454822914
+// LIFERAY-SERVICE-BUILDER-HASH:-2064826172

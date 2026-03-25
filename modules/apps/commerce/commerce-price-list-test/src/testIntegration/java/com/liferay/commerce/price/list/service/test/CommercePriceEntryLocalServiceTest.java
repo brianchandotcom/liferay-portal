@@ -684,10 +684,6 @@ public class CommercePriceEntryLocalServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					commercePriceList.getGroupId()));
 
-		Assert.assertEquals(
-			cpInstanceUnitOfMeasure1.getKey(),
-			commercePriceEntry.getUnitOfMeasureKey());
-
 		Assert.assertTrue(
 			BigDecimalUtil.eq(
 				cpInstanceUnitOfMeasure1.getPricingQuantity(),
@@ -698,6 +694,10 @@ public class CommercePriceEntryLocalServiceTest {
 
 		Assert.assertTrue(
 			BigDecimalUtil.eq(scale, commercePriceEntry.getQuantity()));
+
+		Assert.assertEquals(
+			cpInstanceUnitOfMeasure1.getKey(),
+			commercePriceEntry.getUnitOfMeasureKey());
 
 		commercePriceEntry = CommercePriceEntryTestUtil.addCommercePriceEntry(
 			_group.getGroupId());

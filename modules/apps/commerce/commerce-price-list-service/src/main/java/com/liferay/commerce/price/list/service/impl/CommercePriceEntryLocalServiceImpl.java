@@ -177,8 +177,8 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = _getUnitOfMeasureKey(
-			cpInstanceId, unitOfMeasureKey);
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			_getCPInstanceUnitOfMeasure(cpInstanceId, unitOfMeasureKey);
 
 		if (cpInstanceUnitOfMeasure != null) {
 			commercePriceEntry.setPricingQuantity(
@@ -726,8 +726,8 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = _getUnitOfMeasureKey(
-			cpInstanceId, unitOfMeasureKey);
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			_getCPInstanceUnitOfMeasure(cpInstanceId, unitOfMeasureKey);
 
 		if (cpInstanceUnitOfMeasure != null) {
 			commercePriceEntry.setPricingQuantity(
@@ -988,6 +988,26 @@ public class CommercePriceEntryLocalServiceImpl
 		return commercePriceEntries;
 	}
 
+	private CPInstanceUnitOfMeasure _getCPInstanceUnitOfMeasure(
+		long cpInstanceId, String unitOfMeasureKey) {
+
+		if (!Validator.isBlank(unitOfMeasureKey)) {
+			return _cpInstanceUnitOfMeasureLocalService.
+				fetchCPInstanceUnitOfMeasure(cpInstanceId, unitOfMeasureKey);
+		}
+
+		int count =
+			_cpInstanceUnitOfMeasureLocalService.
+				getCPInstanceUnitOfMeasuresCount(cpInstanceId);
+
+		if (count == 1) {
+			return _cpInstanceUnitOfMeasureLocalService.
+				fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
+		}
+
+		return null;
+	}
+
 	private GroupByStep _getGroupByStep(
 		FromStep fromStep, long commercePriceListId, String cpInstanceUuid,
 		int status, String unitOfMeasureKey) {
@@ -1020,26 +1040,6 @@ public class CommercePriceEntryLocalServiceImpl
 				}
 			)
 		);
-	}
-
-	private CPInstanceUnitOfMeasure _getUnitOfMeasureKey(
-		long cpInstanceId, String unitOfMeasureKey) {
-
-		if (!Validator.isBlank(unitOfMeasureKey)) {
-			return _cpInstanceUnitOfMeasureLocalService.
-				fetchCPInstanceUnitOfMeasure(cpInstanceId, unitOfMeasureKey);
-		}
-
-		int count =
-			_cpInstanceUnitOfMeasureLocalService.
-				getCPInstanceUnitOfMeasuresCount(cpInstanceId);
-
-		if (count == 1) {
-			return _cpInstanceUnitOfMeasureLocalService.
-				fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
-		}
-
-		return null;
 	}
 
 	private void _reindexCPDefinition(long cpDefinitionId)

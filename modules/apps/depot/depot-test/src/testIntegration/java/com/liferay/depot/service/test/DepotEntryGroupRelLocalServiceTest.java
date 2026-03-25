@@ -175,13 +175,13 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 		Assert.assertTrue(depotEntryGroupRel.getDepotEntryId() > 0);
 
-		Assert.assertNotNull(
+		Assert.assertNull(
 			_depotEntryGroupRelLocalService.
-				getDepotEntryGroupRelByDepotEntryIdToGroupId(
+				fetchDepotEntryGroupRelByDepotEntryIdToGroupId(
 					depotEntry.getDepotEntryId(), _group1.getGroupId()));
-		Assert.assertNotNull(
+		Assert.assertNull(
 			_depotEntryGroupRelLocalService.
-				getDepotEntryGroupRelByDepotEntryIdToGroupId(
+				fetchDepotEntryGroupRelByDepotEntryIdToGroupId(
 					depotEntry.getDepotEntryId(), _group2.getGroupId()));
 	}
 
@@ -227,7 +227,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 				depotEntry.getDepotEntryId(), group.getGroupId());
 
 		Assert.assertEquals(
-			3,
+			1,
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
 				depotEntry));
 
@@ -246,16 +246,16 @@ public class DepotEntryGroupRelLocalServiceTest {
 		Assert.assertNull(
 			_depotEntryGroupRelLocalService.fetchDepotEntryGroupRel(
 				depotEntryGroupRel.getDepotEntryGroupRelId()));
-		Assert.assertNotNull(
+		Assert.assertNull(
 			_depotEntryGroupRelLocalService.
 				fetchDepotEntryGroupRelByDepotEntryIdToGroupId(
 					depotEntry.getDepotEntryId(), _group1.getGroupId()));
-		Assert.assertNotNull(
+		Assert.assertNull(
 			_depotEntryGroupRelLocalService.
 				fetchDepotEntryGroupRelByDepotEntryIdToGroupId(
 					depotEntry.getDepotEntryId(), _group2.getGroupId()));
 		Assert.assertEquals(
-			2,
+			0,
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
 				depotEntry));
 		Assert.assertEquals(
@@ -285,7 +285,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 				depotEntry.getDepotEntryId(), group.getGroupId());
 
 		Assert.assertEquals(
-			3,
+			1,
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
 				depotEntry));
 
@@ -310,7 +310,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
 				depotEntry));
 		Assert.assertEquals(
-			systemEventsCount + 3,
+			systemEventsCount + 1,
 			_systemEventLocalService.getSystemEventsCount());
 	}
 

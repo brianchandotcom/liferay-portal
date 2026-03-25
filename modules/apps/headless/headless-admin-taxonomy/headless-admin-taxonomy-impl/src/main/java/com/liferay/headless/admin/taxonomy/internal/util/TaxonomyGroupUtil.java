@@ -61,10 +61,12 @@ public class TaxonomyGroupUtil {
 
 			if (group == null) {
 				DepotEntry depotEntry =
-					DepotEntryLocalServiceUtil.getDepotEntry(
+					DepotEntryLocalServiceUtil.fetchDepotEntry(
 						assetLibrary.getId());
 
-				group = depotEntry.getGroup();
+				if (depotEntry != null) {
+					group = depotEntry.getGroup();
+				}
 			}
 
 			if (group != null) {

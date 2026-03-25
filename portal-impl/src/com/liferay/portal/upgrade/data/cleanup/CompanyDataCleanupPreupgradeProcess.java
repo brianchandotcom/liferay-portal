@@ -78,11 +78,8 @@ public class CompanyDataCleanupPreupgradeProcess
 				return;
 			}
 
-			String normalizedTableName = dbInspector.normalizeName(
-				sourceTableName);
-
 			String updateSql = _getUpdateSQL(
-				companyIdColumnName, normalizedTableName, sourceColumnName,
+				companyIdColumnName, sourceColumnName, sourceTableName,
 				targetColumnNames[0], targetTableName);
 
 			try (PreparedStatement preparedStatement =
@@ -92,45 +89,45 @@ public class CompanyDataCleanupPreupgradeProcess
 
 				DataCleanupLoggingUtil.logUpdate(
 					_log, count, sourceTableName, companyIdColumnName, null,
-					"it could be populated from table " + targetTableName);
+					"missing values were populated from the " +
+						targetTableName + " table.");
 			}
 		}
 
 		private String _getUpdateSQL(
-			String companyIdColumnName, String normalizedTableName,
-			String sourceColumnName, String targetColumnName,
+			String companyIdColumnName, String sourceColumnName,
+			String sourceTableName, String targetColumnName,
 			String targetTableName) {
 
 			if ((DBManagerUtil.getDBType() == DBType.MARIADB) ||
 				(DBManagerUtil.getDBType() == DBType.MYSQL)) {
 
 				return StringBundler.concat(
-					"update ", normalizedTableName, " inner join ",
-					targetTableName, " on ", targetTableName, StringPool.PERIOD,
-					targetColumnName, " = ", normalizedTableName,
-					StringPool.PERIOD, sourceColumnName, " set ",
-					normalizedTableName, StringPool.PERIOD, companyIdColumnName,
-					" = ", targetTableName, StringPool.PERIOD,
-					companyIdColumnName, " where coalesce(",
-					normalizedTableName, StringPool.PERIOD, companyIdColumnName,
-					", 0) = 0 and ", normalizedTableName, StringPool.PERIOD,
-					sourceColumnName, " > 0");
+					"update ", sourceTableName, " inner join ", targetTableName,
+					" on ", targetTableName, StringPool.PERIOD,
+					targetColumnName, " = ", sourceTableName, StringPool.PERIOD,
+					sourceColumnName, " set ", sourceTableName,
+					StringPool.PERIOD, companyIdColumnName, " = ",
+					targetTableName, StringPool.PERIOD, companyIdColumnName,
+					" where coalesce(", sourceTableName, StringPool.PERIOD,
+					companyIdColumnName, ", 0) = 0 and ", sourceTableName,
+					StringPool.PERIOD, sourceColumnName, " > 0");
 			}
 
 			String setSubquery = StringBundler.concat(
 				"(select distinct ", companyIdColumnName, " from ",
 				targetTableName, " where ", targetTableName, StringPool.PERIOD,
-				targetColumnName, " = ", normalizedTableName, StringPool.PERIOD,
+				targetColumnName, " = ", sourceTableName, StringPool.PERIOD,
 				sourceColumnName, ")");
 
 			String existsSubquery = StringBundler.concat(
 				"exists (select 1 from ", targetTableName, " where ",
 				targetTableName, StringPool.PERIOD, targetColumnName, " = ",
-				normalizedTableName, StringPool.PERIOD, sourceColumnName, ")");
+				sourceTableName, StringPool.PERIOD, sourceColumnName, ")");
 
 			return StringBundler.concat(
-				"update ", normalizedTableName, " set ", companyIdColumnName,
-				" = ", setSubquery, " where coalesce(", companyIdColumnName,
+				"update ", sourceTableName, " set ", companyIdColumnName, " = ",
+				setSubquery, " where coalesce(", companyIdColumnName,
 				", 0) = 0 and ", sourceColumnName, " > 0 and ", existsSubquery);
 		}
 

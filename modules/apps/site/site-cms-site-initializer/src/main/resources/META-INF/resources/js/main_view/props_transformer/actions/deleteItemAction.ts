@@ -6,6 +6,7 @@
 import {fetch, sub} from 'frontend-js-web';
 
 import SpaceService from '../../../common/services/SpaceService';
+import {getFormattedLabel} from '../../../common/utils/getFormattedText';
 import {getScopeExternalReferenceCode} from '../../../common/utils/getScopeExternalReferenceCode';
 import {
 	displayDeleteSuccessToast,
@@ -85,7 +86,7 @@ export default async function deleteItemAction(
 				loadData,
 				successMessage: sub(
 					Liferay.Language.get('x-was-successfully-deleted'),
-					`<strong>${title}</strong>`
+					`<strong>${getFormattedLabel(title)}</strong>`
 				),
 				title: sub(
 					Liferay.Language.get('delete-asset-confirmation-title'),

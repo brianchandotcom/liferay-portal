@@ -998,3 +998,49 @@ test('LPD-79249 Test XSS vulnerability when moving a change to a ctCollection wi
 		page.getByRole('heading', {name: 'Moved Changes'})
 	).toBeVisible();
 });
+
+test('LPD-82268 FragmentEntryLink change displays the fragment related to the published page', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+	pageEditorPage,
+	pagesAdminPage,
+}) => {
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await page
+		.getByTestId('creationMenuNewButton')
+		.locator('visible=true')
+		.click();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.addPage({
+		name: pageTitle,
+	});
+
+	await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+	await pageEditorPage.publishPage();
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+	await pagesAdminPage.clickOnAction('Edit', pageTitle);
+
+	const headingId = await pageEditorPage.getFragmentId('Heading');
+
+	await pageEditorPage.editTextEditable(headingId, 'element-text', 'Edited');
+
+	await pageEditorPage.publishPage();
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	await expect(
+		page.getByRole('link', {name: `Heading for ${pageTitle}`})
+	).toBeVisible();
+});

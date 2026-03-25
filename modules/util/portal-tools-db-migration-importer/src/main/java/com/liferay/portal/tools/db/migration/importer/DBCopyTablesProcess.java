@@ -85,16 +85,7 @@ public class DBCopyTablesProcess {
 		List<String> targetColumnNames = _targetColumnNamesMap.get(
 			targetTableName);
 
-		if (sourceColumnNames.size() > targetColumnNames.size()) {
-			throw new IllegalStateException(
-				StringBundler.concat(
-					"Source table ", targetTableName, " has ",
-					sourceColumnNames.size(), " but target table name has ",
-					targetColumnNames.size(), " columns",
-					(_partitionName == null) ? StringPool.BLANK :
-						" in partition " + _partitionName));
-		}
-		else if (sourceColumnNames.size() < targetColumnNames.size()) {
+		if (sourceColumnNames.size() < targetColumnNames.size()) {
 			Set<String> sourceColumnNamesSet = new TreeSet<String>(
 				String.CASE_INSENSITIVE_ORDER) {
 
@@ -161,6 +152,8 @@ public class DBCopyTablesProcess {
 		sourceTableNames.retainAll(targetTableNames);
 
 		targetTableNames.retainAll(sourceTableNames);
+
+		_validateTables(sourceTableNames, targetTableNames);
 
 		Iterator<String> sourceIterator = sourceTableNames.iterator();
 		Iterator<String> targetIterator = targetTableNames.iterator();
@@ -550,6 +543,47 @@ public class DBCopyTablesProcess {
 		}
 		else {
 			throw new PortalException("Invalid type: " + targetType);
+		}
+	}
+
+	private void _validateTables(
+		Set<String> sourceTableNames, Set<String> targetTableNames) {
+
+		StringBundler sb = new StringBundler();
+
+		Iterator<String> sourceIterator = sourceTableNames.iterator();
+		Iterator<String> targetIterator = targetTableNames.iterator();
+
+		while (sourceIterator.hasNext()) {
+			String sourceTableName = sourceIterator.next();
+			String targetTableName = targetIterator.next();
+
+			List<String> sourceColumnNames = _sourceColumnNamesMap.get(
+				sourceTableName);
+			List<String> targetColumnNames = _targetColumnNamesMap.get(
+				targetTableName);
+
+			if (sourceColumnNames.size() > targetColumnNames.size()) {
+				sb.append("Source table ");
+				sb.append(sourceTableName);
+				sb.append(" has ");
+				sb.append(sourceColumnNames.size());
+				sb.append(" columns, but target table ");
+				sb.append(targetTableName);
+				sb.append(" has only ");
+				sb.append(targetColumnNames.size());
+
+				if (_partitionName != null) {
+					sb.append(" in partition ");
+					sb.append(_partitionName);
+				}
+
+				sb.append(StringPool.NEW_LINE);
+			}
+		}
+
+		if (sb.length() > 0) {
+			throw new IllegalArgumentException(sb.toString());
 		}
 	}
 

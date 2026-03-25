@@ -29,9 +29,13 @@ function getFirstDayOfWeek(
 	return FIRST_DAY_OF_WEEK_MAP[locale] ?? 0;
 }
 
-function getWeekdaysShort(locale = Liferay.ThemeDisplay.getBCP47LanguageId()) {
+function getWeekdaysShort(
+	locale = Liferay.ThemeDisplay.getBCP47LanguageId()
+): string[] {
 	if (locale in WEEKDAYS_SHORT_MAP) {
-		return WEEKDAYS_SHORT_MAP[locale as keyof typeof WEEKDAYS_SHORT_MAP];
+		return [
+			...WEEKDAYS_SHORT_MAP[locale as keyof typeof WEEKDAYS_SHORT_MAP],
+		];
 	}
 
 	const weekdaysShort = Array.from({length: 7}, (_, i) => {
@@ -43,9 +47,11 @@ function getWeekdaysShort(locale = Liferay.ThemeDisplay.getBCP47LanguageId()) {
 	return weekdaysShort;
 }
 
-function getMonthsLong(locale = Liferay.ThemeDisplay.getBCP47LanguageId()) {
+function getMonthsLong(
+	locale = Liferay.ThemeDisplay.getBCP47LanguageId()
+): string[] {
 	if (locale in MONTHS_LONG_MAP) {
-		return MONTHS_LONG_MAP[locale as keyof typeof MONTHS_LONG_MAP];
+		return [...MONTHS_LONG_MAP[locale as keyof typeof MONTHS_LONG_MAP]];
 	}
 
 	const weekdaysShort = Array.from({length: 12}, (_, i) => {

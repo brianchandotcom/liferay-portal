@@ -33,8 +33,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -96,10 +100,26 @@ public class SharedAssetDTOConverter
 		return new SharedAsset() {
 			{
 				setActionIds(
-					() -> TransformUtil.transformToArray(
-						SharingEntryAction.getSharingEntryActions(
-							sharingEntry.getActionIds()),
-						SharingEntryAction::getActionId, String.class));
+					() -> {
+						String[] actionIds = TransformUtil.transformToArray(
+							SharingEntryAction.getSharingEntryActions(
+								sharingEntry.getActionIds()),
+							SharingEntryAction::getActionId, String.class);
+
+						if (!ArrayUtil.contains(
+								actionIds,
+								SharingEntryAction.UPDATE.getActionId()) &&
+							_hasUpdatePermission(
+								GuestOrUserUtil.getPermissionChecker(),
+								sharingEntry)) {
+
+							return ArrayUtil.append(
+								actionIds,
+								SharingEntryAction.UPDATE.getActionId());
+						}
+
+						return actionIds;
+					});
 				setAssetType(
 					() -> {
 						if (sharingEntryInterpreter == null) {
@@ -351,6 +371,27 @@ public class SharedAssetDTOConverter
 		}
 
 		return fileEntry.getMimeType();
+	}
+
+	private boolean _hasUpdatePermission(
+			PermissionChecker permissionChecker, SharingEntry sharingEntry)
+		throws PortalException {
+
+		if (permissionChecker == null) {
+			return false;
+		}
+
+		ModelResourcePermission<?> modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				sharingEntry.getClassName());
+
+		if (modelResourcePermission != null) {
+			return modelResourcePermission.contains(
+				permissionChecker, sharingEntry.getClassPK(),
+				SharingEntryAction.UPDATE.getActionId());
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

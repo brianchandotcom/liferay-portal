@@ -7,6 +7,8 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.exportimport.test.rule.LazyReferencing;
+import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
@@ -16,10 +18,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -61,7 +61,7 @@ public class DisplayPageTemplateFolderResourceTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
+			LazyReferencingTestRule.INSTANCE, new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Ignore
@@ -310,6 +310,55 @@ public class DisplayPageTemplateFolderResourceTest
 						liveGroupDisplayPageTemplateFolder.
 							getExternalReferenceCode(),
 						liveGroupDisplayPageTemplateFolder));
+	}
+
+	@LazyReferencing
+	@Test
+	public void testPutSiteDisplayPageTemplateFolderLazyReferencing()
+		throws Exception {
+
+		DisplayPageTemplateFolder putDisplayPageTemplateFolder =
+			_testPutSiteDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder(), StringPool.BLANK);
+
+		_assertNoParentDisplayPageTemplateFolder(putDisplayPageTemplateFolder);
+
+		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
+			_getParentDisplayPageTemplateFolder(5);
+
+		putDisplayPageTemplateFolder.setParentDisplayPageTemplateFolder(
+			parentDisplayPageTemplateFolder);
+		putDisplayPageTemplateFolder.
+			setParentDisplayPageTemplateFolderExternalReferenceCode(
+				parentDisplayPageTemplateFolder.getExternalReferenceCode());
+
+		displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
+			testGroup.getExternalReferenceCode(),
+			putDisplayPageTemplateFolder.getExternalReferenceCode(),
+			putDisplayPageTemplateFolder);
+
+		List<LayoutPageTemplateCollection> parentLayoutPageTemplateCollections =
+			new ArrayList<>();
+
+		while (parentDisplayPageTemplateFolder != null) {
+			parentLayoutPageTemplateCollections.add(
+				_layoutPageTemplateCollectionService.
+					getLayoutPageTemplateCollection(
+						parentDisplayPageTemplateFolder.
+							getExternalReferenceCode(),
+						testGroup.getGroupId()));
+
+			parentDisplayPageTemplateFolder =
+				parentDisplayPageTemplateFolder.
+					getParentDisplayPageTemplateFolder();
+		}
+
+		_assertParentDisplayPageTemplateFolder(
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollection(
+					putDisplayPageTemplateFolder.getExternalReferenceCode(),
+					testGroup.getGroupId()),
+			parentLayoutPageTemplateCollections);
 	}
 
 	@Override
@@ -735,38 +784,6 @@ public class DisplayPageTemplateFolderResourceTest
 
 			Assert.assertEquals(
 				"UnsupportedOperationException", problem.getType());
-		}
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
-				testGroup.getExternalReferenceCode(),
-				putDisplayPageTemplateFolder.getExternalReferenceCode(),
-				putDisplayPageTemplateFolder);
-
-			List<LayoutPageTemplateCollection>
-				parentLayoutPageTemplateCollections = new ArrayList<>();
-
-			while (parentDisplayPageTemplateFolder != null) {
-				parentLayoutPageTemplateCollections.add(
-					_layoutPageTemplateCollectionService.
-						getLayoutPageTemplateCollection(
-							parentDisplayPageTemplateFolder.
-								getExternalReferenceCode(),
-							testGroup.getGroupId()));
-
-				parentDisplayPageTemplateFolder =
-					parentDisplayPageTemplateFolder.
-						getParentDisplayPageTemplateFolder();
-			}
-
-			_assertParentDisplayPageTemplateFolder(
-				_layoutPageTemplateCollectionService.
-					getLayoutPageTemplateCollection(
-						putDisplayPageTemplateFolder.getExternalReferenceCode(),
-						testGroup.getGroupId()),
-				parentLayoutPageTemplateCollections);
 		}
 	}
 

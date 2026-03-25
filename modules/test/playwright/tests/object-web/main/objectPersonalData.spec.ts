@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectRelationshipAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -11,7 +12,8 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
-import {performLoginViaApi, performLogout, userData} from '../../../utils/performLogin';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
@@ -35,6 +37,8 @@ test(
 		usersAndOrganizationsPage,
 		viewObjectEntriesPage,
 	}) => {
+		test.setTimeout(120000);
+
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
 		});
@@ -78,11 +82,7 @@ test(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccount.alternateName,
-		});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		for (const entryName of ['Entry B', 'Entry C', 'Entry D', 'Entry E']) {
 			await apiHelpers.objectEntry.postObjectEntry(
@@ -91,8 +91,7 @@ test(
 			);
 		}
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 
@@ -121,21 +120,11 @@ test(
 
 		await personalDataErasurePage.anonymizeButton.click();
 
-		await usersAndOrganizationsPage.goToUsers(false);
+		await usersAndOrganizationsPage.goToUsers();
 
-		await expect(async () => {
-			await (
-				await usersAndOrganizationsPage.usersTableRowActions(
-					userAccount.alternateName
-				)
-			).click();
+		await usersAndOrganizationsPage.filterUsers('inactive');
 
-			await expect(
-				usersAndOrganizationsPage.activateUserMenuItem
-			).toBeVisible({timeout: 500});
-		}).toPass({timeout: 5000});
-
-		await usersAndOrganizationsPage.activateUserMenuItem.click();
+		await usersAndOrganizationsPage.activateUsers([userAccount.name]);
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
@@ -157,14 +146,23 @@ test(
 		usersAndOrganizationsPage,
 		viewObjectEntriesPage,
 	}) => {
+		test.setTimeout(120000);
+
 		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
+			objectFieldBusinessTypes: [
+				{
+					businessType: 'Text',
+					label: {en_US: 'Custom Field'},
+					name: 'customField',
+				},
+			],
 		});
 
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields,
 				status: {code: 0},
+				titleObjectFieldName: 'customField',
 			});
 
 		apiHelpers.data.push({
@@ -172,12 +170,33 @@ test(
 			type: 'objectDefinition',
 		});
 
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const objectRelationshipName = 'relationship' + getRandomInt();
+
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition.externalReferenceCode,
+			{
+				label: {en_US: 'Relationship'},
+				name: objectRelationshipName,
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition.externalReferenceCode,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition.externalReferenceCode,
+				objectDefinitionId1: objectDefinition.id,
+				objectDefinitionId2: objectDefinition.id,
+				objectDefinitionName2: objectDefinition.name,
+				type: 'manyToMany',
+			}
+		);
+
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const textFieldName = objectFields[0].name;
 
-		await apiHelpers.objectEntry.postObjectEntry(
-			{[textFieldName]: 'Entry A'},
+		const entryA = await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Entry A'},
 			applicationName
 		);
 
@@ -200,21 +219,47 @@ test(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccount.alternateName,
-		});
+		await performUserSwitch(page, userAccount.alternateName);
 
-		for (const entryName of ['Entry B', 'Entry C', 'Entry D', 'Entry E']) {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{[textFieldName]: entryName},
-				applicationName
-			);
-		}
+		const entryB = await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Entry B'},
+			applicationName
+		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		const entryC = await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Entry C'},
+			applicationName
+		);
+
+		const entryD = await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Entry D'},
+			applicationName
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Entry E'},
+			applicationName
+		);
+
+		await performUserSwitch(page, 'test');
+
+		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+			{
+				applicationName,
+				currentExternalReferenceCode: entryA.externalReferenceCode,
+				objectRelationshipName,
+				relatedExternalReferenceCode: entryB.externalReferenceCode,
+			}
+		);
+
+		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+			{
+				applicationName,
+				currentExternalReferenceCode: entryC.externalReferenceCode,
+				objectRelationshipName,
+				relatedExternalReferenceCode: entryD.externalReferenceCode,
+			}
+		);
 
 		await usersAndOrganizationsPage.goToUsers(false);
 
@@ -241,23 +286,11 @@ test(
 
 		await personalDataErasurePage.deleteMenuItem.click();
 
-		await personalDataErasurePage.deleteLink.click();
+		await usersAndOrganizationsPage.goToUsers();
 
-		await usersAndOrganizationsPage.goToUsers(false);
+		await usersAndOrganizationsPage.filterUsers('inactive');
 
-		await expect(async () => {
-			await (
-				await usersAndOrganizationsPage.usersTableRowActions(
-					userAccount.alternateName
-				)
-			).click();
-
-			await expect(
-				usersAndOrganizationsPage.activateUserMenuItem
-			).toBeVisible({timeout: 500});
-		}).toPass({timeout: 5000});
-
-		await usersAndOrganizationsPage.activateUserMenuItem.click();
+		await usersAndOrganizationsPage.activateUsers([userAccount.name]);
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
@@ -268,12 +301,12 @@ test(
 			'Entry E',
 		]) {
 			await expect(
-				page.getByRole('cell', {name: entryName})
+				page.locator('table').getByRole('cell', {name: entryName})
 			).not.toBeVisible();
 		}
 
 		await expect(
-			page.getByRole('cell', {name: 'Entry A'})
+			page.locator('table').getByRole('cell', {name: 'Entry A'})
 		).toBeVisible();
 	}
 );
@@ -283,10 +316,12 @@ test(
 	{tag: '@LPD-78504'},
 	async ({
 		apiHelpers,
-		exportUserDataPage: _exportUserDataPage,
+		exportUserDataPage,
 		page,
 		usersAndOrganizationsPage,
 	}) => {
+		test.setTimeout(120000);
+
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
 		});
@@ -325,11 +360,7 @@ test(
 			userAccount.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccount.alternateName,
-		});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		for (const entryNumber of ['1', '2', '3']) {
 			await apiHelpers.objectEntry.postObjectEntry(
@@ -338,8 +369,7 @@ test(
 			);
 		}
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await usersAndOrganizationsPage.goToUsers(false);
 
@@ -357,16 +387,26 @@ test(
 
 		await usersAndOrganizationsPage.exportPersonalDataItem.click();
 
-		await page.getByRole('button', {name: 'Add'}).click();
+		await exportUserDataPage.addExportProcessesButton.click();
 
-		await page.getByRole('menuitem', {name: 'Export'}).click();
+		await page.getByLabel('Objects').check();
 
-		await page.getByRole('checkbox', {name: 'Objects'}).check();
-
-		await page.getByRole('button', {name: 'Export'}).click();
+		await exportUserDataPage.exportButton.click();
 
 		await expect(
-			page.getByText('Your request completed successfully.')
+			exportUserDataPage.statusText('Successful').first()
 		).toBeVisible();
+
+		const downloadPromise = page.waitForEvent('download');
+
+		await exportUserDataPage.actionsButton.click();
+
+		await page.getByRole('menuitem', {name: /Download/}).click();
+
+		const download = await downloadPromise;
+
+		expect(download.suggestedFilename()).toMatch(
+			/UAD_.*com\.liferay\.object/
+		);
 	}
 );

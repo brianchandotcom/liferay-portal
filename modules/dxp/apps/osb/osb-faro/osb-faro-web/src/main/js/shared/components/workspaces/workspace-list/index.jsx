@@ -8,6 +8,21 @@ import {Project} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
 import {Routes, toRoute} from 'shared/util/router';
 
+const isSubscriptionLimitReached = subscription => {
+	const hasReached = (limit, count) => limit > 0 && count >= limit;
+
+	return (
+		hasReached(
+			subscription.get('individualsLimit'),
+			subscription.get('individualsCountSinceLastAnniversary')
+		) ||
+		hasReached(
+			subscription.get('pageViewsLimit'),
+			subscription.get('pageViewsCountSinceLastAnniversary')
+		)
+	);
+};
+
 export default class WorkspaceList extends React.Component {
 	static defaultProps = {
 		checkDisabled: noop,
@@ -68,6 +83,11 @@ export default class WorkspaceList extends React.Component {
 							state
 						} = project;
 
+						const hasLimitReached =
+							faroSubscription?.get('name') ===
+								'Liferay Data Platform' &&
+							isSubscriptionLimitReached(faroSubscription);
+
 						return (
 							<WorkspaceListItem
 								accountName={name}
@@ -79,6 +99,7 @@ export default class WorkspaceList extends React.Component {
 								corpProjectName={corpProjectName}
 								disabled={checkDisabled(project)}
 								groupId={groupId}
+								hasLimitReached={hasLimitReached}
 								href={this.getRoute(project)}
 								isJoinableProjects={isJoinableProjects}
 								key={name}

@@ -44,7 +44,7 @@ const getDateParts = (
 
 const FORMATTER_MAP = {
 	'dd': (date: Date, locale: string) => {
-		return getDateParts(date, locale).day;
+		return getDateParts(date, locale).day ?? '';
 	},
 	'dd-yyyy': (date: Date, locale: string) => {
 		const {day, year} = getDateParts(date, locale);
@@ -67,9 +67,11 @@ const FORMATTER_MAP = {
 		return `${month}/${day}/${year}`;
 	},
 	'MMM': (date: Date, locale: string) => {
-		return getDateParts(date, locale, {
-			month: 'short',
-		}).month;
+		return (
+			getDateParts(date, locale, {
+				month: 'short',
+			}).month ?? ''
+		);
 	},
 	'MMM d, h a': (date: Date, locale: string) => {
 		const {day, dayPeriod, hour, month} = getDateParts(date, locale, {
@@ -174,7 +176,7 @@ const FORMATTER_MAP = {
 		return `${day} ${time}`;
 	},
 	'yyyy': (date: Date, locale: string) => {
-		return getDateParts(date, locale).year;
+		return getDateParts(date, locale).year ?? '';
 	},
 	'yyyy MMM d': (date: Date, locale: string) => {
 		const {day, month, year} = getDateParts(date, locale, {
@@ -239,20 +241,15 @@ export function format(
 	date: Date,
 	format: keyof typeof FORMATTER_MAP,
 	locale = Liferay.ThemeDisplay.getBCP47LanguageId()
-) {
-	if (!format) {
-		return date;
-	}
+): string {
+	const formatter =
+		FORMATTER_MAP[normalizeFormat(format) as keyof typeof FORMATTER_MAP] ??
+		FORMATTER_MAP['yyyy-MM-ddThh:mm:ssZ'];
 
-	let formatter =
-		FORMATTER_MAP[normalizeFormat(format) as keyof typeof FORMATTER_MAP];
-
-	if (!formatter) {
+	if (!FORMATTER_MAP[normalizeFormat(format) as keyof typeof FORMATTER_MAP]) {
 		console.warn(
 			`No formatter found for '${format}'. Defaulting to use 'yyyy-MM-ddThh:mm:ssZ'.`
 		);
-
-		formatter = FORMATTER_MAP['yyyy-MM-ddThh:mm:ssZ'];
 	}
 
 	if (!(date instanceof Date)) {

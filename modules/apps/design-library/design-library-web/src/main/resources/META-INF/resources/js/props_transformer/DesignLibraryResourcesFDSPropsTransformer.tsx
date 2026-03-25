@@ -6,12 +6,12 @@
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
+import {TableCellContentType} from '../constants';
 import {
 	FromNowDateTimeRenderer,
 	LinkRenderer,
 	createSetItemComponentProps,
 } from './cell_renderers';
-import {TableCellContentType} from './constants';
 
 export default function DesignLibraryResourcesFDSPropsTransformer(
 	props: IFrontendDataSetProps

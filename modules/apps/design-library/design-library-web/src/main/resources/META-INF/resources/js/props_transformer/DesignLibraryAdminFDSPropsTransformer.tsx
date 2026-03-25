@@ -8,6 +8,7 @@ import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
+import {TableCellContentType} from '../constants';
 import CreateDesignLibraryModal from '../modal/CreateDesignLibraryModal';
 import confirmAndDeleteEntryAction from './actions/confirmAndDeleteEntryAction';
 import {
@@ -15,7 +16,6 @@ import {
 	LinkRenderer,
 	createSetItemComponentProps,
 } from './cell_renderers';
-import {TableCellContentType} from './constants';
 
 export default function DesignLibraryAdminFDSPropsTransformer({
 	additionalProps: {entryIdKey, redirectURL},

@@ -4,9 +4,9 @@
  */
 
 import {openModal, openToast} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
 
-const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
+import {FDS_EVENT_UPDATE_DISPLAY} from '../../constants';
+import DesignLibraryService from '../../services/DesignLibraryService';
 
 export default function confirmAndDeleteEntryAction({
 	bodyHTML,
@@ -35,61 +35,40 @@ export default function confirmAndDeleteEntryAction({
 			{
 				displayType: 'danger',
 				label: Liferay.Language.get('delete'),
-				onClick: ({processClose}: {processClose: () => void}) => {
+				onClick: async ({processClose}: {processClose: () => void}) => {
 					processClose();
 
-					const DEFAULT_ERROR = Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					);
+					try {
+						await DesignLibraryService.remove(deleteAction);
 
-					return fetch(deleteAction.href, {
-						headers: {
-							'Accept': 'application/json',
-							'Accept-Language':
-								Liferay.ThemeDisplay.getBCP47LanguageId(),
-							'Content-Type': 'application/json',
-						},
-						method: deleteAction.method,
-					})
-						.then((response) => {
-							if (!response.ok) {
-								throw new Error(DEFAULT_ERROR);
-							}
-
-							return response.status === 204
-								? ''
-								: response.json();
-						})
-						.then(() => {
-							openToast({
-								message:
-									successMessage ||
-									Liferay.Language.get(
-										'your-request-completed-successfully'
-									),
-								type: 'success',
-							});
-
-							loadData();
-
-							if (dataSetId) {
-								Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
-									id: dataSetId,
-								});
-							}
-						})
-						.catch(() => {
-							openToast({
-								message: DEFAULT_ERROR,
-								type: 'danger',
-							});
+						openToast({
+							message:
+								successMessage ||
+								Liferay.Language.get(
+									'your-request-completed-successfully'
+								),
+							type: 'success',
 						});
+
+						loadData();
+
+						if (dataSetId) {
+							Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+								id: dataSetId,
+							});
+						}
+					}
+					catch (error: any) {
+						openToast({
+							message: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+							type: 'danger',
+						});
+					}
 				},
 			},
 		],
-		containerProps: {
-			className: '',
-		},
 		role: 'alert',
 		status: 'danger',
 		title,

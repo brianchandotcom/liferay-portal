@@ -2870,6 +2870,63 @@ test.describe('Manage object entries through View Object Entries', () => {
 		);
 	});
 
+	test('can verify auto increment field is read only in object entries', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: [
+				'Text',
+				{
+					businessType: 'AutoIncrement',
+					objectFieldSettings: [
+						{name: 'prefix', value: 'HAT-'} as any,
+						{name: 'initialValue', value: '1'},
+						{name: 'suffix', value: ''} as any,
+					],
+				},
+			],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		const autoIncrementInput = page
+			.locator('[data-field-reference^="autoincrement"]')
+			.locator('input.form-control');
+
+		await expect(autoIncrementInput).not.toBeVisible();
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(autoIncrementInput).toBeVisible();
+
+		await expect(autoIncrementInput).toHaveAttribute('readonly', '');
+
+		await expect(autoIncrementInput).toHaveValue('HAT-1');
+	});
+
 	test('can view all entries related to an object in the relationship field using autocomplete', async ({
 		apiHelpers,
 		page,

@@ -224,8 +224,10 @@ public class PreupgradeVerifyDatabaseStateTest
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(
-				"Missing tables detected: [" +
-					_getNormalizedName(objectDefinition.getDBTableName()) + "]",
+				StringBundler.concat(
+					"Missing tables detected: [",
+					_getNormalizedName(objectDefinition.getDBTableName()),
+					"] in company ", PortalInstancePool.getDefaultCompanyId()),
 				exception.getMessage());
 		}
 		finally {
@@ -238,11 +240,17 @@ public class PreupgradeVerifyDatabaseStateTest
 	public void testVerifyPreupgradeMissingServiceComponentTable()
 		throws Exception {
 
+		DB db = DBManagerUtil.getDB();
+
+		String tableName = _getNormalizedName("TestTable");
+
+		if (PropsValues.DATABASE_PARTITION_ENABLED) {
+			db.runSQL("create table " + tableName + "(id LONG)");
+		}
+
 		ServiceComponent serviceComponent =
 			_serviceComponentLocalService.createServiceComponent(
 				RandomTestUtil.nextLong());
-
-		String tableName = "TestTable";
 
 		serviceComponent.setMvccVersion(0);
 		serviceComponent.setBuildNamespace("com.liferay.test.service.impl");
@@ -258,11 +266,64 @@ public class PreupgradeVerifyDatabaseStateTest
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(
-				"Missing tables detected: [" + _getNormalizedName(tableName) +
-					"]",
+				StringBundler.concat(
+					"Missing tables detected: [", tableName, "] in company ",
+					TestPropsValues.getCompanyId()),
 				exception.getMessage());
 		}
 		finally {
+			db.runSQL("DROP_TABLE_IF_EXISTS(" + tableName + ")");
+
+			_serviceComponentLocalService.deleteServiceComponent(
+				serviceComponent);
+		}
+	}
+
+	@Test
+	public void testVerifyPreupgradeMissingTableAndMissingView()
+		throws Exception {
+
+		Assume.assumeTrue(PropsValues.DATABASE_PARTITION_ENABLED);
+
+		DB db = DBManagerUtil.getDB();
+		String tableName = _getNormalizedName("TestTable");
+
+		db.runSQL("create table " + tableName + "(id LONG)");
+
+		ServiceComponent serviceComponent =
+			_serviceComponentLocalService.createServiceComponent(
+				RandomTestUtil.nextLong());
+
+		serviceComponent.setMvccVersion(0);
+		serviceComponent.setBuildNamespace("com.liferay.test.service.impl");
+		serviceComponent.setData(
+			StringBundler.concat("<![CDATA[create table ", tableName, " ("));
+
+		_serviceComponentLocalService.addServiceComponent(serviceComponent);
+
+		_renameView("Release_", "Release_backup");
+
+		try {
+			testVerify();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			String viewName = _getNormalizedName("Release_");
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Missing tables detected: [", tableName, "] in company ",
+					TestPropsValues.getCompanyId(),
+					", Missing views detected: [", viewName, "] in company ",
+					TestPropsValues.getCompanyId()),
+				exception.getMessage());
+		}
+		finally {
+			db.runSQL("DROP_TABLE_IF_EXISTS(" + tableName + ")");
+
+			_renameView("Release_backup", "Release_");
+
 			_serviceComponentLocalService.deleteServiceComponent(
 				serviceComponent);
 		}
@@ -300,7 +361,7 @@ public class PreupgradeVerifyDatabaseStateTest
 		String originalData = serviceComponent.getData();
 
 		try {
-			serviceComponent.setData(RandomTestUtil.randomString());
+			serviceComponent.setData(StringPool.BLANK);
 
 			serviceComponent =
 				_serviceComponentLocalService.updateServiceComponent(
@@ -314,12 +375,23 @@ public class PreupgradeVerifyDatabaseStateTest
 			Set<String> tableNames = DBResourceUtil.parseCreateTableSQL(
 				originalData);
 
-			Assert.assertEquals(
-				"Stale tables from a previous upgrade detected: " +
-					new TreeSet<>(
-						TransformUtil.transform(
-							tableNames, this::_getNormalizedName)),
-				exception.getMessage());
+			Set<String> normalizedTableNames = new TreeSet<>(
+				TransformUtil.transform(tableNames, this::_getNormalizedName));
+
+			String expectedMsg = StringBundler.concat(
+				"Stale tables from a previous upgrade detected: ",
+				normalizedTableNames, " in company ",
+				PortalInstancePool.getDefaultCompanyId());
+
+			if (PropsValues.DATABASE_PARTITION_ENABLED) {
+				expectedMsg = StringBundler.concat(
+					expectedMsg,
+					", Stale tables from a previous upgrade detected: ",
+					normalizedTableNames, " in company ",
+					TestPropsValues.getCompanyId());
+			}
+
+			Assert.assertEquals(expectedMsg, exception.getMessage());
 		}
 		finally {
 			serviceComponent.setData(originalData);

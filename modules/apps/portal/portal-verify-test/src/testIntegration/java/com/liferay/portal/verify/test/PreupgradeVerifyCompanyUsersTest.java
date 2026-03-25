@@ -62,36 +62,19 @@ public class PreupgradeVerifyCompanyUsersTest
 	}
 
 	@Test
-	public void testVerifyCompanyAdminUser() throws Exception {
+	public void testVerifyCompanyUsers() throws Exception {
 		Role role = _roleLocalService.getRole(
 			_companyId, RoleConstants.ADMINISTRATOR);
 
 		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
 
-		try {
-			_userLocalService.deleteRoleUsers(role.getRoleId(), users);
-
-			super.testVerify();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				"No admin user found for company " + _companyId,
-				exception.getMessage());
-		}
-		finally {
-			_userLocalService.addRoleUsers(role.getRoleId(), users);
-		}
-	}
-
-	@Test
-	public void testVerifyCompanyGuestUser() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
 		User user = _userLocalService.getGuestUser(_companyId);
 
 		try {
+			_userLocalService.deleteRoleUsers(role.getRoleId(), users);
+
 			db.runSQL(
 				StringBundler.concat(
 					"update User_ set type_ = ", UserConstants.TYPE_REGULAR,
@@ -103,10 +86,14 @@ public class PreupgradeVerifyCompanyUsersTest
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(
-				"No guest user found for company " + _companyId,
+				StringBundler.concat(
+					"No admin user found for company ", _companyId,
+					", No guest user found for company ", _companyId),
 				exception.getMessage());
 		}
 		finally {
+			_userLocalService.addRoleUsers(role.getRoleId(), users);
+
 			db.runSQL(
 				StringBundler.concat(
 					"update User_ set type_ = ", UserConstants.TYPE_GUEST,

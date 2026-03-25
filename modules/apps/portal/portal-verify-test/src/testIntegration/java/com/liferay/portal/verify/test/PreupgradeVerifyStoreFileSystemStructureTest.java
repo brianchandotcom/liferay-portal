@@ -37,7 +37,10 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.junit.After;
@@ -175,49 +178,35 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			_ROOT_DIR_FILE_SYSTEM_STORE + "/" +
 				PortalInstancePool.getCompanyIds()[0]);
 
-		File file = _touch(
+		File file1 = _touch(
 			_mkdirs(_ROOT_DIR_FILE_SYSTEM_STORE),
 			PortalInstancePool.getCompanyIds()[0]);
 
-		_testVerify(false, file + " is not a directory", null);
+		_testVerify(false, file1 + " is not a directory", null);
 
-		file = _touch(
+		File file2 = _touch(
 			_mkdirs(_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _repositoryId),
 			RandomTestUtil.randomString());
 
-		_testVerify(
-			false, null,
-			"Unexpected file " + file + " in file system structure");
-
-		file = _touch(
+		File file3 = _touch(
 			_mkdirs(_ROOT_DIR_FILE_SYSTEM_STORE, _companyId),
 			RandomTestUtil.randomString());
 
-		_testVerify(
-			false, null,
-			"Unexpected file " + file + " in file system structure");
-
-		file = _touch(
+		File file4 = _touch(
 			_mkdirs(
 				_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _repositoryId, "100"),
 			RandomTestUtil.randomString());
 
-		_testVerify(
-			false, null,
-			"Unexpected file " + file + " not matching version label pattern");
-
-		file = _mkdirs(
+		File file5 = _mkdirs(
 			_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _repositoryId, "100.txt");
 
 		_testVerify(
 			false, null,
-			StringBundler.concat(
-				"Unexpected file name directory ", file,
-				" with extension in file system structure"));
-
-		_mkdirs(
-			_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _repositoryId, "100",
-			"1.0");
+			"Unexpected file " + file2 + " in file system structure",
+			"Unexpected file " + file3 + " in file system structure",
+			"Unexpected file " + file4 + " not matching version label pattern",
+			"Unexpected file name directory " + file5 +
+				" with extension in file system structure");
 
 		_testVerify(false, null, null);
 
@@ -236,21 +225,42 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	}
 
 	private void _assertLogCapture(
-		String expectedLogEntryMessage, LogCapture logCapture) {
+		LogCapture logCapture, String... expectedLogEntryMessages) {
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		if (expectedLogEntryMessage == null) {
+		if (expectedLogEntryMessages == null) {
 			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
 			return;
 		}
 
-		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+		if (expectedLogEntryMessages.length == 1) {
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-		LogEntry logEntry = logEntries.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
-		Assert.assertEquals(expectedLogEntryMessage, logEntry.getMessage());
+			Assert.assertEquals(
+				expectedLogEntryMessages[0], logEntry.getMessage());
+
+			return;
+		}
+
+		Assert.assertEquals(
+			logEntries.toString(), expectedLogEntryMessages.length,
+			logEntries.size());
+
+		Set<String> verifyMessages = new HashSet<>();
+
+		for (LogEntry entry : logEntries) {
+			verifyMessages.add(entry.getMessage());
+		}
+
+		Set<String> expectedMessages = new HashSet<>(
+			Arrays.asList(expectedLogEntryMessages));
+
+		Assert.assertEquals(
+			verifyMessages.toString(), expectedMessages, verifyMessages);
 	}
 
 	private File _mkdirs(Object... objects) {
@@ -270,7 +280,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 	private void _testVerify(
 			boolean advancedFileSystemStore, String expectedExceptionMessage,
-			String expectedLogEntryMessage)
+			String... expectedLogEntryMessage)
 		throws Exception {
 
 		String dlStoreImpl = ReflectionTestUtil.getAndSetFieldValue(
@@ -285,7 +295,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		try {
 			testVerify();
 
-			_assertLogCapture(expectedLogEntryMessage, logCapture);
+			_assertLogCapture(logCapture, expectedLogEntryMessage);
 
 			if ((expectedExceptionMessage != null) ||
 				(expectedLogEntryMessage != null)) {
@@ -307,7 +317,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			Assert.assertEquals(
 				expectedExceptionMessage, exception.getMessage());
 
-			_assertLogCapture(expectedLogEntryMessage, logCapture);
+			_assertLogCapture(logCapture, expectedLogEntryMessage);
 		}
 		finally {
 			logCapture.close();

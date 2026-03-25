@@ -40,6 +40,7 @@ import jakarta.portlet.PortletPreferences;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -145,32 +146,25 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 				"Invalid scope primary key 0 for scope " + scope);
 		}
 
-		boolean propagateChanges = ParamUtil.getBoolean(
-			actionRequest, "propagateChanges");
-		boolean propagateContributedFragmentChanges = ParamUtil.getBoolean(
-			actionRequest, "propagateContributedFragmentChanges");
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"propagateChanges",
+				ParamUtil.getBoolean(actionRequest, "propagateChanges")
+			).put(
+				"propagateContributedFragmentChanges",
+				ParamUtil.getBoolean(
+					actionRequest, "propagateContributedFragmentChanges")
+			).build();
 
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
 			_configurationProvider.saveCompanyConfiguration(
-				FragmentServiceConfiguration.class, scopePK,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"propagateChanges", propagateChanges
-				).put(
-					"propagateContributedFragmentChanges",
-					propagateContributedFragmentChanges
-				).build());
+				FragmentServiceConfiguration.class, scopePK, properties);
 		}
 		else {
 			_configurationProvider.saveSystemConfiguration(
-				FragmentServiceConfiguration.class,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"propagateChanges", propagateChanges
-				).put(
-					"propagateContributedFragmentChanges",
-					propagateContributedFragmentChanges
-				).build());
+				FragmentServiceConfiguration.class, properties);
 		}
 	}
 

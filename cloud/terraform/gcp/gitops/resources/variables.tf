@@ -2,6 +2,10 @@ variable "argocd_namespace" {
 	default="argocd-system"
 	type=string
 }
+variable "crossplane_namespace" {
+	default="crossplane-system"
+	type=string
+}
 variable "deployment_name" {
 	type=string
 	validation {

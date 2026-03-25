@@ -253,9 +253,7 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			singular: Liferay.Language.get('moving-x-to-x'),
 		},
 		success: {
-			all: Liferay.Language.get(
-				'all-items-were-successfully-moved-to-x'
-			),
+			all: Liferay.Language.get('all-items-were-successfully-moved-to-x'),
 			plural: Liferay.Language.get(
 				'x-assets-were-successfully-moved-to-x'
 			),

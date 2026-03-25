@@ -178,12 +178,18 @@ function executeAction({
 	if (isFolder) {
 		if (action === 'copy') {
 			promise = replace
-				? FolderService.copyReplaceFolder(itemData.embedded.id, folder.id)
+				? FolderService.copyReplaceFolder(
+						itemData.embedded.id,
+						folder.id
+					)
 				: FolderService.copyFolder(itemData.embedded.id, folder.id);
 		}
 		else {
 			promise = replace
-				? FolderService.moveReplaceFolder(itemData.embedded.id, folder.id)
+				? FolderService.moveReplaceFolder(
+						itemData.embedded.id,
+						folder.id
+					)
 				: FolderService.moveFolder(itemData.embedded.id, folder.id);
 		}
 	}
@@ -319,7 +325,8 @@ function FolderItemSelectorModalContent({
 			return;
 		}
 
-		const isFolder = itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
+		const isFolder =
+			itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
 
 		const checkDuplicatePromise = isFolder
 			? FolderService.searchFolder(

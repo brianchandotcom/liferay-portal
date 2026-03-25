@@ -43,7 +43,7 @@ search:
                 drop:
                     -   ALL
             privileged: false
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
         version: 8.12.0
         volumeSize: 10Gi
     opensearch:

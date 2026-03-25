@@ -9,7 +9,7 @@ import {EConfigInURLBehavior, IConfigInURL} from './types';
 
 export const FDS_CONFIG_PARAM_NAME = '_fdsConfig';
 
-function getConfigParamName(id: string): string {
+export function getConfigParamName(id: string): string {
 	return `${id}${FDS_CONFIG_PARAM_NAME}`;
 }
 

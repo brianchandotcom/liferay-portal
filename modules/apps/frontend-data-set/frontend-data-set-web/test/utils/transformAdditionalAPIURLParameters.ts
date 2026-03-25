@@ -4,9 +4,9 @@
  */
 
 import {transformAdditionalAPIURLParameters} from '../../src/main/resources/META-INF/resources/utils/transformAdditionalAPIURLParameters';
-import {TLoadDataParams} from '../../src/main/resources/META-INF/resources/utils/types';
+import {ILoadDataArgs} from '../../src/main/resources/META-INF/resources/utils/types';
 
-const baseLoadDataParams: TLoadDataParams = {
+const baseLoadDataArgs: ILoadDataArgs = {
 	additionalAPIURLParameters: 'nestedFields=skus',
 	apiURL: '/o/products',
 	currentURL: '/sample-portlet-page-url',
@@ -29,29 +29,29 @@ describe('transformAdditionalAPIURLParameters', () => {
 	});
 
 	it('returns the original additionalAPIURLParameters when no transformer is provided', () => {
-		const result = transformAdditionalAPIURLParameters(baseLoadDataParams);
+		const result = transformAdditionalAPIURLParameters(baseLoadDataArgs);
 
 		expect(result).toBe('nestedFields=skus');
 	});
 
 	it('returns undefined when no transformer is provided and additionalAPIURLParameters is undefined', () => {
-		const params = {
-			...baseLoadDataParams,
+		const args = {
+			...baseLoadDataArgs,
 			additionalAPIURLParameters: undefined,
 		};
 
-		const result = transformAdditionalAPIURLParameters(params);
+		const result = transformAdditionalAPIURLParameters(args);
 
 		expect(result).toBeUndefined();
 	});
 
 	it('returns the value from the transformer when one is provided', () => {
-		const transformer = (params: TLoadDataParams) => {
-			return `${params.additionalAPIURLParameters}&extraField=bar`;
+		const transformer = (args: ILoadDataArgs) => {
+			return `${args.additionalAPIURLParameters}&extraField=bar`;
 		};
 
 		const result = transformAdditionalAPIURLParameters(
-			baseLoadDataParams,
+			baseLoadDataArgs,
 			transformer
 		);
 
@@ -60,10 +60,10 @@ describe('transformAdditionalAPIURLParameters', () => {
 
 	it('passes all loadDataParams to the transformer', () => {
 		const transformer = jest.fn(
-			(params: TLoadDataParams) => params.additionalAPIURLParameters
+			(args: ILoadDataArgs) => args.additionalAPIURLParameters
 		);
 
-		transformAdditionalAPIURLParameters(baseLoadDataParams, transformer);
+		transformAdditionalAPIURLParameters(baseLoadDataArgs, transformer);
 
 		expect(transformer).toHaveBeenCalledTimes(1);
 
@@ -90,23 +90,23 @@ describe('transformAdditionalAPIURLParameters', () => {
 	});
 
 	it('allows the transformer to conditionally modify additionalAPIURLParameters based on other params', () => {
-		const transformer = (params: TLoadDataParams) => {
-			if (params.searchParam) {
-				return `${params.additionalAPIURLParameters}&restrictFields=name`;
+		const transformer = (args: ILoadDataArgs) => {
+			if (args.searchParam) {
+				return `${args.additionalAPIURLParameters}&restrictFields=name`;
 			}
 
-			return params.additionalAPIURLParameters;
+			return args.additionalAPIURLParameters;
 		};
 
 		const resultWithSearch = transformAdditionalAPIURLParameters(
-			baseLoadDataParams,
+			baseLoadDataArgs,
 			transformer
 		);
 
 		expect(resultWithSearch).toBe('nestedFields=skus&restrictFields=name');
 
 		const resultWithoutSearch = transformAdditionalAPIURLParameters(
-			{...baseLoadDataParams, searchParam: undefined},
+			{...baseLoadDataArgs, searchParam: undefined},
 			transformer
 		);
 
@@ -114,24 +114,24 @@ describe('transformAdditionalAPIURLParameters', () => {
 	});
 
 	it('prevents the transformer from mutating the original params', () => {
-		const transformer = (params: TLoadDataParams) => {
-			params.sorts!.push({
+		const transformer = (args: ILoadDataArgs) => {
+			args.sorts!.push({
 				active: true,
 				direction: 'asc',
 				key: 'name',
 			});
 
-			params.additionalAPIURLParameters = 'mutated=true';
+			args.additionalAPIURLParameters = 'mutated=true';
 
 			return 'nestedFields=skus&extra=value';
 		};
 
-		transformAdditionalAPIURLParameters(baseLoadDataParams, transformer);
+		transformAdditionalAPIURLParameters(baseLoadDataArgs, transformer);
 
-		expect(baseLoadDataParams.additionalAPIURLParameters).toBe(
+		expect(baseLoadDataArgs.additionalAPIURLParameters).toBe(
 			'nestedFields=skus'
 		);
-		expect(baseLoadDataParams.sorts).toEqual([
+		expect(baseLoadDataArgs.sorts).toEqual([
 			{
 				active: true,
 				direction: 'desc',
@@ -144,7 +144,7 @@ describe('transformAdditionalAPIURLParameters', () => {
 		const transformer = () => undefined;
 
 		const result = transformAdditionalAPIURLParameters(
-			baseLoadDataParams,
+			baseLoadDataArgs,
 			transformer
 		);
 

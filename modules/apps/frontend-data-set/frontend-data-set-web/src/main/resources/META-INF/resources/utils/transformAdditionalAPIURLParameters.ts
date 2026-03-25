@@ -5,15 +5,15 @@
 
 import {deepClone} from 'frontend-js-web';
 
-import {TLoadDataParams} from './types';
+import {ILoadDataArgs} from './types';
 
 export function transformAdditionalAPIURLParameters(
-	loadDataParams: TLoadDataParams,
-	transformer?: (loadDataParams: TLoadDataParams) => string | undefined
+	loadDataArgs: ILoadDataArgs,
+	transformer?: (loadDataArgs: ILoadDataArgs) => string | undefined
 ): string | undefined {
 	if (transformer) {
-		return transformer(deepClone(loadDataParams));
+		return transformer(deepClone(loadDataArgs));
 	}
 
-	return loadDataParams.additionalAPIURLParameters;
+	return loadDataArgs.additionalAPIURLParameters;
 }

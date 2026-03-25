@@ -296,7 +296,7 @@ export interface IFileDropSettings {
 	onFileDrop?: TOnFileDrop;
 }
 
-export type TLoadDataParams = {
+export type ILoadDataArgs = {
 	additionalAPIURLParameters?: string;
 	apiURL: string;
 	currentURL?: string;
@@ -311,7 +311,7 @@ export interface IFrontendDataSetProps {
 	actionParameterName?: string;
 	additionalAPIURLParameters?: string;
 	additionalAPIURLParametersTransformer?: (
-		loadDataParams: TLoadDataParams
+		loadDataArgs: ILoadDataArgs
 	) => string | undefined;
 	apiURL?: string;
 	appURL?: string;

@@ -672,7 +672,7 @@ const FrontendDataSetContent = ({
 				? sorts.filter((sort: TSort) => sort.active)
 				: sorts;
 
-		const loadDataParams = {
+		const loadDataArgs = {
 			additionalAPIURLParameters,
 			apiURL,
 			currentURL,
@@ -684,9 +684,9 @@ const FrontendDataSetContent = ({
 		};
 
 		return loadData({
-			...loadDataParams,
+			...loadDataArgs,
 			additionalAPIURLParameters: transformAdditionalAPIURLParameters(
-				loadDataParams,
+				loadDataArgs,
 				additionalAPIURLParametersTransformer
 			),
 		});

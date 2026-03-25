@@ -17,11 +17,13 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.context.PublicationsDisplayContext;
 import com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext;
 import com.liferay.change.tracking.web.internal.helper.PublicationHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -95,13 +97,17 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 				return "/publications/view_publications.jsp";
 			}
 
+			CTConfiguration ctConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					CTConfiguration.class, themeDisplay.getCompanyId());
+
 			ViewChangesDisplayContext viewChangesDisplayContext =
 				new ViewChangesDisplayContext(
 					activeCtCollectionId, _basePersistenceRegistry,
-					_ctClosureFactory, ctCollection, _ctCollectionLocalService,
-					_ctDisplayRendererRegistry, _ctEntryLocalService,
-					_ctSchemaVersionLocalService, _groupLocalService, _language,
-					_portal,
+					_ctClosureFactory, ctCollection, ctConfiguration,
+					_ctCollectionLocalService, _ctDisplayRendererRegistry,
+					_ctEntryLocalService, _ctSchemaVersionLocalService,
+					_groupLocalService, _language, _portal,
 					new PublicationsDisplayContext(
 						_ctCollectionLocalService, _ctDisplayRendererRegistry,
 						_ctPreferencesLocalService, _ctRemoteLocalService,
@@ -144,6 +150,9 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private BasePersistenceRegistry _basePersistenceRegistry;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CTClosureFactory _ctClosureFactory;

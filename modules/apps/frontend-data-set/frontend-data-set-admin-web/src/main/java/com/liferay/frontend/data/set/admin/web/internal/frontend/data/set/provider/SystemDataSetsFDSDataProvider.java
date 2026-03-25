@@ -77,7 +77,7 @@ public class SystemDataSetsFDSDataProvider
 				getObjectDefinitionByExternalReferenceCode(
 					"L_DATA_SET", themeDisplay.getCompanyId());
 
-		List<SystemDataSet> systemDataSets = new ArrayList<>(end - start);
+		List<SystemDataSet> systemDataSets = new ArrayList<>();
 
 		for (SystemFDSEntry systemFDSEntry :
 				systemFDSEntries.subList(start, end)) {

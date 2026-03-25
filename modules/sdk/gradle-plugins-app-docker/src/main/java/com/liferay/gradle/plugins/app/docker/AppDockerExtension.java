@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 import org.gradle.api.Project;
 import org.gradle.api.specs.AndSpec;
@@ -52,9 +53,9 @@ public class AppDockerExtension {
 
 		};
 
-		_subprojects = project.getSubprojects();
+		Set<Project> allSubprojects = project.getSubprojects();
 
-		_subprojects = _subprojects.stream(
+		_subprojects = allSubprojects.stream(
 		).filter(
 			subproject -> subproject.getSubprojects(
 			).isEmpty()

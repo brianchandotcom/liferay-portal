@@ -68,7 +68,7 @@ public class SystemDataSetsFDSDataProvider
 		int end = Math.min(
 			fdsPagination.getEndPosition(), systemFDSEntries.size());
 
-		if (start >= systemFDSEntries.size()) {
+		if ((start >= systemFDSEntries.size()) || (start >= end)) {
 			return Collections.emptyList();
 		}
 

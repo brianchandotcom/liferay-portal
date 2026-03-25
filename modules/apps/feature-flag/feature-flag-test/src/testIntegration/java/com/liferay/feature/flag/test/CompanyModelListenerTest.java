@@ -33,8 +33,7 @@ import org.junit.runner.RunWith;
  * @author Thiago Buarque
  */
 @RunWith(Arquillian.class)
-public class
-	ProcessDeprecationFeatureFlagsInitialRequestPortalInstanceLifecycleListenerTest {
+public class CompanyModelListenerTest {
 
 	@ClassRule
 	@Rule

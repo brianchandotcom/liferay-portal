@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
+
 export enum TableCellContentType {
 	DESIGN_LIBRARY_LINK = 'designLibraryLink',
 	FROM_NOW_DATE_TIME = 'fromNowDateTime',

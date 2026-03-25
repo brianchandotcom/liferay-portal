@@ -14,6 +14,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -114,14 +115,15 @@ public class GroupModelListener extends BaseModelListener<Group> {
 						groupId, String.valueOf(group.getGroupId())));
 
 				if (newAcceptedGroupIds.length == 0) {
-					_objectDefinitionSettingLocalService.
-						deleteObjectDefinitionSetting(objectDefinitionSetting);
-
-					return;
+					objectDefinitionSetting.setName(
+						ObjectDefinitionSettingConstants.
+							NAME_ACCEPT_ALL_GROUPS);
+					objectDefinitionSetting.setValue(StringPool.TRUE);
 				}
-
-				objectDefinitionSetting.setValue(
-					StringUtil.merge(newAcceptedGroupIds));
+				else {
+					objectDefinitionSetting.setValue(
+						StringUtil.merge(newAcceptedGroupIds));
+				}
 
 				_objectDefinitionSettingLocalService.
 					updateObjectDefinitionSetting(objectDefinitionSetting);

@@ -16,6 +16,7 @@ import {openAssetUsageListModal} from '../../common/components/asset_usage/utils
 import {AssetLibrary} from '../../common/types/AssetLibrary';
 import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
+import {getFormattedLabel} from '../../common/utils/getFormattedText';
 import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
 import {openCMSModal} from '../../common/utils/openCMSModal';
 import EditAssetCategoriesModalContent from '../categorization/modal/EditAssetCategoriesModalContent';
@@ -344,13 +345,13 @@ export default function AssetsFDSPropsTransformer({
 								Liferay.Language.get(
 									'delete-folder-confirmation-body'
 								),
-								title
+								getFormattedLabel(title)
 							)
 						: sub(
 								Liferay.Language.get(
 									'delete-asset-confirmation-body'
 								),
-								title
+								getFormattedLabel(title)
 							);
 
 				if (additionalProps.brokenLinksCheckerEnabled) {

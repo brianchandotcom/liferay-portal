@@ -8,7 +8,12 @@ environmentId: ""
 gateway:
     className: ""
     name: ""
+license:
+    externalSecretName: ""
+    targetSecretName: "liferay-license"
 projectId: ""
 search:
-    elasticsearch: {}
+    elasticsearch:
+        name: ""
+secretStoreName: ""
 storage: {}

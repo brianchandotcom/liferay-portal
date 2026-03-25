@@ -99,15 +99,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -891,15 +894,61 @@ public class CTCollectionLocalServiceImpl
 		Map<Long, Set<Long>> enclosureMap = CTEnclosureUtil.getEnclosureMap(
 			ctClosure, modelClassNameId, modelClassPK);
 
-		for (Map.Entry<Long, Long> entry :
-				CTEnclosureUtil.getEnclosureParentEntries(
-					ctClosure, enclosureMap)) {
+		Set<Map.Entry<Long, Long>> visited = new HashSet<>();
 
-			int count = _ctEntryPersistence.countByC_MCNI_MCPK(
-				ctCollectionId, entry.getKey(), entry.getValue());
+		Queue<Map.Entry<Long, Long>> queue = new LinkedList<>();
 
-			if (count > 0) {
-				return false;
+		for (Map.Entry<Long, Set<Long>> enclosureEntry :
+				enclosureMap.entrySet()) {
+
+			long classNameId = enclosureEntry.getKey();
+
+			for (long classPK : enclosureEntry.getValue()) {
+				queue.add(
+					new AbstractMap.SimpleImmutableEntry<>(
+						classNameId, classPK));
+			}
+		}
+
+		while (!queue.isEmpty()) {
+			Map.Entry<Long, Long> nodeEntry = queue.poll();
+
+			Map<Long, List<Long>> parentPKsMap = ctClosure.getParentPKsMap(
+				nodeEntry.getKey(), nodeEntry.getValue());
+
+			for (Map.Entry<Long, List<Long>> parentEntry :
+					parentPKsMap.entrySet()) {
+
+				long parentClassNameId = parentEntry.getKey();
+
+				for (long parentClassPK : parentEntry.getValue()) {
+					Map.Entry<Long, Long> parentNodeEntry =
+						new AbstractMap.SimpleImmutableEntry<>(
+							parentClassNameId, parentClassPK);
+
+					if (!visited.add(parentNodeEntry)) {
+						continue;
+					}
+
+					Set<Long> enclosureClassPKs = enclosureMap.get(
+						parentClassNameId);
+
+					if ((enclosureClassPKs != null) &&
+						enclosureClassPKs.contains(parentClassPK)) {
+
+						queue.add(parentNodeEntry);
+					}
+					else {
+						int count = _ctEntryPersistence.countByC_MCNI_MCPK(
+							ctCollectionId, parentClassNameId, parentClassPK);
+
+						if (count > 0) {
+							return false;
+						}
+
+						queue.add(parentNodeEntry);
+					}
+				}
 			}
 		}
 
@@ -1338,7 +1387,7 @@ public class CTCollectionLocalServiceImpl
 		}
 
 		CTClosure ctClosure = _ctClosureFactory.create(
-			ctCollection.getCtCollectionId(), modelClassNameId);
+			ctCollection.getCtCollectionId());
 
 		Map<Long, Set<Long>> enclosureMap = CTEnclosureUtil.getEnclosureMap(
 			ctClosure, modelClassNameId, modelClassPK);

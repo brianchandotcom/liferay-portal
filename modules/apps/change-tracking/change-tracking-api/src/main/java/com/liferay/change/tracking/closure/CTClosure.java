@@ -17,6 +17,9 @@ public interface CTClosure {
 
 	public long getCTCollectionId();
 
+	public Map<Long, List<Long>> getParentPKsMap(
+		long classNameId, long classPK);
+
 	public Map<Long, List<Long>> getRootPKsMap();
 
 }

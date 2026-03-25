@@ -106,7 +106,7 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputFieldId": "ObjectField_ticketsIDs",
+										"inputFieldId": "ObjectField_ticketIds",
 										"inputHelpText": {
 											"en_US": "Provide the Ticket IDs to be prioritized.",
 											"es_ES": "Proporciona los identificadores de los tickets que quieras priorizar",

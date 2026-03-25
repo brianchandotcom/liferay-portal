@@ -11,60 +11,23 @@
 FragmentServiceConfigurationDisplayContext fragmentServiceConfigurationDisplayContext = (FragmentServiceConfigurationDisplayContext)request.getAttribute(FragmentServiceConfigurationDisplayContext.class.getName());
 %>
 
-<aui:form action="<%= fragmentServiceConfigurationDisplayContext.getEditFragmentServiceConfigurationURL() %>" method="post" name="fm">
-	<clay:sheet
-		size="full"
-	>
-		<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message="there-was-an-unknown-error" />
+<div class="form-group">
+	<span aria-hidden="true" class="loading-animation"></span>
 
-		<clay:sheet-header>
-			<h2>
-				<liferay-ui:message key="fragment-configuration-name" />
-			</h2>
-
-			<c:if test="<%= fragmentServiceConfigurationDisplayContext.showInfoMessage() %>">
-				<clay:alert
-					message="this-configuration-is-not-saved-yet.-the-values-shown-are-the-default"
-				/>
-			</c:if>
-		</clay:sheet-header>
-
-		<clay:sheet-section>
-			<div>
-				<span aria-hidden="true" class="loading-animation"></span>
-
-				<react:component
-					module="{FragmentServiceConfiguration} from fragment-web"
-					props='<%=
-						HashMapBuilder.<String, Object>put(
-							"alreadyPropagateContributedFragmentChanges", fragmentServiceConfigurationDisplayContext.isAlreadyPropagateContributedFragmentChanges()
-						).put(
-							"namespace", liferayPortletResponse.getNamespace()
-						).put(
-							"propagateChanges", fragmentServiceConfigurationDisplayContext.isPropagateChangesEnabled()
-						).put(
-							"propagateContributedFragmentChanges", fragmentServiceConfigurationDisplayContext.isPropagateContributedFragmentChangesEnabled()
-						).put(
-							"propagateContributedFragmentEntriesChangesURL", fragmentServiceConfigurationDisplayContext.getPropagateContributedFragmentEntriesChangesURL()
-						).build()
-					%>'
-				/>
-			</div>
-		</clay:sheet-section>
-
-		<clay:sheet-footer>
-			<clay:button
-				displayType="primary"
-				label="save"
-				type="submit"
-			/>
-
-			<clay:link
-				displayType="secondary"
-				href="<%= fragmentServiceConfigurationDisplayContext.getRedirect() %>"
-				label="cancel"
-				type="button"
-			/>
-		</clay:sheet-footer>
-	</clay:sheet>
-</aui:form>
+	<react:component
+		module="{FragmentServiceConfiguration} from fragment-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"alreadyPropagateContributedFragmentChanges", fragmentServiceConfigurationDisplayContext.isAlreadyPropagateContributedFragmentChanges()
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"propagateChanges", fragmentServiceConfigurationDisplayContext.isPropagateChangesEnabled()
+			).put(
+				"propagateContributedFragmentChanges", fragmentServiceConfigurationDisplayContext.isPropagateContributedFragmentChangesEnabled()
+			).put(
+				"propagateContributedFragmentEntriesChangesURL", fragmentServiceConfigurationDisplayContext.getPropagateContributedFragmentEntriesChangesURL()
+			).build()
+		%>'
+	/>
+</div>

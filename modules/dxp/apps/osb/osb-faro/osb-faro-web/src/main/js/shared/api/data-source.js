@@ -506,27 +506,6 @@ export async function fetchDemandbaseAccountsCount({groupId, id}) {
 	});
 }
 
-export async function fetchDemandbaseIntentDataCount({groupId, id}) {
-	return sendRequest({
-		method: 'GET',
-		path: `contacts/${groupId}/demandbase/intent_data_count?dataSourceId=${id}`
-	});
-}
-
-export async function fetchDemandbaseBuyingCommitteeCount({groupId, id}) {
-	return sendRequest({
-		method: 'GET',
-		path: `contacts/${groupId}/demandbase/buying_committee_count?dataSourceId=${id}`
-	});
-}
-
-export async function fetchDemandbaseCustomAttributesCount({groupId, id}) {
-	return sendRequest({
-		method: 'GET',
-		path: `contacts/${groupId}/demandbase/custom_attributes_count?dataSourceId=${id}`
-	});
-}
-
 export function updateDemandbase({
 	credentials,
 	fieldMappingMaps,

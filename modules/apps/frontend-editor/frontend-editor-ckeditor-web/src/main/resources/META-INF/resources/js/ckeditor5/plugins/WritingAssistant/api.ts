@@ -18,7 +18,7 @@ export async function createEventSource() {
 	}
 
 	return new EventSource(
-		`${token.serviceURL}${AI_HUB_ENDPOINT}/tasks/subscribe`,
+		`${token.serviceURL}${AI_HUB_ENDPOINT}/agent-instances/subscribe`,
 		{
 			fetch: (input, init) =>
 				fetch(input as RequestInfo, {
@@ -64,7 +64,7 @@ async function postToken() {
 	}
 }
 
-export async function postTask(
+export async function postAgentInstance(
 	content: string,
 	eventSourceReference: string,
 	type: EActionType
@@ -75,7 +75,7 @@ export async function postTask(
 		return;
 	}
 
-	await fetch(`${token.serviceURL}${AI_HUB_ENDPOINT}/tasks`, {
+	await fetch(`${token.serviceURL}${AI_HUB_ENDPOINT}/agent-instances`, {
 		body: JSON.stringify({
 			context: {
 				text: content,

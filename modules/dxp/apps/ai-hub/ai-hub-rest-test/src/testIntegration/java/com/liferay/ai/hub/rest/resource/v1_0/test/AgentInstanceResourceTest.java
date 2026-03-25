@@ -261,7 +261,7 @@ public class AgentInstanceResourceTest
 	public void testGetAgentInstanceSubscribe() throws Exception {
 		Assert.assertNotNull(
 			SseEventSourceTestUtil.open(
-				List.of(), new ArrayList<>(), "tasks/subscribe"));
+				List.of(), new ArrayList<>(), "agent-instances/subscribe"));
 	}
 
 	@Ignore
@@ -338,7 +338,7 @@ public class AgentInstanceResourceTest
 			).put(
 				"type", type
 			).toString(),
-			"ai-hub/v1.0/tasks",
+			"ai-hub/v1.0/agent-instances",
 			HashMapBuilder.put(
 				"Authorization",
 				"Bearer " + tokenJSONObject.getString("accessToken")
@@ -358,7 +358,7 @@ public class AgentInstanceResourceTest
 			).put(
 				"type", "Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/tasks", Http.Method.POST);
+			"ai-hub/v1.0/agent-instances", Http.Method.POST);
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.getWorkflowInstance(
@@ -386,7 +386,7 @@ public class AgentInstanceResourceTest
 			).put(
 				"type", "Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/tasks", Http.Method.POST);
+			"ai-hub/v1.0/agent-instances", Http.Method.POST);
 
 		workflowInstance = _workflowInstanceManager.getWorkflowInstance(
 			TestPropsValues.getCompanyId(),
@@ -409,7 +409,7 @@ public class AgentInstanceResourceTest
 			).put(
 				"type", "AI Decision Node With Tool Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/tasks", Http.Method.POST);
+			"ai-hub/v1.0/agent-instances", Http.Method.POST);
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -481,7 +481,7 @@ public class AgentInstanceResourceTest
 		List<String> lines = new ArrayList<>();
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(countDownLatch), lines, "tasks/subscribe");
+			List.of(countDownLatch), lines, "agent-instances/subscribe");
 
 		JSONObject jsonObject = _postAgentInstance(
 			"Thi text ix wrong.", "text", sseEventSinkKey,
@@ -533,7 +533,7 @@ public class AgentInstanceResourceTest
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
 			List.of(countDownLatch1, countDownLatch2), lines,
-			"tasks/subscribe");
+			"agent-instances/subscribe");
 
 		_postAgentInstance(
 			"What is Feliphe's favorite food?", "userMessage", sseEventSinkKey,
@@ -610,7 +610,7 @@ public class AgentInstanceResourceTest
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
 			List.of(countDownLatch1, countDownLatch2), lines,
-			"tasks/subscribe");
+			"agent-instances/subscribe");
 
 		HTTPTestUtil.customize(
 		).withCredentials(
@@ -670,7 +670,7 @@ public class AgentInstanceResourceTest
 		List<String> lines = new ArrayList<>();
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(countDownLatch), lines, "tasks/subscribe");
+			List.of(countDownLatch), lines, "agent-instances/subscribe");
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -682,7 +682,7 @@ public class AgentInstanceResourceTest
 			).put(
 				"type", "LLM Node With Tool Workflow Definition"
 			).toString(),
-			"ai-hub/v1.0/tasks", Http.Method.POST);
+			"ai-hub/v1.0/agent-instances", Http.Method.POST);
 
 		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 
@@ -701,7 +701,7 @@ public class AgentInstanceResourceTest
 		List<String> lines = new ArrayList<>();
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(countDownLatch), lines, "tasks/subscribe");
+			List.of(countDownLatch), lines, "agent-instances/subscribe");
 
 		String inputText =
 			"This is a long and detailed sentence that should be shortened " +

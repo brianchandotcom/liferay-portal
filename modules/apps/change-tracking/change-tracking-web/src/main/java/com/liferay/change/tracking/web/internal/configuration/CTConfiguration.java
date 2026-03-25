@@ -24,6 +24,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTConfiguration {
 
 	@Meta.AD(
+		deflt = "60000", description = "context-view-score-threshold-help",
+		name = "context-view-score-threshold", required = false
+	)
+	public int contextViewScoreThreshold();
+
+	@Meta.AD(
 		description = "hidden-applications-help", name = "hidden-applications",
 		required = false
 	)

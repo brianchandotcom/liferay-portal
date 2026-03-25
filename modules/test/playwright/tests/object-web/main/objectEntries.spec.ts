@@ -2924,6 +2924,79 @@ test.describe('Manage object entries through View Object Entries', () => {
 		);
 	});
 
+	test('can set picklist default value via expression builder', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const {listTypeDefinition, listTypeEntries} =
+			await postListTypeDefinitionListTypeEntries({
+				apiHelpers,
+				listTypeEntriesLength: 5,
+			});
+
+		const objectFields = generateObjectFields({
+			listTypeDefinitionExternalReferenceCode:
+				listTypeDefinition.externalReferenceCode,
+			objectFieldBusinessTypes: ['Picklist', 'Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		const picklistField = objectFields[0];
+
+		await objectFieldsPage.openObjectField(picklistField.label['en_US']);
+
+		await objectFieldsPage.advancedTab.click();
+
+		await objectFieldsPage.useDefaultValueToggle.check();
+
+		await objectFieldsPage.iframeLocator
+			.getByRole('button', {name: 'Expression Builder'})
+			.click();
+
+		const textFieldName = objectFields[1].name;
+
+		await objectFieldsPage.iframeLocator
+			.getByPlaceholder('Create an expression.')
+			.fill(textFieldName);
+
+		await objectFieldsPage.editFieldSaveButton.click();
+
+		await waitForAlert(
+			page,
+			'Success:The object field was updated successfully'
+		);
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		const firstItemName = listTypeEntries[0].name;
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{[textFieldName]: firstItemName},
+			applicationName
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(
+			page.locator(`[data-id$=":${picklistField.name},name"]`)
+		).toHaveText(firstItemName);
+	});
+
 	test('can update an object entry with a date and time field', async ({
 		apiHelpers,
 		page,
@@ -4636,6 +4709,91 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await expect(
 			viewObjectEntriesPage.page.getByText('astronaut.png')
+		).toBeVisible();
+	});
+
+	test('verify that updating the default value of an object field picklist type only affects new entries', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const {listTypeDefinition, listTypeEntries} =
+			await postListTypeDefinitionListTypeEntries({
+				apiHelpers,
+				listTypeEntriesLength: 2,
+			});
+
+		const objectFields = generateObjectFields({
+			listTypeDefinitionExternalReferenceCode:
+				listTypeDefinition.externalReferenceCode,
+			objectFieldBusinessTypes: ['Picklist'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const firstItemName = listTypeEntries[0].name;
+		const secondItemName = listTypeEntries[1].name;
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		await objectFieldsPage.setDefaultValue({
+			defaultValue: firstItemName,
+			objectFieldBusinessType: 'Picklist',
+			objectFieldName: objectFields[0].label['en_US'],
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.getByRole('cell', {name: firstItemName})
+		).toBeVisible();
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		await objectFieldsPage.setDefaultValue({
+			defaultValue: secondItemName,
+			objectFieldBusinessType: 'Picklist',
+			objectFieldName: objectFields[0].label['en_US'],
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.getByRole('cell', {name: firstItemName})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {name: secondItemName})
 		).toBeVisible();
 	});
 });

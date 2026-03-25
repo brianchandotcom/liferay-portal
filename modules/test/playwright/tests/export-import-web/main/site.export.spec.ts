@@ -17,8 +17,8 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import getRandomString from '../../../utils/getRandomString';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
-import {getTempDir} from '../../../utils/temp';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {readFileFromZip} from '../../../utils/zip';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
@@ -48,27 +48,80 @@ test('can export at site level with custom export task name', async ({
 }) => {
 	await exportImportPage.goToExport();
 
-	const taskName = 'MyExport-' + getRandomString();
+	const taskName = getRandomString();
 
 	const exportFilePath = await exportImportPage.export({taskName});
 
-	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}MyExport-`));
+	const expectedFileName = `${taskName.replace(/ /g, '_')}.lar`;
+
+	expect(exportFilePath).toContain(expectedFileName);
 });
 
-test('can export at site level with the default file name', async ({
-	exportImportPage,
-}) => {
-	await exportImportPage.goToExport();
+test(
+	'can export at site level without file name',
+	{tag: '@LPD-76875'},
+	async ({exportImportPage, page}) => {
+		await exportImportPage.goToExport();
 
-	await exportImportPage.newExportButton.click();
+		await exportImportPage.newExportButton.click();
 
-	await exportImportPage.exportButton.click();
+		await exportImportPage.exportButton.click();
 
-	const exportFilePath =
-		await exportImportPage.downloadExportProcess('Export');
+		await expect(
+			page.getByRole('alert').filter({
+				hasText: 'Please enter a file with a valid file name.',
+			})
+		).toBeVisible();
+	}
+);
 
-	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}Export-`));
-});
+test(
+	'can export twice with the same name without overwriting the original file',
+	{tag: '@LPD-76875'},
+	async ({apiHelpers, exportImportPage}) => {
+		const taskName = getRandomString();
+		const expectedFileName = `${taskName.replace(/ /g, '_')}.lar`;
+
+		await exportImportPage.goToExport();
+		const firstExportFilePath = await exportImportPage.export({taskName});
+
+		const firstManifest = await readFileFromZip(
+			'manifest.xml',
+			firstExportFilePath
+		);
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				scope: 'site',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: objectDefinition.name},
+			`${applicationName}/scopes/Guest`
+		);
+
+		await exportImportPage.goToExport();
+		const secondExportFilePath = await exportImportPage.export({taskName});
+
+		const secondManifest = await readFileFromZip(
+			'manifest.xml',
+			secondExportFilePath
+		);
+
+		expect(firstExportFilePath).toContain(expectedFileName);
+		expect(secondExportFilePath).toContain(expectedFileName);
+
+		expect(firstManifest).not.toContain(objectDefinition.name);
+		expect(secondManifest).toContain(objectDefinition.name);
+	}
+);
 
 test('can see corresponding elements at site level', async ({
 	productMenuPage,

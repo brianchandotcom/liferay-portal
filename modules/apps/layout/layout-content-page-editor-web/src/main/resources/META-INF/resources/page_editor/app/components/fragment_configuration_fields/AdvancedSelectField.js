@@ -143,8 +143,9 @@ export function AdvancedSelectField({
 
 	return (
 		<div
-			className={classNames('page-editor__select-field d-flex', {
+			className={classNames('page-editor__select-field d-flex rounded', {
 				custom: !isTokenValueOrInherited,
+				old: !Liferay.FeatureFlags['LPD-40054'],
 			})}
 		>
 			{isTokenValueOrInherited ? (

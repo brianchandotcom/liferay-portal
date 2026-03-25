@@ -46,7 +46,7 @@ const folderItemSelectorBulkAction = ({
 	);
 
 	if (hasFileOrFolder && hasContent) {
-		const actionType = action === 'move' ? 'move' : 'copy';
+		const actionType = action === 'move' ? 'moved' : 'copied';
 		const message = Liferay.Language.get(
 			`assets-with-different-content-types-cannot-be-${actionType}-together.-select-assets-with-the-same-content-type-and-try-again`
 		);

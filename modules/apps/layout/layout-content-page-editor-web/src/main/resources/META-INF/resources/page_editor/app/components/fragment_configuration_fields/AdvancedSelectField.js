@@ -143,10 +143,13 @@ export function AdvancedSelectField({
 
 	return (
 		<div
-			className={classNames('page-editor__select-field d-flex rounded', {
-				custom: !isTokenValueOrInherited,
-				old: !Liferay.FeatureFlags['LPD-40054'],
-			})}
+			className={classNames(
+				'd-flex input-group-item-focusable page-editor__select-field rounded',
+				{
+					custom: !isTokenValueOrInherited,
+					old: !Liferay.FeatureFlags['LPD-40054'],
+				}
+			)}
 		>
 			{isTokenValueOrInherited ? (
 				<SingleSelectWithIcon
@@ -182,7 +185,7 @@ export function AdvancedSelectField({
 				isTokenValueOrInherited ? (
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('detach-style')}
-						className="border-0 flex-shrink-0 mb-0 ml-2 page-editor__select-field__action-button"
+						className="border-0 flex-shrink-0 mb-0 page-editor__select-field__action-button"
 						displayType="secondary"
 						onClick={() => {
 							onSetValue({
@@ -200,7 +203,7 @@ export function AdvancedSelectField({
 					<ClayDropDown
 						active={active}
 						alignmentPosition={Align.BottomRight}
-						className="flex-shrink-0 ml-2"
+						className="flex-shrink-0"
 						menuElementAttrs={{
 							containerProps: {
 								className: 'cadmin',
@@ -212,7 +215,7 @@ export function AdvancedSelectField({
 								aria-label={Liferay.Language.get(
 									'value-from-stylebook'
 								)}
-								className="border-0"
+								className="border-0 page-editor__select-field__action-button"
 								displayType="secondary"
 								id={triggerId}
 								size="sm"
@@ -252,7 +255,7 @@ export function AdvancedSelectField({
 			{value && value !== field.defaultValue ? (
 				<ClayButtonWithIcon
 					aria-label={resetButtonLabel}
-					className="border-0 flex-shrink-0 mb-0 ml-2 page-editor__select-field__action-button"
+					className="border-0 flex-shrink-0 mb-0 page-editor__select-field__action-button"
 					displayType="secondary"
 					onClick={() =>
 						onSetValue({isTokenValue: true, value: null})

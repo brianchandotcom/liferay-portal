@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectEntryFolderLocalServiceWrapper;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -124,6 +125,7 @@ public class ObjectEntryFolderResourceTest
 		_testGetObjectEntryFolderActionsWithGroupSharingDisabled();
 		_testGetObjectEntryFolderActionsWithSharingEnabled();
 		_testGetObjectEntryFolderActionsWithSystemSharingDisabled();
+		_testGetObjectEntryFolderActionsWithoutUpdatePermission();
 	}
 
 	@Override
@@ -887,6 +889,41 @@ public class ObjectEntryFolderResourceTest
 				_testDepotEntryGroup.getGroupId(),
 				originalUnicodeProperties.toString());
 		}
+	}
+
+	@TestInfo("LPD-62553")
+	private void _testGetObjectEntryFolderActionsWithoutUpdatePermission()
+		throws Exception {
+
+		User user = UserTestUtil.addUser(
+			testCompany.getCompanyId(), testCompany.getUserId(), "test",
+			"UserServiceTest." + RandomTestUtil.nextLong() + "@liferay.com",
+			StringPool.BLANK, LocaleUtil.getDefault(), "UserServiceTest",
+			"UserServiceTest", null, null);
+
+		_addResourcePermission(ActionKeys.VIEW, user.getUserId());
+
+		ObjectEntryFolderResource objectEntryFolderResource =
+			ObjectEntryFolderResource.builder(
+			).authentication(
+				user.getEmailAddress(), "test"
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testGetObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder objectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				postObjectEntryFolder.getId());
+
+		Map<String, Map<String, String>> actions =
+			objectEntryFolder.getActions();
+
+		Assert.assertFalse(actions.containsKey("share"));
 	}
 
 	@TestInfo("LPD-62553")

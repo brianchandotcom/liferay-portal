@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -74,24 +75,23 @@ public class ViewStructuresDisplayContextTest
 			fdsActionDropdownItems.toString(), 6,
 			fdsActionDropdownItems.size());
 
-		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(0), "pencil", "edit", "edit", "get",
-			null);
-		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(1), "list-ul", "viewUsages",
-			"view-usages", "get", null);
-		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(2), "export", "export", "export-as-json",
-			"get", null);
-		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(3), "import", "import",
-			"import-and-override", "get", null);
-		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(4), "password-policies", "permissions",
-			"permissions", "get", null);
-		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(5), "trash", "delete", "delete",
-			"delete", Map.of("system", false));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"pencil", "edit", "Edit", "get", fdsActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"list-ul", "viewUsages", "View Usages", "get",
+			fdsActionDropdownItems.get(1));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"export", "export", "Export as JSON", "get",
+			fdsActionDropdownItems.get(2));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"import", "import", "Import and Override", "get",
+			fdsActionDropdownItems.get(3));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"password-policies", "permissions", "Permissions", "get",
+			fdsActionDropdownItems.get(4));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"trash", "delete", "Delete", "delete", Map.of("system", false),
+			fdsActionDropdownItems.get(5));
 	}
 
 	private void _assertDropdownItem(
@@ -106,27 +106,6 @@ public class ViewStructuresDisplayContextTest
 				"/structure-builder?objectFolderExternalReferenceCode=" +
 					objectFolderExternalReferenceCode,
 			dropdownItem.get("href"));
-	}
-
-	private void _assertFDSActionDropdownItem(
-		FDSActionDropdownItem fdsActionDropdownItem, String icon, String id,
-		String label, String method, Map<String, Object> visibilityFilters) {
-
-		Map<String, Object> data =
-			(Map<String, Object>)fdsActionDropdownItem.get("data");
-
-		Assert.assertEquals(id, data.get("id"));
-		Assert.assertEquals(method, data.get("method"));
-
-		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
-		Assert.assertEquals(
-			language.get(LocaleUtil.getDefault(), label),
-			fdsActionDropdownItem.get("label"));
-
-		if (visibilityFilters != null) {
-			Assert.assertEquals(
-				data.get("visibilityFilters"), visibilityFilters);
-		}
 	}
 
 	private Object _getSectionDisplayContext(

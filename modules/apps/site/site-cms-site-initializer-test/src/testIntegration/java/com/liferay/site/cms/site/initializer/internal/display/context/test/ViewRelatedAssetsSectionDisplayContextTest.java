@@ -10,6 +10,7 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -192,22 +193,20 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 			fdsActionDropdownItems.toString(), 5,
 			fdsActionDropdownItems.size());
 
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(0), "pencil", "actionLink", "Edit",
-			"get", "item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(1), "view", "view-content", "View", null,
-			"item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(2), "view", "view-file", "View", null,
-			"item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(3), "share", "share", "Share", "get",
-			"item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(4), "chain-broken", "unlink-asset",
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"pencil", "actionLink", "Edit", "get",
+			fdsActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"view", "view-content", "View", null,
+			fdsActionDropdownItems.get(1));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"view", "view-file", "View", null, fdsActionDropdownItems.get(2));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"share", "share", "Share", "get", fdsActionDropdownItems.get(3));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"chain-broken", "unlink-asset",
 			"Remove from " + _objectDefinition.getLabel(LocaleUtil.US), null,
-			"item", null);
+			fdsActionDropdownItems.get(4));
 	}
 
 	private void _assertDropdownItem(

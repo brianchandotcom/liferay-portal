@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -177,42 +178,39 @@ public class ViewSharedWithMeSectionDisplayContextTest
 			fdsActionDropdownItems.toString(), 9,
 			fdsActionDropdownItems.size());
 
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(0), "view", "actionLink", "view", "get",
-			"item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(1), "share", "share", "share", "get",
-			"item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(2), "view", "view-file", "view", null,
-			"item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(3), "view", "view-content", "view",
-			"get", "item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(4), "pencil", "actionLinkEdit", "edit",
-			"get", "item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(5), "download", "download", "download",
-			"get", "item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(6), "view", "actionLinkFolder",
-			"view-folder", "get", "item",
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"view", "actionLink", "View", "get", fdsActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"share", "share", "Share", "get", fdsActionDropdownItems.get(1));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"view", "view-file", "View", null, fdsActionDropdownItems.get(2));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"view", "view-content", "View", "get",
+			fdsActionDropdownItems.get(3));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"pencil", "actionLinkEdit", "Edit", "get",
+			fdsActionDropdownItems.get(4));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"download", "download", "Download", "get",
+			fdsActionDropdownItems.get(5));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"view", "actionLinkFolder", "View Folder", "get",
 			HashMapBuilder.<String, Object>put(
 				"className", ObjectEntryFolder.class.getName()
-			).build());
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(7), "pencil", "edit-folder", "edit",
-			"get", "item",
+			).build(),
+			fdsActionDropdownItems.get(6));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"pencil", "edit-folder", "Edit", "get",
 			HashMapBuilder.<String, Object>put(
 				"className", ObjectEntryFolder.class.getName()
-			).build());
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(8), "download", "download-folder",
-			"download", "get", "item",
+			).build(),
+			fdsActionDropdownItems.get(7));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"download", "download-folder", "Download", "get",
 			HashMapBuilder.<String, Object>put(
 				"className", ObjectEntryFolder.class.getName()
-			).build());
+			).build(),
+			fdsActionDropdownItems.get(8));
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -184,18 +185,18 @@ public class ViewRecycleBinSectionDisplayContextTest
 			fdsActionDropdownItems.toString(), 3,
 			fdsActionDropdownItems.size());
 
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(0), "view", "actionLinkFolder",
-			"view-folder", "get", "item",
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"view", "actionLinkFolder", "View Folder", "get",
 			HashMapBuilder.<String, Object>put(
 				"entryClassName", ObjectEntryFolder.class.getName()
-			).build());
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(1), "trash", "delete", "delete",
-			"delete", "item", null);
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(2), "restore", "restore", "restore",
-			"restore", "item", null);
+			).build(),
+			fdsActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"trash", "delete", "Delete", "delete",
+			fdsActionDropdownItems.get(1));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"restore", "restore", "Restore", "restore",
+			fdsActionDropdownItems.get(2));
 	}
 
 	@Override

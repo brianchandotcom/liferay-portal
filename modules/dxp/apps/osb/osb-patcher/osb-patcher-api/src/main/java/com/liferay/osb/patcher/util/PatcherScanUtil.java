@@ -6,6 +6,7 @@
 package com.liferay.osb.patcher.util;
 
 import com.liferay.osb.patcher.constants.PatcherFixConstants;
+import com.liferay.osb.patcher.exception.PatcherScanException;
 import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.model.PatcherFix;
 import com.liferay.osb.patcher.model.PatcherProductVersion;
@@ -13,15 +14,10 @@ import com.liferay.osb.patcher.model.PatcherProjectVersion;
 import com.liferay.osb.patcher.service.PatcherFixLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherProductVersionLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherProjectVersionLocalServiceUtil;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,14 +54,17 @@ public class PatcherScanUtil {
 
 		List<Long> patcherProjectVersionIds = new ArrayList<>();
 
-		patcherProjectVersionIds.add(patcherBuild.getPatcherProjectVersionId());
+		long patcherProjectVersionId =
+			patcherBuild.getPatcherProjectVersionId();
+
+		patcherProjectVersionIds.add(patcherProjectVersionId);
 
 		if (!PatcherProjectVersionUtil.isCombinedBranchPatcherProjectVersion(
-				patcherBuild.getPatcherProjectVersionId())) {
+				patcherProjectVersionId)) {
 
 			PatcherProjectVersion siblingPatcherProjectVersion =
 				PatcherProjectVersionUtil.getSiblingPatcherProjectVersion(
-					patcherBuild.getPatcherProjectVersionId());
+					patcherProjectVersionId);
 
 			patcherProjectVersionIds.add(
 				siblingPatcherProjectVersion.getPatcherProjectVersionId());
@@ -82,38 +81,22 @@ public class PatcherScanUtil {
 			Map<Long, List<Long>> otherPatcherProjectVersionIdPatcherFixIdsMap =
 				scanPatcherFixIdsByOtherProjectVersions(
 					PatcherProjectVersionLocalServiceUtil.
-						getPatcherProjectVersion(
-							patcherBuild.getPatcherProjectVersionId()),
+						getPatcherProjectVersion(patcherProjectVersionId),
 					patcherBuildTickets);
 
 			patcherProjectVersionIdPatcherFixIdsMap.putAll(
 				otherPatcherProjectVersionIdPatcherFixIdsMap);
 
-			StringBundler sb = new StringBundler(7);
-
-			sb.append(
-				LanguageUtil.get(
-					LocaleUtil.getMostRelevantLocale(),
-					"failed-building-a-patch-for-tickets"));
-			sb.append("<br />");
-			sb.append(
-				com.liferay.portal.kernel.util.StringUtil.replace(
-					patcherBuild.getName(), CharPool.COMMA,
-					StringPool.COMMA_AND_SPACE));
-			sb.append("<br /><br />");
-			sb.append(
-				LanguageUtil.get(
-					LocaleUtil.getMostRelevantLocale(),
-					"there-was-no-match-found-in-our-fix-catalog-for-the-" +
-						"following-tokens"));
-			sb.append("<br />");
-			sb.append(
+			Object[] arguments = {
+				patcherBuild.getPatcherProductVersionId(),
+				patcherProjectVersionId,
 				StringUtil.merge(
-					patcherBuildTickets, StringPool.COMMA_AND_SPACE));
+					patcherBuildTickets, StringPool.COMMA_AND_SPACE),
+				StringPool.BLANK
+			};
 
-			_log.error(sb.toString());
-
-			throw new Exception(sb.toString());
+			throw new PatcherScanException(
+				"failed-building-a-patch-for-fixes-x", arguments);
 		}
 
 		return patcherProjectVersionIdPatcherFixIdsMap;
@@ -448,11 +431,7 @@ public class PatcherScanUtil {
 			patcherProjectVersionId, patcherBuildTickets,
 			patcherFixesSelection);
 
-		StringBundler sb = new StringBundler(
-			(25 * patcherBuildTickets.size()) + 4);
-
-		sb.append("<div style=\"border:1px solid gray; height:300px; ");
-		sb.append("overflow-y:scroll;\">");
+		List<Map<String, Object>> trace = new ArrayList<>();
 
 		while (!patcherBuildTickets.isEmpty()) {
 			PatcherFix patcherFix = PatcherFixUtil.getPatcherFix(
@@ -469,41 +448,20 @@ public class PatcherScanUtil {
 					return patcherFixIds;
 				}
 
-				sb.append("NO MATCH FOUND</div>");
+				PatcherProjectVersion patcherProjectVersion =
+					PatcherProjectVersionLocalServiceUtil.
+						getPatcherProjectVersion(patcherProjectVersionId);
 
-				String msg = sb.toString();
-
-				sb = new StringBundler(12);
-
-				sb.append(
-					LanguageUtil.get(
-						LocaleUtil.getMostRelevantLocale(),
-						"failed-building-a-patch-for-tickets"));
-				sb.append("<br />");
-				sb.append(
-					com.liferay.portal.kernel.util.StringUtil.replace(
-						patcherBuildName, CharPool.COMMA,
-						StringPool.COMMA_AND_SPACE));
-				sb.append("<br /><br />");
-				sb.append(
-					LanguageUtil.get(
-						LocaleUtil.getMostRelevantLocale(),
-						"there-was-no-match-found-in-our-fix-catalog-for-the-" +
-							"following-tokens"));
-				sb.append("<br />");
-				sb.append(
+				Object[] arguments = {
+					patcherProjectVersion.getPatcherProductVersionId(),
+					patcherProjectVersionId,
 					StringUtil.merge(
-						patcherBuildTickets, StringPool.COMMA_AND_SPACE));
-				sb.append("<br /><br />");
-				sb.append(
-					LanguageUtil.get(
-						LocaleUtil.getMostRelevantLocale(), "process"));
-				sb.append(":<br />");
-				sb.append(msg);
+						patcherBuildTickets, StringPool.COMMA_AND_SPACE),
+					trace
+				};
 
-				_log.error(sb.toString());
-
-				throw new Exception(sb.toString());
+				throw new PatcherScanException(
+					"failed-building-a-patch-for-fixes-x", arguments);
 			}
 
 			PatcherFix latestPatcherFix = PatcherBuildUtil.getLatestPatcherFix(
@@ -511,15 +469,6 @@ public class PatcherScanUtil {
 
 			if (latestPatcherFix.getType() ==
 					PatcherFixConstants.TYPE_EXCLUDED) {
-
-				String msg = sb.toString();
-
-				sb = new StringBundler(12);
-
-				sb.append("PICKED UP FIX ID WITH EXCLUDED ANCESTOR(S)<br />");
-				sb.append("FIX ID:");
-				sb.append(patcherFix.getPatcherFixId());
-				sb.append("<br /><br />EXCLUDED ANCESTOR(S):<br />");
 
 				List<Long> excludedAncestorIds = new ArrayList<>();
 
@@ -535,13 +484,15 @@ public class PatcherScanUtil {
 					}
 				}
 
-				sb.append(
+				Object[] arguments = {
+					patcherFix.getPatcherFixId(),
 					StringUtil.merge(
-						excludedAncestorIds, StringPool.COMMA_AND_SPACE));
+						excludedAncestorIds, StringPool.COMMA_AND_SPACE),
+					trace
+				};
 
-				sb.append(msg);
-
-				throw new Exception(sb.toString());
+				throw new PatcherScanException(
+					"picked-up-fix-id-with-excluded-ancestors", arguments);
 			}
 
 			patcherFixIds.add(latestPatcherFix.getPatcherFixId());
@@ -551,19 +502,16 @@ public class PatcherScanUtil {
 
 			patcherBuildTickets.removeAll(patcherFixTickets);
 
-			sb.append("FOUND:<br />ID: ");
-			sb.append(latestPatcherFix.getPatcherFixId());
-			sb.append("<br />NAME: \"");
-			sb.append(
-				com.liferay.portal.kernel.util.StringUtil.replace(
-					latestPatcherFix.getName(), CharPool.COMMA,
-					StringPool.COMMA_AND_SPACE));
-			sb.append("\"<br />REMOVING TICKETS FROM PHRASE..<br /><br />");
-			sb.append("NEW PHRASE:<br />\"");
-			sb.append(
-				StringUtil.merge(
-					patcherBuildTickets, StringPool.COMMA_AND_SPACE));
-			sb.append("\"<br /><br />");
+			trace.add(
+				HashMapBuilder.<String, Object>put(
+					"patcherFixId", latestPatcherFix.getPatcherFixId()
+				).put(
+					"patcherFixName", latestPatcherFix.getName()
+				).put(
+					"remainingTickets",
+					StringUtil.merge(
+						patcherBuildTickets, StringPool.COMMA_AND_SPACE)
+				).build());
 		}
 
 		patcherFixIds.addAll(patcherFixPackFixIds);
@@ -661,8 +609,5 @@ public class PatcherScanUtil {
 
 		return patcherFixPackFixIds;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PatcherScanUtil.class);
 
 }

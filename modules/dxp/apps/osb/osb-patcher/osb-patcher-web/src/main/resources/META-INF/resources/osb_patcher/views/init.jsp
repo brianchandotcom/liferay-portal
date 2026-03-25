@@ -25,6 +25,7 @@ page import="com.liferay.osb.patcher.constants.PatcherConstants" %><%@
 page import="com.liferay.osb.patcher.constants.PatcherFixConstants" %><%@
 page import="com.liferay.osb.patcher.constants.PatcherProductVersionConstants" %><%@
 page import="com.liferay.osb.patcher.constants.WorkflowConstants" %><%@
+page import="com.liferay.osb.patcher.exception.PatcherScanException" %><%@
 page import="com.liferay.osb.patcher.model.PatcherAccount" %><%@
 page import="com.liferay.osb.patcher.model.PatcherBuild" %><%@
 page import="com.liferay.osb.patcher.model.PatcherFix" %><%@

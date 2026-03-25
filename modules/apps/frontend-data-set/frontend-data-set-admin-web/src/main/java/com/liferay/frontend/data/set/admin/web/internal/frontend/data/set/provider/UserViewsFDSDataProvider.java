@@ -80,7 +80,7 @@ public class UserViewsFDSDataProvider implements FDSDataProvider<UserView> {
 			return Collections.emptyList();
 		}
 
-		List<UserView> userViews = new ArrayList<>(end - start);
+		List<UserView> userViews = new ArrayList<>();
 
 		for (Map.Entry<String, String> entry :
 				sortedDataSetEntries.subList(start, end)) {

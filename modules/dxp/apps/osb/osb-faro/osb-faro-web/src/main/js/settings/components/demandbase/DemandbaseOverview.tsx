@@ -24,9 +24,6 @@ import {DataSourceStatuses} from 'shared/util/constants';
 import {
 	fetch,
 	fetchDemandbaseAccountsCount,
-	fetchDemandbaseBuyingCommitteeCount,
-	fetchDemandbaseCustomAttributesCount,
-	fetchDemandbaseIntentDataCount,
 	fetchToken,
 	updateDemandbase
 } from 'shared/api/data-source';
@@ -77,24 +74,10 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
-	const entitiesStatus = {
-		accountsStatus: dataSource.provider.getIn([
-			'accountsConfiguration',
-			'accountsStatus'
-		]),
-		buyingCommitteeStatus: dataSource.provider.getIn([
-			'buyingCommitteeConfiguration',
-			'buyingCommitteeStatus'
-		]),
-		customAttributesStatus: dataSource.provider.getIn([
-			'customAttributesConfiguration',
-			'customAttributesStatus'
-		]),
-		intentDataStatus: dataSource.provider.getIn([
-			'intentDataConfiguration',
-			'intentDataStatus'
-		])
-	};
+	const accountStatus = dataSource.provider.getIn([
+		'accountsConfiguration',
+		'accountsStatus'
+	]);
 
 	const handleUpdateDataSource = async () => {
 		try {
@@ -132,19 +115,14 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 			alert.message = Liferay.Language.get(
 				'the-data-source-is-disconnected.-data-is-no-longer-being-synced-from-demandbase,-but-you-can-reconnect-to-resume-syncing.'
 			);
-		} else if (
-			entitiesStatus.accountsStatus ||
-			entitiesStatus.buyingCommitteeStatus ||
-			entitiesStatus.customAttributesStatus ||
-			entitiesStatus.intentDataStatus
-		) {
+		} else if (accountStatus) {
 			alert.message = Liferay.Language.get(
 				'all-data-coming-from-this-data-source-is-up-to-date.-there-are-no-errors-to-report'
 			);
 		}
 
 		setAlert(alert);
-	}, [dataSourceActive, entitiesStatus]);
+	}, [dataSourceActive, accountStatus]);
 
 	let _tokenRequest;
 
@@ -309,8 +287,8 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 
 			<Card title={Liferay.Language.get('synced-data')}>
 				<DemandbaseEntityList
+					accountStatus={accountStatus}
 					dataSource={dataSource}
-					entitiesStatus={entitiesStatus}
 					groupId={groupId}
 				/>
 			</Card>
@@ -379,49 +357,17 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 	);
 };
 
-const DemandbaseEntityList = ({dataSource, entitiesStatus, groupId}) => {
-	const {
-		accountsStatus,
-		buyingCommitteeStatus,
-		customAttributesStatus,
-		intentDataStatus
-	} = entitiesStatus;
-
+const DemandbaseEntityList = ({accountStatus, dataSource, groupId}) => {
 	const accountsCountResponse = useRequest({
 		dataSourceFn: fetchDemandbaseAccountsCount,
 		variables: {groupId, id: dataSource.id}
 	});
 
-	const intentDataCountResponse = useRequest({
-		dataSourceFn: fetchDemandbaseIntentDataCount,
-		variables: {groupId, id: dataSource.id}
-	});
-
-	const buyingCommitteeCountResponse = useRequest({
-		dataSourceFn: fetchDemandbaseBuyingCommitteeCount,
-		variables: {groupId, id: dataSource.id}
-	});
-
-	const customAttributesCountResponse = useRequest({
-		dataSourceFn: fetchDemandbaseCustomAttributesCount,
-		variables: {groupId, id: dataSource.id}
-	});
-
-	if (
-		accountsCountResponse.error ||
-		intentDataCountResponse.error ||
-		buyingCommitteeCountResponse.error ||
-		customAttributesCountResponse.error
-	) {
+	if (accountsCountResponse.error) {
 		return <ErrorDisplay />;
 	}
 
-	if (
-		accountsCountResponse.loading ||
-		intentDataCountResponse.loading ||
-		buyingCommitteeCountResponse.loading ||
-		customAttributesCountResponse.loading
-	) {
+	if (accountsCountResponse.loading) {
 		return <Loading spacer />;
 	}
 
@@ -448,14 +394,8 @@ const DemandbaseEntityList = ({dataSource, entitiesStatus, groupId}) => {
 			</div>
 
 			<DemandbaseEntities
-				accountConnectionStatus={accountsStatus}
+				accountConnectionStatus={accountStatus}
 				accountsSyncedCount={accountsCountResponse.data}
-				buyingCommitteeConnectionStatus={buyingCommitteeStatus}
-				buyingCommitteeSyncedCount={buyingCommitteeCountResponse.data}
-				customAttributesConnectionStatus={customAttributesStatus}
-				customAttributesSyncedCount={customAttributesCountResponse.data}
-				intentDataConnectionStatus={intentDataStatus}
-				intentDataSyncedCount={intentDataCountResponse.data}
 			/>
 		</div>
 	);

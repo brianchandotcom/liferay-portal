@@ -5,13 +5,19 @@
 
 package com.liferay.feature.flag.test.util;
 
-import com.liferay.portal.feature.flag.FeatureFlagsBagProvider;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import java.util.Objects;
 import java.util.Properties;
+
+import org.junit.Assert;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Drew Brokke
@@ -25,12 +31,34 @@ public class FeatureFlagTestHelper {
 	public static final String FEATURE_FLAG_KEY_SYSTEM = "FAKE-000";
 
 	public FeatureFlagTestHelper() throws Exception {
-		_featureFlagsBagProvider =
-			(FeatureFlagsBagProvider)PortalBeanLocatorUtil.locate(
-				FeatureFlagsBagProvider.class.getName());
+		Bundle bundle = FrameworkUtil.getBundle(FeatureFlagTestHelper.class);
 
-		_featureFlagManager = (FeatureFlagManager)PortalBeanLocatorUtil.locate(
-			FeatureFlagManager.class.getName());
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Bundle featureFlagWebBundle = null;
+
+		for (Bundle curBundle : bundleContext.getBundles()) {
+			if (Objects.equals(
+					curBundle.getSymbolicName(), "org.eclipse.osgi")) {
+
+				featureFlagWebBundle = curBundle;
+			}
+		}
+
+		Assert.assertNotNull(featureFlagWebBundle);
+
+		_featureFlagsBagProviderObject = bundleContext.getService(
+			bundleContext.getServiceReference(
+				featureFlagWebBundle.loadClass(
+					"com.liferay.portal.feature.flag." +
+						"FeatureFlagsBagProvider")));
+
+		Assert.assertNotNull(_featureFlagsBagProviderObject);
+
+		_featureFlagManager = bundleContext.getService(
+			bundleContext.getServiceReference(FeatureFlagManager.class));
+
+		Assert.assertNotNull(_featureFlagManager);
 
 		Properties properties = PropsUtil.getProperties();
 
@@ -47,7 +75,7 @@ public class FeatureFlagTestHelper {
 			FeatureFlagConstants.getKey(FEATURE_FLAG_KEY_SYSTEM, "system"),
 			Boolean.TRUE.toString());
 
-		_featureFlagsBagProvider.clearCache();
+		_clearCache();
 	}
 
 	public boolean getFeatureFlagValue(long companyId, String featureFlagKey) {
@@ -57,14 +85,22 @@ public class FeatureFlagTestHelper {
 	public void setFeatureFlagValue(
 		long companyId, String featureFlagKey, boolean enabled) {
 
-		_featureFlagsBagProvider.setEnabled(companyId, featureFlagKey, enabled);
+		ReflectionTestUtil.invoke(
+			_featureFlagsBagProviderObject, "setEnabled",
+			new Class<?>[] {long.class, String.class, boolean.class}, companyId,
+			featureFlagKey, enabled);
 	}
 
 	public void tearDown() {
-		_featureFlagsBagProvider.clearCache();
+		_clearCache();
+	}
+
+	private void _clearCache() {
+		ReflectionTestUtil.invoke(
+			_featureFlagsBagProviderObject, "clearCache", new Class<?>[0]);
 	}
 
 	private final FeatureFlagManager _featureFlagManager;
-	private final FeatureFlagsBagProvider _featureFlagsBagProvider;
+	private final Object _featureFlagsBagProviderObject;
 
 }

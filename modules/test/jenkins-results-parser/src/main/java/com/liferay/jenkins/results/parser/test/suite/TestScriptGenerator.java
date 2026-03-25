@@ -121,8 +121,6 @@ public class TestScriptGenerator {
 			sb.append("\n");
 		}
 
-		sb.append("\tlocal exit_code=0\n\tlocal results_output=\"\"\n\n");
-
 		Set<String> commands = new LinkedHashSet<>();
 
 		_gitWorkingDirectory.setCacheBashCommands(true);
@@ -163,21 +161,26 @@ public class TestScriptGenerator {
 			return;
 		}
 
+		sb.append("\t_execute_commands \\\n");
+
+		int i = 0;
+
 		for (String command : commands) {
-			sb.append("\t_execute_command ");
+			sb.append("\t\t");
 			sb.append(command);
-			sb.append(" \"results_output\" || exit_code=1\n\n");
+
+			if (i < (commandCount - 1)) {
+				sb.append(" \\");
+			}
+
+			sb.append("\n");
+
+			i++;
 		}
 
-		sb.append("\techo \"\"\n");
-		sb.append("\techo \"Results:\"\n");
-		sb.append("\techo \"\"\n");
-		sb.append("\techo -e \"${results_output}\"\n\n");
-		sb.append("\texit ${exit_code}\n");
 		sb.append("}\n\n");
 		sb.append("function _execute_command {\n");
-		sb.append("\tlocal command_exit_code=\"\"\n");
-		sb.append("\tlocal command_start_time=${SECONDS}\n\n");
+		sb.append("\tlocal command_exit_code=\"\"\n\n");
 		sb.append("\techo \"\"\n");
 		sb.append("\techo \"Running: ${1}\"\n");
 		sb.append("\techo \"\"\n\n");
@@ -185,16 +188,43 @@ public class TestScriptGenerator {
 		sb.append("\t\teval \"${1}\"\n");
 		sb.append("\t)\n\n");
 		sb.append("\tcommand_exit_code=${?}\n\n");
-		sb.append("\tlocal duration=$(_format_duration ");
-		sb.append("$((${SECONDS} - ${command_start_time})))\n\n");
-		sb.append("\tlocal result=\"SUCCESS\"\n\n");
-		sb.append("\tif [ \"${command_exit_code}\" -ne 0 ]\n");
-		sb.append("\tthen\n");
-		sb.append("\t\tresult=\"FAILED\"\n");
-		sb.append("\tfi\n\n");
-		sb.append("\teval \"${2}+=\\\"\\${1}\\n    \\${result} in ");
-		sb.append("\\${duration}\\n\\n\\\"\"\n\n");
 		sb.append("\treturn ${command_exit_code}\n");
+		sb.append("}\n\n");
+		sb.append("function _execute_commands {\n");
+		sb.append("\tlocal exit_code=0\n");
+		sb.append("\tlocal failed_command=\"\"\n");
+		sb.append("\tlocal results_output=\"Results:\\n\\n\"\n\n");
+		sb.append("\tfor command in \"${@}\"\n");
+		sb.append("\tdo\n");
+		sb.append("\t\tif [ \"${exit_code}\" -ne 0 ]\n");
+		sb.append("\t\tthen\n");
+		sb.append("\t\t\tresults_output+=\"[DID NOT RUN] ${command}\\n\"\n\n");
+		sb.append("\t\t\tcontinue\n");
+		sb.append("\t\tfi\n\n");
+		sb.append("\t\tlocal command_start_time=${SECONDS}\n\n");
+		sb.append("\t\t_execute_command \"${command}\"\n\n");
+		sb.append("\t\tlocal command_exit_code=${?}\n\n");
+		sb.append("\t\tlocal command_duration=$(_format_duration ");
+		sb.append("$((${SECONDS} - ${command_start_time})))\n\n");
+		sb.append("\t\tif [ \"${command_exit_code}\" -ne 0 ]\n");
+		sb.append("\t\tthen\n");
+		sb.append("\t\t\texit_code=${command_exit_code}\n");
+		sb.append("\t\t\tfailed_command=\"${command}\"\n");
+		sb.append("\t\t\tresults_output+=\"[FAILED in ${command_duration}] ");
+		sb.append("${command}\\n\"\n");
+		sb.append("\t\telse\n");
+		sb.append("\t\t\tresults_output+=\"[SUCCESS in ${command_duration}] ");
+		sb.append("${command}\\n\"\n");
+		sb.append("\t\tfi\n");
+		sb.append("\tdone\n\n");
+		sb.append("\techo \"\"\n");
+		sb.append("\techo -e \"${results_output}\"\n\n");
+		sb.append("\tif [ -n \"${failed_command}\" ]\n");
+		sb.append("\tthen\n");
+		sb.append("\t\techo \"Failed while executing: ");
+		sb.append("\\\"${failed_command}\\\"\"\n");
+		sb.append("\tfi\n\n");
+		sb.append("\texit ${exit_code}\n");
 		sb.append("}\n\n");
 		sb.append("function _format_duration {\n");
 		sb.append("\tif [ \"$((${1} / 60))\" -gt 0 ]\n");

@@ -17,6 +17,7 @@ dependencies {
 	compileOnly project(":apps:account:account-api")
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:asset:asset-api")
+	compileOnly project(":apps:asset:asset-categories-api")
 	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:asset:asset-link-api")
 	compileOnly project(":apps:asset:asset-list-api")

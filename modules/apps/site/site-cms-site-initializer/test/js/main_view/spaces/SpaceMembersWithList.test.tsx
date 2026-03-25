@@ -284,7 +284,10 @@ describe('SpaceMembersWithList', () => {
 
 		await waitFor(() => {
 			expect(mockFetch).toHaveBeenCalledWith(
-				expect.stringContaining(`id+ne+%271%27+and+id+ne+%272%27`)
+				expect.stringContaining(`id+ne+%271%27+and+id+ne+%272%27`),
+				expect.objectContaining({
+					headers: expect.any(Object),
+				})
 			);
 		});
 
@@ -319,7 +322,10 @@ describe('SpaceMembersWithList', () => {
 			expect(mockFetch).toHaveBeenCalledWith(
 				expect.stringContaining(
 					`userGroupId+ne+%271%27+and+userGroupId+ne+%272%27`
-				)
+				),
+				expect.objectContaining({
+					headers: expect.any(Object),
+				})
 			);
 		});
 

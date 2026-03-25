@@ -29,7 +29,7 @@ import {handleFindAndReplace} from '../find_and_replace/utils/handleFindAndRepla
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import ExportTranslationModalContent from '../modal/ExportTranslationModalContent';
 import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
-import copyBulkAction from './actions/copyBulkAction';
+import copyOrMoveBulkAction from './actions/copyOrMoveBulkAction';
 import ACTIONS from './actions/creationMenuActions';
 import deleteAssetEntriesBulkAction, {
 	executeBulkDeleteAction,
@@ -637,8 +637,12 @@ export default function AssetsFDSPropsTransformer({
 					},
 				});
 			}
-			else if (action?.data.id === 'copy-to') {
-				copyBulkAction({
+			else if (
+				action?.data.id === 'copy-to' ||
+				action?.data.id === 'move-to'
+			) {
+				copyOrMoveBulkAction({
+					action: action.data.id === 'copy-to' ? 'copy' : 'move',
 					additionalProps,
 					apiURL: otherProps.apiURL,
 					dataSetId: otherProps.id,

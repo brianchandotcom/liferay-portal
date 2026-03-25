@@ -12,6 +12,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -39,7 +40,8 @@ public abstract class BaseSectionDisplayContextTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		CMPTestUtil.getOrAddGroup(BaseSectionDisplayContextTestCase.class);
+		Group group = CMPTestUtil.getOrAddGroup(
+			BaseSectionDisplayContextTestCase.class);
 
 		objectDefinition =
 			objectDefinitionLocalService.
@@ -52,6 +54,7 @@ public abstract class BaseSectionDisplayContextTestCase {
 					_companyLocalService.getCompany(
 						TestPropsValues.getCompanyId()));
 				setLocale(LocaleUtil.getDefault());
+				setScopeGroupId(group.getGroupId());
 				setURLCurrent("http://localhost:8080/currentURL");
 				setUser(TestPropsValues.getUser());
 			}

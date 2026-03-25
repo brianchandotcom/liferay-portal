@@ -15,7 +15,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Pavel Savinov
  */
 @ExtendedObjectClassDefinition(
-	category = "page-fragments", generateUI = false,
+	category = "page-fragments",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

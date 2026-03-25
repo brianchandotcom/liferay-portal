@@ -5,9 +5,10 @@
 
 package com.liferay.fragment.web.internal.display.context;
 
-import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.fragment.web.internal.configuration.helper.FragmentServiceConfigurationHelper;
+import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
@@ -15,10 +16,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletPreferences;
-import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -30,30 +29,16 @@ import java.util.Objects;
 public class FragmentServiceConfigurationDisplayContext {
 
 	public FragmentServiceConfigurationDisplayContext(
+		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		FragmentServiceConfigurationHelper fragmentServiceConfigurationHelper,
-		String scope) {
+		LiferayPortletResponse liferayPortletResponse, String scope,
+		ThemeDisplay themeDisplay) {
 
+		_configurationProvider = configurationProvider;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_fragmentServiceConfigurationHelper =
-			fragmentServiceConfigurationHelper;
 		_scope = scope;
-	}
-
-	public String getEditFragmentServiceConfigurationURL() {
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/instance_settings/edit_fragment_service_configuration"
-		).setRedirect(
-			PortalUtil.getCurrentURL(_httpServletRequest)
-		).setParameter(
-			"scope", _scope
-		).setParameter(
-			"scopePK", _getScopePK()
-		).buildString();
+		_themeDisplay = themeDisplay;
 	}
 
 	public String getPropagateContributedFragmentEntriesChangesURL() {
@@ -70,23 +55,10 @@ public class FragmentServiceConfigurationDisplayContext {
 		).buildString();
 	}
 
-	public String getRedirect() {
-		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				_httpServletRequest,
-				ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
-				PortletRequest.RENDER_PHASE)
-		).buildString();
-	}
-
 	public boolean isAlreadyPropagateContributedFragmentChanges() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		PortletPreferences portletPreferences =
 			PortalPreferencesLocalServiceUtil.getPreferences(
-				themeDisplay.getCompanyId(),
+				_themeDisplay.getCompanyId(),
 				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
 		return GetterUtil.getBoolean(
@@ -94,27 +66,40 @@ public class FragmentServiceConfigurationDisplayContext {
 				"alreadyPropagateContributedFragmentChanges", null));
 	}
 
-	public boolean isPropagateChangesEnabled() {
-		return _fragmentServiceConfigurationHelper.isPropagateChanges(
-			_scope, _getScopePK());
+	public boolean isPropagateChangesEnabled() throws ConfigurationException {
+		return _getFragmentServiceConfiguration().propagateChanges();
 	}
 
-	public boolean isPropagateContributedFragmentChangesEnabled() {
-		return _fragmentServiceConfigurationHelper.
-			isPropagateContributedFragmentChanges(_scope, _getScopePK());
+	public boolean isPropagateContributedFragmentChangesEnabled()
+		throws ConfigurationException {
+
+		return _getFragmentServiceConfiguration().
+			propagateContributedFragmentChanges();
 	}
 
-	public boolean showInfoMessage() throws Exception {
-		if (!Objects.equals(
-				_scope,
-				ExtendedObjectClassDefinition.Scope.COMPANY.getValue()) ||
-			_fragmentServiceConfigurationHelper.hasScopedConfiguration(
-				_getScopePK())) {
+	private FragmentServiceConfiguration _getFragmentServiceConfiguration()
+		throws ConfigurationException {
 
-			return false;
+		if (_fragmentServiceConfiguration != null) {
+			return _fragmentServiceConfiguration;
 		}
 
-		return true;
+		if (Objects.equals(
+				_scope,
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			_fragmentServiceConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					FragmentServiceConfiguration.class,
+					_themeDisplay.getCompanyId());
+		}
+		else {
+			_fragmentServiceConfiguration =
+				_configurationProvider.getSystemConfiguration(
+					FragmentServiceConfiguration.class);
+		}
+
+		return _fragmentServiceConfiguration;
 	}
 
 	private long _getScopePK() {
@@ -122,26 +107,17 @@ public class FragmentServiceConfigurationDisplayContext {
 				_scope,
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			return themeDisplay.getCompanyId();
-		}
-		else if (Objects.equals(
-					_scope,
-					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
-
-			return 0L;
+			return _themeDisplay.getCompanyId();
 		}
 
-		throw new IllegalArgumentException("Unsupported scope: " + _scope);
+		return 0L;
 	}
 
-	private final FragmentServiceConfigurationHelper
-		_fragmentServiceConfigurationHelper;
+	private final ConfigurationProvider _configurationProvider;
+	private FragmentServiceConfiguration _fragmentServiceConfiguration;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final String _scope;
+	private final ThemeDisplay _themeDisplay;
 
 }

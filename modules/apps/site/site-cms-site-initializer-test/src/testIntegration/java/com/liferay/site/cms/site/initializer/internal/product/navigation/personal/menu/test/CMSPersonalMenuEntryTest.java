@@ -141,11 +141,13 @@ public class CMSPersonalMenuEntryTest {
 	}
 
 	private void _testIsShowDepotEntryMemberUserGroup() throws Exception {
-		User user = UserTestUtil.addUser();
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		_userGroupLocalService.addGroupUserGroups(
 			_depotEntry.getGroupId(), new long[] {userGroup.getUserGroupId()});
+
+		User user = UserTestUtil.addUser();
+
 		_userGroupLocalService.addUserUserGroup(
 			user.getUserId(), userGroup.getUserGroupId());
 
@@ -161,7 +163,7 @@ public class CMSPersonalMenuEntryTest {
 		finally {
 			_userLocalService.deleteUser(user);
 
-			// Order matters, first the user, then the userGroup
+			// Order matters, first the user, then the user group
 
 			_userGroupLocalService.deleteUserGroup(userGroup);
 		}

@@ -4,6 +4,8 @@
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
+    annotations:
+        {{- $search.annotations | toYaml | nindent 8 }}
     name: {{ include "elasticsearch.name" . }}
     namespace: {{ $elasticsearchNamespace }}
 spec:
@@ -15,6 +17,9 @@ spec:
         -   count: {{ $search.nodeCount }}
             name: default
             podTemplate:
+                metadata:
+                    annotations:
+                        {{- $search.annotations | toYaml | nindent 24 }}
                 spec:
                     containers:
                         -   env:

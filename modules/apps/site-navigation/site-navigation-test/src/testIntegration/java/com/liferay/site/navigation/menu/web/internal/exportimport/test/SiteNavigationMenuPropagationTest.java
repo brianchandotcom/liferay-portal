@@ -83,10 +83,6 @@ public class SiteNavigationMenuPropagationTest {
 		_siteNavigationMenu2 = SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			layoutSetPrototypeGroup, RandomTestUtil.randomString());
 
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_siteNavigationMenu1.getExternalReferenceCode(), _group,
-			_siteNavigationMenu1.getName());
-
 		_portletId = _addSiteNavigationMenuWidgetToPage(
 			_siteNavigationMenu1.getExternalReferenceCode());
 
@@ -127,10 +123,6 @@ public class SiteNavigationMenuPropagationTest {
 	@Test
 	public void testSiteTemplatePropagationWithDifferentSiteNavigationMenu()
 		throws Exception {
-
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_siteNavigationMenu2.getExternalReferenceCode(), _group,
-			_siteNavigationMenu2.getName());
 
 		LayoutTestUtil.updateLayoutPortletPreference(
 			_prototypeLayout, _portletId,

@@ -73,6 +73,58 @@ test.beforeAll(async ({browser}) => {
 });
 
 test(
+	'Can delete a draft content from Recycle Bin',
+	{tag: '@LPD-83737'},
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await test.step('Create a new Space', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create draft content', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.createContent('Basic Web Content', spaceName);
+
+			await page.getByTitle('Back').click();
+		});
+
+		await test.step('Delete the created content so it goes into the Recycle Bin', async () => {
+			await contentsPage.deleteContent('Untitled Asset');
+		});
+
+		await test.step('Go to the Recycle Bin and delete the content permanently', async () => {
+			await recycleBinPage.goto();
+
+			await page
+				.getByRole('row', {name: 'Untitled Asset'})
+				.getByRole('button')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+			await page.getByLabel('Delete').waitFor({state: 'visible'});
+
+			await expect(
+				recycleBinPage.deleteItemConfirmationText
+			).toBeVisible();
+
+			await recycleBinPage.deleteButton.last().click();
+
+			await waitForAlert(
+				page,
+				`Success:Untitled Asset has been permanently deleted.`
+			);
+		});
+	}
+);
+
+test(
 	'Can delete a single content from Recycle Bin',
 	{tag: '@LPD-55831'},
 	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {

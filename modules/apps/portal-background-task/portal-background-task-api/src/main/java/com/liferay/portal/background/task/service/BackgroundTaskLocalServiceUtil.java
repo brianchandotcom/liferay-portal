@@ -97,6 +97,15 @@ public class BackgroundTaskLocalServiceUtil {
 			userId, backgroundTaskId, fileName, inputStream);
 	}
 
+	public static void addBackgroundTaskAttachment(
+			long userId, long backgroundTaskId, String sourceFileName,
+			String title, java.io.File file)
+		throws PortalException {
+
+		getService().addBackgroundTaskAttachment(
+			userId, backgroundTaskId, sourceFileName, title, file);
+	}
+
 	public static BackgroundTask amendBackgroundTask(
 		long backgroundTaskId, Map<String, Serializable> taskContextMap,
 		int status,
@@ -643,4 +652,4 @@ public class BackgroundTaskLocalServiceUtil {
 			BackgroundTaskLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-475535601
+// LIFERAY-SERVICE-BUILDER-HASH:-867079240

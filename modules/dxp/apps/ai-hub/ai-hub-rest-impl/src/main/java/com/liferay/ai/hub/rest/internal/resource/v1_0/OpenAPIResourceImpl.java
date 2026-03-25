@@ -87,11 +87,11 @@ public class OpenAPIResourceImpl {
 		{
 			add(AgentDefinitionResourceImpl.class);
 
+			add(AgentInstanceResourceImpl.class);
+
 			add(ChatResourceImpl.class);
 
 			add(MessageResourceImpl.class);
-
-			add(TaskResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

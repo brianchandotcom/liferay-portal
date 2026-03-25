@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.client.serdes.v1_0;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.client.dto.v1_0.AgentInstance;
 import com.liferay.ai.hub.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,22 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class TaskSerDes {
+public class AgentInstanceSerDes {
 
-	public static Task toDTO(String json) {
-		TaskJSONParser taskJSONParser = new TaskJSONParser();
+	public static AgentInstance toDTO(String json) {
+		AgentInstanceJSONParser agentInstanceJSONParser =
+			new AgentInstanceJSONParser();
 
-		return taskJSONParser.parseToDTO(json);
+		return agentInstanceJSONParser.parseToDTO(json);
 	}
 
-	public static Task[] toDTOs(String json) {
-		TaskJSONParser taskJSONParser = new TaskJSONParser();
+	public static AgentInstance[] toDTOs(String json) {
+		AgentInstanceJSONParser agentInstanceJSONParser =
+			new AgentInstanceJSONParser();
 
-		return taskJSONParser.parseToDTOs(json);
+		return agentInstanceJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Task task) {
-		if (task == null) {
+	public static String toJSON(AgentInstance agentInstance) {
+		if (agentInstance == null) {
 			return "null";
 		}
 
@@ -44,17 +46,17 @@ public class TaskSerDes {
 
 		sb.append("{");
 
-		if (task.getContext() != null) {
+		if (agentInstance.getContext() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"context\": ");
 
-			sb.append(_toJSON(task.getContext()));
+			sb.append(_toJSON(agentInstance.getContext()));
 		}
 
-		if (task.getExternalReferenceCode() != null) {
+		if (agentInstance.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -63,12 +65,12 @@ public class TaskSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(task.getExternalReferenceCode()));
+			sb.append(_escape(agentInstance.getExternalReferenceCode()));
 
 			sb.append("\"");
 		}
 
-		if (task.getSseEventSinkKey() != null) {
+		if (agentInstance.getSseEventSinkKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -77,12 +79,12 @@ public class TaskSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(task.getSseEventSinkKey()));
+			sb.append(_escape(agentInstance.getSseEventSinkKey()));
 
 			sb.append("\"");
 		}
 
-		if (task.getType() != null) {
+		if (agentInstance.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -91,7 +93,7 @@ public class TaskSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(task.getType()));
+			sb.append(_escape(agentInstance.getType()));
 
 			sb.append("\"");
 		}
@@ -102,62 +104,65 @@ public class TaskSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		TaskJSONParser taskJSONParser = new TaskJSONParser();
+		AgentInstanceJSONParser agentInstanceJSONParser =
+			new AgentInstanceJSONParser();
 
-		return taskJSONParser.parseToMap(json);
+		return agentInstanceJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Task task) {
-		if (task == null) {
+	public static Map<String, String> toMap(AgentInstance agentInstance) {
+		if (agentInstance == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (task.getContext() == null) {
+		if (agentInstance.getContext() == null) {
 			map.put("context", null);
 		}
 		else {
-			map.put("context", String.valueOf(task.getContext()));
+			map.put("context", String.valueOf(agentInstance.getContext()));
 		}
 
-		if (task.getExternalReferenceCode() == null) {
+		if (agentInstance.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
-				String.valueOf(task.getExternalReferenceCode()));
+				String.valueOf(agentInstance.getExternalReferenceCode()));
 		}
 
-		if (task.getSseEventSinkKey() == null) {
+		if (agentInstance.getSseEventSinkKey() == null) {
 			map.put("sseEventSinkKey", null);
 		}
 		else {
 			map.put(
-				"sseEventSinkKey", String.valueOf(task.getSseEventSinkKey()));
+				"sseEventSinkKey",
+				String.valueOf(agentInstance.getSseEventSinkKey()));
 		}
 
-		if (task.getType() == null) {
+		if (agentInstance.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(task.getType()));
+			map.put("type", String.valueOf(agentInstance.getType()));
 		}
 
 		return map;
 	}
 
-	public static class TaskJSONParser extends BaseJSONParser<Task> {
+	public static class AgentInstanceJSONParser
+		extends BaseJSONParser<AgentInstance> {
 
 		@Override
-		protected Task createDTO() {
-			return new Task();
+		protected AgentInstance createDTO() {
+			return new AgentInstance();
 		}
 
 		@Override
-		protected Task[] createDTOArray(int size) {
-			return new Task[size];
+		protected AgentInstance[] createDTOArray(int size) {
+			return new AgentInstance[size];
 		}
 
 		@Override
@@ -182,29 +187,32 @@ public class TaskSerDes {
 
 		@Override
 		protected void setField(
-			Task task, String jsonParserFieldName,
+			AgentInstance agentInstance, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "context")) {
 				if (jsonParserFieldValue != null) {
-					task.setContext((Map<String, ?>)jsonParserFieldValue);
+					agentInstance.setContext(
+						(Map<String, ?>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
-					task.setExternalReferenceCode((String)jsonParserFieldValue);
+					agentInstance.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sseEventSinkKey")) {
 				if (jsonParserFieldValue != null) {
-					task.setSseEventSinkKey((String)jsonParserFieldValue);
+					agentInstance.setSseEventSinkKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					task.setType((String)jsonParserFieldValue);
+					agentInstance.setType((String)jsonParserFieldValue);
 				}
 			}
 		}

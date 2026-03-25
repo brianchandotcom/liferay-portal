@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.client.dto.v1_0;
 
 import com.liferay.ai.hub.rest.client.function.UnsafeSupplier;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.AgentInstanceSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -20,10 +20,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class Task implements Cloneable, Serializable {
+public class AgentInstance implements Cloneable, Serializable {
 
-	public static Task toDTO(String json) {
-		return TaskSerDes.toDTO(json);
+	public static AgentInstance toDTO(String json) {
+		return AgentInstanceSerDes.toDTO(json);
 	}
 
 	public Map<String, ?> getContext() {
@@ -109,8 +109,8 @@ public class Task implements Cloneable, Serializable {
 	protected String type;
 
 	@Override
-	public Task clone() throws CloneNotSupportedException {
-		return (Task)super.clone();
+	public AgentInstance clone() throws CloneNotSupportedException {
+		return (AgentInstance)super.clone();
 	}
 
 	@Override
@@ -119,13 +119,13 @@ public class Task implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Task)) {
+		if (!(object instanceof AgentInstance)) {
 			return false;
 		}
 
-		Task task = (Task)object;
+		AgentInstance agentInstance = (AgentInstance)object;
 
-		return Objects.equals(toString(), task.toString());
+		return Objects.equals(toString(), agentInstance.toString());
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class Task implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return TaskSerDes.toJSON(this);
+		return AgentInstanceSerDes.toJSON(this);
 	}
 
 }

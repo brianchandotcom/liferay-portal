@@ -1,13 +1,14 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.client.resource.v1_0;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.client.dto.v1_0.AgentInstance;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.problem.Problem;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.AgentInstanceSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -25,28 +26,31 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface TaskResource {
+public interface AgentInstanceResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public void getTaskSubscribe(jakarta.ws.rs.sse.SseEventSink sseEventSink)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getTaskSubscribeHttpResponse(
+	public void getAgentInstanceSubscribe(
 			jakarta.ws.rs.sse.SseEventSink sseEventSink)
 		throws Exception;
 
-	public Task postTask(Task task) throws Exception;
-
-	public HttpInvoker.HttpResponse postTaskHttpResponse(Task task)
+	public HttpInvoker.HttpResponse getAgentInstanceSubscribeHttpResponse(
+			jakarta.ws.rs.sse.SseEventSink sseEventSink)
 		throws Exception;
 
-	public void postTaskBatch(String callbackURL, Object object)
+	public AgentInstance postAgentInstance(AgentInstance agentInstance)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postTaskBatchHttpResponse(
+	public HttpInvoker.HttpResponse postAgentInstanceHttpResponse(
+			AgentInstance agentInstance)
+		throws Exception;
+
+	public void postAgentInstanceBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postAgentInstanceBatchHttpResponse(
 			String callbackURL, Object object)
 		throws Exception;
 
@@ -63,8 +67,8 @@ public interface TaskResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public TaskResource build() {
-			return new TaskResourceImpl(this);
+		public AgentInstanceResource build() {
+			return new AgentInstanceResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -156,14 +160,15 @@ public interface TaskResource {
 
 	}
 
-	public static class TaskResourceImpl implements TaskResource {
+	public static class AgentInstanceResourceImpl
+		implements AgentInstanceResource {
 
-		public void getTaskSubscribe(
+		public void getAgentInstanceSubscribe(
 				jakarta.ws.rs.sse.SseEventSink sseEventSink)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getTaskSubscribeHttpResponse(sseEventSink);
+				getAgentInstanceSubscribeHttpResponse(sseEventSink);
 
 			String content = httpResponse.getContent();
 
@@ -224,7 +229,7 @@ public interface TaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getTaskSubscribeHttpResponse(
+		public HttpInvoker.HttpResponse getAgentInstanceSubscribeHttpResponse(
 				jakarta.ws.rs.sse.SseEventSink sseEventSink)
 			throws Exception {
 
@@ -252,7 +257,7 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/tasks/subscribe");
+						"/o/ai-hub/v1.0/agent-instances/subscribe");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -262,8 +267,11 @@ public interface TaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public Task postTask(Task task) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = postTaskHttpResponse(task);
+		public AgentInstance postAgentInstance(AgentInstance agentInstance)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAgentInstanceHttpResponse(agentInstance);
 
 			String content = httpResponse.getContent();
 
@@ -313,8 +321,7 @@ public interface TaskResource {
 			}
 
 			try {
-				return com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes.
-					toDTO(content);
+				return AgentInstanceSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -325,12 +332,13 @@ public interface TaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTaskHttpResponse(Task task)
+		public HttpInvoker.HttpResponse postAgentInstanceHttpResponse(
+				AgentInstance agentInstance)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(task.toString(), "application/json");
+			httpInvoker.body(agentInstance.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -354,7 +362,7 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/tasks");
+						"/o/ai-hub/v1.0/agent-instances");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -364,11 +372,11 @@ public interface TaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postTaskBatch(String callbackURL, Object object)
+		public void postAgentInstanceBatch(String callbackURL, Object object)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postTaskBatchHttpResponse(
-				callbackURL, object);
+			HttpInvoker.HttpResponse httpResponse =
+				postAgentInstanceBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -418,7 +426,7 @@ public interface TaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTaskBatchHttpResponse(
+		public HttpInvoker.HttpResponse postAgentInstanceBatchHttpResponse(
 				String callbackURL, Object object)
 			throws Exception {
 
@@ -453,7 +461,7 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/tasks/batch");
+						"/o/ai-hub/v1.0/agent-instances/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -463,12 +471,12 @@ public interface TaskResource {
 			return httpInvoker.invoke();
 		}
 
-		private TaskResourceImpl(Builder builder) {
+		private AgentInstanceResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			TaskResource.class.getName());
+			AgentInstanceResource.class.getName());
 
 		private Builder _builder;
 

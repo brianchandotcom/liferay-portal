@@ -6,12 +6,13 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.web.internal.configuration.helper.FragmentServiceConfigurationHelper;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -148,9 +150,28 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 		boolean propagateContributedFragmentChanges = ParamUtil.getBoolean(
 			actionRequest, "propagateContributedFragmentChanges");
 
-		_fragmentServiceConfigurationHelper.updatePropagateChanges(
-			propagateChanges, propagateContributedFragmentChanges, scope,
-			scopePK);
+		if (scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			_configurationProvider.saveCompanyConfiguration(
+				FragmentServiceConfiguration.class, scopePK,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"propagateChanges", propagateChanges
+				).put(
+					"propagateContributedFragmentChanges",
+					propagateContributedFragmentChanges
+				).build());
+		}
+		else {
+			_configurationProvider.saveSystemConfiguration(
+				FragmentServiceConfiguration.class,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"propagateChanges", propagateChanges
+				).put(
+					"propagateContributedFragmentChanges",
+					propagateContributedFragmentChanges
+				).build());
+		}
 	}
 
 	private void _updatePropagateContributedFragmentChangesPortletPreference(
@@ -177,15 +198,14 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentServiceConfigurationHelper
-		_fragmentServiceConfigurationHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

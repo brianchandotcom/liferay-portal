@@ -608,10 +608,6 @@ public abstract class BaseLicenseTestCase {
 
 	private static class WrapperClassLoader extends ClassLoader {
 
-		public WrapperClassLoader(ClassLoader classLoader) {
-			_classLoader = classLoader;
-		}
-
 		@Override
 		public boolean equals(Object object) {
 			return _classLoader.equals(object);
@@ -620,6 +616,10 @@ public abstract class BaseLicenseTestCase {
 		@Override
 		public int hashCode() {
 			return _classLoader.hashCode();
+		}
+
+		private WrapperClassLoader(ClassLoader classLoader) {
+			_classLoader = classLoader;
 		}
 
 		private final ClassLoader _classLoader;

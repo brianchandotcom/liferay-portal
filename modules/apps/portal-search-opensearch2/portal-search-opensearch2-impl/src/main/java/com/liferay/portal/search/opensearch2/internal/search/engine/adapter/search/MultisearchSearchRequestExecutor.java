@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -151,17 +152,44 @@ public class MultisearchSearchRequestExecutor {
 	private RequestItem _toRequestItem(SearchRequest searchRequest) {
 		MultisearchBody.Builder builder = new MultisearchBody.Builder();
 
-		builder.aggregations(searchRequest.aggregations());
+		if (MapUtil.isNotEmpty(searchRequest.aggregations())) {
+			builder.aggregations(searchRequest.aggregations());
+		}
+
 		builder.from(searchRequest.from());
-		builder.highlight(searchRequest.highlight());
+
+		if (searchRequest.highlight() != null) {
+			builder.highlight(searchRequest.highlight());
+		}
+
 		builder.minScore(searchRequest.minScore());
-		builder.postFilter(searchRequest.postFilter());
-		builder.query(searchRequest.query());
-		builder.searchAfter(searchRequest.searchAfter());
+
+		if (searchRequest.postFilter() != null) {
+			builder.postFilter(searchRequest.postFilter());
+		}
+
+		if (searchRequest.query() != null) {
+			builder.query(searchRequest.query());
+		}
+
+		if (ListUtil.isNotEmpty(searchRequest.searchAfter())) {
+			builder.searchAfter(searchRequest.searchAfter());
+		}
+
 		builder.size(searchRequest.size());
-		builder.sort(searchRequest.sort());
-		builder.source(searchRequest.source());
-		builder.suggest(searchRequest.suggest());
+
+		if (ListUtil.isNotEmpty(searchRequest.sort())) {
+			builder.sort(searchRequest.sort());
+		}
+
+		if (searchRequest.source() != null) {
+			builder.source(searchRequest.source());
+		}
+
+		if (searchRequest.suggest() != null) {
+			builder.suggest(searchRequest.suggest());
+		}
+
 		builder.trackScores(searchRequest.trackScores());
 		builder.trackTotalHits(searchRequest.trackTotalHits());
 

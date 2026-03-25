@@ -212,31 +212,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro executeGraphqlQuery(query = null) {
-		Click(
-			locator1 = "Button#BUTTON_WITH_VALUE",
-			value = "GraphQL");
-
-		AssertElementPresent.assertVisible(locator1 = "OpenAPI#GRAPHQL_EDITOR_LINE");
-
-		Click(
-			editor = "query-editor",
-			locator1 = "OpenAPI#GRAPHQL_EDITOR_LINE");
-
-		Type.sendKeys(
-			locator1 = "//body",
-			value1 = "keys=CONTROL,a");
-
-		Type.typeCodeMirrorEditorNoError(
-			locator1 = "OpenAPI#GRAPHQL_EDITOR",
-			value1 = ${query});
-
-		Click(
-			locator1 = "Button#BUTTON_WITH_VALUE",
-			value = "Execute Query (Ctrl-Enter)");
-	}
-
-	@summary = "Default summary"
 	macro expandAPIMethod(method = null, service = null) {
 		Variables.assertDefined(parameterList = "${service},${method}");
 

@@ -207,7 +207,10 @@ public class DepotEntryLocalServiceTest {
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER)));
 		Assert.assertArrayEquals(
-			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW},
+			new String[] {
+				ActionKeys.ADD_DISCUSSION,
+				ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW
+			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER)));
@@ -257,7 +260,10 @@ public class DepotEntryLocalServiceTest {
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER)));
 		Assert.assertArrayEquals(
-			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW},
+			new String[] {
+				ActionKeys.ADD_DISCUSSION,
+				ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW
+			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER)));

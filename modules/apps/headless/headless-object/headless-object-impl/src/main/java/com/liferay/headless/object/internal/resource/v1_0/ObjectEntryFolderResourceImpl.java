@@ -976,7 +976,7 @@ public class ObjectEntryFolderResourceImpl
 						}
 
 						return addAction(
-							ActionKeys.VIEW, serviceBuilderObjectEntryFolder,
+							ActionKeys.UPDATE, serviceBuilderObjectEntryFolder,
 							"getObjectEntryFolder");
 					}
 				).put(

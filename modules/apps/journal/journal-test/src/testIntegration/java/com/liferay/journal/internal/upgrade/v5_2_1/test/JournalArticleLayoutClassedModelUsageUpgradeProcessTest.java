@@ -166,6 +166,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		_publishToLive(stagingLayout);
 
+		_addLiveLayoutClassedModelUsage(_layout, stagingLayout);
+
 		_assertAssetEntryLayoutClassedModelUsages(stagingLayout, _layout);
 
 		LayoutRevision layoutRevision = _getLayoutRevision(stagingLayout);
@@ -197,6 +199,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		_assertAssetEntryLayoutClassedModelUsages(stagingLayout);
 
 		_publishToLive(stagingLayout);
+
+		_addLiveLayoutClassedModelUsage(_layout, stagingLayout);
 
 		_assertAssetEntryLayoutClassedModelUsages(stagingLayout, _layout);
 
@@ -240,6 +244,30 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		_assertLayoutClassedModelUsagesByPlidCount(
 			1, layoutRevision.getLayoutRevisionId());
+	}
+
+	private void _addLiveLayoutClassedModelUsage(
+		Layout liveLayout, Layout stagingLayout) {
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(stagingLayout.getPlid());
+
+		Assert.assertEquals(
+			layoutClassedModelUsages.toString(), 1,
+			layoutClassedModelUsages.size());
+
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			layoutClassedModelUsages.get(0);
+
+		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+			liveLayout.getGroupId(),
+			layoutClassedModelUsage.getClassExternalReferenceCode(),
+			layoutClassedModelUsage.getClassNameId(),
+			layoutClassedModelUsage.getClassPK(),
+			layoutClassedModelUsage.getContainerKey(),
+			layoutClassedModelUsage.getContainerType(), liveLayout.getPlid(),
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private void _assertAssetEntryLayoutClassedModelUsages(Layout... layouts) {

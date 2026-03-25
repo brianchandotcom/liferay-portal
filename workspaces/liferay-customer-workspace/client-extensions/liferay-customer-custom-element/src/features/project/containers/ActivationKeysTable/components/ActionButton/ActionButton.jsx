@@ -27,7 +27,7 @@ const ActionButton = ({
 	project,
 	setStatus,
 }) => {
-	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
+	const {provisioningServerAPI} = useAppPropertiesContext();
 	const navigate = useNavigate();
 
 	const allowSelfProvisioning = project.allowSelfProvisioning;
@@ -63,8 +63,7 @@ const ActionButton = ({
 			handleMultipleAlertStatus,
 			handleAlertStatus,
 			activationKeysByStatusPaginatedChecked,
-			project.name,
-			featureFlags
+			project.name
 		);
 
 		return (

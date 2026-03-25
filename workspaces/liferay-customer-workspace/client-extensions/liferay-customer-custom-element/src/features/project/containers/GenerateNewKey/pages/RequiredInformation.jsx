@@ -46,7 +46,6 @@ const RequiredInformation = ({
 }) => {
 	const {
 		client,
-		featureFlags,
 		provisioningServerAPI,
 	} = useAppPropertiesContext();
 
@@ -325,10 +324,7 @@ const RequiredInformation = ({
 	]);
 
 	const CheckboxSubscriptionNotification = () => {
-		if (
-			featureFlags.includes('LPS-180001') &&
-			(selectedKeyData?.hasNotPermanentLicense || isComplimentaryKey)
-		) {
+		if (selectedKeyData?.hasNotPermanentLicense || isComplimentaryKey) {
 			return (
 				<>
 					<div className="d-flex mb-3 pt-2">

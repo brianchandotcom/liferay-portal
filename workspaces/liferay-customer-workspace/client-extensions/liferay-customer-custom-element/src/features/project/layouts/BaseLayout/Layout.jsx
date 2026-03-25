@@ -6,7 +6,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 import InformationBanner from '~/components/InformationBanner';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useAppContext} from '~/features/project/context';
 import i18n from '~/utils/I18n';
 
@@ -22,7 +21,6 @@ import getDateCustomFormat from '~/utils/getDateCustomFormat';
 import useHasAllEventsPermissions from '../../pages/Project/BusinessEvents/hooks/useHasAllEventsPermissions';
 
 const Layout = () => {
-	const {featureFlags} = useAppPropertiesContext();
 	const [{businessEvents, subscriptions, userProjectAccess}] =
 		useAppContext();
 
@@ -137,23 +135,7 @@ const Layout = () => {
 							/>
 						))}
 
-				{showBanner &&
-					featureFlags.includes('LRSD-8459') &&
-					hasBusinessEnterpriseOrProSubscription && (
-						<InformationBanner
-							content={i18n.sub(
-								'visit-the-new-project-usage-page-to-see-your-project-consumption-for-liferay-saas-for-more-information-please-feel-free-to-visit-this-page',
-								[
-									`<a href="${Liferay.currentURL}#/${accountKey}/project-usage">`,
-									'</a>',
-									'<a href="https://support.liferay.com/w/liferay-saas-plans">',
-									'</a>',
-								]
-							)}
-							icon="exclamation-circle"
-							onDismiss={handleBannerDismiss}
-						/>
-					)}
+
 			</div>
 
 			<div className="d-flex">

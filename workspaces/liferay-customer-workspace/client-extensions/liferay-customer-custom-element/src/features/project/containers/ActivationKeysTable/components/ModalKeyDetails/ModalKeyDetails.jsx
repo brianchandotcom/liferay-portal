@@ -76,8 +76,6 @@ const ModalKeyDetails = ({
 		new Date(currentActivationKey.expirationDate).getFullYear() >
 		YEAR_FOR_PERMANENT_KEYS;
 
-	const {featureFlags} = useAppPropertiesContext();
-
 	useEffect(() => {
 		setIsLoading(true);
 
@@ -161,8 +159,7 @@ const ModalKeyDetails = ({
 				/>
 			</div>
 
-			{featureFlags.includes('LPS-185063') &&
-				!keyIsPermanent &&
+			{!keyIsPermanent &&
 				(isLoading ? (
 					<ClayLoadingIndicator />
 				) : (

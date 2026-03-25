@@ -233,18 +233,16 @@ const SideMenu = () => {
 					</li>
 				)}
 
-				{featureFlags.includes('ISSD-119') && (
-					<div className="d-flex">
-						<MenuItem
-							iconKey="attachments"
-							to={getKebabCase(MENU_TYPES.attachments)}
-						>
-							{i18n.translate(
-								getKebabCase(MENU_TYPES.attachments)
-							)}
-						</MenuItem>
-					</div>
-				)}
+				<div className="d-flex">
+					<MenuItem
+						iconKey="attachments"
+						to={getKebabCase(MENU_TYPES.attachments)}
+					>
+						{i18n.translate(
+							getKebabCase(MENU_TYPES.attachments)
+						)}
+					</MenuItem>
+				</div>
 
 				<div className="d-flex">
 					<MenuItem

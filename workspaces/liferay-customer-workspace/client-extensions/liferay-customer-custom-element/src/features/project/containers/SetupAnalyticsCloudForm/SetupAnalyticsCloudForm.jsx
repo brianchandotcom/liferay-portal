@@ -114,7 +114,7 @@ const SetupAnalyticsCloudPage = ({
 		},
 	});
 
-	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
+	const {provisioningServerAPI} = useAppPropertiesContext();
 
 	const analyticsDataCenterLocations = useMemo(
 		() =>
@@ -219,97 +219,61 @@ const SetupAnalyticsCloudPage = ({
 					},
 				});
 
-				if (!featureFlags.includes('LPS-159127')) {
-					await Promise.all(
-						analyticsCloud?.incidentReportContact?.map(
-							({email}) => {
-								return client.mutate({
-									context: {
-										displaySuccess: false,
-										type: 'liferay-rest',
-									},
-									mutation: addIncidentReportAnalyticsCloud,
-									variables: {
-										IncidentReportContactAnalyticsCloud: {
-											analyticsCloudWorkspaceId,
-											emailAddress: email,
-											r_accountEntryToIncidentReportContactAC_accountEntryId:
-												project.id,
-										},
-									},
-								});
-							}
-						)
-					);
-				}
+				const notificationTemplateService =
+					new NotificationQueueService(client);
 
-				if (featureFlags.includes('LPS-181031')) {
-					const notificationTemplateService =
-						new NotificationQueueService(client);
-
-					await notificationTemplateService.send(
-						'SETUP-ANALYTICS-CLOUD-ENVIRONMENT',
-						{
-							'[%AC_DATA_CENTER_LOCATION%]':
-								analyticsCloud.dataCenterLocation,
-							'[%AC_DATA_TIME%]': new Date().toUTCString(),
-							'[%AC_EMAIL_DOMAINS%]':
-								analyticsCloud.allowedEmailDomains ||
-								BLANK_TEXT,
-							'[%AC_INCIDENT_REPORT_CONTACT%]':
-								emailsCriticalIncident,
-							'[%AC_OWNER_EMAIL%]':
-								analyticsCloud.ownerEmailAddress,
-							'[%AC_TIME_ZONE%]':
-								analyticsCloud.timeZone || BLANK_TEXT,
-							'[%AC_WORKSPACE_FRIENDLY_URL%]':
-								analyticsCloud.workspaceFriendlyUrl ||
-								BLANK_TEXT,
-							'[%AC_WORKSPACE_NAME%]':
-								analyticsCloud.workspaceName,
-							'[%PROJECT_ID%]': project?.code,
-							'[%PROJECT_SALESFORCE_ACCOUNT_LINK%]':
-								project?.salesforceAccountKey
-									? 'https://liferay.lightning.force.com/lightning/r/Account/' +
-										project?.salesforceAccountKey +
-										'/view'
-									: BLANK_TEXT,
-							'[%PROJECT_SALESFORCE_PROJECT_LINK%]':
-								project?.salesforceProjectKey
-									? 'https://liferay.lightning.force.com/lightning/r/Project__c/' +
-										project?.salesforceProjectKey +
-										'/view'
-									: BLANK_TEXT,
-						}
-					);
-				}
+				await notificationTemplateService.send(
+					'SETUP-ANALYTICS-CLOUD-ENVIRONMENT',
+					{
+						'[%AC_DATA_CENTER_LOCATION%]':
+							analyticsCloud.dataCenterLocation,
+						'[%AC_DATA_TIME%]': new Date().toUTCString(),
+						'[%AC_EMAIL_DOMAINS%]':
+							analyticsCloud.allowedEmailDomains ||
+							BLANK_TEXT,
+						'[%AC_INCIDENT_REPORT_CONTACT%]':
+							emailsCriticalIncident,
+						'[%AC_OWNER_EMAIL%]':
+							analyticsCloud.ownerEmailAddress,
+						'[%AC_TIME_ZONE%]':
+							analyticsCloud.timeZone || BLANK_TEXT,
+						'[%AC_WORKSPACE_FRIENDLY_URL%]':
+							analyticsCloud.workspaceFriendlyUrl ||
+							BLANK_TEXT,
+						'[%AC_WORKSPACE_NAME%]':
+							analyticsCloud.workspaceName,
+						'[%PROJECT_ID%]': project?.code,
+						'[%PROJECT_SALESFORCE_ACCOUNT_LINK%]':
+							project?.salesforceAccountKey
+								? 'https://liferay.lightning.force.com/lightning/r/Account/' +
+									project?.salesforceAccountKey +
+									'/view'
+								: BLANK_TEXT,
+						'[%PROJECT_SALESFORCE_PROJECT_LINK%]':
+							project?.salesforceProjectKey
+								? 'https://liferay.lightning.force.com/lightning/r/Project__c/' +
+									project?.salesforceProjectKey +
+									'/view'
+								: BLANK_TEXT,
+					}
+				);
 			}
 		};
 
-		try {
-			setIsLoadingSubmitButton(true);
-
-			const oAuthToken = await getOrRequestToken();
-
-			if (featureFlags.includes('LPS-159127')) {
 				try {
-					await updateRaysourceContact(
-						addContactRoleRaysource,
-						addHighPriorityContact,
-						oAuthToken,
-						project,
-						provisioningServerAPI
-					);
+					setIsLoadingSubmitButton(true);
 
-					await updateLiferayContact(
-						addHighPriorityContact,
-						addContactRoleLiferay,
-						project,
-						client
-					);
-				}
-				catch (error) {
-					if (error.cause === STATUS_CODE.conflict) {
+					const oAuthToken = await getOrRequestToken();
+
+					try {
+						await updateRaysourceContact(
+							addContactRoleRaysource,
+							addHighPriorityContact,
+							oAuthToken,
+							project,
+							provisioningServerAPI
+						);
+
 						await updateLiferayContact(
 							addHighPriorityContact,
 							addContactRoleLiferay,
@@ -317,51 +281,59 @@ const SetupAnalyticsCloudPage = ({
 							client
 						);
 					}
-					else {
-						throw new Error('Error', {cause: error.cause});
+					catch (error) {
+						if (error.cause === STATUS_CODE.conflict) {
+							await updateLiferayContact(
+								addHighPriorityContact,
+								addContactRoleLiferay,
+								project,
+								client
+							);
+						}
+						else {
+							throw new Error('Error', {cause: error.cause});
+						}
 					}
+
+					await updateRaysourceContact(
+						removeContactRoleRaysource,
+						removeHighPriorityContact,
+						oAuthToken,
+						project,
+						provisioningServerAPI
+					);
+
+					await updateLiferayContact(
+						removeHighPriorityContact,
+						removeContactRoleLiferay,
+						project,
+						client
+					);
+
+					handleDataSubmit();
+					setIsLoadingSubmitButton(false);
+
+					handlePage(true);
 				}
+				catch (error) {
+					setIsLoadingSubmitButton(false);
+				}
+		};
 
-				await updateRaysourceContact(
-					removeContactRoleRaysource,
-					removeHighPriorityContact,
-					oAuthToken,
-					project,
-					provisioningServerAPI
-				);
+		const handleButtonClick = () => {
 
-				await updateLiferayContact(
-					removeHighPriorityContact,
-					removeContactRoleLiferay,
-					project,
-					client
-				);
-			}
+			// eslint-disable-next-line no-unused-expressions
+			step === 1 ? handlePage(false) : handlePreviousStep();
+		};
 
-			handleDataSubmit();
-			setIsLoadingSubmitButton(false);
+		const updateMultiSelectEmpty = (error) => {
+			setIsMultiSelectEmpty(error);
+		};
 
-			handlePage(true);
-		}
-		catch (error) {
-			setIsLoadingSubmitButton(false);
-		}
-	};
-
-	const handleButtonClick = () => {
-
-		// eslint-disable-next-line no-unused-expressions
-		step === 1 ? handlePage(false) : handlePreviousStep();
-	};
-
-	const updateMultiSelectEmpty = (error) => {
-		setIsMultiSelectEmpty(error);
-	};
-
-	return featureFlags.includes('LPS-159127') ? (
-		<>
-			<Layout
-				className="pt-1 px-3"
+		return (
+			<>
+				<Layout
+					className="pt-1 px-3"
 				footerProps={{
 					leftButton: (
 						<Button
@@ -584,221 +556,6 @@ const SetupAnalyticsCloudPage = ({
 				)}
 			</Layout>
 		</>
-	) : (
-		<Layout
-			className="pt-1 px-3"
-			footerProps={{
-				leftButton: (
-					<Button
-						borderless
-						className="text-neutral-10"
-						onClick={() => handlePage(false)}
-					>
-						{leftButton}
-					</Button>
-				),
-				middleButton: (
-					<Button
-						disabled={
-							baseButtonDisabled || !termAndConditionsChecked
-						}
-						displayType="primary"
-						onClick={handleSubmit}
-					>
-						{i18n.translate('submit')}
-					</Button>
-				),
-			}}
-			headerProps={{
-				helper: i18n.translate(
-					'we-ll-need-a-few-details-to-finish-creating-your-analytics-cloud-workspace'
-				),
-				title: i18n.translate('set-up-analytics-cloud'),
-			}}
-		>
-			<FieldArray
-				name="activations.incidentReportContact"
-				render={({pop, push}) => (
-					<>
-						<ClayForm.Group className="pb-1">
-							<div>
-								<h4 className="ml-3 text-neutral-10">
-									{project.name}
-								</h4>
-							</div>
-
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'this-user-will-create-and-manage-the-analytics-cloud-workspace-and-must-have-a-liferay-com-account-the-owner-email-can-be-updated-via-a-support-ticket-if-needed'
-								)}
-								label={i18n.translate('owner-email')}
-								name="activations.ownerEmailAddress"
-								placeholder="user@company.com"
-								required
-								type="email"
-								validations={[
-									(value) =>
-										isValidEmail(
-											value,
-											bannedDomainsOwnerEmail
-										),
-								]}
-							/>
-
-							<Input
-								groupStyle="pb-1"
-								label={i18n.translate('workspace-name')}
-								name="activations.workspaceName"
-								placeholder="superbank1"
-								required
-								type="text"
-								validations={[
-									(value) => maxLength(value, MAX_LENGTH),
-								]}
-							/>
-
-							<Select
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'select-a-server-location-for-your-data-to-be-stored'
-								)}
-								key={analyticsDataCenterLocations}
-								label={i18n.translate('data-center-location')}
-								name="activations.dataCenterLocation"
-								options={analyticsDataCenterLocations}
-								required
-							/>
-
-							{hasDisasterRecovery && (
-								<Select
-									groupStyle="mb-0 pt-2"
-									label={i18n.translate(
-										'Disaster Recovery Data Center Location'
-									)}
-									name="activations.disasterDataCenterLocation"
-									options={analyticsDataCenterLocations}
-									required
-								/>
-							)}
-
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'please-note-that-the-friendly-url-cannot-be-changed-once-added'
-								)}
-								label={i18n.translate('workspace-friendly-url')}
-								name="activations.workspaceFriendlyUrl"
-								placeholder="/myurl"
-								type="text"
-								validations={[
-									(value) => isValidFriendlyURL(value),
-								]}
-							/>
-
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'anyone-with-an-email-address-at-the-provided-domains-can-request-access-to-your-workspace-if-multiple-separate-domains-by-commas'
-								)}
-								label={i18n.translate('allowed-email-domains')}
-								name="activations.allowedEmailDomains"
-								placeholder="@mycompany.com"
-								type="text"
-								validations={[
-									() =>
-										isValidEmailDomain(
-											bannedDomainsAllowedDomains
-										),
-								]}
-							/>
-
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'enter-the-timezone-to-be-used-for-all-data-reporting-in-your-workspace'
-								)}
-								label={i18n.translate('time-zone')}
-								name="activations.timeZone"
-								placeholder="UTC-04:00"
-								type="text"
-							/>
-
-							<div className="ml-3">
-								<ClayCheckbox
-									checked={termAndConditionsChecked}
-									label={
-										<div
-											dangerouslySetInnerHTML={{
-												__html: i18n.sub(
-													'by-checking-this-box-and-clicking-submit-below-i-as-an-authorized-representative-of-x-acknowledge-that-x-accepts-the-x-terms-and-conditions-and-privacy-policy-x-these-terms-will-govern-x-s-use-of-liferay-analytics-cloud-unless-x-has-entered-into-a-separate-agreement-with-liferay-that-governs-x-s-use-of-liferay-analytics-cloud',
-													[
-														project.name,
-														'<a href="https://www.liferay.com/documents/d/guest/1012410" rel="noreferrer noopener" target="_blank">',
-														'</a>',
-													]
-												),
-											}}
-										/>
-									}
-									onChange={() =>
-										setTermAndConditionsChecked(
-											(
-												previousTermAndConditionsChecked
-											) =>
-												!previousTermAndConditionsChecked
-										)
-									}
-								/>
-							</div>
-
-							<ClayForm.Group>
-								{values?.activations?.incidentReportContact?.map(
-									(activation, index) => (
-										<IncidentReportInput
-											activation={activation}
-											id={index}
-											key={index}
-										/>
-									)
-								)}
-							</ClayForm.Group>
-						</ClayForm.Group>
-
-						{values?.activations?.incidentReportContact?.length >
-							INITIAL_SETUP_ADMIN_COUNT && (
-							<Button
-								className="ml-3 my-2 text-brandy-secondary"
-								displayType="secondary"
-								onClick={() => pop()}
-								prependIcon="hr"
-								small
-							>
-								{i18n.translate(
-									'remove-incident-report-contact'
-								)}
-							</Button>
-						)}
-
-						<Button
-							className="btn-outline-primary ml-3 my-2 rounded-xs"
-							onClick={() => {
-								push(
-									getInitialAnalyticsInvite(
-										values?.activations
-											?.incidentReportContact
-									)
-								);
-							}}
-							prependIcon="plus"
-							small
-						>
-							{i18n.translate('add-incident-report-contact')}
-						</Button>
-					</>
-				)}
-			/>
-		</Layout>
 	);
 };
 

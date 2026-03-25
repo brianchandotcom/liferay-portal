@@ -39,7 +39,7 @@ const TeamMemberInputs = ({
 	selectOnChange,
 	setRoleSelectorFilled,
 }) => {
-	const {accountSettingsURL, featureFlags} = useAppPropertiesContext();
+	const {accountSettingsURL} = useAppPropertiesContext();
 	const provisioningService = useProvisioningLicenseKeys();
 
 	const [radioOptions, setRadioOptions] = useState({});
@@ -228,7 +228,7 @@ const TeamMemberInputs = ({
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
 
-			{featureFlags.includes('ISSD-100') && warningMessage && (
+			{warningMessage && (
 				<div
 					className="alert alert-warning align-items-top d-flex m-3 p-3"
 					role="alert"

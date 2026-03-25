@@ -6,7 +6,6 @@
 import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import SearchBuilder from '~/lib/SearchBuilder';
 import IncidentContactCard from '~/features/project/containers/IncidentContactCard';
 import i18n from '~/utils/I18n';
@@ -24,7 +23,6 @@ const TeamMembers = () => {
 	const {setHasSideMenu} = useOutletContext();
 	const {data: dataCurrentKoroneikiAccount, loading: loadingCurrentKoroneikiAccount} = useCurrentKoroneikiAccount();
 	const koroneikiAccount = dataCurrentKoroneikiAccount?.koroneikiAccountByExternalReferenceCode;
-	const {featureFlags} = useAppPropertiesContext();
 
 	const {data: dataSubscriptionGroups, loading: loadingSubscriptionGroups} = useQuery(
 		getAccountSubscriptionGroups,
@@ -81,8 +79,7 @@ const TeamMembers = () => {
 					loading={loading}
 				/>
 
-				{featureFlags.includes('LPS-159127') &&
-					hasActiveProduct && (
+				{hasActiveProduct && (
 						<IncidentContactCard
 							accountSubscriptionGroupsNames={accountSubscriptionGroupsNames}
 							hasActiveProduct={hasActiveProduct}

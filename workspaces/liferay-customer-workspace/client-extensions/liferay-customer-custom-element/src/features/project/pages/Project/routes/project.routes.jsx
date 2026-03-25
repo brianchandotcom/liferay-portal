@@ -168,17 +168,15 @@ const ProjectRoutes = () => {
 								path="new"
 							/>
 
-							{featureFlags.includes('LPS-186175') && (
-								<Route
-									element={
-										<DeactivateKeysTable
-											initialFilter="startswith(productName,'Portal')"
-											productName={PRODUCT_TYPES.portal}
-										/>
-									}
-									path="deactivate"
-								/>
-							)}
+							<Route
+								element={
+									<DeactivateKeysTable
+										initialFilter="startswith(productName,'Portal')"
+										productName={PRODUCT_TYPES.portal}
+									/>
+								}
+								path="deactivate"
+							/>
 
 							<Route
 								element={
@@ -328,9 +326,7 @@ const ProjectRoutes = () => {
 						</Route>
 					</Route>
 
-					{featureFlags.includes('ISSD-119') && (
-						<Route element={<Attachments />} path="attachments" />
-					)}
+					<Route element={<Attachments />} path="attachments" />
 
 					<Route element={<TeamMembers />} path="team-members" />
 

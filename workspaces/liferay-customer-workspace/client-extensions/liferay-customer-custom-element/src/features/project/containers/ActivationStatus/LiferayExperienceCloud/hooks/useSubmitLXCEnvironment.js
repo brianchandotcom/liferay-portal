@@ -37,9 +37,7 @@ export default function useSubmitLXCEnvironment(
 	handleLoadingSubmitButton,
 	values
 ) {
-	const {client} = useAppPropertiesContext();
-
-	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
+	const {client, provisioningServerAPI} = useAppPropertiesContext();
 
 	const [createLiferayExperienceCloudEnvironment] =
 		useCreateLiferayExperienceCloudEnvironment();
@@ -141,39 +139,37 @@ export default function useSubmitLXCEnvironment(
 						)
 					);
 
-					if (featureFlags.includes('LPS-181031')) {
-						const adminInfo = lxcActivationFields?.admins?.map(
-							({email, fullName}) => {
-								const [firstName, ...lastNames] =
-									fullName.split(' ');
-								const lastName = lastNames.join(' ');
+					const adminInfo = lxcActivationFields?.admins?.map(
+						({email, fullName}) => {
+							const [firstName, ...lastNames] =
+								fullName.split(' ');
+							const lastName = lastNames.join(' ');
 
-								return `
-									<strong>First Name -</strong> ${firstName}<br>
-									<strong>Last Name - </strong>${lastName}<br>
-									<strong>Email Address - </strong>${email}
-									<br><br>`;
-							}
-						);
+							return `
+								<strong>First Name -</strong> ${firstName}<br>
+								<strong>Last Name - </strong>${lastName}<br>
+								<strong>Email Address - </strong>${email}
+								<br><br>`;
+						}
+					);
 
-						const notificationTemplateService =
-							new NotificationQueueService(client);
+					const notificationTemplateService =
+						new NotificationQueueService(client);
 
-						await notificationTemplateService.send(
-							'SETUP-LXC-ENVIRONMENT',
-							{
-								'[%ANALYTICS_CLOUD_OWNERS_EMAIL_ADDRESS%]':
-									lxcActivationFields.analyticsCloudOwnersEmailAddress,
-								'[%DATE_AND_TIME_SUBMITTED%]':
-									new Date().toUTCString(),
-								'[%PROJECT_ADMIN%]': adminInfo.join(''),
-								'[%PROJECT_CODE%]': project.code,
-								'[%PROJECT_DATA_CENTER_REGION%]':
-									lxcActivationFields.primaryRegion,
-								'[%PROJECT_ID%]': lxcActivationFields.projectId,
-							}
-						);
-					}
+					await notificationTemplateService.send(
+						'SETUP-LXC-ENVIRONMENT',
+						{
+							'[%ANALYTICS_CLOUD_OWNERS_EMAIL_ADDRESS%]':
+								lxcActivationFields.analyticsCloudOwnersEmailAddress,
+							'[%DATE_AND_TIME_SUBMITTED%]':
+								new Date().toUTCString(),
+							'[%PROJECT_ADMIN%]': adminInfo.join(''),
+							'[%PROJECT_CODE%]': project.code,
+							'[%PROJECT_DATA_CENTER_REGION%]':
+								lxcActivationFields.primaryRegion,
+							'[%PROJECT_ID%]': lxcActivationFields.projectId,
+						}
+					);
 				}
 			}
 			catch (error) {
@@ -186,16 +182,24 @@ export default function useSubmitLXCEnvironment(
 
 			const oAuthToken = await getOrRequestToken();
 
-			if (featureFlags.includes('LPS-159127')) {
-				try {
-					await updateRaysourceContact(
-						addContactRoleRaysource,
-						addHighPriorityContactList,
-						oAuthToken,
-						project,
-						provisioningServerAPI
-					);
+			try {
+				await updateRaysourceContact(
+					addContactRoleRaysource,
+					addHighPriorityContactList,
+					oAuthToken,
+					project,
+					provisioningServerAPI
+				);
 
+				await updateLiferayContact(
+					addHighPriorityContactList,
+					addContactRoleLiferay,
+					project,
+					client
+				);
+			}
+			catch (error) {
+				if (error.cause === STATUS_CODE.conflict) {
 					await updateLiferayContact(
 						addHighPriorityContactList,
 						addContactRoleLiferay,
@@ -203,35 +207,25 @@ export default function useSubmitLXCEnvironment(
 						client
 					);
 				}
-				catch (error) {
-					if (error.cause === STATUS_CODE.conflict) {
-						await updateLiferayContact(
-							addHighPriorityContactList,
-							addContactRoleLiferay,
-							project,
-							client
-						);
-					}
-					else {
-						throw new Error('Error', {cause: error.cause});
-					}
+				else {
+					throw new Error('Error', {cause: error.cause});
 				}
-
-				await updateRaysourceContact(
-					removeContactRoleRaysource,
-					removeHighPriorityContactList,
-					oAuthToken,
-					project,
-					provisioningServerAPI
-				);
-
-				await updateLiferayContact(
-					removeHighPriorityContactList,
-					removeContactRoleLiferay,
-					project,
-					client
-				);
 			}
+
+			await updateRaysourceContact(
+				removeContactRoleRaysource,
+				removeHighPriorityContactList,
+				oAuthToken,
+				project,
+				provisioningServerAPI
+			);
+
+			await updateLiferayContact(
+				removeHighPriorityContactList,
+				removeContactRoleLiferay,
+				project,
+				client
+			);
 
 			await handleDataSubmit();
 			handleChangeForm(true);

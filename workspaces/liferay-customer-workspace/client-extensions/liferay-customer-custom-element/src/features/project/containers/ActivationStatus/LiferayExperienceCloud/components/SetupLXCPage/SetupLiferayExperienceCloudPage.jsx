@@ -6,7 +6,6 @@
 import ClayForm from '@clayui/form';
 import {FieldArray} from 'formik';
 import {useEffect, useState} from 'react';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {HIGH_PRIORITY_CONTACT_CATEGORIES} from '~/features/project/utils/getHighPriorityContacts';
 import i18n from '~/utils/I18n';
 import {
@@ -36,7 +35,6 @@ const SetupLiferayExperienceCloudPage = ({
 	touched,
 	values,
 }) => {
-	const {featureFlags} = useAppPropertiesContext();
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [inputErrors, setInputErrors] = useState({});
@@ -160,7 +158,7 @@ const SetupLiferayExperienceCloudPage = ({
 		return Object.values(inputErrors).some((error) => !!error);
 	};
 
-	return featureFlags.includes('LPS-159127') ? (
+	return (
 		<Layout
 			className="pt-1 px-3"
 			footerProps={{
@@ -366,146 +364,6 @@ const SetupLiferayExperienceCloudPage = ({
 					/>
 				</div>
 			)}
-		</Layout>
-	) : (
-		<Layout
-			className="pt-1 px-3"
-			footerProps={{
-				leftButton: (
-					<Button
-						borderless
-						onClick={() => handleOnLeftButtonClick()}
-					>
-						{leftButton}
-					</Button>
-				),
-				middleButton: (
-					<Button
-						disabled={baseButtonDisabled}
-						displayType="primary"
-						onClick={() => handleSubmitLxcEnvironment()}
-					>
-						{i18n.translate('submit')}
-					</Button>
-				),
-			}}
-			headerProps={{
-				helper: i18n.translate(
-					'we-ll-need-a-few-details-to-finish-creating-your-liferay-saas-workspace'
-				),
-				title: i18n.translate('set-up-liferay-saas'),
-			}}
-		>
-			<FieldArray
-				name="lxc.admins"
-				render={({pop, push}) => (
-					<>
-						<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
-							<div className="mr-4 pr-2">
-								<label>
-									{i18n.translate('organization-name')}
-								</label>
-
-								<p className="dxp-cloud-project-name text-neutral-6 text-paragraph-lg">
-									<strong>{project.name}</strong>
-								</p>
-							</div>
-						</div>
-						<ClayForm.Group className="mb-0">
-							<ClayForm.Group className="mb-0 pb-1">
-								<Input
-									groupStyle="pb-1"
-									helper={i18n.translate(
-										'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
-									)}
-									label={i18n.translate('project-id')}
-									name="lxc.projectId"
-									required
-									type="text"
-								/>
-
-								<Select
-									groupStyle="mb-0"
-									key={primaryRegionList}
-									label={i18n.translate('primary-region')}
-									name="lxc.primaryRegion"
-									options={primaryRegionList}
-									required
-								/>
-							</ClayForm.Group>
-
-							<ClayForm.Group className="mb-0">
-								{values.lxc.admins.map((admin, index) => (
-									<AdminInputs
-										admin={admin}
-										id={index}
-										key={index}
-									/>
-								))}
-							</ClayForm.Group>
-						</ClayForm.Group>
-
-						{values?.lxc?.admins?.length >
-							INITIAL_SETUP_ADMIN_COUNT && (
-							<Button
-								className="ml-3 my-2 text-brandy-secondary"
-								displayType="secondary"
-								onClick={() => {
-									pop();
-									setBaseButtonDisabled(false);
-								}}
-								prependIcon="hr"
-								small
-							>
-								{i18n.translate('remove-project-admin')}
-							</Button>
-						)}
-
-						<Button
-							className="cp-btn-add-dxp-cloud ml-3 my-2 rounded-xs"
-							onClick={() => {
-								push(getInitialLxcAdmins(values?.lxc?.admins));
-								setBaseButtonDisabled(true);
-							}}
-							prependIcon="plus"
-							small
-						>
-							{i18n.translate('add-another-admin')}
-						</Button>
-
-						<hr />
-
-						<ClayForm.Group className="mb-0">
-							<Input
-								groupStyle="pb-1"
-								label={i18n.translate(
-									'incident-management-contacts-first-and-last-name'
-								)}
-								name="lxc.incidentManagementFullName"
-								required
-								type="text"
-							/>
-
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
-								)}
-								label={i18n.translate(
-									'incident-management-contacts-email-address'
-								)}
-								name="lxc.incidentManagementEmail"
-								required
-								type="text"
-								validations={[
-									(value) =>
-										isValidEmail(value, bannedDomains),
-								]}
-							/>
-						</ClayForm.Group>
-					</>
-				)}
-			/>
 		</Layout>
 	);
 };

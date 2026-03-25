@@ -39,7 +39,6 @@ const ActivationKeysInputs = ({
 	const {
 		articleGettingStartedWithLiferayEnterpriseSearchURL,
 		client,
-		featureFlags,
 		provisioningServerAPI,
 		submitSupportTicketURL,
 	} = useAppPropertiesContext();
@@ -311,7 +310,7 @@ const ActivationKeysInputs = ({
 
 			{hasLicenseDownloadError && currentEnterpriseMessage}
 
-			{(accountSubscriptionGroupName === 'enterprise-search') && featureFlags.includes('LPS-185004') && (
+			{accountSubscriptionGroupName === 'enterprise-search' && (
 				<p className="pt-3 text-neutral-7">
 					{`${i18n.translate(
 						'for-instructions-on-how-to-setup-your-liferay-enterprise-search-software-please-read-the'

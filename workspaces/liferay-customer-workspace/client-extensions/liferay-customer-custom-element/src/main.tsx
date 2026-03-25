@@ -86,8 +86,6 @@ const CustomerPortalApp: React.FC<CustomerPortalAppProps> = ({
 					} as any
 				}
 			>
-				{properties.featureFlags?.includes('LPS-192494')}
-
 				<AppRouteComponent />
 			</AppPropertiesContext.Provider>
 		</ApolloProvider>

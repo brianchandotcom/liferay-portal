@@ -44,7 +44,7 @@ const SelectSubscription = ({
 	urlPreviousPage,
 }) => {
 	const [{subscriptionGroups}] = useAppContext();
-	const {articleDeactivateKey, client, featureFlags, provisioningServerAPI} =
+	const {articleDeactivateKey, client, provisioningServerAPI} =
 		useAppPropertiesContext();
 
 	const [generateFormValues, setGenerateFormValues] = useState();
@@ -887,8 +887,7 @@ const SelectSubscription = ({
 							})}
 					</div>
 
-					{featureFlags.includes('LPS-148342') &&
-						allowComplimentary && (
+					{allowComplimentary && (
 							<Radio
 								hasCustomAlert={
 									hasComplimentaryKey && (

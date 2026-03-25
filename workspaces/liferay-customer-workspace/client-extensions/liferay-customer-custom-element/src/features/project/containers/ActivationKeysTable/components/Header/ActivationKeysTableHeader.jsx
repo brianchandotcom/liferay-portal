@@ -5,7 +5,6 @@
 
 import ClayAlert from '@clayui/alert';
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useGetMyUserAccount} from '~/services/liferay/graphql/user-accounts';
 import i18n from '~/utils/I18n';
 import {ROLE_TYPES} from '~/utils/constants';
@@ -62,8 +61,6 @@ const ActivationKeysTableHeader = ({
 			return hasAdminRoles;
 		}
 	}, [userAccounts]);
-
-	const {featureFlags} = useAppPropertiesContext();
 
 	const [status, setStatus] = useState({
 		deactivate: '',
@@ -190,8 +187,7 @@ const ActivationKeysTableHeader = ({
 								</>
 							)}
 
-						{featureFlags.includes('ISSD-78') &&
-							(isAdminUserAccount || isAdminOrPartnerManager) &&
+						{(isAdminUserAccount || isAdminOrPartnerManager) &&
 							allowSelfProvisioning &&
 							activationKeysByStatusPaginatedChecked.length >=
 								2 &&

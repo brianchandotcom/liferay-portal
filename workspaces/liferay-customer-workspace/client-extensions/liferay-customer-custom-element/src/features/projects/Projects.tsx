@@ -7,7 +7,6 @@ import {NetworkStatus} from '@apollo/client';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import useKoroneikiAccounts from '~/hooks/useKoroneikiAccounts';
 import SearchBuilder from '~/lib/SearchBuilder';
 
@@ -74,7 +73,6 @@ const Projects = () => {
 		[getFilter]
 	);
 
-	const {featureFlags} = useAppPropertiesContext();
 	const koroneikiAccounts = data?.c?.koroneikiAccounts;
 	const koroneikiAccountTotal = koroneikiAccounts?.totalCount;
 
@@ -101,14 +99,13 @@ const Projects = () => {
 
 	return (
 		<>
-			{featureFlags?.includes('LPS-191380') &&
-				hasAvailableCategoriesToDisplay && (
-					<ProjectCategoryDropdown
-						onSelect={handleOnSelect}
-						projectCategoryItems={projectCategoryItems}
-						selectedProjectCategoryKey={selectedProjectCategoryKey}
-					/>
-				)}
+			{hasAvailableCategoriesToDisplay && (
+				<ProjectCategoryDropdown
+					onSelect={handleOnSelect}
+					projectCategoryItems={projectCategoryItems}
+					selectedProjectCategoryKey={selectedProjectCategoryKey}
+				/>
+			)}
 
 			<ClayLayout.ContainerFluid
 				className="cp-projects-wrapper"

@@ -4,7 +4,6 @@
  */
 
 import {useMemo} from 'react';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import i18n from '~/utils/I18n';
 import Skeleton from '~/components/Skeleton';
 import {PRODUCT_TYPES} from '~/features/project/utils/constants/productTypes';
@@ -39,7 +38,6 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 			PRODUCT_TYPES.liferayCloud,
 		]
 	);
-	const {featureFlags} = useAppPropertiesContext();
 
 	const accountSubscriptionGroups = data?.c.accountSubscriptionGroups.items;
 	const accountSubscriptionGroupLiferayExperienceCloud = useMemo(

@@ -20,8 +20,7 @@ export function getActivationKeysDownloadItems(
 	handleMultipleAlertStatus,
 	handleAlertStatus,
 	selectedKeysObjects,
-	projectName,
-	featureFlags
+	projectName
 ) {
 	const dropdownItemsSelectedDownload = [
 		{
@@ -60,23 +59,21 @@ export function getActivationKeysDownloadItems(
 		},
 	];
 
-	if (featureFlags.includes('LPS-194304')) {
-		dropdownItemsSelectedDownload.push({
-			icon: (
-				<ClayIcon className="mr-1 text-neutral-4" symbol="download" />
-			),
-			label: i18n.translate('export-selected-key-details-csv'),
-			onClick: async () => {
-				const downloadedAggregated = await downloadSelectedKeysDetails(
-					selectedKeysIDs,
-					oAuthToken,
-					provisioningServerAPI
-				);
+	dropdownItemsSelectedDownload.push({
+		icon: (
+			<ClayIcon className="mr-1 text-neutral-4" symbol="download" />
+		),
+		label: i18n.translate('export-selected-key-details-csv'),
+		onClick: async () => {
+			const downloadedAggregated = await downloadSelectedKeysDetails(
+				selectedKeysIDs,
+				oAuthToken,
+				provisioningServerAPI
+			);
 
-				return handleAlertStatus(downloadedAggregated);
-			},
-		});
-	}
+			return handleAlertStatus(downloadedAggregated);
+		},
+	});
 
 	return dropdownItemsSelectedDownload;
 }

@@ -40,7 +40,7 @@ test(
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const spaceName = `Space ${getRandomString()}`;
-		const file1Title = `Content ${getRandomString()}`;
+		const file1Title = `<b>Content ${getRandomString()}</b>`;
 		let space = null;
 
 		await test.step('Create a new Space with recycle bin disabled', async () => {

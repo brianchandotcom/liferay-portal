@@ -74,7 +74,7 @@ public class FragmentEntryLinkCTDisplayRender
 			}
 		}
 
-		return Validator.isNotNull(
+		return Validator.isNull(
 			fragmentEntryLink.getOriginalFragmentEntryLinkERC());
 	}
 

@@ -248,12 +248,14 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 	},
 	[BULK_ACTION_MOVE]: {
 		info: {
-			all: Liferay.Language.get('move-action-started-for-all-assets'),
-			plural: Liferay.Language.get('move-action-started-for-x-assets'),
-			singular: Liferay.Language.get('move-action-started-for-one-asset'),
+			all: Liferay.Language.get('moving-all-assets-to-x'),
+			plural: Liferay.Language.get('moving-x-assets-to-x'),
+			singular: Liferay.Language.get('moving-x-to-x'),
 		},
 		success: {
-			all: Liferay.Language.get('all-items-were-successfully-moved-to-x'),
+			all: Liferay.Language.get(
+				'all-items-were-successfully-moved-to-x'
+			),
 			plural: Liferay.Language.get(
 				'x-assets-were-successfully-moved-to-x'
 			),

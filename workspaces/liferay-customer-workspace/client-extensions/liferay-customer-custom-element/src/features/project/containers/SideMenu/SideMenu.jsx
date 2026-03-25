@@ -32,7 +32,7 @@ const expandGroupForSideMenu = (group) => {
 			displayName: productName
 		}));
 	}
-	
+
 	return [group];
 };
 
@@ -78,15 +78,6 @@ const SideMenu = () => {
 		[menuItemActiveStatus]
 	);
 
-	const hasSaasSubscription = useMemo(
-        () =>
-            subscriptionGroups?.some(
-                (subscription) =>
-                    subscription.activationProductName?.includes(PRODUCT_TYPES.liferayExperienceCloud)
-            ),
-        [subscriptionGroups]
-    );
-
 	const hasSLASubscription = useMemo(
 		() =>
 			koroneikiAccount?.slaCurrent ||
@@ -94,6 +85,15 @@ const SideMenu = () => {
 			koroneikiAccount?.slaFuture,
 		[koroneikiAccount]
 	);
+
+  	const isProjectUsageEnabled =
+		(hasPlanSubscription || hasLegacySubscription) &&
+		  (featureFlags.includes('LRSD-6322') ||
+		  	loggedUserAccount?.isLiferayStaff ||
+		  	loggedUserAccount?.isPartner) ||
+		hasExperienceSubscription &&
+		  (featureFlags.includes('LRSD-12003') ||
+			  loggedUserAccount?.isLiferayStaff);
 
 	useEffect(() => {
 		const expandedHeightProducts = isOpenedProductsMenu
@@ -262,11 +262,7 @@ const SideMenu = () => {
 					</div>
 				)}
 
-				{(((loggedUserAccount?.isLiferayStaff || loggedUserAccount?.isPartner) &&
-					(hasPlanSubscription || hasLegacySubscription)) ||
-					(featureFlags.includes('LRSD-12003') &&
-						loggedUserAccount?.isLiferayStaff &&
-						hasExperienceSubscription)) && (
+				{isProjectUsageEnabled && (
 					<div className="d-flex">
 						<MenuItem
 							iconKey="projectUsage"

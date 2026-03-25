@@ -88,9 +88,13 @@ const ProjectRoutes = () => {
 		subscriptions === undefined;
 
 	const isProjectUsageEnabled =
-		((loggedUserAccount?.isLiferayStaff || loggedUserAccount?.isPartner) &&
-			(hasPlanSubscription || hasLegacySubscription)) ||
-		(featureFlags.includes('LRSD-12003') && loggedUserAccount?.isLiferayStaff && hasExperienceSubscription);
+		(hasPlanSubscription || hasLegacySubscription) &&
+		  (featureFlags.includes('LRSD-6322') ||
+		  	loggedUserAccount?.isLiferayStaff ||
+		  	loggedUserAccount?.isPartner) ||
+		hasExperienceSubscription &&
+		  (featureFlags.includes('LRSD-12003') ||
+			  loggedUserAccount?.isLiferayStaff);
 
 	const hasSLASubscription = useMemo(
 		() =>

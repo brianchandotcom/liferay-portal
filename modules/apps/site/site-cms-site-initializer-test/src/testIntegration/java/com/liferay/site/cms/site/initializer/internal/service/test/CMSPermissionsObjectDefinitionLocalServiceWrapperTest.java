@@ -211,8 +211,6 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 		Portlet portlet = _portletLocalService.fetchPortletById(
 			TestPropsValues.getCompanyId(), objectDefinition.getPortletId());
 
-		Assert.assertNotNull(portlet);
-
 		_assertResourcePermission(
 			ActionKeys.VIEW, portlet.getRootPortletId(), cmsAdministratorRole);
 

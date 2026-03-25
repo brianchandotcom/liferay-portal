@@ -124,13 +124,14 @@ const displayToast = (
 	}
 };
 
-function executeBulkCopyAction({
+function executeBulkCopyOrMoveAction({
 	apiURL,
 	dataSetId,
 	folder,
 	onClose,
 	selectedData,
 	targetName,
+	type
 }: {
 	apiURL: string | undefined;
 	dataSetId?: string;
@@ -138,6 +139,7 @@ function executeBulkCopyAction({
 	onClose: () => void;
 	selectedData: any;
 	targetName?: string;
+	type: 'CopyObjectBulkSelectionAction' | 'MoveObjectBulkSelectionAction'
 }) {
 	triggerAssetBulkAction({
 		additionalData: {
@@ -150,7 +152,7 @@ function executeBulkCopyAction({
 		},
 		onCreateSuccess: onClose,
 		selectedData,
-		type: 'CopyObjectBulkSelectionAction',
+		type,
 	});
 }
 
@@ -250,8 +252,9 @@ function FolderItemSelectorModalContent({
 	selectedData,
 }: TFolderItemSelectorModalContent) {
 	const isCopy = action === 'copy';
+	const isMove = action === 'move';
 	const isFolderSelectionInitial =
-		objectEntryFolderExternalReferenceCode && !isCopy;
+		objectEntryFolderExternalReferenceCode && !isCopy && !isMove;
 
 	const [selectedItemType, setSelectedItemType] = useState<
 		'folder' | 'space'
@@ -313,13 +316,16 @@ function FolderItemSelectorModalContent({
 
 	const handleOnItemsChange = (folder: Folder, targetName?: string) => {
 		if (isBulk) {
-			executeBulkCopyAction({
+			const actionType = isCopy ? 'CopyObjectBulkSelectionAction' : 'MoveObjectBulkSelectionAction';
+			
+			executeBulkCopyOrMoveAction({
 				apiURL,
 				dataSetId,
 				folder,
 				onClose: () => onOpenChange(false),
 				selectedData,
 				targetName,
+				type: actionType
 			});
 		}
 		else if (itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {

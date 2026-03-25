@@ -10,6 +10,10 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import getRandomString from '../../../utils/getRandomString';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {DataSetPage} from './pages/DataSetPage';
 
@@ -529,5 +533,49 @@ test(
 				String(objectEntry2.id)
 			);
 		}
+	}
+);
+
+test(
+	'Can access the CMS when assigned to a Space via user group',
+	{tag: '@LPD-83640'},
+	async ({apiHelpers, page}) => {
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+			userGroup.id,
+			[user.id]
+		);
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: `Space ${getRandomString()}`,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.jsonWebServicesUserGroup.assignUserGroupsToGroup(
+			String(space.siteId),
+			String(userGroup.id)
+		);
+
+		await performLogout(page);
+		await performLogin(page, user.alternateName);
+
+		await page.goto('/web/cms');
+
+		await expect(
+			page.getByRole('heading', {name: `Welcome, ${user.givenName}!`})
+		).toBeVisible();
 	}
 );

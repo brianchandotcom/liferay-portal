@@ -2016,6 +2016,10 @@ export class PageEditorPage {
 			`/web${siteUrl || '/guest'}/${layoutName}?${editMode ? 'p_l_mode=edit' : ''}`
 		);
 
+		// Prevent unintended hover effects on the page
+
+		await this.page.getByLabel('Control Menu').hover();
+
 		if (editMode) {
 			await this.page.waitForFunction((sidebarWidth) => {
 				const wrapper = document.querySelector('.page-editor__wrapper');

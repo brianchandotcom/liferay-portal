@@ -153,6 +153,15 @@ public class ReportController extends BaseFaroController {
 				faroProject, Collections.emptyMap(), path, queryParameters,
 				Map.class);
 		}
+		catch (FaroEngineClientException faroEngineClientException) {
+			_log.error(faroEngineClientException);
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				faroEngineClientException.getMessage());
+
+			return _reportControllerResponseFactory.create(
+				jsonObject.getString("message"), jsonObject.getInt("status"));
+		}
 		catch (InvalidFilterException invalidFilterException) {
 			Response.ResponseBuilder responseBuilder = Response.status(
 				Response.Status.BAD_REQUEST);
@@ -177,15 +186,6 @@ public class ReportController extends BaseFaroController {
 					"message", "Bad Request"
 				).build()
 			).build();
-		}
-		catch (FaroEngineClientException faroEngineClientException) {
-			_log.error(faroEngineClientException);
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				faroEngineClientException.getMessage());
-
-			return _reportControllerResponseFactory.create(
-				jsonObject.getString("message"), jsonObject.getInt("status"));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

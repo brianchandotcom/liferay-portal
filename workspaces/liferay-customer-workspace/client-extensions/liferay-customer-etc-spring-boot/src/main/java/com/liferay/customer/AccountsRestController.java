@@ -498,19 +498,19 @@ public class AccountsRestController extends BaseRestController {
 				koroneikiAccount)
 		throws Exception {
 
-		Account account = new Account();
-
-		account.setDescription(koroneikiAccount::getDescription);
-		account.setExternalReferenceCode(koroneikiAccount::getKey);
-		account.setName(
-			() -> StringUtil.shorten(koroneikiAccount.getName(), 99));
-
 		AccountResource accountResource = AccountResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
+
+		Account account = new Account();
+
+		account.setDescription(koroneikiAccount::getDescription);
+		account.setExternalReferenceCode(koroneikiAccount::getKey);
+		account.setName(
+			() -> StringUtil.shorten(koroneikiAccount.getName(), 99));
 
 		accountResource.putAccountByExternalReferenceCode(
 			koroneikiAccount.getKey(), account);

@@ -22,8 +22,8 @@ export class DocumentLibraryEditFilePage {
 	readonly saveButton: Locator;
 	readonly scheduleButton: Locator;
 	readonly selectForUpdateButton: Locator;
+	readonly submitForWorkflowButton: Locator;
 	readonly titleSelector: Locator;
-
 	constructor(page: Page) {
 		this.page = page;
 
@@ -42,6 +42,9 @@ export class DocumentLibraryEditFilePage {
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 		this.scheduleButton = page.getByRole('button', {name: 'Schedule'});
 		this.selectForUpdateButton = page.getByLabel('Upload', {exact: true});
+		this.submitForWorkflowButton = page.getByRole('button', {
+			name: 'Submit for Workflow',
+		});
 		this.titleSelector = page.getByLabel('Title');
 	}
 
@@ -253,5 +256,10 @@ export class DocumentLibraryEditFilePage {
 				.locator('.card-type-asset')
 				.filter({hasText: displayPageName}),
 		});
+	}
+
+	async submitWorkflowForBasicFileEntry(title: string) {
+		await this.titleSelector.fill(title);
+		await this.submitForWorkflowButton.click();
 	}
 }

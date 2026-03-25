@@ -234,7 +234,7 @@ export default class WorkspaceListItem extends React.Component {
 			return (
 				<div className='workspace-info text-secondary'>
 					{Liferay.Language.get(
-						'access-to-liferay-data-platform-has-been-restricted-because-your-workspace-has-reached-the-known-individuals-or-page-view-limit-please-contact-sales-to-proceed'
+						'access-to-liferay-data-platform-has-been-restricted-because-your-workspace-has-reached-the-known-individuals-or-page-view-limit'
 					)}
 				</div>
 			);

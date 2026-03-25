@@ -395,15 +395,8 @@ public class TaxonomyCategoryResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
 				if ((depotEntry != null) &&
-					(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
+					(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
 
-					searchContext.setAttribute(
-						"groupIds",
-						new long[] {
-							assetLibraryId, GroupConstants.ANY_PARENT_GROUP_ID
-						});
-				}
-				else {
 					searchContext.setGroupIds(new long[] {assetLibraryId});
 				}
 

@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.model.AccountEntryTable;
 import com.liferay.account.model.AccountEntryUserRelTable;
+import com.liferay.asset.categories.thread.local.AssetVocabularyThreadLocal;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -498,20 +499,27 @@ public class ObjectEntryLocalServiceImpl
 			try {
 				if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 					ObjectEntryThreadLocal.setSkipObjectValidationRules(true);
+
+					if (objectDefinition.isCMS()) {
+						AssetVocabularyThreadLocal.
+							setSkipRequiredCategoryValidation(true);
+					}
 				}
 
 				objectEntry = objectEntryPersistence.update(objectEntry);
+
+				_updateAsset(
+					serviceContext.getUserId(), objectEntry,
+					serviceContext.getAssetCategoryIds(),
+					serviceContext.getAssetTagNames(),
+					serviceContext.getAssetLinkEntryIds(),
+					serviceContext.getAssetPriority(), serviceContext);
 			}
 			finally {
+				AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(
+					false);
 				ObjectEntryThreadLocal.setSkipObjectValidationRules(false);
 			}
-
-			_updateAsset(
-				serviceContext.getUserId(), objectEntry,
-				serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames(),
-				serviceContext.getAssetLinkEntryIds(),
-				serviceContext.getAssetPriority(), serviceContext);
 		}
 
 		_addFriendlyURLEntry(

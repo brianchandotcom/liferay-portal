@@ -58,7 +58,7 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 			else if (action?.data?.id === 'view-content') {
 				return {
 					...action,
-					isVisible: (item: any) => Boolean(!item?.file?.link?.href),
+					isVisible: (item: any) => Boolean(!item?.file),
 				};
 			}
 			else if (action?.data?.id === 'view-file') {

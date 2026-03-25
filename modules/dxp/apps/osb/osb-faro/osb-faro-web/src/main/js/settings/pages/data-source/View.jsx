@@ -1,4 +1,5 @@
 import CSV from './CSV';
+import DemandbaseOverview from 'settings/components/demandbase/DemandbaseOverview';
 import LiferayOverview from 'settings/components/liferay/LiferayOverview';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
@@ -11,6 +12,7 @@ import {withRouter} from 'react-router-dom';
 
 const PAGE_MAP = {
 	[DataSourceTypes.Csv]: CSV,
+	[DataSourceTypes.Demandbase]: DemandbaseOverview,
 	[DataSourceTypes.Liferay]: LiferayOverview,
 	[DataSourceTypes.Salesforce]: SalesforceOverview
 };

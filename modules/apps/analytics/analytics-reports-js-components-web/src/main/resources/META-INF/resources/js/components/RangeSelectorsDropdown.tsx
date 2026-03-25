@@ -195,7 +195,7 @@ const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 						onClick={() => triggerRef?.current?.focus()}
 						placeholder="YYYY-MM-DD"
 						value={rangeStart}
-						weekdaysShort={dateUtils.getWeekdaysShort()}
+						weekdaysShort={dateUtils.getWeekdaysShort() as string[]}
 						years={{
 							end: new Date().getFullYear() + 25,
 							start: new Date().getFullYear() - 50,

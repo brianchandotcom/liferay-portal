@@ -16,7 +16,7 @@ export function formatDate(date: Date, rangeSelector: RangeSelectors) {
 		return dateUtils.format(date, 'MMM d, h a');
 	}
 
-	return dateUtils.format(date, 'YYYY MMM D');
+	return dateUtils.format(date, 'yyyy MMM d');
 }
 
 export function getDateRange(rangeSelector: RangeSelectors, date = new Date()) {

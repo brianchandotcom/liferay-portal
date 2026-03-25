@@ -11,6 +11,7 @@ import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalSer
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -71,6 +73,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -363,12 +366,21 @@ public class TaxonomyCategoryResourceImpl
 					AssetCategoriesPermission.RESOURCE_NAME, assetLibraryId)
 			).build(),
 			booleanQuery -> {
-				if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
-					return;
-				}
-
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
+
+				if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+					TermsFilter assetVocabularyIdTermsFilter = new TermsFilter(
+						Field.ASSET_VOCABULARY_ID);
+
+					assetVocabularyIdTermsFilter.addValues(
+						_getAssetVocabularyIds(depotEntry.getGroupId()));
+
+					booleanFilter.add(
+						assetVocabularyIdTermsFilter, BooleanClauseOccur.MUST);
+
+					return;
+				}
 
 				booleanFilter.add(
 					new TermFilter(
@@ -733,6 +745,25 @@ public class TaxonomyCategoryResourceImpl
 		}
 
 		return assetCategory.getVocabularyId();
+	}
+
+	private String[] _getAssetVocabularyIds(long groupId) {
+		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
+			new ArrayList<>();
+
+		assetVocabularyGroupRels.addAll(
+			_assetVocabularyGroupRelLocalService.
+				getAssetVocabularyGroupRelsByGroupId(groupId));
+		assetVocabularyGroupRels.addAll(
+			_assetVocabularyGroupRelLocalService.
+				getAssetVocabularyGroupRelsByGroupId(
+					GroupConstants.GROUP_ID_ALL));
+
+		return transformToArray(
+			assetVocabularyGroupRels,
+			assetVocabularyGroupRel -> String.valueOf(
+				assetVocabularyGroupRel.getVocabularyId()),
+			String.class);
 	}
 
 	private Page<TaxonomyCategory> _getCategoriesPage(

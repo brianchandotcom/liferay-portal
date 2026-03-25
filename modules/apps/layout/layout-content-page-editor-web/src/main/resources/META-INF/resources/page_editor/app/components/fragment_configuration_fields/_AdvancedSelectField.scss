@@ -3,9 +3,25 @@
 $prefix: '.page-editor__single-select-with-icon';
 
 html#{$cadmin-selector} .cadmin .page-editor__select-field {
-	&:not(:hover):not(.custom)
-		.page-editor__select-field__action-button:not(:focus) {
-		opacity: 0;
+	&:not(.old) {
+		border: 1px solid $cadmin-secondary-l3;
+
+		&:focus-within,
+		&:hover {
+			border-color: $cadmin-secondary-l0;
+		}
+
+		&:not(:hover):not(:focus-within):not(.custom)
+			.page-editor__select-field__action-button {
+			opacity: 0;
+		}
+	}
+
+	&.old {
+		&:not(:hover):not(.custom)
+			.page-editor__select-field__action-button:not(:focus) {
+			opacity: 0;
+		}
 	}
 
 	#{$prefix} {
@@ -43,11 +59,6 @@ html#{$cadmin-selector} .cadmin .page-editor__select-field {
 	#{$prefix}__select {
 		opacity: 0;
 		z-index: 1;
-	}
-
-	#{$prefix}:hover,
-	#{$prefix}:focus-within {
-		background-color: $cadmin-gray-100;
 	}
 
 	#{$prefix}:focus-within {

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Time;
@@ -165,23 +166,26 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 
 		_assertCKEditorConfiguration(false, privateLicenseKey);
 
+		String customLicenseKey = RandomTestUtil.randomString();
+
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID,
 			() -> {
 				FileUtil.write(
-					_CKEDITOR_CONFIG_FILE, "licenseKey=\"custom.key\"");
+					_CKEDITOR_CONFIG_FILE,
+					"licenseKey=\"" + customLicenseKey + "\"");
 
 				assertPortalLicenseRegistered();
 			});
 
-		_assertCKEditorConfiguration(true, "custom.key");
+		_assertCKEditorConfiguration(true, customLicenseKey);
 
 		resetCheckInterval();
 
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID, this::assertPortalLicenseRegistered);
 
-		_assertCKEditorConfiguration(true, "custom.key");
+		_assertCKEditorConfiguration(true, customLicenseKey);
 	}
 
 	@Test
@@ -197,16 +201,19 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 
 		_assertCKEditorConfiguration(false, privateLicenseKey);
 
+		String customLicenseKey = RandomTestUtil.randomString();
+
 		ConfigurationTestUtil.updateConfiguration(
 			_CKEDITOR_CONFIG_ID,
 			() -> {
 				FileUtil.write(
-					_CKEDITOR_CONFIG_FILE, "licenseKey=\"custom.key\"");
+					_CKEDITOR_CONFIG_FILE,
+					"licenseKey=\"" + customLicenseKey + "\"");
 
 				assertPortalLicenseRegistered();
 			});
 
-		_assertCKEditorConfiguration(true, "custom.key");
+		_assertCKEditorConfiguration(true, customLicenseKey);
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -216,7 +223,7 @@ public class CKEditorLicenseTest extends BaseLicenseTestCase {
 			preparedStatement.setString(
 				1,
 				StringUtil.replace(
-					_readConfigurationFromDatabase(), "custom.key",
+					_readConfigurationFromDatabase(), customLicenseKey,
 					privateLicenseKey));
 			preparedStatement.setString(2, _CKEDITOR_CONFIG_ID);
 

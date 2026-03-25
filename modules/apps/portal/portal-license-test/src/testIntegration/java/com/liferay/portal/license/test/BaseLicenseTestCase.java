@@ -334,6 +334,18 @@ public abstract class BaseLicenseTestCase {
 		}
 	}
 
+	protected static String getProperty(String propertyKey) {
+		String value = _licenseTestProperties.getProperty(propertyKey);
+
+		if (Validator.isNull(value)) {
+			throw new IllegalStateException(
+				StringBundler.concat(
+					"Property ", _PROPERTY_PREFIX, propertyKey, " is not set"));
+		}
+
+		return value;
+	}
+
 	protected void assertPortalInvalidatedWithBrokenFile(String filePath)
 		throws Exception {
 
@@ -344,15 +356,11 @@ public abstract class BaseLicenseTestCase {
 	}
 
 	protected String getCMPProductId() {
-		return _licenseTestProperties.getProperty("product.id.cmp");
+		return getProperty("product.id.cmp");
 	}
 
 	protected String getPortalProductId() {
-		return _licenseTestProperties.getProperty("product.id.portal");
-	}
-
-	protected String getProperty(String propertyKey) {
-		return _licenseTestProperties.getProperty(propertyKey);
+		return getProperty("product.id.portal");
 	}
 
 	private static Field _findField(ClassLoader classLoader, String fieldString)
@@ -541,6 +549,8 @@ public abstract class BaseLicenseTestCase {
 	private static final String _NOT_REGISTERED_LICENSE_KEY =
 		"This instance is not registered.";
 
+	private static final String _PROPERTY_PREFIX = "license.test.";
+
 	private static Properties _licenseTestProperties;
 
 	private static class ReflectionsHolder {
@@ -569,7 +579,7 @@ public abstract class BaseLicenseTestCase {
 
 			if (_licenseManagerHelperClass != null) {
 				_licenseTestProperties = PropsUtil.getProperties(
-					"license.test.", true);
+					_PROPERTY_PREFIX, true);
 
 				if (_licenseTestProperties.isEmpty()) {
 					throw new IllegalArgumentException(
@@ -578,15 +588,11 @@ public abstract class BaseLicenseTestCase {
 
 				try {
 					_lifecycleActionField = _findField(
-						classLoader,
-						_licenseTestProperties.getProperty(
-							"lifecycle.action.field"));
+						classLoader, getProperty("lifecycle.action.field"));
 					_validateMethod = _findMethod(
-						classLoader,
-						_licenseTestProperties.getProperty("validate.method"));
+						classLoader, getProperty("validate.method"));
 					_versionMethod = _findMethod(
-						classLoader,
-						_licenseTestProperties.getProperty("version.method"));
+						classLoader, getProperty("version.method"));
 
 					ByteBuddyAgent.install();
 

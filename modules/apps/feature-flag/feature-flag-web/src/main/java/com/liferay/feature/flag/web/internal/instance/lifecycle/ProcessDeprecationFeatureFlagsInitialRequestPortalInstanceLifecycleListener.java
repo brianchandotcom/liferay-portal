@@ -32,7 +32,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  * @author Thiago Buarque
  */
-@Component(service = PortalInstanceLifecycleListener.class)
+@Component(
+	property = "service.ranking:Integer=100",
+	service = PortalInstanceLifecycleListener.class
+)
 public class
 	ProcessDeprecationFeatureFlagsInitialRequestPortalInstanceLifecycleListener
 		extends InitialRequestPortalInstanceLifecycleListener {

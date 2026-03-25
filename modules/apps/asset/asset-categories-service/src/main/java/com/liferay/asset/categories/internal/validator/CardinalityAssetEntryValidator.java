@@ -5,6 +5,7 @@
 
 package com.liferay.asset.categories.internal.validator;
 
+import com.liferay.asset.categories.thread.local.AssetVocabularyThreadLocal;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -96,7 +97,8 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 			long[] categoryIds, AssetVocabulary assetVocabulary)
 		throws PortalException {
 
-		if (!assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(
+		if (AssetVocabularyThreadLocal.isSkipRequiredCategoryValidation() ||
+			!assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(
 				classNameId, classTypePK)) {
 
 			return;

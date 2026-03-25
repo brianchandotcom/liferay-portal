@@ -214,36 +214,6 @@ public class CTMessageUtil {
 	}
 
 	/**
-	 * Returns the last ct message in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct message
-	 * @throws NoSuchMessageException if a matching ct message could not be found
-	 */
-	public static CTMessage findByCtCollectionId_Last(
-			long ctCollectionId, OrderByComparator<CTMessage> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchMessageException {
-
-		return getPersistence().findByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct message in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct message, or <code>null</code> if a matching ct message could not be found
-	 */
-	public static CTMessage fetchByCtCollectionId_Last(
-		long ctCollectionId, OrderByComparator<CTMessage> orderByComparator) {
-
-		return getPersistence().fetchByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ct messages where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -420,4 +390,4 @@ public class CTMessageUtil {
 	private static volatile CTMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2064540695
+// LIFERAY-SERVICE-BUILDER-HASH:-1785475451

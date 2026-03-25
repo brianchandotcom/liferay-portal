@@ -212,34 +212,6 @@ public class ExpandoColumnUtil {
 	}
 
 	/**
-	 * Returns the last expando column in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando column
-	 * @throws NoSuchColumnException if a matching expando column could not be found
-	 */
-	public static ExpandoColumn findByTableId_Last(
-			long tableId, OrderByComparator<ExpandoColumn> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchColumnException {
-
-		return getPersistence().findByTableId_Last(tableId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last expando column in the ordered set where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando column, or <code>null</code> if a matching expando column could not be found
-	 */
-	public static ExpandoColumn fetchByTableId_Last(
-		long tableId, OrderByComparator<ExpandoColumn> orderByComparator) {
-
-		return getPersistence().fetchByTableId_Last(tableId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the expando columns that the user has permission to view where tableId = &#63;.
 	 *
 	 * @param tableId the table ID
@@ -652,4 +624,4 @@ public class ExpandoColumnUtil {
 	private static volatile ExpandoColumnPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1575787092
+// LIFERAY-SERVICE-BUILDER-HASH:1643664205

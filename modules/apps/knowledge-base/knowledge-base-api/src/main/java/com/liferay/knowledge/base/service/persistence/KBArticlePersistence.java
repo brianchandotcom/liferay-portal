@@ -124,32 +124,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByResourcePrimKey_Last(
-			long resourcePrimKey,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByResourcePrimKey_Last(
-		long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb articles where resourcePrimKey = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -247,32 +221,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByUuid_Last(
 		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -436,34 +384,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb articles where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -570,34 +490,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByR_G_First(
-		long resourcePrimKey, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_G_Last(
-			long resourcePrimKey, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_G_Last(
 		long resourcePrimKey, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -818,34 +710,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_L_Last(
-			long resourcePrimKey, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_L_Last(
-		long resourcePrimKey, boolean latest,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles where resourcePrimKey = any &#63; and latest = &#63;.
 	 *
 	 * <p>
@@ -1031,34 +895,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByR_M_First(
-		long resourcePrimKey, boolean main,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_M_Last(
-			long resourcePrimKey, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_M_Last(
 		long resourcePrimKey, boolean main,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -1254,34 +1090,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_S_Last(
-			long resourcePrimKey, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_S_Last(
-		long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles where resourcePrimKey = any &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -1472,34 +1280,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_ERC_Last(
-			long groupId, String externalReferenceCode,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_ERC_Last(
-		long groupId, String externalReferenceCode,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1659,34 +1439,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_L_First(
-		long groupId, boolean latest,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_L_Last(
-			long groupId, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_L_Last(
 		long groupId, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -1856,34 +1608,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_M_Last(
-			long groupId, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_M_Last(
-		long groupId, boolean main,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2043,34 +1767,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_S_First(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_S_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_S_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -2239,34 +1935,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and latest = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByC_L_Last(
-			long companyId, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and latest = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByC_L_Last(
-		long companyId, boolean latest,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb articles where companyId = &#63; and latest = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2372,34 +2040,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByC_M_First(
-		long companyId, boolean main,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and main = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByC_M_Last(
-			long companyId, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and main = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByC_M_Last(
 		long companyId, boolean main,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -2515,34 +2155,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByC_S_Last(
-			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByC_S_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb articles where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2649,34 +2261,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByP_L_First(
-		long parentResourcePrimKey, boolean latest,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByP_L_Last(
-			long parentResourcePrimKey, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByP_L_Last(
 		long parentResourcePrimKey, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -2872,34 +2456,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByP_M_Last(
-			long parentResourcePrimKey, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByP_M_Last(
-		long parentResourcePrimKey, boolean main,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles where parentResourcePrimKey = any &#63; and main = &#63;.
 	 *
 	 * <p>
@@ -3085,34 +2641,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByP_S_First(
-		long parentResourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByP_S_Last(
-			long parentResourcePrimKey, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByP_S_Last(
 		long parentResourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -3307,34 +2835,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByLtD_S_Last(
-			Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByLtD_S_Last(
-		Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb articles where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -3506,36 +3006,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByR_G_L_First(
-		long resourcePrimKey, long groupId, boolean latest,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_G_L_Last(
-			long resourcePrimKey, long groupId, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_G_L_Last(
 		long resourcePrimKey, long groupId, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -3869,36 +3339,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_G_M_Last(
-			long resourcePrimKey, long groupId, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_G_M_Last(
-		long resourcePrimKey, long groupId, boolean main,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -4218,36 +3658,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByR_G_S_First(
-		long resourcePrimKey, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_G_S_Last(
-			long resourcePrimKey, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_G_S_Last(
 		long resourcePrimKey, long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -4574,36 +3984,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_G_NotS_Last(
-			long resourcePrimKey, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_G_NotS_Last(
-		long resourcePrimKey, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status &ne; &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -4778,36 +4158,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByR_L_NotS_First(
-		long resourcePrimKey, boolean latest, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_L_NotS_Last(
-			long resourcePrimKey, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_L_NotS_Last(
 		long resourcePrimKey, boolean latest, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -5015,36 +4365,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByR_M_NotS_First(
-		long resourcePrimKey, boolean main, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_M_NotS_Last(
-			long resourcePrimKey, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_M_NotS_Last(
 		long resourcePrimKey, boolean main, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -5318,36 +4638,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_ERC_S_Last(
-			long groupId, String externalReferenceCode, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_ERC_S_Last(
-		long groupId, String externalReferenceCode, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -5528,36 +4818,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_P_L_First(
-		long groupId, long parentResourcePrimKey, boolean latest,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_P_L_Last(
-			long groupId, long parentResourcePrimKey, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_P_L_Last(
 		long groupId, long parentResourcePrimKey, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -5897,36 +5157,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_P_M_Last(
-			long groupId, long parentResourcePrimKey, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_P_M_Last(
-		long groupId, long parentResourcePrimKey, boolean main,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6256,36 +5486,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_P_S_First(
-		long groupId, long parentResourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_P_S_Last(
-			long groupId, long parentResourcePrimKey, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_P_S_Last(
 		long groupId, long parentResourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -6622,36 +5822,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_KBFI_UT_Last(
-			long groupId, long kbFolderId, String urlTitle,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_KBFI_UT_Last(
-		long groupId, long kbFolderId, String urlTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6826,36 +5996,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_KBFI_L_First(
-		long groupId, long kbFolderId, boolean latest,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_KBFI_L_Last(
-			long groupId, long kbFolderId, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_KBFI_L_Last(
 		long groupId, long kbFolderId, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7039,36 +6179,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_KBFI_S_Last(
-			long groupId, long kbFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_KBFI_S_Last(
-		long groupId, long kbFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7241,36 +6351,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_LikeS_L_First(
-		long groupId, String sections, boolean latest,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_LikeS_L_Last(
-			long groupId, String sections, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_LikeS_L_Last(
 		long groupId, String sections, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7599,36 +6679,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_LikeS_M_Last(
-			long groupId, String sections, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_LikeS_M_Last(
-		long groupId, String sections, boolean main,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7946,36 +6996,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_LikeS_S_First(
-		long groupId, String sections, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_LikeS_S_Last(
-			long groupId, String sections, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_LikeS_S_Last(
 		long groupId, String sections, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -8302,36 +7322,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_L_NotS_Last(
-			long groupId, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_L_NotS_Last(
-		long groupId, boolean latest, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and latest = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -8504,36 +7494,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_M_NotS_First(
-		long groupId, boolean main, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_M_NotS_Last(
-			long groupId, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_M_NotS_Last(
 		long groupId, boolean main, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -8716,36 +7676,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByC_L_NotS_Last(
-			long companyId, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByC_L_NotS_Last(
-		long companyId, boolean latest, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb articles where companyId = &#63; and latest = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -8860,36 +7790,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByC_M_NotS_First(
-		long companyId, boolean main, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByC_M_NotS_Last(
-			long companyId, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where companyId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByC_M_NotS_Last(
 		long companyId, boolean main, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -9012,36 +7912,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByP_L_NotS_First(
-		long parentResourcePrimKey, boolean latest, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByP_L_NotS_Last(
-			long parentResourcePrimKey, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByP_L_NotS_Last(
 		long parentResourcePrimKey, boolean latest, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -9254,36 +8124,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByP_M_NotS_First(
-		long parentResourcePrimKey, boolean main, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByP_M_NotS_Last(
-			long parentResourcePrimKey, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where parentResourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByP_M_NotS_Last(
 		long parentResourcePrimKey, boolean main, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -9502,38 +8342,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByR_G_L_NotS_First(
-		long resourcePrimKey, long groupId, boolean latest, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_G_L_NotS_Last(
-			long resourcePrimKey, long groupId, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_G_L_NotS_Last(
 		long resourcePrimKey, long groupId, boolean latest, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -9894,38 +8702,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByR_G_M_NotS_Last(
-			long resourcePrimKey, long groupId, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByR_G_M_NotS_Last(
-		long resourcePrimKey, long groupId, boolean main, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63; and status &ne; &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -10277,39 +9053,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_P_L_S_First(
-		long groupId, long parentResourcePrimKey, boolean latest, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_P_L_S_Last(
-			long groupId, long parentResourcePrimKey, boolean latest,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_P_L_S_Last(
 		long groupId, long parentResourcePrimKey, boolean latest, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -10675,39 +9418,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_P_L_NotS_Last(
-			long groupId, long parentResourcePrimKey, boolean latest,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_P_L_NotS_Last(
-		long groupId, long parentResourcePrimKey, boolean latest, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -11062,38 +9772,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_P_M_S_First(
-		long groupId, long parentResourcePrimKey, boolean main, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_P_M_S_Last(
-			long groupId, long parentResourcePrimKey, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_P_M_S_Last(
 		long groupId, long parentResourcePrimKey, boolean main, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -11454,38 +10132,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_P_M_NotS_Last(
-			long groupId, long parentResourcePrimKey, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_P_M_NotS_Last(
-		long groupId, long parentResourcePrimKey, boolean main, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -11836,38 +10482,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_KBFI_UT_S_First(
-		long groupId, long kbFolderId, String urlTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_KBFI_UT_S_Last(
-			long groupId, long kbFolderId, String urlTitle, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_KBFI_UT_S_Last(
 		long groupId, long kbFolderId, String urlTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -12228,38 +10842,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_KBFI_UT_NotS_Last(
-			long groupId, long kbFolderId, String urlTitle, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_KBFI_UT_NotS_Last(
-		long groupId, long kbFolderId, String urlTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -12457,38 +11039,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_KBFI_L_NotS_Last(
-			long groupId, long kbFolderId, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_KBFI_L_NotS_Last(
-		long groupId, long kbFolderId, boolean latest, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and latest = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -12681,38 +11231,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_LikeS_L_NotS_First(
-		long groupId, String sections, boolean latest, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_LikeS_L_NotS_Last(
-			long groupId, String sections, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_LikeS_L_NotS_Last(
 		long groupId, String sections, boolean latest, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -13068,38 +11586,6 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	public KBArticle fetchByG_LikeS_M_NotS_First(
-		long groupId, String sections, boolean main, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article
-	 * @throws NoSuchArticleException if a matching kb article could not be found
-	 */
-	public KBArticle findByG_LikeS_M_NotS_Last(
-			long groupId, String sections, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
-	 * Returns the last kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	public KBArticle fetchByG_LikeS_M_NotS_Last(
 		long groupId, String sections, boolean main, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -13470,4 +11956,4 @@ public interface KBArticlePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1455134585
+// LIFERAY-SERVICE-BUILDER-HASH:-387632862

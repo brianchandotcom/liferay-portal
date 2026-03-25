@@ -337,64 +337,6 @@ public class OrganizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last organization in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByUuid_Last(
-			String uuid, OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByUuid_Last(
-		String uuid, OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -959,72 +901,6 @@ public class OrganizationPersistenceImpl
 
 		List<Organization> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1599,65 +1475,6 @@ public class OrganizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByCompanyId_Last(
-			long companyId, OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2155,65 +1972,6 @@ public class OrganizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByCompanyIdLocations_Last(
-			long companyId, OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByCompanyIdLocations_Last(
-			companyId, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByCompanyIdLocations_Last(
-		long companyId, OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByCompanyIdLocations(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByCompanyIdLocations(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2698,65 +2456,6 @@ public class OrganizationPersistenceImpl
 		long logoId, OrderByComparator<Organization> orderByComparator) {
 
 		List<Organization> list = findByLogoId(logoId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByLogoId_Last(
-			long logoId, OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByLogoId_Last(
-			logoId, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("logoId=");
-		sb.append(logoId);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByLogoId_Last(
-		long logoId, OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByLogoId(logoId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByLogoId(
-			logoId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3276,73 +2975,6 @@ public class OrganizationPersistenceImpl
 
 		List<Organization> list = findByC_P(
 			companyId, parentOrganizationId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByC_P_Last(
-			long companyId, long parentOrganizationId,
-			OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByC_P_Last(
-			companyId, parentOrganizationId, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentOrganizationId=");
-		sb.append(parentOrganizationId);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByC_P_Last(
-		long companyId, long parentOrganizationId,
-		OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByC_P(companyId, parentOrganizationId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByC_P(
-			companyId, parentOrganizationId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3890,72 +3522,6 @@ public class OrganizationPersistenceImpl
 
 		List<Organization> list = findByC_LikeT(
 			companyId, treePath, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByC_LikeT_Last(
-			long companyId, String treePath,
-			OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByC_LikeT_Last(
-			companyId, treePath, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", treePathLIKE");
-		sb.append(treePath);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByC_LikeT_Last(
-		long companyId, String treePath,
-		OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByC_LikeT(companyId, treePath);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByC_LikeT(
-			companyId, treePath, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4753,72 +4319,6 @@ public class OrganizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByC_LikeN_Last(
-			long companyId, String name,
-			OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByC_LikeN_Last(
-			companyId, name, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByC_LikeN_Last(
-		long companyId, String name,
-		OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByC_LikeN(companyId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByC_LikeN(
-			companyId, name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63; and name LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -5400,79 +4900,6 @@ public class OrganizationPersistenceImpl
 
 		List<Organization> list = findByGtO_C_P(
 			organizationId, companyId, parentOrganizationId, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where organizationId &gt; &#63; and companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByGtO_C_P_Last(
-			long organizationId, long companyId, long parentOrganizationId,
-			OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByGtO_C_P_Last(
-			organizationId, companyId, parentOrganizationId, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("organizationId>");
-		sb.append(organizationId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentOrganizationId=");
-		sb.append(parentOrganizationId);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where organizationId &gt; &#63; and companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByGtO_C_P_Last(
-		long organizationId, long companyId, long parentOrganizationId,
-		OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByGtO_C_P(
-			organizationId, companyId, parentOrganizationId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByGtO_C_P(
-			organizationId, companyId, parentOrganizationId, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -6073,78 +5500,6 @@ public class OrganizationPersistenceImpl
 
 		List<Organization> list = findByC_P_LikeN(
 			companyId, parentOrganizationId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	@Override
-	public Organization findByC_P_LikeN_Last(
-			long companyId, long parentOrganizationId, String name,
-			OrderByComparator<Organization> orderByComparator)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByC_P_LikeN_Last(
-			companyId, parentOrganizationId, name, orderByComparator);
-
-		if (organization != null) {
-			return organization;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentOrganizationId=");
-		sb.append(parentOrganizationId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchOrganizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	@Override
-	public Organization fetchByC_P_LikeN_Last(
-		long companyId, long parentOrganizationId, String name,
-		OrderByComparator<Organization> orderByComparator) {
-
-		int count = countByC_P_LikeN(companyId, parentOrganizationId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Organization> list = findByC_P_LikeN(
-			companyId, parentOrganizationId, name, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -8603,4 +7958,4 @@ public class OrganizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2133879325
+// LIFERAY-SERVICE-BUILDER-HASH:797527338

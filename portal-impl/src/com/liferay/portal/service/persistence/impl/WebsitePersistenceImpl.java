@@ -311,64 +311,6 @@ public class WebsitePersistenceImpl
 	}
 
 	/**
-	 * Returns the last website in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website
-	 * @throws NoSuchWebsiteException if a matching website could not be found
-	 */
-	@Override
-	public Website findByUuid_Last(
-			String uuid, OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
-
-		Website website = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (website != null) {
-			return website;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last website in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website, or <code>null</code> if a matching website could not be found
-	 */
-	@Override
-	public Website fetchByUuid_Last(
-		String uuid, OrderByComparator<Website> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Website> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the websites where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -701,72 +643,6 @@ public class WebsitePersistenceImpl
 	}
 
 	/**
-	 * Returns the last website in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website
-	 * @throws NoSuchWebsiteException if a matching website could not be found
-	 */
-	@Override
-	public Website findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
-
-		Website website = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (website != null) {
-			return website;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last website in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website, or <code>null</code> if a matching website could not be found
-	 */
-	@Override
-	public Website fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Website> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Website> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the websites where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1077,64 +953,6 @@ public class WebsitePersistenceImpl
 	}
 
 	/**
-	 * Returns the last website in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website
-	 * @throws NoSuchWebsiteException if a matching website could not be found
-	 */
-	@Override
-	public Website findByCompanyId_Last(
-			long companyId, OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
-
-		Website website = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (website != null) {
-			return website;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last website in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website, or <code>null</code> if a matching website could not be found
-	 */
-	@Override
-	public Website fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Website> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Website> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the websites where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1406,64 +1224,6 @@ public class WebsitePersistenceImpl
 		long userId, OrderByComparator<Website> orderByComparator) {
 
 		List<Website> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last website in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website
-	 * @throws NoSuchWebsiteException if a matching website could not be found
-	 */
-	@Override
-	public Website findByUserId_Last(
-			long userId, OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
-
-		Website website = fetchByUserId_Last(userId, orderByComparator);
-
-		if (website != null) {
-			return website;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last website in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website, or <code>null</code> if a matching website could not be found
-	 */
-	@Override
-	public Website fetchByUserId_Last(
-		long userId, OrderByComparator<Website> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Website> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1769,72 +1529,6 @@ public class WebsitePersistenceImpl
 
 		List<Website> list = findByC_C(
 			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website
-	 * @throws NoSuchWebsiteException if a matching website could not be found
-	 */
-	@Override
-	public Website findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
-
-		Website website = fetchByC_C_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (website != null) {
-			return website;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website, or <code>null</code> if a matching website could not be found
-	 */
-	@Override
-	public Website fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<Website> orderByComparator) {
-
-		int count = countByC_C(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Website> list = findByC_C(
-			companyId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2168,78 +1862,6 @@ public class WebsitePersistenceImpl
 
 		List<Website> list = findByC_C_C(
 			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website
-	 * @throws NoSuchWebsiteException if a matching website could not be found
-	 */
-	@Override
-	public Website findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
-
-		Website website = fetchByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (website != null) {
-			return website;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website, or <code>null</code> if a matching website could not be found
-	 */
-	@Override
-	public Website fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<Website> orderByComparator) {
-
-		int count = countByC_C_C(companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Website> list = findByC_C_C(
-			companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2602,83 +2224,6 @@ public class WebsitePersistenceImpl
 
 		List<Website> list = findByC_C_C_P(
 			companyId, classNameId, classPK, primary, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website
-	 * @throws NoSuchWebsiteException if a matching website could not be found
-	 */
-	@Override
-	public Website findByC_C_C_P_Last(
-			long companyId, long classNameId, long classPK, boolean primary,
-			OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
-
-		Website website = fetchByC_C_C_P_Last(
-			companyId, classNameId, classPK, primary, orderByComparator);
-
-		if (website != null) {
-			return website;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching website, or <code>null</code> if a matching website could not be found
-	 */
-	@Override
-	public Website fetchByC_C_C_P_Last(
-		long companyId, long classNameId, long classPK, boolean primary,
-		OrderByComparator<Website> orderByComparator) {
-
-		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Website> list = findByC_C_C_P(
-			companyId, classNameId, classPK, primary, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3811,4 +3356,4 @@ public class WebsitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:723565597
+// LIFERAY-SERVICE-BUILDER-HASH:-653552720

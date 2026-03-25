@@ -336,68 +336,6 @@ public class CommercePriceModifierRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price modifier rel in the ordered set where commercePriceModifierId = &#63;.
-	 *
-	 * @param commercePriceModifierId the commerce price modifier ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier rel
-	 * @throws NoSuchPriceModifierRelException if a matching commerce price modifier rel could not be found
-	 */
-	@Override
-	public CommercePriceModifierRel findByCommercePriceModifierId_Last(
-			long commercePriceModifierId,
-			OrderByComparator<CommercePriceModifierRel> orderByComparator)
-		throws NoSuchPriceModifierRelException {
-
-		CommercePriceModifierRel commercePriceModifierRel =
-			fetchByCommercePriceModifierId_Last(
-				commercePriceModifierId, orderByComparator);
-
-		if (commercePriceModifierRel != null) {
-			return commercePriceModifierRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceModifierId=");
-		sb.append(commercePriceModifierId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier rel in the ordered set where commercePriceModifierId = &#63;.
-	 *
-	 * @param commercePriceModifierId the commerce price modifier ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier rel, or <code>null</code> if a matching commerce price modifier rel could not be found
-	 */
-	@Override
-	public CommercePriceModifierRel fetchByCommercePriceModifierId_Last(
-		long commercePriceModifierId,
-		OrderByComparator<CommercePriceModifierRel> orderByComparator) {
-
-		int count = countByCommercePriceModifierId(commercePriceModifierId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifierRel> list = findByCommercePriceModifierId(
-			commercePriceModifierId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price modifier rels where commercePriceModifierId = &#63; from the database.
 	 *
 	 * @param commercePriceModifierId the commerce price modifier ID
@@ -721,73 +659,6 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		List<CommercePriceModifierRel> list = findByCPM_CN(
 			commercePriceModifierId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price modifier rel in the ordered set where commercePriceModifierId = &#63; and classNameId = &#63;.
-	 *
-	 * @param commercePriceModifierId the commerce price modifier ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier rel
-	 * @throws NoSuchPriceModifierRelException if a matching commerce price modifier rel could not be found
-	 */
-	@Override
-	public CommercePriceModifierRel findByCPM_CN_Last(
-			long commercePriceModifierId, long classNameId,
-			OrderByComparator<CommercePriceModifierRel> orderByComparator)
-		throws NoSuchPriceModifierRelException {
-
-		CommercePriceModifierRel commercePriceModifierRel = fetchByCPM_CN_Last(
-			commercePriceModifierId, classNameId, orderByComparator);
-
-		if (commercePriceModifierRel != null) {
-			return commercePriceModifierRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceModifierId=");
-		sb.append(commercePriceModifierId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier rel in the ordered set where commercePriceModifierId = &#63; and classNameId = &#63;.
-	 *
-	 * @param commercePriceModifierId the commerce price modifier ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier rel, or <code>null</code> if a matching commerce price modifier rel could not be found
-	 */
-	@Override
-	public CommercePriceModifierRel fetchByCPM_CN_Last(
-		long commercePriceModifierId, long classNameId,
-		OrderByComparator<CommercePriceModifierRel> orderByComparator) {
-
-		int count = countByCPM_CN(commercePriceModifierId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifierRel> list = findByCPM_CN(
-			commercePriceModifierId, classNameId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1123,72 +994,6 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		List<CommercePriceModifierRel> list = findByCN_CPK(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price modifier rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier rel
-	 * @throws NoSuchPriceModifierRelException if a matching commerce price modifier rel could not be found
-	 */
-	@Override
-	public CommercePriceModifierRel findByCN_CPK_Last(
-			long classNameId, long classPK,
-			OrderByComparator<CommercePriceModifierRel> orderByComparator)
-		throws NoSuchPriceModifierRelException {
-
-		CommercePriceModifierRel commercePriceModifierRel = fetchByCN_CPK_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (commercePriceModifierRel != null) {
-			return commercePriceModifierRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier rel, or <code>null</code> if a matching commerce price modifier rel could not be found
-	 */
-	@Override
-	public CommercePriceModifierRel fetchByCN_CPK_Last(
-		long classNameId, long classPK,
-		OrderByComparator<CommercePriceModifierRel> orderByComparator) {
-
-		int count = countByCN_CPK(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifierRel> list = findByCN_CPK(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2522,4 +2327,4 @@ public class CommercePriceModifierRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-498458961
+// LIFERAY-SERVICE-BUILDER-HASH:741664189

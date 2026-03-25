@@ -123,32 +123,6 @@ public interface CPDefinitionLocalizationPersistence
 			<CPDefinitionLocalization> orderByComparator);
 
 	/**
-	 * Returns the last cp definition localization in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition localization
-	 * @throws NoSuchCPDefinitionLocalizationException if a matching cp definition localization could not be found
-	 */
-	public CPDefinitionLocalization findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionLocalization> orderByComparator)
-		throws NoSuchCPDefinitionLocalizationException;
-
-	/**
-	 * Returns the last cp definition localization in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
-	 */
-	public CPDefinitionLocalization fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionLocalization> orderByComparator);
-
-	/**
 	 * Removes all the cp definition localizations where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -342,4 +316,4 @@ public interface CPDefinitionLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1879217254
+// LIFERAY-SERVICE-BUILDER-HASH:-1242096762

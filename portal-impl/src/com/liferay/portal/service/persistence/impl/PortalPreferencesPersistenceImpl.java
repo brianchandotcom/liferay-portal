@@ -293,66 +293,6 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Returns the last portal preferences in the ordered set where ownerType = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preferences
-	 * @throws NoSuchPreferencesException if a matching portal preferences could not be found
-	 */
-	@Override
-	public PortalPreferences findByOwnerType_Last(
-			int ownerType,
-			OrderByComparator<PortalPreferences> orderByComparator)
-		throws NoSuchPreferencesException {
-
-		PortalPreferences portalPreferences = fetchByOwnerType_Last(
-			ownerType, orderByComparator);
-
-		if (portalPreferences != null) {
-			return portalPreferences;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append("}");
-
-		throw new NoSuchPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portal preferences in the ordered set where ownerType = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
-	 */
-	@Override
-	public PortalPreferences fetchByOwnerType_Last(
-		int ownerType, OrderByComparator<PortalPreferences> orderByComparator) {
-
-		int count = countByOwnerType(ownerType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortalPreferences> list = findByOwnerType(
-			ownerType, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the portal preferenceses where ownerType = &#63; from the database.
 	 *
 	 * @param ownerType the owner type
@@ -1211,4 +1151,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1554338231
+// LIFERAY-SERVICE-BUILDER-HASH:-1922569847

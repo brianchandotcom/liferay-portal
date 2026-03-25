@@ -312,67 +312,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 	/**
-	 * Returns the last o auth2 application scope aliases in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application scope aliases
-	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
-	 */
-	@Override
-	public OAuth2ApplicationScopeAliases findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
-		throws NoSuchOAuth2ApplicationScopeAliasesException {
-
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (oAuth2ApplicationScopeAliases != null) {
-			return oAuth2ApplicationScopeAliases;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationScopeAliasesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 application scope aliases in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
-	 */
-	@Override
-	public OAuth2ApplicationScopeAliases fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2ApplicationScopeAliases> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the o auth2 application scope aliaseses where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -663,68 +602,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 		List<OAuth2ApplicationScopeAliases> list = findByOAuth2ApplicationId(
 			oAuth2ApplicationId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application scope aliases
-	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
-	 */
-	@Override
-	public OAuth2ApplicationScopeAliases findByOAuth2ApplicationId_Last(
-			long oAuth2ApplicationId,
-			OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
-		throws NoSuchOAuth2ApplicationScopeAliasesException {
-
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			fetchByOAuth2ApplicationId_Last(
-				oAuth2ApplicationId, orderByComparator);
-
-		if (oAuth2ApplicationScopeAliases != null) {
-			return oAuth2ApplicationScopeAliases;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("oAuth2ApplicationId=");
-		sb.append(oAuth2ApplicationId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationScopeAliasesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
-	 */
-	@Override
-	public OAuth2ApplicationScopeAliases fetchByOAuth2ApplicationId_Last(
-		long oAuth2ApplicationId,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
-
-		int count = countByOAuth2ApplicationId(oAuth2ApplicationId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2ApplicationScopeAliases> list = findByOAuth2ApplicationId(
-			oAuth2ApplicationId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1512,4 +1389,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:132169938
+// LIFERAY-SERVICE-BUILDER-HASH:-2096271230

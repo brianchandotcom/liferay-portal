@@ -334,64 +334,6 @@ public class CPDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByUuid_Last(
-			String uuid, OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByUuid_Last(
-		String uuid, OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -939,72 +881,6 @@ public class CPDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1318,65 +1194,6 @@ public class CPDefinitionPersistenceImpl
 
 		List<CPDefinition> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByGroupId_Last(
-			long groupId, OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByGroupId_Last(
-		long groupId, OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1882,65 +1699,6 @@ public class CPDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByCompanyId_Last(
-			long companyId, OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2231,65 +1989,6 @@ public class CPDefinitionPersistenceImpl
 
 		List<CPDefinition> list = findByCProductId(
 			CProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByCProductId_Last(
-			long CProductId, OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByCProductId_Last(
-			CProductId, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByCProductId_Last(
-		long CProductId, OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByCProductId(CProductId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByCProductId(
-			CProductId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2594,67 +2293,6 @@ public class CPDefinitionPersistenceImpl
 
 		List<CPDefinition> list = findByCPTaxCategoryId(
 			CPTaxCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByCPTaxCategoryId_Last(
-			long CPTaxCategoryId,
-			OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByCPTaxCategoryId_Last(
-			CPTaxCategoryId, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPTaxCategoryId=");
-		sb.append(CPTaxCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByCPTaxCategoryId_Last(
-		long CPTaxCategoryId,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByCPTaxCategoryId(CPTaxCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByCPTaxCategoryId(
-			CPTaxCategoryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2977,72 +2615,6 @@ public class CPDefinitionPersistenceImpl
 
 		List<CPDefinition> list = findByG_SE(
 			groupId, subscriptionEnabled, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByG_SE_Last(
-			long groupId, boolean subscriptionEnabled,
-			OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByG_SE_Last(
-			groupId, subscriptionEnabled, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", subscriptionEnabled=");
-		sb.append(subscriptionEnabled);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByG_SE_Last(
-		long groupId, boolean subscriptionEnabled,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByG_SE(groupId, subscriptionEnabled);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByG_SE(
-			groupId, subscriptionEnabled, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3583,72 +3155,6 @@ public class CPDefinitionPersistenceImpl
 
 		List<CPDefinition> list = findByG_S(
 			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByG_S_Last(
-			groupId, status, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByG_S(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByG_S(
-			groupId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4381,72 +3887,6 @@ public class CPDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByC_S_Last(
-			long CProductId, int status,
-			OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByC_S_Last(
-			CProductId, status, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByC_S_Last(
-		long CProductId, int status,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByC_S(CProductId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByC_S(
-			CProductId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definitions where CProductId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CProductId the c product ID
@@ -4766,72 +4206,6 @@ public class CPDefinitionPersistenceImpl
 
 		List<CPDefinition> list = findByLtD_S(
 			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6145,4 +5519,4 @@ public class CPDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-48053698
+// LIFERAY-SERVICE-BUILDER-HASH:-2015216600

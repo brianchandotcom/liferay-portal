@@ -321,67 +321,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cpd availability estimate in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a matching cpd availability estimate could not be found
-	 */
-	@Override
-	public CPDAvailabilityEstimate findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPDAvailabilityEstimate> orderByComparator)
-		throws NoSuchCPDAvailabilityEstimateException {
-
-		CPDAvailabilityEstimate cpdAvailabilityEstimate = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpdAvailabilityEstimate != null) {
-			return cpdAvailabilityEstimate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDAvailabilityEstimateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cpd availability estimate in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd availability estimate, or <code>null</code> if a matching cpd availability estimate could not be found
-	 */
-	@Override
-	public CPDAvailabilityEstimate fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPDAvailabilityEstimate> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDAvailabilityEstimate> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cpd availability estimates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -717,72 +656,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cpd availability estimate in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a matching cpd availability estimate could not be found
-	 */
-	@Override
-	public CPDAvailabilityEstimate findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDAvailabilityEstimate> orderByComparator)
-		throws NoSuchCPDAvailabilityEstimateException {
-
-		CPDAvailabilityEstimate cpdAvailabilityEstimate = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpdAvailabilityEstimate != null) {
-			return cpdAvailabilityEstimate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDAvailabilityEstimateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cpd availability estimate in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd availability estimate, or <code>null</code> if a matching cpd availability estimate could not be found
-	 */
-	@Override
-	public CPDAvailabilityEstimate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDAvailabilityEstimate> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDAvailabilityEstimate> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cpd availability estimates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1105,71 +978,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		List<CPDAvailabilityEstimate> list =
 			findByCommerceAvailabilityEstimateId(
 				commerceAvailabilityEstimateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cpd availability estimate in the ordered set where commerceAvailabilityEstimateId = &#63;.
-	 *
-	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a matching cpd availability estimate could not be found
-	 */
-	@Override
-	public CPDAvailabilityEstimate findByCommerceAvailabilityEstimateId_Last(
-			long commerceAvailabilityEstimateId,
-			OrderByComparator<CPDAvailabilityEstimate> orderByComparator)
-		throws NoSuchCPDAvailabilityEstimateException {
-
-		CPDAvailabilityEstimate cpdAvailabilityEstimate =
-			fetchByCommerceAvailabilityEstimateId_Last(
-				commerceAvailabilityEstimateId, orderByComparator);
-
-		if (cpdAvailabilityEstimate != null) {
-			return cpdAvailabilityEstimate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceAvailabilityEstimateId=");
-		sb.append(commerceAvailabilityEstimateId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDAvailabilityEstimateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cpd availability estimate in the ordered set where commerceAvailabilityEstimateId = &#63;.
-	 *
-	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cpd availability estimate, or <code>null</code> if a matching cpd availability estimate could not be found
-	 */
-	@Override
-	public CPDAvailabilityEstimate fetchByCommerceAvailabilityEstimateId_Last(
-		long commerceAvailabilityEstimateId,
-		OrderByComparator<CPDAvailabilityEstimate> orderByComparator) {
-
-		int count = countByCommerceAvailabilityEstimateId(
-			commerceAvailabilityEstimateId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDAvailabilityEstimate> list =
-			findByCommerceAvailabilityEstimateId(
-				commerceAvailabilityEstimateId, count - 1, count,
-				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2176,4 +1984,4 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1590176591
+// LIFERAY-SERVICE-BUILDER-HASH:466722137

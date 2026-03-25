@@ -213,35 +213,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application findByUuid_Last(
-			String uuid, OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application fetchByUuid_Last(
-		String uuid, OrderByComparator<OAuth2Application> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -433,41 +404,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -655,39 +591,6 @@ public class OAuth2ApplicationUtil {
 		OrderByComparator<OAuth2Application> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -950,41 +853,6 @@ public class OAuth2ApplicationUtil {
 		OrderByComparator<OAuth2Application> orderByComparator) {
 
 		return getPersistence().fetchByC_CP_First(
-			companyId, clientProfile, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application findByC_CP_Last(
-			long companyId, int clientProfile,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().findByC_CP_Last(
-			companyId, clientProfile, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application fetchByC_CP_Last(
-		long companyId, int clientProfile,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		return getPersistence().fetchByC_CP_Last(
 			companyId, clientProfile, orderByComparator);
 	}
 
@@ -1315,4 +1183,4 @@ public class OAuth2ApplicationUtil {
 	private static volatile OAuth2ApplicationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:581609296
+// LIFERAY-SERVICE-BUILDER-HASH:1203598696

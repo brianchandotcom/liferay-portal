@@ -332,64 +332,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByUuid_Last(
-			String uuid, OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByUuid_Last(
-		String uuid, OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset categories where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -937,72 +879,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset categories where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1316,65 +1192,6 @@ public class AssetCategoryPersistenceImpl
 
 		List<AssetCategory> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByGroupId_Last(
-			long groupId, OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByGroupId_Last(
-		long groupId, OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1887,67 +1704,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset category in the ordered set where parentCategoryId = &#63;.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByParentCategoryId_Last(
-			long parentCategoryId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByParentCategoryId_Last(
-			parentCategoryId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where parentCategoryId = &#63;.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByParentCategoryId_Last(
-		long parentCategoryId,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByParentCategoryId(parentCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByParentCategoryId(
-			parentCategoryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset categories where parentCategoryId = &#63; from the database.
 	 *
 	 * @param parentCategoryId the parent category ID
@@ -2241,66 +1997,6 @@ public class AssetCategoryPersistenceImpl
 
 		List<AssetCategory> list = findByVocabularyId(
 			vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where vocabularyId = &#63;.
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByVocabularyId_Last(
-			long vocabularyId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByVocabularyId_Last(
-			vocabularyId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where vocabularyId = &#63;.
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByVocabularyId_Last(
-		long vocabularyId, OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByVocabularyId(vocabularyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByVocabularyId(
-			vocabularyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2619,72 +2315,6 @@ public class AssetCategoryPersistenceImpl
 
 		List<AssetCategory> list = findByG_P(
 			groupId, parentCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByG_P_Last(
-			long groupId, long parentCategoryId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByG_P_Last(
-			groupId, parentCategoryId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByG_P_Last(
-		long groupId, long parentCategoryId,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByG_P(groupId, parentCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByG_P(
-			groupId, parentCategoryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3228,72 +2858,6 @@ public class AssetCategoryPersistenceImpl
 
 		List<AssetCategory> list = findByG_V(
 			groupId, vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByG_V_Last(
-			long groupId, long vocabularyId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByG_V_Last(
-			groupId, vocabularyId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByG_V_Last(
-		long groupId, long vocabularyId,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByG_V(groupId, vocabularyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByG_V(
-			groupId, vocabularyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4453,72 +4017,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByP_N_Last(
-			long parentCategoryId, String name,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByP_N_Last(
-			parentCategoryId, name, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByP_N_Last(
-		long parentCategoryId, String name,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByP_N(parentCategoryId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByP_N(
-			parentCategoryId, name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset categories where parentCategoryId = &#63; and name = &#63; from the database.
 	 *
 	 * @param parentCategoryId the parent category ID
@@ -4867,73 +4365,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByP_V_Last(
-			long parentCategoryId, long vocabularyId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByP_V_Last(
-			parentCategoryId, vocabularyId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByP_V_Last(
-		long parentCategoryId, long vocabularyId,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByP_V(parentCategoryId, vocabularyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByP_V(
-			parentCategoryId, vocabularyId, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63; from the database.
 	 *
 	 * @param parentCategoryId the parent category ID
@@ -5264,72 +4695,6 @@ public class AssetCategoryPersistenceImpl
 
 		List<AssetCategory> list = findByN_V(
 			name, vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByN_V_Last(
-			String name, long vocabularyId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByN_V_Last(
-			name, vocabularyId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByN_V_Last(
-		String name, long vocabularyId,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByN_V(name, vocabularyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByN_V(
-			name, vocabularyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5696,78 +5061,6 @@ public class AssetCategoryPersistenceImpl
 
 		List<AssetCategory> list = findByG_P_V(
 			groupId, parentCategoryId, vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByG_P_V_Last(
-			long groupId, long parentCategoryId, long vocabularyId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByG_P_V_Last(
-			groupId, parentCategoryId, vocabularyId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByG_P_V_Last(
-		long groupId, long parentCategoryId, long vocabularyId,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByG_P_V(groupId, parentCategoryId, vocabularyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByG_P_V(
-			groupId, parentCategoryId, vocabularyId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6365,78 +5658,6 @@ public class AssetCategoryPersistenceImpl
 
 		List<AssetCategory> list = findByG_LikeT_V(
 			groupId, treePath, vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and treePath LIKE &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param treePath the tree path
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByG_LikeT_V_Last(
-			long groupId, String treePath, long vocabularyId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByG_LikeT_V_Last(
-			groupId, treePath, vocabularyId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", treePathLIKE");
-		sb.append(treePath);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and treePath LIKE &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param treePath the tree path
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByG_LikeT_V_Last(
-		long groupId, String treePath, long vocabularyId,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByG_LikeT_V(groupId, treePath, vocabularyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByG_LikeT_V(
-			groupId, treePath, vocabularyId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7072,77 +6293,6 @@ public class AssetCategoryPersistenceImpl
 
 		List<AssetCategory> list = findByG_LikeN_V(
 			groupId, name, vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and name LIKE &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category
-	 * @throws NoSuchCategoryException if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory findByG_LikeN_V_Last(
-			long groupId, String name, long vocabularyId,
-			OrderByComparator<AssetCategory> orderByComparator)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByG_LikeN_V_Last(
-			groupId, name, vocabularyId, orderByComparator);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset category in the ordered set where groupId = &#63; and name LIKE &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByG_LikeN_V_Last(
-		long groupId, String name, long vocabularyId,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		int count = countByG_LikeN_V(groupId, name, vocabularyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetCategory> list = findByG_LikeN_V(
-			groupId, name, vocabularyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -9946,4 +9096,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:309765053
+// LIFERAY-SERVICE-BUILDER-HASH:-1206562799

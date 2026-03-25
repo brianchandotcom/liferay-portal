@@ -213,34 +213,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Returns the last commerce order type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType findByUuid_Last(
-			String uuid, OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -427,40 +399,6 @@ public class CommerceOrderTypeUtil {
 		OrderByComparator<CommerceOrderType> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -655,38 +593,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Returns the last commerce order type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -875,40 +781,6 @@ public class CommerceOrderTypeUtil {
 		OrderByComparator<CommerceOrderType> orderByComparator) {
 
 		return getPersistence().fetchByC_A_First(
-			companyId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByC_A_Last(
-			companyId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		return getPersistence().fetchByC_A_Last(
 			companyId, active, orderByComparator);
 	}
 
@@ -1111,40 +983,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Returns the last commerce order type in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -1341,40 +1179,6 @@ public class CommerceOrderTypeUtil {
 		OrderByComparator<CommerceOrderType> orderByComparator) {
 
 		return getPersistence().fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	public static CommerceOrderType fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		return getPersistence().fetchByLtE_S_Last(
 			expirationDate, status, orderByComparator);
 	}
 
@@ -1701,4 +1505,4 @@ public class CommerceOrderTypeUtil {
 	private static volatile CommerceOrderTypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:562329233
+// LIFERAY-SERVICE-BUILDER-HASH:-563907787

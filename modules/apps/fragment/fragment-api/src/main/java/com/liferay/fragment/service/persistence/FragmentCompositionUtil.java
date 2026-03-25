@@ -214,35 +214,6 @@ public class FragmentCompositionUtil {
 	}
 
 	/**
-	 * Returns the last fragment composition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByUuid_Last(
-			String uuid,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByUuid_Last(
-		String uuid, OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment compositions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -437,40 +408,6 @@ public class FragmentCompositionUtil {
 	}
 
 	/**
-	 * Returns the last fragment composition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment compositions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -592,36 +529,6 @@ public class FragmentCompositionUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByGroupId_Last(
-			long groupId,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -749,38 +656,6 @@ public class FragmentCompositionUtil {
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
 		return getPersistence().fetchByFragmentCollectionId_First(
-			fragmentCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where fragmentCollectionId = &#63;.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByFragmentCollectionId_Last(
-			long fragmentCollectionId,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByFragmentCollectionId_Last(
-			fragmentCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where fragmentCollectionId = &#63;.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByFragmentCollectionId_Last(
-		long fragmentCollectionId,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByFragmentCollectionId_Last(
 			fragmentCollectionId, orderByComparator);
 	}
 
@@ -915,40 +790,6 @@ public class FragmentCompositionUtil {
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
 		return getPersistence().fetchByG_FCI_First(
-			groupId, fragmentCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByG_FCI_Last(
-			long groupId, long fragmentCollectionId,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByG_FCI_Last(
-			groupId, fragmentCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByG_FCI_Last(
-		long groupId, long fragmentCollectionId,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByG_FCI_Last(
 			groupId, fragmentCollectionId, orderByComparator);
 	}
 
@@ -1166,42 +1007,6 @@ public class FragmentCompositionUtil {
 	}
 
 	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByG_FCI_LikeN_Last(
-			long groupId, long fragmentCollectionId, String name,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByG_FCI_LikeN_Last(
-			groupId, fragmentCollectionId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByG_FCI_LikeN_Last(
-		long groupId, long fragmentCollectionId, String name,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByG_FCI_LikeN_Last(
-			groupId, fragmentCollectionId, name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1350,42 +1155,6 @@ public class FragmentCompositionUtil {
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
 		return getPersistence().fetchByG_FCI_S_First(
-			groupId, fragmentCollectionId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByG_FCI_S_Last(
-			long groupId, long fragmentCollectionId, int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByG_FCI_S_Last(
-			groupId, fragmentCollectionId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByG_FCI_S_Last(
-		long groupId, long fragmentCollectionId, int status,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByG_FCI_S_Last(
 			groupId, fragmentCollectionId, status, orderByComparator);
 	}
 
@@ -1545,44 +1314,6 @@ public class FragmentCompositionUtil {
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
 		return getPersistence().fetchByG_FCI_LikeN_S_First(
-			groupId, fragmentCollectionId, name, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByG_FCI_LikeN_S_Last(
-			long groupId, long fragmentCollectionId, String name, int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByG_FCI_LikeN_S_Last(
-			groupId, fragmentCollectionId, name, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByG_FCI_LikeN_S_Last(
-		long groupId, long fragmentCollectionId, String name, int status,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByG_FCI_LikeN_S_Last(
 			groupId, fragmentCollectionId, name, status, orderByComparator);
 	}
 
@@ -1854,4 +1585,4 @@ public class FragmentCompositionUtil {
 	private static volatile FragmentCompositionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-778890659
+// LIFERAY-SERVICE-BUILDER-HASH:-1120621217

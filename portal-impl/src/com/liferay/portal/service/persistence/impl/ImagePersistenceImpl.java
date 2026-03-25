@@ -291,64 +291,6 @@ public class ImagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last image in the ordered set where size &lt; &#63;.
-	 *
-	 * @param size the size
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching image
-	 * @throws NoSuchImageException if a matching image could not be found
-	 */
-	@Override
-	public Image findByLtSize_Last(
-			int size, OrderByComparator<Image> orderByComparator)
-		throws NoSuchImageException {
-
-		Image image = fetchByLtSize_Last(size, orderByComparator);
-
-		if (image != null) {
-			return image;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("size<");
-		sb.append(size);
-
-		sb.append("}");
-
-		throw new NoSuchImageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last image in the ordered set where size &lt; &#63;.
-	 *
-	 * @param size the size
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching image, or <code>null</code> if a matching image could not be found
-	 */
-	@Override
-	public Image fetchByLtSize_Last(
-		int size, OrderByComparator<Image> orderByComparator) {
-
-		int count = countByLtSize(size);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Image> list = findByLtSize(
-			size, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the images where size &lt; &#63; from the database.
 	 *
 	 * @param size the size
@@ -1251,4 +1193,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1705837274
+// LIFERAY-SERVICE-BUILDER-HASH:916479105

@@ -120,32 +120,6 @@ public interface LVEntryLocalizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
-	 */
-	public LVEntryLocalization findByLvEntryId_Last(
-			long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalization> orderByComparator)
-		throws NoSuchLVEntryLocalizationException;
-
-	/**
-	 * Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
-	 */
-	public LVEntryLocalization fetchByLvEntryId_Last(
-		long lvEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryLocalization>
-			orderByComparator);
-
-	/**
 	 * Removes all the lv entry localizations where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -381,4 +355,4 @@ public interface LVEntryLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:793364427
+// LIFERAY-SERVICE-BUILDER-HASH:468991220

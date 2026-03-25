@@ -231,41 +231,6 @@ public class CommerceQualifierEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry
-	 * @throws NoSuchCommerceQualifierEntryException if a matching commerce qualifier entry could not be found
-	 */
-	public static CommerceQualifierEntry findByS_S_Last(
-			long sourceClassNameId, long sourceClassPK,
-			OrderByComparator<CommerceQualifierEntry> orderByComparator)
-		throws com.liferay.commerce.qualifier.exception.
-			NoSuchCommerceQualifierEntryException {
-
-		return getPersistence().findByS_S_Last(
-			sourceClassNameId, sourceClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	public static CommerceQualifierEntry fetchByS_S_Last(
-		long sourceClassNameId, long sourceClassPK,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return getPersistence().fetchByS_S_Last(
-			sourceClassNameId, sourceClassPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; from the database.
 	 *
 	 * @param sourceClassNameId the source class name ID
@@ -398,41 +363,6 @@ public class CommerceQualifierEntryUtil {
 		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
 
 		return getPersistence().fetchByT_T_First(
-			targetClassNameId, targetClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry
-	 * @throws NoSuchCommerceQualifierEntryException if a matching commerce qualifier entry could not be found
-	 */
-	public static CommerceQualifierEntry findByT_T_Last(
-			long targetClassNameId, long targetClassPK,
-			OrderByComparator<CommerceQualifierEntry> orderByComparator)
-		throws com.liferay.commerce.qualifier.exception.
-			NoSuchCommerceQualifierEntryException {
-
-		return getPersistence().findByT_T_Last(
-			targetClassNameId, targetClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	public static CommerceQualifierEntry fetchByT_T_Last(
-		long targetClassNameId, long targetClassPK,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return getPersistence().fetchByT_T_Last(
 			targetClassNameId, targetClassPK, orderByComparator);
 	}
 
@@ -581,45 +511,6 @@ public class CommerceQualifierEntryUtil {
 		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
 
 		return getPersistence().fetchByS_S_T_First(
-			sourceClassNameId, sourceClassPK, targetClassNameId,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry
-	 * @throws NoSuchCommerceQualifierEntryException if a matching commerce qualifier entry could not be found
-	 */
-	public static CommerceQualifierEntry findByS_S_T_Last(
-			long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-			OrderByComparator<CommerceQualifierEntry> orderByComparator)
-		throws com.liferay.commerce.qualifier.exception.
-			NoSuchCommerceQualifierEntryException {
-
-		return getPersistence().findByS_S_T_Last(
-			sourceClassNameId, sourceClassPK, targetClassNameId,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	public static CommerceQualifierEntry fetchByS_S_T_Last(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return getPersistence().fetchByS_S_T_Last(
 			sourceClassNameId, sourceClassPK, targetClassNameId,
 			orderByComparator);
 	}
@@ -777,45 +668,6 @@ public class CommerceQualifierEntryUtil {
 		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
 
 		return getPersistence().fetchByS_T_T_First(
-			sourceClassNameId, targetClassNameId, targetClassPK,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry
-	 * @throws NoSuchCommerceQualifierEntryException if a matching commerce qualifier entry could not be found
-	 */
-	public static CommerceQualifierEntry findByS_T_T_Last(
-			long sourceClassNameId, long targetClassNameId, long targetClassPK,
-			OrderByComparator<CommerceQualifierEntry> orderByComparator)
-		throws com.liferay.commerce.qualifier.exception.
-			NoSuchCommerceQualifierEntryException {
-
-		return getPersistence().findByS_T_T_Last(
-			sourceClassNameId, targetClassNameId, targetClassPK,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	public static CommerceQualifierEntry fetchByS_T_T_Last(
-		long sourceClassNameId, long targetClassNameId, long targetClassPK,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return getPersistence().fetchByS_T_T_Last(
 			sourceClassNameId, targetClassNameId, targetClassPK,
 			orderByComparator);
 	}
@@ -1114,4 +966,4 @@ public class CommerceQualifierEntryUtil {
 	private static volatile CommerceQualifierEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1667695739
+// LIFERAY-SERVICE-BUILDER-HASH:1833599153

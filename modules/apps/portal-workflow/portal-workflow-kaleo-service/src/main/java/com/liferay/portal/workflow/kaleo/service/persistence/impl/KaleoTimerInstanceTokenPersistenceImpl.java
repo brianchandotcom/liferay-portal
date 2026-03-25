@@ -330,67 +330,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token
-	 * @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
-	 */
-	@Override
-	public KaleoTimerInstanceToken findByKaleoInstanceId_Last(
-			long kaleoInstanceId,
-			OrderByComparator<KaleoTimerInstanceToken> orderByComparator)
-		throws NoSuchTimerInstanceTokenException {
-
-		KaleoTimerInstanceToken kaleoTimerInstanceToken =
-			fetchByKaleoInstanceId_Last(kaleoInstanceId, orderByComparator);
-
-		if (kaleoTimerInstanceToken != null) {
-			return kaleoTimerInstanceToken;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoInstanceId=");
-		sb.append(kaleoInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchTimerInstanceTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
-	 */
-	@Override
-	public KaleoTimerInstanceToken fetchByKaleoInstanceId_Last(
-		long kaleoInstanceId,
-		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
-
-		int count = countByKaleoInstanceId(kaleoInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTimerInstanceToken> list = findByKaleoInstanceId(
-			kaleoInstanceId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo timer instance tokens where kaleoInstanceId = &#63; from the database.
 	 *
 	 * @param kaleoInstanceId the kaleo instance ID
@@ -934,73 +873,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token
-	 * @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
-	 */
-	@Override
-	public KaleoTimerInstanceToken findByKITI_C_Last(
-			long kaleoInstanceTokenId, boolean completed,
-			OrderByComparator<KaleoTimerInstanceToken> orderByComparator)
-		throws NoSuchTimerInstanceTokenException {
-
-		KaleoTimerInstanceToken kaleoTimerInstanceToken = fetchByKITI_C_Last(
-			kaleoInstanceTokenId, completed, orderByComparator);
-
-		if (kaleoTimerInstanceToken != null) {
-			return kaleoTimerInstanceToken;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoInstanceTokenId=");
-		sb.append(kaleoInstanceTokenId);
-
-		sb.append(", completed=");
-		sb.append(completed);
-
-		sb.append("}");
-
-		throw new NoSuchTimerInstanceTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
-	 */
-	@Override
-	public KaleoTimerInstanceToken fetchByKITI_C_Last(
-		long kaleoInstanceTokenId, boolean completed,
-		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
-
-		int count = countByKITI_C(kaleoInstanceTokenId, completed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTimerInstanceToken> list = findByKITI_C(
-			kaleoInstanceTokenId, completed, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63; from the database.
 	 *
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
@@ -1351,78 +1223,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		List<KaleoTimerInstanceToken> list = findByKITI_B_C(
 			kaleoInstanceTokenId, blocking, completed, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param blocking the blocking
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token
-	 * @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
-	 */
-	@Override
-	public KaleoTimerInstanceToken findByKITI_B_C_Last(
-			long kaleoInstanceTokenId, boolean blocking, boolean completed,
-			OrderByComparator<KaleoTimerInstanceToken> orderByComparator)
-		throws NoSuchTimerInstanceTokenException {
-
-		KaleoTimerInstanceToken kaleoTimerInstanceToken = fetchByKITI_B_C_Last(
-			kaleoInstanceTokenId, blocking, completed, orderByComparator);
-
-		if (kaleoTimerInstanceToken != null) {
-			return kaleoTimerInstanceToken;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoInstanceTokenId=");
-		sb.append(kaleoInstanceTokenId);
-
-		sb.append(", blocking=");
-		sb.append(blocking);
-
-		sb.append(", completed=");
-		sb.append(completed);
-
-		sb.append("}");
-
-		throw new NoSuchTimerInstanceTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param blocking the blocking
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
-	 */
-	@Override
-	public KaleoTimerInstanceToken fetchByKITI_B_C_Last(
-		long kaleoInstanceTokenId, boolean blocking, boolean completed,
-		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
-
-		int count = countByKITI_B_C(kaleoInstanceTokenId, blocking, completed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTimerInstanceToken> list = findByKITI_B_C(
-			kaleoInstanceTokenId, blocking, completed, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2556,4 +2356,4 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:501437033
+// LIFERAY-SERVICE-BUILDER-HASH:-257504329

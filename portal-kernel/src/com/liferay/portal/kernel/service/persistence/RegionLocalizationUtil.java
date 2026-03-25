@@ -218,39 +218,6 @@ public class RegionLocalizationUtil {
 	}
 
 	/**
-	 * Returns the last region localization in the ordered set where regionId = &#63;.
-	 *
-	 * @param regionId the region ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region localization
-	 * @throws NoSuchRegionLocalizationException if a matching region localization could not be found
-	 */
-	public static RegionLocalization findByRegionId_Last(
-			long regionId,
-			OrderByComparator<RegionLocalization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchRegionLocalizationException {
-
-		return getPersistence().findByRegionId_Last(
-			regionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last region localization in the ordered set where regionId = &#63;.
-	 *
-	 * @param regionId the region ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region localization, or <code>null</code> if a matching region localization could not be found
-	 */
-	public static RegionLocalization fetchByRegionId_Last(
-		long regionId,
-		OrderByComparator<RegionLocalization> orderByComparator) {
-
-		return getPersistence().fetchByRegionId_Last(
-			regionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the region localizations where regionId = &#63; from the database.
 	 *
 	 * @param regionId the region ID
@@ -514,4 +481,4 @@ public class RegionLocalizationUtil {
 	private static volatile RegionLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:352342043
+// LIFERAY-SERVICE-BUILDER-HASH:1826384153

@@ -321,68 +321,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce inventory booked quantity in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory booked quantity
-	 * @throws NoSuchInventoryBookedQuantityException if a matching commerce inventory booked quantity could not be found
-	 */
-	@Override
-	public CommerceInventoryBookedQuantity findByLtExpirationDate_Last(
-			Date expirationDate,
-			OrderByComparator<CommerceInventoryBookedQuantity>
-				orderByComparator)
-		throws NoSuchInventoryBookedQuantityException {
-
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-			fetchByLtExpirationDate_Last(expirationDate, orderByComparator);
-
-		if (commerceInventoryBookedQuantity != null) {
-			return commerceInventoryBookedQuantity;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryBookedQuantityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory booked quantity in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory booked quantity, or <code>null</code> if a matching commerce inventory booked quantity could not be found
-	 */
-	@Override
-	public CommerceInventoryBookedQuantity fetchByLtExpirationDate_Last(
-		Date expirationDate,
-		OrderByComparator<CommerceInventoryBookedQuantity> orderByComparator) {
-
-		int count = countByLtExpirationDate(expirationDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryBookedQuantity> list = findByLtExpirationDate(
-			expirationDate, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce inventory booked quantities where expirationDate &lt; &#63; from the database.
 	 *
 	 * @param expirationDate the expiration date
@@ -695,68 +633,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 
 		List<CommerceInventoryBookedQuantity> list = findBySku(
 			sku, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory booked quantity in the ordered set where sku = &#63;.
-	 *
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory booked quantity
-	 * @throws NoSuchInventoryBookedQuantityException if a matching commerce inventory booked quantity could not be found
-	 */
-	@Override
-	public CommerceInventoryBookedQuantity findBySku_Last(
-			String sku,
-			OrderByComparator<CommerceInventoryBookedQuantity>
-				orderByComparator)
-		throws NoSuchInventoryBookedQuantityException {
-
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-			fetchBySku_Last(sku, orderByComparator);
-
-		if (commerceInventoryBookedQuantity != null) {
-			return commerceInventoryBookedQuantity;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sku=");
-		sb.append(sku);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryBookedQuantityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory booked quantity in the ordered set where sku = &#63;.
-	 *
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory booked quantity, or <code>null</code> if a matching commerce inventory booked quantity could not be found
-	 */
-	@Override
-	public CommerceInventoryBookedQuantity fetchBySku_Last(
-		String sku,
-		OrderByComparator<CommerceInventoryBookedQuantity> orderByComparator) {
-
-		int count = countBySku(sku);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryBookedQuantity> list = findBySku(
-			sku, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1129,80 +1005,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 
 		List<CommerceInventoryBookedQuantity> list = findByC_S_U(
 			companyId, sku, unitOfMeasureKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory booked quantity
-	 * @throws NoSuchInventoryBookedQuantityException if a matching commerce inventory booked quantity could not be found
-	 */
-	@Override
-	public CommerceInventoryBookedQuantity findByC_S_U_Last(
-			long companyId, String sku, String unitOfMeasureKey,
-			OrderByComparator<CommerceInventoryBookedQuantity>
-				orderByComparator)
-		throws NoSuchInventoryBookedQuantityException {
-
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-			fetchByC_S_U_Last(
-				companyId, sku, unitOfMeasureKey, orderByComparator);
-
-		if (commerceInventoryBookedQuantity != null) {
-			return commerceInventoryBookedQuantity;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryBookedQuantityException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory booked quantity, or <code>null</code> if a matching commerce inventory booked quantity could not be found
-	 */
-	@Override
-	public CommerceInventoryBookedQuantity fetchByC_S_U_Last(
-		long companyId, String sku, String unitOfMeasureKey,
-		OrderByComparator<CommerceInventoryBookedQuantity> orderByComparator) {
-
-		int count = countByC_S_U(companyId, sku, unitOfMeasureKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryBookedQuantity> list = findByC_S_U(
-			companyId, sku, unitOfMeasureKey, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2083,4 +1885,4 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1737606934
+// LIFERAY-SERVICE-BUILDER-HASH:305491614

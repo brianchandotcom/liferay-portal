@@ -343,72 +343,6 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout seo entry custom meta tag in the ordered set where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry custom meta tag
-	 * @throws NoSuchEntryCustomMetaTagException if a matching layout seo entry custom meta tag could not be found
-	 */
-	@Override
-	public LayoutSEOEntryCustomMetaTag findByG_L_Last(
-			long groupId, long layoutSEOEntryId,
-			OrderByComparator<LayoutSEOEntryCustomMetaTag> orderByComparator)
-		throws NoSuchEntryCustomMetaTagException {
-
-		LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag =
-			fetchByG_L_Last(groupId, layoutSEOEntryId, orderByComparator);
-
-		if (layoutSEOEntryCustomMetaTag != null) {
-			return layoutSEOEntryCustomMetaTag;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", layoutSEOEntryId=");
-		sb.append(layoutSEOEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryCustomMetaTagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout seo entry custom meta tag in the ordered set where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry custom meta tag, or <code>null</code> if a matching layout seo entry custom meta tag could not be found
-	 */
-	@Override
-	public LayoutSEOEntryCustomMetaTag fetchByG_L_Last(
-		long groupId, long layoutSEOEntryId,
-		OrderByComparator<LayoutSEOEntryCustomMetaTag> orderByComparator) {
-
-		int count = countByG_L(groupId, layoutSEOEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutSEOEntryCustomMetaTag> list = findByG_L(
-			groupId, layoutSEOEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1417,4 +1351,4 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1468814461
+// LIFERAY-SERVICE-BUILDER-HASH:504932636

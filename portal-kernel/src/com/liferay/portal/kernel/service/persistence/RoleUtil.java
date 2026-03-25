@@ -203,34 +203,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the last role in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	public static Role findByUuid_Last(
-			String uuid, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	public static Role fetchByUuid_Last(
-		String uuid, OrderByComparator<Role> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -412,40 +384,6 @@ public class RoleUtil {
 		OrderByComparator<Role> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	public static Role findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	public static Role fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Role> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -635,36 +573,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the last role in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	public static Role findByCompanyId_Last(
-			long companyId, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	public static Role fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Role> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -836,34 +744,6 @@ public class RoleUtil {
 		String name, OrderByComparator<Role> orderByComparator) {
 
 		return getPersistence().fetchByName_First(name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	public static Role findByName_Last(
-			String name, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByName_Last(name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	public static Role fetchByName_Last(
-		String name, OrderByComparator<Role> orderByComparator) {
-
-		return getPersistence().fetchByName_Last(name, orderByComparator);
 	}
 
 	/**
@@ -1039,34 +919,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the last role in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	public static Role findByType_Last(
-			int type, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByType_Last(type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	public static Role fetchByType_Last(
-		int type, OrderByComparator<Role> orderByComparator) {
-
-		return getPersistence().fetchByType_Last(type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where type = &#63;.
 	 *
 	 * @param type the type
@@ -1238,34 +1090,6 @@ public class RoleUtil {
 
 		return getPersistence().fetchBySubtype_First(
 			subtype, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where subtype = &#63;.
-	 *
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	public static Role findBySubtype_Last(
-			String subtype, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findBySubtype_Last(subtype, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where subtype = &#63;.
-	 *
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	public static Role fetchBySubtype_Last(
-		String subtype, OrderByComparator<Role> orderByComparator) {
-
-		return getPersistence().fetchBySubtype_Last(subtype, orderByComparator);
 	}
 
 	/**
@@ -1513,38 +1337,6 @@ public class RoleUtil {
 		long companyId, int type, OrderByComparator<Role> orderByComparator) {
 
 		return getPersistence().fetchByC_T_First(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	public static Role findByC_T_Last(
-			long companyId, int type, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByC_T_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	public static Role fetchByC_T_Last(
-		long companyId, int type, OrderByComparator<Role> orderByComparator) {
-
-		return getPersistence().fetchByC_T_Last(
 			companyId, type, orderByComparator);
 	}
 
@@ -1889,38 +1681,6 @@ public class RoleUtil {
 		int type, String subtype, OrderByComparator<Role> orderByComparator) {
 
 		return getPersistence().fetchByT_S_First(
-			type, subtype, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
-	 *
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role
-	 * @throws NoSuchRoleException if a matching role could not be found
-	 */
-	public static Role findByT_S_Last(
-			int type, String subtype, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByT_S_Last(
-			type, subtype, orderByComparator);
-	}
-
-	/**
-	 * Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
-	 *
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching role, or <code>null</code> if a matching role could not be found
-	 */
-	public static Role fetchByT_S_Last(
-		int type, String subtype, OrderByComparator<Role> orderByComparator) {
-
-		return getPersistence().fetchByT_S_Last(
 			type, subtype, orderByComparator);
 	}
 
@@ -3098,4 +2858,4 @@ public class RoleUtil {
 	private static volatile RolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2016363370
+// LIFERAY-SERVICE-BUILDER-HASH:1406344394

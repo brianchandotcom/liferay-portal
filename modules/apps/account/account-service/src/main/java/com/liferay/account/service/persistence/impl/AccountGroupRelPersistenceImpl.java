@@ -307,67 +307,6 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last account group rel in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel
-	 * @throws NoSuchGroupRelException if a matching account group rel could not be found
-	 */
-	@Override
-	public AccountGroupRel findByAccountGroupId_Last(
-			long accountGroupId,
-			OrderByComparator<AccountGroupRel> orderByComparator)
-		throws NoSuchGroupRelException {
-
-		AccountGroupRel accountGroupRel = fetchByAccountGroupId_Last(
-			accountGroupId, orderByComparator);
-
-		if (accountGroupRel != null) {
-			return accountGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountGroupId=");
-		sb.append(accountGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group rel in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel, or <code>null</code> if a matching account group rel could not be found
-	 */
-	@Override
-	public AccountGroupRel fetchByAccountGroupId_Last(
-		long accountGroupId,
-		OrderByComparator<AccountGroupRel> orderByComparator) {
-
-		int count = countByAccountGroupId(accountGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroupRel> list = findByAccountGroupId(
-			accountGroupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the account group rels where accountGroupId = &#63; from the database.
 	 *
 	 * @param accountGroupId the account group ID
@@ -669,72 +608,6 @@ public class AccountGroupRelPersistenceImpl
 
 		List<AccountGroupRel> list = findByA_C(
 			accountGroupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel
-	 * @throws NoSuchGroupRelException if a matching account group rel could not be found
-	 */
-	@Override
-	public AccountGroupRel findByA_C_Last(
-			long accountGroupId, long classNameId,
-			OrderByComparator<AccountGroupRel> orderByComparator)
-		throws NoSuchGroupRelException {
-
-		AccountGroupRel accountGroupRel = fetchByA_C_Last(
-			accountGroupId, classNameId, orderByComparator);
-
-		if (accountGroupRel != null) {
-			return accountGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountGroupId=");
-		sb.append(accountGroupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel, or <code>null</code> if a matching account group rel could not be found
-	 */
-	@Override
-	public AccountGroupRel fetchByA_C_Last(
-		long accountGroupId, long classNameId,
-		OrderByComparator<AccountGroupRel> orderByComparator) {
-
-		int count = countByA_C(accountGroupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroupRel> list = findByA_C(
-			accountGroupId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1050,72 +923,6 @@ public class AccountGroupRelPersistenceImpl
 
 		List<AccountGroupRel> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account group rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel
-	 * @throws NoSuchGroupRelException if a matching account group rel could not be found
-	 */
-	@Override
-	public AccountGroupRel findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<AccountGroupRel> orderByComparator)
-		throws NoSuchGroupRelException {
-
-		AccountGroupRel accountGroupRel = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (accountGroupRel != null) {
-			return accountGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account group rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel, or <code>null</code> if a matching account group rel could not be found
-	 */
-	@Override
-	public AccountGroupRel fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<AccountGroupRel> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountGroupRel> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2113,4 +1920,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:583066413
+// LIFERAY-SERVICE-BUILDER-HASH:-727190482

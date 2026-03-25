@@ -358,78 +358,6 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding
-	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
-	 */
-	@Override
-	public SamlPeerBinding findByC_D_SNIV_Last(
-			long companyId, boolean deleted, String samlNameIdValue,
-			OrderByComparator<SamlPeerBinding> orderByComparator)
-		throws NoSuchPeerBindingException {
-
-		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIV_Last(
-			companyId, deleted, samlNameIdValue, orderByComparator);
-
-		if (samlPeerBinding != null) {
-			return samlPeerBinding;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", deleted=");
-		sb.append(deleted);
-
-		sb.append(", samlNameIdValue=");
-		sb.append(samlNameIdValue);
-
-		sb.append("}");
-
-		throw new NoSuchPeerBindingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
-	 */
-	@Override
-	public SamlPeerBinding fetchByC_D_SNIV_Last(
-		long companyId, boolean deleted, String samlNameIdValue,
-		OrderByComparator<SamlPeerBinding> orderByComparator) {
-
-		int count = countByC_D_SNIV(companyId, deleted, samlNameIdValue);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlPeerBinding> list = findByC_D_SNIV(
-			companyId, deleted, samlNameIdValue, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -821,85 +749,6 @@ public class SamlPeerBindingPersistenceImpl
 
 		List<SamlPeerBinding> list = findByC_U_SPEI_D(
 			companyId, userId, samlPeerEntityId, deleted, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding
-	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
-	 */
-	@Override
-	public SamlPeerBinding findByC_U_SPEI_D_Last(
-			long companyId, long userId, String samlPeerEntityId,
-			boolean deleted,
-			OrderByComparator<SamlPeerBinding> orderByComparator)
-		throws NoSuchPeerBindingException {
-
-		SamlPeerBinding samlPeerBinding = fetchByC_U_SPEI_D_Last(
-			companyId, userId, samlPeerEntityId, deleted, orderByComparator);
-
-		if (samlPeerBinding != null) {
-			return samlPeerBinding;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", samlPeerEntityId=");
-		sb.append(samlPeerEntityId);
-
-		sb.append(", deleted=");
-		sb.append(deleted);
-
-		sb.append("}");
-
-		throw new NoSuchPeerBindingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
-	 */
-	@Override
-	public SamlPeerBinding fetchByC_U_SPEI_D_Last(
-		long companyId, long userId, String samlPeerEntityId, boolean deleted,
-		OrderByComparator<SamlPeerBinding> orderByComparator) {
-
-		int count = countByC_U_SPEI_D(
-			companyId, userId, samlPeerEntityId, deleted);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlPeerBinding> list = findByC_U_SPEI_D(
-			companyId, userId, samlPeerEntityId, deleted, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1688,4 +1537,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-746743898
+// LIFERAY-SERVICE-BUILDER-HASH:-11716609

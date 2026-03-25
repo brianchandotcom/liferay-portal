@@ -123,32 +123,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the blogs entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the blogs entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -611,32 +531,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -796,34 +690,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByG_LtD_First(
-		long groupId, Date displayDate,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_LtD_Last(
-			long groupId, Date displayDate,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_LtD_Last(
 		long groupId, Date displayDate,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -993,34 +859,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_S_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_S_Last(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the blogs entries that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1179,34 +1017,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByG_NotS_First(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_NotS_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_NotS_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -1376,34 +1186,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByC_U_Last(
-			long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByC_U_Last(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1510,34 +1292,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByC_LtD_First(
-		long companyId, Date displayDate,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByC_LtD_Last(
-			long companyId, Date displayDate,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByC_LtD_Last(
 		long companyId, Date displayDate,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -1653,34 +1407,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByC_S_Last(
-			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByC_S_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1791,34 +1517,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByC_NotS_Last(
-			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByC_NotS_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1924,34 +1622,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByLtD_S_First(
-		Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByLtD_S_Last(
-			Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByLtD_S_Last(
 		Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -2069,36 +1739,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByG_U_LtD_First(
-		long groupId, long userId, Date displayDate,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_U_LtD_Last(
-			long groupId, long userId, Date displayDate,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_U_LtD_Last(
 		long groupId, long userId, Date displayDate,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -2277,36 +1917,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByG_U_S_First(
-		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_U_S_Last(
-			long groupId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_U_S_Last(
 		long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -2631,36 +2241,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_U_NotS_Last(
-			long groupId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_U_NotS_Last(
-		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the blogs entries that the user has permission to view where groupId = &#63; and userId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2833,36 +2413,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByG_D_S_First(
-		long groupId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_D_S_Last(
-			long groupId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_D_S_Last(
 		long groupId, Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -3045,36 +2595,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_GtD_S_Last(
-			long groupId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_GtD_S_Last(
-		long groupId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the blogs entries that the user has permission to view where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3252,36 +2772,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_LtD_S_Last(
-			long groupId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_LtD_S_Last(
-		long groupId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the blogs entries that the user has permission to view where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3454,36 +2944,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByG_LtD_NotS_First(
-		long groupId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_LtD_NotS_Last(
-			long groupId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_LtD_NotS_Last(
 		long groupId, Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -3667,36 +3127,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByC_U_S_Last(
-			long companyId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByC_U_S_Last(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3811,36 +3241,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByC_U_NotS_First(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByC_U_NotS_Last(
-			long companyId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByC_U_NotS_Last(
 		long companyId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -3965,36 +3365,6 @@ public interface BlogsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByC_LtD_S_Last(
-			long companyId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByC_LtD_S_Last(
-		long companyId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -4109,36 +3479,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByC_LtD_NotS_First(
-		long companyId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByC_LtD_NotS_Last(
-			long companyId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByC_LtD_NotS_Last(
 		long companyId, Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -4268,38 +3608,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByG_U_LtD_S_First(
-		long groupId, long userId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_U_LtD_S_Last(
-			long groupId, long userId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_U_LtD_S_Last(
 		long groupId, long userId, Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -4497,38 +3805,6 @@ public interface BlogsEntryPersistence
 	 * @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	public BlogsEntry fetchByG_U_LtD_NotS_First(
-		long groupId, long userId, Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry
-	 * @throws NoSuchEntryException if a matching blogs entry could not be found
-	 */
-	public BlogsEntry findByG_U_LtD_NotS_Last(
-			long groupId, long userId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	public BlogsEntry fetchByG_U_LtD_NotS_Last(
 		long groupId, long userId, Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry>
 			orderByComparator);
@@ -4791,4 +4067,4 @@ public interface BlogsEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1159326030
+// LIFERAY-SERVICE-BUILDER-HASH:-1736036489

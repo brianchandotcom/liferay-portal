@@ -219,39 +219,6 @@ public class CTCollectionTemplateUtil {
 	}
 
 	/**
-	 * Returns the last ct collection template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection template
-	 * @throws NoSuchCollectionTemplateException if a matching ct collection template could not be found
-	 */
-	public static CTCollectionTemplate findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CTCollectionTemplate> orderByComparator)
-		throws com.liferay.change.tracking.exception.
-			NoSuchCollectionTemplateException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct collection template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection template, or <code>null</code> if a matching ct collection template could not be found
-	 */
-	public static CTCollectionTemplate fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CTCollectionTemplate> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the ct collection templates that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -502,4 +469,4 @@ public class CTCollectionTemplateUtil {
 	private static volatile CTCollectionTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-418256943
+// LIFERAY-SERVICE-BUILDER-HASH:1945249681

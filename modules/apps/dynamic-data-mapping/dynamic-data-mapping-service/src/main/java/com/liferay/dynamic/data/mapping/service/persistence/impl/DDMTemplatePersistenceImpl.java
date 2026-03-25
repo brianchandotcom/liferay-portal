@@ -339,64 +339,6 @@ public class DDMTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByUuid_Last(
-			String uuid, OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByUuid_Last(
-		String uuid, OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -944,72 +886,6 @@ public class DDMTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1323,65 +1199,6 @@ public class DDMTemplatePersistenceImpl
 
 		List<DDMTemplate> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByGroupId_Last(
-			long groupId, OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByGroupId_Last(
-		long groupId, OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1883,65 +1700,6 @@ public class DDMTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm template in the ordered set where classPK = &#63;.
-	 *
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByClassPK_Last(
-			long classPK, OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByClassPK_Last(
-			classPK, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where classPK = &#63;.
-	 *
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByClassPK_Last(
-		long classPK, OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByClassPK(classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByClassPK(
-			classPK, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm templates where classPK = &#63; from the database.
 	 *
 	 * @param classPK the class pk
@@ -2246,66 +2004,6 @@ public class DDMTemplatePersistenceImpl
 
 		List<DDMTemplate> list = findByTemplateKey(
 			templateKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where templateKey = &#63;.
-	 *
-	 * @param templateKey the template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByTemplateKey_Last(
-			String templateKey,
-			OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByTemplateKey_Last(
-			templateKey, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("templateKey=");
-		sb.append(templateKey);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where templateKey = &#63;.
-	 *
-	 * @param templateKey the template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByTemplateKey_Last(
-		String templateKey, OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByTemplateKey(templateKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByTemplateKey(
-			templateKey, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2635,64 +2333,6 @@ public class DDMTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm template in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByType_Last(
-			String type, OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByType_Last(type, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByType_Last(
-		String type, OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByType(type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByType(
-			type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm templates where type = &#63; from the database.
 	 *
 	 * @param type the type
@@ -3010,65 +2650,6 @@ public class DDMTemplatePersistenceImpl
 
 		List<DDMTemplate> list = findByLanguage(
 			language, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where language = &#63;.
-	 *
-	 * @param language the language
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByLanguage_Last(
-			String language, OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByLanguage_Last(
-			language, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("language=");
-		sb.append(language);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where language = &#63;.
-	 *
-	 * @param language the language
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByLanguage_Last(
-		String language, OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByLanguage(language);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByLanguage(
-			language, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3587,72 +3168,6 @@ public class DDMTemplatePersistenceImpl
 
 		List<DDMTemplate> list = findByG_C(
 			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByG_C_Last(
-			long groupId, long classNameId,
-			OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByG_C_Last(
-			groupId, classNameId, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByG_C_Last(
-		long groupId, long classNameId,
-		OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByG_C(groupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByG_C(
-			groupId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4189,72 +3704,6 @@ public class DDMTemplatePersistenceImpl
 
 		List<DDMTemplate> list = findByG_CPK(
 			groupId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByG_CPK_Last(
-			long groupId, long classPK,
-			OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByG_CPK_Last(
-			groupId, classPK, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByG_CPK_Last(
-		long groupId, long classPK,
-		OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByG_CPK(groupId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByG_CPK(
-			groupId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5337,77 +4786,6 @@ public class DDMTemplatePersistenceImpl
 
 		List<DDMTemplate> list = findByG_C_C(
 			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByG_C_C_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByG_C_C(groupId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByG_C_C(
-			groupId, classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6807,77 +6185,6 @@ public class DDMTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByC_C_T_Last(
-			long classNameId, long classPK, String type,
-			OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByC_C_T_Last(
-			classNameId, classPK, type, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByC_C_T_Last(
-		long classNameId, long classPK, String type,
-		OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByC_C_T(classNameId, classPK, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByC_C_T(
-			classNameId, classPK, type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm templates where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -7270,83 +6577,6 @@ public class DDMTemplatePersistenceImpl
 
 		List<DDMTemplate> list = findByG_C_C_T(
 			groupId, classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByG_C_C_T_Last(
-			long groupId, long classNameId, long classPK, String type,
-			OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByG_C_C_T_Last(
-			groupId, classNameId, classPK, type, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByG_C_C_T_Last(
-		long groupId, long classNameId, long classPK, String type,
-		OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByG_C_C_T(groupId, classNameId, classPK, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByG_C_C_T(
-			groupId, classNameId, classPK, type, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -8064,88 +7294,6 @@ public class DDMTemplatePersistenceImpl
 
 		List<DDMTemplate> list = findByG_C_C_T_M(
 			groupId, classNameId, classPK, type, mode, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param mode the mode
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate findByG_C_C_T_M_Last(
-			long groupId, long classNameId, long classPK, String type,
-			String mode, OrderByComparator<DDMTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByG_C_C_T_M_Last(
-			groupId, classNameId, classPK, type, mode, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", mode=");
-		sb.append(mode);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param mode the mode
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByG_C_C_T_M_Last(
-		long groupId, long classNameId, long classPK, String type, String mode,
-		OrderByComparator<DDMTemplate> orderByComparator) {
-
-		int count = countByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMTemplate> list = findByG_C_C_T_M(
-			groupId, classNameId, classPK, type, mode, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -10220,4 +9368,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-305474372
+// LIFERAY-SERVICE-BUILDER-HASH:1431926357

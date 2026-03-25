@@ -515,72 +515,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last workflow instance link in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a matching workflow instance link could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws NoSuchWorkflowInstanceLinkException {
-
-		WorkflowInstanceLink workflowInstanceLink = fetchByC_C_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (workflowInstanceLink != null) {
-			return workflowInstanceLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowInstanceLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last workflow instance link in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow instance link, or <code>null</code> if a matching workflow instance link could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<WorkflowInstanceLink> orderByComparator) {
-
-		int count = countByC_C(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WorkflowInstanceLink> list = findByC_C(
-			companyId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the workflow instance links where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -919,78 +853,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		List<WorkflowInstanceLink> list = findByG_C_C(
 			groupId, companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a matching workflow instance link could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink findByG_C_C_Last(
-			long groupId, long companyId, long classNameId,
-			OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws NoSuchWorkflowInstanceLinkException {
-
-		WorkflowInstanceLink workflowInstanceLink = fetchByG_C_C_Last(
-			groupId, companyId, classNameId, orderByComparator);
-
-		if (workflowInstanceLink != null) {
-			return workflowInstanceLink;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowInstanceLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow instance link, or <code>null</code> if a matching workflow instance link could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink fetchByG_C_C_Last(
-		long groupId, long companyId, long classNameId,
-		OrderByComparator<WorkflowInstanceLink> orderByComparator) {
-
-		int count = countByG_C_C(groupId, companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WorkflowInstanceLink> list = findByG_C_C(
-			groupId, companyId, classNameId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1367,83 +1229,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		List<WorkflowInstanceLink> list = findByG_C_C_C(
 			groupId, companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a matching workflow instance link could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink findByG_C_C_C_Last(
-			long groupId, long companyId, long classNameId, long classPK,
-			OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws NoSuchWorkflowInstanceLinkException {
-
-		WorkflowInstanceLink workflowInstanceLink = fetchByG_C_C_C_Last(
-			groupId, companyId, classNameId, classPK, orderByComparator);
-
-		if (workflowInstanceLink != null) {
-			return workflowInstanceLink;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowInstanceLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow instance link, or <code>null</code> if a matching workflow instance link could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink fetchByG_C_C_C_Last(
-		long groupId, long companyId, long classNameId, long classPK,
-		OrderByComparator<WorkflowInstanceLink> orderByComparator) {
-
-		int count = countByG_C_C_C(groupId, companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WorkflowInstanceLink> list = findByG_C_C_C(
-			groupId, companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2531,4 +2316,4 @@ public class WorkflowInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-483467255
+// LIFERAY-SERVICE-BUILDER-HASH:-1720379360

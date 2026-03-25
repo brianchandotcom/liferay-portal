@@ -212,34 +212,6 @@ public class SystemEventUtil {
 	}
 
 	/**
-	 * Returns the last system event in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event
-	 * @throws NoSuchSystemEventException if a matching system event could not be found
-	 */
-	public static SystemEvent findByGroupId_Last(
-			long groupId, OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchSystemEventException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 */
-	public static SystemEvent fetchByGroupId_Last(
-		long groupId, OrderByComparator<SystemEvent> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the system events where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -369,40 +341,6 @@ public class SystemEventUtil {
 		OrderByComparator<SystemEvent> orderByComparator) {
 
 		return getPersistence().fetchByG_S_First(
-			groupId, systemEventSetKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and systemEventSetKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param systemEventSetKey the system event set key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event
-	 * @throws NoSuchSystemEventException if a matching system event could not be found
-	 */
-	public static SystemEvent findByG_S_Last(
-			long groupId, long systemEventSetKey,
-			OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchSystemEventException {
-
-		return getPersistence().findByG_S_Last(
-			groupId, systemEventSetKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and systemEventSetKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param systemEventSetKey the system event set key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 */
-	public static SystemEvent fetchByG_S_Last(
-		long groupId, long systemEventSetKey,
-		OrderByComparator<SystemEvent> orderByComparator) {
-
-		return getPersistence().fetchByG_S_Last(
 			groupId, systemEventSetKey, orderByComparator);
 	}
 
@@ -544,42 +482,6 @@ public class SystemEventUtil {
 		OrderByComparator<SystemEvent> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_First(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event
-	 * @throws NoSuchSystemEventException if a matching system event could not be found
-	 */
-	public static SystemEvent findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchSystemEventException {
-
-		return getPersistence().findByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 */
-	public static SystemEvent fetchByG_C_C_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<SystemEvent> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_Last(
 			groupId, classNameId, classPK, orderByComparator);
 	}
 
@@ -735,44 +637,6 @@ public class SystemEventUtil {
 		OrderByComparator<SystemEvent> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_T_First(
-			groupId, classNameId, classPK, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event
-	 * @throws NoSuchSystemEventException if a matching system event could not be found
-	 */
-	public static SystemEvent findByG_C_C_T_Last(
-			long groupId, long classNameId, long classPK, int type,
-			OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchSystemEventException {
-
-		return getPersistence().findByG_C_C_T_Last(
-			groupId, classNameId, classPK, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 */
-	public static SystemEvent fetchByG_C_C_T_Last(
-		long groupId, long classNameId, long classPK, int type,
-		OrderByComparator<SystemEvent> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_T_Last(
 			groupId, classNameId, classPK, type, orderByComparator);
 	}
 
@@ -964,4 +828,4 @@ public class SystemEventUtil {
 	private static volatile SystemEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1698836037
+// LIFERAY-SERVICE-BUILDER-HASH:149280103

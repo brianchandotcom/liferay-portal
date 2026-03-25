@@ -207,34 +207,6 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	 * Returns the last wiki node in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	public static WikiNode findByUuid_Last(
-			String uuid, OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	public static WikiNode fetchByUuid_Last(
-		String uuid, OrderByComparator<WikiNode> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the wiki nodes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -426,40 +398,6 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	 * Returns the last wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	public static WikiNode findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	public static WikiNode fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<WikiNode> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the wiki nodes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -578,34 +516,6 @@ public class WikiNodeUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	public static WikiNode findByGroupId_Last(
-			long groupId, OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	public static WikiNode fetchByGroupId_Last(
-		long groupId, OrderByComparator<WikiNode> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -784,36 +694,6 @@ public class WikiNodeUtil {
 		long companyId, OrderByComparator<WikiNode> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	public static WikiNode findByCompanyId_Last(
-			long companyId, OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	public static WikiNode fetchByCompanyId_Last(
-		long companyId, OrderByComparator<WikiNode> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -1009,40 +889,6 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	 * Returns the last wiki node in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	public static WikiNode findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByG_S_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	public static WikiNode fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<WikiNode> orderByComparator) {
-
-		return getPersistence().fetchByG_S_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the wiki nodes that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1232,40 +1078,6 @@ public class WikiNodeUtil {
 		OrderByComparator<WikiNode> orderByComparator) {
 
 		return getPersistence().fetchByC_S_First(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	public static WikiNode findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByC_S_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	public static WikiNode fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator) {
-
-		return getPersistence().fetchByC_S_Last(
 			companyId, status, orderByComparator);
 	}
 
@@ -1516,4 +1328,4 @@ public class WikiNodeUtil {
 	private static volatile WikiNodePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1542665309
+// LIFERAY-SERVICE-BUILDER-HASH:-2048012529

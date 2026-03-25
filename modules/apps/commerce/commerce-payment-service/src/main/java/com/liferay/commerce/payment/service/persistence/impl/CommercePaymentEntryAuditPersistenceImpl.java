@@ -320,68 +320,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce payment entry audit in the ordered set where commercePaymentEntryId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the commerce payment entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry audit
-	 * @throws NoSuchPaymentEntryAuditException if a matching commerce payment entry audit could not be found
-	 */
-	@Override
-	public CommercePaymentEntryAudit findByCommercePaymentEntryId_Last(
-			long commercePaymentEntryId,
-			OrderByComparator<CommercePaymentEntryAudit> orderByComparator)
-		throws NoSuchPaymentEntryAuditException {
-
-		CommercePaymentEntryAudit commercePaymentEntryAudit =
-			fetchByCommercePaymentEntryId_Last(
-				commercePaymentEntryId, orderByComparator);
-
-		if (commercePaymentEntryAudit != null) {
-			return commercePaymentEntryAudit;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePaymentEntryId=");
-		sb.append(commercePaymentEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentEntryAuditException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce payment entry audit in the ordered set where commercePaymentEntryId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the commerce payment entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment entry audit, or <code>null</code> if a matching commerce payment entry audit could not be found
-	 */
-	@Override
-	public CommercePaymentEntryAudit fetchByCommercePaymentEntryId_Last(
-		long commercePaymentEntryId,
-		OrderByComparator<CommercePaymentEntryAudit> orderByComparator) {
-
-		int count = countByCommercePaymentEntryId(commercePaymentEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePaymentEntryAudit> list = findByCommercePaymentEntryId(
-			commercePaymentEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce payment entry audits that the user has permission to view where commercePaymentEntryId = &#63;.
 	 *
 	 * @param commercePaymentEntryId the commerce payment entry ID
@@ -1362,4 +1300,4 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:818895968
+// LIFERAY-SERVICE-BUILDER-HASH:1974965475

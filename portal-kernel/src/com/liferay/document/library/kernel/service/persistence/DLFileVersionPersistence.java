@@ -123,32 +123,6 @@ public interface DLFileVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -308,34 +282,6 @@ public interface DLFileVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,32 +381,6 @@ public interface DLFileVersionPersistence
 	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	public DLFileVersion fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator);
@@ -568,32 +488,6 @@ public interface DLFileVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file version in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByFileEntryId_Last(
-			long fileEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByFileEntryId_Last(
-		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file versions where fileEntryId = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -691,32 +585,6 @@ public interface DLFileVersionPersistence
 	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	public DLFileVersion fetchByMimeType_First(
-		String mimeType,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file version in the ordered set where mimeType = &#63;.
-	 *
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByMimeType_Last(
-			String mimeType,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where mimeType = &#63;.
-	 *
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByMimeType_Last(
 		String mimeType,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator);
@@ -831,34 +699,6 @@ public interface DLFileVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param storeUUID the store uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByC_SU_Last(
-			long companyId, String storeUUID,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param storeUUID the store uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByC_SU_Last(
-		long companyId, String storeUUID,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file versions where companyId = &#63; and storeUUID = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -965,34 +805,6 @@ public interface DLFileVersionPersistence
 	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	public DLFileVersion fetchByC_NotS_First(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByC_NotS_Last(
-			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByC_NotS_Last(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator);
@@ -1154,34 +966,6 @@ public interface DLFileVersionPersistence
 	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	public DLFileVersion fetchByF_S_First(
-		long fileEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByF_S_Last(
-			long fileEntryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByF_S_Last(
 		long fileEntryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator);
@@ -1377,34 +1161,6 @@ public interface DLFileVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file version in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByLtD_S_Last(
-			Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByLtD_S_Last(
-		Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file versions where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -1517,36 +1273,6 @@ public interface DLFileVersionPersistence
 	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	public DLFileVersion fetchByG_F_S_First(
-		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByG_F_S_Last(
-			long groupId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByG_F_S_Last(
 		long groupId, long folderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator);
@@ -1666,36 +1392,6 @@ public interface DLFileVersionPersistence
 	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	public DLFileVersion fetchByC_E_S_First(
-		long companyId, Date expirationDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and expirationDate = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByC_E_S_Last(
-			long companyId, Date expirationDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and expirationDate = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByC_E_S_Last(
 		long companyId, Date expirationDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
 			orderByComparator);
@@ -1915,38 +1611,6 @@ public interface DLFileVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param title the title
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	public DLFileVersion findByG_F_T_V_Last(
-			long groupId, long folderId, String title, String version,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-				orderByComparator)
-		throws NoSuchFileVersionException;
-
-	/**
-	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param title the title
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	public DLFileVersion fetchByG_F_T_V_Last(
-		long groupId, long folderId, String title, String version,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2090,4 +1754,4 @@ public interface DLFileVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-602195451
+// LIFERAY-SERVICE-BUILDER-HASH:1624090249

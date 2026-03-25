@@ -120,32 +120,6 @@ public interface CTCollectionTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ct collection template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection template
-	 * @throws NoSuchCollectionTemplateException if a matching ct collection template could not be found
-	 */
-	public CTCollectionTemplate findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CTCollectionTemplate> orderByComparator)
-		throws NoSuchCollectionTemplateException;
-
-	/**
-	 * Returns the last ct collection template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection template, or <code>null</code> if a matching ct collection template could not be found
-	 */
-	public CTCollectionTemplate fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollectionTemplate>
-			orderByComparator);
-
-	/**
 	 * Returns all the ct collection templates that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -333,4 +307,4 @@ public interface CTCollectionTemplatePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1264119288
+// LIFERAY-SERVICE-BUILDER-HASH:1453427509

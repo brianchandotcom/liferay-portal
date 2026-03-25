@@ -494,67 +494,6 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saml idp sso session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sso session
-	 * @throws NoSuchIdpSsoSessionException if a matching saml idp sso session could not be found
-	 */
-	@Override
-	public SamlIdpSsoSession findByLtCreateDate_Last(
-			Date createDate,
-			OrderByComparator<SamlIdpSsoSession> orderByComparator)
-		throws NoSuchIdpSsoSessionException {
-
-		SamlIdpSsoSession samlIdpSsoSession = fetchByLtCreateDate_Last(
-			createDate, orderByComparator);
-
-		if (samlIdpSsoSession != null) {
-			return samlIdpSsoSession;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchIdpSsoSessionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last saml idp sso session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
-	 */
-	@Override
-	public SamlIdpSsoSession fetchByLtCreateDate_Last(
-		Date createDate,
-		OrderByComparator<SamlIdpSsoSession> orderByComparator) {
-
-		int count = countByLtCreateDate(createDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SamlIdpSsoSession> list = findByLtCreateDate(
-			createDate, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the saml idp sso sessions where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -1529,4 +1468,4 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-990353619
+// LIFERAY-SERVICE-BUILDER-HASH:1445435457

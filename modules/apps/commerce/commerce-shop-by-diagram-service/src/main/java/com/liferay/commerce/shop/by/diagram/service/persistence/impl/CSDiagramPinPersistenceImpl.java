@@ -325,67 +325,6 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cs diagram pin in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram pin
-	 * @throws NoSuchCSDiagramPinException if a matching cs diagram pin could not be found
-	 */
-	@Override
-	public CSDiagramPin findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CSDiagramPin> orderByComparator)
-		throws NoSuchCSDiagramPinException {
-
-		CSDiagramPin csDiagramPin = fetchByCPDefinitionId_Last(
-			CPDefinitionId, orderByComparator);
-
-		if (csDiagramPin != null) {
-			return csDiagramPin;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramPinException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cs diagram pin in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram pin, or <code>null</code> if a matching cs diagram pin could not be found
-	 */
-	@Override
-	public CSDiagramPin fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		OrderByComparator<CSDiagramPin> orderByComparator) {
-
-		int count = countByCPDefinitionId(CPDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CSDiagramPin> list = findByCPDefinitionId(
-			CPDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cs diagram pins where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -1350,4 +1289,4 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1487203912
+// LIFERAY-SERVICE-BUILDER-HASH:1192755046

@@ -221,37 +221,6 @@ public class PermissionCheckFinderEntryUtil {
 	}
 
 	/**
-	 * Returns the last permission check finder entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching permission check finder entry
-	 * @throws NoSuchPermissionCheckFinderEntryException if a matching permission check finder entry could not be found
-	 */
-	public static PermissionCheckFinderEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<PermissionCheckFinderEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchPermissionCheckFinderEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last permission check finder entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching permission check finder entry, or <code>null</code> if a matching permission check finder entry could not be found
-	 */
-	public static PermissionCheckFinderEntry fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<PermissionCheckFinderEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the permission check finder entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -656,4 +625,4 @@ public class PermissionCheckFinderEntryUtil {
 	private static volatile PermissionCheckFinderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-932540086
+// LIFERAY-SERVICE-BUILDER-HASH:1872790988

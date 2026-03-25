@@ -120,32 +120,6 @@ public interface CTSGrandParentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cts grand parent in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts grand parent
-	 * @throws NoSuchCTSGrandParentException if a matching cts grand parent could not be found
-	 */
-	public CTSGrandParent findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSGrandParent>
-				orderByComparator)
-		throws NoSuchCTSGrandParentException;
-
-	/**
-	 * Returns the last cts grand parent in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts grand parent, or <code>null</code> if a matching cts grand parent could not be found
-	 */
-	public CTSGrandParent fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTSGrandParent>
-			orderByComparator);
-
-	/**
 	 * Removes all the cts grand parents where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -281,4 +255,4 @@ public interface CTSGrandParentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2087643298
+// LIFERAY-SERVICE-BUILDER-HASH:135842609

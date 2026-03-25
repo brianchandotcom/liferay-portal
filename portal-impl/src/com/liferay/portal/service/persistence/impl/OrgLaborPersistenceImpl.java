@@ -291,65 +291,6 @@ public class OrgLaborPersistenceImpl
 	}
 
 	/**
-	 * Returns the last org labor in the ordered set where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching org labor
-	 * @throws NoSuchOrgLaborException if a matching org labor could not be found
-	 */
-	@Override
-	public OrgLabor findByOrganizationId_Last(
-			long organizationId, OrderByComparator<OrgLabor> orderByComparator)
-		throws NoSuchOrgLaborException {
-
-		OrgLabor orgLabor = fetchByOrganizationId_Last(
-			organizationId, orderByComparator);
-
-		if (orgLabor != null) {
-			return orgLabor;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("organizationId=");
-		sb.append(organizationId);
-
-		sb.append("}");
-
-		throw new NoSuchOrgLaborException(sb.toString());
-	}
-
-	/**
-	 * Returns the last org labor in the ordered set where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching org labor, or <code>null</code> if a matching org labor could not be found
-	 */
-	@Override
-	public OrgLabor fetchByOrganizationId_Last(
-		long organizationId, OrderByComparator<OrgLabor> orderByComparator) {
-
-		int count = countByOrganizationId(organizationId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OrgLabor> list = findByOrganizationId(
-			organizationId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the org labors where organizationId = &#63; from the database.
 	 *
 	 * @param organizationId the organization ID
@@ -983,4 +924,4 @@ public class OrgLaborPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2088270766
+// LIFERAY-SERVICE-BUILDER-HASH:679408770

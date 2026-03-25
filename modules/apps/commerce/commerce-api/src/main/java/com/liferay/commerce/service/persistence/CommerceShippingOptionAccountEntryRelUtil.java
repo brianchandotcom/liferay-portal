@@ -238,43 +238,6 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce shipping option account entry rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping option account entry rel
-	 * @throws NoSuchShippingOptionAccountEntryRelException if a matching commerce shipping option account entry rel could not be found
-	 */
-	public static CommerceShippingOptionAccountEntryRel
-			findByAccountEntryId_Last(
-				long accountEntryId,
-				OrderByComparator<CommerceShippingOptionAccountEntryRel>
-					orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchShippingOptionAccountEntryRelException {
-
-		return getPersistence().findByAccountEntryId_Last(
-			accountEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce shipping option account entry rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping option account entry rel, or <code>null</code> if a matching commerce shipping option account entry rel could not be found
-	 */
-	public static CommerceShippingOptionAccountEntryRel
-		fetchByAccountEntryId_Last(
-			long accountEntryId,
-			OrderByComparator<CommerceShippingOptionAccountEntryRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByAccountEntryId_Last(
-			accountEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce shipping option account entry rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -406,43 +369,6 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchByCommerceChannelId_First(
-			commerceChannelId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce shipping option account entry rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping option account entry rel
-	 * @throws NoSuchShippingOptionAccountEntryRelException if a matching commerce shipping option account entry rel could not be found
-	 */
-	public static CommerceShippingOptionAccountEntryRel
-			findByCommerceChannelId_Last(
-				long commerceChannelId,
-				OrderByComparator<CommerceShippingOptionAccountEntryRel>
-					orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchShippingOptionAccountEntryRelException {
-
-		return getPersistence().findByCommerceChannelId_Last(
-			commerceChannelId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce shipping option account entry rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping option account entry rel, or <code>null</code> if a matching commerce shipping option account entry rel could not be found
-	 */
-	public static CommerceShippingOptionAccountEntryRel
-		fetchByCommerceChannelId_Last(
-			long commerceChannelId,
-			OrderByComparator<CommerceShippingOptionAccountEntryRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommerceChannelId_Last(
 			commerceChannelId, orderByComparator);
 	}
 
@@ -581,43 +507,6 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchByCommerceShippingOptionKey_First(
-			commerceShippingOptionKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce shipping option account entry rel in the ordered set where commerceShippingOptionKey = &#63;.
-	 *
-	 * @param commerceShippingOptionKey the commerce shipping option key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping option account entry rel
-	 * @throws NoSuchShippingOptionAccountEntryRelException if a matching commerce shipping option account entry rel could not be found
-	 */
-	public static CommerceShippingOptionAccountEntryRel
-			findByCommerceShippingOptionKey_Last(
-				String commerceShippingOptionKey,
-				OrderByComparator<CommerceShippingOptionAccountEntryRel>
-					orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchShippingOptionAccountEntryRelException {
-
-		return getPersistence().findByCommerceShippingOptionKey_Last(
-			commerceShippingOptionKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce shipping option account entry rel in the ordered set where commerceShippingOptionKey = &#63;.
-	 *
-	 * @param commerceShippingOptionKey the commerce shipping option key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping option account entry rel, or <code>null</code> if a matching commerce shipping option account entry rel could not be found
-	 */
-	public static CommerceShippingOptionAccountEntryRel
-		fetchByCommerceShippingOptionKey_Last(
-			String commerceShippingOptionKey,
-			OrderByComparator<CommerceShippingOptionAccountEntryRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommerceShippingOptionKey_Last(
 			commerceShippingOptionKey, orderByComparator);
 	}
 
@@ -905,4 +794,4 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-741858353
+// LIFERAY-SERVICE-BUILDER-HASH:-1485273653

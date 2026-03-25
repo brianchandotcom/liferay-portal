@@ -330,67 +330,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tax category mapping in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping
-	 * @throws NoSuchTaxCategoryMappingException if a matching commerce tax category mapping could not be found
-	 */
-	@Override
-	public CommerceTaxCategoryMapping findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceTaxCategoryMapping> orderByComparator)
-		throws NoSuchTaxCategoryMappingException {
-
-		CommerceTaxCategoryMapping commerceTaxCategoryMapping =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (commerceTaxCategoryMapping != null) {
-			return commerceTaxCategoryMapping;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTaxCategoryMappingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax category mapping in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
-	 */
-	@Override
-	public CommerceTaxCategoryMapping fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxCategoryMapping> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tax category mappings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -932,72 +871,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce tax category mapping in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping
-	 * @throws NoSuchTaxCategoryMappingException if a matching commerce tax category mapping could not be found
-	 */
-	@Override
-	public CommerceTaxCategoryMapping findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceTaxCategoryMapping> orderByComparator)
-		throws NoSuchTaxCategoryMappingException {
-
-		CommerceTaxCategoryMapping commerceTaxCategoryMapping =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (commerceTaxCategoryMapping != null) {
-			return commerceTaxCategoryMapping;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxCategoryMappingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax category mapping in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
-	 */
-	@Override
-	public CommerceTaxCategoryMapping fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxCategoryMapping> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce tax category mappings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1314,68 +1187,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 
 		List<CommerceTaxCategoryMapping> list = findByCommerceTaxMethodId(
 			commerceTaxMethodId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce tax category mapping in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping
-	 * @throws NoSuchTaxCategoryMappingException if a matching commerce tax category mapping could not be found
-	 */
-	@Override
-	public CommerceTaxCategoryMapping findByCommerceTaxMethodId_Last(
-			long commerceTaxMethodId,
-			OrderByComparator<CommerceTaxCategoryMapping> orderByComparator)
-		throws NoSuchTaxCategoryMappingException {
-
-		CommerceTaxCategoryMapping commerceTaxCategoryMapping =
-			fetchByCommerceTaxMethodId_Last(
-				commerceTaxMethodId, orderByComparator);
-
-		if (commerceTaxCategoryMapping != null) {
-			return commerceTaxCategoryMapping;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceTaxMethodId=");
-		sb.append(commerceTaxMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxCategoryMappingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce tax category mapping in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
-	 */
-	@Override
-	public CommerceTaxCategoryMapping fetchByCommerceTaxMethodId_Last(
-		long commerceTaxMethodId,
-		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
-
-		int count = countByCommerceTaxMethodId(commerceTaxMethodId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTaxCategoryMapping> list = findByCommerceTaxMethodId(
-			commerceTaxMethodId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2737,4 +2548,4 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-489687119
+// LIFERAY-SERVICE-BUILDER-HASH:1912356560

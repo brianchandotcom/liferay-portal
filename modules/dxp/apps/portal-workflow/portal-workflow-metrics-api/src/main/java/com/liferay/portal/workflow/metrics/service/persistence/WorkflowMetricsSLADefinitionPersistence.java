@@ -120,32 +120,6 @@ public interface WorkflowMetricsSLADefinitionPersistence
 			<WorkflowMetricsSLADefinition> orderByComparator);
 
 	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinition> orderByComparator)
-		throws NoSuchSLADefinitionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinition> orderByComparator);
-
-	/**
 	 * Removes all the workflow metrics sla definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -302,34 +276,6 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @return the first matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	public WorkflowMetricsSLADefinition fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinition> orderByComparator);
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinition> orderByComparator)
-		throws NoSuchSLADefinitionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<WorkflowMetricsSLADefinition> orderByComparator);
@@ -501,34 +447,6 @@ public interface WorkflowMetricsSLADefinitionPersistence
 			<WorkflowMetricsSLADefinition> orderByComparator);
 
 	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition findByC_S_Last(
-			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinition> orderByComparator)
-		throws NoSuchSLADefinitionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition fetchByC_S_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinition> orderByComparator);
-
-	/**
 	 * Removes all the workflow metrics sla definitions where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -641,36 +559,6 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @return the first matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	public WorkflowMetricsSLADefinition fetchByC_A_P_First(
-		long companyId, boolean active, long processId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinition> orderByComparator);
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and processId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param processId the process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition findByC_A_P_Last(
-			long companyId, boolean active, long processId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinition> orderByComparator)
-		throws NoSuchSLADefinitionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and processId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param processId the process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition fetchByC_A_P_Last(
 		long companyId, boolean active, long processId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<WorkflowMetricsSLADefinition> orderByComparator);
@@ -804,38 +692,6 @@ public interface WorkflowMetricsSLADefinitionPersistence
 			<WorkflowMetricsSLADefinition> orderByComparator);
 
 	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and name = &#63; and processId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param name the name
-	 * @param processId the process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition findByC_A_N_P_Last(
-			long companyId, boolean active, String name, long processId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinition> orderByComparator)
-		throws NoSuchSLADefinitionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and name = &#63; and processId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param name the name
-	 * @param processId the process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition fetchByC_A_N_P_Last(
-		long companyId, boolean active, String name, long processId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinition> orderByComparator);
-
-	/**
 	 * Removes all the workflow metrics sla definitions where companyId = &#63; and active = &#63; and name = &#63; and processId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -963,38 +819,6 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @return the first matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	public WorkflowMetricsSLADefinition fetchByC_A_P_S_First(
-		long companyId, boolean active, long processId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinition> orderByComparator);
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and processId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param processId the process ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition findByC_A_P_S_Last(
-			long companyId, boolean active, long processId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinition> orderByComparator)
-		throws NoSuchSLADefinitionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and processId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param processId the process ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition fetchByC_A_P_S_Last(
 		long companyId, boolean active, long processId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<WorkflowMetricsSLADefinition> orderByComparator);
@@ -1135,42 +959,6 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	 * @return the first matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
 	 */
 	public WorkflowMetricsSLADefinition fetchByC_A_P_NotPV_S_First(
-		long companyId, boolean active, long processId, String processVersion,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinition> orderByComparator);
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param processId the process ID
-	 * @param processVersion the process version
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition findByC_A_P_NotPV_S_Last(
-			long companyId, boolean active, long processId,
-			String processVersion, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinition> orderByComparator)
-		throws NoSuchSLADefinitionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param processId the process ID
-	 * @param processVersion the process version
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
-	 */
-	public WorkflowMetricsSLADefinition fetchByC_A_P_NotPV_S_Last(
 		long companyId, boolean active, long processId, String processVersion,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator
@@ -1333,4 +1121,4 @@ public interface WorkflowMetricsSLADefinitionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-708135206
+// LIFERAY-SERVICE-BUILDER-HASH:1136936166

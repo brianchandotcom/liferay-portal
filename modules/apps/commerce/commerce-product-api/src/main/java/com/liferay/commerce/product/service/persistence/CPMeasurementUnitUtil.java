@@ -213,35 +213,6 @@ public class CPMeasurementUnitUtil {
 	}
 
 	/**
-	 * Returns the last cp measurement unit in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit findByUuid_Last(
-			String uuid, OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPMeasurementUnitException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit fetchByUuid_Last(
-		String uuid, OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp measurement units where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -439,41 +410,6 @@ public class CPMeasurementUnitUtil {
 	}
 
 	/**
-	 * Returns the last cp measurement unit in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPMeasurementUnitException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp measurement units where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -596,39 +532,6 @@ public class CPMeasurementUnitUtil {
 		OrderByComparator<CPMeasurementUnit> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPMeasurementUnitException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -828,41 +731,6 @@ public class CPMeasurementUnitUtil {
 	}
 
 	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit findByC_T_Last(
-			long companyId, int type,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPMeasurementUnitException {
-
-		return getPersistence().findByC_T_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit fetchByC_T_Last(
-		long companyId, int type,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		return getPersistence().fetchByC_T_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp measurement units where companyId = &#63; and type = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1001,43 +869,6 @@ public class CPMeasurementUnitUtil {
 		OrderByComparator<CPMeasurementUnit> orderByComparator) {
 
 		return getPersistence().fetchByC_P_T_First(
-			companyId, primary, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63; and primary = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit findByC_P_T_Last(
-			long companyId, boolean primary, int type,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPMeasurementUnitException {
-
-		return getPersistence().findByC_P_T_Last(
-			companyId, primary, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp measurement unit in the ordered set where companyId = &#63; and primary = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	 */
-	public static CPMeasurementUnit fetchByC_P_T_Last(
-		long companyId, boolean primary, int type,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
-
-		return getPersistence().fetchByC_P_T_Last(
 			companyId, primary, type, orderByComparator);
 	}
 
@@ -1306,4 +1137,4 @@ public class CPMeasurementUnitUtil {
 	private static volatile CPMeasurementUnitPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-829872575
+// LIFERAY-SERVICE-BUILDER-HASH:-1644612656

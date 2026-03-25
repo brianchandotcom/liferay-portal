@@ -210,34 +210,6 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
-	 * Returns the last segments entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry findByUuid_Last(
-			String uuid, OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the segments entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,40 +404,6 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
-	 * Returns the last segments entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the segments entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -590,38 +528,6 @@ public class SegmentsEntryUtil {
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return getPersistence().fetchBySegmentsEntryId_First(
-			segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry findBySegmentsEntryId_Last(
-			long segmentsEntryId,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findBySegmentsEntryId_Last(
-			segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchBySegmentsEntryId_Last(
-		long segmentsEntryId,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return getPersistence().fetchBySegmentsEntryId_Last(
 			segmentsEntryId, orderByComparator);
 	}
 
@@ -832,34 +738,6 @@ public class SegmentsEntryUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry findByGroupId_Last(
-			long groupId, OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -1186,34 +1064,6 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
-	 * Returns the last segments entry in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry findByActive_Last(
-			boolean active, OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByActive_Last(active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchByActive_Last(
-		boolean active, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return getPersistence().fetchByActive_Last(active, orderByComparator);
-	}
-
-	/**
 	 * Removes all the segments entries where active = &#63; from the database.
 	 *
 	 * @param active the active
@@ -1330,34 +1180,6 @@ public class SegmentsEntryUtil {
 		String source, OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return getPersistence().fetchBySource_First(source, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where source = &#63;.
-	 *
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry findBySource_Last(
-			String source, OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findBySource_Last(source, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where source = &#63;.
-	 *
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchBySource_Last(
-		String source, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return getPersistence().fetchBySource_Last(source, orderByComparator);
 	}
 
 	/**
@@ -1553,40 +1375,6 @@ public class SegmentsEntryUtil {
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_A_First(
-			groupId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry findByG_A_Last(
-			long groupId, boolean active,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_A_Last(
-			groupId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchByG_A_Last(
-		long groupId, boolean active,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_A_Last(
 			groupId, active, orderByComparator);
 	}
 
@@ -1941,40 +1729,6 @@ public class SegmentsEntryUtil {
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_SRC_First(
-			groupId, source, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and source = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry findByG_SRC_Last(
-			long groupId, String source,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_SRC_Last(
-			groupId, source, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and source = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	public static SegmentsEntry fetchByG_SRC_Last(
-		long groupId, String source,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_SRC_Last(
 			groupId, source, orderByComparator);
 	}
 
@@ -2449,4 +2203,4 @@ public class SegmentsEntryUtil {
 	private static volatile SegmentsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1959586873
+// LIFERAY-SERVICE-BUILDER-HASH:-1850251245

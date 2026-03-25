@@ -292,65 +292,6 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 	/**
-	 * Returns the last password tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password tracker
-	 * @throws NoSuchPasswordTrackerException if a matching password tracker could not be found
-	 */
-	@Override
-	public PasswordTracker findByUserId_Last(
-			long userId, OrderByComparator<PasswordTracker> orderByComparator)
-		throws NoSuchPasswordTrackerException {
-
-		PasswordTracker passwordTracker = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (passwordTracker != null) {
-			return passwordTracker;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchPasswordTrackerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last password tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password tracker, or <code>null</code> if a matching password tracker could not be found
-	 */
-	@Override
-	public PasswordTracker fetchByUserId_Last(
-		long userId, OrderByComparator<PasswordTracker> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PasswordTracker> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the password trackers where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1024,4 +965,4 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-565055231
+// LIFERAY-SERVICE-BUILDER-HASH:-1711245331

@@ -166,32 +166,6 @@ public interface PatcherFixPackPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack findByPatcherFixComponentId_Last(
-			long patcherFixComponentId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-				orderByComparator)
-		throws NoSuchPatcherFixPackException;
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack fetchByPatcherFixComponentId_Last(
-		long patcherFixComponentId,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-			orderByComparator);
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63;.
 	 *
 	 * @param patcherFixComponentId the patcher fix component ID
@@ -339,32 +313,6 @@ public interface PatcherFixPackPersistence
 	 * @return the first matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
 	 */
 	public PatcherFixPack fetchByVersion_First(
-		int version,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-			orderByComparator);
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where version = &#63;.
-	 *
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack findByVersion_Last(
-			int version,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-				orderByComparator)
-		throws NoSuchPatcherFixPackException;
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where version = &#63;.
-	 *
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack fetchByVersion_Last(
 		int version,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
 			orderByComparator);
@@ -526,34 +474,6 @@ public interface PatcherFixPackPersistence
 	 * @return the first matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
 	 */
 	public PatcherFixPack fetchByPFCI_PPVI_First(
-		long patcherFixComponentId, long patcherProjectVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-			orderByComparator);
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack findByPFCI_PPVI_Last(
-			long patcherFixComponentId, long patcherProjectVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-				orderByComparator)
-		throws NoSuchPatcherFixPackException;
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack fetchByPFCI_PPVI_Last(
 		long patcherFixComponentId, long patcherProjectVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
 			orderByComparator);
@@ -724,34 +644,6 @@ public interface PatcherFixPackPersistence
 	 * @return the first matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
 	 */
 	public PatcherFixPack fetchByPFCI_V_First(
-		long patcherFixComponentId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-			orderByComparator);
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack findByPFCI_V_Last(
-			long patcherFixComponentId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-				orderByComparator)
-		throws NoSuchPatcherFixPackException;
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack fetchByPFCI_V_Last(
 		long patcherFixComponentId, int version,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
 			orderByComparator);
@@ -975,34 +867,6 @@ public interface PatcherFixPackPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack findByPFCI_S_Last(
-			long patcherProjectVersionId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-				orderByComparator)
-		throws NoSuchPatcherFixPackException;
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack fetchByPFCI_S_Last(
-		long patcherProjectVersionId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-			orderByComparator);
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherProjectVersionId = &#63; and status = &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -1173,37 +1037,6 @@ public interface PatcherFixPackPersistence
 	 * @return the first matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
 	 */
 	public PatcherFixPack fetchByPFCI_PPVI_GtV_First(
-		long patcherFixComponentId, long patcherProjectVersionId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-			orderByComparator);
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &gt; &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack findByPFCI_PPVI_GtV_Last(
-			long patcherFixComponentId, long patcherProjectVersionId,
-			int version,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-				orderByComparator)
-		throws NoSuchPatcherFixPackException;
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &gt; &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack fetchByPFCI_PPVI_GtV_Last(
 		long patcherFixComponentId, long patcherProjectVersionId, int version,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
 			orderByComparator);
@@ -1390,37 +1223,6 @@ public interface PatcherFixPackPersistence
 	 * @return the first matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
 	 */
 	public PatcherFixPack fetchByPFCI_PPVI_LtV_First(
-		long patcherFixComponentId, long patcherProjectVersionId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-			orderByComparator);
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &lt; &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack findByPFCI_PPVI_LtV_Last(
-			long patcherFixComponentId, long patcherProjectVersionId,
-			int version,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
-				orderByComparator)
-		throws NoSuchPatcherFixPackException;
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &lt; &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	public PatcherFixPack fetchByPFCI_PPVI_LtV_Last(
 		long patcherFixComponentId, long patcherProjectVersionId, int version,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixPack>
 			orderByComparator);
@@ -1870,4 +1672,4 @@ public interface PatcherFixPackPersistence
 		java.util.List<com.liferay.osb.patcher.model.PatcherFix> patcherFixes);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1396128877
+// LIFERAY-SERVICE-BUILDER-HASH:1252279770

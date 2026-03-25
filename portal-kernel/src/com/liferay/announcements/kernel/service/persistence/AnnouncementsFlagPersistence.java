@@ -122,32 +122,6 @@ public interface AnnouncementsFlagPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last announcements flag in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag
-	 * @throws NoSuchFlagException if a matching announcements flag could not be found
-	 */
-	public AnnouncementsFlag findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag>
-				orderByComparator)
-		throws NoSuchFlagException;
-
-	/**
-	 * Returns the last announcements flag in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	 */
-	public AnnouncementsFlag fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag>
-			orderByComparator);
-
-	/**
 	 * Removes all the announcements flags where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -245,32 +219,6 @@ public interface AnnouncementsFlagPersistence
 	 * @return the first matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 */
 	public AnnouncementsFlag fetchByEntryId_First(
-		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag>
-			orderByComparator);
-
-	/**
-	 * Returns the last announcements flag in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag
-	 * @throws NoSuchFlagException if a matching announcements flag could not be found
-	 */
-	public AnnouncementsFlag findByEntryId_Last(
-			long entryId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag>
-				orderByComparator)
-		throws NoSuchFlagException;
-
-	/**
-	 * Returns the last announcements flag in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	 */
-	public AnnouncementsFlag fetchByEntryId_Last(
 		long entryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag>
 			orderByComparator);
@@ -466,4 +414,4 @@ public interface AnnouncementsFlagPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1038588190
+// LIFERAY-SERVICE-BUILDER-HASH:-1330849348

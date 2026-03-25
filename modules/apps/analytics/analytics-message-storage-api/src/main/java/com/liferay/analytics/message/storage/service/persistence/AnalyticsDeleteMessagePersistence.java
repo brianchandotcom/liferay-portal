@@ -125,32 +125,6 @@ public interface AnalyticsDeleteMessagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message
-	 * @throws NoSuchDeleteMessageException if a matching analytics delete message could not be found
-	 */
-	public AnalyticsDeleteMessage findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsDeleteMessage> orderByComparator)
-		throws NoSuchDeleteMessageException;
-
-	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message, or <code>null</code> if a matching analytics delete message could not be found
-	 */
-	public AnalyticsDeleteMessage fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsDeleteMessage>
-			orderByComparator);
-
-	/**
 	 * Removes all the analytics delete messages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -255,34 +229,6 @@ public interface AnalyticsDeleteMessagePersistence
 	 * @return the first matching analytics delete message, or <code>null</code> if a matching analytics delete message could not be found
 	 */
 	public AnalyticsDeleteMessage fetchByC_GtM_First(
-		long companyId, Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsDeleteMessage>
-			orderByComparator);
-
-	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63; and modifiedDate &gt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message
-	 * @throws NoSuchDeleteMessageException if a matching analytics delete message could not be found
-	 */
-	public AnalyticsDeleteMessage findByC_GtM_Last(
-			long companyId, Date modifiedDate,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsDeleteMessage> orderByComparator)
-		throws NoSuchDeleteMessageException;
-
-	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63; and modifiedDate &gt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message, or <code>null</code> if a matching analytics delete message could not be found
-	 */
-	public AnalyticsDeleteMessage fetchByC_GtM_Last(
 		long companyId, Date modifiedDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsDeleteMessage>
 			orderByComparator);
@@ -429,4 +375,4 @@ public interface AnalyticsDeleteMessagePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1810958138
+// LIFERAY-SERVICE-BUILDER-HASH:1740187458

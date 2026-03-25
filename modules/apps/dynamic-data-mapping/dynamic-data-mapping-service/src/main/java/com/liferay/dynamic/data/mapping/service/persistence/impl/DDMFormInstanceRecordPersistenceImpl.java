@@ -335,67 +335,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm form instance record in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord findByUuid_Last(
-			String uuid,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws NoSuchFormInstanceRecordException {
-
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFormInstanceRecord> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm form instance records where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -951,72 +890,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm form instance record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws NoSuchFormInstanceRecordException {
-
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFormInstanceRecord> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm form instance records where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1343,67 +1216,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm form instance record in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws NoSuchFormInstanceRecordException {
-
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFormInstanceRecord> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm form instance records where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1701,67 +1513,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 
 		List<DDMFormInstanceRecord> list = findByFormInstanceId(
 			formInstanceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord findByFormInstanceId_Last(
-			long formInstanceId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws NoSuchFormInstanceRecordException {
-
-		DDMFormInstanceRecord ddmFormInstanceRecord =
-			fetchByFormInstanceId_Last(formInstanceId, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("formInstanceId=");
-		sb.append(formInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord fetchByFormInstanceId_Last(
-		long formInstanceId,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		int count = countByFormInstanceId(formInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFormInstanceRecord> list = findByFormInstanceId(
-			formInstanceId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2082,72 +1833,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 
 		List<DDMFormInstanceRecord> list = findByU_F(
 			userId, formInstanceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord findByU_F_Last(
-			long userId, long formInstanceId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws NoSuchFormInstanceRecordException {
-
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByU_F_Last(
-			userId, formInstanceId, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", formInstanceId=");
-		sb.append(formInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord fetchByU_F_Last(
-		long userId, long formInstanceId,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		int count = countByU_F(userId, formInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFormInstanceRecord> list = findByU_F(
-			userId, formInstanceId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2497,73 +2182,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 
 		List<DDMFormInstanceRecord> list = findByF_F(
 			formInstanceId, formInstanceVersion, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord findByF_F_Last(
-			long formInstanceId, String formInstanceVersion,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws NoSuchFormInstanceRecordException {
-
-		DDMFormInstanceRecord ddmFormInstanceRecord = fetchByF_F_Last(
-			formInstanceId, formInstanceVersion, orderByComparator);
-
-		if (ddmFormInstanceRecord != null) {
-			return ddmFormInstanceRecord;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("formInstanceId=");
-		sb.append(formInstanceId);
-
-		sb.append(", formInstanceVersion=");
-		sb.append(formInstanceVersion);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecord fetchByF_F_Last(
-		long formInstanceId, String formInstanceVersion,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		int count = countByF_F(formInstanceId, formInstanceVersion);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFormInstanceRecord> list = findByF_F(
-			formInstanceId, formInstanceVersion, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3757,4 +3375,4 @@ public class DDMFormInstanceRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:361161023
+// LIFERAY-SERVICE-BUILDER-HASH:-393079737

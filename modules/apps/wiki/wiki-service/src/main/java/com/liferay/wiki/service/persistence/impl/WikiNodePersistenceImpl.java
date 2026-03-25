@@ -336,64 +336,6 @@ public class WikiNodePersistenceImpl
 	}
 
 	/**
-	 * Returns the last wiki node in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode findByUuid_Last(
-			String uuid, OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-
-		WikiNode wikiNode = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (wikiNode != null) {
-			return wikiNode;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode fetchByUuid_Last(
-		String uuid, OrderByComparator<WikiNode> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WikiNode> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the wiki nodes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -940,72 +882,6 @@ public class WikiNodePersistenceImpl
 	}
 
 	/**
-	 * Returns the last wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-
-		WikiNode wikiNode = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (wikiNode != null) {
-			return wikiNode;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<WikiNode> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WikiNode> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the wiki nodes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1316,64 +1192,6 @@ public class WikiNodePersistenceImpl
 		long groupId, OrderByComparator<WikiNode> orderByComparator) {
 
 		List<WikiNode> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode findByGroupId_Last(
-			long groupId, OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-
-		WikiNode wikiNode = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (wikiNode != null) {
-			return wikiNode;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode fetchByGroupId_Last(
-		long groupId, OrderByComparator<WikiNode> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WikiNode> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1863,64 +1681,6 @@ public class WikiNodePersistenceImpl
 
 		List<WikiNode> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode findByCompanyId_Last(
-			long companyId, OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-
-		WikiNode wikiNode = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (wikiNode != null) {
-			return wikiNode;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode fetchByCompanyId_Last(
-		long companyId, OrderByComparator<WikiNode> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WikiNode> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2437,71 +2197,6 @@ public class WikiNodePersistenceImpl
 
 		List<WikiNode> list = findByG_S(
 			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-
-		WikiNode wikiNode = fetchByG_S_Last(groupId, status, orderByComparator);
-
-		if (wikiNode != null) {
-			return wikiNode;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<WikiNode> orderByComparator) {
-
-		int count = countByG_S(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WikiNode> list = findByG_S(
-			groupId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3033,72 +2728,6 @@ public class WikiNodePersistenceImpl
 
 		List<WikiNode> list = findByC_S(
 			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws NoSuchNodeException if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-
-		WikiNode wikiNode = fetchByC_S_Last(
-			companyId, status, orderByComparator);
-
-		if (wikiNode != null) {
-			return wikiNode;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator) {
-
-		int count = countByC_S(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WikiNode> list = findByC_S(
-			companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4549,4 +4178,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1429493416
+// LIFERAY-SERVICE-BUILDER-HASH:-937485616

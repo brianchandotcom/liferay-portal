@@ -123,32 +123,6 @@ public interface AssetAutoTaggerEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset auto tagger entry in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset auto tagger entry
-	 * @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
-	 */
-	public AssetAutoTaggerEntry findByAssetEntryId_Last(
-			long assetEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetAutoTaggerEntry> orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset auto tagger entry in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
-	 */
-	public AssetAutoTaggerEntry fetchByAssetEntryId_Last(
-		long assetEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetAutoTaggerEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset auto tagger entries where assetEntryId = &#63; from the database.
 	 *
 	 * @param assetEntryId the asset entry ID
@@ -247,32 +221,6 @@ public interface AssetAutoTaggerEntryPersistence
 	 * @return the first matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
 	 */
 	public AssetAutoTaggerEntry fetchByAssetTagId_First(
-		long assetTagId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetAutoTaggerEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset auto tagger entry in the ordered set where assetTagId = &#63;.
-	 *
-	 * @param assetTagId the asset tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset auto tagger entry
-	 * @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
-	 */
-	public AssetAutoTaggerEntry findByAssetTagId_Last(
-			long assetTagId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetAutoTaggerEntry> orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset auto tagger entry in the ordered set where assetTagId = &#63;.
-	 *
-	 * @param assetTagId the asset tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
-	 */
-	public AssetAutoTaggerEntry fetchByAssetTagId_Last(
 		long assetTagId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetAutoTaggerEntry>
 			orderByComparator);
@@ -465,4 +413,4 @@ public interface AssetAutoTaggerEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-441274368
+// LIFERAY-SERVICE-BUILDER-HASH:-801234522

@@ -323,67 +323,6 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo node setting in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node setting
-	 * @throws NoSuchNodeSettingException if a matching kaleo node setting could not be found
-	 */
-	@Override
-	public KaleoNodeSetting findByKaleoNodeId_Last(
-			long kaleoNodeId,
-			OrderByComparator<KaleoNodeSetting> orderByComparator)
-		throws NoSuchNodeSettingException {
-
-		KaleoNodeSetting kaleoNodeSetting = fetchByKaleoNodeId_Last(
-			kaleoNodeId, orderByComparator);
-
-		if (kaleoNodeSetting != null) {
-			return kaleoNodeSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoNodeId=");
-		sb.append(kaleoNodeId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo node setting in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node setting, or <code>null</code> if a matching kaleo node setting could not be found
-	 */
-	@Override
-	public KaleoNodeSetting fetchByKaleoNodeId_Last(
-		long kaleoNodeId,
-		OrderByComparator<KaleoNodeSetting> orderByComparator) {
-
-		int count = countByKaleoNodeId(kaleoNodeId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoNodeSetting> list = findByKaleoNodeId(
-			kaleoNodeId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo node settings where kaleoNodeId = &#63; from the database.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
@@ -1596,4 +1535,4 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1477932608
+// LIFERAY-SERVICE-BUILDER-HASH:1785253128

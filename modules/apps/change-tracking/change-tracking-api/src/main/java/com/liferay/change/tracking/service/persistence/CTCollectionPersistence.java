@@ -119,32 +119,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 			orderByComparator);
 
 	/**
-	 * Returns the last ct collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	public CTCollection findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last ct collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public CTCollection fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator);
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -298,34 +272,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 * @return the first matching ct collection, or <code>null</code> if a matching ct collection could not be found
 	 */
 	public CTCollection fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	public CTCollection findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last ct collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public CTCollection fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
 			orderByComparator);
@@ -489,32 +435,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 			orderByComparator);
 
 	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	public CTCollection findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public CTCollection fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator);
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -667,34 +587,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 * @return the first matching ct collection, or <code>null</code> if a matching ct collection could not be found
 	 */
 	public CTCollection fetchByC_U_First(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	public CTCollection findByC_U_Last(
-			long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public CTCollection fetchByC_U_Last(
 		long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
 			orderByComparator);
@@ -865,34 +757,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 			orderByComparator);
 
 	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and schemaVersionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param schemaVersionId the schema version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	public CTCollection findByC_SVI_Last(
-			long companyId, long schemaVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and schemaVersionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param schemaVersionId the schema version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public CTCollection fetchByC_SVI_Last(
-		long companyId, long schemaVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator);
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where companyId = &#63; and schemaVersionId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1052,34 +916,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 * @return the first matching ct collection, or <code>null</code> if a matching ct collection could not be found
 	 */
 	public CTCollection fetchByC_S_First(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	public CTCollection findByC_S_Last(
-			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the last ct collection in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public CTCollection fetchByC_S_Last(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
 			orderByComparator);
@@ -1462,4 +1298,4 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2121147171
+// LIFERAY-SERVICE-BUILDER-HASH:-2137798163

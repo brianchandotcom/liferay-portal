@@ -120,32 +120,6 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 			orderByComparator);
 
 	/**
-	 * Returns the last dispatch log in the ordered set where dispatchTriggerId = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch log
-	 * @throws NoSuchLogException if a matching dispatch log could not be found
-	 */
-	public DispatchLog findByDispatchTriggerId_Last(
-			long dispatchTriggerId,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchLog>
-				orderByComparator)
-		throws NoSuchLogException;
-
-	/**
-	 * Returns the last dispatch log in the ordered set where dispatchTriggerId = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch log, or <code>null</code> if a matching dispatch log could not be found
-	 */
-	public DispatchLog fetchByDispatchTriggerId_Last(
-		long dispatchTriggerId,
-		com.liferay.portal.kernel.util.OrderByComparator<DispatchLog>
-			orderByComparator);
-
-	/**
 	 * Removes all the dispatch logs where dispatchTriggerId = &#63; from the database.
 	 *
 	 * @param dispatchTriggerId the dispatch trigger ID
@@ -250,34 +224,6 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 	 * @return the first matching dispatch log, or <code>null</code> if a matching dispatch log could not be found
 	 */
 	public DispatchLog fetchByDTI_S_First(
-		long dispatchTriggerId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DispatchLog>
-			orderByComparator);
-
-	/**
-	 * Returns the last dispatch log in the ordered set where dispatchTriggerId = &#63; and status = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch log
-	 * @throws NoSuchLogException if a matching dispatch log could not be found
-	 */
-	public DispatchLog findByDTI_S_Last(
-			long dispatchTriggerId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchLog>
-				orderByComparator)
-		throws NoSuchLogException;
-
-	/**
-	 * Returns the last dispatch log in the ordered set where dispatchTriggerId = &#63; and status = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch log, or <code>null</code> if a matching dispatch log could not be found
-	 */
-	public DispatchLog fetchByDTI_S_Last(
 		long dispatchTriggerId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DispatchLog>
 			orderByComparator);
@@ -419,4 +365,4 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-494575869
+// LIFERAY-SERVICE-BUILDER-HASH:145832075

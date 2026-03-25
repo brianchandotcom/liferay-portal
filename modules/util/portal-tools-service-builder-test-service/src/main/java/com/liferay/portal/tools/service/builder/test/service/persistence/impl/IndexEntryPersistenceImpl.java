@@ -312,64 +312,6 @@ public class IndexEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry findByOwnerId_Last(
-			long ownerId, OrderByComparator<IndexEntry> orderByComparator)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByOwnerId_Last(ownerId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry fetchByOwnerId_Last(
-		long ownerId, OrderByComparator<IndexEntry> orderByComparator) {
-
-		int count = countByOwnerId(ownerId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<IndexEntry> list = findByOwnerId(
-			ownerId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the index entries where ownerId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -652,64 +594,6 @@ public class IndexEntryPersistenceImpl
 		long plid, OrderByComparator<IndexEntry> orderByComparator) {
 
 		List<IndexEntry> list = findByPlid(plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry findByPlid_Last(
-			long plid, OrderByComparator<IndexEntry> orderByComparator)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByPlid_Last(plid, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry fetchByPlid_Last(
-		long plid, OrderByComparator<IndexEntry> orderByComparator) {
-
-		int count = countByPlid(plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<IndexEntry> list = findByPlid(
-			plid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1020,65 +904,6 @@ public class IndexEntryPersistenceImpl
 
 		List<IndexEntry> list = findByPortletId(
 			portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry findByPortletId_Last(
-			String portletId, OrderByComparator<IndexEntry> orderByComparator)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByPortletId_Last(
-			portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry fetchByPortletId_Last(
-		String portletId, OrderByComparator<IndexEntry> orderByComparator) {
-
-		int count = countByPortletId(portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<IndexEntry> list = findByPortletId(
-			portletId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1433,72 +1258,6 @@ public class IndexEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last index entry in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry findByO_P_Last(
-			int ownerType, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByO_P_Last(
-			ownerType, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry fetchByO_P_Last(
-		int ownerType, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		int count = countByO_P(ownerType, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<IndexEntry> list = findByO_P(
-			ownerType, portletId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the index entries where ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerType the owner type
@@ -1844,72 +1603,6 @@ public class IndexEntryPersistenceImpl
 
 		List<IndexEntry> list = findByP_P(
 			plid, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry findByP_P_Last(
-			long plid, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByP_P_Last(
-			plid, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry fetchByP_P_Last(
-		long plid, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		int count = countByP_P(plid, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<IndexEntry> list = findByP_P(
-			plid, portletId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2278,77 +1971,6 @@ public class IndexEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry findByO_O_P_Last(
-			long ownerId, int ownerType, long plid,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByO_O_P_Last(
-			ownerId, ownerType, plid, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry fetchByO_O_P_Last(
-		long ownerId, int ownerType, long plid,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		int count = countByO_O_P(ownerId, ownerType, plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<IndexEntry> list = findByO_O_P(
-			ownerId, ownerType, plid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the index entries where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -2705,77 +2327,6 @@ public class IndexEntryPersistenceImpl
 
 		List<IndexEntry> list = findByO_O_PI(
 			ownerId, ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry findByO_O_PI_Last(
-			long ownerId, int ownerType, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByO_O_PI_Last(
-			ownerId, ownerType, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry fetchByO_O_PI_Last(
-		long ownerId, int ownerType, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		int count = countByO_O_PI(ownerId, ownerType, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<IndexEntry> list = findByO_O_PI(
-			ownerId, ownerType, portletId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3166,77 +2717,6 @@ public class IndexEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last index entry in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry findByO_P_P_Last(
-			int ownerType, long plid, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByO_P_P_Last(
-			ownerType, plid, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry fetchByO_P_P_Last(
-		int ownerType, long plid, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		int count = countByO_P_P(ownerType, plid, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<IndexEntry> list = findByO_P_P(
-			ownerType, plid, portletId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the index entries where ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerType the owner type
@@ -3618,84 +3098,6 @@ public class IndexEntryPersistenceImpl
 
 		List<IndexEntry> list = findByC_O_O_LikeP(
 			companyId, ownerId, ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry findByC_O_O_LikeP_Last(
-			long companyId, long ownerId, int ownerType, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByC_O_O_LikeP_Last(
-			companyId, ownerId, ownerType, portletId, orderByComparator);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletIdLIKE");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	@Override
-	public IndexEntry fetchByC_O_O_LikeP_Last(
-		long companyId, long ownerId, int ownerType, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		int count = countByC_O_O_LikeP(
-			companyId, ownerId, ownerType, portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<IndexEntry> list = findByC_O_O_LikeP(
-			companyId, ownerId, ownerType, portletId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5404,4 +4806,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2037044116
+// LIFERAY-SERVICE-BUILDER-HASH:2011187274

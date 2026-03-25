@@ -120,32 +120,6 @@ public interface CalendarPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last calendar in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar
-	 * @throws NoSuchCalendarException if a matching calendar could not be found
-	 */
-	public Calendar findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Calendar>
-				orderByComparator)
-		throws NoSuchCalendarException;
-
-	/**
-	 * Returns the last calendar in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
-	 */
-	public Calendar fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Calendar>
-			orderByComparator);
-
-	/**
 	 * Removes all the calendars where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -304,34 +278,6 @@ public interface CalendarPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last calendar in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar
-	 * @throws NoSuchCalendarException if a matching calendar could not be found
-	 */
-	public Calendar findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Calendar>
-				orderByComparator)
-		throws NoSuchCalendarException;
-
-	/**
-	 * Returns the last calendar in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
-	 */
-	public Calendar fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Calendar>
-			orderByComparator);
-
-	/**
 	 * Removes all the calendars where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -438,34 +384,6 @@ public interface CalendarPersistence
 	 * @return the first matching calendar, or <code>null</code> if a matching calendar could not be found
 	 */
 	public Calendar fetchByG_C_First(
-		long groupId, long calendarResourceId,
-		com.liferay.portal.kernel.util.OrderByComparator<Calendar>
-			orderByComparator);
-
-	/**
-	 * Returns the last calendar in the ordered set where groupId = &#63; and calendarResourceId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar
-	 * @throws NoSuchCalendarException if a matching calendar could not be found
-	 */
-	public Calendar findByG_C_Last(
-			long groupId, long calendarResourceId,
-			com.liferay.portal.kernel.util.OrderByComparator<Calendar>
-				orderByComparator)
-		throws NoSuchCalendarException;
-
-	/**
-	 * Returns the last calendar in the ordered set where groupId = &#63; and calendarResourceId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
-	 */
-	public Calendar fetchByG_C_Last(
 		long groupId, long calendarResourceId,
 		com.liferay.portal.kernel.util.OrderByComparator<Calendar>
 			orderByComparator);
@@ -640,36 +558,6 @@ public interface CalendarPersistence
 	 * @return the first matching calendar, or <code>null</code> if a matching calendar could not be found
 	 */
 	public Calendar fetchByG_C_D_First(
-		long groupId, long calendarResourceId, boolean defaultCalendar,
-		com.liferay.portal.kernel.util.OrderByComparator<Calendar>
-			orderByComparator);
-
-	/**
-	 * Returns the last calendar in the ordered set where groupId = &#63; and calendarResourceId = &#63; and defaultCalendar = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param calendarResourceId the calendar resource ID
-	 * @param defaultCalendar the default calendar
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar
-	 * @throws NoSuchCalendarException if a matching calendar could not be found
-	 */
-	public Calendar findByG_C_D_Last(
-			long groupId, long calendarResourceId, boolean defaultCalendar,
-			com.liferay.portal.kernel.util.OrderByComparator<Calendar>
-				orderByComparator)
-		throws NoSuchCalendarException;
-
-	/**
-	 * Returns the last calendar in the ordered set where groupId = &#63; and calendarResourceId = &#63; and defaultCalendar = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param calendarResourceId the calendar resource ID
-	 * @param defaultCalendar the default calendar
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar, or <code>null</code> if a matching calendar could not be found
-	 */
-	public Calendar fetchByG_C_D_Last(
 		long groupId, long calendarResourceId, boolean defaultCalendar,
 		com.liferay.portal.kernel.util.OrderByComparator<Calendar>
 			orderByComparator);
@@ -876,4 +764,4 @@ public interface CalendarPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:914809379
+// LIFERAY-SERVICE-BUILDER-HASH:-1142477711

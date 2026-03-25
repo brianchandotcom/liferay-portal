@@ -207,34 +207,6 @@ public class ListTypeUtil {
 	}
 
 	/**
-	 * Returns the last list type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type
-	 * @throws NoSuchListTypeException if a matching list type could not be found
-	 */
-	public static ListType findByUuid_Last(
-			String uuid, OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type, or <code>null</code> if a matching list type could not be found
-	 */
-	public static ListType fetchByUuid_Last(
-		String uuid, OrderByComparator<ListType> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the list types where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -363,40 +335,6 @@ public class ListTypeUtil {
 	}
 
 	/**
-	 * Returns the last list type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type
-	 * @throws NoSuchListTypeException if a matching list type could not be found
-	 */
-	public static ListType findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type, or <code>null</code> if a matching list type could not be found
-	 */
-	public static ListType fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ListType> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the list types where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -515,36 +453,6 @@ public class ListTypeUtil {
 		long companyId, OrderByComparator<ListType> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type
-	 * @throws NoSuchListTypeException if a matching list type could not be found
-	 */
-	public static ListType findByCompanyId_Last(
-			long companyId, OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type, or <code>null</code> if a matching list type could not be found
-	 */
-	public static ListType fetchByCompanyId_Last(
-		long companyId, OrderByComparator<ListType> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -673,40 +581,6 @@ public class ListTypeUtil {
 		OrderByComparator<ListType> orderByComparator) {
 
 		return getPersistence().fetchByC_T_First(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type
-	 * @throws NoSuchListTypeException if a matching list type could not be found
-	 */
-	public static ListType findByC_T_Last(
-			long companyId, String type,
-			OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
-
-		return getPersistence().findByC_T_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type, or <code>null</code> if a matching list type could not be found
-	 */
-	public static ListType fetchByC_T_Last(
-		long companyId, String type,
-		OrderByComparator<ListType> orderByComparator) {
-
-		return getPersistence().fetchByC_T_Last(
 			companyId, type, orderByComparator);
 	}
 
@@ -961,4 +835,4 @@ public class ListTypeUtil {
 	private static volatile ListTypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:399900394
+// LIFERAY-SERVICE-BUILDER-HASH:703458304

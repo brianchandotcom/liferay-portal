@@ -316,65 +316,6 @@ public class ObjectLayoutRowPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout row in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row
-	 * @throws NoSuchObjectLayoutRowException if a matching object layout row could not be found
-	 */
-	@Override
-	public ObjectLayoutRow findByUuid_Last(
-			String uuid, OrderByComparator<ObjectLayoutRow> orderByComparator)
-		throws NoSuchObjectLayoutRowException {
-
-		ObjectLayoutRow objectLayoutRow = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectLayoutRow != null) {
-			return objectLayoutRow;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutRowException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout row in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row, or <code>null</code> if a matching object layout row could not be found
-	 */
-	@Override
-	public ObjectLayoutRow fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectLayoutRow> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutRow> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout rows where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -708,72 +649,6 @@ public class ObjectLayoutRowPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout row in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row
-	 * @throws NoSuchObjectLayoutRowException if a matching object layout row could not be found
-	 */
-	@Override
-	public ObjectLayoutRow findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectLayoutRow> orderByComparator)
-		throws NoSuchObjectLayoutRowException {
-
-		ObjectLayoutRow objectLayoutRow = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectLayoutRow != null) {
-			return objectLayoutRow;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutRowException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout row in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row, or <code>null</code> if a matching object layout row could not be found
-	 */
-	@Override
-	public ObjectLayoutRow fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectLayoutRow> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutRow> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout rows where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1086,67 +961,6 @@ public class ObjectLayoutRowPersistenceImpl
 
 		List<ObjectLayoutRow> list = findByObjectLayoutBoxId(
 			objectLayoutBoxId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object layout row in the ordered set where objectLayoutBoxId = &#63;.
-	 *
-	 * @param objectLayoutBoxId the object layout box ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row
-	 * @throws NoSuchObjectLayoutRowException if a matching object layout row could not be found
-	 */
-	@Override
-	public ObjectLayoutRow findByObjectLayoutBoxId_Last(
-			long objectLayoutBoxId,
-			OrderByComparator<ObjectLayoutRow> orderByComparator)
-		throws NoSuchObjectLayoutRowException {
-
-		ObjectLayoutRow objectLayoutRow = fetchByObjectLayoutBoxId_Last(
-			objectLayoutBoxId, orderByComparator);
-
-		if (objectLayoutRow != null) {
-			return objectLayoutRow;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectLayoutBoxId=");
-		sb.append(objectLayoutBoxId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutRowException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout row in the ordered set where objectLayoutBoxId = &#63;.
-	 *
-	 * @param objectLayoutBoxId the object layout box ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout row, or <code>null</code> if a matching object layout row could not be found
-	 */
-	@Override
-	public ObjectLayoutRow fetchByObjectLayoutBoxId_Last(
-		long objectLayoutBoxId,
-		OrderByComparator<ObjectLayoutRow> orderByComparator) {
-
-		int count = countByObjectLayoutBoxId(objectLayoutBoxId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutRow> list = findByObjectLayoutBoxId(
-			objectLayoutBoxId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1921,4 +1735,4 @@ public class ObjectLayoutRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1049264127
+// LIFERAY-SERVICE-BUILDER-HASH:-866903327

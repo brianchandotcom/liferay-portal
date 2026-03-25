@@ -330,64 +330,6 @@ public class MBMailingListPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards mailing list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list
-	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
-	 */
-	@Override
-	public MBMailingList findByUuid_Last(
-			String uuid, OrderByComparator<MBMailingList> orderByComparator)
-		throws NoSuchMailingListException {
-
-		MBMailingList mbMailingList = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (mbMailingList != null) {
-			return mbMailingList;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchMailingListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards mailing list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	 */
-	@Override
-	public MBMailingList fetchByUuid_Last(
-		String uuid, OrderByComparator<MBMailingList> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBMailingList> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards mailing lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -935,72 +877,6 @@ public class MBMailingListPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list
-	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
-	 */
-	@Override
-	public MBMailingList findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<MBMailingList> orderByComparator)
-		throws NoSuchMailingListException {
-
-		MBMailingList mbMailingList = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (mbMailingList != null) {
-			return mbMailingList;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchMailingListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	 */
-	@Override
-	public MBMailingList fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<MBMailingList> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBMailingList> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards mailing lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1315,65 +1191,6 @@ public class MBMailingListPersistenceImpl
 
 		List<MBMailingList> list = findByActive(
 			active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards mailing list in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list
-	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
-	 */
-	@Override
-	public MBMailingList findByActive_Last(
-			boolean active, OrderByComparator<MBMailingList> orderByComparator)
-		throws NoSuchMailingListException {
-
-		MBMailingList mbMailingList = fetchByActive_Last(
-			active, orderByComparator);
-
-		if (mbMailingList != null) {
-			return mbMailingList;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchMailingListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards mailing list in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	 */
-	@Override
-	public MBMailingList fetchByActive_Last(
-		boolean active, OrderByComparator<MBMailingList> orderByComparator) {
-
-		int count = countByActive(active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBMailingList> list = findByActive(
-			active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2670,4 +2487,4 @@ public class MBMailingListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-21709005
+// LIFERAY-SERVICE-BUILDER-HASH:1646345712

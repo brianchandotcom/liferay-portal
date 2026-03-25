@@ -218,37 +218,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout page template entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -450,41 +419,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout page template entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -607,37 +541,6 @@ public class LayoutPageTemplateEntryUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -825,39 +728,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByLayoutPrototypeId_First(
-			layoutPrototypeId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where layoutPrototypeId = &#63;.
-	 *
-	 * @param layoutPrototypeId the layout prototype ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByLayoutPrototypeId_Last(
-			long layoutPrototypeId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByLayoutPrototypeId_Last(
-			layoutPrototypeId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where layoutPrototypeId = &#63;.
-	 *
-	 * @param layoutPrototypeId the layout prototype ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByLayoutPrototypeId_Last(
-		long layoutPrototypeId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByLayoutPrototypeId_Last(
 			layoutPrototypeId, orderByComparator);
 	}
 
@@ -1054,41 +924,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_L_First(
-			groupId, layoutPageTemplateCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_L_Last(
-			long groupId, long layoutPageTemplateCollectionId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_L_Last(
-			groupId, layoutPageTemplateCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_L_Last(
-		long groupId, long layoutPageTemplateCollectionId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_L_Last(
 			groupId, layoutPageTemplateCollectionId, orderByComparator);
 	}
 
@@ -1380,41 +1215,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_N_Last(
-			long groupId, String name,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_N_Last(
-			groupId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_N_Last(
-		long groupId, String name,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_N_Last(
-			groupId, name, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and name = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1610,41 +1410,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_T_First(
-			groupId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_T_Last(
-			long groupId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_T_Last(
-			groupId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_T_Last(
-		long groupId, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_T_Last(
 			groupId, type, orderByComparator);
 	}
 
@@ -2006,41 +1771,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_S_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_S_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2249,43 +1979,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_L_LikeN_First(
-			groupId, layoutPageTemplateCollectionId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_L_LikeN_Last(
-			long groupId, long layoutPageTemplateCollectionId, String name,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_L_LikeN_Last(
-			groupId, layoutPageTemplateCollectionId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_L_LikeN_Last(
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_L_LikeN_Last(
 			groupId, layoutPageTemplateCollectionId, name, orderByComparator);
 	}
 
@@ -2516,43 +2209,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_L_T_First(
-			groupId, layoutPageTemplateCollectionId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_L_T_Last(
-			long groupId, long layoutPageTemplateCollectionId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_L_T_Last(
-			groupId, layoutPageTemplateCollectionId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_L_T_Last(
-		long groupId, long layoutPageTemplateCollectionId, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_L_T_Last(
 			groupId, layoutPageTemplateCollectionId, type, orderByComparator);
 	}
 
@@ -2788,43 +2444,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_L_S_Last(
-			long groupId, long layoutPageTemplateCollectionId, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_L_S_Last(
-			groupId, layoutPageTemplateCollectionId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_L_S_Last(
-		long groupId, long layoutPageTemplateCollectionId, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_L_S_Last(
-			groupId, layoutPageTemplateCollectionId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3050,43 +2669,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_N_T_Last(
-			long groupId, String name, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_N_T_Last(
-			groupId, name, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_N_T_Last(
-		long groupId, String name, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_N_T_Last(
-			groupId, name, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and name = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3296,43 +2878,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_T_LikeN_First(
-			groupId, name, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_T_LikeN_Last(
-			long groupId, String name, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_T_LikeN_Last(
-			groupId, name, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_T_LikeN_Last(
-		long groupId, String name, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_T_LikeN_Last(
 			groupId, name, type, orderByComparator);
 	}
 
@@ -3720,43 +3265,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_T_S_First(
-			groupId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_T_S_Last(
-			long groupId, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_T_S_Last(
-			groupId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_T_S_Last(
-		long groupId, int type, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_T_S_Last(
 			groupId, type, status, orderByComparator);
 	}
 
@@ -4254,49 +3762,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_L_LikeN_S_Last(
-			long groupId, long layoutPageTemplateCollectionId, String name,
-			int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_L_LikeN_S_Last(
-			groupId, layoutPageTemplateCollectionId, name, status,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_L_LikeN_S_Last(
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_L_LikeN_S_Last(
-			groupId, layoutPageTemplateCollectionId, name, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4541,45 +4006,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_T_First(
-			groupId, classNameId, classTypeKey, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_C_C_T_Last(
-			long groupId, long classNameId, String classTypeKey, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_C_C_T_Last(
-			groupId, classNameId, classTypeKey, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_C_C_T_Last(
-		long groupId, long classNameId, String classTypeKey, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_T_Last(
 			groupId, classNameId, classTypeKey, type, orderByComparator);
 	}
 
@@ -4833,49 +4259,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_C_C_D_Last(
-			long groupId, long classNameId, String classTypeKey,
-			boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_C_C_D_Last(
-			groupId, classNameId, classTypeKey, defaultTemplate,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_C_C_D_Last(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_D_Last(
-			groupId, classNameId, classTypeKey, defaultTemplate,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -5124,45 +4507,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_C_T_D_Last(
-			long groupId, long classNameId, int type, boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_C_T_D_Last(
-			groupId, classNameId, type, defaultTemplate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_C_T_D_Last(
-		long groupId, long classNameId, int type, boolean defaultTemplate,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_T_D_Last(
-			groupId, classNameId, type, defaultTemplate, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -5398,45 +4742,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_T_LikeN_S_First(
-			groupId, name, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_T_LikeN_S_Last(
-			long groupId, String name, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_T_LikeN_S_Last(
-			groupId, name, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_T_LikeN_S_Last(
-		long groupId, String name, int type, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_T_LikeN_S_Last(
 			groupId, name, type, status, orderByComparator);
 	}
 
@@ -5866,45 +5171,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_T_D_S_Last(
-			long groupId, int type, boolean defaultTemplate, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_T_D_S_Last(
-			groupId, type, defaultTemplate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_T_D_S_Last(
-		long groupId, int type, boolean defaultTemplate, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_T_D_S_Last(
-			groupId, type, defaultTemplate, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6153,49 +5419,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_LikeN_T_First(
-			groupId, classNameId, classTypeKey, name, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_C_C_LikeN_T_Last(
-			long groupId, long classNameId, String classTypeKey, String name,
-			int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_C_C_LikeN_T_Last(
-			groupId, classNameId, classTypeKey, name, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_C_C_LikeN_T_Last(
-		long groupId, long classNameId, String classTypeKey, String name,
-		int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_LikeN_T_Last(
 			groupId, classNameId, classTypeKey, name, type, orderByComparator);
 	}
 
@@ -6465,51 +5688,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_C_C_T_S_Last(
-			long groupId, long classNameId, String classTypeKey, int type,
-			int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_C_C_T_S_Last(
-			groupId, classNameId, classTypeKey, type, status,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_C_C_T_S_Last(
-		long groupId, long classNameId, String classTypeKey, int type,
-		int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_T_S_Last(
-			groupId, classNameId, classTypeKey, type, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6771,51 +5949,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_D_S_First(
-			groupId, classNameId, classTypeKey, defaultTemplate, status,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_C_C_D_S_Last(
-			long groupId, long classNameId, String classTypeKey,
-			boolean defaultTemplate, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_C_C_D_S_Last(
-			groupId, classNameId, classTypeKey, defaultTemplate, status,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_C_C_D_S_Last(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_D_S_Last(
 			groupId, classNameId, classTypeKey, defaultTemplate, status,
 			orderByComparator);
 	}
@@ -7088,53 +6221,6 @@ public class LayoutPageTemplateEntryUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_LikeN_T_S_First(
-			groupId, classNameId, classTypeKey, name, type, status,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param name the name
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry findByG_C_C_LikeN_T_S_Last(
-			long groupId, long classNameId, String classTypeKey, String name,
-			int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws com.liferay.layout.page.template.exception.
-			NoSuchPageTemplateEntryException {
-
-		return getPersistence().findByG_C_C_LikeN_T_S_Last(
-			groupId, classNameId, classTypeKey, name, type, status,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param name the name
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	public static LayoutPageTemplateEntry fetchByG_C_C_LikeN_T_S_Last(
-		long groupId, long classNameId, String classTypeKey, String name,
-		int type, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_LikeN_T_S_Last(
 			groupId, classNameId, classTypeKey, name, type, status,
 			orderByComparator);
 	}
@@ -7512,4 +6598,4 @@ public class LayoutPageTemplateEntryUtil {
 	private static volatile LayoutPageTemplateEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1670211210
+// LIFERAY-SERVICE-BUILDER-HASH:-1120874380

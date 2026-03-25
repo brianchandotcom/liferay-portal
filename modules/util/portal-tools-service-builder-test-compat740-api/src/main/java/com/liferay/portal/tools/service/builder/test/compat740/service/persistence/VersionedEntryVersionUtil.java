@@ -222,39 +222,6 @@ public class VersionedEntryVersionUtil {
 	}
 
 	/**
-	 * Returns the last versioned entry version in the ordered set where versionedEntryId = &#63;.
-	 *
-	 * @param versionedEntryId the versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a matching versioned entry version could not be found
-	 */
-	public static VersionedEntryVersion findByVersionedEntryId_Last(
-			long versionedEntryId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchVersionedEntryVersionException {
-
-		return getPersistence().findByVersionedEntryId_Last(
-			versionedEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where versionedEntryId = &#63;.
-	 *
-	 * @param versionedEntryId the versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
-	 */
-	public static VersionedEntryVersion fetchByVersionedEntryId_Last(
-		long versionedEntryId,
-		OrderByComparator<VersionedEntryVersion> orderByComparator) {
-
-		return getPersistence().fetchByVersionedEntryId_Last(
-			versionedEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the versioned entry versions where versionedEntryId = &#63; from the database.
 	 *
 	 * @param versionedEntryId the versioned entry ID
@@ -454,37 +421,6 @@ public class VersionedEntryVersionUtil {
 	}
 
 	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a matching versioned entry version could not be found
-	 */
-	public static VersionedEntryVersion findByGroupId_Last(
-			long groupId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchVersionedEntryVersionException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
-	 */
-	public static VersionedEntryVersion fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<VersionedEntryVersion> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the versioned entry versions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -614,41 +550,6 @@ public class VersionedEntryVersionUtil {
 		OrderByComparator<VersionedEntryVersion> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Version_First(
-			groupId, version, orderByComparator);
-	}
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a matching versioned entry version could not be found
-	 */
-	public static VersionedEntryVersion findByGroupId_Version_Last(
-			long groupId, int version,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchVersionedEntryVersionException {
-
-		return getPersistence().findByGroupId_Version_Last(
-			groupId, version, orderByComparator);
-	}
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
-	 */
-	public static VersionedEntryVersion fetchByGroupId_Version_Last(
-		long groupId, int version,
-		OrderByComparator<VersionedEntryVersion> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Version_Last(
 			groupId, version, orderByComparator);
 	}
 
@@ -846,4 +747,4 @@ public class VersionedEntryVersionUtil {
 	private static volatile VersionedEntryVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1027370319
+// LIFERAY-SERVICE-BUILDER-HASH:-709622698

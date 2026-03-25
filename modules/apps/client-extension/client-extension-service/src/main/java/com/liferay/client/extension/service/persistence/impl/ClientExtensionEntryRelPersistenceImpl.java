@@ -344,67 +344,6 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last client extension entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException {
-
-		ClientExtensionEntryRel clientExtensionEntryRel = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (clientExtensionEntryRel != null) {
-			return clientExtensionEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last client extension entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ClientExtensionEntryRel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the client extension entry rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -962,72 +901,6 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last client extension entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException {
-
-		ClientExtensionEntryRel clientExtensionEntryRel = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (clientExtensionEntryRel != null) {
-			return clientExtensionEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last client extension entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ClientExtensionEntryRel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the client extension entry rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1357,67 +1230,6 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 		List<ClientExtensionEntryRel> list = findByType(
 			type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last client extension entry rel in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel findByType_Last(
-			String type,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException {
-
-		ClientExtensionEntryRel clientExtensionEntryRel = fetchByType_Last(
-			type, orderByComparator);
-
-		if (clientExtensionEntryRel != null) {
-			return clientExtensionEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last client extension entry rel in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel fetchByType_Last(
-		String type,
-		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
-
-		int count = countByType(type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ClientExtensionEntryRel> list = findByType(
-			type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1787,73 +1599,6 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last client extension entry rel in the ordered set where companyId = &#63; and cetExternalReferenceCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param cetExternalReferenceCode the cet external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel findByC_CETERC_Last(
-			long companyId, String cetExternalReferenceCode,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException {
-
-		ClientExtensionEntryRel clientExtensionEntryRel = fetchByC_CETERC_Last(
-			companyId, cetExternalReferenceCode, orderByComparator);
-
-		if (clientExtensionEntryRel != null) {
-			return clientExtensionEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", cetExternalReferenceCode=");
-		sb.append(cetExternalReferenceCode);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last client extension entry rel in the ordered set where companyId = &#63; and cetExternalReferenceCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param cetExternalReferenceCode the cet external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel fetchByC_CETERC_Last(
-		long companyId, String cetExternalReferenceCode,
-		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
-
-		int count = countByC_CETERC(companyId, cetExternalReferenceCode);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ClientExtensionEntryRel> list = findByC_CETERC(
-			companyId, cetExternalReferenceCode, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the client extension entry rels where companyId = &#63; and cetExternalReferenceCode = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2203,72 +1948,6 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 		List<ClientExtensionEntryRel> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException {
-
-		ClientExtensionEntryRel clientExtensionEntryRel = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (clientExtensionEntryRel != null) {
-			return clientExtensionEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ClientExtensionEntryRel> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2628,77 +2307,6 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 		List<ClientExtensionEntryRel> list = findByC_C_T(
 			classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel findByC_C_T_Last(
-			long classNameId, long classPK, String type,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException {
-
-		ClientExtensionEntryRel clientExtensionEntryRel = fetchByC_C_T_Last(
-			classNameId, classPK, type, orderByComparator);
-
-		if (clientExtensionEntryRel != null) {
-			return clientExtensionEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
-	 */
-	@Override
-	public ClientExtensionEntryRel fetchByC_C_T_Last(
-		long classNameId, long classPK, String type,
-		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
-
-		int count = countByC_C_T(classNameId, classPK, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ClientExtensionEntryRel> list = findByC_C_T(
-			classNameId, classPK, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4226,4 +3834,4 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1637603574
+// LIFERAY-SERVICE-BUILDER-HASH:1998888094

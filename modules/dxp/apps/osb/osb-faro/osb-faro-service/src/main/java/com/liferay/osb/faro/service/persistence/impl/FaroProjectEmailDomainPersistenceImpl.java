@@ -301,67 +301,6 @@ public class FaroProjectEmailDomainPersistenceImpl
 	}
 
 	/**
-	 * Returns the last faro project email domain in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project email domain
-	 * @throws NoSuchFaroProjectEmailDomainException if a matching faro project email domain could not be found
-	 */
-	@Override
-	public FaroProjectEmailDomain findByGroupId_Last(
-			long groupId,
-			OrderByComparator<FaroProjectEmailDomain> orderByComparator)
-		throws NoSuchFaroProjectEmailDomainException {
-
-		FaroProjectEmailDomain faroProjectEmailDomain = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (faroProjectEmailDomain != null) {
-			return faroProjectEmailDomain;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroProjectEmailDomainException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro project email domain in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project email domain, or <code>null</code> if a matching faro project email domain could not be found
-	 */
-	@Override
-	public FaroProjectEmailDomain fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<FaroProjectEmailDomain> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroProjectEmailDomain> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the faro project email domains where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -647,67 +586,6 @@ public class FaroProjectEmailDomainPersistenceImpl
 
 		List<FaroProjectEmailDomain> list = findByFaroProjectId(
 			faroProjectId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last faro project email domain in the ordered set where faroProjectId = &#63;.
-	 *
-	 * @param faroProjectId the faro project ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project email domain
-	 * @throws NoSuchFaroProjectEmailDomainException if a matching faro project email domain could not be found
-	 */
-	@Override
-	public FaroProjectEmailDomain findByFaroProjectId_Last(
-			long faroProjectId,
-			OrderByComparator<FaroProjectEmailDomain> orderByComparator)
-		throws NoSuchFaroProjectEmailDomainException {
-
-		FaroProjectEmailDomain faroProjectEmailDomain =
-			fetchByFaroProjectId_Last(faroProjectId, orderByComparator);
-
-		if (faroProjectEmailDomain != null) {
-			return faroProjectEmailDomain;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("faroProjectId=");
-		sb.append(faroProjectId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroProjectEmailDomainException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro project email domain in the ordered set where faroProjectId = &#63;.
-	 *
-	 * @param faroProjectId the faro project ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project email domain, or <code>null</code> if a matching faro project email domain could not be found
-	 */
-	@Override
-	public FaroProjectEmailDomain fetchByFaroProjectId_Last(
-		long faroProjectId,
-		OrderByComparator<FaroProjectEmailDomain> orderByComparator) {
-
-		int count = countByFaroProjectId(faroProjectId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroProjectEmailDomain> list = findByFaroProjectId(
-			faroProjectId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1438,4 +1316,4 @@ public class FaroProjectEmailDomainPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-671554565
+// LIFERAY-SERVICE-BUILDER-HASH:1305834381

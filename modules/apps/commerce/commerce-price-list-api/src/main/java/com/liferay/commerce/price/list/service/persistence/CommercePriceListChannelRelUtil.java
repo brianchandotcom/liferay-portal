@@ -219,37 +219,6 @@ public class CommercePriceListChannelRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce price list channel rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel
-	 * @throws NoSuchPriceListChannelRelException if a matching commerce price list channel rel could not be found
-	 */
-	public static CommercePriceListChannelRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommercePriceListChannelRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListChannelRelException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list channel rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
-	 */
-	public static CommercePriceListChannelRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommercePriceListChannelRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price list channel rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -382,41 +351,6 @@ public class CommercePriceListChannelRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce price list channel rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel
-	 * @throws NoSuchPriceListChannelRelException if a matching commerce price list channel rel could not be found
-	 */
-	public static CommercePriceListChannelRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommercePriceListChannelRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListChannelRelException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list channel rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
-	 */
-	public static CommercePriceListChannelRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommercePriceListChannelRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price list channel rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -542,39 +476,6 @@ public class CommercePriceListChannelRelUtil {
 		OrderByComparator<CommercePriceListChannelRel> orderByComparator) {
 
 		return getPersistence().fetchByCommercePriceListId_First(
-			commercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list channel rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel
-	 * @throws NoSuchPriceListChannelRelException if a matching commerce price list channel rel could not be found
-	 */
-	public static CommercePriceListChannelRel findByCommercePriceListId_Last(
-			long commercePriceListId,
-			OrderByComparator<CommercePriceListChannelRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListChannelRelException {
-
-		return getPersistence().findByCommercePriceListId_Last(
-			commercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price list channel rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
-	 */
-	public static CommercePriceListChannelRel fetchByCommercePriceListId_Last(
-		long commercePriceListId,
-		OrderByComparator<CommercePriceListChannelRel> orderByComparator) {
-
-		return getPersistence().fetchByCommercePriceListId_Last(
 			commercePriceListId, orderByComparator);
 	}
 
@@ -853,4 +754,4 @@ public class CommercePriceListChannelRelUtil {
 	private static volatile CommercePriceListChannelRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:249396653
+// LIFERAY-SERVICE-BUILDER-HASH:1506818574

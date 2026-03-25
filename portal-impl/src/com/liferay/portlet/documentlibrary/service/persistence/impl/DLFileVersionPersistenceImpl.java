@@ -325,64 +325,6 @@ public class DLFileVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByUuid_Last(
-			String uuid, OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByUuid_Last(
-		String uuid, OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -930,72 +872,6 @@ public class DLFileVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1320,65 +1196,6 @@ public class DLFileVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByCompanyId_Last(
-			long companyId, OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByCompanyId_Last(
-		long companyId, OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file versions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1670,66 +1487,6 @@ public class DLFileVersionPersistenceImpl
 
 		List<DLFileVersion> list = findByFileEntryId(
 			fileEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByFileEntryId_Last(
-			long fileEntryId,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByFileEntryId_Last(
-			fileEntryId, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByFileEntryId_Last(
-		long fileEntryId, OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByFileEntryId(fileEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByFileEntryId(
-			fileEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2041,65 +1798,6 @@ public class DLFileVersionPersistenceImpl
 
 		List<DLFileVersion> list = findByMimeType(
 			mimeType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where mimeType = &#63;.
-	 *
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByMimeType_Last(
-			String mimeType, OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByMimeType_Last(
-			mimeType, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("mimeType=");
-		sb.append(mimeType);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where mimeType = &#63;.
-	 *
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByMimeType_Last(
-		String mimeType, OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByMimeType(mimeType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByMimeType(
-			mimeType, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2454,72 +2152,6 @@ public class DLFileVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param storeUUID the store uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByC_SU_Last(
-			long companyId, String storeUUID,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByC_SU_Last(
-			companyId, storeUUID, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", storeUUID=");
-		sb.append(storeUUID);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param storeUUID the store uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByC_SU_Last(
-		long companyId, String storeUUID,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByC_SU(companyId, storeUUID);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByC_SU(
-			companyId, storeUUID, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file versions where companyId = &#63; and storeUUID = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2842,72 +2474,6 @@ public class DLFileVersionPersistenceImpl
 
 		List<DLFileVersion> list = findByC_NotS(
 			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByC_NotS_Last(
-			long companyId, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByC_NotS_Last(
-			companyId, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByC_NotS_Last(
-		long companyId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByC_NotS(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByC_NotS(
-			companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3438,72 +3004,6 @@ public class DLFileVersionPersistenceImpl
 
 		List<DLFileVersion> list = findByF_S(
 			fileEntryId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByF_S_Last(
-			long fileEntryId, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByF_S_Last(
-			fileEntryId, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByF_S_Last(
-		long fileEntryId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByF_S(fileEntryId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByF_S(
-			fileEntryId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4126,72 +3626,6 @@ public class DLFileVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file version in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file versions where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -4540,77 +3974,6 @@ public class DLFileVersionPersistenceImpl
 
 		List<DLFileVersion> list = findByG_F_S(
 			groupId, folderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByG_F_S_Last(
-			long groupId, long folderId, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByG_F_S_Last(
-			groupId, folderId, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByG_F_S_Last(
-		long groupId, long folderId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByG_F_S(groupId, folderId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByG_F_S(
-			groupId, folderId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4981,78 +4344,6 @@ public class DLFileVersionPersistenceImpl
 
 		List<DLFileVersion> list = findByC_E_S(
 			companyId, expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and expirationDate = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByC_E_S_Last(
-			long companyId, Date expirationDate, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByC_E_S_Last(
-			companyId, expirationDate, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", expirationDate=");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where companyId = &#63; and expirationDate = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByC_E_S_Last(
-		long companyId, Date expirationDate, int status,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByC_E_S(companyId, expirationDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByC_E_S(
-			companyId, expirationDate, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5800,83 +5091,6 @@ public class DLFileVersionPersistenceImpl
 
 		List<DLFileVersion> list = findByG_F_T_V(
 			groupId, folderId, title, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param title the title
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version
-	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion findByG_F_T_V_Last(
-			long groupId, long folderId, String title, String version,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByG_F_T_V_Last(
-			groupId, folderId, title, version, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append(", title=");
-		sb.append(title);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param title the title
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 */
-	@Override
-	public DLFileVersion fetchByG_F_T_V_Last(
-		long groupId, long folderId, String title, String version,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-
-		int count = countByG_F_T_V(groupId, folderId, title, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersion> list = findByG_F_T_V(
-			groupId, folderId, title, version, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7220,4 +6434,4 @@ public class DLFileVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1376803933
+// LIFERAY-SERVICE-BUILDER-HASH:1013912713

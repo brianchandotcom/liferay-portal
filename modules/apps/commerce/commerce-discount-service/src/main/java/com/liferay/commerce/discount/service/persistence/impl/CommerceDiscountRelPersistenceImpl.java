@@ -313,68 +313,6 @@ public class CommerceDiscountRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce discount rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rel
-	 * @throws NoSuchDiscountRelException if a matching commerce discount rel could not be found
-	 */
-	@Override
-	public CommerceDiscountRel findByCommerceDiscountId_Last(
-			long commerceDiscountId,
-			OrderByComparator<CommerceDiscountRel> orderByComparator)
-		throws NoSuchDiscountRelException {
-
-		CommerceDiscountRel commerceDiscountRel =
-			fetchByCommerceDiscountId_Last(
-				commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountRel != null) {
-			return commerceDiscountRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceDiscountId=");
-		sb.append(commerceDiscountId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rel, or <code>null</code> if a matching commerce discount rel could not be found
-	 */
-	@Override
-	public CommerceDiscountRel fetchByCommerceDiscountId_Last(
-		long commerceDiscountId,
-		OrderByComparator<CommerceDiscountRel> orderByComparator) {
-
-		int count = countByCommerceDiscountId(commerceDiscountId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountRel> list = findByCommerceDiscountId(
-			commerceDiscountId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce discount rels where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -678,73 +616,6 @@ public class CommerceDiscountRelPersistenceImpl
 
 		List<CommerceDiscountRel> list = findByCD_CN(
 			commerceDiscountId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount rel in the ordered set where commerceDiscountId = &#63; and classNameId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rel
-	 * @throws NoSuchDiscountRelException if a matching commerce discount rel could not be found
-	 */
-	@Override
-	public CommerceDiscountRel findByCD_CN_Last(
-			long commerceDiscountId, long classNameId,
-			OrderByComparator<CommerceDiscountRel> orderByComparator)
-		throws NoSuchDiscountRelException {
-
-		CommerceDiscountRel commerceDiscountRel = fetchByCD_CN_Last(
-			commerceDiscountId, classNameId, orderByComparator);
-
-		if (commerceDiscountRel != null) {
-			return commerceDiscountRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceDiscountId=");
-		sb.append(commerceDiscountId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount rel in the ordered set where commerceDiscountId = &#63; and classNameId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rel, or <code>null</code> if a matching commerce discount rel could not be found
-	 */
-	@Override
-	public CommerceDiscountRel fetchByCD_CN_Last(
-		long commerceDiscountId, long classNameId,
-		OrderByComparator<CommerceDiscountRel> orderByComparator) {
-
-		int count = countByCD_CN(commerceDiscountId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountRel> list = findByCD_CN(
-			commerceDiscountId, classNameId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1062,72 +933,6 @@ public class CommerceDiscountRelPersistenceImpl
 
 		List<CommerceDiscountRel> list = findByCN_CPK(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rel
-	 * @throws NoSuchDiscountRelException if a matching commerce discount rel could not be found
-	 */
-	@Override
-	public CommerceDiscountRel findByCN_CPK_Last(
-			long classNameId, long classPK,
-			OrderByComparator<CommerceDiscountRel> orderByComparator)
-		throws NoSuchDiscountRelException {
-
-		CommerceDiscountRel commerceDiscountRel = fetchByCN_CPK_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (commerceDiscountRel != null) {
-			return commerceDiscountRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rel, or <code>null</code> if a matching commerce discount rel could not be found
-	 */
-	@Override
-	public CommerceDiscountRel fetchByCN_CPK_Last(
-		long classNameId, long classPK,
-		OrderByComparator<CommerceDiscountRel> orderByComparator) {
-
-		int count = countByCN_CPK(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountRel> list = findByCN_CPK(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1467,78 +1272,6 @@ public class CommerceDiscountRelPersistenceImpl
 
 		List<CommerceDiscountRel> list = findByCD_CN_CPK(
 			commerceDiscountId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount rel in the ordered set where commerceDiscountId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rel
-	 * @throws NoSuchDiscountRelException if a matching commerce discount rel could not be found
-	 */
-	@Override
-	public CommerceDiscountRel findByCD_CN_CPK_Last(
-			long commerceDiscountId, long classNameId, long classPK,
-			OrderByComparator<CommerceDiscountRel> orderByComparator)
-		throws NoSuchDiscountRelException {
-
-		CommerceDiscountRel commerceDiscountRel = fetchByCD_CN_CPK_Last(
-			commerceDiscountId, classNameId, classPK, orderByComparator);
-
-		if (commerceDiscountRel != null) {
-			return commerceDiscountRel;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceDiscountId=");
-		sb.append(commerceDiscountId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount rel in the ordered set where commerceDiscountId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount rel, or <code>null</code> if a matching commerce discount rel could not be found
-	 */
-	@Override
-	public CommerceDiscountRel fetchByCD_CN_CPK_Last(
-		long commerceDiscountId, long classNameId, long classPK,
-		OrderByComparator<CommerceDiscountRel> orderByComparator) {
-
-		int count = countByCD_CN_CPK(commerceDiscountId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountRel> list = findByCD_CN_CPK(
-			commerceDiscountId, classNameId, classPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2347,4 +2080,4 @@ public class CommerceDiscountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-327294064
+// LIFERAY-SERVICE-BUILDER-HASH:957787613

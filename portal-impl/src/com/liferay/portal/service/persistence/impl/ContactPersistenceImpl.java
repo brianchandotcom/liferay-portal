@@ -290,64 +290,6 @@ public class ContactPersistenceImpl
 	}
 
 	/**
-	 * Returns the last contact in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	@Override
-	public Contact findByCompanyId_Last(
-			long companyId, OrderByComparator<Contact> orderByComparator)
-		throws NoSuchContactException {
-
-		Contact contact = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (contact != null) {
-			return contact;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchContactException(sb.toString());
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	@Override
-	public Contact fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Contact> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Contact> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the contacts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -619,64 +561,6 @@ public class ContactPersistenceImpl
 		long userId, OrderByComparator<Contact> orderByComparator) {
 
 		List<Contact> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	@Override
-	public Contact findByUserId_Last(
-			long userId, OrderByComparator<Contact> orderByComparator)
-		throws NoSuchContactException {
-
-		Contact contact = fetchByUserId_Last(userId, orderByComparator);
-
-		if (contact != null) {
-			return contact;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchContactException(sb.toString());
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	@Override
-	public Contact fetchByUserId_Last(
-		long userId, OrderByComparator<Contact> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Contact> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -982,71 +866,6 @@ public class ContactPersistenceImpl
 
 		List<Contact> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	@Override
-	public Contact findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<Contact> orderByComparator)
-		throws NoSuchContactException {
-
-		Contact contact = fetchByC_U_Last(companyId, userId, orderByComparator);
-
-		if (contact != null) {
-			return contact;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchContactException(sb.toString());
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	@Override
-	public Contact fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<Contact> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Contact> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1362,72 +1181,6 @@ public class ContactPersistenceImpl
 
 		List<Contact> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact
-	 * @throws NoSuchContactException if a matching contact could not be found
-	 */
-	@Override
-	public Contact findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<Contact> orderByComparator)
-		throws NoSuchContactException {
-
-		Contact contact = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (contact != null) {
-			return contact;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchContactException(sb.toString());
-	}
-
-	/**
-	 * Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	 */
-	@Override
-	public Contact fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<Contact> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Contact> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2157,4 +1910,4 @@ public class ContactPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1363783179
+// LIFERAY-SERVICE-BUILDER-HASH:-1394487782

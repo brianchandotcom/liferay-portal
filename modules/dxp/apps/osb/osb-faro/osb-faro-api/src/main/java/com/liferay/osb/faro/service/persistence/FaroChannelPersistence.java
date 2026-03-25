@@ -119,32 +119,6 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 			orderByComparator);
 
 	/**
-	 * Returns the last faro channel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel
-	 * @throws NoSuchFaroChannelException if a matching faro channel could not be found
-	 */
-	public FaroChannel findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
-				orderByComparator)
-		throws NoSuchFaroChannelException;
-
-	/**
-	 * Returns the last faro channel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel, or <code>null</code> if a matching faro channel could not be found
-	 */
-	public FaroChannel fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
-			orderByComparator);
-
-	/**
 	 * Removes all the faro channels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -243,32 +217,6 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	 * @return the first matching faro channel, or <code>null</code> if a matching faro channel could not be found
 	 */
 	public FaroChannel fetchByWorkspaceGroupId_First(
-		long workspaceGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
-			orderByComparator);
-
-	/**
-	 * Returns the last faro channel in the ordered set where workspaceGroupId = &#63;.
-	 *
-	 * @param workspaceGroupId the workspace group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel
-	 * @throws NoSuchFaroChannelException if a matching faro channel could not be found
-	 */
-	public FaroChannel findByWorkspaceGroupId_Last(
-			long workspaceGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
-				orderByComparator)
-		throws NoSuchFaroChannelException;
-
-	/**
-	 * Returns the last faro channel in the ordered set where workspaceGroupId = &#63;.
-	 *
-	 * @param workspaceGroupId the workspace group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel, or <code>null</code> if a matching faro channel could not be found
-	 */
-	public FaroChannel fetchByWorkspaceGroupId_Last(
 		long workspaceGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
 			orderByComparator);
@@ -377,34 +325,6 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	 * @return the first matching faro channel, or <code>null</code> if a matching faro channel could not be found
 	 */
 	public FaroChannel fetchByG_U_First(
-		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
-			orderByComparator);
-
-	/**
-	 * Returns the last faro channel in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel
-	 * @throws NoSuchFaroChannelException if a matching faro channel could not be found
-	 */
-	public FaroChannel findByG_U_Last(
-			long groupId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
-				orderByComparator)
-		throws NoSuchFaroChannelException;
-
-	/**
-	 * Returns the last faro channel in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro channel, or <code>null</code> if a matching faro channel could not be found
-	 */
-	public FaroChannel fetchByG_U_Last(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
 			orderByComparator);
@@ -597,4 +517,4 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-221580786
+// LIFERAY-SERVICE-BUILDER-HASH:1842479512

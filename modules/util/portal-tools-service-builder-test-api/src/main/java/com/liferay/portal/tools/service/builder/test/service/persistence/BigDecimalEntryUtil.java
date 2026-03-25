@@ -221,39 +221,6 @@ public class BigDecimalEntryUtil {
 	}
 
 	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue = &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a matching big decimal entry could not be found
-	 */
-	public static BigDecimalEntry findByBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchBigDecimalEntryException {
-
-		return getPersistence().findByBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
-	}
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue = &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
-	 */
-	public static BigDecimalEntry fetchByBigDecimalValue_Last(
-		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		return getPersistence().fetchByBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
-	}
-
-	/**
 	 * Removes all the big decimal entries where bigDecimalValue = &#63; from the database.
 	 *
 	 * @param bigDecimalValue the big decimal value
@@ -381,39 +348,6 @@ public class BigDecimalEntryUtil {
 	}
 
 	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a matching big decimal entry could not be found
-	 */
-	public static BigDecimalEntry findByGtBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchBigDecimalEntryException {
-
-		return getPersistence().findByGtBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
-	}
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
-	 */
-	public static BigDecimalEntry fetchByGtBigDecimalValue_Last(
-		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		return getPersistence().fetchByGtBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
-	}
-
-	/**
 	 * Removes all the big decimal entries where bigDecimalValue &gt; &#63; from the database.
 	 *
 	 * @param bigDecimalValue the big decimal value
@@ -537,39 +471,6 @@ public class BigDecimalEntryUtil {
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
 
 		return getPersistence().fetchByLtBigDecimalValue_First(
-			bigDecimalValue, orderByComparator);
-	}
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a matching big decimal entry could not be found
-	 */
-	public static BigDecimalEntry findByLtBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchBigDecimalEntryException {
-
-		return getPersistence().findByLtBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
-	}
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
-	 */
-	public static BigDecimalEntry fetchByLtBigDecimalValue_Last(
-		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		return getPersistence().fetchByLtBigDecimalValue_Last(
 			bigDecimalValue, orderByComparator);
 	}
 
@@ -982,4 +883,4 @@ public class BigDecimalEntryUtil {
 	private static volatile BigDecimalEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1658411619
+// LIFERAY-SERVICE-BUILDER-HASH:1758637457

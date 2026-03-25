@@ -324,67 +324,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo definition version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition version
-	 * @throws NoSuchDefinitionVersionException if a matching kaleo definition version could not be found
-	 */
-	@Override
-	public KaleoDefinitionVersion findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoDefinitionVersion> orderByComparator)
-		throws NoSuchDefinitionVersionException {
-
-		KaleoDefinitionVersion kaleoDefinitionVersion = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoDefinitionVersion != null) {
-			return kaleoDefinitionVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo definition version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
-	 */
-	@Override
-	public KaleoDefinitionVersion fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<KaleoDefinitionVersion> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoDefinitionVersion> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo definition versions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -705,72 +644,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 
 		List<KaleoDefinitionVersion> list = findByC_N(
 			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo definition version in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition version
-	 * @throws NoSuchDefinitionVersionException if a matching kaleo definition version could not be found
-	 */
-	@Override
-	public KaleoDefinitionVersion findByC_N_Last(
-			long companyId, String name,
-			OrderByComparator<KaleoDefinitionVersion> orderByComparator)
-		throws NoSuchDefinitionVersionException {
-
-		KaleoDefinitionVersion kaleoDefinitionVersion = fetchByC_N_Last(
-			companyId, name, orderByComparator);
-
-		if (kaleoDefinitionVersion != null) {
-			return kaleoDefinitionVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo definition version in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
-	 */
-	@Override
-	public KaleoDefinitionVersion fetchByC_N_Last(
-		long companyId, String name,
-		OrderByComparator<KaleoDefinitionVersion> orderByComparator) {
-
-		int count = countByC_N(companyId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoDefinitionVersion> list = findByC_N(
-			companyId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2139,4 +2012,4 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1054110217
+// LIFERAY-SERVICE-BUILDER-HASH:185392048

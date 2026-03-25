@@ -330,65 +330,6 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file shortcut in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut
-	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut findByUuid_Last(
-			String uuid, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (dlFileShortcut != null) {
-			return dlFileShortcut;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFileShortcutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByUuid_Last(
-		String uuid, OrderByComparator<DLFileShortcut> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileShortcut> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file shortcuts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -936,72 +877,6 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut
-	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (dlFileShortcut != null) {
-			return dlFileShortcut;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileShortcutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DLFileShortcut> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileShortcut> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file shortcuts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1317,65 +1192,6 @@ public class DLFileShortcutPersistenceImpl
 
 		List<DLFileShortcut> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut
-	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut findByGroupId_Last(
-			long groupId, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (dlFileShortcut != null) {
-			return dlFileShortcut;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFileShortcutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByGroupId_Last(
-		long groupId, OrderByComparator<DLFileShortcut> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileShortcut> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1882,65 +1698,6 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file shortcut in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut
-	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut findByCompanyId_Last(
-			long companyId, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (dlFileShortcut != null) {
-			return dlFileShortcut;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileShortcutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByCompanyId_Last(
-		long companyId, OrderByComparator<DLFileShortcut> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileShortcut> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file shortcuts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2236,67 +1993,6 @@ public class DLFileShortcutPersistenceImpl
 
 		List<DLFileShortcut> list = findByToFileEntryId(
 			toFileEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where toFileEntryId = &#63;.
-	 *
-	 * @param toFileEntryId the to file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut
-	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut findByToFileEntryId_Last(
-			long toFileEntryId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByToFileEntryId_Last(
-			toFileEntryId, orderByComparator);
-
-		if (dlFileShortcut != null) {
-			return dlFileShortcut;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("toFileEntryId=");
-		sb.append(toFileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchFileShortcutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where toFileEntryId = &#63;.
-	 *
-	 * @param toFileEntryId the to file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByToFileEntryId_Last(
-		long toFileEntryId,
-		OrderByComparator<DLFileShortcut> orderByComparator) {
-
-		int count = countByToFileEntryId(toFileEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileShortcut> list = findByToFileEntryId(
-			toFileEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2614,72 +2310,6 @@ public class DLFileShortcutPersistenceImpl
 
 		List<DLFileShortcut> list = findByG_F(
 			groupId, folderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut
-	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut findByG_F_Last(
-			long groupId, long folderId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByG_F_Last(
-			groupId, folderId, orderByComparator);
-
-		if (dlFileShortcut != null) {
-			return dlFileShortcut;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append("}");
-
-		throw new NoSuchFileShortcutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByG_F_Last(
-		long groupId, long folderId,
-		OrderByComparator<DLFileShortcut> orderByComparator) {
-
-		int count = countByG_F(groupId, folderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileShortcut> list = findByG_F(
-			groupId, folderId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3215,72 +2845,6 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut
-	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut findByC_NotS_Last(
-			long companyId, int status,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByC_NotS_Last(
-			companyId, status, orderByComparator);
-
-		if (dlFileShortcut != null) {
-			return dlFileShortcut;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFileShortcutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByC_NotS_Last(
-		long companyId, int status,
-		OrderByComparator<DLFileShortcut> orderByComparator) {
-
-		int count = countByC_NotS(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileShortcut> list = findByC_NotS(
-			companyId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file shortcuts where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3615,77 +3179,6 @@ public class DLFileShortcutPersistenceImpl
 
 		List<DLFileShortcut> list = findByG_F_A(
 			groupId, folderId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut
-	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut findByG_F_A_Last(
-			long groupId, long folderId, boolean active,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByG_F_A_Last(
-			groupId, folderId, active, orderByComparator);
-
-		if (dlFileShortcut != null) {
-			return dlFileShortcut;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchFileShortcutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByG_F_A_Last(
-		long groupId, long folderId, boolean active,
-		OrderByComparator<DLFileShortcut> orderByComparator) {
-
-		int count = countByG_F_A(groupId, folderId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileShortcut> list = findByG_F_A(
-			groupId, folderId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4289,83 +3782,6 @@ public class DLFileShortcutPersistenceImpl
 
 		List<DLFileShortcut> list = findByG_F_A_S(
 			groupId, folderId, active, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut
-	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut findByG_F_A_S_Last(
-			long groupId, long folderId, boolean active, int status,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByG_F_A_S_Last(
-			groupId, folderId, active, status, orderByComparator);
-
-		if (dlFileShortcut != null) {
-			return dlFileShortcut;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFileShortcutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByG_F_A_S_Last(
-		long groupId, long folderId, boolean active, int status,
-		OrderByComparator<DLFileShortcut> orderByComparator) {
-
-		int count = countByG_F_A_S(groupId, folderId, active, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileShortcut> list = findByG_F_A_S(
-			groupId, folderId, active, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6138,4 +5554,4 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:370169295
+// LIFERAY-SERVICE-BUILDER-HASH:749169016

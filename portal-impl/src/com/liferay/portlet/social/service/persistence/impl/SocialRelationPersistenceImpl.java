@@ -318,65 +318,6 @@ public class SocialRelationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByUuid_Last(
-			String uuid, OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByUuid_Last(
-		String uuid, OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social relations where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -721,72 +662,6 @@ public class SocialRelationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social relations where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1111,65 +986,6 @@ public class SocialRelationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByCompanyId_Last(
-			long companyId, OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByCompanyId_Last(
-		long companyId, OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social relations where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1459,65 +1275,6 @@ public class SocialRelationPersistenceImpl
 
 		List<SocialRelation> list = findByUserId1(
 			userId1, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByUserId1_Last(
-			long userId1, OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByUserId1_Last(
-			userId1, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId1=");
-		sb.append(userId1);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByUserId1_Last(
-		long userId1, OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByUserId1(userId1);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByUserId1(
-			userId1, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1825,65 +1582,6 @@ public class SocialRelationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where userId2 = &#63;.
-	 *
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByUserId2_Last(
-			long userId2, OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByUserId2_Last(
-			userId2, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId2=");
-		sb.append(userId2);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId2 = &#63;.
-	 *
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByUserId2_Last(
-		long userId2, OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByUserId2(userId2);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByUserId2(
-			userId2, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social relations where userId2 = &#63; from the database.
 	 *
 	 * @param userId2 the user id2
@@ -2167,65 +1865,6 @@ public class SocialRelationPersistenceImpl
 		int type, OrderByComparator<SocialRelation> orderByComparator) {
 
 		List<SocialRelation> list = findByType(type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByType_Last(
-			int type, OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByType_Last(
-			type, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByType_Last(
-		int type, OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByType(type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByType(
-			type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2540,72 +2179,6 @@ public class SocialRelationPersistenceImpl
 
 		List<SocialRelation> list = findByC_T(
 			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByC_T_Last(
-			long companyId, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByC_T_Last(
-			companyId, type, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByC_T_Last(
-		long companyId, int type,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByC_T(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByC_T(
-			companyId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2941,72 +2514,6 @@ public class SocialRelationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByU1_U2_Last(
-			long userId1, long userId2,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByU1_U2_Last(
-			userId1, userId2, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId1=");
-		sb.append(userId1);
-
-		sb.append(", userId2=");
-		sb.append(userId2);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByU1_U2_Last(
-		long userId1, long userId2,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByU1_U2(userId1, userId2);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByU1_U2(
-			userId1, userId2, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social relations where userId1 = &#63; and userId2 = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
@@ -3332,72 +2839,6 @@ public class SocialRelationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63; and type = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByU1_T_Last(
-			long userId1, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByU1_T_Last(
-			userId1, type, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId1=");
-		sb.append(userId1);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63; and type = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByU1_T_Last(
-		long userId1, int type,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByU1_T(userId1, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByU1_T(
-			userId1, type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social relations where userId1 = &#63; and type = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
@@ -3714,72 +3155,6 @@ public class SocialRelationPersistenceImpl
 
 		List<SocialRelation> list = findByU2_T(
 			userId2, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId2 = &#63; and type = &#63;.
-	 *
-	 * @param userId2 the user id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation findByU2_T_Last(
-			long userId2, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByU2_T_Last(
-			userId2, type, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId2=");
-		sb.append(userId2);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId2 = &#63; and type = &#63;.
-	 *
-	 * @param userId2 the user id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	@Override
-	public SocialRelation fetchByU2_T_Last(
-		long userId2, int type,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		int count = countByU2_T(userId2, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRelation> list = findByU2_T(
-			userId2, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5137,4 +4512,4 @@ public class SocialRelationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2051535716
+// LIFERAY-SERVICE-BUILDER-HASH:-1407692649

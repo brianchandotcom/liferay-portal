@@ -220,37 +220,6 @@ public class SharepointOAuth2TokenEntryUtil {
 	}
 
 	/**
-	 * Returns the last sharepoint o auth2 token entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharepoint o auth2 token entry
-	 * @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
-	 */
-	public static SharepointOAuth2TokenEntry findByUserId_Last(
-			long userId,
-			OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator)
-		throws com.liferay.sharepoint.rest.oauth2.exception.
-			NoSuch2TokenEntryException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharepoint o auth2 token entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
-	 */
-	public static SharepointOAuth2TokenEntry fetchByUserId_Last(
-		long userId,
-		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the sharepoint o auth2 token entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -515,4 +484,4 @@ public class SharepointOAuth2TokenEntryUtil {
 	private static volatile SharepointOAuth2TokenEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-586759697
+// LIFERAY-SERVICE-BUILDER-HASH:-759866080

@@ -127,34 +127,6 @@ public interface OpenIdConnectUserPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last open ID connect user in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect user
-	 * @throws NoSuchUserException if a matching open ID connect user could not be found
-	 */
-	public OpenIdConnectUser findByC_U_Last(
-			long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<OpenIdConnectUser>
-				orderByComparator)
-		throws NoSuchUserException;
-
-	/**
-	 * Returns the last open ID connect user in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect user, or <code>null</code> if a matching open ID connect user could not be found
-	 */
-	public OpenIdConnectUser fetchByC_U_Last(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<OpenIdConnectUser>
-			orderByComparator);
-
-	/**
 	 * Removes all the open ID connect users where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -351,4 +323,4 @@ public interface OpenIdConnectUserPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-12312406
+// LIFERAY-SERVICE-BUILDER-HASH:-749846673

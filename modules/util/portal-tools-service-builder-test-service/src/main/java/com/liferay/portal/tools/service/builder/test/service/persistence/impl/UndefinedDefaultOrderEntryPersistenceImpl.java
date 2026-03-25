@@ -512,67 +512,6 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last undefined default order entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching undefined default order entry
-	 * @throws NoSuchUndefinedDefaultOrderEntryException if a matching undefined default order entry could not be found
-	 */
-	@Override
-	public UndefinedDefaultOrderEntry findByName_Collection_Last(
-			String name,
-			OrderByComparator<UndefinedDefaultOrderEntry> orderByComparator)
-		throws NoSuchUndefinedDefaultOrderEntryException {
-
-		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry =
-			fetchByName_Collection_Last(name, orderByComparator);
-
-		if (undefinedDefaultOrderEntry != null) {
-			return undefinedDefaultOrderEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchUndefinedDefaultOrderEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last undefined default order entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching undefined default order entry, or <code>null</code> if a matching undefined default order entry could not be found
-	 */
-	@Override
-	public UndefinedDefaultOrderEntry fetchByName_Collection_Last(
-		String name,
-		OrderByComparator<UndefinedDefaultOrderEntry> orderByComparator) {
-
-		int count = countByName_Collection(name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UndefinedDefaultOrderEntry> list = findByName_Collection(
-			name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the undefined default order entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -1314,4 +1253,4 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:853719848
+// LIFERAY-SERVICE-BUILDER-HASH:-2073967241

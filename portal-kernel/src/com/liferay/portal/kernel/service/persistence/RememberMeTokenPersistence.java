@@ -121,32 +121,6 @@ public interface RememberMeTokenPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last remember me token in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching remember me token
-	 * @throws NoSuchRememberMeTokenException if a matching remember me token could not be found
-	 */
-	public RememberMeToken findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<RememberMeToken>
-				orderByComparator)
-		throws NoSuchRememberMeTokenException;
-
-	/**
-	 * Returns the last remember me token in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching remember me token, or <code>null</code> if a matching remember me token could not be found
-	 */
-	public RememberMeToken fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<RememberMeToken>
-			orderByComparator);
-
-	/**
 	 * Removes all the remember me tokens where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -245,32 +219,6 @@ public interface RememberMeTokenPersistence
 	 * @return the first matching remember me token, or <code>null</code> if a matching remember me token could not be found
 	 */
 	public RememberMeToken fetchByLteExpirationDate_First(
-		Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<RememberMeToken>
-			orderByComparator);
-
-	/**
-	 * Returns the last remember me token in the ordered set where expirationDate &le; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching remember me token
-	 * @throws NoSuchRememberMeTokenException if a matching remember me token could not be found
-	 */
-	public RememberMeToken findByLteExpirationDate_Last(
-			Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<RememberMeToken>
-				orderByComparator)
-		throws NoSuchRememberMeTokenException;
-
-	/**
-	 * Returns the last remember me token in the ordered set where expirationDate &le; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching remember me token, or <code>null</code> if a matching remember me token could not be found
-	 */
-	public RememberMeToken fetchByLteExpirationDate_Last(
 		Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<RememberMeToken>
 			orderByComparator);
@@ -411,4 +359,4 @@ public interface RememberMeTokenPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:611942789
+// LIFERAY-SERVICE-BUILDER-HASH:1197143363

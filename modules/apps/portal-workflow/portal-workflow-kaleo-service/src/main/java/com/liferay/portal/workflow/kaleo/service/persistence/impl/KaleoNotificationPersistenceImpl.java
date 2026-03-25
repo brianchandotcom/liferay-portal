@@ -322,67 +322,6 @@ public class KaleoNotificationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo notification in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification
-	 * @throws NoSuchNotificationException if a matching kaleo notification could not be found
-	 */
-	@Override
-	public KaleoNotification findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoNotification> orderByComparator)
-		throws NoSuchNotificationException {
-
-		KaleoNotification kaleoNotification = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoNotification != null) {
-			return kaleoNotification;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	 */
-	@Override
-	public KaleoNotification fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<KaleoNotification> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoNotification> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo notifications where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -687,68 +626,6 @@ public class KaleoNotificationPersistenceImpl
 
 		List<KaleoNotification> list = findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification
-	 * @throws NoSuchNotificationException if a matching kaleo notification could not be found
-	 */
-	@Override
-	public KaleoNotification findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNotification> orderByComparator)
-		throws NoSuchNotificationException {
-
-		KaleoNotification kaleoNotification =
-			fetchByKaleoDefinitionVersionId_Last(
-				kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoNotification != null) {
-			return kaleoNotification;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	 */
-	@Override
-	public KaleoNotification fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNotification> orderByComparator) {
-
-		int count = countByKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoNotification> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1088,72 +965,6 @@ public class KaleoNotificationPersistenceImpl
 
 		List<KaleoNotification> list = findByKCN_KCPK(
 			kaleoClassName, kaleoClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification
-	 * @throws NoSuchNotificationException if a matching kaleo notification could not be found
-	 */
-	@Override
-	public KaleoNotification findByKCN_KCPK_Last(
-			String kaleoClassName, long kaleoClassPK,
-			OrderByComparator<KaleoNotification> orderByComparator)
-		throws NoSuchNotificationException {
-
-		KaleoNotification kaleoNotification = fetchByKCN_KCPK_Last(
-			kaleoClassName, kaleoClassPK, orderByComparator);
-
-		if (kaleoNotification != null) {
-			return kaleoNotification;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	 */
-	@Override
-	public KaleoNotification fetchByKCN_KCPK_Last(
-		String kaleoClassName, long kaleoClassPK,
-		OrderByComparator<KaleoNotification> orderByComparator) {
-
-		int count = countByKCN_KCPK(kaleoClassName, kaleoClassPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoNotification> list = findByKCN_KCPK(
-			kaleoClassName, kaleoClassPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1549,79 +1360,6 @@ public class KaleoNotificationPersistenceImpl
 
 		List<KaleoNotification> list = findByKCN_KCPK_ET(
 			kaleoClassName, kaleoClassPK, executionType, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param executionType the execution type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification
-	 * @throws NoSuchNotificationException if a matching kaleo notification could not be found
-	 */
-	@Override
-	public KaleoNotification findByKCN_KCPK_ET_Last(
-			String kaleoClassName, long kaleoClassPK, String executionType,
-			OrderByComparator<KaleoNotification> orderByComparator)
-		throws NoSuchNotificationException {
-
-		KaleoNotification kaleoNotification = fetchByKCN_KCPK_ET_Last(
-			kaleoClassName, kaleoClassPK, executionType, orderByComparator);
-
-		if (kaleoNotification != null) {
-			return kaleoNotification;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append(", executionType=");
-		sb.append(executionType);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param executionType the execution type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	 */
-	@Override
-	public KaleoNotification fetchByKCN_KCPK_ET_Last(
-		String kaleoClassName, long kaleoClassPK, String executionType,
-		OrderByComparator<KaleoNotification> orderByComparator) {
-
-		int count = countByKCN_KCPK_ET(
-			kaleoClassName, kaleoClassPK, executionType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoNotification> list = findByKCN_KCPK_ET(
-			kaleoClassName, kaleoClassPK, executionType, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2748,4 +2486,4 @@ public class KaleoNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1055279845
+// LIFERAY-SERVICE-BUILDER-HASH:-580947019

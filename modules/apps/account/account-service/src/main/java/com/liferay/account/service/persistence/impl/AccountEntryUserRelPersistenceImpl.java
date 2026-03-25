@@ -306,67 +306,6 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last account entry user rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry user rel
-	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
-	 */
-	@Override
-	public AccountEntryUserRel findByAccountEntryId_Last(
-			long accountEntryId,
-			OrderByComparator<AccountEntryUserRel> orderByComparator)
-		throws NoSuchEntryUserRelException {
-
-		AccountEntryUserRel accountEntryUserRel = fetchByAccountEntryId_Last(
-			accountEntryId, orderByComparator);
-
-		if (accountEntryUserRel != null) {
-			return accountEntryUserRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUserRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account entry user rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
-	 */
-	@Override
-	public AccountEntryUserRel fetchByAccountEntryId_Last(
-		long accountEntryId,
-		OrderByComparator<AccountEntryUserRel> orderByComparator) {
-
-		int count = countByAccountEntryId(accountEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountEntryUserRel> list = findByAccountEntryId(
-			accountEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the account entry user rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -651,67 +590,6 @@ public class AccountEntryUserRelPersistenceImpl
 
 		List<AccountEntryUserRel> list = findByAccountUserId(
 			accountUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account entry user rel in the ordered set where accountUserId = &#63;.
-	 *
-	 * @param accountUserId the account user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry user rel
-	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
-	 */
-	@Override
-	public AccountEntryUserRel findByAccountUserId_Last(
-			long accountUserId,
-			OrderByComparator<AccountEntryUserRel> orderByComparator)
-		throws NoSuchEntryUserRelException {
-
-		AccountEntryUserRel accountEntryUserRel = fetchByAccountUserId_Last(
-			accountUserId, orderByComparator);
-
-		if (accountEntryUserRel != null) {
-			return accountEntryUserRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountUserId=");
-		sb.append(accountUserId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUserRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account entry user rel in the ordered set where accountUserId = &#63;.
-	 *
-	 * @param accountUserId the account user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
-	 */
-	@Override
-	public AccountEntryUserRel fetchByAccountUserId_Last(
-		long accountUserId,
-		OrderByComparator<AccountEntryUserRel> orderByComparator) {
-
-		int count = countByAccountUserId(accountUserId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountEntryUserRel> list = findByAccountUserId(
-			accountUserId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1642,4 +1520,4 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:965108988
+// LIFERAY-SERVICE-BUILDER-HASH:291448512

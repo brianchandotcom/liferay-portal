@@ -322,64 +322,6 @@ public class CTEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry findByUuid_Last(
-			String uuid, OrderByComparator<CTEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		CTEntry ctEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (ctEntry != null) {
-			return ctEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<CTEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ct entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -711,72 +653,6 @@ public class CTEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		CTEntry ctEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ctEntry != null) {
-			return ctEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CTEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ct entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1082,64 +958,6 @@ public class CTEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry findByUserId_Last(
-			long userId, OrderByComparator<CTEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		CTEntry ctEntry = fetchByUserId_Last(userId, orderByComparator);
-
-		if (ctEntry != null) {
-			return ctEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry fetchByUserId_Last(
-		long userId, OrderByComparator<CTEntry> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTEntry> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ct entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1418,65 +1236,6 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = findByCtCollectionId(
 			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry findByCtCollectionId_Last(
-			long ctCollectionId, OrderByComparator<CTEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		CTEntry ctEntry = fetchByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-
-		if (ctEntry != null) {
-			return ctEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry fetchByCtCollectionId_Last(
-		long ctCollectionId, OrderByComparator<CTEntry> orderByComparator) {
-
-		int count = countByCtCollectionId(ctCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTEntry> list = findByCtCollectionId(
-			ctCollectionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1786,73 +1545,6 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = findByC_MCNI(
 			ctCollectionId, modelClassNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry findByC_MCNI_Last(
-			long ctCollectionId, long modelClassNameId,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		CTEntry ctEntry = fetchByC_MCNI_Last(
-			ctCollectionId, modelClassNameId, orderByComparator);
-
-		if (ctEntry != null) {
-			return ctEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append(", modelClassNameId=");
-		sb.append(modelClassNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry fetchByC_MCNI_Last(
-		long ctCollectionId, long modelClassNameId,
-		OrderByComparator<CTEntry> orderByComparator) {
-
-		int count = countByC_MCNI(ctCollectionId, modelClassNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTEntry> list = findByC_MCNI(
-			ctCollectionId, modelClassNameId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2389,79 +2081,6 @@ public class CTEntryPersistenceImpl
 
 		List<CTEntry> list = findByNotC_MCNI_MCPK(
 			ctCollectionId, modelClassNameId, modelClassPK, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry findByNotC_MCNI_MCPK_Last(
-			long ctCollectionId, long modelClassNameId, long modelClassPK,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		CTEntry ctEntry = fetchByNotC_MCNI_MCPK_Last(
-			ctCollectionId, modelClassNameId, modelClassPK, orderByComparator);
-
-		if (ctEntry != null) {
-			return ctEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId!=");
-		sb.append(ctCollectionId);
-
-		sb.append(", modelClassNameId=");
-		sb.append(modelClassNameId);
-
-		sb.append(", modelClassPK=");
-		sb.append(modelClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	@Override
-	public CTEntry fetchByNotC_MCNI_MCPK_Last(
-		long ctCollectionId, long modelClassNameId, long modelClassPK,
-		OrderByComparator<CTEntry> orderByComparator) {
-
-		int count = countByNotC_MCNI_MCPK(
-			ctCollectionId, modelClassNameId, modelClassPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTEntry> list = findByNotC_MCNI_MCPK(
-			ctCollectionId, modelClassNameId, modelClassPK, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3905,4 +3524,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1488860689
+// LIFERAY-SERVICE-BUILDER-HASH:635623181

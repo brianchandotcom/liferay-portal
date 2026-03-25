@@ -330,65 +330,6 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cs diagram setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram setting
-	 * @throws NoSuchCSDiagramSettingException if a matching cs diagram setting could not be found
-	 */
-	@Override
-	public CSDiagramSetting findByUuid_Last(
-			String uuid, OrderByComparator<CSDiagramSetting> orderByComparator)
-		throws NoSuchCSDiagramSettingException {
-
-		CSDiagramSetting csDiagramSetting = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (csDiagramSetting != null) {
-			return csDiagramSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cs diagram setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram setting, or <code>null</code> if a matching cs diagram setting could not be found
-	 */
-	@Override
-	public CSDiagramSetting fetchByUuid_Last(
-		String uuid, OrderByComparator<CSDiagramSetting> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CSDiagramSetting> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cs diagram settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -724,72 +665,6 @@ public class CSDiagramSettingPersistenceImpl
 
 		List<CSDiagramSetting> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cs diagram setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram setting
-	 * @throws NoSuchCSDiagramSettingException if a matching cs diagram setting could not be found
-	 */
-	@Override
-	public CSDiagramSetting findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CSDiagramSetting> orderByComparator)
-		throws NoSuchCSDiagramSettingException {
-
-		CSDiagramSetting csDiagramSetting = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (csDiagramSetting != null) {
-			return csDiagramSetting;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cs diagram setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram setting, or <code>null</code> if a matching cs diagram setting could not be found
-	 */
-	@Override
-	public CSDiagramSetting fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CSDiagramSetting> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CSDiagramSetting> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2052,4 +1927,4 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1447297922
+// LIFERAY-SERVICE-BUILDER-HASH:-571686120

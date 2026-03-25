@@ -335,75 +335,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel
-			findByCommerceShippingFixedOptionId_Last(
-				long commerceShippingFixedOptionId,
-				OrderByComparator<CommerceShippingFixedOptionRel>
-					orderByComparator)
-		throws NoSuchShippingFixedOptionRelException {
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			fetchByCommerceShippingFixedOptionId_Last(
-				commerceShippingFixedOptionId, orderByComparator);
-
-		if (commerceShippingFixedOptionRel != null) {
-			return commerceShippingFixedOptionRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingFixedOptionId=");
-		sb.append(commerceShippingFixedOptionId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option rel, or <code>null</code> if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel
-		fetchByCommerceShippingFixedOptionId_Last(
-			long commerceShippingFixedOptionId,
-			OrderByComparator<CommerceShippingFixedOptionRel>
-				orderByComparator) {
-
-		int count = countByCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShippingFixedOptionRel> list =
-			findByCommerceShippingFixedOptionId(
-				commerceShippingFixedOptionId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; from the database.
 	 *
 	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
@@ -708,69 +639,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		List<CommerceShippingFixedOptionRel> list =
 			findByCommerceShippingMethodId(
 				commerceShippingMethodId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel findByCommerceShippingMethodId_Last(
-			long commerceShippingMethodId,
-			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator)
-		throws NoSuchShippingFixedOptionRelException {
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			fetchByCommerceShippingMethodId_Last(
-				commerceShippingMethodId, orderByComparator);
-
-		if (commerceShippingFixedOptionRel != null) {
-			return commerceShippingFixedOptionRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingMethodId=");
-		sb.append(commerceShippingMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option rel, or <code>null</code> if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel fetchByCommerceShippingMethodId_Last(
-		long commerceShippingMethodId,
-		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
-
-		int count = countByCommerceShippingMethodId(commerceShippingMethodId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShippingFixedOptionRel> list =
-			findByCommerceShippingMethodId(
-				commerceShippingMethodId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1103,76 +971,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		List<CommerceShippingFixedOptionRel> list = findByC_C(
 			commerceShippingFixedOptionId, commerceShippingMethodId, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel findByC_C_Last(
-			long commerceShippingFixedOptionId, long commerceShippingMethodId,
-			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator)
-		throws NoSuchShippingFixedOptionRelException {
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			fetchByC_C_Last(
-				commerceShippingFixedOptionId, commerceShippingMethodId,
-				orderByComparator);
-
-		if (commerceShippingFixedOptionRel != null) {
-			return commerceShippingFixedOptionRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingFixedOptionId=");
-		sb.append(commerceShippingFixedOptionId);
-
-		sb.append(", commerceShippingMethodId=");
-		sb.append(commerceShippingMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option rel, or <code>null</code> if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel fetchByC_C_Last(
-		long commerceShippingFixedOptionId, long commerceShippingMethodId,
-		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
-
-		int count = countByC_C(
-			commerceShippingFixedOptionId, commerceShippingMethodId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShippingFixedOptionRel> list = findByC_C(
-			commerceShippingFixedOptionId, commerceShippingMethodId, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2023,4 +1821,4 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1455412686
+// LIFERAY-SERVICE-BUILDER-HASH:-1435259740

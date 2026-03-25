@@ -121,32 +121,6 @@ public interface DepotEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	public DepotEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	public DepotEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DepotEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the depot entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface DepotEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	public DepotEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	public DepotEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DepotEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the depot entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -485,34 +431,6 @@ public interface DepotEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last depot entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	public DepotEntry findByC_T_Last(
-			long companyId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last depot entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	public DepotEntry fetchByC_T_Last(
-		long companyId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<DepotEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the depot entries where companyId = &#63; and type = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -649,4 +567,4 @@ public interface DepotEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1837104525
+// LIFERAY-SERVICE-BUILDER-HASH:974231851

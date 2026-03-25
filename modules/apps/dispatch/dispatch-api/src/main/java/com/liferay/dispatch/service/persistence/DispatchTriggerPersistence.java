@@ -120,32 +120,6 @@ public interface DispatchTriggerPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last dispatch trigger in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-				orderByComparator)
-		throws NoSuchTriggerException;
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-			orderByComparator);
-
-	/**
 	 * Returns all the dispatch triggers that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -299,34 +273,6 @@ public interface DispatchTriggerPersistence
 	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	public DispatchTrigger fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-			orderByComparator);
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-				orderByComparator)
-		throws NoSuchTriggerException;
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
 			orderByComparator);
@@ -490,32 +436,6 @@ public interface DispatchTriggerPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-				orderByComparator)
-		throws NoSuchTriggerException;
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-			orderByComparator);
-
-	/**
 	 * Returns all the dispatch triggers that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -663,32 +583,6 @@ public interface DispatchTriggerPersistence
 	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	public DispatchTrigger fetchByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-			orderByComparator);
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger findByActive_Last(
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-				orderByComparator)
-		throws NoSuchTriggerException;
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger fetchByActive_Last(
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
 			orderByComparator);
@@ -847,34 +741,6 @@ public interface DispatchTriggerPersistence
 	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	public DispatchTrigger fetchByC_U_First(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-			orderByComparator);
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger findByC_U_Last(
-			long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-				orderByComparator)
-		throws NoSuchTriggerException;
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger fetchByC_U_Last(
 		long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
 			orderByComparator);
@@ -1040,34 +906,6 @@ public interface DispatchTriggerPersistence
 	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	public DispatchTrigger fetchByC_DTET_First(
-		long companyId, String dispatchTaskExecutorType,
-		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-			orderByComparator);
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and dispatchTaskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param dispatchTaskExecutorType the dispatch task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger findByC_DTET_Last(
-			long companyId, String dispatchTaskExecutorType,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-				orderByComparator)
-		throws NoSuchTriggerException;
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and dispatchTaskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param dispatchTaskExecutorType the dispatch task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger fetchByC_DTET_Last(
 		long companyId, String dispatchTaskExecutorType,
 		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
 			orderByComparator);
@@ -1284,34 +1122,6 @@ public interface DispatchTriggerPersistence
 	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	public DispatchTrigger fetchByA_DTCM_First(
-		boolean active, int dispatchTaskClusterMode,
-		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-			orderByComparator);
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63; and dispatchTaskClusterMode = &#63;.
-	 *
-	 * @param active the active
-	 * @param dispatchTaskClusterMode the dispatch task cluster mode
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger findByA_DTCM_Last(
-			boolean active, int dispatchTaskClusterMode,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
-				orderByComparator)
-		throws NoSuchTriggerException;
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63; and dispatchTaskClusterMode = &#63;.
-	 *
-	 * @param active the active
-	 * @param dispatchTaskClusterMode the dispatch task cluster mode
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger fetchByA_DTCM_Last(
 		boolean active, int dispatchTaskClusterMode,
 		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
 			orderByComparator);
@@ -1695,4 +1505,4 @@ public interface DispatchTriggerPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1329787117
+// LIFERAY-SERVICE-BUILDER-HASH:-2089770629

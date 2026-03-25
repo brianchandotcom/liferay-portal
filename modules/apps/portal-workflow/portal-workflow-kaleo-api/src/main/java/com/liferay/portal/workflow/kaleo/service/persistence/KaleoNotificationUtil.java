@@ -218,39 +218,6 @@ public class KaleoNotificationUtil {
 	}
 
 	/**
-	 * Returns the last kaleo notification in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification
-	 * @throws NoSuchNotificationException if a matching kaleo notification could not be found
-	 */
-	public static KaleoNotification findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoNotification> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchNotificationException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	 */
-	public static KaleoNotification fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<KaleoNotification> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo notifications where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -376,39 +343,6 @@ public class KaleoNotificationUtil {
 		OrderByComparator<KaleoNotification> orderByComparator) {
 
 		return getPersistence().fetchByKaleoDefinitionVersionId_First(
-			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification
-	 * @throws NoSuchNotificationException if a matching kaleo notification could not be found
-	 */
-	public static KaleoNotification findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNotification> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchNotificationException {
-
-		return getPersistence().findByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	 */
-	public static KaleoNotification fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNotification> orderByComparator) {
-
-		return getPersistence().fetchByKaleoDefinitionVersionId_Last(
 			kaleoDefinitionVersionId, orderByComparator);
 	}
 
@@ -549,41 +483,6 @@ public class KaleoNotificationUtil {
 		OrderByComparator<KaleoNotification> orderByComparator) {
 
 		return getPersistence().fetchByKCN_KCPK_First(
-			kaleoClassName, kaleoClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification
-	 * @throws NoSuchNotificationException if a matching kaleo notification could not be found
-	 */
-	public static KaleoNotification findByKCN_KCPK_Last(
-			String kaleoClassName, long kaleoClassPK,
-			OrderByComparator<KaleoNotification> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchNotificationException {
-
-		return getPersistence().findByKCN_KCPK_Last(
-			kaleoClassName, kaleoClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	 */
-	public static KaleoNotification fetchByKCN_KCPK_Last(
-		String kaleoClassName, long kaleoClassPK,
-		OrderByComparator<KaleoNotification> orderByComparator) {
-
-		return getPersistence().fetchByKCN_KCPK_Last(
 			kaleoClassName, kaleoClassPK, orderByComparator);
 	}
 
@@ -735,43 +634,6 @@ public class KaleoNotificationUtil {
 		OrderByComparator<KaleoNotification> orderByComparator) {
 
 		return getPersistence().fetchByKCN_KCPK_ET_First(
-			kaleoClassName, kaleoClassPK, executionType, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param executionType the execution type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification
-	 * @throws NoSuchNotificationException if a matching kaleo notification could not be found
-	 */
-	public static KaleoNotification findByKCN_KCPK_ET_Last(
-			String kaleoClassName, long kaleoClassPK, String executionType,
-			OrderByComparator<KaleoNotification> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchNotificationException {
-
-		return getPersistence().findByKCN_KCPK_ET_Last(
-			kaleoClassName, kaleoClassPK, executionType, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param executionType the execution type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	 */
-	public static KaleoNotification fetchByKCN_KCPK_ET_Last(
-		String kaleoClassName, long kaleoClassPK, String executionType,
-		OrderByComparator<KaleoNotification> orderByComparator) {
-
-		return getPersistence().fetchByKCN_KCPK_ET_Last(
 			kaleoClassName, kaleoClassPK, executionType, orderByComparator);
 	}
 
@@ -972,4 +834,4 @@ public class KaleoNotificationUtil {
 	private static volatile KaleoNotificationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:279222126
+// LIFERAY-SERVICE-BUILDER-HASH:-1683560658

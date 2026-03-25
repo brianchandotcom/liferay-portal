@@ -217,39 +217,6 @@ public class SamlIdpSpSessionUtil {
 	}
 
 	/**
-	 * Returns the last saml idp sp session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp session
-	 * @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
-	 */
-	public static SamlIdpSpSession findByLtCreateDate_Last(
-			Date createDate,
-			OrderByComparator<SamlIdpSpSession> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchIdpSpSessionException {
-
-		return getPersistence().findByLtCreateDate_Last(
-			createDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saml idp sp session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
-	 */
-	public static SamlIdpSpSession fetchByLtCreateDate_Last(
-		Date createDate,
-		OrderByComparator<SamlIdpSpSession> orderByComparator) {
-
-		return getPersistence().fetchByLtCreateDate_Last(
-			createDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saml idp sp sessions where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -373,39 +340,6 @@ public class SamlIdpSpSessionUtil {
 		OrderByComparator<SamlIdpSpSession> orderByComparator) {
 
 		return getPersistence().fetchBySamlIdpSsoSessionId_First(
-			samlIdpSsoSessionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saml idp sp session in the ordered set where samlIdpSsoSessionId = &#63;.
-	 *
-	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp session
-	 * @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
-	 */
-	public static SamlIdpSpSession findBySamlIdpSsoSessionId_Last(
-			long samlIdpSsoSessionId,
-			OrderByComparator<SamlIdpSpSession> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchIdpSpSessionException {
-
-		return getPersistence().findBySamlIdpSsoSessionId_Last(
-			samlIdpSsoSessionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saml idp sp session in the ordered set where samlIdpSsoSessionId = &#63;.
-	 *
-	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
-	 */
-	public static SamlIdpSpSession fetchBySamlIdpSsoSessionId_Last(
-		long samlIdpSsoSessionId,
-		OrderByComparator<SamlIdpSpSession> orderByComparator) {
-
-		return getPersistence().fetchBySamlIdpSsoSessionId_Last(
 			samlIdpSsoSessionId, orderByComparator);
 	}
 
@@ -592,4 +526,4 @@ public class SamlIdpSpSessionUtil {
 	private static volatile SamlIdpSpSessionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1133591359
+// LIFERAY-SERVICE-BUILDER-HASH:-522781039

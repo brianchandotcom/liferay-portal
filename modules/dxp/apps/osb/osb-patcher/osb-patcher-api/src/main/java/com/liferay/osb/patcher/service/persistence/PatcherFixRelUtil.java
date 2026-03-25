@@ -218,38 +218,6 @@ public class PatcherFixRelUtil {
 	}
 
 	/**
-	 * Returns the last patcher fix rel in the ordered set where childPatcherFixId = &#63;.
-	 *
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel
-	 * @throws NoSuchPatcherFixRelException if a matching patcher fix rel could not be found
-	 */
-	public static PatcherFixRel findByChildPatcherFixId_Last(
-			long childPatcherFixId,
-			OrderByComparator<PatcherFixRel> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixRelException {
-
-		return getPersistence().findByChildPatcherFixId_Last(
-			childPatcherFixId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher fix rel in the ordered set where childPatcherFixId = &#63;.
-	 *
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel, or <code>null</code> if a matching patcher fix rel could not be found
-	 */
-	public static PatcherFixRel fetchByChildPatcherFixId_Last(
-		long childPatcherFixId,
-		OrderByComparator<PatcherFixRel> orderByComparator) {
-
-		return getPersistence().fetchByChildPatcherFixId_Last(
-			childPatcherFixId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the patcher fix rels where childPatcherFixId = &#63; from the database.
 	 *
 	 * @param childPatcherFixId the child patcher fix ID
@@ -372,38 +340,6 @@ public class PatcherFixRelUtil {
 		OrderByComparator<PatcherFixRel> orderByComparator) {
 
 		return getPersistence().fetchByParentPatcherFixId_First(
-			parentPatcherFixId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher fix rel in the ordered set where parentPatcherFixId = &#63;.
-	 *
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel
-	 * @throws NoSuchPatcherFixRelException if a matching patcher fix rel could not be found
-	 */
-	public static PatcherFixRel findByParentPatcherFixId_Last(
-			long parentPatcherFixId,
-			OrderByComparator<PatcherFixRel> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixRelException {
-
-		return getPersistence().findByParentPatcherFixId_Last(
-			parentPatcherFixId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher fix rel in the ordered set where parentPatcherFixId = &#63;.
-	 *
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel, or <code>null</code> if a matching patcher fix rel could not be found
-	 */
-	public static PatcherFixRel fetchByParentPatcherFixId_Last(
-		long parentPatcherFixId,
-		OrderByComparator<PatcherFixRel> orderByComparator) {
-
-		return getPersistence().fetchByParentPatcherFixId_Last(
 			parentPatcherFixId, orderByComparator);
 	}
 
@@ -585,4 +521,4 @@ public class PatcherFixRelUtil {
 	private static volatile PatcherFixRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-853900307
+// LIFERAY-SERVICE-BUILDER-HASH:-1795270919

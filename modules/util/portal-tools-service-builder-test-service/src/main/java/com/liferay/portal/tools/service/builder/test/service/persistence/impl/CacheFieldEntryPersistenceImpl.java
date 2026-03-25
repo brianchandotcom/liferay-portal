@@ -288,65 +288,6 @@ public class CacheFieldEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cache field entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cache field entry
-	 * @throws NoSuchCacheFieldEntryException if a matching cache field entry could not be found
-	 */
-	@Override
-	public CacheFieldEntry findByGroupId_Last(
-			long groupId, OrderByComparator<CacheFieldEntry> orderByComparator)
-		throws NoSuchCacheFieldEntryException {
-
-		CacheFieldEntry cacheFieldEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (cacheFieldEntry != null) {
-			return cacheFieldEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCacheFieldEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cache field entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cache field entry, or <code>null</code> if a matching cache field entry could not be found
-	 */
-	@Override
-	public CacheFieldEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<CacheFieldEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CacheFieldEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cache field entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1004,4 +945,4 @@ public class CacheFieldEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1539597647
+// LIFERAY-SERVICE-BUILDER-HASH:-1842289001

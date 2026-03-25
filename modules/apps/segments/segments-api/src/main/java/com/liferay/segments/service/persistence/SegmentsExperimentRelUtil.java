@@ -223,38 +223,6 @@ public class SegmentsExperimentRelUtil {
 	}
 
 	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
-	 *
-	 * @param segmentsExperimentId the segments experiment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel
-	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
-	 */
-	public static SegmentsExperimentRel findBySegmentsExperimentId_Last(
-			long segmentsExperimentId,
-			OrderByComparator<SegmentsExperimentRel> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchExperimentRelException {
-
-		return getPersistence().findBySegmentsExperimentId_Last(
-			segmentsExperimentId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
-	 *
-	 * @param segmentsExperimentId the segments experiment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
-	 */
-	public static SegmentsExperimentRel fetchBySegmentsExperimentId_Last(
-		long segmentsExperimentId,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
-
-		return getPersistence().fetchBySegmentsExperimentId_Last(
-			segmentsExperimentId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the segments experiment rels where segmentsExperimentId = &#63; from the database.
 	 *
 	 * @param segmentsExperimentId the segments experiment ID
@@ -380,38 +348,6 @@ public class SegmentsExperimentRelUtil {
 		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
 
 		return getPersistence().fetchBySegmentsExperienceId_First(
-			segmentsExperienceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel
-	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
-	 */
-	public static SegmentsExperimentRel findBySegmentsExperienceId_Last(
-			long segmentsExperienceId,
-			OrderByComparator<SegmentsExperimentRel> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchExperimentRelException {
-
-		return getPersistence().findBySegmentsExperienceId_Last(
-			segmentsExperienceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
-	 */
-	public static SegmentsExperimentRel fetchBySegmentsExperienceId_Last(
-		long segmentsExperienceId,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
-
-		return getPersistence().fetchBySegmentsExperienceId_Last(
 			segmentsExperienceId, orderByComparator);
 	}
 
@@ -681,4 +617,4 @@ public class SegmentsExperimentRelUtil {
 	private static volatile SegmentsExperimentRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1647630962
+// LIFERAY-SERVICE-BUILDER-HASH:-1095543494

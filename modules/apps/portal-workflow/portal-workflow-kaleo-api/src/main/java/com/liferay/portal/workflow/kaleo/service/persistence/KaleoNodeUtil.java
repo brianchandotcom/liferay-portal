@@ -213,36 +213,6 @@ public class KaleoNodeUtil {
 	}
 
 	/**
-	 * Returns the last kaleo node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
-	 */
-	public static KaleoNode findByCompanyId_Last(
-			long companyId, OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node, or <code>null</code> if a matching kaleo node could not be found
-	 */
-	public static KaleoNode fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KaleoNode> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo nodes where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -367,38 +337,6 @@ public class KaleoNodeUtil {
 		OrderByComparator<KaleoNode> orderByComparator) {
 
 		return getPersistence().fetchByKaleoDefinitionVersionId_First(
-			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
-	 */
-	public static KaleoNode findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
-
-		return getPersistence().findByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node, or <code>null</code> if a matching kaleo node could not be found
-	 */
-	public static KaleoNode fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNode> orderByComparator) {
-
-		return getPersistence().fetchByKaleoDefinitionVersionId_Last(
 			kaleoDefinitionVersionId, orderByComparator);
 	}
 
@@ -539,40 +477,6 @@ public class KaleoNodeUtil {
 		OrderByComparator<KaleoNode> orderByComparator) {
 
 		return getPersistence().fetchByC_KDVI_First(
-			companyId, kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where companyId = &#63; and kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
-	 */
-	public static KaleoNode findByC_KDVI_Last(
-			long companyId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
-
-		return getPersistence().findByC_KDVI_Last(
-			companyId, kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo node in the ordered set where companyId = &#63; and kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo node, or <code>null</code> if a matching kaleo node could not be found
-	 */
-	public static KaleoNode fetchByC_KDVI_Last(
-		long companyId, long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNode> orderByComparator) {
-
-		return getPersistence().fetchByC_KDVI_Last(
 			companyId, kaleoDefinitionVersionId, orderByComparator);
 	}
 
@@ -760,4 +664,4 @@ public class KaleoNodeUtil {
 	private static volatile KaleoNodePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-438811024
+// LIFERAY-SERVICE-BUILDER-HASH:-880470400

@@ -123,32 +123,6 @@ public interface BigDecimalEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue = &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a matching big decimal entry could not be found
-	 */
-	public BigDecimalEntry findByBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
-				orderByComparator)
-		throws NoSuchBigDecimalEntryException;
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue = &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
-	 */
-	public BigDecimalEntry fetchByBigDecimalValue_Last(
-		BigDecimal bigDecimalValue,
-		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the big decimal entries where bigDecimalValue = &#63; from the database.
 	 *
 	 * @param bigDecimalValue the big decimal value
@@ -252,32 +226,6 @@ public interface BigDecimalEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a matching big decimal entry could not be found
-	 */
-	public BigDecimalEntry findByGtBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
-				orderByComparator)
-		throws NoSuchBigDecimalEntryException;
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
-	 */
-	public BigDecimalEntry fetchByGtBigDecimalValue_Last(
-		BigDecimal bigDecimalValue,
-		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the big decimal entries where bigDecimalValue &gt; &#63; from the database.
 	 *
 	 * @param bigDecimalValue the big decimal value
@@ -376,32 +324,6 @@ public interface BigDecimalEntryPersistence
 	 * @return the first matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
 	 */
 	public BigDecimalEntry fetchByLtBigDecimalValue_First(
-		BigDecimal bigDecimalValue,
-		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a matching big decimal entry could not be found
-	 */
-	public BigDecimalEntry findByLtBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
-				orderByComparator)
-		throws NoSuchBigDecimalEntryException;
-
-	/**
-	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching big decimal entry, or <code>null</code> if a matching big decimal entry could not be found
-	 */
-	public BigDecimalEntry fetchByLtBigDecimalValue_Last(
 		BigDecimal bigDecimalValue,
 		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
 			orderByComparator);
@@ -729,4 +651,4 @@ public interface BigDecimalEntryPersistence
 				lvEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:252000047
+// LIFERAY-SERVICE-BUILDER-HASH:-1319997680

@@ -120,32 +120,6 @@ public interface BackgroundTaskPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last background task in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
 	 * Removes all the background tasks where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -243,32 +217,6 @@ public interface BackgroundTaskPersistence
 	 * @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	 */
 	public BackgroundTask fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
-	 * Returns the last background task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator);
@@ -376,32 +324,6 @@ public interface BackgroundTaskPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last background task in the ordered set where completed = &#63;.
-	 *
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByCompleted_Last(
-			boolean completed,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where completed = &#63;.
-	 *
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByCompleted_Last(
-		boolean completed,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
 	 * Removes all the background tasks where completed = &#63; from the database.
 	 *
 	 * @param completed the completed
@@ -499,32 +421,6 @@ public interface BackgroundTaskPersistence
 	 * @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	 */
 	public BackgroundTask fetchByStatus_First(
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
-	 * Returns the last background task in the ordered set where status = &#63;.
-	 *
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByStatus_Last(
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where status = &#63;.
-	 *
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByStatus_Last(
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator);
@@ -634,34 +530,6 @@ public interface BackgroundTaskPersistence
 	 * @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	 */
 	public BackgroundTask fetchByG_T_First(
-		long groupId, String taskExecutorClassName,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByG_T_Last(
-			long groupId, String taskExecutorClassName,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByG_T_Last(
 		long groupId, String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator);
@@ -856,34 +724,6 @@ public interface BackgroundTaskPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByG_S_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByG_S_Last(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
 	 * Removes all the background tasks where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -990,34 +830,6 @@ public interface BackgroundTaskPersistence
 	 * @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	 */
 	public BackgroundTask fetchByT_S_First(
-		String taskExecutorClassName, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
-	 * Returns the last background task in the ordered set where taskExecutorClassName = &#63; and status = &#63;.
-	 *
-	 * @param taskExecutorClassName the task executor class name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByT_S_Last(
-			String taskExecutorClassName, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where taskExecutorClassName = &#63; and status = &#63;.
-	 *
-	 * @param taskExecutorClassName the task executor class name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByT_S_Last(
 		String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator);
@@ -1217,36 +1029,6 @@ public interface BackgroundTaskPersistence
 	 * @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	 */
 	public BackgroundTask fetchByG_N_T_First(
-		long groupId, String name, String taskExecutorClassName,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param taskExecutorClassName the task executor class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByG_N_T_Last(
-			long groupId, String name, String taskExecutorClassName,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param taskExecutorClassName the task executor class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByG_N_T_Last(
 		long groupId, String name, String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator);
@@ -1464,36 +1246,6 @@ public interface BackgroundTaskPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByG_T_C_Last(
-			long groupId, String taskExecutorClassName, boolean completed,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByG_T_C_Last(
-		long groupId, String taskExecutorClassName, boolean completed,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
 	 * Returns all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
 	 *
 	 * <p>
@@ -1701,36 +1453,6 @@ public interface BackgroundTaskPersistence
 	 * @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	 */
 	public BackgroundTask fetchByG_T_S_First(
-		long groupId, String taskExecutorClassName, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByG_T_S_Last(
-			long groupId, String taskExecutorClassName, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByG_T_S_Last(
 		long groupId, String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
 			orderByComparator);
@@ -1951,40 +1673,6 @@ public interface BackgroundTaskPersistence
 	 * @return the first matching background task, or <code>null</code> if a matching background task could not be found
 	 */
 	public BackgroundTask fetchByG_N_T_C_First(
-		long groupId, String name, String taskExecutorClassName,
-		boolean completed,
-		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-			orderByComparator);
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param taskExecutorClassName the task executor class name
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	public BackgroundTask findByG_N_T_C_Last(
-			long groupId, String name, String taskExecutorClassName,
-			boolean completed,
-			com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
-				orderByComparator)
-		throws NoSuchBackgroundTaskException;
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param taskExecutorClassName the task executor class name
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	public BackgroundTask fetchByG_N_T_C_Last(
 		long groupId, String name, String taskExecutorClassName,
 		boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask>
@@ -2231,4 +1919,4 @@ public interface BackgroundTaskPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-683781541
+// LIFERAY-SERVICE-BUILDER-HASH:1507436246

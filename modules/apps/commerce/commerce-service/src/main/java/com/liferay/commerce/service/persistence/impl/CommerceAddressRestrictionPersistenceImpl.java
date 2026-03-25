@@ -310,67 +310,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce address restriction in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce address restriction
-	 * @throws NoSuchAddressRestrictionException if a matching commerce address restriction could not be found
-	 */
-	@Override
-	public CommerceAddressRestriction findByCountryId_Last(
-			long countryId,
-			OrderByComparator<CommerceAddressRestriction> orderByComparator)
-		throws NoSuchAddressRestrictionException {
-
-		CommerceAddressRestriction commerceAddressRestriction =
-			fetchByCountryId_Last(countryId, orderByComparator);
-
-		if (commerceAddressRestriction != null) {
-			return commerceAddressRestriction;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressRestrictionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce address restriction in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce address restriction, or <code>null</code> if a matching commerce address restriction could not be found
-	 */
-	@Override
-	public CommerceAddressRestriction fetchByCountryId_Last(
-		long countryId,
-		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
-
-		int count = countByCountryId(countryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceAddressRestriction> list = findByCountryId(
-			countryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce address restrictions where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -672,72 +611,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 		List<CommerceAddressRestriction> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce address restriction in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce address restriction
-	 * @throws NoSuchAddressRestrictionException if a matching commerce address restriction could not be found
-	 */
-	@Override
-	public CommerceAddressRestriction findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<CommerceAddressRestriction> orderByComparator)
-		throws NoSuchAddressRestrictionException {
-
-		CommerceAddressRestriction commerceAddressRestriction = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (commerceAddressRestriction != null) {
-			return commerceAddressRestriction;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchAddressRestrictionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce address restriction in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce address restriction, or <code>null</code> if a matching commerce address restriction could not be found
-	 */
-	@Override
-	public CommerceAddressRestriction fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceAddressRestriction> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1758,4 +1631,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-655603172
+// LIFERAY-SERVICE-BUILDER-HASH:314464850

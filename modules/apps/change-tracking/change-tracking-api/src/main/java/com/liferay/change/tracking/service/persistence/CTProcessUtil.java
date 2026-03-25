@@ -213,36 +213,6 @@ public class CTProcessUtil {
 	}
 
 	/**
-	 * Returns the last ct process in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process
-	 * @throws NoSuchProcessException if a matching ct process could not be found
-	 */
-	public static CTProcess findByCompanyId_Last(
-			long companyId, OrderByComparator<CTProcess> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchProcessException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
-	 */
-	public static CTProcess fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTProcess> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the ct processes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -420,36 +390,6 @@ public class CTProcessUtil {
 		long ctCollectionId, OrderByComparator<CTProcess> orderByComparator) {
 
 		return getPersistence().fetchByCtCollectionId_First(
-			ctCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process
-	 * @throws NoSuchProcessException if a matching ct process could not be found
-	 */
-	public static CTProcess findByCtCollectionId_Last(
-			long ctCollectionId, OrderByComparator<CTProcess> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchProcessException {
-
-		return getPersistence().findByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
-	 */
-	public static CTProcess fetchByCtCollectionId_Last(
-		long ctCollectionId, OrderByComparator<CTProcess> orderByComparator) {
-
-		return getPersistence().fetchByCtCollectionId_Last(
 			ctCollectionId, orderByComparator);
 	}
 
@@ -642,40 +582,6 @@ public class CTProcessUtil {
 		OrderByComparator<CTProcess> orderByComparator) {
 
 		return getPersistence().fetchByC_T_First(
-			ctCollectionId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process
-	 * @throws NoSuchProcessException if a matching ct process could not be found
-	 */
-	public static CTProcess findByC_T_Last(
-			long ctCollectionId, int type,
-			OrderByComparator<CTProcess> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchProcessException {
-
-		return getPersistence().findByC_T_Last(
-			ctCollectionId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
-	 */
-	public static CTProcess fetchByC_T_Last(
-		long ctCollectionId, int type,
-		OrderByComparator<CTProcess> orderByComparator) {
-
-		return getPersistence().fetchByC_T_Last(
 			ctCollectionId, type, orderByComparator);
 	}
 
@@ -924,4 +830,4 @@ public class CTProcessUtil {
 	private static volatile CTProcessPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-14558029
+// LIFERAY-SERVICE-BUILDER-HASH:-1020507451

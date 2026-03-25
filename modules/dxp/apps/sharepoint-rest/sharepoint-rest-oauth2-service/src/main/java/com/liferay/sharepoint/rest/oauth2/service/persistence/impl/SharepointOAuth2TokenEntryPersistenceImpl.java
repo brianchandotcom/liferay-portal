@@ -306,67 +306,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sharepoint o auth2 token entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharepoint o auth2 token entry
-	 * @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
-	 */
-	@Override
-	public SharepointOAuth2TokenEntry findByUserId_Last(
-			long userId,
-			OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator)
-		throws NoSuch2TokenEntryException {
-
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry =
-			fetchByUserId_Last(userId, orderByComparator);
-
-		if (sharepointOAuth2TokenEntry != null) {
-			return sharepointOAuth2TokenEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuch2TokenEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharepoint o auth2 token entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
-	 */
-	@Override
-	public SharepointOAuth2TokenEntry fetchByUserId_Last(
-		long userId,
-		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharepointOAuth2TokenEntry> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sharepoint o auth2 token entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1335,4 +1274,4 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1171041854
+// LIFERAY-SERVICE-BUILDER-HASH:-1950685200

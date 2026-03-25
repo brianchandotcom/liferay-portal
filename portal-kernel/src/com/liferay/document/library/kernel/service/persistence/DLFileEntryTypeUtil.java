@@ -211,35 +211,6 @@ public class DLFileEntryTypeUtil {
 	}
 
 	/**
-	 * Returns the last document library file entry type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
-	 */
-	public static DLFileEntryType findByUuid_Last(
-			String uuid, OrderByComparator<DLFileEntryType> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryTypeException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	 */
-	public static DLFileEntryType fetchByUuid_Last(
-		String uuid, OrderByComparator<DLFileEntryType> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entry types where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -437,41 +408,6 @@ public class DLFileEntryTypeUtil {
 	}
 
 	/**
-	 * Returns the last document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
-	 */
-	public static DLFileEntryType findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DLFileEntryType> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryTypeException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	 */
-	public static DLFileEntryType fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DLFileEntryType> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entry types where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -592,35 +528,6 @@ public class DLFileEntryTypeUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
-	 */
-	public static DLFileEntryType findByGroupId_Last(
-			long groupId, OrderByComparator<DLFileEntryType> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryTypeException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	 */
-	public static DLFileEntryType fetchByGroupId_Last(
-		long groupId, OrderByComparator<DLFileEntryType> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -947,38 +854,6 @@ public class DLFileEntryTypeUtil {
 		long companyId, OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
-	 */
-	public static DLFileEntryType findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<DLFileEntryType> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryTypeException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	 */
-	public static DLFileEntryType fetchByCompanyId_Last(
-		long companyId, OrderByComparator<DLFileEntryType> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -1593,4 +1468,4 @@ public class DLFileEntryTypeUtil {
 	private static volatile DLFileEntryTypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1782628432
+// LIFERAY-SERVICE-BUILDER-HASH:-1813598022

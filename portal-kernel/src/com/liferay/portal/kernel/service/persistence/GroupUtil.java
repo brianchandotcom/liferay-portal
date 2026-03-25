@@ -203,34 +203,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByUuid_Last(
-			String uuid, OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByUuid_Last(
-		String uuid, OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -422,40 +394,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -578,36 +516,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByCompanyId_Last(
-			long companyId, OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -724,36 +632,6 @@ public class GroupUtil {
 		long liveGroupId, OrderByComparator<Group> orderByComparator) {
 
 		return getPersistence().fetchByLiveGroupId_First(
-			liveGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where liveGroupId = &#63;.
-	 *
-	 * @param liveGroupId the live group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByLiveGroupId_Last(
-			long liveGroupId, OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByLiveGroupId_Last(
-			liveGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where liveGroupId = &#63;.
-	 *
-	 * @param liveGroupId the live group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByLiveGroupId_Last(
-		long liveGroupId, OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByLiveGroupId_Last(
 			liveGroupId, orderByComparator);
 	}
 
@@ -887,40 +765,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1048,40 +892,6 @@ public class GroupUtil {
 		OrderByComparator<Group> orderByComparator) {
 
 		return getPersistence().fetchByC_P_First(
-			companyId, parentGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_P_Last(
-			long companyId, long parentGroupId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_P_Last(
-			companyId, parentGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_P_Last(
-		long companyId, long parentGroupId,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_P_Last(
 			companyId, parentGroupId, orderByComparator);
 	}
 
@@ -1435,40 +1245,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_S_Last(
-			long companyId, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_S_Last(
-			companyId, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_S_Last(
-		long companyId, boolean site,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_S_Last(
-			companyId, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1595,40 +1371,6 @@ public class GroupUtil {
 		OrderByComparator<Group> orderByComparator) {
 
 		return getPersistence().fetchByC_A_First(
-			companyId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_A_Last(
-			companyId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_A_Last(
 			companyId, active, orderByComparator);
 	}
 
@@ -1764,40 +1506,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_CPK_Last(
-			long classNameId, long classPK,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_CPK_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_CPK_Last(
-		long classNameId, long classPK,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_CPK_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -1923,38 +1631,6 @@ public class GroupUtil {
 		int type, boolean active, OrderByComparator<Group> orderByComparator) {
 
 		return getPersistence().fetchByT_A_First(
-			type, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where type = &#63; and active = &#63;.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByT_A_Last(
-			int type, boolean active,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByT_A_Last(type, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where type = &#63; and active = &#63;.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByT_A_Last(
-		int type, boolean active, OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByT_A_Last(
 			type, active, orderByComparator);
 	}
 
@@ -2096,42 +1772,6 @@ public class GroupUtil {
 		OrderByComparator<Group> orderByComparator) {
 
 		return getPersistence().fetchByGtG_C_P_First(
-			groupId, companyId, parentGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByGtG_C_P_Last(
-			long groupId, long companyId, long parentGroupId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByGtG_C_P_Last(
-			groupId, companyId, parentGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByGtG_C_P_Last(
-		long groupId, long companyId, long parentGroupId,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByGtG_C_P_Last(
 			groupId, companyId, parentGroupId, orderByComparator);
 	}
 
@@ -2363,42 +2003,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and classNameId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_C_P_Last(
-			long companyId, long classNameId, long parentGroupId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_C_P_Last(
-			companyId, classNameId, parentGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and classNameId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_C_P_Last(
-		long companyId, long classNameId, long parentGroupId,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_C_P_Last(
-			companyId, classNameId, parentGroupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and classNameId = &#63; and parentGroupId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2546,42 +2150,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and classNameId = &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_C_S_Last(
-			long companyId, long classNameId, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_C_S_Last(
-			companyId, classNameId, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and classNameId = &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_C_S_Last(
-		long companyId, long classNameId, boolean site,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_C_S_Last(
-			companyId, classNameId, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and classNameId = &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2724,42 +2292,6 @@ public class GroupUtil {
 		OrderByComparator<Group> orderByComparator) {
 
 		return getPersistence().fetchByC_P_S_First(
-			companyId, parentGroupId, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_P_S_Last(
-			long companyId, long parentGroupId, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_P_S_Last(
-			companyId, parentGroupId, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_P_S_Last(
-		long companyId, long parentGroupId, boolean site,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_P_S_Last(
 			companyId, parentGroupId, site, orderByComparator);
 	}
 
@@ -2987,42 +2519,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and treePath LIKE &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_LikeT_S_Last(
-			long companyId, String treePath, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_LikeT_S_Last(
-			companyId, treePath, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and treePath LIKE &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_LikeT_S_Last(
-		long companyId, String treePath, boolean site,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_LikeT_S_Last(
-			companyId, treePath, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and treePath LIKE &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3169,42 +2665,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and name LIKE &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_LikeN_S_Last(
-			long companyId, String name, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_LikeN_S_Last(
-			companyId, name, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and name LIKE &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_LikeN_S_Last(
-		long companyId, String name, boolean site,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_LikeN_S_Last(
-			companyId, name, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and name LIKE &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3347,42 +2807,6 @@ public class GroupUtil {
 		OrderByComparator<Group> orderByComparator) {
 
 		return getPersistence().fetchByC_S_A_First(
-			companyId, site, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and site = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_S_A_Last(
-			long companyId, boolean site, boolean active,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_S_A_Last(
-			companyId, site, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and site = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_S_A_Last(
-		long companyId, boolean site, boolean active,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_S_A_Last(
 			companyId, site, active, orderByComparator);
 	}
 
@@ -3543,44 +2967,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and classNameId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByGtG_C_C_P_Last(
-			long groupId, long companyId, long classNameId, long parentGroupId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByGtG_C_C_P_Last(
-			groupId, companyId, classNameId, parentGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and classNameId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByGtG_C_C_P_Last(
-		long groupId, long companyId, long classNameId, long parentGroupId,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByGtG_C_C_P_Last(
-			groupId, companyId, classNameId, parentGroupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where groupId &gt; &#63; and companyId = &#63; and classNameId = &#63; and parentGroupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3737,44 +3123,6 @@ public class GroupUtil {
 		OrderByComparator<Group> orderByComparator) {
 
 		return getPersistence().fetchByGtG_C_P_S_First(
-			groupId, companyId, parentGroupId, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63; and site = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByGtG_C_P_S_Last(
-			long groupId, long companyId, long parentGroupId, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByGtG_C_P_S_Last(
-			groupId, companyId, parentGroupId, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63; and site = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByGtG_C_P_S_Last(
-		long groupId, long companyId, long parentGroupId, boolean site,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByGtG_C_P_S_Last(
 			groupId, companyId, parentGroupId, site, orderByComparator);
 	}
 
@@ -4024,44 +3372,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63; and name LIKE &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param name the name
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_P_LikeN_S_Last(
-			long companyId, long parentGroupId, String name, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_P_LikeN_S_Last(
-			companyId, parentGroupId, name, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63; and name LIKE &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param name the name
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_P_LikeN_S_Last(
-		long companyId, long parentGroupId, String name, boolean site,
-		OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_P_LikeN_S_Last(
-			companyId, parentGroupId, name, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and parentGroupId = &#63; and name LIKE &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -4220,44 +3530,6 @@ public class GroupUtil {
 		boolean inheritContent, OrderByComparator<Group> orderByComparator) {
 
 		return getPersistence().fetchByC_P_S_I_First(
-			companyId, parentGroupId, site, inheritContent, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63; and inheritContent = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param inheritContent the inherit content
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	public static Group findByC_P_S_I_Last(
-			long companyId, long parentGroupId, boolean site,
-			boolean inheritContent, OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_P_S_I_Last(
-			companyId, parentGroupId, site, inheritContent, orderByComparator);
-	}
-
-	/**
-	 * Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63; and inheritContent = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param inheritContent the inherit content
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	public static Group fetchByC_P_S_I_Last(
-		long companyId, long parentGroupId, boolean site,
-		boolean inheritContent, OrderByComparator<Group> orderByComparator) {
-
-		return getPersistence().fetchByC_P_S_I_Last(
 			companyId, parentGroupId, site, inheritContent, orderByComparator);
 	}
 
@@ -5384,4 +4656,4 @@ public class GroupUtil {
 	private static volatile GroupPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:249018205
+// LIFERAY-SERVICE-BUILDER-HASH:1060012737

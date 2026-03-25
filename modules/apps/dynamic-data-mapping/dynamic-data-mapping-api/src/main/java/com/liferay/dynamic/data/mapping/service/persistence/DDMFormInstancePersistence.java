@@ -121,32 +121,6 @@ public interface DDMFormInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm form instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance
-	 * @throws NoSuchFormInstanceException if a matching ddm form instance could not be found
-	 */
-	public DDMFormInstance findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
-				orderByComparator)
-		throws NoSuchFormInstanceException;
-
-	/**
-	 * Returns the last ddm form instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
-	 */
-	public DDMFormInstance fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm form instances where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface DDMFormInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm form instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance
-	 * @throws NoSuchFormInstanceException if a matching ddm form instance could not be found
-	 */
-	public DDMFormInstance findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
-				orderByComparator)
-		throws NoSuchFormInstanceException;
-
-	/**
-	 * Returns the last ddm form instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
-	 */
-	public DDMFormInstance fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm form instances where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface DDMFormInstancePersistence
 	 * @return the first matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
 	 */
 	public DDMFormInstance fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm form instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance
-	 * @throws NoSuchFormInstanceException if a matching ddm form instance could not be found
-	 */
-	public DDMFormInstance findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
-				orderByComparator)
-		throws NoSuchFormInstanceException;
-
-	/**
-	 * Returns the last ddm form instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
-	 */
-	public DDMFormInstance fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
 			orderByComparator);
@@ -815,4 +735,4 @@ public interface DDMFormInstancePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:734725976
+// LIFERAY-SERVICE-BUILDER-HASH:2018125275

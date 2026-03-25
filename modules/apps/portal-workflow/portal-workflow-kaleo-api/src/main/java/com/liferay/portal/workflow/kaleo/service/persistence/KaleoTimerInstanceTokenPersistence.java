@@ -123,32 +123,6 @@ public interface KaleoTimerInstanceTokenPersistence
 			<KaleoTimerInstanceToken> orderByComparator);
 
 	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token
-	 * @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
-	 */
-	public KaleoTimerInstanceToken findByKaleoInstanceId_Last(
-			long kaleoInstanceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTimerInstanceToken> orderByComparator)
-		throws NoSuchTimerInstanceTokenException;
-
-	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
-	 */
-	public KaleoTimerInstanceToken fetchByKaleoInstanceId_Last(
-		long kaleoInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<KaleoTimerInstanceToken> orderByComparator);
-
-	/**
 	 * Removes all the kaleo timer instance tokens where kaleoInstanceId = &#63; from the database.
 	 *
 	 * @param kaleoInstanceId the kaleo instance ID
@@ -311,34 +285,6 @@ public interface KaleoTimerInstanceTokenPersistence
 			<KaleoTimerInstanceToken> orderByComparator);
 
 	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token
-	 * @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
-	 */
-	public KaleoTimerInstanceToken findByKITI_C_Last(
-			long kaleoInstanceTokenId, boolean completed,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTimerInstanceToken> orderByComparator)
-		throws NoSuchTimerInstanceTokenException;
-
-	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
-	 */
-	public KaleoTimerInstanceToken fetchByKITI_C_Last(
-		long kaleoInstanceTokenId, boolean completed,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<KaleoTimerInstanceToken> orderByComparator);
-
-	/**
 	 * Removes all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63; from the database.
 	 *
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
@@ -454,36 +400,6 @@ public interface KaleoTimerInstanceTokenPersistence
 	 * @return the first matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
 	 */
 	public KaleoTimerInstanceToken fetchByKITI_B_C_First(
-		long kaleoInstanceTokenId, boolean blocking, boolean completed,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<KaleoTimerInstanceToken> orderByComparator);
-
-	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param blocking the blocking
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token
-	 * @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
-	 */
-	public KaleoTimerInstanceToken findByKITI_B_C_Last(
-			long kaleoInstanceTokenId, boolean blocking, boolean completed,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTimerInstanceToken> orderByComparator)
-		throws NoSuchTimerInstanceTokenException;
-
-	/**
-	 * Returns the last kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param blocking the blocking
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
-	 */
-	public KaleoTimerInstanceToken fetchByKITI_B_C_Last(
 		long kaleoInstanceTokenId, boolean blocking, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<KaleoTimerInstanceToken> orderByComparator);
@@ -634,4 +550,4 @@ public interface KaleoTimerInstanceTokenPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1781204446
+// LIFERAY-SERVICE-BUILDER-HASH:949530375

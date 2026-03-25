@@ -305,65 +305,6 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last background task in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByGroupId_Last(
-			long groupId, OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByGroupId_Last(
-		long groupId, OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the background tasks where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -642,65 +583,6 @@ public class BackgroundTaskPersistenceImpl
 
 		List<BackgroundTask> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByCompanyId_Last(
-			long companyId, OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByCompanyId_Last(
-		long companyId, OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -999,67 +881,6 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last background task in the ordered set where completed = &#63;.
-	 *
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByCompleted_Last(
-			boolean completed,
-			OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByCompleted_Last(
-			completed, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("completed=");
-		sb.append(completed);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where completed = &#63;.
-	 *
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByCompleted_Last(
-		boolean completed,
-		OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByCompleted(completed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByCompleted(
-			completed, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the background tasks where completed = &#63; from the database.
 	 *
 	 * @param completed the completed
@@ -1333,65 +1154,6 @@ public class BackgroundTaskPersistenceImpl
 
 		List<BackgroundTask> list = findByStatus(
 			status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where status = &#63;.
-	 *
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByStatus_Last(
-			int status, OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByStatus_Last(
-			status, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where status = &#63;.
-	 *
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByStatus_Last(
-		int status, OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByStatus(status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByStatus(
-			status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1716,73 +1478,6 @@ public class BackgroundTaskPersistenceImpl
 
 		List<BackgroundTask> list = findByG_T(
 			groupId, taskExecutorClassName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByG_T_Last(
-			long groupId, String taskExecutorClassName,
-			OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByG_T_Last(
-			groupId, taskExecutorClassName, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", taskExecutorClassName=");
-		sb.append(taskExecutorClassName);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByG_T_Last(
-		long groupId, String taskExecutorClassName,
-		OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByG_T(groupId, taskExecutorClassName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByG_T(
-			groupId, taskExecutorClassName, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2483,72 +2178,6 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByG_S_Last(
-			groupId, status, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByG_S(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByG_S(
-			groupId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the background tasks where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2873,72 +2502,6 @@ public class BackgroundTaskPersistenceImpl
 
 		List<BackgroundTask> list = findByT_S(
 			taskExecutorClassName, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where taskExecutorClassName = &#63; and status = &#63;.
-	 *
-	 * @param taskExecutorClassName the task executor class name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByT_S_Last(
-			String taskExecutorClassName, int status,
-			OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByT_S_Last(
-			taskExecutorClassName, status, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("taskExecutorClassName=");
-		sb.append(taskExecutorClassName);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where taskExecutorClassName = &#63; and status = &#63;.
-	 *
-	 * @param taskExecutorClassName the task executor class name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByT_S_Last(
-		String taskExecutorClassName, int status,
-		OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByT_S(taskExecutorClassName, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByT_S(
-			taskExecutorClassName, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3653,78 +3216,6 @@ public class BackgroundTaskPersistenceImpl
 
 		List<BackgroundTask> list = findByG_N_T(
 			groupId, name, taskExecutorClassName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param taskExecutorClassName the task executor class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByG_N_T_Last(
-			long groupId, String name, String taskExecutorClassName,
-			OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByG_N_T_Last(
-			groupId, name, taskExecutorClassName, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", taskExecutorClassName=");
-		sb.append(taskExecutorClassName);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param taskExecutorClassName the task executor class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByG_N_T_Last(
-		long groupId, String name, String taskExecutorClassName,
-		OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByG_N_T(groupId, name, taskExecutorClassName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByG_N_T(
-			groupId, name, taskExecutorClassName, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4541,78 +4032,6 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByG_T_C_Last(
-			long groupId, String taskExecutorClassName, boolean completed,
-			OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByG_T_C_Last(
-			groupId, taskExecutorClassName, completed, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", taskExecutorClassName=");
-		sb.append(taskExecutorClassName);
-
-		sb.append(", completed=");
-		sb.append(completed);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByG_T_C_Last(
-		long groupId, String taskExecutorClassName, boolean completed,
-		OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByG_T_C(groupId, taskExecutorClassName, completed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByG_T_C(
-			groupId, taskExecutorClassName, completed, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
 	 *
 	 * <p>
@@ -5390,78 +4809,6 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByG_T_S_Last(
-			long groupId, String taskExecutorClassName, int status,
-			OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByG_T_S_Last(
-			groupId, taskExecutorClassName, status, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", taskExecutorClassName=");
-		sb.append(taskExecutorClassName);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param taskExecutorClassName the task executor class name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByG_T_S_Last(
-		long groupId, String taskExecutorClassName, int status,
-		OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByG_T_S(groupId, taskExecutorClassName, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByG_T_S(
-			groupId, taskExecutorClassName, status, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -6219,86 +5566,6 @@ public class BackgroundTaskPersistenceImpl
 
 		List<BackgroundTask> list = findByG_N_T_C(
 			groupId, name, taskExecutorClassName, completed, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param taskExecutorClassName the task executor class name
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task
-	 * @throws NoSuchBackgroundTaskException if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask findByG_N_T_C_Last(
-			long groupId, String name, String taskExecutorClassName,
-			boolean completed,
-			OrderByComparator<BackgroundTask> orderByComparator)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByG_N_T_C_Last(
-			groupId, name, taskExecutorClassName, completed, orderByComparator);
-
-		if (backgroundTask != null) {
-			return backgroundTask;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", taskExecutorClassName=");
-		sb.append(taskExecutorClassName);
-
-		sb.append(", completed=");
-		sb.append(completed);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
-	}
-
-	/**
-	 * Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param taskExecutorClassName the task executor class name
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching background task, or <code>null</code> if a matching background task could not be found
-	 */
-	@Override
-	public BackgroundTask fetchByG_N_T_C_Last(
-		long groupId, String name, String taskExecutorClassName,
-		boolean completed,
-		OrderByComparator<BackgroundTask> orderByComparator) {
-
-		int count = countByG_N_T_C(
-			groupId, name, taskExecutorClassName, completed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BackgroundTask> list = findByG_N_T_C(
-			groupId, name, taskExecutorClassName, completed, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -7714,4 +6981,4 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:428607866
+// LIFERAY-SERVICE-BUILDER-HASH:800549188

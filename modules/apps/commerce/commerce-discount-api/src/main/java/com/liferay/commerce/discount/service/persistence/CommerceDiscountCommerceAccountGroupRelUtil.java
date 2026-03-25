@@ -238,43 +238,6 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce discount commerce account group rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount commerce account group rel
-	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a matching commerce discount commerce account group rel could not be found
-	 */
-	public static CommerceDiscountCommerceAccountGroupRel
-			findByCommerceDiscountId_Last(
-				long commerceDiscountId,
-				OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-					orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountCommerceAccountGroupRelException {
-
-		return getPersistence().findByCommerceDiscountId_Last(
-			commerceDiscountId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount commerce account group rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
-	 */
-	public static CommerceDiscountCommerceAccountGroupRel
-		fetchByCommerceDiscountId_Last(
-			long commerceDiscountId,
-			OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommerceDiscountId_Last(
-			commerceDiscountId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce discount commerce account group rels where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -409,43 +372,6 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchByCommerceAccountGroupId_First(
-			commerceAccountGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount commerce account group rel
-	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a matching commerce discount commerce account group rel could not be found
-	 */
-	public static CommerceDiscountCommerceAccountGroupRel
-			findByCommerceAccountGroupId_Last(
-				long commerceAccountGroupId,
-				OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-					orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountCommerceAccountGroupRelException {
-
-		return getPersistence().findByCommerceAccountGroupId_Last(
-			commerceAccountGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
-	 */
-	public static CommerceDiscountCommerceAccountGroupRel
-		fetchByCommerceAccountGroupId_Last(
-			long commerceAccountGroupId,
-			OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommerceAccountGroupId_Last(
 			commerceAccountGroupId, orderByComparator);
 	}
 
@@ -741,4 +667,4 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-644086600
+// LIFERAY-SERVICE-BUILDER-HASH:-786819384

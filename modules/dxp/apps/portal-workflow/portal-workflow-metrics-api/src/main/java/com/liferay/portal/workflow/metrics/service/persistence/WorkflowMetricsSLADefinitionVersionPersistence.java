@@ -121,32 +121,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a matching workflow metrics sla definition version could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
-		throws NoSuchSLADefinitionVersionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
-
-	/**
 	 * Removes all the workflow metrics sla definition versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -309,34 +283,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a matching workflow metrics sla definition version could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
-		throws NoSuchSLADefinitionVersionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
-
-	/**
 	 * Removes all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,34 +389,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion
 		fetchByWorkflowMetricsSLADefinitionId_First(
-			long workflowMetricsSLADefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinitionVersion> orderByComparator);
-
-	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where workflowMetricsSLADefinitionId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a matching workflow metrics sla definition version could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion
-			findByWorkflowMetricsSLADefinitionId_Last(
-				long workflowMetricsSLADefinitionId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<WorkflowMetricsSLADefinitionVersion> orderByComparator)
-		throws NoSuchSLADefinitionVersionException;
-
-	/**
-	 * Returns the last workflow metrics sla definition version in the ordered set where workflowMetricsSLADefinitionId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion
-		fetchByWorkflowMetricsSLADefinitionId_Last(
 			long workflowMetricsSLADefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<WorkflowMetricsSLADefinitionVersion> orderByComparator);
@@ -679,4 +597,4 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1627908042
+// LIFERAY-SERVICE-BUILDER-HASH:1563253364

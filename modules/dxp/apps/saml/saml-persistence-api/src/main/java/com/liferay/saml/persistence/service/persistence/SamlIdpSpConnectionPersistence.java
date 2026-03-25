@@ -120,32 +120,6 @@ public interface SamlIdpSpConnectionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last saml idp sp connection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp connection
-	 * @throws NoSuchIdpSpConnectionException if a matching saml idp sp connection could not be found
-	 */
-	public SamlIdpSpConnection findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SamlIdpSpConnection> orderByComparator)
-		throws NoSuchIdpSpConnectionException;
-
-	/**
-	 * Returns the last saml idp sp connection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml idp sp connection, or <code>null</code> if a matching saml idp sp connection could not be found
-	 */
-	public SamlIdpSpConnection fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpConnection>
-			orderByComparator);
-
-	/**
 	 * Removes all the saml idp sp connections where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -336,4 +310,4 @@ public interface SamlIdpSpConnectionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:552082454
+// LIFERAY-SERVICE-BUILDER-HASH:963795888

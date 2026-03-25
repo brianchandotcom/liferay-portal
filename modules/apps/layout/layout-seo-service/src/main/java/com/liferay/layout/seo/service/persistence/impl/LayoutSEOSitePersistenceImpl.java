@@ -330,64 +330,6 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout seo site in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo site
-	 * @throws NoSuchSiteException if a matching layout seo site could not be found
-	 */
-	@Override
-	public LayoutSEOSite findByUuid_Last(
-			String uuid, OrderByComparator<LayoutSEOSite> orderByComparator)
-		throws NoSuchSiteException {
-
-		LayoutSEOSite layoutSEOSite = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (layoutSEOSite != null) {
-			return layoutSEOSite;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSiteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout seo site in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo site, or <code>null</code> if a matching layout seo site could not be found
-	 */
-	@Override
-	public LayoutSEOSite fetchByUuid_Last(
-		String uuid, OrderByComparator<LayoutSEOSite> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutSEOSite> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout seo sites where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -926,72 +868,6 @@ public class LayoutSEOSitePersistenceImpl
 
 		List<LayoutSEOSite> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout seo site in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo site
-	 * @throws NoSuchSiteException if a matching layout seo site could not be found
-	 */
-	@Override
-	public LayoutSEOSite findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutSEOSite> orderByComparator)
-		throws NoSuchSiteException {
-
-		LayoutSEOSite layoutSEOSite = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (layoutSEOSite != null) {
-			return layoutSEOSite;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSiteException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout seo site in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo site, or <code>null</code> if a matching layout seo site could not be found
-	 */
-	@Override
-	public LayoutSEOSite fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutSEOSite> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutSEOSite> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2256,4 +2132,4 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1616206539
+// LIFERAY-SERVICE-BUILDER-HASH:90536875

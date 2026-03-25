@@ -524,72 +524,6 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 	/**
-	 * Returns the last push notifications device in the ordered set where userId = &#63; and platform = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param platform the platform
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching push notifications device
-	 * @throws NoSuchDeviceException if a matching push notifications device could not be found
-	 */
-	@Override
-	public PushNotificationsDevice findByU_P_Last(
-			long userId, String platform,
-			OrderByComparator<PushNotificationsDevice> orderByComparator)
-		throws NoSuchDeviceException {
-
-		PushNotificationsDevice pushNotificationsDevice = fetchByU_P_Last(
-			userId, platform, orderByComparator);
-
-		if (pushNotificationsDevice != null) {
-			return pushNotificationsDevice;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", platform=");
-		sb.append(platform);
-
-		sb.append("}");
-
-		throw new NoSuchDeviceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last push notifications device in the ordered set where userId = &#63; and platform = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param platform the platform
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
-	 */
-	@Override
-	public PushNotificationsDevice fetchByU_P_Last(
-		long userId, String platform,
-		OrderByComparator<PushNotificationsDevice> orderByComparator) {
-
-		int count = countByU_P(userId, platform);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PushNotificationsDevice> list = findByU_P(
-			userId, platform, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the push notifications devices where userId = any &#63; and platform = &#63;.
 	 *
 	 * <p>
@@ -1667,4 +1601,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-777502051
+// LIFERAY-SERVICE-BUILDER-HASH:-667427602

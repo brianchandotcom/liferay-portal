@@ -118,32 +118,6 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching entry
-	 * @throws NoSuchEntryException if a matching entry could not be found
-	 */
-	public Entry findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching entry, or <code>null</code> if a matching entry could not be found
-	 */
-	public Entry fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
-
-	/**
 	 * Removes all the entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -327,4 +301,4 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:477640467
+// LIFERAY-SERVICE-BUILDER-HASH:358008332

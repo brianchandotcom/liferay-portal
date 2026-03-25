@@ -242,43 +242,6 @@ public class CommerceShippingFixedOptionQualifierUtil {
 	}
 
 	/**
-	 * Returns the last commerce shipping fixed option qualifier in the ordered set where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option qualifier
-	 * @throws NoSuchShippingFixedOptionQualifierException if a matching commerce shipping fixed option qualifier could not be found
-	 */
-	public static CommerceShippingFixedOptionQualifier
-			findByCommerceShippingFixedOptionId_Last(
-				long commerceShippingFixedOptionId,
-				OrderByComparator<CommerceShippingFixedOptionQualifier>
-					orderByComparator)
-		throws com.liferay.commerce.shipping.engine.fixed.exception.
-			NoSuchShippingFixedOptionQualifierException {
-
-		return getPersistence().findByCommerceShippingFixedOptionId_Last(
-			commerceShippingFixedOptionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option qualifier in the ordered set where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option qualifier, or <code>null</code> if a matching commerce shipping fixed option qualifier could not be found
-	 */
-	public static CommerceShippingFixedOptionQualifier
-		fetchByCommerceShippingFixedOptionId_Last(
-			long commerceShippingFixedOptionId,
-			OrderByComparator<CommerceShippingFixedOptionQualifier>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommerceShippingFixedOptionId_Last(
-			commerceShippingFixedOptionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63; from the database.
 	 *
 	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
@@ -424,43 +387,6 @@ public class CommerceShippingFixedOptionQualifierUtil {
 			orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, commerceShippingFixedOptionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option qualifier in the ordered set where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option qualifier
-	 * @throws NoSuchShippingFixedOptionQualifierException if a matching commerce shipping fixed option qualifier could not be found
-	 */
-	public static CommerceShippingFixedOptionQualifier findByC_C_Last(
-			long classNameId, long commerceShippingFixedOptionId,
-			OrderByComparator<CommerceShippingFixedOptionQualifier>
-				orderByComparator)
-		throws com.liferay.commerce.shipping.engine.fixed.exception.
-			NoSuchShippingFixedOptionQualifierException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, commerceShippingFixedOptionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option qualifier in the ordered set where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option qualifier, or <code>null</code> if a matching commerce shipping fixed option qualifier could not be found
-	 */
-	public static CommerceShippingFixedOptionQualifier fetchByC_C_Last(
-		long classNameId, long commerceShippingFixedOptionId,
-		OrderByComparator<CommerceShippingFixedOptionQualifier>
-			orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, commerceShippingFixedOptionId, orderByComparator);
 	}
 
@@ -763,4 +689,4 @@ public class CommerceShippingFixedOptionQualifierUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1492790475
+// LIFERAY-SERVICE-BUILDER-HASH:211628735

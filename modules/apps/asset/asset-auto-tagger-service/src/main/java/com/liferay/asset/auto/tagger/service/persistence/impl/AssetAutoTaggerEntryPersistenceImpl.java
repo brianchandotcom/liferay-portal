@@ -324,67 +324,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset auto tagger entry in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset auto tagger entry
-	 * @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry findByAssetEntryId_Last(
-			long assetEntryId,
-			OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByAssetEntryId_Last(
-			assetEntryId, orderByComparator);
-
-		if (assetAutoTaggerEntry != null) {
-			return assetAutoTaggerEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetEntryId=");
-		sb.append(assetEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset auto tagger entry in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry fetchByAssetEntryId_Last(
-		long assetEntryId,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
-
-		int count = countByAssetEntryId(assetEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetAutoTaggerEntry> list = findByAssetEntryId(
-			assetEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset auto tagger entries where assetEntryId = &#63; from the database.
 	 *
 	 * @param assetEntryId the asset entry ID
@@ -679,67 +618,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 		List<AssetAutoTaggerEntry> list = findByAssetTagId(
 			assetTagId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset auto tagger entry in the ordered set where assetTagId = &#63;.
-	 *
-	 * @param assetTagId the asset tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset auto tagger entry
-	 * @throws NoSuchEntryException if a matching asset auto tagger entry could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry findByAssetTagId_Last(
-			long assetTagId,
-			OrderByComparator<AssetAutoTaggerEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByAssetTagId_Last(
-			assetTagId, orderByComparator);
-
-		if (assetAutoTaggerEntry != null) {
-			return assetAutoTaggerEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetTagId=");
-		sb.append(assetTagId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset auto tagger entry in the ordered set where assetTagId = &#63;.
-	 *
-	 * @param assetTagId the asset tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry fetchByAssetTagId_Last(
-		long assetTagId,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
-
-		int count = countByAssetTagId(assetTagId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetAutoTaggerEntry> list = findByAssetTagId(
-			assetTagId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1985,4 +1863,4 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1399912969
+// LIFERAY-SERVICE-BUILDER-HASH:-1700538109

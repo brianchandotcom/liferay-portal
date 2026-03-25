@@ -121,32 +121,6 @@ public interface DDMStorageLinkPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	public DDMStorageLink findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
-		throws NoSuchStorageLinkException;
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	public DDMStorageLink fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm storage links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -251,34 +225,6 @@ public interface DDMStorageLinkPersistence
 	 * @return the first matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	 */
 	public DDMStorageLink fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	public DDMStorageLink findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
-		throws NoSuchStorageLinkException;
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	public DDMStorageLink fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
 			orderByComparator);
@@ -432,32 +378,6 @@ public interface DDMStorageLinkPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm storage link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	public DDMStorageLink findByStructureId_Last(
-			long structureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
-		throws NoSuchStorageLinkException;
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	public DDMStorageLink fetchByStructureId_Last(
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm storage links where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -556,32 +476,6 @@ public interface DDMStorageLinkPersistence
 	 * @return the first matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	 */
 	public DDMStorageLink fetchByStructureVersionId_First(
-		long structureVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	public DDMStorageLink findByStructureVersionId_Last(
-			long structureVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
-		throws NoSuchStorageLinkException;
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	public DDMStorageLink fetchByStructureVersionId_Last(
 		long structureVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
 			orderByComparator);
@@ -796,4 +690,4 @@ public interface DDMStorageLinkPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1573400027
+// LIFERAY-SERVICE-BUILDER-HASH:871749101

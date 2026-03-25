@@ -317,64 +317,6 @@ public class SAPEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sap entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry
-	 * @throws NoSuchEntryException if a matching sap entry could not be found
-	 */
-	@Override
-	public SAPEntry findByUuid_Last(
-			String uuid, OrderByComparator<SAPEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SAPEntry sapEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (sapEntry != null) {
-			return sapEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sap entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
-	 */
-	@Override
-	public SAPEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SAPEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SAPEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the sap entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -921,72 +863,6 @@ public class SAPEntryPersistenceImpl
 
 		List<SAPEntry> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sap entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry
-	 * @throws NoSuchEntryException if a matching sap entry could not be found
-	 */
-	@Override
-	public SAPEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SAPEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SAPEntry sapEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (sapEntry != null) {
-			return sapEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sap entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
-	 */
-	@Override
-	public SAPEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SAPEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SAPEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1543,64 +1419,6 @@ public class SAPEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sap entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry
-	 * @throws NoSuchEntryException if a matching sap entry could not be found
-	 */
-	@Override
-	public SAPEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<SAPEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SAPEntry sapEntry = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (sapEntry != null) {
-			return sapEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sap entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
-	 */
-	@Override
-	public SAPEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<SAPEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SAPEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the sap entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2090,72 +1908,6 @@ public class SAPEntryPersistenceImpl
 
 		List<SAPEntry> list = findByC_D(
 			companyId, defaultSAPEntry, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sap entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultSAPEntry the default sap entry
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry
-	 * @throws NoSuchEntryException if a matching sap entry could not be found
-	 */
-	@Override
-	public SAPEntry findByC_D_Last(
-			long companyId, boolean defaultSAPEntry,
-			OrderByComparator<SAPEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SAPEntry sapEntry = fetchByC_D_Last(
-			companyId, defaultSAPEntry, orderByComparator);
-
-		if (sapEntry != null) {
-			return sapEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", defaultSAPEntry=");
-		sb.append(defaultSAPEntry);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sap entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultSAPEntry the default sap entry
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
-	 */
-	@Override
-	public SAPEntry fetchByC_D_Last(
-		long companyId, boolean defaultSAPEntry,
-		OrderByComparator<SAPEntry> orderByComparator) {
-
-		int count = countByC_D(companyId, defaultSAPEntry);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SAPEntry> list = findByC_D(
-			companyId, defaultSAPEntry, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3410,4 +3162,4 @@ public class SAPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:329669016
+// LIFERAY-SERVICE-BUILDER-HASH:2020305935

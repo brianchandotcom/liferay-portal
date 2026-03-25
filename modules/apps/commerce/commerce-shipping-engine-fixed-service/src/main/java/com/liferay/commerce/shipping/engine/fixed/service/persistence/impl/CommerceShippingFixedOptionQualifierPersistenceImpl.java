@@ -340,76 +340,6 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce shipping fixed option qualifier in the ordered set where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option qualifier
-	 * @throws NoSuchShippingFixedOptionQualifierException if a matching commerce shipping fixed option qualifier could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionQualifier
-			findByCommerceShippingFixedOptionId_Last(
-				long commerceShippingFixedOptionId,
-				OrderByComparator<CommerceShippingFixedOptionQualifier>
-					orderByComparator)
-		throws NoSuchShippingFixedOptionQualifierException {
-
-		CommerceShippingFixedOptionQualifier
-			commerceShippingFixedOptionQualifier =
-				fetchByCommerceShippingFixedOptionId_Last(
-					commerceShippingFixedOptionId, orderByComparator);
-
-		if (commerceShippingFixedOptionQualifier != null) {
-			return commerceShippingFixedOptionQualifier;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingFixedOptionId=");
-		sb.append(commerceShippingFixedOptionId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionQualifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option qualifier in the ordered set where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option qualifier, or <code>null</code> if a matching commerce shipping fixed option qualifier could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionQualifier
-		fetchByCommerceShippingFixedOptionId_Last(
-			long commerceShippingFixedOptionId,
-			OrderByComparator<CommerceShippingFixedOptionQualifier>
-				orderByComparator) {
-
-		int count = countByCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShippingFixedOptionQualifier> list =
-			findByCommerceShippingFixedOptionId(
-				commerceShippingFixedOptionId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63; from the database.
 	 *
 	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
@@ -740,76 +670,6 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 
 		List<CommerceShippingFixedOptionQualifier> list = findByC_C(
 			classNameId, commerceShippingFixedOptionId, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option qualifier in the ordered set where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option qualifier
-	 * @throws NoSuchShippingFixedOptionQualifierException if a matching commerce shipping fixed option qualifier could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionQualifier findByC_C_Last(
-			long classNameId, long commerceShippingFixedOptionId,
-			OrderByComparator<CommerceShippingFixedOptionQualifier>
-				orderByComparator)
-		throws NoSuchShippingFixedOptionQualifierException {
-
-		CommerceShippingFixedOptionQualifier
-			commerceShippingFixedOptionQualifier = fetchByC_C_Last(
-				classNameId, commerceShippingFixedOptionId, orderByComparator);
-
-		if (commerceShippingFixedOptionQualifier != null) {
-			return commerceShippingFixedOptionQualifier;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", commerceShippingFixedOptionId=");
-		sb.append(commerceShippingFixedOptionId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionQualifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option qualifier in the ordered set where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option qualifier, or <code>null</code> if a matching commerce shipping fixed option qualifier could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionQualifier fetchByC_C_Last(
-		long classNameId, long commerceShippingFixedOptionId,
-		OrderByComparator<CommerceShippingFixedOptionQualifier>
-			orderByComparator) {
-
-		int count = countByC_C(classNameId, commerceShippingFixedOptionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShippingFixedOptionQualifier> list = findByC_C(
-			classNameId, commerceShippingFixedOptionId, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1925,4 +1785,4 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1097381396
+// LIFERAY-SERVICE-BUILDER-HASH:946649830

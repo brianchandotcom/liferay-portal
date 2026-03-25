@@ -339,64 +339,6 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
-	 */
-	@Override
-	public CPTaxCategory findByUuid_Last(
-			String uuid, OrderByComparator<CPTaxCategory> orderByComparator)
-		throws NoSuchCPTaxCategoryException {
-
-		CPTaxCategory cpTaxCategory = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (cpTaxCategory != null) {
-			return cpTaxCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPTaxCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
-	 */
-	@Override
-	public CPTaxCategory fetchByUuid_Last(
-		String uuid, OrderByComparator<CPTaxCategory> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPTaxCategory> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cp tax categories that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -970,72 +912,6 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
-	 */
-	@Override
-	public CPTaxCategory findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPTaxCategory> orderByComparator)
-		throws NoSuchCPTaxCategoryException {
-
-		CPTaxCategory cpTaxCategory = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpTaxCategory != null) {
-			return cpTaxCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPTaxCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
-	 */
-	@Override
-	public CPTaxCategory fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPTaxCategory> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPTaxCategory> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cp tax categories that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1592,65 +1468,6 @@ public class CPTaxCategoryPersistenceImpl
 
 		List<CPTaxCategory> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp tax category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
-	 */
-	@Override
-	public CPTaxCategory findByCompanyId_Last(
-			long companyId, OrderByComparator<CPTaxCategory> orderByComparator)
-		throws NoSuchCPTaxCategoryException {
-
-		CPTaxCategory cpTaxCategory = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (cpTaxCategory != null) {
-			return cpTaxCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPTaxCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp tax category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
-	 */
-	@Override
-	public CPTaxCategory fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CPTaxCategory> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPTaxCategory> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3219,4 +3036,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1934391487
+// LIFERAY-SERVICE-BUILDER-HASH:-14364891

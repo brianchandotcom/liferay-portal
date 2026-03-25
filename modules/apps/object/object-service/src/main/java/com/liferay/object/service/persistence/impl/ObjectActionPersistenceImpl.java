@@ -323,64 +323,6 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object action in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction findByUuid_Last(
-			String uuid, OrderByComparator<ObjectAction> orderByComparator)
-		throws NoSuchObjectActionException {
-
-		ObjectAction objectAction = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (objectAction != null) {
-			return objectAction;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectAction> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectAction> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object actions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -714,72 +656,6 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object action in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws NoSuchObjectActionException {
-
-		ObjectAction objectAction = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectAction != null) {
-			return objectAction;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectAction> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object actions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1092,67 +968,6 @@ public class ObjectActionPersistenceImpl
 
 		List<ObjectAction> list = findByObjectDefinitionId(
 			objectDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws NoSuchObjectActionException {
-
-		ObjectAction objectAction = fetchByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-
-		if (objectAction != null) {
-			return objectAction;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		int count = countByObjectDefinitionId(objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectAction> list = findByObjectDefinitionId(
-			objectDefinitionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1693,73 +1508,6 @@ public class ObjectActionPersistenceImpl
 
 		List<ObjectAction> list = findByA_OAEK(
 			active, objectActionExecutorKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
-	 *
-	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction findByA_OAEK_Last(
-			boolean active, String objectActionExecutorKey,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws NoSuchObjectActionException {
-
-		ObjectAction objectAction = fetchByA_OAEK_Last(
-			active, objectActionExecutorKey, orderByComparator);
-
-		if (objectAction != null) {
-			return objectAction;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append(", objectActionExecutorKey=");
-		sb.append(objectActionExecutorKey);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
-	 *
-	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction fetchByA_OAEK_Last(
-		boolean active, String objectActionExecutorKey,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		int count = countByA_OAEK(active, objectActionExecutorKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectAction> list = findByA_OAEK(
-			active, objectActionExecutorKey, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2372,78 +2120,6 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object action in the ordered set where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction findByC_A_OATK_Last(
-			long companyId, boolean active, String objectActionTriggerKey,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws NoSuchObjectActionException {
-
-		ObjectAction objectAction = fetchByC_A_OATK_Last(
-			companyId, active, objectActionTriggerKey, orderByComparator);
-
-		if (objectAction != null) {
-			return objectAction;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", objectActionTriggerKey=");
-		sb.append(objectActionTriggerKey);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction fetchByC_A_OATK_Last(
-		long companyId, boolean active, String objectActionTriggerKey,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		int count = countByC_A_OATK(companyId, active, objectActionTriggerKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectAction> list = findByC_A_OATK(
-			companyId, active, objectActionTriggerKey, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object actions where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2826,81 +2502,6 @@ public class ObjectActionPersistenceImpl
 		List<ObjectAction> list = findByO_A_OATK(
 			objectDefinitionId, active, objectActionTriggerKey, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action
-	 * @throws NoSuchObjectActionException if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction findByO_A_OATK_Last(
-			long objectDefinitionId, boolean active,
-			String objectActionTriggerKey,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws NoSuchObjectActionException {
-
-		ObjectAction objectAction = fetchByO_A_OATK_Last(
-			objectDefinitionId, active, objectActionTriggerKey,
-			orderByComparator);
-
-		if (objectAction != null) {
-			return objectAction;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", objectActionTriggerKey=");
-		sb.append(objectActionTriggerKey);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
-	 */
-	@Override
-	public ObjectAction fetchByO_A_OATK_Last(
-		long objectDefinitionId, boolean active, String objectActionTriggerKey,
-		OrderByComparator<ObjectAction> orderByComparator) {
-
-		int count = countByO_A_OATK(
-			objectDefinitionId, active, objectActionTriggerKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectAction> list = findByO_A_OATK(
-			objectDefinitionId, active, objectActionTriggerKey, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4200,4 +3801,4 @@ public class ObjectActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-540424044
+// LIFERAY-SERVICE-BUILDER-HASH:1149125732

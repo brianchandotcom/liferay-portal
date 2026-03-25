@@ -219,38 +219,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where resourcePrimKey = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByResourcePrimKey_Last(
-			long resourcePrimKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByResourcePrimKey_Last(
-			resourcePrimKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where resourcePrimKey = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByResourcePrimKey_Last(
-		long resourcePrimKey,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByResourcePrimKey_Last(
-			resourcePrimKey, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where resourcePrimKey = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -366,34 +334,6 @@ public class JournalArticleUtil {
 		String uuid, OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByUuid_Last(
-			String uuid, OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByUuid_Last(
-		String uuid, OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
 	/**
@@ -591,40 +531,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -744,34 +650,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByGroupId_Last(
-			long groupId, OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByGroupId_Last(
-		long groupId, OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -955,36 +833,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByCompanyId_Last(
-			long companyId, OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByCompanyId_Last(
-		long companyId, OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1107,38 +955,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByDDMStructureId_First(
-			DDMStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where DDMStructureId = &#63;.
-	 *
-	 * @param DDMStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByDDMStructureId_Last(
-			long DDMStructureId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByDDMStructureId_Last(
-			DDMStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where DDMStructureId = &#63;.
-	 *
-	 * @param DDMStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByDDMStructureId_Last(
-		long DDMStructureId,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByDDMStructureId_Last(
 			DDMStructureId, orderByComparator);
 	}
 
@@ -1269,38 +1085,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where DDMTemplateKey = &#63;.
-	 *
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByDDMTemplateKey_Last(
-			String DDMTemplateKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByDDMTemplateKey_Last(
-			DDMTemplateKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where DDMTemplateKey = &#63;.
-	 *
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByDDMTemplateKey_Last(
-		String DDMTemplateKey,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByDDMTemplateKey_Last(
-			DDMTemplateKey, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where DDMTemplateKey = &#63; from the database.
 	 *
 	 * @param DDMTemplateKey the ddm template key
@@ -1424,38 +1208,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where layoutUuid = &#63;.
-	 *
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByLayoutUuid_Last(
-			String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByLayoutUuid_Last(
-			layoutUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where layoutUuid = &#63;.
-	 *
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByLayoutUuid_Last(
-		String layoutUuid,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByLayoutUuid_Last(
-			layoutUuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where layoutUuid = &#63; from the database.
 	 *
 	 * @param layoutUuid the layout uuid
@@ -1575,38 +1327,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchBySmallImageId_First(
-			smallImageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where smallImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findBySmallImageId_Last(
-			long smallImageId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findBySmallImageId_Last(
-			smallImageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where smallImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchBySmallImageId_Last(
-		long smallImageId,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchBySmallImageId_Last(
 			smallImageId, orderByComparator);
 	}
 
@@ -1744,40 +1464,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where resourcePrimKey = &#63; and indexable = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param indexable the indexable
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByR_I_Last(
-			long resourcePrimKey, boolean indexable,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByR_I_Last(
-			resourcePrimKey, indexable, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where resourcePrimKey = &#63; and indexable = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param indexable the indexable
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByR_I_Last(
-		long resourcePrimKey, boolean indexable,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByR_I_Last(
-			resourcePrimKey, indexable, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where resourcePrimKey = &#63; and indexable = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -1908,40 +1594,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByR_ST_First(
-			resourcePrimKey, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByR_ST_Last(
-			long resourcePrimKey, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByR_ST_Last(
-			resourcePrimKey, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByR_ST_Last(
-		long resourcePrimKey, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByR_ST_Last(
 			resourcePrimKey, status, orderByComparator);
 	}
 
@@ -2172,40 +1824,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_U_Last(
-			groupId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_U_Last(
-			groupId, userId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and userId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2402,40 +2020,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_ERC_First(
-			groupId, externalReferenceCode, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_ERC_Last(
-			long groupId, String externalReferenceCode,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_ERC_Last(
-			groupId, externalReferenceCode, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_ERC_Last(
-		long groupId, String externalReferenceCode,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_ERC_Last(
 			groupId, externalReferenceCode, orderByComparator);
 	}
 
@@ -2639,40 +2223,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_F_First(
-			groupId, folderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_F_Last(
-			long groupId, long folderId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_F_Last(
-			groupId, folderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_F_Last(
-		long groupId, long folderId,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_F_Last(
 			groupId, folderId, orderByComparator);
 	}
 
@@ -3033,40 +2583,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_A_Last(
-			long groupId, String articleId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_A_Last(
-			groupId, articleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_A_Last(
-		long groupId, String articleId,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_A_Last(
-			groupId, articleId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3261,40 +2777,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_UT_First(
-			groupId, urlTitle, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_UT_Last(
-			long groupId, String urlTitle,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_UT_Last(
-			groupId, urlTitle, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_UT_Last(
-		long groupId, String urlTitle,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_UT_Last(
 			groupId, urlTitle, orderByComparator);
 	}
 
@@ -3495,40 +2977,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_DDMSI_First(
-			groupId, DDMStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and DDMStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param DDMStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_DDMSI_Last(
-			long groupId, long DDMStructureId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_DDMSI_Last(
-			groupId, DDMStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and DDMStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param DDMStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_DDMSI_Last(
-		long groupId, long DDMStructureId,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_DDMSI_Last(
 			groupId, DDMStructureId, orderByComparator);
 	}
 
@@ -3734,40 +3182,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and DDMTemplateKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_DDMTK_Last(
-			long groupId, String DDMTemplateKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_DDMTK_Last(
-			groupId, DDMTemplateKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and DDMTemplateKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_DDMTK_Last(
-		long groupId, String DDMTemplateKey,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_DDMTK_Last(
-			groupId, DDMTemplateKey, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and DDMTemplateKey = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3969,40 +3383,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_L_Last(
-			long groupId, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_L_Last(
-			groupId, layoutUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_L_Last(
-		long groupId, String layoutUuid,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_L_Last(
-			groupId, layoutUuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and layoutUuid = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4196,40 +3576,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_ST_First(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_ST_Last(
-			long groupId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_ST_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_ST_Last(
-		long groupId, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_ST_Last(
 			groupId, status, orderByComparator);
 	}
 
@@ -4432,40 +3778,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63; and version = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByC_V_Last(
-			long companyId, double version,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByC_V_Last(
-			companyId, version, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63; and version = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByC_V_Last(
-		long companyId, double version,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByC_V_Last(
-			companyId, version, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where companyId = &#63; and version = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -4593,40 +3905,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByC_ST_First(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByC_ST_Last(
-			long companyId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByC_ST_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByC_ST_Last(
-		long companyId, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByC_ST_Last(
 			companyId, status, orderByComparator);
 	}
 
@@ -4764,40 +4042,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByC_NotST_Last(
-			long companyId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByC_NotST_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByC_NotST_Last(
-		long companyId, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByC_NotST_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -4927,40 +4171,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
 			displayDate, status, orderByComparator);
 	}
 
@@ -5103,42 +4313,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByR_I_S_First(
-			resourcePrimKey, indexable, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where resourcePrimKey = &#63; and indexable = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param indexable the indexable
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByR_I_S_Last(
-			long resourcePrimKey, boolean indexable, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByR_I_S_Last(
-			resourcePrimKey, indexable, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where resourcePrimKey = &#63; and indexable = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param indexable the indexable
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByR_I_S_Last(
-		long resourcePrimKey, boolean indexable, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByR_I_S_Last(
 			resourcePrimKey, indexable, status, orderByComparator);
 	}
 
@@ -5393,42 +4567,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_U_C_First(
-			groupId, userId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_U_C_Last(
-			long groupId, long userId, long classNameId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_U_C_Last(
-			groupId, userId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_U_C_Last(
-		long groupId, long userId, long classNameId,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_U_C_Last(
 			groupId, userId, classNameId, orderByComparator);
 	}
 
@@ -5732,42 +4870,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_ERC_ST_First(
-			groupId, externalReferenceCode, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_ERC_ST_Last(
-			long groupId, String externalReferenceCode, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_ERC_ST_Last(
-			groupId, externalReferenceCode, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_ERC_ST_Last(
-		long groupId, String externalReferenceCode, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_ERC_ST_Last(
 			groupId, externalReferenceCode, status, orderByComparator);
 	}
 
@@ -6179,42 +5281,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_F_ST_Last(
-			long groupId, long folderId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_F_ST_Last(
-			groupId, folderId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_F_ST_Last(
-		long groupId, long folderId, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_F_ST_Last(
-			groupId, folderId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6605,42 +5671,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_C_C_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6945,42 +5975,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_C_DDMTK_Last(
-			long groupId, long classNameId, String DDMTemplateKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_C_DDMTK_Last(
-			groupId, classNameId, DDMTemplateKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_C_DDMTK_Last(
-		long groupId, long classNameId, String DDMTemplateKey,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_C_DDMTK_Last(
-			groupId, classNameId, DDMTemplateKey, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7206,42 +6200,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_C_L_Last(
-			long groupId, long classNameId, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_C_L_Last(
-			groupId, classNameId, layoutUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_C_L_Last(
-		long groupId, long classNameId, String layoutUuid,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_C_L_Last(
-			groupId, classNameId, layoutUuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and layoutUuid = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7460,42 +6418,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_C_NotL_First(
-			groupId, classNameId, layoutUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and layoutUuid &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_C_NotL_Last(
-			long groupId, long classNameId, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_C_NotL_Last(
-			groupId, classNameId, layoutUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and layoutUuid &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_C_NotL_Last(
-		long groupId, long classNameId, String layoutUuid,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_C_NotL_Last(
 			groupId, classNameId, layoutUuid, orderByComparator);
 	}
 
@@ -7978,42 +6900,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_A_ST_Last(
-			long groupId, String articleId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_A_ST_Last(
-			groupId, articleId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_A_ST_Last(
-		long groupId, String articleId, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_A_ST_Last(
-			groupId, articleId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -8409,42 +7295,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_A_NotST_Last(
-			long groupId, String articleId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_A_NotST_Last(
-			groupId, articleId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and articleId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_A_NotST_Last(
-		long groupId, String articleId, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_A_NotST_Last(
-			groupId, articleId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -8662,42 +7512,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_UT_ST_First(
-			groupId, urlTitle, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_UT_ST_Last(
-			long groupId, String urlTitle, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_UT_ST_Last(
-			groupId, urlTitle, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_UT_ST_Last(
-		long groupId, String urlTitle, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_UT_ST_Last(
 			groupId, urlTitle, status, orderByComparator);
 	}
 
@@ -8921,42 +7735,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63; and version = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByC_V_ST_Last(
-			long companyId, double version, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByC_V_ST_Last(
-			companyId, version, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where companyId = &#63; and version = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByC_V_ST_Last(
-		long companyId, double version, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByC_V_ST_Last(
-			companyId, version, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where companyId = &#63; and version = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -9109,44 +7887,6 @@ public class JournalArticleUtil {
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByG_F_C_NotST_First(
-			groupId, folderId, classNameId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param classNameId the class name ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article
-	 * @throws NoSuchArticleException if a matching journal article could not be found
-	 */
-	public static JournalArticle findByG_F_C_NotST_Last(
-			long groupId, long folderId, long classNameId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_F_C_NotST_Last(
-			groupId, folderId, classNameId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param classNameId the class name ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	public static JournalArticle fetchByG_F_C_NotST_Last(
-		long groupId, long folderId, long classNameId, int status,
-		OrderByComparator<JournalArticle> orderByComparator) {
-
-		return getPersistence().fetchByG_F_C_NotST_Last(
 			groupId, folderId, classNameId, status, orderByComparator);
 	}
 
@@ -9420,4 +8160,4 @@ public class JournalArticleUtil {
 	private static volatile JournalArticlePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1701375579
+// LIFERAY-SERVICE-BUILDER-HASH:-801656321

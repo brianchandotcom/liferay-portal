@@ -119,32 +119,6 @@ public interface RecentLayoutRevisionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last recent layout revision in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision
-	 * @throws NoSuchRecentLayoutRevisionException if a matching recent layout revision could not be found
-	 */
-	public RecentLayoutRevision findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<RecentLayoutRevision> orderByComparator)
-		throws NoSuchRecentLayoutRevisionException;
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
-	 */
-	public RecentLayoutRevision fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
-			orderByComparator);
-
-	/**
 	 * Removes all the recent layout revisions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -242,32 +216,6 @@ public interface RecentLayoutRevisionPersistence
 	 * @return the first matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
 	 */
 	public RecentLayoutRevision fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
-			orderByComparator);
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision
-	 * @throws NoSuchRecentLayoutRevisionException if a matching recent layout revision could not be found
-	 */
-	public RecentLayoutRevision findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<RecentLayoutRevision> orderByComparator)
-		throws NoSuchRecentLayoutRevisionException;
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
-	 */
-	public RecentLayoutRevision fetchByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
 			orderByComparator);
@@ -371,32 +319,6 @@ public interface RecentLayoutRevisionPersistence
 	 * @return the first matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
 	 */
 	public RecentLayoutRevision fetchByLayoutRevisionId_First(
-		long layoutRevisionId,
-		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
-			orderByComparator);
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where layoutRevisionId = &#63;.
-	 *
-	 * @param layoutRevisionId the layout revision ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision
-	 * @throws NoSuchRecentLayoutRevisionException if a matching recent layout revision could not be found
-	 */
-	public RecentLayoutRevision findByLayoutRevisionId_Last(
-			long layoutRevisionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<RecentLayoutRevision> orderByComparator)
-		throws NoSuchRecentLayoutRevisionException;
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where layoutRevisionId = &#63;.
-	 *
-	 * @param layoutRevisionId the layout revision ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
-	 */
-	public RecentLayoutRevision fetchByLayoutRevisionId_Last(
 		long layoutRevisionId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
 			orderByComparator);
@@ -597,4 +519,4 @@ public interface RecentLayoutRevisionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-605552076
+// LIFERAY-SERVICE-BUILDER-HASH:189554513

@@ -339,65 +339,6 @@ public class CalendarBookingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking findByUuid_Last(
-			String uuid, OrderByComparator<CalendarBooking> orderByComparator)
-		throws NoSuchBookingException {
-
-		CalendarBooking calendarBooking = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking fetchByUuid_Last(
-		String uuid, OrderByComparator<CalendarBooking> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarBooking> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendar bookings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -945,72 +886,6 @@ public class CalendarBookingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws NoSuchBookingException {
-
-		CalendarBooking calendarBooking = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarBooking> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendar bookings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1337,66 +1212,6 @@ public class CalendarBookingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking findByCalendarId_Last(
-			long calendarId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws NoSuchBookingException {
-
-		CalendarBooking calendarBooking = fetchByCalendarId_Last(
-			calendarId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("calendarId=");
-		sb.append(calendarId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking fetchByCalendarId_Last(
-		long calendarId, OrderByComparator<CalendarBooking> orderByComparator) {
-
-		int count = countByCalendarId(calendarId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarBooking> list = findByCalendarId(
-			calendarId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendar bookings where calendarId = &#63; from the database.
 	 *
 	 * @param calendarId the calendar ID
@@ -1695,67 +1510,6 @@ public class CalendarBookingPersistenceImpl
 
 		List<CalendarBooking> list = findByCalendarResourceId(
 			calendarResourceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarResourceId = &#63;.
-	 *
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking findByCalendarResourceId_Last(
-			long calendarResourceId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws NoSuchBookingException {
-
-		CalendarBooking calendarBooking = fetchByCalendarResourceId_Last(
-			calendarResourceId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("calendarResourceId=");
-		sb.append(calendarResourceId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarResourceId = &#63;.
-	 *
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking fetchByCalendarResourceId_Last(
-		long calendarResourceId,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		int count = countByCalendarResourceId(calendarResourceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarBooking> list = findByCalendarResourceId(
-			calendarResourceId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2079,67 +1833,6 @@ public class CalendarBookingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking findByParentCalendarBookingId_Last(
-			long parentCalendarBookingId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws NoSuchBookingException {
-
-		CalendarBooking calendarBooking = fetchByParentCalendarBookingId_Last(
-			parentCalendarBookingId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCalendarBookingId=");
-		sb.append(parentCalendarBookingId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking fetchByParentCalendarBookingId_Last(
-		long parentCalendarBookingId,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		int count = countByParentCalendarBookingId(parentCalendarBookingId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarBooking> list = findByParentCalendarBookingId(
-			parentCalendarBookingId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the calendar bookings where parentCalendarBookingId = &#63; from the database.
 	 *
 	 * @param parentCalendarBookingId the parent calendar booking ID
@@ -2448,69 +2141,6 @@ public class CalendarBookingPersistenceImpl
 
 		List<CalendarBooking> list = findByRecurringCalendarBookingId(
 			recurringCalendarBookingId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
-	 *
-	 * @param recurringCalendarBookingId the recurring calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking findByRecurringCalendarBookingId_Last(
-			long recurringCalendarBookingId,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws NoSuchBookingException {
-
-		CalendarBooking calendarBooking =
-			fetchByRecurringCalendarBookingId_Last(
-				recurringCalendarBookingId, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recurringCalendarBookingId=");
-		sb.append(recurringCalendarBookingId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
-	 *
-	 * @param recurringCalendarBookingId the recurring calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking fetchByRecurringCalendarBookingId_Last(
-		long recurringCalendarBookingId,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		int count = countByRecurringCalendarBookingId(
-			recurringCalendarBookingId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarBooking> list = findByRecurringCalendarBookingId(
-			recurringCalendarBookingId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3244,72 +2874,6 @@ public class CalendarBookingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking findByC_S_Last(
-			long calendarId, int status,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws NoSuchBookingException {
-
-		CalendarBooking calendarBooking = fetchByC_S_Last(
-			calendarId, status, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("calendarId=");
-		sb.append(calendarId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking fetchByC_S_Last(
-		long calendarId, int status,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		int count = countByC_S(calendarId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarBooking> list = findByC_S(
-			calendarId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the calendar bookings where calendarId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -3918,73 +3482,6 @@ public class CalendarBookingPersistenceImpl
 
 		List<CalendarBooking> list = findByP_S(
 			parentCalendarBookingId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking findByP_S_Last(
-			long parentCalendarBookingId, int status,
-			OrderByComparator<CalendarBooking> orderByComparator)
-		throws NoSuchBookingException {
-
-		CalendarBooking calendarBooking = fetchByP_S_Last(
-			parentCalendarBookingId, status, orderByComparator);
-
-		if (calendarBooking != null) {
-			return calendarBooking;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCalendarBookingId=");
-		sb.append(parentCalendarBookingId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	@Override
-	public CalendarBooking fetchByP_S_Last(
-		long parentCalendarBookingId, int status,
-		OrderByComparator<CalendarBooking> orderByComparator) {
-
-		int count = countByP_S(parentCalendarBookingId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CalendarBooking> list = findByP_S(
-			parentCalendarBookingId, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5548,4 +5045,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1166369116
+// LIFERAY-SERVICE-BUILDER-HASH:-1469984450

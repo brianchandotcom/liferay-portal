@@ -210,34 +210,6 @@ public class ObjectDefinitionUtil {
 	}
 
 	/**
-	 * Returns the last object definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByUuid_Last(
-			String uuid, OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the object definitions that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -424,40 +396,6 @@ public class ObjectDefinitionUtil {
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -651,37 +589,6 @@ public class ObjectDefinitionUtil {
 	}
 
 	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByCompanyId_Last(
-		long companyId, OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the object definitions that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -863,38 +770,6 @@ public class ObjectDefinitionUtil {
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		return getPersistence().fetchByObjectFolderId_First(
-			objectFolderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByObjectFolderId_Last(
-			long objectFolderId,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByObjectFolderId_Last(
-			objectFolderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByObjectFolderId_Last(
-		long objectFolderId,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByObjectFolderId_Last(
 			objectFolderId, orderByComparator);
 	}
 
@@ -1085,38 +960,6 @@ public class ObjectDefinitionUtil {
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		return getPersistence().fetchByAccountEntryRestricted_First(
-			accountEntryRestricted, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where accountEntryRestricted = &#63;.
-	 *
-	 * @param accountEntryRestricted the account entry restricted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByAccountEntryRestricted_Last(
-			boolean accountEntryRestricted,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByAccountEntryRestricted_Last(
-			accountEntryRestricted, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where accountEntryRestricted = &#63;.
-	 *
-	 * @param accountEntryRestricted the account entry restricted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByAccountEntryRestricted_Last(
-		boolean accountEntryRestricted,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByAccountEntryRestricted_Last(
 			accountEntryRestricted, orderByComparator);
 	}
 
@@ -1370,35 +1213,6 @@ public class ObjectDefinitionUtil {
 	}
 
 	/**
-	 * Returns the last object definition in the ordered set where system = &#63;.
-	 *
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findBySystem_Last(
-			boolean system,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findBySystem_Last(system, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where system = &#63;.
-	 *
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchBySystem_Last(
-		boolean system, OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchBySystem_Last(system, orderByComparator);
-	}
-
-	/**
 	 * Returns all the object definitions that the user has permission to view where system = &#63;.
 	 *
 	 * @param system the system
@@ -1585,40 +1399,6 @@ public class ObjectDefinitionUtil {
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		return getPersistence().fetchByC_U_First(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByC_U_Last(
 			companyId, userId, orderByComparator);
 	}
 
@@ -1948,40 +1728,6 @@ public class ObjectDefinitionUtil {
 	}
 
 	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByC_S_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByC_S_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the object definitions that the user has permission to view where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2174,40 +1920,6 @@ public class ObjectDefinitionUtil {
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		return getPersistence().fetchByS_S_First(
-			system, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where system = &#63; and status = &#63;.
-	 *
-	 * @param system the system
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByS_S_Last(
-			boolean system, int status,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByS_S_Last(
-			system, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where system = &#63; and status = &#63;.
-	 *
-	 * @param system the system
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByS_S_Last(
-		boolean system, int status,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByS_S_Last(
 			system, status, orderByComparator);
 	}
 
@@ -2414,42 +2126,6 @@ public class ObjectDefinitionUtil {
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		return getPersistence().fetchByC_A_S_First(
-			companyId, active, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByC_A_S_Last(
-			long companyId, boolean active, int status,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByC_A_S_Last(
-			companyId, active, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByC_A_S_Last(
-		long companyId, boolean active, int status,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByC_A_S_Last(
 			companyId, active, status, orderByComparator);
 	}
 
@@ -2668,42 +2344,6 @@ public class ObjectDefinitionUtil {
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		return getPersistence().fetchByC_M_S_First(
-			companyId, modifiable, system, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and modifiable = &#63; and system = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiable the modifiable
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByC_M_S_Last(
-			long companyId, boolean modifiable, boolean system,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByC_M_S_Last(
-			companyId, modifiable, system, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and modifiable = &#63; and system = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiable the modifiable
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByC_M_S_Last(
-		long companyId, boolean modifiable, boolean system,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByC_M_S_Last(
 			companyId, modifiable, system, orderByComparator);
 	}
 
@@ -2934,44 +2574,6 @@ public class ObjectDefinitionUtil {
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		return getPersistence().fetchByC_A_S_S_First(
-			companyId, active, system, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param system the system
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByC_A_S_S_Last(
-			long companyId, boolean active, boolean system, int status,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByC_A_S_S_Last(
-			companyId, active, system, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param system the system
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByC_A_S_S_Last(
-		long companyId, boolean active, boolean system, int status,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByC_A_S_S_Last(
 			companyId, active, system, status, orderByComparator);
 	}
 
@@ -3231,52 +2833,6 @@ public class ObjectDefinitionUtil {
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		return getPersistence().fetchByC_OFI_A_E_S_S_First(
-			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
-			status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param objectFolderId the object folder ID
-	 * @param active the active
-	 * @param enableObjectEntryDraft the enable object entry draft
-	 * @param scope the scope
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByC_OFI_A_E_S_S_Last(
-			long companyId, long objectFolderId, boolean active,
-			boolean enableObjectEntryDraft, String scope, int status,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByC_OFI_A_E_S_S_Last(
-			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
-			status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param objectFolderId the object folder ID
-	 * @param active the active
-	 * @param enableObjectEntryDraft the enable object entry draft
-	 * @param scope the scope
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByC_OFI_A_E_S_S_Last(
-		long companyId, long objectFolderId, boolean active,
-		boolean enableObjectEntryDraft, String scope, int status,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByC_OFI_A_E_S_S_Last(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, orderByComparator);
 	}
@@ -3871,4 +3427,4 @@ public class ObjectDefinitionUtil {
 	private static volatile ObjectDefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-352876962
+// LIFERAY-SERVICE-BUILDER-HASH:-858162154

@@ -121,32 +121,6 @@ public interface KBCommentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb comment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	public KBComment findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last kb comment in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	public KBComment fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb comments where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface KBCommentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb comment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	public KBComment findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last kb comment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	public KBComment fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb comments where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,32 +378,6 @@ public interface KBCommentPersistence
 	 * @return the first matching kb comment, or <code>null</code> if a matching kb comment could not be found
 	 */
 	public KBComment fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	public KBComment findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	public KBComment fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
 			orderByComparator);
@@ -566,34 +486,6 @@ public interface KBCommentPersistence
 	 * @return the first matching kb comment, or <code>null</code> if a matching kb comment could not be found
 	 */
 	public KBComment fetchByG_C_First(
-		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	public KBComment findByG_C_Last(
-			long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	public KBComment fetchByG_C_Last(
 		long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
 			orderByComparator);
@@ -709,34 +601,6 @@ public interface KBCommentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	public KBComment findByG_S_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last kb comment in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	public KBComment fetchByG_S_Last(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb comments where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -842,34 +706,6 @@ public interface KBCommentPersistence
 	 * @return the first matching kb comment, or <code>null</code> if a matching kb comment could not be found
 	 */
 	public KBComment fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb comment in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	public KBComment findByC_C_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last kb comment in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	public KBComment fetchByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
 			orderByComparator);
@@ -992,36 +828,6 @@ public interface KBCommentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb comment in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	public KBComment findByU_C_C_Last(
-			long userId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last kb comment in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	public KBComment fetchByU_C_C_Last(
-		long userId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb comments where userId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1136,36 +942,6 @@ public interface KBCommentPersistence
 	 * @return the first matching kb comment, or <code>null</code> if a matching kb comment could not be found
 	 */
 	public KBComment fetchByC_C_S_First(
-		long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb comment in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment
-	 * @throws NoSuchCommentException if a matching kb comment could not be found
-	 */
-	public KBComment findByC_C_S_Last(
-			long classNameId, long classPK, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
-	 * Returns the last kb comment in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb comment, or <code>null</code> if a matching kb comment could not be found
-	 */
-	public KBComment fetchByC_C_S_Last(
 		long classNameId, long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBComment>
 			orderByComparator);
@@ -1393,4 +1169,4 @@ public interface KBCommentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1679065238
+// LIFERAY-SERVICE-BUILDER-HASH:-878800176

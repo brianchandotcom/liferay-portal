@@ -121,32 +121,6 @@ public interface ReadingTimeEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last reading time entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching reading time entry
-	 * @throws NoSuchEntryException if a matching reading time entry could not be found
-	 */
-	public ReadingTimeEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last reading time entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
-	 */
-	public ReadingTimeEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the reading time entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -301,34 +275,6 @@ public interface ReadingTimeEntryPersistence
 	 * @return the first matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
 	public ReadingTimeEntry fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last reading time entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching reading time entry
-	 * @throws NoSuchEntryException if a matching reading time entry could not be found
-	 */
-	public ReadingTimeEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last reading time entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
-	 */
-	public ReadingTimeEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
 			orderByComparator);
@@ -530,4 +476,4 @@ public interface ReadingTimeEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:792449279
+// LIFERAY-SERVICE-BUILDER-HASH:1950067211

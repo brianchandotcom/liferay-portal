@@ -314,65 +314,6 @@ public class TrashVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last trash version in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash version
-	 * @throws NoSuchVersionException if a matching trash version could not be found
-	 */
-	@Override
-	public TrashVersion findByEntryId_Last(
-			long entryId, OrderByComparator<TrashVersion> orderByComparator)
-		throws NoSuchVersionException {
-
-		TrashVersion trashVersion = fetchByEntryId_Last(
-			entryId, orderByComparator);
-
-		if (trashVersion != null) {
-			return trashVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId=");
-		sb.append(entryId);
-
-		sb.append("}");
-
-		throw new NoSuchVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last trash version in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash version, or <code>null</code> if a matching trash version could not be found
-	 */
-	@Override
-	public TrashVersion fetchByEntryId_Last(
-		long entryId, OrderByComparator<TrashVersion> orderByComparator) {
-
-		int count = countByEntryId(entryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TrashVersion> list = findByEntryId(
-			entryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the trash versions where entryId = &#63; from the database.
 	 *
 	 * @param entryId the entry ID
@@ -680,72 +621,6 @@ public class TrashVersionPersistenceImpl
 
 		List<TrashVersion> list = findByE_CN(
 			entryId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash version
-	 * @throws NoSuchVersionException if a matching trash version could not be found
-	 */
-	@Override
-	public TrashVersion findByE_CN_Last(
-			long entryId, long classNameId,
-			OrderByComparator<TrashVersion> orderByComparator)
-		throws NoSuchVersionException {
-
-		TrashVersion trashVersion = fetchByE_CN_Last(
-			entryId, classNameId, orderByComparator);
-
-		if (trashVersion != null) {
-			return trashVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId=");
-		sb.append(entryId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash version, or <code>null</code> if a matching trash version could not be found
-	 */
-	@Override
-	public TrashVersion fetchByE_CN_Last(
-		long entryId, long classNameId,
-		OrderByComparator<TrashVersion> orderByComparator) {
-
-		int count = countByE_CN(entryId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TrashVersion> list = findByE_CN(
-			entryId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1935,4 +1810,4 @@ public class TrashVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1768025348
+// LIFERAY-SERVICE-BUILDER-HASH:-2080065098

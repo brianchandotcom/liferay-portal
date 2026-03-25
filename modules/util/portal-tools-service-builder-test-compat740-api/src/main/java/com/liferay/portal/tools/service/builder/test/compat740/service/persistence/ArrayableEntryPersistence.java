@@ -120,32 +120,6 @@ public interface ArrayableEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last arrayable entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching arrayable entry
-	 * @throws NoSuchArrayableEntryException if a matching arrayable entry could not be found
-	 */
-	public ArrayableEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<ArrayableEntry>
-				orderByComparator)
-		throws NoSuchArrayableEntryException;
-
-	/**
-	 * Returns the last arrayable entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching arrayable entry, or <code>null</code> if a matching arrayable entry could not be found
-	 */
-	public ArrayableEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ArrayableEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the arrayable entries where groupId = any &#63;.
 	 *
 	 * <p>
@@ -354,4 +328,4 @@ public interface ArrayableEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-524666647
+// LIFERAY-SERVICE-BUILDER-HASH:-1350771535

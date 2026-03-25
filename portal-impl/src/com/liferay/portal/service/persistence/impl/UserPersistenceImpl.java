@@ -337,63 +337,6 @@ public class UserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByUuid_Last(
-			String uuid, OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByUuid_Last(
-		String uuid, OrderByComparator<User> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByUuid(uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the users where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -735,71 +678,6 @@ public class UserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<User> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the users where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1110,64 +988,6 @@ public class UserPersistenceImpl
 		long companyId, OrderByComparator<User> orderByComparator) {
 
 		List<User> list = findByCompanyId(companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByCompanyId_Last(
-			long companyId, OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByCompanyId_Last(
-		long companyId, OrderByComparator<User> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1651,64 +1471,6 @@ public class UserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user in the ordered set where emailAddress = &#63;.
-	 *
-	 * @param emailAddress the email address
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByEmailAddress_Last(
-			String emailAddress, OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByEmailAddress_Last(emailAddress, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("emailAddress=");
-		sb.append(emailAddress);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where emailAddress = &#63;.
-	 *
-	 * @param emailAddress the email address
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByEmailAddress_Last(
-		String emailAddress, OrderByComparator<User> orderByComparator) {
-
-		int count = countByEmailAddress(emailAddress);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByEmailAddress(
-			emailAddress, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the users where emailAddress = &#63; from the database.
 	 *
 	 * @param emailAddress the email address
@@ -2019,64 +1781,6 @@ public class UserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user in the ordered set where portraitId = &#63;.
-	 *
-	 * @param portraitId the portrait ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByPortraitId_Last(
-			long portraitId, OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByPortraitId_Last(portraitId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portraitId=");
-		sb.append(portraitId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where portraitId = &#63;.
-	 *
-	 * @param portraitId the portrait ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByPortraitId_Last(
-		long portraitId, OrderByComparator<User> orderByComparator) {
-
-		int count = countByPortraitId(portraitId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByPortraitId(
-			portraitId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the users where portraitId = &#63; from the database.
 	 *
 	 * @param portraitId the portrait ID
@@ -2371,71 +2075,6 @@ public class UserPersistenceImpl
 
 		List<User> list = findByGtU_C(
 			userId, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user in the ordered set where userId &gt; &#63; and companyId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByGtU_C_Last(
-			long userId, long companyId,
-			OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByGtU_C_Last(userId, companyId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId>");
-		sb.append(userId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where userId &gt; &#63; and companyId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByGtU_C_Last(
-		long userId, long companyId,
-		OrderByComparator<User> orderByComparator) {
-
-		int count = countByGtU_C(userId, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByGtU_C(
-			userId, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2967,71 +2606,6 @@ public class UserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByC_CD_Last(
-			long companyId, Date createDate,
-			OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByC_CD_Last(companyId, createDate, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", createDate=");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByC_CD_Last(
-		long companyId, Date createDate,
-		OrderByComparator<User> orderByComparator) {
-
-		int count = countByC_CD(companyId, createDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByC_CD(
-			companyId, createDate, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the users where companyId = &#63; and createDate = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3380,72 +2954,6 @@ public class UserPersistenceImpl
 
 		List<User> list = findByC_MD(
 			companyId, modifiedDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and modifiedDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByC_MD_Last(
-			long companyId, Date modifiedDate,
-			OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByC_MD_Last(
-			companyId, modifiedDate, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", modifiedDate=");
-		sb.append(modifiedDate);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and modifiedDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByC_MD_Last(
-		long companyId, Date modifiedDate,
-		OrderByComparator<User> orderByComparator) {
-
-		int count = countByC_MD(companyId, modifiedDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByC_MD(
-			companyId, modifiedDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4202,71 +3710,6 @@ public class UserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and facebookId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param facebookId the facebook ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByC_FID_Last(
-			long companyId, long facebookId,
-			OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByC_FID_Last(companyId, facebookId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", facebookId=");
-		sb.append(facebookId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and facebookId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param facebookId the facebook ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByC_FID_Last(
-		long companyId, long facebookId,
-		OrderByComparator<User> orderByComparator) {
-
-		int count = countByC_FID(companyId, facebookId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByC_FID(
-			companyId, facebookId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the users where companyId = &#63; and facebookId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -4576,69 +4019,6 @@ public class UserPersistenceImpl
 		long companyId, int type, OrderByComparator<User> orderByComparator) {
 
 		List<User> list = findByC_T(companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByC_T_Last(
-			long companyId, int type, OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByC_T_Last(companyId, type, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByC_T_Last(
-		long companyId, int type, OrderByComparator<User> orderByComparator) {
-
-		int count = countByC_T(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByC_T(
-			companyId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4960,70 +4340,6 @@ public class UserPersistenceImpl
 		long companyId, int status, OrderByComparator<User> orderByComparator) {
 
 		List<User> list = findByC_S(companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByC_S_Last(companyId, status, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByC_S_Last(
-		long companyId, int status, OrderByComparator<User> orderByComparator) {
-
-		int count = countByC_S(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByC_S(
-			companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5395,78 +4711,6 @@ public class UserPersistenceImpl
 
 		List<User> list = findByC_CD_MD(
 			companyId, createDate, modifiedDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and createDate = &#63; and modifiedDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByC_CD_MD_Last(
-			long companyId, Date createDate, Date modifiedDate,
-			OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByC_CD_MD_Last(
-			companyId, createDate, modifiedDate, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", createDate=");
-		sb.append(createDate);
-
-		sb.append(", modifiedDate=");
-		sb.append(modifiedDate);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and createDate = &#63; and modifiedDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByC_CD_MD_Last(
-		long companyId, Date createDate, Date modifiedDate,
-		OrderByComparator<User> orderByComparator) {
-
-		int count = countByC_CD_MD(companyId, createDate, modifiedDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByC_CD_MD(
-			companyId, createDate, modifiedDate, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5850,77 +5094,6 @@ public class UserPersistenceImpl
 
 		List<User> list = findByC_T_S(
 			companyId, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByC_T_S_Last(
-			long companyId, int type, int status,
-			OrderByComparator<User> orderByComparator)
-		throws NoSuchUserException {
-
-		User user = fetchByC_T_S_Last(
-			companyId, type, status, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByC_T_S_Last(
-		long companyId, int type, int status,
-		OrderByComparator<User> orderByComparator) {
-
-		int count = countByC_T_S(companyId, type, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<User> list = findByC_T_S(
-			companyId, type, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -9235,4 +8408,4 @@ public class UserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1009306220
+// LIFERAY-SERVICE-BUILDER-HASH:-1739034491

@@ -315,64 +315,6 @@ public class SourcePersistenceImpl
 	}
 
 	/**
-	 * Returns the last source in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching source
-	 * @throws NoSuchSourceException if a matching source could not be found
-	 */
-	@Override
-	public Source findByUuid_Last(
-			String uuid, OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
-
-		Source source = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (source != null) {
-			return source;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last source in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching source, or <code>null</code> if a matching source could not be found
-	 */
-	@Override
-	public Source fetchByUuid_Last(
-		String uuid, OrderByComparator<Source> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Source> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -901,71 +843,6 @@ public class SourcePersistenceImpl
 	}
 
 	/**
-	 * Returns the last source in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching source
-	 * @throws NoSuchSourceException if a matching source could not be found
-	 */
-	@Override
-	public Source findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
-
-		Source source = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (source != null) {
-			return source;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last source in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching source, or <code>null</code> if a matching source could not be found
-	 */
-	@Override
-	public Source fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Source> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Source> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sources where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1263,64 +1140,6 @@ public class SourcePersistenceImpl
 		long groupId, OrderByComparator<Source> orderByComparator) {
 
 		List<Source> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last source in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching source
-	 * @throws NoSuchSourceException if a matching source could not be found
-	 */
-	@Override
-	public Source findByGroupId_Last(
-			long groupId, OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
-
-		Source source = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (source != null) {
-			return source;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchSourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last source in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching source, or <code>null</code> if a matching source could not be found
-	 */
-	@Override
-	public Source fetchByGroupId_Last(
-		long groupId, OrderByComparator<Source> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Source> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1795,64 +1614,6 @@ public class SourcePersistenceImpl
 		long companyId, OrderByComparator<Source> orderByComparator) {
 
 		List<Source> list = findByCompanyId(companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last source in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching source
-	 * @throws NoSuchSourceException if a matching source could not be found
-	 */
-	@Override
-	public Source findByCompanyId_Last(
-			long companyId, OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
-
-		Source source = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (source != null) {
-			return source;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last source in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching source, or <code>null</code> if a matching source could not be found
-	 */
-	@Override
-	public Source fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Source> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Source> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2664,4 +2425,4 @@ public class SourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-536055654
+// LIFERAY-SERVICE-BUILDER-HASH:-1995294504

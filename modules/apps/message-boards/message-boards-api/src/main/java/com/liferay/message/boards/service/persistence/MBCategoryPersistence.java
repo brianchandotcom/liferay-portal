@@ -121,32 +121,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards categories where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards categories where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,32 +378,6 @@ public interface MBCategoryPersistence
 	 * @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	 */
 	public MBCategory fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
@@ -614,32 +534,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards categories where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -744,34 +638,6 @@ public interface MBCategoryPersistence
 	 * @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	 */
 	public MBCategory fetchByG_P_First(
-		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByG_P_Last(
-			long groupId, long parentCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByG_P_Last(
 		long groupId, long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
@@ -1124,34 +990,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByG_S_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByG_S_Last(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1315,34 +1153,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByC_S_Last(
-			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByC_S_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
 	 * Removes all the message boards categories where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1458,36 +1268,6 @@ public interface MBCategoryPersistence
 	 * @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	 */
 	public MBCategory fetchByNotC_G_P_First(
-		long categoryId, long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByNotC_G_P_Last(
-			long categoryId, long groupId, long parentCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByNotC_G_P_Last(
 		long categoryId, long groupId, long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
@@ -1824,36 +1604,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByG_P_S_Last(
-			long groupId, long parentCategoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByG_P_S_Last(
-		long groupId, long parentCategoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2170,36 +1920,6 @@ public interface MBCategoryPersistence
 	 * @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	 */
 	public MBCategory fetchByG_P_NotS_First(
-		long groupId, long parentCategoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByG_P_NotS_Last(
-			long groupId, long parentCategoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByG_P_NotS_Last(
 		long groupId, long parentCategoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
@@ -2532,38 +2252,6 @@ public interface MBCategoryPersistence
 	 * @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	 */
 	public MBCategory fetchByNotC_G_P_S_First(
-		long categoryId, long groupId, long parentCategoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-			orderByComparator);
-
-	/**
-	 * Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	public MBCategory findByNotC_G_P_S_Last(
-			long categoryId, long groupId, long parentCategoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
-	 * Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	public MBCategory fetchByNotC_G_P_S_Last(
 		long categoryId, long groupId, long parentCategoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
@@ -2984,4 +2672,4 @@ public interface MBCategoryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2136902595
+// LIFERAY-SERVICE-BUILDER-HASH:1054802101

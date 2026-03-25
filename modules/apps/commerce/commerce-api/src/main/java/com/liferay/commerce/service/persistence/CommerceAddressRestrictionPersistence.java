@@ -121,32 +121,6 @@ public interface CommerceAddressRestrictionPersistence
 			<CommerceAddressRestriction> orderByComparator);
 
 	/**
-	 * Returns the last commerce address restriction in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce address restriction
-	 * @throws NoSuchAddressRestrictionException if a matching commerce address restriction could not be found
-	 */
-	public CommerceAddressRestriction findByCountryId_Last(
-			long countryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceAddressRestriction> orderByComparator)
-		throws NoSuchAddressRestrictionException;
-
-	/**
-	 * Returns the last commerce address restriction in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce address restriction, or <code>null</code> if a matching commerce address restriction could not be found
-	 */
-	public CommerceAddressRestriction fetchByCountryId_Last(
-		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceAddressRestriction> orderByComparator);
-
-	/**
 	 * Removes all the commerce address restrictions where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -251,34 +225,6 @@ public interface CommerceAddressRestrictionPersistence
 	 * @return the first matching commerce address restriction, or <code>null</code> if a matching commerce address restriction could not be found
 	 */
 	public CommerceAddressRestriction fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceAddressRestriction> orderByComparator);
-
-	/**
-	 * Returns the last commerce address restriction in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce address restriction
-	 * @throws NoSuchAddressRestrictionException if a matching commerce address restriction could not be found
-	 */
-	public CommerceAddressRestriction findByC_C_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceAddressRestriction> orderByComparator)
-		throws NoSuchAddressRestrictionException;
-
-	/**
-	 * Returns the last commerce address restriction in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce address restriction, or <code>null</code> if a matching commerce address restriction could not be found
-	 */
-	public CommerceAddressRestriction fetchByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceAddressRestriction> orderByComparator);
@@ -485,4 +431,4 @@ public interface CommerceAddressRestrictionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-722319053
+// LIFERAY-SERVICE-BUILDER-HASH:-1584081449

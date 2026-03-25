@@ -301,65 +301,6 @@ public class CTMessagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct message in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct message
-	 * @throws NoSuchMessageException if a matching ct message could not be found
-	 */
-	@Override
-	public CTMessage findByCtCollectionId_Last(
-			long ctCollectionId, OrderByComparator<CTMessage> orderByComparator)
-		throws NoSuchMessageException {
-
-		CTMessage ctMessage = fetchByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-
-		if (ctMessage != null) {
-			return ctMessage;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct message in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct message, or <code>null</code> if a matching ct message could not be found
-	 */
-	@Override
-	public CTMessage fetchByCtCollectionId_Last(
-		long ctCollectionId, OrderByComparator<CTMessage> orderByComparator) {
-
-		int count = countByCtCollectionId(ctCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTMessage> list = findByCtCollectionId(
-			ctCollectionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ct messages where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -1026,4 +967,4 @@ public class CTMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-884192602
+// LIFERAY-SERVICE-BUILDER-HASH:-2104351193

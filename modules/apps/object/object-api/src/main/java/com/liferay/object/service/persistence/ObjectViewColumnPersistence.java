@@ -120,32 +120,6 @@ public interface ObjectViewColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object view column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column
-	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
-	 */
-	public ObjectViewColumn findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-				orderByComparator)
-		throws NoSuchObjectViewColumnException;
-
-	/**
-	 * Returns the last object view column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
-	 */
-	public ObjectViewColumn fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-			orderByComparator);
-
-	/**
 	 * Removes all the object view columns where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -250,34 +224,6 @@ public interface ObjectViewColumnPersistence
 	 * @return the first matching object view column, or <code>null</code> if a matching object view column could not be found
 	 */
 	public ObjectViewColumn fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-			orderByComparator);
-
-	/**
-	 * Returns the last object view column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column
-	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
-	 */
-	public ObjectViewColumn findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-				orderByComparator)
-		throws NoSuchObjectViewColumnException;
-
-	/**
-	 * Returns the last object view column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
-	 */
-	public ObjectViewColumn fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
 			orderByComparator);
@@ -388,32 +334,6 @@ public interface ObjectViewColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object view column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column
-	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
-	 */
-	public ObjectViewColumn findByObjectViewId_Last(
-			long objectViewId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-				orderByComparator)
-		throws NoSuchObjectViewColumnException;
-
-	/**
-	 * Returns the last object view column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
-	 */
-	public ObjectViewColumn fetchByObjectViewId_Last(
-		long objectViewId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-			orderByComparator);
-
-	/**
 	 * Removes all the object view columns where objectViewId = &#63; from the database.
 	 *
 	 * @param objectViewId the object view ID
@@ -518,34 +438,6 @@ public interface ObjectViewColumnPersistence
 	 * @return the first matching object view column, or <code>null</code> if a matching object view column could not be found
 	 */
 	public ObjectViewColumn fetchByOVI_OFN_First(
-		long objectViewId, String objectFieldName,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-			orderByComparator);
-
-	/**
-	 * Returns the last object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column
-	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
-	 */
-	public ObjectViewColumn findByOVI_OFN_Last(
-			long objectViewId, String objectFieldName,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-				orderByComparator)
-		throws NoSuchObjectViewColumnException;
-
-	/**
-	 * Returns the last object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
-	 */
-	public ObjectViewColumn fetchByOVI_OFN_Last(
 		long objectViewId, String objectFieldName,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
 			orderByComparator);
@@ -688,4 +580,4 @@ public interface ObjectViewColumnPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1540524486
+// LIFERAY-SERVICE-BUILDER-HASH:-19708386

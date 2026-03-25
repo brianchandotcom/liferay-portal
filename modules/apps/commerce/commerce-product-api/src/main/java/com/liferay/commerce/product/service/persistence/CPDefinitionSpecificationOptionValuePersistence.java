@@ -123,32 +123,6 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 			<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionSpecificationOptionValue> orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException;
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionSpecificationOptionValue> orderByComparator);
-
-	/**
 	 * Removes all the cp definition specification option values where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -311,34 +285,6 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 			<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionSpecificationOptionValue> orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException;
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionSpecificationOptionValue> orderByComparator);
-
-	/**
 	 * Removes all the cp definition specification option values where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -444,32 +390,6 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 			<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionSpecificationOptionValue> orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException;
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionSpecificationOptionValue> orderByComparator);
-
-	/**
 	 * Removes all the cp definition specification option values where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -570,32 +490,6 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 * @return the first matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	 */
 	public CPDefinitionSpecificationOptionValue fetchByCPDefinitionId_First(
-		long CPDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionSpecificationOptionValue> orderByComparator);
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionSpecificationOptionValue> orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException;
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue fetchByCPDefinitionId_Last(
 		long CPDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDefinitionSpecificationOptionValue> orderByComparator);
@@ -709,34 +603,6 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 				<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue
-			findByCPSpecificationOptionId_Last(
-				long CPSpecificationOptionId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CPDefinitionSpecificationOptionValue> orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException;
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue
-		fetchByCPSpecificationOptionId_Last(
-			long CPSpecificationOptionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionSpecificationOptionValue> orderByComparator);
-
-	/**
 	 * Removes all the cp definition specification option values where CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPSpecificationOptionId the cp specification option ID
@@ -837,32 +703,6 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 * @return the first matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	 */
 	public CPDefinitionSpecificationOptionValue fetchByCPOptionCategoryId_First(
-		long CPOptionCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionSpecificationOptionValue> orderByComparator);
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue findByCPOptionCategoryId_Last(
-			long CPOptionCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionSpecificationOptionValue> orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException;
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue fetchByCPOptionCategoryId_Last(
 		long CPOptionCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDefinitionSpecificationOptionValue> orderByComparator);
@@ -1032,34 +872,6 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 			<CPDefinitionSpecificationOptionValue> orderByComparator);
 
 	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue findByC_CSO_Last(
-			long CPDefinitionId, long CPSpecificationOptionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionSpecificationOptionValue> orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException;
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue fetchByC_CSO_Last(
-		long CPDefinitionId, long CPSpecificationOptionId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionSpecificationOptionValue> orderByComparator);
-
-	/**
 	 * Removes all the cp definition specification option values where CPDefinitionId = &#63; and CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -1167,34 +979,6 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 * @return the first matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	 */
 	public CPDefinitionSpecificationOptionValue fetchByC_COC_First(
-		long CPDefinitionId, long CPOptionCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionSpecificationOptionValue> orderByComparator);
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue findByC_COC_Last(
-			long CPDefinitionId, long CPOptionCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionSpecificationOptionValue> orderByComparator)
-		throws NoSuchCPDefinitionSpecificationOptionValueException;
-
-	/**
-	 * Returns the last cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
-	 */
-	public CPDefinitionSpecificationOptionValue fetchByC_COC_Last(
 		long CPDefinitionId, long CPOptionCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDefinitionSpecificationOptionValue> orderByComparator);
@@ -1454,4 +1238,4 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1400051061
+// LIFERAY-SERVICE-BUILDER-HASH:1414261983

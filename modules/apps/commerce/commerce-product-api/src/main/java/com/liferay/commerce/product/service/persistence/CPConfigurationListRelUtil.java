@@ -226,39 +226,6 @@ public class CPConfigurationListRelUtil {
 	}
 
 	/**
-	 * Returns the last cp configuration list rel in the ordered set where CPConfigurationListId = &#63;.
-	 *
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list rel
-	 * @throws NoSuchCPConfigurationListRelException if a matching cp configuration list rel could not be found
-	 */
-	public static CPConfigurationListRel findByCPConfigurationListId_Last(
-			long CPConfigurationListId,
-			OrderByComparator<CPConfigurationListRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListRelException {
-
-		return getPersistence().findByCPConfigurationListId_Last(
-			CPConfigurationListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list rel in the ordered set where CPConfigurationListId = &#63;.
-	 *
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list rel, or <code>null</code> if a matching cp configuration list rel could not be found
-	 */
-	public static CPConfigurationListRel fetchByCPConfigurationListId_Last(
-		long CPConfigurationListId,
-		OrderByComparator<CPConfigurationListRel> orderByComparator) {
-
-		return getPersistence().fetchByCPConfigurationListId_Last(
-			CPConfigurationListId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration list rels where CPConfigurationListId = &#63; from the database.
 	 *
 	 * @param CPConfigurationListId the cp configuration list ID
@@ -392,41 +359,6 @@ public class CPConfigurationListRelUtil {
 		OrderByComparator<CPConfigurationListRel> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, CPConfigurationListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list rel in the ordered set where classNameId = &#63; and CPConfigurationListId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list rel
-	 * @throws NoSuchCPConfigurationListRelException if a matching cp configuration list rel could not be found
-	 */
-	public static CPConfigurationListRel findByC_C_Last(
-			long classNameId, long CPConfigurationListId,
-			OrderByComparator<CPConfigurationListRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListRelException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, CPConfigurationListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list rel in the ordered set where classNameId = &#63; and CPConfigurationListId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list rel, or <code>null</code> if a matching cp configuration list rel could not be found
-	 */
-	public static CPConfigurationListRel fetchByC_C_Last(
-		long classNameId, long CPConfigurationListId,
-		OrderByComparator<CPConfigurationListRel> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, CPConfigurationListId, orderByComparator);
 	}
 
@@ -708,4 +640,4 @@ public class CPConfigurationListRelUtil {
 	private static volatile CPConfigurationListRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-184820119
+// LIFERAY-SERVICE-BUILDER-HASH:813124631

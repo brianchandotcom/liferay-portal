@@ -220,37 +220,6 @@ public class FaroProjectEmailDomainUtil {
 	}
 
 	/**
-	 * Returns the last faro project email domain in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project email domain
-	 * @throws NoSuchFaroProjectEmailDomainException if a matching faro project email domain could not be found
-	 */
-	public static FaroProjectEmailDomain findByGroupId_Last(
-			long groupId,
-			OrderByComparator<FaroProjectEmailDomain> orderByComparator)
-		throws com.liferay.osb.faro.exception.
-			NoSuchFaroProjectEmailDomainException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro project email domain in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project email domain, or <code>null</code> if a matching faro project email domain could not be found
-	 */
-	public static FaroProjectEmailDomain fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<FaroProjectEmailDomain> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro project email domains where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -373,39 +342,6 @@ public class FaroProjectEmailDomainUtil {
 		OrderByComparator<FaroProjectEmailDomain> orderByComparator) {
 
 		return getPersistence().fetchByFaroProjectId_First(
-			faroProjectId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro project email domain in the ordered set where faroProjectId = &#63;.
-	 *
-	 * @param faroProjectId the faro project ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project email domain
-	 * @throws NoSuchFaroProjectEmailDomainException if a matching faro project email domain could not be found
-	 */
-	public static FaroProjectEmailDomain findByFaroProjectId_Last(
-			long faroProjectId,
-			OrderByComparator<FaroProjectEmailDomain> orderByComparator)
-		throws com.liferay.osb.faro.exception.
-			NoSuchFaroProjectEmailDomainException {
-
-		return getPersistence().findByFaroProjectId_Last(
-			faroProjectId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro project email domain in the ordered set where faroProjectId = &#63;.
-	 *
-	 * @param faroProjectId the faro project ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project email domain, or <code>null</code> if a matching faro project email domain could not be found
-	 */
-	public static FaroProjectEmailDomain fetchByFaroProjectId_Last(
-		long faroProjectId,
-		OrderByComparator<FaroProjectEmailDomain> orderByComparator) {
-
-		return getPersistence().fetchByFaroProjectId_Last(
 			faroProjectId, orderByComparator);
 	}
 
@@ -601,4 +537,4 @@ public class FaroProjectEmailDomainUtil {
 	private static volatile FaroProjectEmailDomainPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1143648121
+// LIFERAY-SERVICE-BUILDER-HASH:1368162735

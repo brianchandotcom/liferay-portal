@@ -136,36 +136,6 @@ public interface SamlPeerBindingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding
-	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
-	 */
-	public SamlPeerBinding findByC_D_SNIV_Last(
-			long companyId, boolean deleted, String samlNameIdValue,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
-				orderByComparator)
-		throws NoSuchPeerBindingException;
-
-	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
-	 */
-	public SamlPeerBinding fetchByC_D_SNIV_Last(
-		long companyId, boolean deleted, String samlNameIdValue,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
-			orderByComparator);
-
-	/**
 	 * Removes all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -292,39 +262,6 @@ public interface SamlPeerBindingPersistence
 	 * @return the first matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
 	 */
 	public SamlPeerBinding fetchByC_U_SPEI_D_First(
-		long companyId, long userId, String samlPeerEntityId, boolean deleted,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
-			orderByComparator);
-
-	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding
-	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
-	 */
-	public SamlPeerBinding findByC_U_SPEI_D_Last(
-			long companyId, long userId, String samlPeerEntityId,
-			boolean deleted,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
-				orderByComparator)
-		throws NoSuchPeerBindingException;
-
-	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
-	 */
-	public SamlPeerBinding fetchByC_U_SPEI_D_Last(
 		long companyId, long userId, String samlPeerEntityId, boolean deleted,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
 			orderByComparator);
@@ -473,4 +410,4 @@ public interface SamlPeerBindingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1112890295
+// LIFERAY-SERVICE-BUILDER-HASH:1815879095

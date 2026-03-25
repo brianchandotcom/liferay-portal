@@ -326,72 +326,6 @@ public class ExpandoTablePersistenceImpl
 	}
 
 	/**
-	 * Returns the last expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando table
-	 * @throws NoSuchTableException if a matching expando table could not be found
-	 */
-	@Override
-	public ExpandoTable findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<ExpandoTable> orderByComparator)
-		throws NoSuchTableException {
-
-		ExpandoTable expandoTable = fetchByC_C_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (expandoTable != null) {
-			return expandoTable;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchTableException(sb.toString());
-	}
-
-	/**
-	 * Returns the last expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching expando table, or <code>null</code> if a matching expando table could not be found
-	 */
-	@Override
-	public ExpandoTable fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<ExpandoTable> orderByComparator) {
-
-		int count = countByC_C(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ExpandoTable> list = findByC_C(
-			companyId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the expando tables where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1555,4 +1489,4 @@ public class ExpandoTablePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:923478121
+// LIFERAY-SERVICE-BUILDER-HASH:-593082189

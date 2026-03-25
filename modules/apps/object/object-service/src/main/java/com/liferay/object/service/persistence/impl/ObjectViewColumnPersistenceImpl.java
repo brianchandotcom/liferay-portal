@@ -316,65 +316,6 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object view column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column
-	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
-	 */
-	@Override
-	public ObjectViewColumn findByUuid_Last(
-			String uuid, OrderByComparator<ObjectViewColumn> orderByComparator)
-		throws NoSuchObjectViewColumnException {
-
-		ObjectViewColumn objectViewColumn = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectViewColumn != null) {
-			return objectViewColumn;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectViewColumnException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object view column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
-	 */
-	@Override
-	public ObjectViewColumn fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectViewColumn> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectViewColumn> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object view columns where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -708,72 +649,6 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object view column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column
-	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
-	 */
-	@Override
-	public ObjectViewColumn findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectViewColumn> orderByComparator)
-		throws NoSuchObjectViewColumnException {
-
-		ObjectViewColumn objectViewColumn = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectViewColumn != null) {
-			return objectViewColumn;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectViewColumnException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object view column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
-	 */
-	@Override
-	public ObjectViewColumn fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectViewColumn> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectViewColumn> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object view columns where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1081,67 +956,6 @@ public class ObjectViewColumnPersistenceImpl
 
 		List<ObjectViewColumn> list = findByObjectViewId(
 			objectViewId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object view column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column
-	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
-	 */
-	@Override
-	public ObjectViewColumn findByObjectViewId_Last(
-			long objectViewId,
-			OrderByComparator<ObjectViewColumn> orderByComparator)
-		throws NoSuchObjectViewColumnException {
-
-		ObjectViewColumn objectViewColumn = fetchByObjectViewId_Last(
-			objectViewId, orderByComparator);
-
-		if (objectViewColumn != null) {
-			return objectViewColumn;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectViewId=");
-		sb.append(objectViewId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectViewColumnException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object view column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
-	 */
-	@Override
-	public ObjectViewColumn fetchByObjectViewId_Last(
-		long objectViewId,
-		OrderByComparator<ObjectViewColumn> orderByComparator) {
-
-		int count = countByObjectViewId(objectViewId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectViewColumn> list = findByObjectViewId(
-			objectViewId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1464,72 +1278,6 @@ public class ObjectViewColumnPersistenceImpl
 
 		List<ObjectViewColumn> list = findByOVI_OFN(
 			objectViewId, objectFieldName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column
-	 * @throws NoSuchObjectViewColumnException if a matching object view column could not be found
-	 */
-	@Override
-	public ObjectViewColumn findByOVI_OFN_Last(
-			long objectViewId, String objectFieldName,
-			OrderByComparator<ObjectViewColumn> orderByComparator)
-		throws NoSuchObjectViewColumnException {
-
-		ObjectViewColumn objectViewColumn = fetchByOVI_OFN_Last(
-			objectViewId, objectFieldName, orderByComparator);
-
-		if (objectViewColumn != null) {
-			return objectViewColumn;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectViewId=");
-		sb.append(objectViewId);
-
-		sb.append(", objectFieldName=");
-		sb.append(objectFieldName);
-
-		sb.append("}");
-
-		throw new NoSuchObjectViewColumnException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view column, or <code>null</code> if a matching object view column could not be found
-	 */
-	@Override
-	public ObjectViewColumn fetchByOVI_OFN_Last(
-		long objectViewId, String objectFieldName,
-		OrderByComparator<ObjectViewColumn> orderByComparator) {
-
-		int count = countByOVI_OFN(objectViewId, objectFieldName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectViewColumn> list = findByOVI_OFN(
-			objectViewId, objectFieldName, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2347,4 +2095,4 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1804364767
+// LIFERAY-SERVICE-BUILDER-HASH:-1710266026

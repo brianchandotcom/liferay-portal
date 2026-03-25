@@ -327,64 +327,6 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot entry pin in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin
-	 * @throws NoSuchEntryPinException if a matching depot entry pin could not be found
-	 */
-	@Override
-	public DepotEntryPin findByUuid_Last(
-			String uuid, OrderByComparator<DepotEntryPin> orderByComparator)
-		throws NoSuchEntryPinException {
-
-		DepotEntryPin depotEntryPin = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (depotEntryPin != null) {
-			return depotEntryPin;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryPinException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin, or <code>null</code> if a matching depot entry pin could not be found
-	 */
-	@Override
-	public DepotEntryPin fetchByUuid_Last(
-		String uuid, OrderByComparator<DepotEntryPin> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryPin> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot entry pins where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -932,72 +874,6 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot entry pin in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin
-	 * @throws NoSuchEntryPinException if a matching depot entry pin could not be found
-	 */
-	@Override
-	public DepotEntryPin findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DepotEntryPin> orderByComparator)
-		throws NoSuchEntryPinException {
-
-		DepotEntryPin depotEntryPin = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (depotEntryPin != null) {
-			return depotEntryPin;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryPinException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin, or <code>null</code> if a matching depot entry pin could not be found
-	 */
-	@Override
-	public DepotEntryPin fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DepotEntryPin> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryPin> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot entry pins where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1319,65 +1195,6 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot entry pin in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin
-	 * @throws NoSuchEntryPinException if a matching depot entry pin could not be found
-	 */
-	@Override
-	public DepotEntryPin findByUserId_Last(
-			long userId, OrderByComparator<DepotEntryPin> orderByComparator)
-		throws NoSuchEntryPinException {
-
-		DepotEntryPin depotEntryPin = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (depotEntryPin != null) {
-			return depotEntryPin;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryPinException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin, or <code>null</code> if a matching depot entry pin could not be found
-	 */
-	@Override
-	public DepotEntryPin fetchByUserId_Last(
-		long userId, OrderByComparator<DepotEntryPin> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryPin> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot entry pins where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1669,66 +1486,6 @@ public class DepotEntryPinPersistenceImpl
 
 		List<DepotEntryPin> list = findByDepotEntryId(
 			depotEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin
-	 * @throws NoSuchEntryPinException if a matching depot entry pin could not be found
-	 */
-	@Override
-	public DepotEntryPin findByDepotEntryId_Last(
-			long depotEntryId,
-			OrderByComparator<DepotEntryPin> orderByComparator)
-		throws NoSuchEntryPinException {
-
-		DepotEntryPin depotEntryPin = fetchByDepotEntryId_Last(
-			depotEntryId, orderByComparator);
-
-		if (depotEntryPin != null) {
-			return depotEntryPin;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("depotEntryId=");
-		sb.append(depotEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryPinException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry pin in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry pin, or <code>null</code> if a matching depot entry pin could not be found
-	 */
-	@Override
-	public DepotEntryPin fetchByDepotEntryId_Last(
-		long depotEntryId, OrderByComparator<DepotEntryPin> orderByComparator) {
-
-		int count = countByDepotEntryId(depotEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntryPin> list = findByDepotEntryId(
-			depotEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2995,4 +2752,4 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1548266651
+// LIFERAY-SERVICE-BUILDER-HASH:-559887671

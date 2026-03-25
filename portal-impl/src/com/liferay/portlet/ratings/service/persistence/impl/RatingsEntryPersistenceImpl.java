@@ -322,64 +322,6 @@ public class RatingsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	@Override
-	public RatingsEntry findByUuid_Last(
-			String uuid, OrderByComparator<RatingsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		RatingsEntry ratingsEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (ratingsEntry != null) {
-			return ratingsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	@Override
-	public RatingsEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<RatingsEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RatingsEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ratings entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -724,72 +666,6 @@ public class RatingsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	@Override
-	public RatingsEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		RatingsEntry ratingsEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ratingsEntry != null) {
-			return ratingsEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	@Override
-	public RatingsEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<RatingsEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RatingsEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ratings entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1123,72 +999,6 @@ public class RatingsEntryPersistenceImpl
 
 		List<RatingsEntry> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	@Override
-	public RatingsEntry findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		RatingsEntry ratingsEntry = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (ratingsEntry != null) {
-			return ratingsEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	@Override
-	public RatingsEntry fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<RatingsEntry> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RatingsEntry> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2167,77 +1977,6 @@ public class RatingsEntryPersistenceImpl
 
 		List<RatingsEntry> list = findByC_C_S(
 			classNameId, classPK, score, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param score the score
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	@Override
-	public RatingsEntry findByC_C_S_Last(
-			long classNameId, long classPK, double score,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		RatingsEntry ratingsEntry = fetchByC_C_S_Last(
-			classNameId, classPK, score, orderByComparator);
-
-		if (ratingsEntry != null) {
-			return ratingsEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", score=");
-		sb.append(score);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param score the score
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	@Override
-	public RatingsEntry fetchByC_C_S_Last(
-		long classNameId, long classPK, double score,
-		OrderByComparator<RatingsEntry> orderByComparator) {
-
-		int count = countByC_C_S(classNameId, classPK, score);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RatingsEntry> list = findByC_C_S(
-			classNameId, classPK, score, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3346,4 +3085,4 @@ public class RatingsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1518408766
+// LIFERAY-SERVICE-BUILDER-HASH:-542631290

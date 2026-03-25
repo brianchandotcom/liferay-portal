@@ -118,32 +118,6 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 			orderByComparator);
 
 	/**
-	 * Returns the last org labor in the ordered set where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching org labor
-	 * @throws NoSuchOrgLaborException if a matching org labor could not be found
-	 */
-	public OrgLabor findByOrganizationId_Last(
-			long organizationId,
-			com.liferay.portal.kernel.util.OrderByComparator<OrgLabor>
-				orderByComparator)
-		throws NoSuchOrgLaborException;
-
-	/**
-	 * Returns the last org labor in the ordered set where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching org labor, or <code>null</code> if a matching org labor could not be found
-	 */
-	public OrgLabor fetchByOrganizationId_Last(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgLabor>
-			orderByComparator);
-
-	/**
 	 * Removes all the org labors where organizationId = &#63; from the database.
 	 *
 	 * @param organizationId the organization ID
@@ -278,4 +252,4 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-754805039
+// LIFERAY-SERVICE-BUILDER-HASH:1388807322

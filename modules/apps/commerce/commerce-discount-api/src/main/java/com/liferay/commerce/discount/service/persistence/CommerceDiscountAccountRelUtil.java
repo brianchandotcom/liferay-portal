@@ -219,37 +219,6 @@ public class CommerceDiscountAccountRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce discount account rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount account rel
-	 * @throws NoSuchDiscountAccountRelException if a matching commerce discount account rel could not be found
-	 */
-	public static CommerceDiscountAccountRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceDiscountAccountRel> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountAccountRelException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount account rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount account rel, or <code>null</code> if a matching commerce discount account rel could not be found
-	 */
-	public static CommerceDiscountAccountRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceDiscountAccountRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce discount account rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -378,41 +347,6 @@ public class CommerceDiscountAccountRelUtil {
 		OrderByComparator<CommerceDiscountAccountRel> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount account rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount account rel
-	 * @throws NoSuchDiscountAccountRelException if a matching commerce discount account rel could not be found
-	 */
-	public static CommerceDiscountAccountRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceDiscountAccountRel> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountAccountRelException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount account rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount account rel, or <code>null</code> if a matching commerce discount account rel could not be found
-	 */
-	public static CommerceDiscountAccountRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceDiscountAccountRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -546,39 +480,6 @@ public class CommerceDiscountAccountRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce discount account rel in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount account rel
-	 * @throws NoSuchDiscountAccountRelException if a matching commerce discount account rel could not be found
-	 */
-	public static CommerceDiscountAccountRel findByCommerceAccountId_Last(
-			long commerceAccountId,
-			OrderByComparator<CommerceDiscountAccountRel> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountAccountRelException {
-
-		return getPersistence().findByCommerceAccountId_Last(
-			commerceAccountId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount account rel in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount account rel, or <code>null</code> if a matching commerce discount account rel could not be found
-	 */
-	public static CommerceDiscountAccountRel fetchByCommerceAccountId_Last(
-		long commerceAccountId,
-		OrderByComparator<CommerceDiscountAccountRel> orderByComparator) {
-
-		return getPersistence().fetchByCommerceAccountId_Last(
-			commerceAccountId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce discount account rels where commerceAccountId = &#63; from the database.
 	 *
 	 * @param commerceAccountId the commerce account ID
@@ -702,39 +603,6 @@ public class CommerceDiscountAccountRelUtil {
 		OrderByComparator<CommerceDiscountAccountRel> orderByComparator) {
 
 		return getPersistence().fetchByCommerceDiscountId_First(
-			commerceDiscountId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount account rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount account rel
-	 * @throws NoSuchDiscountAccountRelException if a matching commerce discount account rel could not be found
-	 */
-	public static CommerceDiscountAccountRel findByCommerceDiscountId_Last(
-			long commerceDiscountId,
-			OrderByComparator<CommerceDiscountAccountRel> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountAccountRelException {
-
-		return getPersistence().findByCommerceDiscountId_Last(
-			commerceDiscountId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce discount account rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount account rel, or <code>null</code> if a matching commerce discount account rel could not be found
-	 */
-	public static CommerceDiscountAccountRel fetchByCommerceDiscountId_Last(
-		long commerceDiscountId,
-		OrderByComparator<CommerceDiscountAccountRel> orderByComparator) {
-
-		return getPersistence().fetchByCommerceDiscountId_Last(
 			commerceDiscountId, orderByComparator);
 	}
 
@@ -1010,4 +878,4 @@ public class CommerceDiscountAccountRelUtil {
 	private static volatile CommerceDiscountAccountRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1261024559
+// LIFERAY-SERVICE-BUILDER-HASH:134343609

@@ -210,34 +210,6 @@ public class WikiPageResourceUtil {
 	}
 
 	/**
-	 * Returns the last wiki page resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki page resource
-	 * @throws NoSuchPageResourceException if a matching wiki page resource could not be found
-	 */
-	public static WikiPageResource findByUuid_Last(
-			String uuid, OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki page resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
-	 */
-	public static WikiPageResource fetchByUuid_Last(
-		String uuid, OrderByComparator<WikiPageResource> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the wiki page resources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -428,40 +400,6 @@ public class WikiPageResourceUtil {
 		OrderByComparator<WikiPageResource> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki page resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki page resource
-	 * @throws NoSuchPageResourceException if a matching wiki page resource could not be found
-	 */
-	public static WikiPageResource findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last wiki page resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
-	 */
-	public static WikiPageResource fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<WikiPageResource> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -711,4 +649,4 @@ public class WikiPageResourceUtil {
 	private static volatile WikiPageResourcePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1342778603
+// LIFERAY-SERVICE-BUILDER-HASH:197594187

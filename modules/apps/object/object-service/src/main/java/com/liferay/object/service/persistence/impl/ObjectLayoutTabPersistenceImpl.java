@@ -316,65 +316,6 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout tab in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout tab
-	 * @throws NoSuchObjectLayoutTabException if a matching object layout tab could not be found
-	 */
-	@Override
-	public ObjectLayoutTab findByUuid_Last(
-			String uuid, OrderByComparator<ObjectLayoutTab> orderByComparator)
-		throws NoSuchObjectLayoutTabException {
-
-		ObjectLayoutTab objectLayoutTab = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectLayoutTab != null) {
-			return objectLayoutTab;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutTabException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout tab in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout tab, or <code>null</code> if a matching object layout tab could not be found
-	 */
-	@Override
-	public ObjectLayoutTab fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectLayoutTab> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutTab> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout tabs where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -708,72 +649,6 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout tab in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout tab
-	 * @throws NoSuchObjectLayoutTabException if a matching object layout tab could not be found
-	 */
-	@Override
-	public ObjectLayoutTab findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectLayoutTab> orderByComparator)
-		throws NoSuchObjectLayoutTabException {
-
-		ObjectLayoutTab objectLayoutTab = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectLayoutTab != null) {
-			return objectLayoutTab;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutTabException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout tab in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout tab, or <code>null</code> if a matching object layout tab could not be found
-	 */
-	@Override
-	public ObjectLayoutTab fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectLayoutTab> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutTab> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout tabs where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1090,67 +965,6 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout tab in the ordered set where objectLayoutId = &#63;.
-	 *
-	 * @param objectLayoutId the object layout ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout tab
-	 * @throws NoSuchObjectLayoutTabException if a matching object layout tab could not be found
-	 */
-	@Override
-	public ObjectLayoutTab findByObjectLayoutId_Last(
-			long objectLayoutId,
-			OrderByComparator<ObjectLayoutTab> orderByComparator)
-		throws NoSuchObjectLayoutTabException {
-
-		ObjectLayoutTab objectLayoutTab = fetchByObjectLayoutId_Last(
-			objectLayoutId, orderByComparator);
-
-		if (objectLayoutTab != null) {
-			return objectLayoutTab;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectLayoutId=");
-		sb.append(objectLayoutId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutTabException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout tab in the ordered set where objectLayoutId = &#63;.
-	 *
-	 * @param objectLayoutId the object layout ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout tab, or <code>null</code> if a matching object layout tab could not be found
-	 */
-	@Override
-	public ObjectLayoutTab fetchByObjectLayoutId_Last(
-		long objectLayoutId,
-		OrderByComparator<ObjectLayoutTab> orderByComparator) {
-
-		int count = countByObjectLayoutId(objectLayoutId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutTab> list = findByObjectLayoutId(
-			objectLayoutId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout tabs where objectLayoutId = &#63; from the database.
 	 *
 	 * @param objectLayoutId the object layout ID
@@ -1440,67 +1254,6 @@ public class ObjectLayoutTabPersistenceImpl
 
 		List<ObjectLayoutTab> list = findByObjectRelationshipId(
 			objectRelationshipId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object layout tab in the ordered set where objectRelationshipId = &#63;.
-	 *
-	 * @param objectRelationshipId the object relationship ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout tab
-	 * @throws NoSuchObjectLayoutTabException if a matching object layout tab could not be found
-	 */
-	@Override
-	public ObjectLayoutTab findByObjectRelationshipId_Last(
-			long objectRelationshipId,
-			OrderByComparator<ObjectLayoutTab> orderByComparator)
-		throws NoSuchObjectLayoutTabException {
-
-		ObjectLayoutTab objectLayoutTab = fetchByObjectRelationshipId_Last(
-			objectRelationshipId, orderByComparator);
-
-		if (objectLayoutTab != null) {
-			return objectLayoutTab;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectRelationshipId=");
-		sb.append(objectRelationshipId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutTabException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout tab in the ordered set where objectRelationshipId = &#63;.
-	 *
-	 * @param objectRelationshipId the object relationship ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout tab, or <code>null</code> if a matching object layout tab could not be found
-	 */
-	@Override
-	public ObjectLayoutTab fetchByObjectRelationshipId_Last(
-		long objectRelationshipId,
-		OrderByComparator<ObjectLayoutTab> orderByComparator) {
-
-		int count = countByObjectRelationshipId(objectRelationshipId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutTab> list = findByObjectRelationshipId(
-			objectRelationshipId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2295,4 +2048,4 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:765380280
+// LIFERAY-SERVICE-BUILDER-HASH:1254250712

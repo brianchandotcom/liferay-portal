@@ -119,32 +119,6 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last spring entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry
-	 * @throws NoSuchSpringEntryException if a matching spring entry could not be found
-	 */
-	public SpringEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
-				orderByComparator)
-		throws NoSuchSpringEntryException;
-
-	/**
-	 * Returns the last spring entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry, or <code>null</code> if a matching spring entry could not be found
-	 */
-	public SpringEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the spring entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -254,34 +228,6 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last spring entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry
-	 * @throws NoSuchSpringEntryException if a matching spring entry could not be found
-	 */
-	public SpringEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
-				orderByComparator)
-		throws NoSuchSpringEntryException;
-
-	/**
-	 * Returns the last spring entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry, or <code>null</code> if a matching spring entry could not be found
-	 */
-	public SpringEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the spring entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -381,32 +327,6 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	 * @return the first matching spring entry, or <code>null</code> if a matching spring entry could not be found
 	 */
 	public SpringEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last spring entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry
-	 * @throws NoSuchSpringEntryException if a matching spring entry could not be found
-	 */
-	public SpringEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
-				orderByComparator)
-		throws NoSuchSpringEntryException;
-
-	/**
-	 * Returns the last spring entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching spring entry, or <code>null</code> if a matching spring entry could not be found
-	 */
-	public SpringEntry fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SpringEntry>
 			orderByComparator);
@@ -547,4 +467,4 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1580069640
+// LIFERAY-SERVICE-BUILDER-HASH:950700006

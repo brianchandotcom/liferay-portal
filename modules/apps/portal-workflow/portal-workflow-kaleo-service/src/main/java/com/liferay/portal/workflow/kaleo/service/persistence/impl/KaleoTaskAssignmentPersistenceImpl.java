@@ -322,67 +322,6 @@ public class KaleoTaskAssignmentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo task assignment in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	 */
-	@Override
-	public KaleoTaskAssignment findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException {
-
-		KaleoTaskAssignment kaleoTaskAssignment = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoTaskAssignment != null) {
-			return kaleoTaskAssignment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskAssignmentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	 */
-	@Override
-	public KaleoTaskAssignment fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<KaleoTaskAssignment> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskAssignment> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo task assignments where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -687,68 +626,6 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 		List<KaleoTaskAssignment> list = findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	 */
-	@Override
-	public KaleoTaskAssignment findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException {
-
-		KaleoTaskAssignment kaleoTaskAssignment =
-			fetchByKaleoDefinitionVersionId_Last(
-				kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoTaskAssignment != null) {
-			return kaleoTaskAssignment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskAssignmentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	 */
-	@Override
-	public KaleoTaskAssignment fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoTaskAssignment> orderByComparator) {
-
-		int count = countByKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskAssignment> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1088,72 +965,6 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 		List<KaleoTaskAssignment> list = findByKCN_KCPK(
 			kaleoClassName, kaleoClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	 */
-	@Override
-	public KaleoTaskAssignment findByKCN_KCPK_Last(
-			String kaleoClassName, long kaleoClassPK,
-			OrderByComparator<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException {
-
-		KaleoTaskAssignment kaleoTaskAssignment = fetchByKCN_KCPK_Last(
-			kaleoClassName, kaleoClassPK, orderByComparator);
-
-		if (kaleoTaskAssignment != null) {
-			return kaleoTaskAssignment;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchTaskAssignmentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	 */
-	@Override
-	public KaleoTaskAssignment fetchByKCN_KCPK_Last(
-		String kaleoClassName, long kaleoClassPK,
-		OrderByComparator<KaleoTaskAssignment> orderByComparator) {
-
-		int count = countByKCN_KCPK(kaleoClassName, kaleoClassPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskAssignment> list = findByKCN_KCPK(
-			kaleoClassName, kaleoClassPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1549,79 +1360,6 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 		List<KaleoTaskAssignment> list = findByKCN_KCPK_ACN(
 			kaleoClassName, kaleoClassPK, assigneeClassName, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param assigneeClassName the assignee class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	 */
-	@Override
-	public KaleoTaskAssignment findByKCN_KCPK_ACN_Last(
-			String kaleoClassName, long kaleoClassPK, String assigneeClassName,
-			OrderByComparator<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException {
-
-		KaleoTaskAssignment kaleoTaskAssignment = fetchByKCN_KCPK_ACN_Last(
-			kaleoClassName, kaleoClassPK, assigneeClassName, orderByComparator);
-
-		if (kaleoTaskAssignment != null) {
-			return kaleoTaskAssignment;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append(", assigneeClassName=");
-		sb.append(assigneeClassName);
-
-		sb.append("}");
-
-		throw new NoSuchTaskAssignmentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param assigneeClassName the assignee class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	 */
-	@Override
-	public KaleoTaskAssignment fetchByKCN_KCPK_ACN_Last(
-		String kaleoClassName, long kaleoClassPK, String assigneeClassName,
-		OrderByComparator<KaleoTaskAssignment> orderByComparator) {
-
-		int count = countByKCN_KCPK_ACN(
-			kaleoClassName, kaleoClassPK, assigneeClassName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskAssignment> list = findByKCN_KCPK_ACN(
-			kaleoClassName, kaleoClassPK, assigneeClassName, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2761,4 +2499,4 @@ public class KaleoTaskAssignmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:911909610
+// LIFERAY-SERVICE-BUILDER-HASH:17239387

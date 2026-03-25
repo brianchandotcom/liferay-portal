@@ -120,32 +120,6 @@ public interface ObjectEntryFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object entry folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-				orderByComparator)
-		throws NoSuchObjectEntryFolderException;
-
-	/**
-	 * Returns the last object entry folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-			orderByComparator);
-
-	/**
 	 * Removes all the object entry folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -300,34 +274,6 @@ public interface ObjectEntryFolderPersistence
 	 * @return the first matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
 	 */
 	public ObjectEntryFolder fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-			orderByComparator);
-
-	/**
-	 * Returns the last object entry folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-				orderByComparator)
-		throws NoSuchObjectEntryFolderException;
-
-	/**
-	 * Returns the last object entry folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
 			orderByComparator);
@@ -513,36 +459,6 @@ public interface ObjectEntryFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder findByG_C_P_Last(
-			long groupId, long companyId, long parentObjectEntryFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-				orderByComparator)
-		throws NoSuchObjectEntryFolderException;
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder fetchByG_C_P_Last(
-		long groupId, long companyId, long parentObjectEntryFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-			orderByComparator);
-
-	/**
 	 * Returns all the object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -720,36 +636,6 @@ public interface ObjectEntryFolderPersistence
 	 * @return the first matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
 	 */
 	public ObjectEntryFolder fetchByG_C_LikeT_First(
-		long groupId, long companyId, String treePath,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-			orderByComparator);
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder findByG_C_LikeT_Last(
-			long groupId, long companyId, String treePath,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-				orderByComparator)
-		throws NoSuchObjectEntryFolderException;
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder fetchByG_C_LikeT_Last(
 		long groupId, long companyId, String treePath,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
 			orderByComparator);
@@ -946,42 +832,6 @@ public interface ObjectEntryFolderPersistence
 	 * @return the first matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
 	 */
 	public ObjectEntryFolder fetchByG_C_P_N_NotS_First(
-		long groupId, long companyId, long parentObjectEntryFolderId,
-		String name, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-			orderByComparator);
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63; and name = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder findByG_C_P_N_NotS_Last(
-			long groupId, long companyId, long parentObjectEntryFolderId,
-			String name, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
-				orderByComparator)
-		throws NoSuchObjectEntryFolderException;
-
-	/**
-	 * Returns the last object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63; and name = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	public ObjectEntryFolder fetchByG_C_P_N_NotS_Last(
 		long groupId, long companyId, long parentObjectEntryFolderId,
 		String name, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryFolder>
@@ -1207,4 +1057,4 @@ public interface ObjectEntryFolderPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1372848942
+// LIFERAY-SERVICE-BUILDER-HASH:991652397

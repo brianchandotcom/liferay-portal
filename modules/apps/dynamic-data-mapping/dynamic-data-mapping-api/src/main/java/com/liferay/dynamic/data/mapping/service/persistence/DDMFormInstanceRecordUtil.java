@@ -216,37 +216,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns the last ddm form instance record in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord findByUuid_Last(
-			String uuid,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm form instance records where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -447,41 +416,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns the last ddm form instance record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm form instance records where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -604,39 +538,6 @@ public class DDMFormInstanceRecordUtil {
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -764,39 +665,6 @@ public class DDMFormInstanceRecordUtil {
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 
 		return getPersistence().fetchByFormInstanceId_First(
-			formInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord findByFormInstanceId_Last(
-			long formInstanceId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByFormInstanceId_Last(
-			formInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord fetchByFormInstanceId_Last(
-		long formInstanceId,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().fetchByFormInstanceId_Last(
 			formInstanceId, orderByComparator);
 	}
 
@@ -934,41 +802,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns the last ddm form instance record in the ordered set where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord findByU_F_Last(
-			long userId, long formInstanceId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByU_F_Last(
-			userId, formInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord fetchByU_F_Last(
-		long userId, long formInstanceId,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().fetchByU_F_Last(
-			userId, formInstanceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm form instance records where userId = &#63; and formInstanceId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1101,41 +934,6 @@ public class DDMFormInstanceRecordUtil {
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 
 		return getPersistence().fetchByF_F_First(
-			formInstanceId, formInstanceVersion, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord findByF_F_Last(
-			long formInstanceId, String formInstanceVersion,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByF_F_Last(
-			formInstanceId, formInstanceVersion, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm form instance record in the ordered set where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord fetchByF_F_Last(
-		long formInstanceId, String formInstanceVersion,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().fetchByF_F_Last(
 			formInstanceId, formInstanceVersion, orderByComparator);
 	}
 
@@ -1337,4 +1135,4 @@ public class DDMFormInstanceRecordUtil {
 	private static volatile DDMFormInstanceRecordPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1282531075
+// LIFERAY-SERVICE-BUILDER-HASH:-1085638835

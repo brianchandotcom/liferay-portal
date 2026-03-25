@@ -339,64 +339,6 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm structure in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByUuid_Last(
-			String uuid, OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByUuid_Last(
-		String uuid, OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm structures where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -944,72 +886,6 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm structures where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1324,65 +1200,6 @@ public class DDMStructurePersistenceImpl
 
 		List<DDMStructure> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByGroupId_Last(
-			long groupId, OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByGroupId_Last(
-		long groupId, OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2376,67 +2193,6 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm structure in the ordered set where parentStructureId = &#63;.
-	 *
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByParentStructureId_Last(
-			long parentStructureId,
-			OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByParentStructureId_Last(
-			parentStructureId, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentStructureId=");
-		sb.append(parentStructureId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where parentStructureId = &#63;.
-	 *
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByParentStructureId_Last(
-		long parentStructureId,
-		OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByParentStructureId(parentStructureId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByParentStructureId(
-			parentStructureId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm structures where parentStructureId = &#63; from the database.
 	 *
 	 * @param parentStructureId the parent structure ID
@@ -2746,67 +2502,6 @@ public class DDMStructurePersistenceImpl
 
 		List<DDMStructure> list = findByStructureKey(
 			structureKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where structureKey = &#63;.
-	 *
-	 * @param structureKey the structure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByStructureKey_Last(
-			String structureKey,
-			OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByStructureKey_Last(
-			structureKey, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureKey=");
-		sb.append(structureKey);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where structureKey = &#63;.
-	 *
-	 * @param structureKey the structure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByStructureKey_Last(
-		String structureKey,
-		OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByStructureKey(structureKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByStructureKey(
-			structureKey, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3141,72 +2836,6 @@ public class DDMStructurePersistenceImpl
 
 		List<DDMStructure> list = findByG_P(
 			groupId, parentStructureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByG_P_Last(
-			long groupId, long parentStructureId,
-			OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByG_P_Last(
-			groupId, parentStructureId, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentStructureId=");
-		sb.append(parentStructureId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByG_P_Last(
-		long groupId, long parentStructureId,
-		OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByG_P(groupId, parentStructureId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByG_P(
-			groupId, parentStructureId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3749,72 +3378,6 @@ public class DDMStructurePersistenceImpl
 
 		List<DDMStructure> list = findByG_C(
 			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByG_C_Last(
-			long groupId, long classNameId,
-			OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByG_C_Last(
-			groupId, classNameId, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByG_C_Last(
-		long groupId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByG_C(groupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByG_C(
-			groupId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4894,72 +4457,6 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByC_C_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByC_C(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByC_C(
-			companyId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm structures where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -5793,77 +5290,6 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByG_N_D_Last(
-			long groupId, String name, String description,
-			OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByG_N_D_Last(
-			groupId, name, description, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", description=");
-		sb.append(description);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByG_N_D_Last(
-		long groupId, String name, String description,
-		OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByG_N_D(groupId, name, description);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByG_N_D(
-			groupId, name, description, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6564,83 +5990,6 @@ public class DDMStructurePersistenceImpl
 
 		List<DDMStructure> list = findByG_C_N_D(
 			groupId, classNameId, name, description, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure
-	 * @throws NoSuchStructureException if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure findByG_C_N_D_Last(
-			long groupId, long classNameId, String name, String description,
-			OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByG_C_N_D_Last(
-			groupId, classNameId, name, description, orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", description=");
-		sb.append(description);
-
-		sb.append("}");
-
-		throw new NoSuchStructureException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByG_C_N_D_Last(
-		long groupId, long classNameId, String name, String description,
-		OrderByComparator<DDMStructure> orderByComparator) {
-
-		int count = countByG_C_N_D(groupId, classNameId, name, description);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByG_C_N_D(
-			groupId, classNameId, name, description, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -9082,4 +8431,4 @@ public class DDMStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-571723998
+// LIFERAY-SERVICE-BUILDER-HASH:-1296871085

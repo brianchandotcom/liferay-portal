@@ -506,78 +506,6 @@ public class TicketPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket
-	 * @throws NoSuchTicketException if a matching ticket could not be found
-	 */
-	@Override
-	public Ticket findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<Ticket> orderByComparator)
-		throws NoSuchTicketException {
-
-		Ticket ticket = fetchByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (ticket != null) {
-			return ticket;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchTicketException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket, or <code>null</code> if a matching ticket could not be found
-	 */
-	@Override
-	public Ticket fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<Ticket> orderByComparator) {
-
-		int count = countByC_C_C(companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Ticket> list = findByC_C_C(
-			companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -908,77 +836,6 @@ public class TicketPersistenceImpl
 
 		List<Ticket> list = findByC_C_T(
 			classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket
-	 * @throws NoSuchTicketException if a matching ticket could not be found
-	 */
-	@Override
-	public Ticket findByC_C_T_Last(
-			long classNameId, long classPK, int type,
-			OrderByComparator<Ticket> orderByComparator)
-		throws NoSuchTicketException {
-
-		Ticket ticket = fetchByC_C_T_Last(
-			classNameId, classPK, type, orderByComparator);
-
-		if (ticket != null) {
-			return ticket;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchTicketException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket, or <code>null</code> if a matching ticket could not be found
-	 */
-	@Override
-	public Ticket fetchByC_C_T_Last(
-		long classNameId, long classPK, int type,
-		OrderByComparator<Ticket> orderByComparator) {
-
-		int count = countByC_C_T(classNameId, classPK, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Ticket> list = findByC_C_T(
-			classNameId, classPK, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1340,83 +1197,6 @@ public class TicketPersistenceImpl
 
 		List<Ticket> list = findByC_C_C_T(
 			companyId, classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket
-	 * @throws NoSuchTicketException if a matching ticket could not be found
-	 */
-	@Override
-	public Ticket findByC_C_C_T_Last(
-			long companyId, long classNameId, long classPK, int type,
-			OrderByComparator<Ticket> orderByComparator)
-		throws NoSuchTicketException {
-
-		Ticket ticket = fetchByC_C_C_T_Last(
-			companyId, classNameId, classPK, type, orderByComparator);
-
-		if (ticket != null) {
-			return ticket;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchTicketException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ticket, or <code>null</code> if a matching ticket could not be found
-	 */
-	@Override
-	public Ticket fetchByC_C_C_T_Last(
-		long companyId, long classNameId, long classPK, int type,
-		OrderByComparator<Ticket> orderByComparator) {
-
-		int count = countByC_C_C_T(companyId, classNameId, classPK, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Ticket> list = findByC_C_C_T(
-			companyId, classNameId, classPK, type, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2190,4 +1970,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-527496242
+// LIFERAY-SERVICE-BUILDER-HASH:-793157743

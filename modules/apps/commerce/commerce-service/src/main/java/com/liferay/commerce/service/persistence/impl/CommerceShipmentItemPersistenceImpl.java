@@ -330,67 +330,6 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce shipment item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item
-	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceShipmentItem> orderByComparator)
-		throws NoSuchShipmentItemException {
-
-		CommerceShipmentItem commerceShipmentItem = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceShipmentItem != null) {
-			return commerceShipmentItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchShipmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceShipmentItem> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShipmentItem> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce shipment items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -927,72 +866,6 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce shipment item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item
-	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceShipmentItem> orderByComparator)
-		throws NoSuchShipmentItemException {
-
-		CommerceShipmentItem commerceShipmentItem = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceShipmentItem != null) {
-			return commerceShipmentItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchShipmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceShipmentItem> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShipmentItem> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce shipment items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1306,67 +1179,6 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce shipment item in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item
-	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CommerceShipmentItem> orderByComparator)
-		throws NoSuchShipmentItemException {
-
-		CommerceShipmentItem commerceShipmentItem = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (commerceShipmentItem != null) {
-			return commerceShipmentItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchShipmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CommerceShipmentItem> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShipmentItem> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce shipment items where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1654,68 +1466,6 @@ public class CommerceShipmentItemPersistenceImpl
 
 		List<CommerceShipmentItem> list = findByCommerceShipmentId(
 			commerceShipmentId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where commerceShipmentId = &#63;.
-	 *
-	 * @param commerceShipmentId the commerce shipment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item
-	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem findByCommerceShipmentId_Last(
-			long commerceShipmentId,
-			OrderByComparator<CommerceShipmentItem> orderByComparator)
-		throws NoSuchShipmentItemException {
-
-		CommerceShipmentItem commerceShipmentItem =
-			fetchByCommerceShipmentId_Last(
-				commerceShipmentId, orderByComparator);
-
-		if (commerceShipmentItem != null) {
-			return commerceShipmentItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShipmentId=");
-		sb.append(commerceShipmentId);
-
-		sb.append("}");
-
-		throw new NoSuchShipmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where commerceShipmentId = &#63;.
-	 *
-	 * @param commerceShipmentId the commerce shipment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem fetchByCommerceShipmentId_Last(
-		long commerceShipmentId,
-		OrderByComparator<CommerceShipmentItem> orderByComparator) {
-
-		int count = countByCommerceShipmentId(commerceShipmentId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShipmentItem> list = findByCommerceShipmentId(
-			commerceShipmentId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2014,68 +1764,6 @@ public class CommerceShipmentItemPersistenceImpl
 
 		List<CommerceShipmentItem> list = findByCommerceOrderItemId(
 			commerceOrderItemId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where commerceOrderItemId = &#63;.
-	 *
-	 * @param commerceOrderItemId the commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item
-	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem findByCommerceOrderItemId_Last(
-			long commerceOrderItemId,
-			OrderByComparator<CommerceShipmentItem> orderByComparator)
-		throws NoSuchShipmentItemException {
-
-		CommerceShipmentItem commerceShipmentItem =
-			fetchByCommerceOrderItemId_Last(
-				commerceOrderItemId, orderByComparator);
-
-		if (commerceShipmentItem != null) {
-			return commerceShipmentItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceOrderItemId=");
-		sb.append(commerceOrderItemId);
-
-		sb.append("}");
-
-		throw new NoSuchShipmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where commerceOrderItemId = &#63;.
-	 *
-	 * @param commerceOrderItemId the commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem fetchByCommerceOrderItemId_Last(
-		long commerceOrderItemId,
-		OrderByComparator<CommerceShipmentItem> orderByComparator) {
-
-		int count = countByCommerceOrderItemId(commerceOrderItemId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShipmentItem> list = findByCommerceOrderItemId(
-			commerceOrderItemId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2393,73 +2081,6 @@ public class CommerceShipmentItemPersistenceImpl
 
 		List<CommerceShipmentItem> list = findByC_C(
 			commerceShipmentId, commerceOrderItemId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where commerceShipmentId = &#63; and commerceOrderItemId = &#63;.
-	 *
-	 * @param commerceShipmentId the commerce shipment ID
-	 * @param commerceOrderItemId the commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item
-	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem findByC_C_Last(
-			long commerceShipmentId, long commerceOrderItemId,
-			OrderByComparator<CommerceShipmentItem> orderByComparator)
-		throws NoSuchShipmentItemException {
-
-		CommerceShipmentItem commerceShipmentItem = fetchByC_C_Last(
-			commerceShipmentId, commerceOrderItemId, orderByComparator);
-
-		if (commerceShipmentItem != null) {
-			return commerceShipmentItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShipmentId=");
-		sb.append(commerceShipmentId);
-
-		sb.append(", commerceOrderItemId=");
-		sb.append(commerceOrderItemId);
-
-		sb.append("}");
-
-		throw new NoSuchShipmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where commerceShipmentId = &#63; and commerceOrderItemId = &#63;.
-	 *
-	 * @param commerceShipmentId the commerce shipment ID
-	 * @param commerceOrderItemId the commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem fetchByC_C_Last(
-		long commerceShipmentId, long commerceOrderItemId,
-		OrderByComparator<CommerceShipmentItem> orderByComparator) {
-
-		int count = countByC_C(commerceShipmentId, commerceOrderItemId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShipmentItem> list = findByC_C(
-			commerceShipmentId, commerceOrderItemId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3036,82 +2657,6 @@ public class CommerceShipmentItemPersistenceImpl
 		List<CommerceShipmentItem> list = findByC_NotC_GteQ(
 			commerceShipmentId, commerceInventoryWarehouseId, quantity, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where commerceShipmentId = &#63; and commerceInventoryWarehouseId &ne; &#63; and quantity &ge; &#63;.
-	 *
-	 * @param commerceShipmentId the commerce shipment ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param quantity the quantity
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item
-	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem findByC_NotC_GteQ_Last(
-			long commerceShipmentId, long commerceInventoryWarehouseId,
-			BigDecimal quantity,
-			OrderByComparator<CommerceShipmentItem> orderByComparator)
-		throws NoSuchShipmentItemException {
-
-		CommerceShipmentItem commerceShipmentItem = fetchByC_NotC_GteQ_Last(
-			commerceShipmentId, commerceInventoryWarehouseId, quantity,
-			orderByComparator);
-
-		if (commerceShipmentItem != null) {
-			return commerceShipmentItem;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShipmentId=");
-		sb.append(commerceShipmentId);
-
-		sb.append(", commerceInventoryWarehouseId!=");
-		sb.append(commerceInventoryWarehouseId);
-
-		sb.append(", quantity>=");
-		sb.append(quantity);
-
-		sb.append("}");
-
-		throw new NoSuchShipmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipment item in the ordered set where commerceShipmentId = &#63; and commerceInventoryWarehouseId &ne; &#63; and quantity &ge; &#63;.
-	 *
-	 * @param commerceShipmentId the commerce shipment ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param quantity the quantity
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
-	 */
-	@Override
-	public CommerceShipmentItem fetchByC_NotC_GteQ_Last(
-		long commerceShipmentId, long commerceInventoryWarehouseId,
-		BigDecimal quantity,
-		OrderByComparator<CommerceShipmentItem> orderByComparator) {
-
-		int count = countByC_NotC_GteQ(
-			commerceShipmentId, commerceInventoryWarehouseId, quantity);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShipmentItem> list = findByC_NotC_GteQ(
-			commerceShipmentId, commerceInventoryWarehouseId, quantity,
-			count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4373,4 +3918,4 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1623074108
+// LIFERAY-SERVICE-BUILDER-HASH:-16130846

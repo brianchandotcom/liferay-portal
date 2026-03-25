@@ -120,32 +120,6 @@ public interface ObjectFieldSettingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object field setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting
-	 * @throws NoSuchObjectFieldSettingException if a matching object field setting could not be found
-	 */
-	public ObjectFieldSetting findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
-				orderByComparator)
-		throws NoSuchObjectFieldSettingException;
-
-	/**
-	 * Returns the last object field setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting, or <code>null</code> if a matching object field setting could not be found
-	 */
-	public ObjectFieldSetting fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
-			orderByComparator);
-
-	/**
 	 * Removes all the object field settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -255,34 +229,6 @@ public interface ObjectFieldSettingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object field setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting
-	 * @throws NoSuchObjectFieldSettingException if a matching object field setting could not be found
-	 */
-	public ObjectFieldSetting findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
-				orderByComparator)
-		throws NoSuchObjectFieldSettingException;
-
-	/**
-	 * Returns the last object field setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting, or <code>null</code> if a matching object field setting could not be found
-	 */
-	public ObjectFieldSetting fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
-			orderByComparator);
-
-	/**
 	 * Removes all the object field settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -383,32 +329,6 @@ public interface ObjectFieldSettingPersistence
 	 * @return the first matching object field setting, or <code>null</code> if a matching object field setting could not be found
 	 */
 	public ObjectFieldSetting fetchByObjectFieldId_First(
-		long objectFieldId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
-			orderByComparator);
-
-	/**
-	 * Returns the last object field setting in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting
-	 * @throws NoSuchObjectFieldSettingException if a matching object field setting could not be found
-	 */
-	public ObjectFieldSetting findByObjectFieldId_Last(
-			long objectFieldId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
-				orderByComparator)
-		throws NoSuchObjectFieldSettingException;
-
-	/**
-	 * Returns the last object field setting in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting, or <code>null</code> if a matching object field setting could not be found
-	 */
-	public ObjectFieldSetting fetchByObjectFieldId_Last(
 		long objectFieldId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
 			orderByComparator);
@@ -600,4 +520,4 @@ public interface ObjectFieldSettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1577298420
+// LIFERAY-SERVICE-BUILDER-HASH:-1527029439

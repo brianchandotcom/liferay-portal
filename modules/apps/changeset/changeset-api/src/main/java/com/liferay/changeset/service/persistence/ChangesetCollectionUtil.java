@@ -217,36 +217,6 @@ public class ChangesetCollectionUtil {
 	}
 
 	/**
-	 * Returns the last changeset collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection
-	 * @throws NoSuchCollectionException if a matching changeset collection could not be found
-	 */
-	public static ChangesetCollection findByGroupId_Last(
-			long groupId,
-			OrderByComparator<ChangesetCollection> orderByComparator)
-		throws com.liferay.changeset.exception.NoSuchCollectionException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
-	 */
-	public static ChangesetCollection fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<ChangesetCollection> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the changeset collections where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -366,38 +336,6 @@ public class ChangesetCollectionUtil {
 		OrderByComparator<ChangesetCollection> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection
-	 * @throws NoSuchCollectionException if a matching changeset collection could not be found
-	 */
-	public static ChangesetCollection findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<ChangesetCollection> orderByComparator)
-		throws com.liferay.changeset.exception.NoSuchCollectionException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
-	 */
-	public static ChangesetCollection fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<ChangesetCollection> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -529,40 +467,6 @@ public class ChangesetCollectionUtil {
 		OrderByComparator<ChangesetCollection> orderByComparator) {
 
 		return getPersistence().fetchByG_U_First(
-			groupId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection
-	 * @throws NoSuchCollectionException if a matching changeset collection could not be found
-	 */
-	public static ChangesetCollection findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<ChangesetCollection> orderByComparator)
-		throws com.liferay.changeset.exception.NoSuchCollectionException {
-
-		return getPersistence().findByG_U_Last(
-			groupId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
-	 */
-	public static ChangesetCollection fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<ChangesetCollection> orderByComparator) {
-
-		return getPersistence().fetchByG_U_Last(
 			groupId, userId, orderByComparator);
 	}
 
@@ -763,40 +667,6 @@ public class ChangesetCollectionUtil {
 	}
 
 	/**
-	 * Returns the last changeset collection in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection
-	 * @throws NoSuchCollectionException if a matching changeset collection could not be found
-	 */
-	public static ChangesetCollection findByC_N_Last(
-			long companyId, String name,
-			OrderByComparator<ChangesetCollection> orderByComparator)
-		throws com.liferay.changeset.exception.NoSuchCollectionException {
-
-		return getPersistence().findByC_N_Last(
-			companyId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
-	 */
-	public static ChangesetCollection fetchByC_N_Last(
-		long companyId, String name,
-		OrderByComparator<ChangesetCollection> orderByComparator) {
-
-		return getPersistence().fetchByC_N_Last(
-			companyId, name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the changeset collections where companyId = &#63; and name = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -986,4 +856,4 @@ public class ChangesetCollectionUtil {
 	private static volatile ChangesetCollectionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1383599455
+// LIFERAY-SERVICE-BUILDER-HASH:628661589

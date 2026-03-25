@@ -218,39 +218,6 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version
-	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
-	 */
-	public static DDMTemplateVersion findByTemplateId_Last(
-			long templateId,
-			OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchTemplateVersionException {
-
-		return getPersistence().findByTemplateId_Last(
-			templateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
-	 */
-	public static DDMTemplateVersion fetchByTemplateId_Last(
-		long templateId,
-		OrderByComparator<DDMTemplateVersion> orderByComparator) {
-
-		return getPersistence().fetchByTemplateId_Last(
-			templateId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm template versions where templateId = &#63; from the database.
 	 *
 	 * @param templateId the template ID
@@ -451,41 +418,6 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version
-	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
-	 */
-	public static DDMTemplateVersion findByT_S_Last(
-			long templateId, int status,
-			OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchTemplateVersionException {
-
-		return getPersistence().findByT_S_Last(
-			templateId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
-	 */
-	public static DDMTemplateVersion fetchByT_S_Last(
-		long templateId, int status,
-		OrderByComparator<DDMTemplateVersion> orderByComparator) {
-
-		return getPersistence().fetchByT_S_Last(
-			templateId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm template versions where templateId = &#63; and status = &#63; from the database.
 	 *
 	 * @param templateId the template ID
@@ -674,4 +606,4 @@ public class DDMTemplateVersionUtil {
 	private static volatile DDMTemplateVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:577827845
+// LIFERAY-SERVICE-BUILDER-HASH:1773545077

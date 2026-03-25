@@ -214,37 +214,6 @@ public class CTSParentUtil {
 	}
 
 	/**
-	 * Returns the last cts parent in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts parent
-	 * @throws NoSuchCTSParentException if a matching cts parent could not be found
-	 */
-	public static CTSParent findByCompanyId_Last(
-			long companyId, OrderByComparator<CTSParent> orderByComparator)
-		throws com.liferay.change.tracking.sample.exception.
-			NoSuchCTSParentException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cts parent in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts parent, or <code>null</code> if a matching cts parent could not be found
-	 */
-	public static CTSParent fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTSParent> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cts parents where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -375,41 +344,6 @@ public class CTSParentUtil {
 		OrderByComparator<CTSParent> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			companyId, ctsGrandParentId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cts parent in the ordered set where companyId = &#63; and ctsGrandParentId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ctsGrandParentId the cts grand parent ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts parent
-	 * @throws NoSuchCTSParentException if a matching cts parent could not be found
-	 */
-	public static CTSParent findByC_C_Last(
-			long companyId, long ctsGrandParentId,
-			OrderByComparator<CTSParent> orderByComparator)
-		throws com.liferay.change.tracking.sample.exception.
-			NoSuchCTSParentException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, ctsGrandParentId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cts parent in the ordered set where companyId = &#63; and ctsGrandParentId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ctsGrandParentId the cts grand parent ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts parent, or <code>null</code> if a matching cts parent could not be found
-	 */
-	public static CTSParent fetchByC_C_Last(
-		long companyId, long ctsGrandParentId,
-		OrderByComparator<CTSParent> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			companyId, ctsGrandParentId, orderByComparator);
 	}
 
@@ -594,4 +528,4 @@ public class CTSParentUtil {
 	private static volatile CTSParentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2123278182
+// LIFERAY-SERVICE-BUILDER-HASH:-959748890

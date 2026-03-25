@@ -319,67 +319,6 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm structure link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure link
-	 * @throws NoSuchStructureLinkException if a matching ddm structure link could not be found
-	 */
-	@Override
-	public DDMStructureLink findByStructureId_Last(
-			long structureId,
-			OrderByComparator<DDMStructureLink> orderByComparator)
-		throws NoSuchStructureLinkException {
-
-		DDMStructureLink ddmStructureLink = fetchByStructureId_Last(
-			structureId, orderByComparator);
-
-		if (ddmStructureLink != null) {
-			return ddmStructureLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure link, or <code>null</code> if a matching ddm structure link could not be found
-	 */
-	@Override
-	public DDMStructureLink fetchByStructureId_Last(
-		long structureId,
-		OrderByComparator<DDMStructureLink> orderByComparator) {
-
-		int count = countByStructureId(structureId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructureLink> list = findByStructureId(
-			structureId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm structure links where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -688,72 +627,6 @@ public class DDMStructureLinkPersistenceImpl
 
 		List<DDMStructureLink> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure link
-	 * @throws NoSuchStructureLinkException if a matching ddm structure link could not be found
-	 */
-	@Override
-	public DDMStructureLink findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<DDMStructureLink> orderByComparator)
-		throws NoSuchStructureLinkException {
-
-		DDMStructureLink ddmStructureLink = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (ddmStructureLink != null) {
-			return ddmStructureLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure link, or <code>null</code> if a matching ddm structure link could not be found
-	 */
-	@Override
-	public DDMStructureLink fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<DDMStructureLink> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructureLink> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1985,4 +1858,4 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-179606557
+// LIFERAY-SERVICE-BUILDER-HASH:-82206855

@@ -120,32 +120,6 @@ public interface OAuth2ApplicationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	public OAuth2Application findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
-				orderByComparator)
-		throws NoSuchOAuth2ApplicationException;
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public OAuth2Application fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
-			orderByComparator);
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -304,34 +278,6 @@ public interface OAuth2ApplicationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	public OAuth2Application findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
-				orderByComparator)
-		throws NoSuchOAuth2ApplicationException;
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public OAuth2Application fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
-			orderByComparator);
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -485,32 +431,6 @@ public interface OAuth2ApplicationPersistence
 	 * @return the first matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	 */
 	public OAuth2Application fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
-			orderByComparator);
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	public OAuth2Application findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
-				orderByComparator)
-		throws NoSuchOAuth2ApplicationException;
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public OAuth2Application fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 			orderByComparator);
@@ -720,34 +640,6 @@ public interface OAuth2ApplicationPersistence
 	 * @return the first matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	 */
 	public OAuth2Application fetchByC_CP_First(
-		long companyId, int clientProfile,
-		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
-			orderByComparator);
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
-	 */
-	public OAuth2Application findByC_CP_Last(
-			long companyId, int clientProfile,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
-				orderByComparator)
-		throws NoSuchOAuth2ApplicationException;
-
-	/**
-	 * Returns the last o auth2 application in the ordered set where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public OAuth2Application fetchByC_CP_Last(
 		long companyId, int clientProfile,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 			orderByComparator);
@@ -998,4 +890,4 @@ public interface OAuth2ApplicationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:428186779
+// LIFERAY-SERVICE-BUILDER-HASH:-851738441

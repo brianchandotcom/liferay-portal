@@ -329,67 +329,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm form instance version in the ordered set where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance version
-	 * @throws NoSuchFormInstanceVersionException if a matching ddm form instance version could not be found
-	 */
-	@Override
-	public DDMFormInstanceVersion findByFormInstanceId_Last(
-			long formInstanceId,
-			OrderByComparator<DDMFormInstanceVersion> orderByComparator)
-		throws NoSuchFormInstanceVersionException {
-
-		DDMFormInstanceVersion ddmFormInstanceVersion =
-			fetchByFormInstanceId_Last(formInstanceId, orderByComparator);
-
-		if (ddmFormInstanceVersion != null) {
-			return ddmFormInstanceVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("formInstanceId=");
-		sb.append(formInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm form instance version in the ordered set where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
-	 */
-	@Override
-	public DDMFormInstanceVersion fetchByFormInstanceId_Last(
-		long formInstanceId,
-		OrderByComparator<DDMFormInstanceVersion> orderByComparator) {
-
-		int count = countByFormInstanceId(formInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFormInstanceVersion> list = findByFormInstanceId(
-			formInstanceId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm form instance versions where formInstanceId = &#63; from the database.
 	 *
 	 * @param formInstanceId the form instance ID
@@ -914,72 +853,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 		List<DDMFormInstanceVersion> list = findByF_S(
 			formInstanceId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm form instance version in the ordered set where formInstanceId = &#63; and status = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance version
-	 * @throws NoSuchFormInstanceVersionException if a matching ddm form instance version could not be found
-	 */
-	@Override
-	public DDMFormInstanceVersion findByF_S_Last(
-			long formInstanceId, int status,
-			OrderByComparator<DDMFormInstanceVersion> orderByComparator)
-		throws NoSuchFormInstanceVersionException {
-
-		DDMFormInstanceVersion ddmFormInstanceVersion = fetchByF_S_Last(
-			formInstanceId, status, orderByComparator);
-
-		if (ddmFormInstanceVersion != null) {
-			return ddmFormInstanceVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("formInstanceId=");
-		sb.append(formInstanceId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm form instance version in the ordered set where formInstanceId = &#63; and status = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
-	 */
-	@Override
-	public DDMFormInstanceVersion fetchByF_S_Last(
-		long formInstanceId, int status,
-		OrderByComparator<DDMFormInstanceVersion> orderByComparator) {
-
-		int count = countByF_S(formInstanceId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFormInstanceVersion> list = findByF_S(
-			formInstanceId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2064,4 +1937,4 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-683813347
+// LIFERAY-SERVICE-BUILDER-HASH:1755511655

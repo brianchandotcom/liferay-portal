@@ -321,67 +321,6 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 	/**
-	 * Returns the last dl file version preview in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl file version preview
-	 * @throws NoSuchFileVersionPreviewException if a matching dl file version preview could not be found
-	 */
-	@Override
-	public DLFileVersionPreview findByFileEntryId_Last(
-			long fileEntryId,
-			OrderByComparator<DLFileVersionPreview> orderByComparator)
-		throws NoSuchFileVersionPreviewException {
-
-		DLFileVersionPreview dlFileVersionPreview = fetchByFileEntryId_Last(
-			fileEntryId, orderByComparator);
-
-		if (dlFileVersionPreview != null) {
-			return dlFileVersionPreview;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionPreviewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dl file version preview in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl file version preview, or <code>null</code> if a matching dl file version preview could not be found
-	 */
-	@Override
-	public DLFileVersionPreview fetchByFileEntryId_Last(
-		long fileEntryId,
-		OrderByComparator<DLFileVersionPreview> orderByComparator) {
-
-		int count = countByFileEntryId(fileEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersionPreview> list = findByFileEntryId(
-			fileEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the dl file version previews where fileEntryId = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -677,67 +616,6 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		List<DLFileVersionPreview> list = findByFileVersionId(
 			fileVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last dl file version preview in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl file version preview
-	 * @throws NoSuchFileVersionPreviewException if a matching dl file version preview could not be found
-	 */
-	@Override
-	public DLFileVersionPreview findByFileVersionId_Last(
-			long fileVersionId,
-			OrderByComparator<DLFileVersionPreview> orderByComparator)
-		throws NoSuchFileVersionPreviewException {
-
-		DLFileVersionPreview dlFileVersionPreview = fetchByFileVersionId_Last(
-			fileVersionId, orderByComparator);
-
-		if (dlFileVersionPreview != null) {
-			return dlFileVersionPreview;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileVersionId=");
-		sb.append(fileVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionPreviewException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dl file version preview in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl file version preview, or <code>null</code> if a matching dl file version preview could not be found
-	 */
-	@Override
-	public DLFileVersionPreview fetchByFileVersionId_Last(
-		long fileVersionId,
-		OrderByComparator<DLFileVersionPreview> orderByComparator) {
-
-		int count = countByFileVersionId(fileVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileVersionPreview> list = findByFileVersionId(
-			fileVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2207,4 +2085,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:897456095
+// LIFERAY-SERVICE-BUILDER-HASH:184975235

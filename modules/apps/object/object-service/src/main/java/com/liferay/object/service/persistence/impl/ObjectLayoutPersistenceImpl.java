@@ -315,64 +315,6 @@ public class ObjectLayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout findByUuid_Last(
-			String uuid, OrderByComparator<ObjectLayout> orderByComparator)
-		throws NoSuchObjectLayoutException {
-
-		ObjectLayout objectLayout = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (objectLayout != null) {
-			return objectLayout;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectLayout> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayout> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layouts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -706,72 +648,6 @@ public class ObjectLayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectLayout> orderByComparator)
-		throws NoSuchObjectLayoutException {
-
-		ObjectLayout objectLayout = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectLayout != null) {
-			return objectLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectLayout> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayout> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layouts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1093,67 +969,6 @@ public class ObjectLayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectLayout> orderByComparator)
-		throws NoSuchObjectLayoutException {
-
-		ObjectLayout objectLayout = fetchByObjectDefinitionId_Last(
-			objectDefinitionId, orderByComparator);
-
-		if (objectLayout != null) {
-			return objectLayout;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectLayout> orderByComparator) {
-
-		int count = countByObjectDefinitionId(objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayout> list = findByObjectDefinitionId(
-			objectDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layouts where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1457,73 +1272,6 @@ public class ObjectLayoutPersistenceImpl
 
 		List<ObjectLayout> list = findByC_DOL(
 			companyId, defaultObjectLayout, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object layout in the ordered set where companyId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout findByC_DOL_Last(
-			long companyId, boolean defaultObjectLayout,
-			OrderByComparator<ObjectLayout> orderByComparator)
-		throws NoSuchObjectLayoutException {
-
-		ObjectLayout objectLayout = fetchByC_DOL_Last(
-			companyId, defaultObjectLayout, orderByComparator);
-
-		if (objectLayout != null) {
-			return objectLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", defaultObjectLayout=");
-		sb.append(defaultObjectLayout);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout in the ordered set where companyId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout fetchByC_DOL_Last(
-		long companyId, boolean defaultObjectLayout,
-		OrderByComparator<ObjectLayout> orderByComparator) {
-
-		int count = countByC_DOL(companyId, defaultObjectLayout);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayout> list = findByC_DOL(
-			companyId, defaultObjectLayout, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1850,73 +1598,6 @@ public class ObjectLayoutPersistenceImpl
 
 		List<ObjectLayout> list = findByODI_DOL(
 			objectDefinitionId, defaultObjectLayout, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object layout in the ordered set where objectDefinitionId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout
-	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout findByODI_DOL_Last(
-			long objectDefinitionId, boolean defaultObjectLayout,
-			OrderByComparator<ObjectLayout> orderByComparator)
-		throws NoSuchObjectLayoutException {
-
-		ObjectLayout objectLayout = fetchByODI_DOL_Last(
-			objectDefinitionId, defaultObjectLayout, orderByComparator);
-
-		if (objectLayout != null) {
-			return objectLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", defaultObjectLayout=");
-		sb.append(defaultObjectLayout);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout in the ordered set where objectDefinitionId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout, or <code>null</code> if a matching object layout could not be found
-	 */
-	@Override
-	public ObjectLayout fetchByODI_DOL_Last(
-		long objectDefinitionId, boolean defaultObjectLayout,
-		OrderByComparator<ObjectLayout> orderByComparator) {
-
-		int count = countByODI_DOL(objectDefinitionId, defaultObjectLayout);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayout> list = findByODI_DOL(
-			objectDefinitionId, defaultObjectLayout, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2735,4 +2416,4 @@ public class ObjectLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1386117479
+// LIFERAY-SERVICE-BUILDER-HASH:1092812703

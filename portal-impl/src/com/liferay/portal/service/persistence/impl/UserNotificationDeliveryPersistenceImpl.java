@@ -292,67 +292,6 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last user notification delivery in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user notification delivery
-	 * @throws NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
-	 */
-	@Override
-	public UserNotificationDelivery findByUserId_Last(
-			long userId,
-			OrderByComparator<UserNotificationDelivery> orderByComparator)
-		throws NoSuchUserNotificationDeliveryException {
-
-		UserNotificationDelivery userNotificationDelivery = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (userNotificationDelivery != null) {
-			return userNotificationDelivery;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationDeliveryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last user notification delivery in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	 */
-	@Override
-	public UserNotificationDelivery fetchByUserId_Last(
-		long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<UserNotificationDelivery> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the user notification deliveries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1336,4 +1275,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1833622802
+// LIFERAY-SERVICE-BUILDER-HASH:-834487124

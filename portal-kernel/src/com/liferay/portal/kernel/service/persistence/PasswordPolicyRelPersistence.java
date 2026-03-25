@@ -120,32 +120,6 @@ public interface PasswordPolicyRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last password policy rel in the ordered set where passwordPolicyId = &#63;.
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy rel
-	 * @throws NoSuchPasswordPolicyRelException if a matching password policy rel could not be found
-	 */
-	public PasswordPolicyRel findByPasswordPolicyId_Last(
-			long passwordPolicyId,
-			com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicyRel>
-				orderByComparator)
-		throws NoSuchPasswordPolicyRelException;
-
-	/**
-	 * Returns the last password policy rel in the ordered set where passwordPolicyId = &#63;.
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
-	 */
-	public PasswordPolicyRel fetchByPasswordPolicyId_Last(
-		long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicyRel>
-			orderByComparator);
-
-	/**
 	 * Removes all the password policy rels where passwordPolicyId = &#63; from the database.
 	 *
 	 * @param passwordPolicyId the password policy ID
@@ -332,4 +306,4 @@ public interface PasswordPolicyRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1189253293
+// LIFERAY-SERVICE-BUILDER-HASH:-1113321058

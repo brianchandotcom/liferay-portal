@@ -121,32 +121,6 @@ public interface CTPreferencesPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ct preferences in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct preferences
-	 * @throws NoSuchPreferencesException if a matching ct preferences could not be found
-	 */
-	public CTPreferences findByCtCollectionId_Last(
-			long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
-				orderByComparator)
-		throws NoSuchPreferencesException;
-
-	/**
-	 * Returns the last ct preferences in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
-	 */
-	public CTPreferences fetchByCtCollectionId_Last(
-		long ctCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
-			orderByComparator);
-
-	/**
 	 * Removes all the ct preferenceses where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -245,32 +219,6 @@ public interface CTPreferencesPersistence
 	 * @return the first matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
 	 */
 	public CTPreferences fetchByPreviousCtCollectionId_First(
-		long previousCtCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct preferences in the ordered set where previousCtCollectionId = &#63;.
-	 *
-	 * @param previousCtCollectionId the previous ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct preferences
-	 * @throws NoSuchPreferencesException if a matching ct preferences could not be found
-	 */
-	public CTPreferences findByPreviousCtCollectionId_Last(
-			long previousCtCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
-				orderByComparator)
-		throws NoSuchPreferencesException;
-
-	/**
-	 * Returns the last ct preferences in the ordered set where previousCtCollectionId = &#63;.
-	 *
-	 * @param previousCtCollectionId the previous ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
-	 */
-	public CTPreferences fetchByPreviousCtCollectionId_Last(
 		long previousCtCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
 			orderByComparator);
@@ -461,4 +409,4 @@ public interface CTPreferencesPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:238349967
+// LIFERAY-SERVICE-BUILDER-HASH:-2018470953

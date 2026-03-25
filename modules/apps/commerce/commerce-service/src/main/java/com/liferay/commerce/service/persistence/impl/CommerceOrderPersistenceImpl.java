@@ -327,64 +327,6 @@ public class CommerceOrderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByUuid_Last(
-			String uuid, OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce orders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -916,72 +858,6 @@ public class CommerceOrderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce orders where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1282,65 +1158,6 @@ public class CommerceOrderPersistenceImpl
 
 		List<CommerceOrder> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByGroupId_Last(
-			long groupId, OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByGroupId_Last(
-		long groupId, OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1831,65 +1648,6 @@ public class CommerceOrderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByUserId_Last(
-			long userId, OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByUserId_Last(
-		long userId, OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce orders where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -2173,67 +1931,6 @@ public class CommerceOrderPersistenceImpl
 
 		List<CommerceOrder> list = findByBillingAddressId(
 			billingAddressId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where billingAddressId = &#63;.
-	 *
-	 * @param billingAddressId the billing address ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByBillingAddressId_Last(
-			long billingAddressId,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByBillingAddressId_Last(
-			billingAddressId, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("billingAddressId=");
-		sb.append(billingAddressId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where billingAddressId = &#63;.
-	 *
-	 * @param billingAddressId the billing address ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByBillingAddressId_Last(
-		long billingAddressId,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByBillingAddressId(billingAddressId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByBillingAddressId(
-			billingAddressId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2538,67 +2235,6 @@ public class CommerceOrderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByCommerceAccountId_Last(
-			long commerceAccountId,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByCommerceAccountId_Last(
-			commerceAccountId, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceAccountId=");
-		sb.append(commerceAccountId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByCommerceAccountId_Last(
-		long commerceAccountId,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByCommerceAccountId(commerceAccountId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByCommerceAccountId(
-			commerceAccountId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce orders where commerceAccountId = &#63; from the database.
 	 *
 	 * @param commerceAccountId the commerce account ID
@@ -2885,67 +2521,6 @@ public class CommerceOrderPersistenceImpl
 
 		List<CommerceOrder> list = findByShippingAddressId(
 			shippingAddressId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where shippingAddressId = &#63;.
-	 *
-	 * @param shippingAddressId the shipping address ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByShippingAddressId_Last(
-			long shippingAddressId,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByShippingAddressId_Last(
-			shippingAddressId, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("shippingAddressId=");
-		sb.append(shippingAddressId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where shippingAddressId = &#63;.
-	 *
-	 * @param shippingAddressId the shipping address ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByShippingAddressId_Last(
-		long shippingAddressId,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByShippingAddressId(shippingAddressId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByShippingAddressId(
-			shippingAddressId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3255,72 +2830,6 @@ public class CommerceOrderPersistenceImpl
 
 		List<CommerceOrder> list = findByG_C(
 			groupId, commerceAccountId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63; and commerceAccountId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByG_C_Last(
-			long groupId, long commerceAccountId,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByG_C_Last(
-			groupId, commerceAccountId, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", commerceAccountId=");
-		sb.append(commerceAccountId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63; and commerceAccountId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByG_C_Last(
-		long groupId, long commerceAccountId,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByG_C(groupId, commerceAccountId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByG_C(
-			groupId, commerceAccountId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3871,73 +3380,6 @@ public class CommerceOrderPersistenceImpl
 
 		List<CommerceOrder> list = findByG_CP(
 			groupId, commercePaymentMethodKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63; and commercePaymentMethodKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param commercePaymentMethodKey the commerce payment method key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByG_CP_Last(
-			long groupId, String commercePaymentMethodKey,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByG_CP_Last(
-			groupId, commercePaymentMethodKey, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", commercePaymentMethodKey=");
-		sb.append(commercePaymentMethodKey);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63; and commercePaymentMethodKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param commercePaymentMethodKey the commerce payment method key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByG_CP_Last(
-		long groupId, String commercePaymentMethodKey,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByG_CP(groupId, commercePaymentMethodKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByG_CP(
-			groupId, commercePaymentMethodKey, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4544,77 +3986,6 @@ public class CommerceOrderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63; and userId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByG_U_O_Last(
-			long groupId, long userId, int orderStatus,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByG_U_O_Last(
-			groupId, userId, orderStatus, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", orderStatus=");
-		sb.append(orderStatus);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63; and userId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByG_U_O_Last(
-		long groupId, long userId, int orderStatus,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByG_U_O(groupId, userId, orderStatus);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByG_U_O(
-			groupId, userId, orderStatus, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce orders that the user has permission to view where groupId = &#63; and userId = &#63; and orderStatus = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -5183,78 +4554,6 @@ public class CommerceOrderPersistenceImpl
 
 		List<CommerceOrder> list = findByG_C_O(
 			groupId, commerceAccountId, orderStatus, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByG_C_O_Last(
-			long groupId, long commerceAccountId, int orderStatus,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByG_C_O_Last(
-			groupId, commerceAccountId, orderStatus, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", commerceAccountId=");
-		sb.append(commerceAccountId);
-
-		sb.append(", orderStatus=");
-		sb.append(orderStatus);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where groupId = &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByG_C_O_Last(
-		long groupId, long commerceAccountId, int orderStatus,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByG_C_O(groupId, commerceAccountId, orderStatus);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByG_C_O(
-			groupId, commerceAccountId, orderStatus, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5847,78 +5146,6 @@ public class CommerceOrderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order in the ordered set where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByU_LtC_O_Last(
-			long userId, Date createDate, int orderStatus,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByU_LtC_O_Last(
-			userId, createDate, orderStatus, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", createDate<");
-		sb.append(createDate);
-
-		sb.append(", orderStatus=");
-		sb.append(orderStatus);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByU_LtC_O_Last(
-		long userId, Date createDate, int orderStatus,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByU_LtC_O(userId, createDate, orderStatus);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByU_LtC_O(
-			userId, createDate, orderStatus, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce orders where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -6273,78 +5500,6 @@ public class CommerceOrderPersistenceImpl
 
 		List<CommerceOrder> list = findByC_LtC_O(
 			createDate, commerceAccountId, orderStatus, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder findByC_LtC_O_Last(
-			Date createDate, long commerceAccountId, int orderStatus,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByC_LtC_O_Last(
-			createDate, commerceAccountId, orderStatus, orderByComparator);
-
-		if (commerceOrder != null) {
-			return commerceOrder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("createDate<");
-		sb.append(createDate);
-
-		sb.append(", commerceAccountId=");
-		sb.append(commerceAccountId);
-
-		sb.append(", orderStatus=");
-		sb.append(orderStatus);
-
-		sb.append("}");
-
-		throw new NoSuchOrderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order in the ordered set where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	@Override
-	public CommerceOrder fetchByC_LtC_O_Last(
-		Date createDate, long commerceAccountId, int orderStatus,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-
-		int count = countByC_LtC_O(createDate, commerceAccountId, orderStatus);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrder> list = findByC_LtC_O(
-			createDate, commerceAccountId, orderStatus, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -7817,4 +6972,4 @@ public class CommerceOrderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1726534364
+// LIFERAY-SERVICE-BUILDER-HASH:-2023841771

@@ -292,65 +292,6 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 	/**
-	 * Returns the last remember me token in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching remember me token
-	 * @throws NoSuchRememberMeTokenException if a matching remember me token could not be found
-	 */
-	@Override
-	public RememberMeToken findByUserId_Last(
-			long userId, OrderByComparator<RememberMeToken> orderByComparator)
-		throws NoSuchRememberMeTokenException {
-
-		RememberMeToken rememberMeToken = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (rememberMeToken != null) {
-			return rememberMeToken;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchRememberMeTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last remember me token in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching remember me token, or <code>null</code> if a matching remember me token could not be found
-	 */
-	@Override
-	public RememberMeToken fetchByUserId_Last(
-		long userId, OrderByComparator<RememberMeToken> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RememberMeToken> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the remember me tokens where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -636,67 +577,6 @@ public class RememberMeTokenPersistenceImpl
 
 		List<RememberMeToken> list = findByLteExpirationDate(
 			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last remember me token in the ordered set where expirationDate &le; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching remember me token
-	 * @throws NoSuchRememberMeTokenException if a matching remember me token could not be found
-	 */
-	@Override
-	public RememberMeToken findByLteExpirationDate_Last(
-			Date expirationDate,
-			OrderByComparator<RememberMeToken> orderByComparator)
-		throws NoSuchRememberMeTokenException {
-
-		RememberMeToken rememberMeToken = fetchByLteExpirationDate_Last(
-			expirationDate, orderByComparator);
-
-		if (rememberMeToken != null) {
-			return rememberMeToken;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<=");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchRememberMeTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last remember me token in the ordered set where expirationDate &le; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching remember me token, or <code>null</code> if a matching remember me token could not be found
-	 */
-	@Override
-	public RememberMeToken fetchByLteExpirationDate_Last(
-		Date expirationDate,
-		OrderByComparator<RememberMeToken> orderByComparator) {
-
-		int count = countByLteExpirationDate(expirationDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RememberMeToken> list = findByLteExpirationDate(
-			expirationDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1404,4 +1284,4 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:253002685
+// LIFERAY-SERVICE-BUILDER-HASH:-1144915232

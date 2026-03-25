@@ -118,32 +118,6 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 			orderByComparator);
 
 	/**
-	 * Returns the last user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker
-	 * @throws NoSuchUserTrackerException if a matching user tracker could not be found
-	 */
-	public UserTracker findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
-				orderByComparator)
-		throws NoSuchUserTrackerException;
-
-	/**
-	 * Returns the last user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 */
-	public UserTracker fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
-			orderByComparator);
-
-	/**
 	 * Removes all the user trackers where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -246,32 +220,6 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 			orderByComparator);
 
 	/**
-	 * Returns the last user tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker
-	 * @throws NoSuchUserTrackerException if a matching user tracker could not be found
-	 */
-	public UserTracker findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
-				orderByComparator)
-		throws NoSuchUserTrackerException;
-
-	/**
-	 * Returns the last user tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 */
-	public UserTracker fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
-			orderByComparator);
-
-	/**
 	 * Removes all the user trackers where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -369,32 +317,6 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
 	 */
 	public UserTracker fetchBySessionId_First(
-		String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
-			orderByComparator);
-
-	/**
-	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker
-	 * @throws NoSuchUserTrackerException if a matching user tracker could not be found
-	 */
-	public UserTracker findBySessionId_Last(
-			String sessionId,
-			com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
-				orderByComparator)
-		throws NoSuchUserTrackerException;
-
-	/**
-	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 */
-	public UserTracker fetchBySessionId_Last(
 		String sessionId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserTracker>
 			orderByComparator);
@@ -535,4 +457,4 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1412363937
+// LIFERAY-SERVICE-BUILDER-HASH:-901965708

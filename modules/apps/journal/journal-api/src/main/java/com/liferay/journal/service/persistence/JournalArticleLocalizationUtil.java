@@ -231,41 +231,6 @@ public class JournalArticleLocalizationUtil {
 	}
 
 	/**
-	 * Returns the last journal article localization in the ordered set where companyId = &#63; and articlePK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param articlePK the article pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article localization
-	 * @throws NoSuchArticleLocalizationException if a matching journal article localization could not be found
-	 */
-	public static JournalArticleLocalization findByC_A_Last(
-			long companyId, long articlePK,
-			OrderByComparator<JournalArticleLocalization> orderByComparator)
-		throws com.liferay.journal.exception.
-			NoSuchArticleLocalizationException {
-
-		return getPersistence().findByC_A_Last(
-			companyId, articlePK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last journal article localization in the ordered set where companyId = &#63; and articlePK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param articlePK the article pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
-	 */
-	public static JournalArticleLocalization fetchByC_A_Last(
-		long companyId, long articlePK,
-		OrderByComparator<JournalArticleLocalization> orderByComparator) {
-
-		return getPersistence().fetchByC_A_Last(
-			companyId, articlePK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal article localizations where companyId = &#63; and articlePK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -539,4 +504,4 @@ public class JournalArticleLocalizationUtil {
 	private static volatile JournalArticleLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1368908121
+// LIFERAY-SERVICE-BUILDER-HASH:-450828825

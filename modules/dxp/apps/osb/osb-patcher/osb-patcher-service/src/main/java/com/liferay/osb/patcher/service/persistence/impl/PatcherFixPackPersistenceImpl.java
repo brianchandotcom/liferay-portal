@@ -489,67 +489,6 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack findByPatcherFixComponentId_Last(
-			long patcherFixComponentId,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws NoSuchPatcherFixPackException {
-
-		PatcherFixPack patcherFixPack = fetchByPatcherFixComponentId_Last(
-			patcherFixComponentId, orderByComparator);
-
-		if (patcherFixPack != null) {
-			return patcherFixPack;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByPatcherFixComponentId_Last(
-		long patcherFixComponentId,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		int count = countByPatcherFixComponentId(patcherFixComponentId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherFixPack> list = findByPatcherFixComponentId(
-			patcherFixComponentId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63;.
 	 *
 	 * @param patcherFixComponentId the patcher fix component ID
@@ -1029,65 +968,6 @@ public class PatcherFixPackPersistenceImpl
 
 		List<PatcherFixPack> list = findByVersion(
 			version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where version = &#63;.
-	 *
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack findByVersion_Last(
-			int version, OrderByComparator<PatcherFixPack> orderByComparator)
-		throws NoSuchPatcherFixPackException {
-
-		PatcherFixPack patcherFixPack = fetchByVersion_Last(
-			version, orderByComparator);
-
-		if (patcherFixPack != null) {
-			return patcherFixPack;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where version = &#63;.
-	 *
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByVersion_Last(
-		int version, OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		int count = countByVersion(version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherFixPack> list = findByVersion(
-			version, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1601,74 +1481,6 @@ public class PatcherFixPackPersistenceImpl
 
 		List<PatcherFixPack> list = findByPFCI_PPVI(
 			patcherFixComponentId, patcherProjectVersionId, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack findByPFCI_PPVI_Last(
-			long patcherFixComponentId, long patcherProjectVersionId,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws NoSuchPatcherFixPackException {
-
-		PatcherFixPack patcherFixPack = fetchByPFCI_PPVI_Last(
-			patcherFixComponentId, patcherProjectVersionId, orderByComparator);
-
-		if (patcherFixPack != null) {
-			return patcherFixPack;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append(", patcherProjectVersionId=");
-		sb.append(patcherProjectVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByPFCI_PPVI_Last(
-		long patcherFixComponentId, long patcherProjectVersionId,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		int count = countByPFCI_PPVI(
-			patcherFixComponentId, patcherProjectVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherFixPack> list = findByPFCI_PPVI(
-			patcherFixComponentId, patcherProjectVersionId, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2218,73 +2030,6 @@ public class PatcherFixPackPersistenceImpl
 
 		List<PatcherFixPack> list = findByPFCI_V(
 			patcherFixComponentId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack findByPFCI_V_Last(
-			long patcherFixComponentId, int version,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws NoSuchPatcherFixPackException {
-
-		PatcherFixPack patcherFixPack = fetchByPFCI_V_Last(
-			patcherFixComponentId, version, orderByComparator);
-
-		if (patcherFixPack != null) {
-			return patcherFixPack;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByPFCI_V_Last(
-		long patcherFixComponentId, int version,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		int count = countByPFCI_V(patcherFixComponentId, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherFixPack> list = findByPFCI_V(
-			patcherFixComponentId, version, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3036,73 +2781,6 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack findByPFCI_S_Last(
-			long patcherProjectVersionId, int status,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws NoSuchPatcherFixPackException {
-
-		PatcherFixPack patcherFixPack = fetchByPFCI_S_Last(
-			patcherProjectVersionId, status, orderByComparator);
-
-		if (patcherFixPack != null) {
-			return patcherFixPack;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherProjectVersionId=");
-		sb.append(patcherProjectVersionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByPFCI_S_Last(
-		long patcherProjectVersionId, int status,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		int count = countByPFCI_S(patcherProjectVersionId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherFixPack> list = findByPFCI_S(
-			patcherProjectVersionId, status, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherProjectVersionId = &#63; and status = &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -3641,80 +3319,6 @@ public class PatcherFixPackPersistenceImpl
 		List<PatcherFixPack> list = findByPFCI_PPVI_GtV(
 			patcherFixComponentId, patcherProjectVersionId, version, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &gt; &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack findByPFCI_PPVI_GtV_Last(
-			long patcherFixComponentId, long patcherProjectVersionId,
-			int version, OrderByComparator<PatcherFixPack> orderByComparator)
-		throws NoSuchPatcherFixPackException {
-
-		PatcherFixPack patcherFixPack = fetchByPFCI_PPVI_GtV_Last(
-			patcherFixComponentId, patcherProjectVersionId, version,
-			orderByComparator);
-
-		if (patcherFixPack != null) {
-			return patcherFixPack;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append(", patcherProjectVersionId=");
-		sb.append(patcherProjectVersionId);
-
-		sb.append(", version>");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &gt; &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByPFCI_PPVI_GtV_Last(
-		long patcherFixComponentId, long patcherProjectVersionId, int version,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		int count = countByPFCI_PPVI_GtV(
-			patcherFixComponentId, patcherProjectVersionId, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherFixPack> list = findByPFCI_PPVI_GtV(
-			patcherFixComponentId, patcherProjectVersionId, version, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4297,80 +3901,6 @@ public class PatcherFixPackPersistenceImpl
 		List<PatcherFixPack> list = findByPFCI_PPVI_LtV(
 			patcherFixComponentId, patcherProjectVersionId, version, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &lt; &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack findByPFCI_PPVI_LtV_Last(
-			long patcherFixComponentId, long patcherProjectVersionId,
-			int version, OrderByComparator<PatcherFixPack> orderByComparator)
-		throws NoSuchPatcherFixPackException {
-
-		PatcherFixPack patcherFixPack = fetchByPFCI_PPVI_LtV_Last(
-			patcherFixComponentId, patcherProjectVersionId, version,
-			orderByComparator);
-
-		if (patcherFixPack != null) {
-			return patcherFixPack;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append(", patcherProjectVersionId=");
-		sb.append(patcherProjectVersionId);
-
-		sb.append(", version<");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &lt; &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByPFCI_PPVI_LtV_Last(
-		long patcherFixComponentId, long patcherProjectVersionId, int version,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		int count = countByPFCI_PPVI_LtV(
-			patcherFixComponentId, patcherProjectVersionId, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherFixPack> list = findByPFCI_PPVI_LtV(
-			patcherFixComponentId, patcherProjectVersionId, version, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6153,4 +5683,4 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1891753505
+// LIFERAY-SERVICE-BUILDER-HASH:-1328279809

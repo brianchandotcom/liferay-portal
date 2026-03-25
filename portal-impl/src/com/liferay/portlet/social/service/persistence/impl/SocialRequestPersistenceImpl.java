@@ -318,64 +318,6 @@ public class SocialRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social request in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByUuid_Last(
-			String uuid, OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByUuid_Last(
-		String uuid, OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social requests where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -923,72 +865,6 @@ public class SocialRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social request in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social requests where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1313,65 +1189,6 @@ public class SocialRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social request in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByCompanyId_Last(
-			long companyId, OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByCompanyId_Last(
-		long companyId, OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social requests where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1658,65 +1475,6 @@ public class SocialRequestPersistenceImpl
 
 		List<SocialRequest> list = findByUserId(
 			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByUserId_Last(
-			long userId, OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByUserId_Last(
-		long userId, OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2021,67 +1779,6 @@ public class SocialRequestPersistenceImpl
 
 		List<SocialRequest> list = findByReceiverUserId(
 			receiverUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByReceiverUserId_Last(
-			long receiverUserId,
-			OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByReceiverUserId_Last(
-			receiverUserId, orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByReceiverUserId_Last(
-		long receiverUserId,
-		OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByReceiverUserId(receiverUserId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByReceiverUserId(
-			receiverUserId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2398,72 +2095,6 @@ public class SocialRequestPersistenceImpl
 
 		List<SocialRequest> list = findByU_S(
 			userId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where userId = &#63; and status = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByU_S_Last(
-			long userId, int status,
-			OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByU_S_Last(
-			userId, status, orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where userId = &#63; and status = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByU_S_Last(
-		long userId, int status,
-		OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByU_S(userId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByU_S(
-			userId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2799,72 +2430,6 @@ public class SocialRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social request in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social requests where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -3183,72 +2748,6 @@ public class SocialRequestPersistenceImpl
 
 		List<SocialRequest> list = findByR_S(
 			receiverUserId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByR_S_Last(
-			long receiverUserId, int status,
-			OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByR_S_Last(
-			receiverUserId, status, orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByR_S_Last(
-		long receiverUserId, int status,
-		OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByR_S(receiverUserId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByR_S(
-			receiverUserId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3889,89 +3388,6 @@ public class SocialRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social request in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByU_C_C_T_S_Last(
-			long userId, long classNameId, long classPK, int type, int status,
-			OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByU_C_C_T_S_Last(
-			userId, classNameId, classPK, type, status, orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByU_C_C_T_S_Last(
-		long userId, long classNameId, long classPK, int type, int status,
-		OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByU_C_C_T_S(
-			userId, classNameId, classPK, type, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByU_C_C_T_S(
-			userId, classNameId, classPK, type, status, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social requests where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -4380,90 +3796,6 @@ public class SocialRequestPersistenceImpl
 		List<SocialRequest> list = findByC_C_T_R_S(
 			classNameId, classPK, type, receiverUserId, status, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request
-	 * @throws NoSuchRequestException if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest findByC_C_T_R_S_Last(
-			long classNameId, long classPK, int type, long receiverUserId,
-			int status, OrderByComparator<SocialRequest> orderByComparator)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByC_C_T_R_S_Last(
-			classNameId, classPK, type, receiverUserId, status,
-			orderByComparator);
-
-		if (socialRequest != null) {
-			return socialRequest;
-		}
-
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social request in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchByC_C_T_R_S_Last(
-		long classNameId, long classPK, int type, long receiverUserId,
-		int status, OrderByComparator<SocialRequest> orderByComparator) {
-
-		int count = countByC_C_T_R_S(
-			classNameId, classPK, type, receiverUserId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialRequest> list = findByC_C_T_R_S(
-			classNameId, classPK, type, receiverUserId, status, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5721,4 +5053,4 @@ public class SocialRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1589363029
+// LIFERAY-SERVICE-BUILDER-HASH:721883941

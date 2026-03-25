@@ -220,38 +220,6 @@ public class BatchPlannerPolicyUtil {
 	}
 
 	/**
-	 * Returns the last batch planner policy in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner policy
-	 * @throws NoSuchPolicyException if a matching batch planner policy could not be found
-	 */
-	public static BatchPlannerPolicy findByBatchPlannerPlanId_Last(
-			long batchPlannerPlanId,
-			OrderByComparator<BatchPlannerPolicy> orderByComparator)
-		throws com.liferay.batch.planner.exception.NoSuchPolicyException {
-
-		return getPersistence().findByBatchPlannerPlanId_Last(
-			batchPlannerPlanId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last batch planner policy in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
-	 */
-	public static BatchPlannerPolicy fetchByBatchPlannerPlanId_Last(
-		long batchPlannerPlanId,
-		OrderByComparator<BatchPlannerPolicy> orderByComparator) {
-
-		return getPersistence().fetchByBatchPlannerPlanId_Last(
-			batchPlannerPlanId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the batch planner policies where batchPlannerPlanId = &#63; from the database.
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
@@ -506,4 +474,4 @@ public class BatchPlannerPolicyUtil {
 	private static volatile BatchPlannerPolicyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:197028773
+// LIFERAY-SERVICE-BUILDER-HASH:-1070345484

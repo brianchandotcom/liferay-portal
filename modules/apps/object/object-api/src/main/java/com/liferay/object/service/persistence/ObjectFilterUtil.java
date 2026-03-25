@@ -210,34 +210,6 @@ public class ObjectFilterUtil {
 	}
 
 	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter
-	 * @throws NoSuchObjectFilterException if a matching object filter could not be found
-	 */
-	public static ObjectFilter findByUuid_Last(
-			String uuid, OrderByComparator<ObjectFilter> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFilterException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter, or <code>null</code> if a matching object filter could not be found
-	 */
-	public static ObjectFilter fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectFilter> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object filters where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -367,40 +339,6 @@ public class ObjectFilterUtil {
 	}
 
 	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter
-	 * @throws NoSuchObjectFilterException if a matching object filter could not be found
-	 */
-	public static ObjectFilter findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectFilter> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFilterException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter, or <code>null</code> if a matching object filter could not be found
-	 */
-	public static ObjectFilter fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectFilter> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object filters where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -521,37 +459,6 @@ public class ObjectFilterUtil {
 		long objectFieldId, OrderByComparator<ObjectFilter> orderByComparator) {
 
 		return getPersistence().fetchByObjectFieldId_First(
-			objectFieldId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object filter in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter
-	 * @throws NoSuchObjectFilterException if a matching object filter could not be found
-	 */
-	public static ObjectFilter findByObjectFieldId_Last(
-			long objectFieldId,
-			OrderByComparator<ObjectFilter> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFilterException {
-
-		return getPersistence().findByObjectFieldId_Last(
-			objectFieldId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object filter in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter, or <code>null</code> if a matching object filter could not be found
-	 */
-	public static ObjectFilter fetchByObjectFieldId_Last(
-		long objectFieldId, OrderByComparator<ObjectFilter> orderByComparator) {
-
-		return getPersistence().fetchByObjectFieldId_Last(
 			objectFieldId, orderByComparator);
 	}
 
@@ -732,4 +639,4 @@ public class ObjectFilterUtil {
 	private static volatile ObjectFilterPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1995326602
+// LIFERAY-SERVICE-BUILDER-HASH:-1452564724

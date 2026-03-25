@@ -119,32 +119,6 @@ public interface BasicEntryPersistence extends BasePersistence<BasicEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last basic entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching basic entry
-	 * @throws NoSuchBasicEntryException if a matching basic entry could not be found
-	 */
-	public BasicEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<BasicEntry>
-				orderByComparator)
-		throws NoSuchBasicEntryException;
-
-	/**
-	 * Returns the last basic entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching basic entry, or <code>null</code> if a matching basic entry could not be found
-	 */
-	public BasicEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<BasicEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the basic entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -513,4 +487,4 @@ public interface BasicEntryPersistence extends BasePersistence<BasicEntry> {
 				MappingEntry> mappingEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-285013317
+// LIFERAY-SERVICE-BUILDER-HASH:1088736769

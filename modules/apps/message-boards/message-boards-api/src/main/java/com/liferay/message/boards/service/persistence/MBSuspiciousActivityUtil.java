@@ -216,37 +216,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns the last message boards suspicious activity in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity findByUuid_Last(
-			String uuid,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the message boards suspicious activities where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -446,41 +415,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns the last message boards suspicious activity in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the message boards suspicious activities where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -607,39 +541,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns the last message boards suspicious activity in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity findByMessageId_Last(
-			long messageId,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByMessageId_Last(
-			messageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity fetchByMessageId_Last(
-		long messageId,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().fetchByMessageId_Last(
-			messageId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the message boards suspicious activities where messageId = &#63; from the database.
 	 *
 	 * @param messageId the message ID
@@ -760,39 +661,6 @@ public class MBSuspiciousActivityUtil {
 		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
 
 		return getPersistence().fetchByThreadId_First(
-			threadId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where threadId = &#63;.
-	 *
-	 * @param threadId the thread ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity findByThreadId_Last(
-			long threadId,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByThreadId_Last(
-			threadId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where threadId = &#63;.
-	 *
-	 * @param threadId the thread ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity fetchByThreadId_Last(
-		long threadId,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().fetchByThreadId_Last(
 			threadId, orderByComparator);
 	}
 
@@ -1116,4 +984,4 @@ public class MBSuspiciousActivityUtil {
 	private static volatile MBSuspiciousActivityPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-325738310
+// LIFERAY-SERVICE-BUILDER-HASH:72960886

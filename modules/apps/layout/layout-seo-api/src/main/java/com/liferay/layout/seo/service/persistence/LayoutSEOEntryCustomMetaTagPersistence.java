@@ -129,34 +129,6 @@ public interface LayoutSEOEntryCustomMetaTagPersistence
 			<LayoutSEOEntryCustomMetaTag> orderByComparator);
 
 	/**
-	 * Returns the last layout seo entry custom meta tag in the ordered set where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry custom meta tag
-	 * @throws NoSuchEntryCustomMetaTagException if a matching layout seo entry custom meta tag could not be found
-	 */
-	public LayoutSEOEntryCustomMetaTag findByG_L_Last(
-			long groupId, long layoutSEOEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutSEOEntryCustomMetaTag> orderByComparator)
-		throws NoSuchEntryCustomMetaTagException;
-
-	/**
-	 * Returns the last layout seo entry custom meta tag in the ordered set where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout seo entry custom meta tag, or <code>null</code> if a matching layout seo entry custom meta tag could not be found
-	 */
-	public LayoutSEOEntryCustomMetaTag fetchByG_L_Last(
-		long groupId, long layoutSEOEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutSEOEntryCustomMetaTag> orderByComparator);
-
-	/**
 	 * Removes all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -303,4 +275,4 @@ public interface LayoutSEOEntryCustomMetaTagPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-144623285
+// LIFERAY-SERVICE-BUILDER-HASH:1461320236

@@ -345,66 +345,6 @@ public class CPConfigurationListPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp configuration list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpConfigurationList != null) {
-			return cpConfigurationList;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByUuid_Last(
-		String uuid, OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationList> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp configuration lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -953,72 +893,6 @@ public class CPConfigurationListPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp configuration list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpConfigurationList != null) {
-			return cpConfigurationList;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationList> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp configuration lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1345,67 +1219,6 @@ public class CPConfigurationListPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp configuration list in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (cpConfigurationList != null) {
-			return cpConfigurationList;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationList> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp configuration lists where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1711,69 +1524,6 @@ public class CPConfigurationListPersistenceImpl
 
 		List<CPConfigurationList> list = findByParentCPConfigurationListId(
 			parentCPConfigurationListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList findByParentCPConfigurationListId_Last(
-			long parentCPConfigurationListId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList =
-			fetchByParentCPConfigurationListId_Last(
-				parentCPConfigurationListId, orderByComparator);
-
-		if (cpConfigurationList != null) {
-			return cpConfigurationList;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCPConfigurationListId=");
-		sb.append(parentCPConfigurationListId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByParentCPConfigurationListId_Last(
-		long parentCPConfigurationListId,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		int count = countByParentCPConfigurationListId(
-			parentCPConfigurationListId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationList> list = findByParentCPConfigurationListId(
-			parentCPConfigurationListId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2099,72 +1849,6 @@ public class CPConfigurationListPersistenceImpl
 
 		List<CPConfigurationList> list = findByG_C(
 			groupId, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList findByG_C_Last(
-			long groupId, long companyId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = fetchByG_C_Last(
-			groupId, companyId, orderByComparator);
-
-		if (cpConfigurationList != null) {
-			return cpConfigurationList;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByG_C_Last(
-		long groupId, long companyId,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		int count = countByG_C(groupId, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationList> list = findByG_C(
-			groupId, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2790,72 +2474,6 @@ public class CPConfigurationListPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList findByG_M_Last(
-			long groupId, boolean master,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = fetchByG_M_Last(
-			groupId, master, orderByComparator);
-
-		if (cpConfigurationList != null) {
-			return cpConfigurationList;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", master=");
-		sb.append(master);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByG_M_Last(
-		long groupId, boolean master,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		int count = countByG_M(groupId, master);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationList> list = findByG_M(
-			groupId, master, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp configuration lists where groupId = &#63; and master = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3175,72 +2793,6 @@ public class CPConfigurationListPersistenceImpl
 
 		List<CPConfigurationList> list = findByLtD_S(
 			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (cpConfigurationList != null) {
-			return cpConfigurationList;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationList> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3599,77 +3151,6 @@ public class CPConfigurationListPersistenceImpl
 
 		List<CPConfigurationList> list = findByG_C_S(
 			groupId, companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList findByG_C_S_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = fetchByG_C_S_Last(
-			groupId, companyId, status, orderByComparator);
-
-		if (cpConfigurationList != null) {
-			return cpConfigurationList;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByG_C_S_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		int count = countByG_C_S(groupId, companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationList> list = findByG_C_S(
-			groupId, companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4318,77 +3799,6 @@ public class CPConfigurationListPersistenceImpl
 
 		List<CPConfigurationList> list = findByG_C_NotS(
 			groupId, companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList findByG_C_NotS_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException {
-
-		CPConfigurationList cpConfigurationList = fetchByG_C_NotS_Last(
-			groupId, companyId, status, orderByComparator);
-
-		if (cpConfigurationList != null) {
-			return cpConfigurationList;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationListException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	@Override
-	public CPConfigurationList fetchByG_C_NotS_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		int count = countByG_C_NotS(groupId, companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPConfigurationList> list = findByG_C_NotS(
-			groupId, companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6257,4 +5667,4 @@ public class CPConfigurationListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:260417484
+// LIFERAY-SERVICE-BUILDER-HASH:1576613495

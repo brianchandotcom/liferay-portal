@@ -351,74 +351,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce pricing class cp definition rel in the ordered set where commercePricingClassId = &#63;.
-	 *
-	 * @param commercePricingClassId the commerce pricing class ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class cp definition rel
-	 * @throws NoSuchPricingClassCPDefinitionRelException if a matching commerce pricing class cp definition rel could not be found
-	 */
-	@Override
-	public CommercePricingClassCPDefinitionRel
-			findByCommercePricingClassId_Last(
-				long commercePricingClassId,
-				OrderByComparator<CommercePricingClassCPDefinitionRel>
-					orderByComparator)
-		throws NoSuchPricingClassCPDefinitionRelException {
-
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel =
-				fetchByCommercePricingClassId_Last(
-					commercePricingClassId, orderByComparator);
-
-		if (commercePricingClassCPDefinitionRel != null) {
-			return commercePricingClassCPDefinitionRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePricingClassId=");
-		sb.append(commercePricingClassId);
-
-		sb.append("}");
-
-		throw new NoSuchPricingClassCPDefinitionRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce pricing class cp definition rel in the ordered set where commercePricingClassId = &#63;.
-	 *
-	 * @param commercePricingClassId the commerce pricing class ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class cp definition rel, or <code>null</code> if a matching commerce pricing class cp definition rel could not be found
-	 */
-	@Override
-	public CommercePricingClassCPDefinitionRel
-		fetchByCommercePricingClassId_Last(
-			long commercePricingClassId,
-			OrderByComparator<CommercePricingClassCPDefinitionRel>
-				orderByComparator) {
-
-		int count = countByCommercePricingClassId(commercePricingClassId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePricingClassCPDefinitionRel> list =
-			findByCommercePricingClassId(
-				commercePricingClassId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce pricing class cp definition rels where commercePricingClassId = &#63; from the database.
 	 *
 	 * @param commercePricingClassId the commerce pricing class ID
@@ -733,70 +665,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 
 		List<CommercePricingClassCPDefinitionRel> list = findByCPDefinitionId(
 			CPDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce pricing class cp definition rel in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class cp definition rel
-	 * @throws NoSuchPricingClassCPDefinitionRelException if a matching commerce pricing class cp definition rel could not be found
-	 */
-	@Override
-	public CommercePricingClassCPDefinitionRel findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CommercePricingClassCPDefinitionRel>
-				orderByComparator)
-		throws NoSuchPricingClassCPDefinitionRelException {
-
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel = fetchByCPDefinitionId_Last(
-				CPDefinitionId, orderByComparator);
-
-		if (commercePricingClassCPDefinitionRel != null) {
-			return commercePricingClassCPDefinitionRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchPricingClassCPDefinitionRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce pricing class cp definition rel in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class cp definition rel, or <code>null</code> if a matching commerce pricing class cp definition rel could not be found
-	 */
-	@Override
-	public CommercePricingClassCPDefinitionRel fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		OrderByComparator<CommercePricingClassCPDefinitionRel>
-			orderByComparator) {
-
-		int count = countByCPDefinitionId(CPDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePricingClassCPDefinitionRel> list = findByCPDefinitionId(
-			CPDefinitionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2166,4 +2034,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1409466124
+// LIFERAY-SERVICE-BUILDER-HASH:-151125238

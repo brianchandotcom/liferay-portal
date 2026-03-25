@@ -121,32 +121,6 @@ public interface DDMTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface DDMTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface DDMTemplatePersistence
 	 * @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public DDMTemplate fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
 			orderByComparator);
@@ -615,32 +535,6 @@ public interface DDMTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm template in the ordered set where classPK = &#63;.
-	 *
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByClassPK_Last(
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where classPK = &#63;.
-	 *
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByClassPK_Last(
-		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm templates where classPK = &#63; from the database.
 	 *
 	 * @param classPK the class pk
@@ -738,32 +632,6 @@ public interface DDMTemplatePersistence
 	 * @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public DDMTemplate fetchByTemplateKey_First(
-		String templateKey,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm template in the ordered set where templateKey = &#63;.
-	 *
-	 * @param templateKey the template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByTemplateKey_Last(
-			String templateKey,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where templateKey = &#63;.
-	 *
-	 * @param templateKey the template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByTemplateKey_Last(
 		String templateKey,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
 			orderByComparator);
@@ -871,32 +739,6 @@ public interface DDMTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm template in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByType_Last(
-			String type,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByType_Last(
-		String type,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm templates where type = &#63; from the database.
 	 *
 	 * @param type the type
@@ -994,32 +836,6 @@ public interface DDMTemplatePersistence
 	 * @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public DDMTemplate fetchByLanguage_First(
-		String language,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm template in the ordered set where language = &#63;.
-	 *
-	 * @param language the language
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByLanguage_Last(
-			String language,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where language = &#63;.
-	 *
-	 * @param language the language
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByLanguage_Last(
 		String language,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
 			orderByComparator);
@@ -1174,34 +990,6 @@ public interface DDMTemplatePersistence
 	 * @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public DDMTemplate fetchByG_C_First(
-		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByG_C_Last(
-			long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByG_C_Last(
 		long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
 			orderByComparator);
@@ -1366,34 +1154,6 @@ public interface DDMTemplatePersistence
 	 * @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public DDMTemplate fetchByG_CPK_First(
-		long groupId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByG_CPK_Last(
-			long groupId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByG_CPK_Last(
 		long groupId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
 			orderByComparator);
@@ -1698,36 +1458,6 @@ public interface DDMTemplatePersistence
 	 * @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public DDMTemplate fetchByG_C_C_First(
-		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByG_C_C_Last(
 		long groupId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
 			orderByComparator);
@@ -2112,36 +1842,6 @@ public interface DDMTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByC_C_T_Last(
-			long classNameId, long classPK, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByC_C_T_Last(
-		long classNameId, long classPK, String type,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm templates where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -2265,38 +1965,6 @@ public interface DDMTemplatePersistence
 	 * @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public DDMTemplate fetchByG_C_C_T_First(
-		long groupId, long classNameId, long classPK, String type,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByG_C_C_T_Last(
-			long groupId, long classNameId, long classPK, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByG_C_C_T_Last(
 		long groupId, long classNameId, long classPK, String type,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
 			orderByComparator);
@@ -2501,41 +2169,6 @@ public interface DDMTemplatePersistence
 	 * @return the first matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	 */
 	public DDMTemplate fetchByG_C_C_T_M_First(
-		long groupId, long classNameId, long classPK, String type, String mode,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param mode the mode
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template
-	 * @throws NoSuchTemplateException if a matching ddm template could not be found
-	 */
-	public DDMTemplate findByG_C_C_T_M_Last(
-			long groupId, long classNameId, long classPK, String type,
-			String mode,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last ddm template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param mode the mode
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template, or <code>null</code> if a matching ddm template could not be found
-	 */
-	public DDMTemplate fetchByG_C_C_T_M_Last(
 		long groupId, long classNameId, long classPK, String type, String mode,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate>
 			orderByComparator);
@@ -2804,4 +2437,4 @@ public interface DDMTemplatePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1126130137
+// LIFERAY-SERVICE-BUILDER-HASH:1178611778

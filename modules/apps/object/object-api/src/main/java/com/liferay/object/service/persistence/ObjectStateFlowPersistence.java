@@ -120,32 +120,6 @@ public interface ObjectStateFlowPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object state flow in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state flow
-	 * @throws NoSuchObjectStateFlowException if a matching object state flow could not be found
-	 */
-	public ObjectStateFlow findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectStateFlow>
-				orderByComparator)
-		throws NoSuchObjectStateFlowException;
-
-	/**
-	 * Returns the last object state flow in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state flow, or <code>null</code> if a matching object state flow could not be found
-	 */
-	public ObjectStateFlow fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectStateFlow>
-			orderByComparator);
-
-	/**
 	 * Removes all the object state flows where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -250,34 +224,6 @@ public interface ObjectStateFlowPersistence
 	 * @return the first matching object state flow, or <code>null</code> if a matching object state flow could not be found
 	 */
 	public ObjectStateFlow fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectStateFlow>
-			orderByComparator);
-
-	/**
-	 * Returns the last object state flow in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state flow
-	 * @throws NoSuchObjectStateFlowException if a matching object state flow could not be found
-	 */
-	public ObjectStateFlow findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectStateFlow>
-				orderByComparator)
-		throws NoSuchObjectStateFlowException;
-
-	/**
-	 * Returns the last object state flow in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state flow, or <code>null</code> if a matching object state flow could not be found
-	 */
-	public ObjectStateFlow fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectStateFlow>
 			orderByComparator);
@@ -465,4 +411,4 @@ public interface ObjectStateFlowPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1649468710
+// LIFERAY-SERVICE-BUILDER-HASH:-1121385046

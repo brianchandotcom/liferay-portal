@@ -328,64 +328,6 @@ public class DDLRecordPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddl record in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord findByUuid_Last(
-			String uuid, OrderByComparator<DDLRecord> orderByComparator)
-		throws NoSuchRecordException {
-
-		DDLRecord ddlRecord = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord fetchByUuid_Last(
-		String uuid, OrderByComparator<DDLRecord> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDLRecord> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddl records where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -933,72 +875,6 @@ public class DDLRecordPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddl record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws NoSuchRecordException {
-
-		DDLRecord ddlRecord = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDLRecord> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddl records where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1321,65 +1197,6 @@ public class DDLRecordPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddl record in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord findByCompanyId_Last(
-			long companyId, OrderByComparator<DDLRecord> orderByComparator)
-		throws NoSuchRecordException {
-
-		DDLRecord ddlRecord = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord fetchByCompanyId_Last(
-		long companyId, OrderByComparator<DDLRecord> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDLRecord> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddl records where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1670,65 +1487,6 @@ public class DDLRecordPersistenceImpl
 
 		List<DDLRecord> list = findByRecordSetId(
 			recordSetId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord findByRecordSetId_Last(
-			long recordSetId, OrderByComparator<DDLRecord> orderByComparator)
-		throws NoSuchRecordException {
-
-		DDLRecord ddlRecord = fetchByRecordSetId_Last(
-			recordSetId, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord fetchByRecordSetId_Last(
-		long recordSetId, OrderByComparator<DDLRecord> orderByComparator) {
-
-		int count = countByRecordSetId(recordSetId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDLRecord> list = findByRecordSetId(
-			recordSetId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2045,72 +1803,6 @@ public class DDLRecordPersistenceImpl
 
 		List<DDLRecord> list = findByR_U(
 			recordSetId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and userId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord findByR_U_Last(
-			long recordSetId, long userId,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws NoSuchRecordException {
-
-		DDLRecord ddlRecord = fetchByR_U_Last(
-			recordSetId, userId, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and userId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord fetchByR_U_Last(
-		long recordSetId, long userId,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		int count = countByR_U(recordSetId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDLRecord> list = findByR_U(
-			recordSetId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2454,72 +2146,6 @@ public class DDLRecordPersistenceImpl
 
 		List<DDLRecord> list = findByR_R(
 			recordSetId, recordSetVersion, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord findByR_R_Last(
-			long recordSetId, String recordSetVersion,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws NoSuchRecordException {
-
-		DDLRecord ddlRecord = fetchByR_R_Last(
-			recordSetId, recordSetVersion, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append(", recordSetVersion=");
-		sb.append(recordSetVersion);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord fetchByR_R_Last(
-		long recordSetId, String recordSetVersion,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		int count = countByR_R(recordSetId, recordSetVersion);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDLRecord> list = findByR_R(
-			recordSetId, recordSetVersion, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2875,72 +2501,6 @@ public class DDLRecordPersistenceImpl
 
 		List<DDLRecord> list = findByC_C(
 			className, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord findByC_C_Last(
-			String className, long classPK,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws NoSuchRecordException {
-
-		DDLRecord ddlRecord = fetchByC_C_Last(
-			className, classPK, orderByComparator);
-
-		if (ddlRecord != null) {
-			return ddlRecord;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("className=");
-		sb.append(className);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	@Override
-	public DDLRecord fetchByC_C_Last(
-		String className, long classPK,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		int count = countByC_C(className, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDLRecord> list = findByC_C(
-			className, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4103,4 +3663,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1449253457
+// LIFERAY-SERVICE-BUILDER-HASH:-1751759652

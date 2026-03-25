@@ -221,39 +221,6 @@ public class KaleoTaskInstanceTokenUtil {
 	}
 
 	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskInstanceTokenException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo task instance tokens where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -379,39 +346,6 @@ public class KaleoTaskInstanceTokenUtil {
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
 
 		return getPersistence().fetchByKaleoDefinitionVersionId_First(
-			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskInstanceTokenException {
-
-		return getPersistence().findByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		return getPersistence().fetchByKaleoDefinitionVersionId_Last(
 			kaleoDefinitionVersionId, orderByComparator);
 	}
 
@@ -549,39 +483,6 @@ public class KaleoTaskInstanceTokenUtil {
 	}
 
 	/**
-	 * Returns the last kaleo task instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken findByKaleoInstanceId_Last(
-			long kaleoInstanceId,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskInstanceTokenException {
-
-		return getPersistence().findByKaleoInstanceId_Last(
-			kaleoInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken fetchByKaleoInstanceId_Last(
-		long kaleoInstanceId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		return getPersistence().fetchByKaleoInstanceId_Last(
-			kaleoInstanceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo task instance tokens where kaleoInstanceId = &#63; from the database.
 	 *
 	 * @param kaleoInstanceId the kaleo instance ID
@@ -710,41 +611,6 @@ public class KaleoTaskInstanceTokenUtil {
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
 
 		return getPersistence().fetchByC_U_First(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskInstanceTokenException {
-
-		return getPersistence().findByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		return getPersistence().fetchByC_U_Last(
 			companyId, userId, orderByComparator);
 	}
 
@@ -953,41 +819,6 @@ public class KaleoTaskInstanceTokenUtil {
 	}
 
 	/**
-	 * Returns the last kaleo task instance token in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken findByCN_CPK_Last(
-			String className, long classPK,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskInstanceTokenException {
-
-		return getPersistence().findByCN_CPK_Last(
-			className, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken fetchByCN_CPK_Last(
-		String className, long classPK,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		return getPersistence().fetchByCN_CPK_Last(
-			className, classPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo task instance tokens where className = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param className the class name
@@ -1126,43 +957,6 @@ public class KaleoTaskInstanceTokenUtil {
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
 
 		return getPersistence().fetchByC_U_C_First(
-			companyId, userId, completed, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63; and completed = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken findByC_U_C_Last(
-			long companyId, long userId, boolean completed,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTaskInstanceTokenException {
-
-		return getPersistence().findByC_U_C_Last(
-			companyId, userId, completed, orderByComparator);
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63; and completed = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	public static KaleoTaskInstanceToken fetchByC_U_C_Last(
-		long companyId, long userId, boolean completed,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		return getPersistence().fetchByC_U_C_Last(
 			companyId, userId, completed, orderByComparator);
 	}
 
@@ -1366,4 +1160,4 @@ public class KaleoTaskInstanceTokenUtil {
 	private static volatile KaleoTaskInstanceTokenPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:933110802
+// LIFERAY-SERVICE-BUILDER-HASH:-661676614

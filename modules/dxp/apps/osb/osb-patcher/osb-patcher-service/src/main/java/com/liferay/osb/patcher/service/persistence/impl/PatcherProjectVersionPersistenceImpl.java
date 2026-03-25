@@ -321,68 +321,6 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a matching patcher project version could not be found
-	 */
-	@Override
-	public PatcherProjectVersion findByPatcherProductVersionId_Last(
-			long patcherProductVersionId,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws NoSuchPatcherProjectVersionException {
-
-		PatcherProjectVersion patcherProjectVersion =
-			fetchByPatcherProductVersionId_Last(
-				patcherProductVersionId, orderByComparator);
-
-		if (patcherProjectVersion != null) {
-			return patcherProjectVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherProductVersionId=");
-		sb.append(patcherProductVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProjectVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version, or <code>null</code> if a matching patcher project version could not be found
-	 */
-	@Override
-	public PatcherProjectVersion fetchByPatcherProductVersionId_Last(
-		long patcherProductVersionId,
-		OrderByComparator<PatcherProjectVersion> orderByComparator) {
-
-		int count = countByPatcherProductVersionId(patcherProductVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherProjectVersion> list = findByPatcherProductVersionId(
-			patcherProductVersionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the patcher project versions that the user has permission to view where patcherProductVersionId = &#63;.
 	 *
 	 * @param patcherProductVersionId the patcher product version ID
@@ -890,69 +828,6 @@ public class PatcherProjectVersionPersistenceImpl
 
 		List<PatcherProjectVersion> list = findByRootPatcherProjectVersionId(
 			rootPatcherProjectVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a matching patcher project version could not be found
-	 */
-	@Override
-	public PatcherProjectVersion findByRootPatcherProjectVersionId_Last(
-			long rootPatcherProjectVersionId,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws NoSuchPatcherProjectVersionException {
-
-		PatcherProjectVersion patcherProjectVersion =
-			fetchByRootPatcherProjectVersionId_Last(
-				rootPatcherProjectVersionId, orderByComparator);
-
-		if (patcherProjectVersion != null) {
-			return patcherProjectVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("rootPatcherProjectVersionId=");
-		sb.append(rootPatcherProjectVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProjectVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version, or <code>null</code> if a matching patcher project version could not be found
-	 */
-	@Override
-	public PatcherProjectVersion fetchByRootPatcherProjectVersionId_Last(
-		long rootPatcherProjectVersionId,
-		OrderByComparator<PatcherProjectVersion> orderByComparator) {
-
-		int count = countByRootPatcherProjectVersionId(
-			rootPatcherProjectVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherProjectVersion> list = findByRootPatcherProjectVersionId(
-			rootPatcherProjectVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1872,75 +1747,6 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a matching patcher project version could not be found
-	 */
-	@Override
-	public PatcherProjectVersion findByP_R_Last(
-			long patcherProductVersionId, long rootPatcherProjectVersionId,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws NoSuchPatcherProjectVersionException {
-
-		PatcherProjectVersion patcherProjectVersion = fetchByP_R_Last(
-			patcherProductVersionId, rootPatcherProjectVersionId,
-			orderByComparator);
-
-		if (patcherProjectVersion != null) {
-			return patcherProjectVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherProductVersionId=");
-		sb.append(patcherProductVersionId);
-
-		sb.append(", rootPatcherProjectVersionId=");
-		sb.append(rootPatcherProjectVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProjectVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version, or <code>null</code> if a matching patcher project version could not be found
-	 */
-	@Override
-	public PatcherProjectVersion fetchByP_R_Last(
-		long patcherProductVersionId, long rootPatcherProjectVersionId,
-		OrderByComparator<PatcherProjectVersion> orderByComparator) {
-
-		int count = countByP_R(
-			patcherProductVersionId, rootPatcherProjectVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherProjectVersion> list = findByP_R(
-			patcherProductVersionId, rootPatcherProjectVersionId, count - 1,
-			count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the patcher project versions that the user has permission to view where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
 	 *
 	 * @param patcherProductVersionId the patcher product version ID
@@ -2504,73 +2310,6 @@ public class PatcherProjectVersionPersistenceImpl
 
 		List<PatcherProjectVersion> list = findByP_RN(
 			patcherProductVersionId, repositoryName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63; and repositoryName = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param repositoryName the repository name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a matching patcher project version could not be found
-	 */
-	@Override
-	public PatcherProjectVersion findByP_RN_Last(
-			long patcherProductVersionId, String repositoryName,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws NoSuchPatcherProjectVersionException {
-
-		PatcherProjectVersion patcherProjectVersion = fetchByP_RN_Last(
-			patcherProductVersionId, repositoryName, orderByComparator);
-
-		if (patcherProjectVersion != null) {
-			return patcherProjectVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherProductVersionId=");
-		sb.append(patcherProductVersionId);
-
-		sb.append(", repositoryName=");
-		sb.append(repositoryName);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProjectVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63; and repositoryName = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param repositoryName the repository name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version, or <code>null</code> if a matching patcher project version could not be found
-	 */
-	@Override
-	public PatcherProjectVersion fetchByP_RN_Last(
-		long patcherProductVersionId, String repositoryName,
-		OrderByComparator<PatcherProjectVersion> orderByComparator) {
-
-		int count = countByP_RN(patcherProductVersionId, repositoryName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherProjectVersion> list = findByP_RN(
-			patcherProductVersionId, repositoryName, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3720,4 +3459,4 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1568691899
+// LIFERAY-SERVICE-BUILDER-HASH:-84753571

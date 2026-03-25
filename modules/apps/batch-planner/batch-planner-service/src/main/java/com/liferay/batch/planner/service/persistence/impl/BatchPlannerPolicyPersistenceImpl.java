@@ -313,67 +313,6 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch planner policy in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner policy
-	 * @throws NoSuchPolicyException if a matching batch planner policy could not be found
-	 */
-	@Override
-	public BatchPlannerPolicy findByBatchPlannerPlanId_Last(
-			long batchPlannerPlanId,
-			OrderByComparator<BatchPlannerPolicy> orderByComparator)
-		throws NoSuchPolicyException {
-
-		BatchPlannerPolicy batchPlannerPolicy = fetchByBatchPlannerPlanId_Last(
-			batchPlannerPlanId, orderByComparator);
-
-		if (batchPlannerPolicy != null) {
-			return batchPlannerPolicy;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("batchPlannerPlanId=");
-		sb.append(batchPlannerPlanId);
-
-		sb.append("}");
-
-		throw new NoSuchPolicyException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch planner policy in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
-	 */
-	@Override
-	public BatchPlannerPolicy fetchByBatchPlannerPlanId_Last(
-		long batchPlannerPlanId,
-		OrderByComparator<BatchPlannerPolicy> orderByComparator) {
-
-		int count = countByBatchPlannerPlanId(batchPlannerPlanId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchPlannerPolicy> list = findByBatchPlannerPlanId(
-			batchPlannerPlanId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the batch planner policies where batchPlannerPlanId = &#63; from the database.
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
@@ -1318,4 +1257,4 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1655880816
+// LIFERAY-SERVICE-BUILDER-HASH:-290750838

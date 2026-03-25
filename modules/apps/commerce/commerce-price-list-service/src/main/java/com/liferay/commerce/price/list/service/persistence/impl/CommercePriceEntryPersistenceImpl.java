@@ -345,66 +345,6 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -749,72 +689,6 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1141,67 +1015,6 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1501,67 +1314,6 @@ public class CommercePriceEntryPersistenceImpl
 
 		List<CommercePriceEntry> list = findByCommercePriceListId(
 			commercePriceListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByCommercePriceListId_Last(
-			long commercePriceListId,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByCommercePriceListId_Last(
-			commercePriceListId, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByCommercePriceListId_Last(
-		long commercePriceListId,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByCommercePriceListId(commercePriceListId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByCommercePriceListId(
-			commercePriceListId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1884,67 +1636,6 @@ public class CommercePriceEntryPersistenceImpl
 
 		List<CommercePriceEntry> list = findByCPInstanceUuid(
 			CPInstanceUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByCPInstanceUuid_Last(
-			String CPInstanceUuid,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByCPInstanceUuid_Last(
-			CPInstanceUuid, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByCPInstanceUuid_Last(
-		String CPInstanceUuid,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByCPInstanceUuid(CPInstanceUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByCPInstanceUuid(
-			CPInstanceUuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2309,73 +2000,6 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price entry in the ordered set where commercePriceListId = &#63; and CPInstanceUuid = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByC_C_Last(
-			long commercePriceListId, String CPInstanceUuid,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByC_C_Last(
-			commercePriceListId, CPInstanceUuid, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append(", CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where commercePriceListId = &#63; and CPInstanceUuid = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByC_C_Last(
-		long commercePriceListId, String CPInstanceUuid,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByC_C(commercePriceListId, CPInstanceUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByC_C(
-			commercePriceListId, CPInstanceUuid, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price entries where commercePriceListId = &#63; and CPInstanceUuid = &#63; from the database.
 	 *
 	 * @param commercePriceListId the commerce price list ID
@@ -2722,72 +2346,6 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price entries where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -3123,72 +2681,6 @@ public class CommercePriceEntryPersistenceImpl
 
 		List<CommercePriceEntry> list = findByLtE_S(
 			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByLtE_S(expirationDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByLtE_S(
-			expirationDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3569,78 +3061,6 @@ public class CommercePriceEntryPersistenceImpl
 
 		List<CommercePriceEntry> list = findByC_C_S(
 			commercePriceListId, CPInstanceUuid, status, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where commercePriceListId = &#63; and CPInstanceUuid = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByC_C_S_Last(
-			long commercePriceListId, String CPInstanceUuid, int status,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByC_C_S_Last(
-			commercePriceListId, CPInstanceUuid, status, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append(", CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where commercePriceListId = &#63; and CPInstanceUuid = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByC_C_S_Last(
-		long commercePriceListId, String CPInstanceUuid, int status,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByC_C_S(commercePriceListId, CPInstanceUuid, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByC_C_S(
-			commercePriceListId, CPInstanceUuid, status, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4063,78 +3483,6 @@ public class CommercePriceEntryPersistenceImpl
 
 		List<CommercePriceEntry> list = findByC_Q_U(
 			CPInstanceUuid, quantity, unitOfMeasureKey, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where CPInstanceUuid = &#63; and quantity = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param quantity the quantity
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry
-	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByC_Q_U_Last(
-			String CPInstanceUuid, BigDecimal quantity, String unitOfMeasureKey,
-			OrderByComparator<CommercePriceEntry> orderByComparator)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByC_Q_U_Last(
-			CPInstanceUuid, quantity, unitOfMeasureKey, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append(", quantity=");
-		sb.append(quantity);
-
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price entry in the ordered set where CPInstanceUuid = &#63; and quantity = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param quantity the quantity
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
-	 */
-	@Override
-	public CommercePriceEntry fetchByC_Q_U_Last(
-		String CPInstanceUuid, BigDecimal quantity, String unitOfMeasureKey,
-		OrderByComparator<CommercePriceEntry> orderByComparator) {
-
-		int count = countByC_Q_U(CPInstanceUuid, quantity, unitOfMeasureKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceEntry> list = findByC_Q_U(
-			CPInstanceUuid, quantity, unitOfMeasureKey, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5743,4 +5091,4 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:783849552
+// LIFERAY-SERVICE-BUILDER-HASH:-1222827963

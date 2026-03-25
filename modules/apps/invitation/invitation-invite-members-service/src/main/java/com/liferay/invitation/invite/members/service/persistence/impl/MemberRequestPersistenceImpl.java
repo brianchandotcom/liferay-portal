@@ -506,67 +506,6 @@ public class MemberRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request
-	 * @throws NoSuchMemberRequestException if a matching member request could not be found
-	 */
-	@Override
-	public MemberRequest findByReceiverUserId_Last(
-			long receiverUserId,
-			OrderByComparator<MemberRequest> orderByComparator)
-		throws NoSuchMemberRequestException {
-
-		MemberRequest memberRequest = fetchByReceiverUserId_Last(
-			receiverUserId, orderByComparator);
-
-		if (memberRequest != null) {
-			return memberRequest;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append("}");
-
-		throw new NoSuchMemberRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request, or <code>null</code> if a matching member request could not be found
-	 */
-	@Override
-	public MemberRequest fetchByReceiverUserId_Last(
-		long receiverUserId,
-		OrderByComparator<MemberRequest> orderByComparator) {
-
-		int count = countByReceiverUserId(receiverUserId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MemberRequest> list = findByReceiverUserId(
-			receiverUserId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the member requests where receiverUserId = &#63; from the database.
 	 *
 	 * @param receiverUserId the receiver user ID
@@ -864,72 +803,6 @@ public class MemberRequestPersistenceImpl
 
 		List<MemberRequest> list = findByR_S(
 			receiverUserId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request
-	 * @throws NoSuchMemberRequestException if a matching member request could not be found
-	 */
-	@Override
-	public MemberRequest findByR_S_Last(
-			long receiverUserId, int status,
-			OrderByComparator<MemberRequest> orderByComparator)
-		throws NoSuchMemberRequestException {
-
-		MemberRequest memberRequest = fetchByR_S_Last(
-			receiverUserId, status, orderByComparator);
-
-		if (memberRequest != null) {
-			return memberRequest;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMemberRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request, or <code>null</code> if a matching member request could not be found
-	 */
-	@Override
-	public MemberRequest fetchByR_S_Last(
-		long receiverUserId, int status,
-		OrderByComparator<MemberRequest> orderByComparator) {
-
-		int count = countByR_S(receiverUserId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MemberRequest> list = findByR_S(
-			receiverUserId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1944,4 +1817,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1094699031
+// LIFERAY-SERVICE-BUILDER-HASH:-691483106

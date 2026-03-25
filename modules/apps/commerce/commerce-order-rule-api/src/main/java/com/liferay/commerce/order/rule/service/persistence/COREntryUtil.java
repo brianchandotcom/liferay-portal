@@ -209,35 +209,6 @@ public class COREntryUtil {
 	}
 
 	/**
-	 * Returns the last cor entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	public static COREntry findByUuid_Last(
-			String uuid, OrderByComparator<COREntry> orderByComparator)
-		throws com.liferay.commerce.order.rule.exception.
-			NoSuchCOREntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	public static COREntry fetchByUuid_Last(
-		String uuid, OrderByComparator<COREntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the cor entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -422,41 +393,6 @@ public class COREntryUtil {
 		OrderByComparator<COREntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	public static COREntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<COREntry> orderByComparator)
-		throws com.liferay.commerce.order.rule.exception.
-			NoSuchCOREntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	public static COREntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -657,41 +593,6 @@ public class COREntryUtil {
 	}
 
 	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	public static COREntry findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<COREntry> orderByComparator)
-		throws com.liferay.commerce.order.rule.exception.
-			NoSuchCOREntryException {
-
-		return getPersistence().findByC_A_Last(
-			companyId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	public static COREntry fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		return getPersistence().fetchByC_A_Last(
-			companyId, active, orderByComparator);
-	}
-
-	/**
 	 * Returns all the cor entries that the user has permission to view where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -884,41 +785,6 @@ public class COREntryUtil {
 		OrderByComparator<COREntry> orderByComparator) {
 
 		return getPersistence().fetchByC_LikeType_First(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	public static COREntry findByC_LikeType_Last(
-			long companyId, String type,
-			OrderByComparator<COREntry> orderByComparator)
-		throws com.liferay.commerce.order.rule.exception.
-			NoSuchCOREntryException {
-
-		return getPersistence().findByC_LikeType_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	public static COREntry fetchByC_LikeType_Last(
-		long companyId, String type,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		return getPersistence().fetchByC_LikeType_Last(
 			companyId, type, orderByComparator);
 	}
 
@@ -1120,41 +986,6 @@ public class COREntryUtil {
 	}
 
 	/**
-	 * Returns the last cor entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	public static COREntry findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<COREntry> orderByComparator)
-		throws com.liferay.commerce.order.rule.exception.
-			NoSuchCOREntryException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	public static COREntry fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the cor entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -1349,41 +1180,6 @@ public class COREntryUtil {
 		OrderByComparator<COREntry> orderByComparator) {
 
 		return getPersistence().fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	public static COREntry findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<COREntry> orderByComparator)
-		throws com.liferay.commerce.order.rule.exception.
-			NoSuchCOREntryException {
-
-		return getPersistence().findByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	public static COREntry fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		return getPersistence().fetchByLtE_S_Last(
 			expirationDate, status, orderByComparator);
 	}
 
@@ -1591,43 +1387,6 @@ public class COREntryUtil {
 		OrderByComparator<COREntry> orderByComparator) {
 
 		return getPersistence().fetchByC_A_LikeType_First(
-			companyId, active, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	public static COREntry findByC_A_LikeType_Last(
-			long companyId, boolean active, String type,
-			OrderByComparator<COREntry> orderByComparator)
-		throws com.liferay.commerce.order.rule.exception.
-			NoSuchCOREntryException {
-
-		return getPersistence().findByC_A_LikeType_Last(
-			companyId, active, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	public static COREntry fetchByC_A_LikeType_Last(
-		long companyId, boolean active, String type,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		return getPersistence().fetchByC_A_LikeType_Last(
 			companyId, active, type, orderByComparator);
 	}
 
@@ -1964,4 +1723,4 @@ public class COREntryUtil {
 	private static volatile COREntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-386107940
+// LIFERAY-SERVICE-BUILDER-HASH:1610771628

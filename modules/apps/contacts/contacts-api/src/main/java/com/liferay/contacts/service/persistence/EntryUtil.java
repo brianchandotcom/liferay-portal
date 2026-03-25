@@ -204,34 +204,6 @@ public class EntryUtil {
 	}
 
 	/**
-	 * Returns the last entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching entry
-	 * @throws NoSuchEntryException if a matching entry could not be found
-	 */
-	public static Entry findByUserId_Last(
-			long userId, OrderByComparator<Entry> orderByComparator)
-		throws com.liferay.contacts.exception.NoSuchEntryException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching entry, or <code>null</code> if a matching entry could not be found
-	 */
-	public static Entry fetchByUserId_Last(
-		long userId, OrderByComparator<Entry> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -472,4 +444,4 @@ public class EntryUtil {
 	private static volatile EntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1877377843
+// LIFERAY-SERVICE-BUILDER-HASH:-736718327

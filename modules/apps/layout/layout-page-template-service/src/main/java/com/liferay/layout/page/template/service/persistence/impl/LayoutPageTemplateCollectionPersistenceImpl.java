@@ -351,67 +351,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout page template collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection findByUuid_Last(
-			String uuid,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (layoutPageTemplateCollection != null) {
-			return layoutPageTemplateCollection;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateCollection> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout page template collections where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -976,72 +915,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout page template collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (layoutPageTemplateCollection != null) {
-			return layoutPageTemplateCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateCollection> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout page template collections where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1365,67 +1238,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		List<LayoutPageTemplateCollection> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection findByGroupId_Last(
-			long groupId,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (layoutPageTemplateCollection != null) {
-			return layoutPageTemplateCollection;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateCollection> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1969,75 +1781,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		List<LayoutPageTemplateCollection> list = findByG_P(
 			groupId, parentLayoutPageTemplateCollectionId, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection findByG_P_Last(
-			long groupId, long parentLayoutPageTemplateCollectionId,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			fetchByG_P_Last(
-				groupId, parentLayoutPageTemplateCollectionId,
-				orderByComparator);
-
-		if (layoutPageTemplateCollection != null) {
-			return layoutPageTemplateCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentLayoutPageTemplateCollectionId=");
-		sb.append(parentLayoutPageTemplateCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByG_P_Last(
-		long groupId, long parentLayoutPageTemplateCollectionId,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		int count = countByG_P(groupId, parentLayoutPageTemplateCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateCollection> list = findByG_P(
-			groupId, parentLayoutPageTemplateCollectionId, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2611,72 +2354,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		List<LayoutPageTemplateCollection> list = findByG_T(
 			groupId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection findByG_T_Last(
-			long groupId, int type,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			fetchByG_T_Last(groupId, type, orderByComparator);
-
-		if (layoutPageTemplateCollection != null) {
-			return layoutPageTemplateCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByG_T_Last(
-		long groupId, int type,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		int count = countByG_T(groupId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateCollection> list = findByG_T(
-			groupId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3261,81 +2938,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		List<LayoutPageTemplateCollection> list = findByG_P_T(
 			groupId, parentLayoutPageTemplateCollectionId, type, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection findByG_P_T_Last(
-			long groupId, long parentLayoutPageTemplateCollectionId, int type,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			fetchByG_P_T_Last(
-				groupId, parentLayoutPageTemplateCollectionId, type,
-				orderByComparator);
-
-		if (layoutPageTemplateCollection != null) {
-			return layoutPageTemplateCollection;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentLayoutPageTemplateCollectionId=");
-		sb.append(parentLayoutPageTemplateCollectionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByG_P_T_Last(
-		long groupId, long parentLayoutPageTemplateCollectionId, int type,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		int count = countByG_P_T(
-			groupId, parentLayoutPageTemplateCollectionId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateCollection> list = findByG_P_T(
-			groupId, parentLayoutPageTemplateCollectionId, type, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4215,77 +3817,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection findByG_N_T_Last(
-			long groupId, String name, int type,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			fetchByG_N_T_Last(groupId, name, type, orderByComparator);
-
-		if (layoutPageTemplateCollection != null) {
-			return layoutPageTemplateCollection;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByG_N_T_Last(
-		long groupId, String name, int type,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		int count = countByG_N_T(groupId, name, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateCollection> list = findByG_N_T(
-			groupId, name, type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and name = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4913,77 +4444,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		List<LayoutPageTemplateCollection> list = findByG_LikeN_T(
 			groupId, name, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection findByG_LikeN_T_Last(
-			long groupId, String name, int type,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			fetchByG_LikeN_T_Last(groupId, name, type, orderByComparator);
-
-		if (layoutPageTemplateCollection != null) {
-			return layoutPageTemplateCollection;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByG_LikeN_T_Last(
-		long groupId, String name, int type,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		int count = countByG_LikeN_T(groupId, name, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPageTemplateCollection> list = findByG_LikeN_T(
-			groupId, name, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7208,4 +6668,4 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1792474155
+// LIFERAY-SERVICE-BUILDER-HASH:737359681

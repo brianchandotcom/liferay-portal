@@ -294,66 +294,6 @@ public class MembershipRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request
-	 * @throws NoSuchMembershipRequestException if a matching membership request could not be found
-	 */
-	@Override
-	public MembershipRequest findByGroupId_Last(
-			long groupId,
-			OrderByComparator<MembershipRequest> orderByComparator)
-		throws NoSuchMembershipRequestException {
-
-		MembershipRequest membershipRequest = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (membershipRequest != null) {
-			return membershipRequest;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchMembershipRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
-	 */
-	@Override
-	public MembershipRequest fetchByGroupId_Last(
-		long groupId, OrderByComparator<MembershipRequest> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MembershipRequest> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the membership requests where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -630,65 +570,6 @@ public class MembershipRequestPersistenceImpl
 
 		List<MembershipRequest> list = findByUserId(
 			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last membership request in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request
-	 * @throws NoSuchMembershipRequestException if a matching membership request could not be found
-	 */
-	@Override
-	public MembershipRequest findByUserId_Last(
-			long userId, OrderByComparator<MembershipRequest> orderByComparator)
-		throws NoSuchMembershipRequestException {
-
-		MembershipRequest membershipRequest = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (membershipRequest != null) {
-			return membershipRequest;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchMembershipRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last membership request in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
-	 */
-	@Override
-	public MembershipRequest fetchByUserId_Last(
-		long userId, OrderByComparator<MembershipRequest> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MembershipRequest> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -995,72 +876,6 @@ public class MembershipRequestPersistenceImpl
 
 		List<MembershipRequest> list = findByG_S(
 			groupId, statusId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63; and statusId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request
-	 * @throws NoSuchMembershipRequestException if a matching membership request could not be found
-	 */
-	@Override
-	public MembershipRequest findByG_S_Last(
-			long groupId, long statusId,
-			OrderByComparator<MembershipRequest> orderByComparator)
-		throws NoSuchMembershipRequestException {
-
-		MembershipRequest membershipRequest = fetchByG_S_Last(
-			groupId, statusId, orderByComparator);
-
-		if (membershipRequest != null) {
-			return membershipRequest;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", statusId=");
-		sb.append(statusId);
-
-		sb.append("}");
-
-		throw new NoSuchMembershipRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63; and statusId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
-	 */
-	@Override
-	public MembershipRequest fetchByG_S_Last(
-		long groupId, long statusId,
-		OrderByComparator<MembershipRequest> orderByComparator) {
-
-		int count = countByG_S(groupId, statusId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MembershipRequest> list = findByG_S(
-			groupId, statusId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1394,77 +1209,6 @@ public class MembershipRequestPersistenceImpl
 
 		List<MembershipRequest> list = findByG_U_S(
 			groupId, userId, statusId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request
-	 * @throws NoSuchMembershipRequestException if a matching membership request could not be found
-	 */
-	@Override
-	public MembershipRequest findByG_U_S_Last(
-			long groupId, long userId, long statusId,
-			OrderByComparator<MembershipRequest> orderByComparator)
-		throws NoSuchMembershipRequestException {
-
-		MembershipRequest membershipRequest = fetchByG_U_S_Last(
-			groupId, userId, statusId, orderByComparator);
-
-		if (membershipRequest != null) {
-			return membershipRequest;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", statusId=");
-		sb.append(statusId);
-
-		sb.append("}");
-
-		throw new NoSuchMembershipRequestException(sb.toString());
-	}
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
-	 */
-	@Override
-	public MembershipRequest fetchByG_U_S_Last(
-		long groupId, long userId, long statusId,
-		OrderByComparator<MembershipRequest> orderByComparator) {
-
-		int count = countByG_U_S(groupId, userId, statusId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MembershipRequest> list = findByG_U_S(
-			groupId, userId, statusId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2217,4 +1961,4 @@ public class MembershipRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:465558157
+// LIFERAY-SERVICE-BUILDER-HASH:-219353909

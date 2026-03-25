@@ -305,67 +305,6 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last changeset collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection
-	 * @throws NoSuchCollectionException if a matching changeset collection could not be found
-	 */
-	@Override
-	public ChangesetCollection findByGroupId_Last(
-			long groupId,
-			OrderByComparator<ChangesetCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		ChangesetCollection changesetCollection = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (changesetCollection != null) {
-			return changesetCollection;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
-	 */
-	@Override
-	public ChangesetCollection fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<ChangesetCollection> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ChangesetCollection> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the changeset collections where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -646,67 +585,6 @@ public class ChangesetCollectionPersistenceImpl
 
 		List<ChangesetCollection> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection
-	 * @throws NoSuchCollectionException if a matching changeset collection could not be found
-	 */
-	@Override
-	public ChangesetCollection findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<ChangesetCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		ChangesetCollection changesetCollection = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (changesetCollection != null) {
-			return changesetCollection;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
-	 */
-	@Override
-	public ChangesetCollection fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<ChangesetCollection> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ChangesetCollection> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1011,72 +889,6 @@ public class ChangesetCollectionPersistenceImpl
 
 		List<ChangesetCollection> list = findByG_U(
 			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection
-	 * @throws NoSuchCollectionException if a matching changeset collection could not be found
-	 */
-	@Override
-	public ChangesetCollection findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<ChangesetCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		ChangesetCollection changesetCollection = fetchByG_U_Last(
-			groupId, userId, orderByComparator);
-
-		if (changesetCollection != null) {
-			return changesetCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
-	 */
-	@Override
-	public ChangesetCollection fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<ChangesetCollection> orderByComparator) {
-
-		int count = countByG_U(groupId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ChangesetCollection> list = findByG_U(
-			groupId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1603,72 +1415,6 @@ public class ChangesetCollectionPersistenceImpl
 
 		List<ChangesetCollection> list = findByC_N(
 			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection
-	 * @throws NoSuchCollectionException if a matching changeset collection could not be found
-	 */
-	@Override
-	public ChangesetCollection findByC_N_Last(
-			long companyId, String name,
-			OrderByComparator<ChangesetCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		ChangesetCollection changesetCollection = fetchByC_N_Last(
-			companyId, name, orderByComparator);
-
-		if (changesetCollection != null) {
-			return changesetCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last changeset collection in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset collection, or <code>null</code> if a matching changeset collection could not be found
-	 */
-	@Override
-	public ChangesetCollection fetchByC_N_Last(
-		long companyId, String name,
-		OrderByComparator<ChangesetCollection> orderByComparator) {
-
-		int count = countByC_N(companyId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ChangesetCollection> list = findByC_N(
-			companyId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2496,4 +2242,4 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1696244702
+// LIFERAY-SERVICE-BUILDER-HASH:-1705087852

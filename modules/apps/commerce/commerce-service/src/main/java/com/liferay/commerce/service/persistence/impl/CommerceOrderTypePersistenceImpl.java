@@ -328,65 +328,6 @@ public class CommerceOrderTypePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType findByUuid_Last(
-			String uuid, OrderByComparator<CommerceOrderType> orderByComparator)
-		throws NoSuchOrderTypeException {
-
-		CommerceOrderType commerceOrderType = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceOrderType != null) {
-			return commerceOrderType;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderType> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -941,72 +882,6 @@ public class CommerceOrderTypePersistenceImpl
 
 		List<CommerceOrderType> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws NoSuchOrderTypeException {
-
-		CommerceOrderType commerceOrderType = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceOrderType != null) {
-			return commerceOrderType;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderType> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1576,67 +1451,6 @@ public class CommerceOrderTypePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws NoSuchOrderTypeException {
-
-		CommerceOrderType commerceOrderType = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commerceOrderType != null) {
-			return commerceOrderType;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderType> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2132,72 +1946,6 @@ public class CommerceOrderTypePersistenceImpl
 
 		List<CommerceOrderType> list = findByC_A(
 			companyId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws NoSuchOrderTypeException {
-
-		CommerceOrderType commerceOrderType = fetchByC_A_Last(
-			companyId, active, orderByComparator);
-
-		if (commerceOrderType != null) {
-			return commerceOrderType;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		int count = countByC_A(companyId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderType> list = findByC_A(
-			companyId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2731,72 +2479,6 @@ public class CommerceOrderTypePersistenceImpl
 
 		List<CommerceOrderType> list = findByLtD_S(
 			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws NoSuchOrderTypeException {
-
-		CommerceOrderType commerceOrderType = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (commerceOrderType != null) {
-			return commerceOrderType;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderType> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3366,72 +3048,6 @@ public class CommerceOrderTypePersistenceImpl
 
 		List<CommerceOrderType> list = findByLtE_S(
 			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type
-	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws NoSuchOrderTypeException {
-
-		CommerceOrderType commerceOrderType = fetchByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-
-		if (commerceOrderType != null) {
-			return commerceOrderType;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
-	@Override
-	public CommerceOrderType fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommerceOrderType> orderByComparator) {
-
-		int count = countByLtE_S(expirationDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderType> list = findByLtE_S(
-			expirationDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4848,4 +4464,4 @@ public class CommerceOrderTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2008940876
+// LIFERAY-SERVICE-BUILDER-HASH:218795845

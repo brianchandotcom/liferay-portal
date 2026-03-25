@@ -339,64 +339,6 @@ public class CPInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByUuid_Last(
-			String uuid, OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByUuid_Last(
-		String uuid, OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp instances where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -944,72 +886,6 @@ public class CPInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp instances where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1322,64 +1198,6 @@ public class CPInstancePersistenceImpl
 		long groupId, OrderByComparator<CPInstance> orderByComparator) {
 
 		List<CPInstance> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByGroupId_Last(
-			long groupId, OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByGroupId_Last(
-		long groupId, OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1881,65 +1699,6 @@ public class CPInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByCompanyId_Last(
-			long companyId, OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2232,66 +1991,6 @@ public class CPInstancePersistenceImpl
 
 		List<CPInstance> list = findByCPDefinitionId(
 			CPDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByCPDefinitionId_Last(
-			CPDefinitionId, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByCPDefinitionId_Last(
-		long CPDefinitionId, OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByCPDefinitionId(CPDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByCPDefinitionId(
-			CPDefinitionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2610,67 +2309,6 @@ public class CPInstancePersistenceImpl
 
 		List<CPInstance> list = findByCPInstanceUuid(
 			CPInstanceUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByCPInstanceUuid_Last(
-			String CPInstanceUuid,
-			OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByCPInstanceUuid_Last(
-			CPInstanceUuid, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByCPInstanceUuid_Last(
-		String CPInstanceUuid,
-		OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByCPInstanceUuid(CPInstanceUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByCPInstanceUuid(
-			CPInstanceUuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3003,72 +2641,6 @@ public class CPInstancePersistenceImpl
 
 		List<CPInstance> list = findByG_ST(
 			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByG_ST_Last(
-			long groupId, int status,
-			OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByG_ST_Last(
-			groupId, status, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByG_ST_Last(
-		long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByG_ST(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByG_ST(
-			groupId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3613,72 +3185,6 @@ public class CPInstancePersistenceImpl
 
 		List<CPInstance> list = findByC_S(
 			companyId, sku, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where companyId = &#63; and sku = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByC_S_Last(
-			long companyId, String sku,
-			OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByC_S_Last(
-			companyId, sku, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where companyId = &#63; and sku = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByC_S_Last(
-		long companyId, String sku,
-		OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByC_S(companyId, sku);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByC_S(
-			companyId, sku, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4437,72 +3943,6 @@ public class CPInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByC_ST_Last(
-			long CPDefinitionId, int status,
-			OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByC_ST_Last(
-			CPDefinitionId, status, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByC_ST_Last(
-		long CPDefinitionId, int status,
-		OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByC_ST(CPDefinitionId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByC_ST(
-			CPDefinitionId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp instances where CPDefinitionId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -4821,72 +4261,6 @@ public class CPInstancePersistenceImpl
 
 		List<CPInstance> list = findByLtD_S(
 			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5249,78 +4623,6 @@ public class CPInstancePersistenceImpl
 
 		List<CPInstance> list = findByC_LtD_S(
 			CPDefinitionId, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByC_LtD_S_Last(
-			long CPDefinitionId, Date displayDate, int status,
-			OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByC_LtD_S_Last(
-			CPDefinitionId, displayDate, status, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByC_LtD_S_Last(
-		long CPDefinitionId, Date displayDate, int status,
-		OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByC_LtD_S(CPDefinitionId, displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByC_LtD_S(
-			CPDefinitionId, displayDate, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5721,80 +5023,6 @@ public class CPInstancePersistenceImpl
 		List<CPInstance> list = findByR_R_S(
 			replacementCPInstanceUuid, replacementCProductId, status, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
-	 *
-	 * @param replacementCPInstanceUuid the replacement cp instance uuid
-	 * @param replacementCProductId the replacement c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByR_R_S_Last(
-			String replacementCPInstanceUuid, long replacementCProductId,
-			int status, OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByR_R_S_Last(
-			replacementCPInstanceUuid, replacementCProductId, status,
-			orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("replacementCPInstanceUuid=");
-		sb.append(replacementCPInstanceUuid);
-
-		sb.append(", replacementCProductId=");
-		sb.append(replacementCProductId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
-	 *
-	 * @param replacementCPInstanceUuid the replacement cp instance uuid
-	 * @param replacementCProductId the replacement c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByR_R_S_Last(
-		String replacementCPInstanceUuid, long replacementCProductId,
-		int status, OrderByComparator<CPInstance> orderByComparator) {
-
-		int count = countByR_R_S(
-			replacementCPInstanceUuid, replacementCProductId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByR_R_S(
-			replacementCPInstanceUuid, replacementCProductId, status, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7486,4 +6714,4 @@ public class CPInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1054662926
+// LIFERAY-SERVICE-BUILDER-HASH:-1848728511

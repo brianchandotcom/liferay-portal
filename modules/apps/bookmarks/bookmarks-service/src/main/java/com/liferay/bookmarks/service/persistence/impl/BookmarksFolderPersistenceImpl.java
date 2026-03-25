@@ -332,65 +332,6 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last bookmarks folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder
-	 * @throws NoSuchFolderException if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder findByUuid_Last(
-			String uuid, OrderByComparator<BookmarksFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByUuid_Last(
-		String uuid, OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BookmarksFolder> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the bookmarks folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -938,72 +879,6 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last bookmarks folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder
-	 * @throws NoSuchFolderException if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<BookmarksFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BookmarksFolder> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the bookmarks folders where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1319,65 +1194,6 @@ public class BookmarksFolderPersistenceImpl
 
 		List<BookmarksFolder> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder
-	 * @throws NoSuchFolderException if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder findByGroupId_Last(
-			long groupId, OrderByComparator<BookmarksFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByGroupId_Last(
-		long groupId, OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BookmarksFolder> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1886,66 +1702,6 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last bookmarks folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder
-	 * @throws NoSuchFolderException if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<BookmarksFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByCompanyId_Last(
-		long companyId, OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BookmarksFolder> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the bookmarks folders where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2255,72 +2011,6 @@ public class BookmarksFolderPersistenceImpl
 
 		List<BookmarksFolder> list = findByG_P(
 			groupId, parentFolderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder
-	 * @throws NoSuchFolderException if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder findByG_P_Last(
-			long groupId, long parentFolderId,
-			OrderByComparator<BookmarksFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByG_P_Last(
-			groupId, parentFolderId, orderByComparator);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByG_P_Last(
-		long groupId, long parentFolderId,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		int count = countByG_P(groupId, parentFolderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BookmarksFolder> list = findByG_P(
-			groupId, parentFolderId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2862,72 +2552,6 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder
-	 * @throws NoSuchFolderException if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder findByC_NotS_Last(
-			long companyId, int status,
-			OrderByComparator<BookmarksFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByC_NotS_Last(
-			companyId, status, orderByComparator);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByC_NotS_Last(
-		long companyId, int status,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		int count = countByC_NotS(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BookmarksFolder> list = findByC_NotS(
-			companyId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the bookmarks folders where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3265,78 +2889,6 @@ public class BookmarksFolderPersistenceImpl
 
 		List<BookmarksFolder> list = findByG_P_S(
 			groupId, parentFolderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder
-	 * @throws NoSuchFolderException if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder findByG_P_S_Last(
-			long groupId, long parentFolderId, int status,
-			OrderByComparator<BookmarksFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByG_P_S_Last(
-			groupId, parentFolderId, status, orderByComparator);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByG_P_S_Last(
-		long groupId, long parentFolderId, int status,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		int count = countByG_P_S(groupId, parentFolderId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BookmarksFolder> list = findByG_P_S(
-			groupId, parentFolderId, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3915,78 +3467,6 @@ public class BookmarksFolderPersistenceImpl
 
 		List<BookmarksFolder> list = findByG_P_NotS(
 			groupId, parentFolderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder
-	 * @throws NoSuchFolderException if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder findByG_P_NotS_Last(
-			long groupId, long parentFolderId, int status,
-			OrderByComparator<BookmarksFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByG_P_NotS_Last(
-			groupId, parentFolderId, status, orderByComparator);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByG_P_NotS_Last(
-		long groupId, long parentFolderId, int status,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		int count = countByG_P_NotS(groupId, parentFolderId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BookmarksFolder> list = findByG_P_NotS(
-			groupId, parentFolderId, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4585,84 +4065,6 @@ public class BookmarksFolderPersistenceImpl
 
 		List<BookmarksFolder> list = findByGtF_C_P_NotS(
 			folderId, companyId, parentFolderId, status, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param companyId the company ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder
-	 * @throws NoSuchFolderException if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder findByGtF_C_P_NotS_Last(
-			long folderId, long companyId, long parentFolderId, int status,
-			OrderByComparator<BookmarksFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByGtF_C_P_NotS_Last(
-			folderId, companyId, parentFolderId, status, orderByComparator);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("folderId>");
-		sb.append(folderId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last bookmarks folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param companyId the company ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByGtF_C_P_NotS_Last(
-		long folderId, long companyId, long parentFolderId, int status,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		int count = countByGtF_C_P_NotS(
-			folderId, companyId, parentFolderId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BookmarksFolder> list = findByGtF_C_P_NotS(
-			folderId, companyId, parentFolderId, status, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5918,4 +5320,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:862458298
+// LIFERAY-SERVICE-BUILDER-HASH:-1427300257

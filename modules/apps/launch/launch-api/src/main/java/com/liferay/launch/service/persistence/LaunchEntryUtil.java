@@ -210,34 +210,6 @@ public class LaunchEntryUtil {
 	}
 
 	/**
-	 * Returns the last launch entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry
-	 * @throws NoSuchLaunchEntryException if a matching launch entry could not be found
-	 */
-	public static LaunchEntry findByUuid_Last(
-			String uuid, OrderByComparator<LaunchEntry> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry, or <code>null</code> if a matching launch entry could not be found
-	 */
-	public static LaunchEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<LaunchEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the launch entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -367,40 +339,6 @@ public class LaunchEntryUtil {
 	}
 
 	/**
-	 * Returns the last launch entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry
-	 * @throws NoSuchLaunchEntryException if a matching launch entry could not be found
-	 */
-	public static LaunchEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LaunchEntry> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry, or <code>null</code> if a matching launch entry could not be found
-	 */
-	public static LaunchEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LaunchEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the launch entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -520,36 +458,6 @@ public class LaunchEntryUtil {
 		long launchSetId, OrderByComparator<LaunchEntry> orderByComparator) {
 
 		return getPersistence().fetchByLaunchSetId_First(
-			launchSetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch entry in the ordered set where launchSetId = &#63;.
-	 *
-	 * @param launchSetId the launch set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry
-	 * @throws NoSuchLaunchEntryException if a matching launch entry could not be found
-	 */
-	public static LaunchEntry findByLaunchSetId_Last(
-			long launchSetId, OrderByComparator<LaunchEntry> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchEntryException {
-
-		return getPersistence().findByLaunchSetId_Last(
-			launchSetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch entry in the ordered set where launchSetId = &#63;.
-	 *
-	 * @param launchSetId the launch set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch entry, or <code>null</code> if a matching launch entry could not be found
-	 */
-	public static LaunchEntry fetchByLaunchSetId_Last(
-		long launchSetId, OrderByComparator<LaunchEntry> orderByComparator) {
-
-		return getPersistence().fetchByLaunchSetId_Last(
 			launchSetId, orderByComparator);
 	}
 
@@ -879,4 +787,4 @@ public class LaunchEntryUtil {
 	private static volatile LaunchEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:576027500
+// LIFERAY-SERVICE-BUILDER-HASH:2088231298

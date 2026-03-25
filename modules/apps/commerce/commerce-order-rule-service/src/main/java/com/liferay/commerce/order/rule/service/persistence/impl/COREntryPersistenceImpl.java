@@ -325,64 +325,6 @@ public class COREntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cor entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry findByUuid_Last(
-			String uuid, OrderByComparator<COREntry> orderByComparator)
-		throws NoSuchCOREntryException {
-
-		COREntry corEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry fetchByUuid_Last(
-		String uuid, OrderByComparator<COREntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<COREntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cor entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -929,72 +871,6 @@ public class COREntryPersistenceImpl
 
 		List<COREntry> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<COREntry> orderByComparator)
-		throws NoSuchCOREntryException {
-
-		COREntry corEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<COREntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1571,72 +1447,6 @@ public class COREntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<COREntry> orderByComparator)
-		throws NoSuchCOREntryException {
-
-		COREntry corEntry = fetchByC_A_Last(
-			companyId, active, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		int count = countByC_A(companyId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<COREntry> list = findByC_A(
-			companyId, active, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cor entries that the user has permission to view where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2153,72 +1963,6 @@ public class COREntryPersistenceImpl
 
 		List<COREntry> list = findByC_LikeType(
 			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry findByC_LikeType_Last(
-			long companyId, String type,
-			OrderByComparator<COREntry> orderByComparator)
-		throws NoSuchCOREntryException {
-
-		COREntry corEntry = fetchByC_LikeType_Last(
-			companyId, type, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", typeLIKE");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry fetchByC_LikeType_Last(
-		long companyId, String type,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		int count = countByC_LikeType(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<COREntry> list = findByC_LikeType(
-			companyId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2796,72 +2540,6 @@ public class COREntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cor entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<COREntry> orderByComparator)
-		throws NoSuchCOREntryException {
-
-		COREntry corEntry = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<COREntry> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cor entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -3409,72 +3087,6 @@ public class COREntryPersistenceImpl
 
 		List<COREntry> list = findByLtE_S(
 			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<COREntry> orderByComparator)
-		throws NoSuchCOREntryException {
-
-		COREntry corEntry = fetchByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		int count = countByLtE_S(expirationDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<COREntry> list = findByLtE_S(
-			expirationDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4051,77 +3663,6 @@ public class COREntryPersistenceImpl
 
 		List<COREntry> list = findByC_A_LikeType(
 			companyId, active, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry
-	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry findByC_A_LikeType_Last(
-			long companyId, boolean active, String type,
-			OrderByComparator<COREntry> orderByComparator)
-		throws NoSuchCOREntryException {
-
-		COREntry corEntry = fetchByC_A_LikeType_Last(
-			companyId, active, type, orderByComparator);
-
-		if (corEntry != null) {
-			return corEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", typeLIKE");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cor entry in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
-	@Override
-	public COREntry fetchByC_A_LikeType_Last(
-		long companyId, boolean active, String type,
-		OrderByComparator<COREntry> orderByComparator) {
-
-		int count = countByC_A_LikeType(companyId, active, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<COREntry> list = findByC_A_LikeType(
-			companyId, active, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5557,4 +5098,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1279632887
+// LIFERAY-SERVICE-BUILDER-HASH:647631302

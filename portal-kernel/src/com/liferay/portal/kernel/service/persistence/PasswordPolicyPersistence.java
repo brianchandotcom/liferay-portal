@@ -119,32 +119,6 @@ public interface PasswordPolicyPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last password policy in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy
-	 * @throws NoSuchPasswordPolicyException if a matching password policy could not be found
-	 */
-	public PasswordPolicy findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy>
-				orderByComparator)
-		throws NoSuchPasswordPolicyException;
-
-	/**
-	 * Returns the last password policy in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
-	 */
-	public PasswordPolicy fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy>
-			orderByComparator);
-
-	/**
 	 * Returns all the password policies that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -303,34 +277,6 @@ public interface PasswordPolicyPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last password policy in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy
-	 * @throws NoSuchPasswordPolicyException if a matching password policy could not be found
-	 */
-	public PasswordPolicy findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy>
-				orderByComparator)
-		throws NoSuchPasswordPolicyException;
-
-	/**
-	 * Returns the last password policy in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
-	 */
-	public PasswordPolicy fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy>
-			orderByComparator);
-
-	/**
 	 * Returns all the password policies that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -484,32 +430,6 @@ public interface PasswordPolicyPersistence
 	 * @return the first matching password policy, or <code>null</code> if a matching password policy could not be found
 	 */
 	public PasswordPolicy fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy>
-			orderByComparator);
-
-	/**
-	 * Returns the last password policy in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy
-	 * @throws NoSuchPasswordPolicyException if a matching password policy could not be found
-	 */
-	public PasswordPolicy findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy>
-				orderByComparator)
-		throws NoSuchPasswordPolicyException;
-
-	/**
-	 * Returns the last password policy in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy, or <code>null</code> if a matching password policy could not be found
-	 */
-	public PasswordPolicy fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy>
 			orderByComparator);
@@ -749,4 +669,4 @@ public interface PasswordPolicyPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2034036871
+// LIFERAY-SERVICE-BUILDER-HASH:435342574

@@ -213,35 +213,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns the last saved content entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry findByUuid_Last(
-			String uuid, OrderByComparator<SavedContentEntry> orderByComparator)
-		throws com.liferay.saved.content.exception.
-			NoSuchSavedContentEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saved content entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -439,41 +410,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns the last saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws com.liferay.saved.content.exception.
-			NoSuchSavedContentEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saved content entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -595,36 +531,6 @@ public class SavedContentEntryUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws com.liferay.saved.content.exception.
-			NoSuchSavedContentEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -807,35 +713,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns the last saved content entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry findByUserId_Last(
-			long userId, OrderByComparator<SavedContentEntry> orderByComparator)
-		throws com.liferay.saved.content.exception.
-			NoSuchSavedContentEntryException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByUserId_Last(
-		long userId, OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saved content entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -962,41 +839,6 @@ public class SavedContentEntryUtil {
 		OrderByComparator<SavedContentEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_U_First(
-			groupId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws com.liferay.saved.content.exception.
-			NoSuchSavedContentEntryException {
-
-		return getPersistence().findByG_U_Last(
-			groupId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_U_Last(
 			groupId, userId, orderByComparator);
 	}
 
@@ -1201,41 +1043,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry findByG_CN_Last(
-			long groupId, long classNameId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws com.liferay.saved.content.exception.
-			NoSuchSavedContentEntryException {
-
-		return getPersistence().findByG_CN_Last(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByG_CN_Last(
-		long groupId, long classNameId,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_CN_Last(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1436,41 +1243,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns the last saved content entry in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry findByU_C_Last(
-			long userId, long classNameId,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws com.liferay.saved.content.exception.
-			NoSuchSavedContentEntryException {
-
-		return getPersistence().findByU_C_Last(
-			userId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByU_C_Last(
-		long userId, long classNameId,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().fetchByU_C_Last(
-			userId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saved content entries where userId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1609,43 +1381,6 @@ public class SavedContentEntryUtil {
 		OrderByComparator<SavedContentEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_First(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws com.liferay.saved.content.exception.
-			NoSuchSavedContentEntryException {
-
-		return getPersistence().findByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByG_C_C_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_Last(
 			groupId, classNameId, classPK, orderByComparator);
 	}
 
@@ -1868,43 +1603,6 @@ public class SavedContentEntryUtil {
 		OrderByComparator<SavedContentEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_C_C_First(
-			companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry
-	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<SavedContentEntry> orderByComparator)
-		throws com.liferay.saved.content.exception.
-			NoSuchSavedContentEntryException {
-
-		return getPersistence().findByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saved content entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_C_Last(
 			companyId, classNameId, classPK, orderByComparator);
 	}
 
@@ -2392,4 +2090,4 @@ public class SavedContentEntryUtil {
 	private static volatile SavedContentEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1676260528
+// LIFERAY-SERVICE-BUILDER-HASH:1716219339

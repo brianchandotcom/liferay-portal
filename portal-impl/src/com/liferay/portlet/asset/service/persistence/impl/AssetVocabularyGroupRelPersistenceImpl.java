@@ -326,67 +326,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException {
-
-		AssetVocabularyGroupRel assetVocabularyGroupRel = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (assetVocabularyGroupRel != null) {
-			return assetVocabularyGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabularyGroupRel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset vocabulary group rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -944,72 +883,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException {
-
-		AssetVocabularyGroupRel assetVocabularyGroupRel = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (assetVocabularyGroupRel != null) {
-			return assetVocabularyGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabularyGroupRel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset vocabulary group rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1338,67 +1211,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel findByGroupId_Last(
-			long groupId,
-			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException {
-
-		AssetVocabularyGroupRel assetVocabularyGroupRel = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (assetVocabularyGroupRel != null) {
-			return assetVocabularyGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabularyGroupRel> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset vocabulary group rels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1695,67 +1507,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 
 		List<AssetVocabularyGroupRel> list = findByVocabularyId(
 			vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where vocabularyId = &#63;.
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a matching asset vocabulary group rel could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel findByVocabularyId_Last(
-			long vocabularyId,
-			OrderByComparator<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException {
-
-		AssetVocabularyGroupRel assetVocabularyGroupRel =
-			fetchByVocabularyId_Last(vocabularyId, orderByComparator);
-
-		if (assetVocabularyGroupRel != null) {
-			return assetVocabularyGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset vocabulary group rel in the ordered set where vocabularyId = &#63;.
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset vocabulary group rel, or <code>null</code> if a matching asset vocabulary group rel could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel fetchByVocabularyId_Last(
-		long vocabularyId,
-		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
-
-		int count = countByVocabularyId(vocabularyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetVocabularyGroupRel> list = findByVocabularyId(
-			vocabularyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3049,4 +2800,4 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1654957488
+// LIFERAY-SERVICE-BUILDER-HASH:2048332966

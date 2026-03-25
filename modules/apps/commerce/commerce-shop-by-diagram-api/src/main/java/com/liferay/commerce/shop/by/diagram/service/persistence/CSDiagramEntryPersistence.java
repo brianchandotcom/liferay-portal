@@ -122,32 +122,6 @@ public interface CSDiagramEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cs diagram entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
-	 */
-	public CSDiagramEntry findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
-				orderByComparator)
-		throws NoSuchCSDiagramEntryException;
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	public CSDiagramEntry fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the cs diagram entries where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -250,32 +224,6 @@ public interface CSDiagramEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cs diagram entry in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
-	 */
-	public CSDiagramEntry findByCPInstanceId_Last(
-			long CPInstanceId,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
-				orderByComparator)
-		throws NoSuchCSDiagramEntryException;
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	public CSDiagramEntry fetchByCPInstanceId_Last(
-		long CPInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the cs diagram entries where CPInstanceId = &#63; from the database.
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -373,32 +321,6 @@ public interface CSDiagramEntryPersistence
 	 * @return the first matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
 	 */
 	public CSDiagramEntry fetchByCProductId_First(
-		long CProductId,
-		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a matching cs diagram entry could not be found
-	 */
-	public CSDiagramEntry findByCProductId_Last(
-			long CProductId,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
-				orderByComparator)
-		throws NoSuchCSDiagramEntryException;
-
-	/**
-	 * Returns the last cs diagram entry in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	public CSDiagramEntry fetchByCProductId_Last(
 		long CProductId,
 		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
 			orderByComparator);
@@ -642,4 +564,4 @@ public interface CSDiagramEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:609215654
+// LIFERAY-SERVICE-BUILDER-HASH:1351457189

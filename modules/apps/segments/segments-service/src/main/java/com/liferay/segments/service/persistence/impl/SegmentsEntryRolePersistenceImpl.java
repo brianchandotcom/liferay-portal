@@ -325,67 +325,6 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 	/**
-	 * Returns the last segments entry role in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry role
-	 * @throws NoSuchEntryRoleException if a matching segments entry role could not be found
-	 */
-	@Override
-	public SegmentsEntryRole findBySegmentsEntryId_Last(
-			long segmentsEntryId,
-			OrderByComparator<SegmentsEntryRole> orderByComparator)
-		throws NoSuchEntryRoleException {
-
-		SegmentsEntryRole segmentsEntryRole = fetchBySegmentsEntryId_Last(
-			segmentsEntryId, orderByComparator);
-
-		if (segmentsEntryRole != null) {
-			return segmentsEntryRole;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry role in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry role, or <code>null</code> if a matching segments entry role could not be found
-	 */
-	@Override
-	public SegmentsEntryRole fetchBySegmentsEntryId_Last(
-		long segmentsEntryId,
-		OrderByComparator<SegmentsEntryRole> orderByComparator) {
-
-		int count = countBySegmentsEntryId(segmentsEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntryRole> list = findBySegmentsEntryId(
-			segmentsEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the segments entry roles where segmentsEntryId = &#63; from the database.
 	 *
 	 * @param segmentsEntryId the segments entry ID
@@ -676,65 +615,6 @@ public class SegmentsEntryRolePersistenceImpl
 
 		List<SegmentsEntryRole> list = findByRoleId(
 			roleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments entry role in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry role
-	 * @throws NoSuchEntryRoleException if a matching segments entry role could not be found
-	 */
-	@Override
-	public SegmentsEntryRole findByRoleId_Last(
-			long roleId, OrderByComparator<SegmentsEntryRole> orderByComparator)
-		throws NoSuchEntryRoleException {
-
-		SegmentsEntryRole segmentsEntryRole = fetchByRoleId_Last(
-			roleId, orderByComparator);
-
-		if (segmentsEntryRole != null) {
-			return segmentsEntryRole;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("roleId=");
-		sb.append(roleId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRoleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry role in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry role, or <code>null</code> if a matching segments entry role could not be found
-	 */
-	@Override
-	public SegmentsEntryRole fetchByRoleId_Last(
-		long roleId, OrderByComparator<SegmentsEntryRole> orderByComparator) {
-
-		int count = countByRoleId(roleId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntryRole> list = findByRoleId(
-			roleId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1966,4 +1846,4 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:224785908
+// LIFERAY-SERVICE-BUILDER-HASH:1949890034

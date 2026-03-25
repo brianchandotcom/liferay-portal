@@ -333,74 +333,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce discount commerce account group rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount commerce account group rel
-	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a matching commerce discount commerce account group rel could not be found
-	 */
-	@Override
-	public CommerceDiscountCommerceAccountGroupRel
-			findByCommerceDiscountId_Last(
-				long commerceDiscountId,
-				OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-					orderByComparator)
-		throws NoSuchDiscountCommerceAccountGroupRelException {
-
-		CommerceDiscountCommerceAccountGroupRel
-			commerceDiscountCommerceAccountGroupRel =
-				fetchByCommerceDiscountId_Last(
-					commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountCommerceAccountGroupRel != null) {
-			return commerceDiscountCommerceAccountGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceDiscountId=");
-		sb.append(commerceDiscountId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountCommerceAccountGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount commerce account group rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
-	 */
-	@Override
-	public CommerceDiscountCommerceAccountGroupRel
-		fetchByCommerceDiscountId_Last(
-			long commerceDiscountId,
-			OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-				orderByComparator) {
-
-		int count = countByCommerceDiscountId(commerceDiscountId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountCommerceAccountGroupRel> list =
-			findByCommerceDiscountId(
-				commerceDiscountId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce discount commerce account group rels where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -712,74 +644,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 		List<CommerceDiscountCommerceAccountGroupRel> list =
 			findByCommerceAccountGroupId(
 				commerceAccountGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount commerce account group rel
-	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a matching commerce discount commerce account group rel could not be found
-	 */
-	@Override
-	public CommerceDiscountCommerceAccountGroupRel
-			findByCommerceAccountGroupId_Last(
-				long commerceAccountGroupId,
-				OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-					orderByComparator)
-		throws NoSuchDiscountCommerceAccountGroupRelException {
-
-		CommerceDiscountCommerceAccountGroupRel
-			commerceDiscountCommerceAccountGroupRel =
-				fetchByCommerceAccountGroupId_Last(
-					commerceAccountGroupId, orderByComparator);
-
-		if (commerceDiscountCommerceAccountGroupRel != null) {
-			return commerceDiscountCommerceAccountGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceAccountGroupId=");
-		sb.append(commerceAccountGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountCommerceAccountGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
-	 */
-	@Override
-	public CommerceDiscountCommerceAccountGroupRel
-		fetchByCommerceAccountGroupId_Last(
-			long commerceAccountGroupId,
-			OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-				orderByComparator) {
-
-		int count = countByCommerceAccountGroupId(commerceAccountGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountCommerceAccountGroupRel> list =
-			findByCommerceAccountGroupId(
-				commerceAccountGroupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1862,4 +1726,4 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1191301212
+// LIFERAY-SERVICE-BUILDER-HASH:-438512844

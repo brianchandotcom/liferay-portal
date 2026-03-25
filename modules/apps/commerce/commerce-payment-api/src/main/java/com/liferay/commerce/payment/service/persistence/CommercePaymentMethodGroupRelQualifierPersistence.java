@@ -127,34 +127,6 @@ public interface CommercePaymentMethodGroupRelQualifierPersistence
 				<CommercePaymentMethodGroupRelQualifier> orderByComparator);
 
 	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier
-	 * @throws NoSuchPaymentMethodGroupRelQualifierException if a matching commerce payment method group rel qualifier could not be found
-	 */
-	public CommercePaymentMethodGroupRelQualifier
-			findByCommercePaymentMethodGroupRelId_Last(
-				long commercePaymentMethodGroupRelId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommercePaymentMethodGroupRelQualifier> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelQualifierException;
-
-	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier, or <code>null</code> if a matching commerce payment method group rel qualifier could not be found
-	 */
-	public CommercePaymentMethodGroupRelQualifier
-		fetchByCommercePaymentMethodGroupRelId_Last(
-			long commercePaymentMethodGroupRelId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentMethodGroupRelQualifier> orderByComparator);
-
-	/**
 	 * Removes all the commerce payment method group rel qualifiers where commercePaymentMethodGroupRelId = &#63; from the database.
 	 *
 	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
@@ -264,34 +236,6 @@ public interface CommercePaymentMethodGroupRelQualifierPersistence
 	 * @return the first matching commerce payment method group rel qualifier, or <code>null</code> if a matching commerce payment method group rel qualifier could not be found
 	 */
 	public CommercePaymentMethodGroupRelQualifier fetchByC_C_First(
-		long classNameId, long commercePaymentMethodGroupRelId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommercePaymentMethodGroupRelQualifier> orderByComparator);
-
-	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where classNameId = &#63; and commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier
-	 * @throws NoSuchPaymentMethodGroupRelQualifierException if a matching commerce payment method group rel qualifier could not be found
-	 */
-	public CommercePaymentMethodGroupRelQualifier findByC_C_Last(
-			long classNameId, long commercePaymentMethodGroupRelId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentMethodGroupRelQualifier> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelQualifierException;
-
-	/**
-	 * Returns the last commerce payment method group rel qualifier in the ordered set where classNameId = &#63; and commercePaymentMethodGroupRelId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commercePaymentMethodGroupRelId the commerce payment method group rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel qualifier, or <code>null</code> if a matching commerce payment method group rel qualifier could not be found
-	 */
-	public CommercePaymentMethodGroupRelQualifier fetchByC_C_Last(
 		long classNameId, long commercePaymentMethodGroupRelId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommercePaymentMethodGroupRelQualifier> orderByComparator);
@@ -509,4 +453,4 @@ public interface CommercePaymentMethodGroupRelQualifierPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:932741643
+// LIFERAY-SERVICE-BUILDER-HASH:-941090707

@@ -292,67 +292,6 @@ public class RecentLayoutRevisionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last recent layout revision in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision
-	 * @throws NoSuchRecentLayoutRevisionException if a matching recent layout revision could not be found
-	 */
-	@Override
-	public RecentLayoutRevision findByGroupId_Last(
-			long groupId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws NoSuchRecentLayoutRevisionException {
-
-		RecentLayoutRevision recentLayoutRevision = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (recentLayoutRevision != null) {
-			return recentLayoutRevision;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchRecentLayoutRevisionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
-	 */
-	@Override
-	public RecentLayoutRevision fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<RecentLayoutRevision> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RecentLayoutRevision> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the recent layout revisions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -631,67 +570,6 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		List<RecentLayoutRevision> list = findByUserId(
 			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision
-	 * @throws NoSuchRecentLayoutRevisionException if a matching recent layout revision could not be found
-	 */
-	@Override
-	public RecentLayoutRevision findByUserId_Last(
-			long userId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws NoSuchRecentLayoutRevisionException {
-
-		RecentLayoutRevision recentLayoutRevision = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (recentLayoutRevision != null) {
-			return recentLayoutRevision;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchRecentLayoutRevisionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
-	 */
-	@Override
-	public RecentLayoutRevision fetchByUserId_Last(
-		long userId,
-		OrderByComparator<RecentLayoutRevision> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RecentLayoutRevision> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -987,67 +865,6 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		List<RecentLayoutRevision> list = findByLayoutRevisionId(
 			layoutRevisionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where layoutRevisionId = &#63;.
-	 *
-	 * @param layoutRevisionId the layout revision ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision
-	 * @throws NoSuchRecentLayoutRevisionException if a matching recent layout revision could not be found
-	 */
-	@Override
-	public RecentLayoutRevision findByLayoutRevisionId_Last(
-			long layoutRevisionId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws NoSuchRecentLayoutRevisionException {
-
-		RecentLayoutRevision recentLayoutRevision =
-			fetchByLayoutRevisionId_Last(layoutRevisionId, orderByComparator);
-
-		if (recentLayoutRevision != null) {
-			return recentLayoutRevision;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutRevisionId=");
-		sb.append(layoutRevisionId);
-
-		sb.append("}");
-
-		throw new NoSuchRecentLayoutRevisionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last recent layout revision in the ordered set where layoutRevisionId = &#63;.
-	 *
-	 * @param layoutRevisionId the layout revision ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
-	 */
-	@Override
-	public RecentLayoutRevision fetchByLayoutRevisionId_Last(
-		long layoutRevisionId,
-		OrderByComparator<RecentLayoutRevision> orderByComparator) {
-
-		int count = countByLayoutRevisionId(layoutRevisionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RecentLayoutRevision> list = findByLayoutRevisionId(
-			layoutRevisionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1993,4 +1810,4 @@ public class RecentLayoutRevisionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1753014381
+// LIFERAY-SERVICE-BUILDER-HASH:150261759

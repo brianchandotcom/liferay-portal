@@ -219,37 +219,6 @@ public class CPDefinitionOptionValueRelUtil {
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionOptionValueRelException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -451,41 +420,6 @@ public class CPDefinitionOptionValueRelUtil {
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionOptionValueRelException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -611,37 +545,6 @@ public class CPDefinitionOptionValueRelUtil {
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionOptionValueRelException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -764,39 +667,6 @@ public class CPDefinitionOptionValueRelUtil {
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionOptionValueRelException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -935,40 +805,6 @@ public class CPDefinitionOptionValueRelUtil {
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel findByCPDefinitionOptionRelId_Last(
-			long CPDefinitionOptionRelId,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionOptionValueRelException {
-
-		return getPersistence().findByCPDefinitionOptionRelId_Last(
-			CPDefinitionOptionRelId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel
-		fetchByCPDefinitionOptionRelId_Last(
-			long CPDefinitionOptionRelId,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return getPersistence().fetchByCPDefinitionOptionRelId_Last(
-			CPDefinitionOptionRelId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where CPDefinitionOptionRelId = &#63; from the database.
 	 *
 	 * @param CPDefinitionOptionRelId the cp definition option rel ID
@@ -1102,39 +938,6 @@ public class CPDefinitionOptionValueRelUtil {
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel findByCPInstanceUuid_Last(
-			String CPInstanceUuid,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionOptionValueRelException {
-
-		return getPersistence().findByCPInstanceUuid_Last(
-			CPInstanceUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel fetchByCPInstanceUuid_Last(
-		String CPInstanceUuid,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return getPersistence().fetchByCPInstanceUuid_Last(
-			CPInstanceUuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where CPInstanceUuid = &#63; from the database.
 	 *
 	 * @param CPInstanceUuid the cp instance uuid
@@ -1253,37 +1056,6 @@ public class CPDefinitionOptionValueRelUtil {
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
 
 		return getPersistence().fetchByKey_First(key, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where key = &#63;.
-	 *
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel findByKey_Last(
-			String key,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionOptionValueRelException {
-
-		return getPersistence().findByKey_Last(key, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where key = &#63;.
-	 *
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel fetchByKey_Last(
-		String key,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return getPersistence().fetchByKey_Last(key, orderByComparator);
 	}
 
 	/**
@@ -1493,41 +1265,6 @@ public class CPDefinitionOptionValueRelUtil {
 	}
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param preselected the preselected
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel findByCDORI_P_Last(
-			long CPDefinitionOptionRelId, boolean preselected,
-			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionOptionValueRelException {
-
-		return getPersistence().findByCDORI_P_Last(
-			CPDefinitionOptionRelId, preselected, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param preselected the preselected
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public static CPDefinitionOptionValueRel fetchByCDORI_P_Last(
-		long CPDefinitionOptionRelId, boolean preselected,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return getPersistence().fetchByCDORI_P_Last(
-			CPDefinitionOptionRelId, preselected, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63; from the database.
 	 *
 	 * @param CPDefinitionOptionRelId the cp definition option rel ID
@@ -1729,4 +1466,4 @@ public class CPDefinitionOptionValueRelUtil {
 	private static volatile CPDefinitionOptionValueRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-507893093
+// LIFERAY-SERVICE-BUILDER-HASH:-352261005

@@ -222,39 +222,6 @@ public class CommerceTaxFixedRateUtil {
 	}
 
 	/**
-	 * Returns the last commerce tax fixed rate in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate
-	 * @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
-	 */
-	public static CommerceTaxFixedRate findByCPTaxCategoryId_Last(
-			long CPTaxCategoryId,
-			OrderByComparator<CommerceTaxFixedRate> orderByComparator)
-		throws com.liferay.commerce.tax.engine.fixed.exception.
-			NoSuchTaxFixedRateException {
-
-		return getPersistence().findByCPTaxCategoryId_Last(
-			CPTaxCategoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
-	 */
-	public static CommerceTaxFixedRate fetchByCPTaxCategoryId_Last(
-		long CPTaxCategoryId,
-		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
-
-		return getPersistence().fetchByCPTaxCategoryId_Last(
-			CPTaxCategoryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce tax fixed rates where CPTaxCategoryId = &#63; from the database.
 	 *
 	 * @param CPTaxCategoryId the cp tax category ID
@@ -378,39 +345,6 @@ public class CommerceTaxFixedRateUtil {
 		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
 
 		return getPersistence().fetchByCommerceTaxMethodId_First(
-			commerceTaxMethodId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate
-	 * @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
-	 */
-	public static CommerceTaxFixedRate findByCommerceTaxMethodId_Last(
-			long commerceTaxMethodId,
-			OrderByComparator<CommerceTaxFixedRate> orderByComparator)
-		throws com.liferay.commerce.tax.engine.fixed.exception.
-			NoSuchTaxFixedRateException {
-
-		return getPersistence().findByCommerceTaxMethodId_Last(
-			commerceTaxMethodId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce tax fixed rate in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
-	 */
-	public static CommerceTaxFixedRate fetchByCommerceTaxMethodId_Last(
-		long commerceTaxMethodId,
-		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
-
-		return getPersistence().fetchByCommerceTaxMethodId_Last(
 			commerceTaxMethodId, orderByComparator);
 	}
 
@@ -680,4 +614,4 @@ public class CommerceTaxFixedRateUtil {
 	private static volatile CommerceTaxFixedRatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1131732481
+// LIFERAY-SERVICE-BUILDER-HASH:1186309951

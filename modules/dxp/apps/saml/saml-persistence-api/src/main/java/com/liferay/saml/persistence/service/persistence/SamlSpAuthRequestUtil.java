@@ -219,39 +219,6 @@ public class SamlSpAuthRequestUtil {
 	}
 
 	/**
-	 * Returns the last saml sp auth request in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp auth request
-	 * @throws NoSuchSpAuthRequestException if a matching saml sp auth request could not be found
-	 */
-	public static SamlSpAuthRequest findByLtCreateDate_Last(
-			Date createDate,
-			OrderByComparator<SamlSpAuthRequest> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchSpAuthRequestException {
-
-		return getPersistence().findByLtCreateDate_Last(
-			createDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saml sp auth request in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
-	 */
-	public static SamlSpAuthRequest fetchByLtCreateDate_Last(
-		Date createDate,
-		OrderByComparator<SamlSpAuthRequest> orderByComparator) {
-
-		return getPersistence().fetchByLtCreateDate_Last(
-			createDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saml sp auth requests where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -515,4 +482,4 @@ public class SamlSpAuthRequestUtil {
 	private static volatile SamlSpAuthRequestPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1041843320
+// LIFERAY-SERVICE-BUILDER-HASH:1960779821

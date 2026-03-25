@@ -121,32 +121,6 @@ public interface BatchPlannerMappingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last batch planner mapping in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner mapping
-	 * @throws NoSuchMappingException if a matching batch planner mapping could not be found
-	 */
-	public BatchPlannerMapping findByBatchPlannerPlanId_Last(
-			long batchPlannerPlanId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<BatchPlannerMapping> orderByComparator)
-		throws NoSuchMappingException;
-
-	/**
-	 * Returns the last batch planner mapping in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
-	 */
-	public BatchPlannerMapping fetchByBatchPlannerPlanId_Last(
-		long batchPlannerPlanId,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerMapping>
-			orderByComparator);
-
-	/**
 	 * Removes all the batch planner mappings where batchPlannerPlanId = &#63; from the database.
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
@@ -348,4 +322,4 @@ public interface BatchPlannerMappingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1980910099
+// LIFERAY-SERVICE-BUILDER-HASH:-263989091

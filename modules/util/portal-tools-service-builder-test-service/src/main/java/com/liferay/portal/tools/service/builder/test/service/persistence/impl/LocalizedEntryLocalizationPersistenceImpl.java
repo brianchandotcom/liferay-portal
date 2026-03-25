@@ -300,67 +300,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the last localized entry localization in the ordered set where localizedEntryId = &#63;.
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching localized entry localization
-	 * @throws NoSuchLocalizedEntryLocalizationException if a matching localized entry localization could not be found
-	 */
-	@Override
-	public LocalizedEntryLocalization findByLocalizedEntryId_Last(
-			long localizedEntryId,
-			OrderByComparator<LocalizedEntryLocalization> orderByComparator)
-		throws NoSuchLocalizedEntryLocalizationException {
-
-		LocalizedEntryLocalization localizedEntryLocalization =
-			fetchByLocalizedEntryId_Last(localizedEntryId, orderByComparator);
-
-		if (localizedEntryLocalization != null) {
-			return localizedEntryLocalization;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("localizedEntryId=");
-		sb.append(localizedEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchLocalizedEntryLocalizationException(sb.toString());
-	}
-
-	/**
-	 * Returns the last localized entry localization in the ordered set where localizedEntryId = &#63;.
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching localized entry localization, or <code>null</code> if a matching localized entry localization could not be found
-	 */
-	@Override
-	public LocalizedEntryLocalization fetchByLocalizedEntryId_Last(
-		long localizedEntryId,
-		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
-
-		int count = countByLocalizedEntryId(localizedEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LocalizedEntryLocalization> list = findByLocalizedEntryId(
-			localizedEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the localized entry localizations where localizedEntryId = &#63; from the database.
 	 *
 	 * @param localizedEntryId the localized entry ID
@@ -1300,4 +1239,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-949339859
+// LIFERAY-SERVICE-BUILDER-HASH:-1465488787

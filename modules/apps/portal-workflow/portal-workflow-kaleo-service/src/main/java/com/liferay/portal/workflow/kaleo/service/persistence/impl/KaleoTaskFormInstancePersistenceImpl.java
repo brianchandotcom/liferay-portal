@@ -322,67 +322,6 @@ public class KaleoTaskFormInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo task form instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException {
-
-		KaleoTaskFormInstance kaleoTaskFormInstance = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoTaskFormInstance != null) {
-			return kaleoTaskFormInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskFormInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task form instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance, or <code>null</code> if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskFormInstance> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo task form instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -687,68 +626,6 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 		List<KaleoTaskFormInstance> list = findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task form instance in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException {
-
-		KaleoTaskFormInstance kaleoTaskFormInstance =
-			fetchByKaleoDefinitionVersionId_Last(
-				kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoTaskFormInstance != null) {
-			return kaleoTaskFormInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskFormInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task form instance in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance, or <code>null</code> if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
-
-		int count = countByKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskFormInstance> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1069,67 +946,6 @@ public class KaleoTaskFormInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo task form instance in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance findByKaleoInstanceId_Last(
-			long kaleoInstanceId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException {
-
-		KaleoTaskFormInstance kaleoTaskFormInstance =
-			fetchByKaleoInstanceId_Last(kaleoInstanceId, orderByComparator);
-
-		if (kaleoTaskFormInstance != null) {
-			return kaleoTaskFormInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoInstanceId=");
-		sb.append(kaleoInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskFormInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task form instance in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance, or <code>null</code> if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance fetchByKaleoInstanceId_Last(
-		long kaleoInstanceId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
-
-		int count = countByKaleoInstanceId(kaleoInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskFormInstance> list = findByKaleoInstanceId(
-			kaleoInstanceId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo task form instances where kaleoInstanceId = &#63; from the database.
 	 *
 	 * @param kaleoInstanceId the kaleo instance ID
@@ -1426,67 +1242,6 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 		List<KaleoTaskFormInstance> list = findByKaleoTaskId(
 			kaleoTaskId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task form instance in the ordered set where kaleoTaskId = &#63;.
-	 *
-	 * @param kaleoTaskId the kaleo task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance findByKaleoTaskId_Last(
-			long kaleoTaskId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException {
-
-		KaleoTaskFormInstance kaleoTaskFormInstance = fetchByKaleoTaskId_Last(
-			kaleoTaskId, orderByComparator);
-
-		if (kaleoTaskFormInstance != null) {
-			return kaleoTaskFormInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoTaskId=");
-		sb.append(kaleoTaskId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskFormInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task form instance in the ordered set where kaleoTaskId = &#63;.
-	 *
-	 * @param kaleoTaskId the kaleo task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance, or <code>null</code> if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance fetchByKaleoTaskId_Last(
-		long kaleoTaskId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
-
-		int count = countByKaleoTaskId(kaleoTaskId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskFormInstance> list = findByKaleoTaskId(
-			kaleoTaskId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1800,68 +1555,6 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 		List<KaleoTaskFormInstance> list = findByKaleoTaskInstanceTokenId(
 			kaleoTaskInstanceTokenId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task form instance in the ordered set where kaleoTaskInstanceTokenId = &#63;.
-	 *
-	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance findByKaleoTaskInstanceTokenId_Last(
-			long kaleoTaskInstanceTokenId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException {
-
-		KaleoTaskFormInstance kaleoTaskFormInstance =
-			fetchByKaleoTaskInstanceTokenId_Last(
-				kaleoTaskInstanceTokenId, orderByComparator);
-
-		if (kaleoTaskFormInstance != null) {
-			return kaleoTaskFormInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoTaskInstanceTokenId=");
-		sb.append(kaleoTaskInstanceTokenId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskFormInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task form instance in the ordered set where kaleoTaskInstanceTokenId = &#63;.
-	 *
-	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task form instance, or <code>null</code> if a matching kaleo task form instance could not be found
-	 */
-	@Override
-	public KaleoTaskFormInstance fetchByKaleoTaskInstanceTokenId_Last(
-		long kaleoTaskInstanceTokenId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
-
-		int count = countByKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskFormInstance> list = findByKaleoTaskInstanceTokenId(
-			kaleoTaskInstanceTokenId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3190,4 +2883,4 @@ public class KaleoTaskFormInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:891965234
+// LIFERAY-SERVICE-BUILDER-HASH:1783280562

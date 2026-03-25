@@ -127,34 +127,6 @@ public interface CTSContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cts content in the ordered set where repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	public CTSContent findByR_P_Last(
-			long repositoryId, String path,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
-	 * Returns the last cts content in the ordered set where repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	public CTSContent fetchByR_P_Last(
-		long repositoryId, String path,
-		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-			orderByComparator);
-
-	/**
 	 * Removes all the cts contents where repositoryId = &#63; and path = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -268,36 +240,6 @@ public interface CTSContentPersistence
 	 * @return the first matching cts content, or <code>null</code> if a matching cts content could not be found
 	 */
 	public CTSContent fetchByC_R_S_First(
-		long companyId, long repositoryId, String storeType,
-		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-			orderByComparator);
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	public CTSContent findByC_R_S_Last(
-			long companyId, long repositoryId, String storeType,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	public CTSContent fetchByC_R_S_Last(
 		long companyId, long repositoryId, String storeType,
 		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
 			orderByComparator);
@@ -433,38 +375,6 @@ public interface CTSContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	public CTSContent findByC_R_P_S_Last(
-			long companyId, long repositoryId, String path, String storeType,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	public CTSContent fetchByC_R_P_S_Last(
-		long companyId, long repositoryId, String path, String storeType,
-		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-			orderByComparator);
-
-	/**
 	 * Removes all the cts contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -592,38 +502,6 @@ public interface CTSContentPersistence
 	 * @return the first matching cts content, or <code>null</code> if a matching cts content could not be found
 	 */
 	public CTSContent fetchByC_R_LikeP_S_First(
-		long companyId, long repositoryId, String path, String storeType,
-		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-			orderByComparator);
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content
-	 * @throws NoSuchContentException if a matching cts content could not be found
-	 */
-	public CTSContent findByC_R_LikeP_S_Last(
-			long companyId, long repositoryId, String path, String storeType,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
-	 * Returns the last cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	public CTSContent fetchByC_R_LikeP_S_Last(
 		long companyId, long repositoryId, String path, String storeType,
 		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
 			orderByComparator);
@@ -845,4 +723,4 @@ public interface CTSContentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1526854427
+// LIFERAY-SERVICE-BUILDER-HASH:1315673931

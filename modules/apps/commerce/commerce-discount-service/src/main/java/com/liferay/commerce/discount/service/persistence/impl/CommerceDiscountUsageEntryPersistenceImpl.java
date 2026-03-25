@@ -316,68 +316,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry findByCommerceDiscountId_Last(
-			long commerceDiscountId,
-			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException {
-
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCommerceDiscountId_Last(
-				commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountUsageEntry != null) {
-			return commerceDiscountUsageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceDiscountId=");
-		sb.append(commerceDiscountId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountUsageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry fetchByCommerceDiscountId_Last(
-		long commerceDiscountId,
-		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
-
-		int count = countByCommerceDiscountId(commerceDiscountId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountUsageEntry> list = findByCommerceDiscountId(
-			commerceDiscountId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce discount usage entries where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -691,74 +629,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		List<CommerceDiscountUsageEntry> list = findByCAI_CDI(
 			commerceAccountId, commerceDiscountId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry findByCAI_CDI_Last(
-			long commerceAccountId, long commerceDiscountId,
-			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException {
-
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCAI_CDI_Last(
-				commerceAccountId, commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountUsageEntry != null) {
-			return commerceDiscountUsageEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceAccountId=");
-		sb.append(commerceAccountId);
-
-		sb.append(", commerceDiscountId=");
-		sb.append(commerceDiscountId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountUsageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry fetchByCAI_CDI_Last(
-		long commerceAccountId, long commerceDiscountId,
-		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
-
-		int count = countByCAI_CDI(commerceAccountId, commerceDiscountId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountUsageEntry> list = findByCAI_CDI(
-			commerceAccountId, commerceDiscountId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1090,74 +960,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		List<CommerceDiscountUsageEntry> list = findByCOI_CDI(
 			commerceOrderId, commerceDiscountId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry findByCOI_CDI_Last(
-			long commerceOrderId, long commerceDiscountId,
-			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException {
-
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCOI_CDI_Last(
-				commerceOrderId, commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountUsageEntry != null) {
-			return commerceDiscountUsageEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceOrderId=");
-		sb.append(commerceOrderId);
-
-		sb.append(", commerceDiscountId=");
-		sb.append(commerceDiscountId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountUsageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry fetchByCOI_CDI_Last(
-		long commerceOrderId, long commerceDiscountId,
-		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
-
-		int count = countByCOI_CDI(commerceOrderId, commerceDiscountId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountUsageEntry> list = findByCOI_CDI(
-			commerceOrderId, commerceDiscountId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1512,82 +1314,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		List<CommerceDiscountUsageEntry> list = findByCAI_COI_CDI(
 			commerceAccountId, commerceOrderId, commerceDiscountId, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry findByCAI_COI_CDI_Last(
-			long commerceAccountId, long commerceOrderId,
-			long commerceDiscountId,
-			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException {
-
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCAI_COI_CDI_Last(
-				commerceAccountId, commerceOrderId, commerceDiscountId,
-				orderByComparator);
-
-		if (commerceDiscountUsageEntry != null) {
-			return commerceDiscountUsageEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceAccountId=");
-		sb.append(commerceAccountId);
-
-		sb.append(", commerceOrderId=");
-		sb.append(commerceOrderId);
-
-		sb.append(", commerceDiscountId=");
-		sb.append(commerceDiscountId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscountUsageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry fetchByCAI_COI_CDI_Last(
-		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
-		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
-
-		int count = countByCAI_COI_CDI(
-			commerceAccountId, commerceOrderId, commerceDiscountId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceDiscountUsageEntry> list = findByCAI_COI_CDI(
-			commerceAccountId, commerceOrderId, commerceDiscountId, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2435,4 +2161,4 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2049613082
+// LIFERAY-SERVICE-BUILDER-HASH:234507071

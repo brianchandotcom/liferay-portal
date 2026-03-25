@@ -330,73 +330,6 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry
-	 * @throws NoSuchCommerceQualifierEntryException if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry findByS_S_Last(
-			long sourceClassNameId, long sourceClassPK,
-			OrderByComparator<CommerceQualifierEntry> orderByComparator)
-		throws NoSuchCommerceQualifierEntryException {
-
-		CommerceQualifierEntry commerceQualifierEntry = fetchByS_S_Last(
-			sourceClassNameId, sourceClassPK, orderByComparator);
-
-		if (commerceQualifierEntry != null) {
-			return commerceQualifierEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sourceClassNameId=");
-		sb.append(sourceClassNameId);
-
-		sb.append(", sourceClassPK=");
-		sb.append(sourceClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommerceQualifierEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry fetchByS_S_Last(
-		long sourceClassNameId, long sourceClassPK,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		int count = countByS_S(sourceClassNameId, sourceClassPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceQualifierEntry> list = findByS_S(
-			sourceClassNameId, sourceClassPK, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; from the database.
 	 *
 	 * @param sourceClassNameId the source class name ID
@@ -709,73 +642,6 @@ public class CommerceQualifierEntryPersistenceImpl
 
 		List<CommerceQualifierEntry> list = findByT_T(
 			targetClassNameId, targetClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry
-	 * @throws NoSuchCommerceQualifierEntryException if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry findByT_T_Last(
-			long targetClassNameId, long targetClassPK,
-			OrderByComparator<CommerceQualifierEntry> orderByComparator)
-		throws NoSuchCommerceQualifierEntryException {
-
-		CommerceQualifierEntry commerceQualifierEntry = fetchByT_T_Last(
-			targetClassNameId, targetClassPK, orderByComparator);
-
-		if (commerceQualifierEntry != null) {
-			return commerceQualifierEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("targetClassNameId=");
-		sb.append(targetClassNameId);
-
-		sb.append(", targetClassPK=");
-		sb.append(targetClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommerceQualifierEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry fetchByT_T_Last(
-		long targetClassNameId, long targetClassPK,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		int count = countByT_T(targetClassNameId, targetClassPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceQualifierEntry> list = findByT_T(
-			targetClassNameId, targetClassPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1122,80 +988,6 @@ public class CommerceQualifierEntryPersistenceImpl
 		List<CommerceQualifierEntry> list = findByS_S_T(
 			sourceClassNameId, sourceClassPK, targetClassNameId, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry
-	 * @throws NoSuchCommerceQualifierEntryException if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry findByS_S_T_Last(
-			long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-			OrderByComparator<CommerceQualifierEntry> orderByComparator)
-		throws NoSuchCommerceQualifierEntryException {
-
-		CommerceQualifierEntry commerceQualifierEntry = fetchByS_S_T_Last(
-			sourceClassNameId, sourceClassPK, targetClassNameId,
-			orderByComparator);
-
-		if (commerceQualifierEntry != null) {
-			return commerceQualifierEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sourceClassNameId=");
-		sb.append(sourceClassNameId);
-
-		sb.append(", sourceClassPK=");
-		sb.append(sourceClassPK);
-
-		sb.append(", targetClassNameId=");
-		sb.append(targetClassNameId);
-
-		sb.append("}");
-
-		throw new NoSuchCommerceQualifierEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry fetchByS_S_T_Last(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		int count = countByS_S_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceQualifierEntry> list = findByS_S_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1557,80 +1349,6 @@ public class CommerceQualifierEntryPersistenceImpl
 		List<CommerceQualifierEntry> list = findByS_T_T(
 			sourceClassNameId, targetClassNameId, targetClassPK, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry
-	 * @throws NoSuchCommerceQualifierEntryException if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry findByS_T_T_Last(
-			long sourceClassNameId, long targetClassNameId, long targetClassPK,
-			OrderByComparator<CommerceQualifierEntry> orderByComparator)
-		throws NoSuchCommerceQualifierEntryException {
-
-		CommerceQualifierEntry commerceQualifierEntry = fetchByS_T_T_Last(
-			sourceClassNameId, targetClassNameId, targetClassPK,
-			orderByComparator);
-
-		if (commerceQualifierEntry != null) {
-			return commerceQualifierEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sourceClassNameId=");
-		sb.append(sourceClassNameId);
-
-		sb.append(", targetClassNameId=");
-		sb.append(targetClassNameId);
-
-		sb.append(", targetClassPK=");
-		sb.append(targetClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommerceQualifierEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce qualifier entry in the ordered set where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry fetchByS_T_T_Last(
-		long sourceClassNameId, long targetClassNameId, long targetClassPK,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		int count = countByS_T_T(
-			sourceClassNameId, targetClassNameId, targetClassPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceQualifierEntry> list = findByS_T_T(
-			sourceClassNameId, targetClassNameId, targetClassPK, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2772,4 +2490,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1979751777
+// LIFERAY-SERVICE-BUILDER-HASH:-465397600

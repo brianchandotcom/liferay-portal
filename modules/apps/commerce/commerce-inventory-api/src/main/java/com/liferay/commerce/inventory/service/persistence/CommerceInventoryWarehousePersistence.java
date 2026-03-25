@@ -120,32 +120,6 @@ public interface CommerceInventoryWarehousePersistence
 			<CommerceInventoryWarehouse> orderByComparator);
 
 	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouse> orderByComparator)
-		throws NoSuchInventoryWarehouseException;
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryWarehouse> orderByComparator);
-
-	/**
 	 * Returns all the commerce inventory warehouses that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -300,34 +274,6 @@ public interface CommerceInventoryWarehousePersistence
 	 * @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	 */
 	public CommerceInventoryWarehouse fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryWarehouse> orderByComparator);
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouse> orderByComparator)
-		throws NoSuchInventoryWarehouseException;
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryWarehouse> orderByComparator);
@@ -492,32 +438,6 @@ public interface CommerceInventoryWarehousePersistence
 			<CommerceInventoryWarehouse> orderByComparator);
 
 	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouse> orderByComparator)
-		throws NoSuchInventoryWarehouseException;
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryWarehouse> orderByComparator);
-
-	/**
 	 * Returns all the commerce inventory warehouses that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -672,34 +592,6 @@ public interface CommerceInventoryWarehousePersistence
 	 * @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	 */
 	public CommerceInventoryWarehouse fetchByC_A_First(
-		long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryWarehouse> orderByComparator);
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse findByC_A_Last(
-			long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouse> orderByComparator)
-		throws NoSuchInventoryWarehouseException;
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse fetchByC_A_Last(
 		long companyId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryWarehouse> orderByComparator);
@@ -865,34 +757,6 @@ public interface CommerceInventoryWarehousePersistence
 	 * @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	 */
 	public CommerceInventoryWarehouse fetchByC_C_First(
-		long companyId, String countryTwoLettersISOCode,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryWarehouse> orderByComparator);
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where companyId = &#63; and countryTwoLettersISOCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param countryTwoLettersISOCode the country two letters iso code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse findByC_C_Last(
-			long companyId, String countryTwoLettersISOCode,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouse> orderByComparator)
-		throws NoSuchInventoryWarehouseException;
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where companyId = &#63; and countryTwoLettersISOCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param countryTwoLettersISOCode the country two letters iso code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse fetchByC_C_Last(
 		long companyId, String countryTwoLettersISOCode,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryWarehouse> orderByComparator);
@@ -1068,36 +932,6 @@ public interface CommerceInventoryWarehousePersistence
 	 * @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	 */
 	public CommerceInventoryWarehouse fetchByC_A_C_First(
-		long companyId, boolean active, String countryTwoLettersISOCode,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryWarehouse> orderByComparator);
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where companyId = &#63; and active = &#63; and countryTwoLettersISOCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param countryTwoLettersISOCode the country two letters iso code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse findByC_A_C_Last(
-			long companyId, boolean active, String countryTwoLettersISOCode,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouse> orderByComparator)
-		throws NoSuchInventoryWarehouseException;
-
-	/**
-	 * Returns the last commerce inventory warehouse in the ordered set where companyId = &#63; and active = &#63; and countryTwoLettersISOCode = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param countryTwoLettersISOCode the country two letters iso code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
-	 */
-	public CommerceInventoryWarehouse fetchByC_A_C_Last(
 		long companyId, boolean active, String countryTwoLettersISOCode,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryWarehouse> orderByComparator);
@@ -1364,4 +1198,4 @@ public interface CommerceInventoryWarehousePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1950471190
+// LIFERAY-SERVICE-BUILDER-HASH:-97110092

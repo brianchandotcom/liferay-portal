@@ -311,67 +311,6 @@ public class SocialActivityCounterPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter
-	 * @throws NoSuchActivityCounterException if a matching social activity counter could not be found
-	 */
-	@Override
-	public SocialActivityCounter findByGroupId_Last(
-			long groupId,
-			OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws NoSuchActivityCounterException {
-
-		SocialActivityCounter socialActivityCounter = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityCounterException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 */
-	@Override
-	public SocialActivityCounter fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<SocialActivityCounter> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityCounter> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social activity counters where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -682,72 +621,6 @@ public class SocialActivityCounterPersistenceImpl
 
 		List<SocialActivityCounter> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter
-	 * @throws NoSuchActivityCounterException if a matching social activity counter could not be found
-	 */
-	@Override
-	public SocialActivityCounter findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws NoSuchActivityCounterException {
-
-		SocialActivityCounter socialActivityCounter = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchActivityCounterException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 */
-	@Override
-	public SocialActivityCounter fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<SocialActivityCounter> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityCounter> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1113,83 +986,6 @@ public class SocialActivityCounterPersistenceImpl
 
 		List<SocialActivityCounter> list = findByG_C_C_O(
 			groupId, classNameId, classPK, ownerType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter
-	 * @throws NoSuchActivityCounterException if a matching social activity counter could not be found
-	 */
-	@Override
-	public SocialActivityCounter findByG_C_C_O_Last(
-			long groupId, long classNameId, long classPK, int ownerType,
-			OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws NoSuchActivityCounterException {
-
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_O_Last(
-			groupId, classNameId, classPK, ownerType, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append("}");
-
-		throw new NoSuchActivityCounterException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 */
-	@Override
-	public SocialActivityCounter fetchByG_C_C_O_Last(
-		long groupId, long classNameId, long classPK, int ownerType,
-		OrderByComparator<SocialActivityCounter> orderByComparator) {
-
-		int count = countByG_C_C_O(groupId, classNameId, classPK, ownerType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityCounter> list = findByG_C_C_O(
-			groupId, classNameId, classPK, ownerType, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2907,4 +2703,4 @@ public class SocialActivityCounterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1980612153
+// LIFERAY-SERVICE-BUILDER-HASH:1417001264

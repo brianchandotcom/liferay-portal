@@ -213,35 +213,6 @@ public class CacheFieldEntryUtil {
 	}
 
 	/**
-	 * Returns the last cache field entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cache field entry
-	 * @throws NoSuchCacheFieldEntryException if a matching cache field entry could not be found
-	 */
-	public static CacheFieldEntry findByGroupId_Last(
-			long groupId, OrderByComparator<CacheFieldEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchCacheFieldEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cache field entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cache field entry, or <code>null</code> if a matching cache field entry could not be found
-	 */
-	public static CacheFieldEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<CacheFieldEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cache field entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -422,4 +393,4 @@ public class CacheFieldEntryUtil {
 	private static volatile CacheFieldEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-745144819
+// LIFERAY-SERVICE-BUILDER-HASH:-1808364231

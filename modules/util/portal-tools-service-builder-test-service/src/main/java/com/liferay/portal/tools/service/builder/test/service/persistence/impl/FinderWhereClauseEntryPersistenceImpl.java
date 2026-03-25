@@ -304,67 +304,6 @@ public class FinderWhereClauseEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last finder where clause entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching finder where clause entry
-	 * @throws NoSuchFinderWhereClauseEntryException if a matching finder where clause entry could not be found
-	 */
-	@Override
-	public FinderWhereClauseEntry findByName_Nickname_Last(
-			String name,
-			OrderByComparator<FinderWhereClauseEntry> orderByComparator)
-		throws NoSuchFinderWhereClauseEntryException {
-
-		FinderWhereClauseEntry finderWhereClauseEntry =
-			fetchByName_Nickname_Last(name, orderByComparator);
-
-		if (finderWhereClauseEntry != null) {
-			return finderWhereClauseEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchFinderWhereClauseEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last finder where clause entry in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching finder where clause entry, or <code>null</code> if a matching finder where clause entry could not be found
-	 */
-	@Override
-	public FinderWhereClauseEntry fetchByName_Nickname_Last(
-		String name,
-		OrderByComparator<FinderWhereClauseEntry> orderByComparator) {
-
-		int count = countByName_Nickname(name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FinderWhereClauseEntry> list = findByName_Nickname(
-			name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the finder where clause entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -1052,4 +991,4 @@ public class FinderWhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-310778637
+// LIFERAY-SERVICE-BUILDER-HASH:-1793073920

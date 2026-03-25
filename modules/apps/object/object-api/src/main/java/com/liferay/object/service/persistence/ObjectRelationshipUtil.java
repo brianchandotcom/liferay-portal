@@ -213,35 +213,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Returns the last object relationship in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object relationships where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -373,40 +344,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Returns the last object relationship in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object relationships where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -528,38 +465,6 @@ public class ObjectRelationshipUtil {
 		OrderByComparator<ObjectRelationship> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -690,38 +595,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByObjectDefinitionId1_Last(
-			long objectDefinitionId1,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByObjectDefinitionId1_Last(
-			objectDefinitionId1, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByObjectDefinitionId1_Last(
-		long objectDefinitionId1,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByObjectDefinitionId1_Last(
-			objectDefinitionId1, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object relationships where objectDefinitionId1 = &#63; from the database.
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -844,38 +717,6 @@ public class ObjectRelationshipUtil {
 		OrderByComparator<ObjectRelationship> orderByComparator) {
 
 		return getPersistence().fetchByObjectDefinitionId2_First(
-			objectDefinitionId2, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByObjectDefinitionId2_Last(
-			long objectDefinitionId2,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByObjectDefinitionId2_Last(
-			objectDefinitionId2, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByObjectDefinitionId2_Last(
-		long objectDefinitionId2,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByObjectDefinitionId2_Last(
 			objectDefinitionId2, orderByComparator);
 	}
 
@@ -1069,38 +910,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Returns the last object relationship in the ordered set where parameterObjectFieldId = &#63;.
-	 *
-	 * @param parameterObjectFieldId the parameter object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByParameterObjectFieldId_Last(
-			long parameterObjectFieldId,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByParameterObjectFieldId_Last(
-			parameterObjectFieldId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where parameterObjectFieldId = &#63;.
-	 *
-	 * @param parameterObjectFieldId the parameter object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByParameterObjectFieldId_Last(
-		long parameterObjectFieldId,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByParameterObjectFieldId_Last(
-			parameterObjectFieldId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object relationships where parameterObjectFieldId = &#63; from the database.
 	 *
 	 * @param parameterObjectFieldId the parameter object field ID
@@ -1233,40 +1042,6 @@ public class ObjectRelationshipUtil {
 		OrderByComparator<ObjectRelationship> orderByComparator) {
 
 		return getPersistence().fetchByC_U_First(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByC_U_Last(
 			companyId, userId, orderByComparator);
 	}
 
@@ -1406,40 +1181,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and edge = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param edge the edge
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI1_E_Last(
-			long objectDefinitionId1, boolean edge,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI1_E_Last(
-			objectDefinitionId1, edge, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and edge = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param edge the edge
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI1_E_Last(
-		long objectDefinitionId1, boolean edge,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI1_E_Last(
-			objectDefinitionId1, edge, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object relationships where objectDefinitionId1 = &#63; and edge = &#63; from the database.
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -1575,40 +1316,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and name = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI1_N_Last(
-			long objectDefinitionId1, String name,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI1_N_Last(
-			objectDefinitionId1, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and name = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI1_N_Last(
-		long objectDefinitionId1, String name,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI1_N_Last(
-			objectDefinitionId1, name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object relationships where objectDefinitionId1 = &#63; and name = &#63; from the database.
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -1740,40 +1447,6 @@ public class ObjectRelationshipUtil {
 		OrderByComparator<ObjectRelationship> orderByComparator) {
 
 		return getPersistence().fetchByODI1_R_First(
-			objectDefinitionId1, reverse, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and reverse = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI1_R_Last(
-			long objectDefinitionId1, boolean reverse,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI1_R_Last(
-			objectDefinitionId1, reverse, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and reverse = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI1_R_Last(
-		long objectDefinitionId1, boolean reverse,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI1_R_Last(
 			objectDefinitionId1, reverse, orderByComparator);
 	}
 
@@ -1915,40 +1588,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63; and edge = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param edge the edge
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI2_E_Last(
-			long objectDefinitionId2, boolean edge,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI2_E_Last(
-			objectDefinitionId2, edge, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63; and edge = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param edge the edge
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI2_E_Last(
-		long objectDefinitionId2, boolean edge,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI2_E_Last(
-			objectDefinitionId2, edge, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object relationships where objectDefinitionId2 = &#63; and edge = &#63; from the database.
 	 *
 	 * @param objectDefinitionId2 the object definition id2
@@ -2080,40 +1719,6 @@ public class ObjectRelationshipUtil {
 		OrderByComparator<ObjectRelationship> orderByComparator) {
 
 		return getPersistence().fetchByODI2_R_First(
-			objectDefinitionId2, reverse, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63; and reverse = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI2_R_Last(
-			long objectDefinitionId2, boolean reverse,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI2_R_Last(
-			objectDefinitionId2, reverse, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63; and reverse = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI2_R_Last(
-		long objectDefinitionId2, boolean reverse,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI2_R_Last(
 			objectDefinitionId2, reverse, orderByComparator);
 	}
 
@@ -2419,42 +2024,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI1_ODI2_T_Last(
-			long objectDefinitionId1, long objectDefinitionId2, String type,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI1_ODI2_T_Last(
-			objectDefinitionId1, objectDefinitionId2, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI1_ODI2_T_Last(
-		long objectDefinitionId1, long objectDefinitionId2, String type,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI1_ODI2_T_Last(
-			objectDefinitionId1, objectDefinitionId2, type, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63; from the database.
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -2605,42 +2174,6 @@ public class ObjectRelationshipUtil {
 		OrderByComparator<ObjectRelationship> orderByComparator) {
 
 		return getPersistence().fetchByODI1_DT_R_First(
-			objectDefinitionId1, deletionType, reverse, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param deletionType the deletion type
-	 * @param reverse the reverse
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI1_DT_R_Last(
-			long objectDefinitionId1, String deletionType, boolean reverse,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI1_DT_R_Last(
-			objectDefinitionId1, deletionType, reverse, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param deletionType the deletion type
-	 * @param reverse the reverse
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI1_DT_R_Last(
-		long objectDefinitionId1, String deletionType, boolean reverse,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI1_DT_R_Last(
 			objectDefinitionId1, deletionType, reverse, orderByComparator);
 	}
 
@@ -2796,42 +2329,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI1_R_T_Last(
-			long objectDefinitionId1, boolean reverse, String type,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI1_R_T_Last(
-			objectDefinitionId1, reverse, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI1_R_T_Last(
-		long objectDefinitionId1, boolean reverse, String type,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI1_R_T_Last(
-			objectDefinitionId1, reverse, type, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63; from the database.
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -2978,42 +2475,6 @@ public class ObjectRelationshipUtil {
 		OrderByComparator<ObjectRelationship> orderByComparator) {
 
 		return getPersistence().fetchByODI2_R_T_First(
-			objectDefinitionId2, reverse, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI2_R_T_Last(
-			long objectDefinitionId2, boolean reverse, String type,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI2_R_T_Last(
-			objectDefinitionId2, reverse, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI2_R_T_Last(
-		long objectDefinitionId2, boolean reverse, String type,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI2_R_T_Last(
 			objectDefinitionId2, reverse, type, orderByComparator);
 	}
 
@@ -3176,47 +2637,6 @@ public class ObjectRelationshipUtil {
 		String type, OrderByComparator<ObjectRelationship> orderByComparator) {
 
 		return getPersistence().fetchByODI1_ODI2_N_T_First(
-			objectDefinitionId1, objectDefinitionId2, name, type,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship
-	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship findByODI1_ODI2_N_T_Last(
-			long objectDefinitionId1, long objectDefinitionId2, String name,
-			String type,
-			OrderByComparator<ObjectRelationship> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
-
-		return getPersistence().findByODI1_ODI2_N_T_Last(
-			objectDefinitionId1, objectDefinitionId2, name, type,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	public static ObjectRelationship fetchByODI1_ODI2_N_T_Last(
-		long objectDefinitionId1, long objectDefinitionId2, String name,
-		String type, OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return getPersistence().fetchByODI1_ODI2_N_T_Last(
 			objectDefinitionId1, objectDefinitionId2, name, type,
 			orderByComparator);
 	}
@@ -3517,4 +2937,4 @@ public class ObjectRelationshipUtil {
 	private static volatile ObjectRelationshipPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1971020124
+// LIFERAY-SERVICE-BUILDER-HASH:1843581276

@@ -335,67 +335,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset display page entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException {
-
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDisplayPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset display page entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetDisplayPageEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset display page entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -951,72 +890,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset display page entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException {
-
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDisplayPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset display page entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetDisplayPageEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset display page entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1343,67 +1216,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset display page entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException {
-
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchDisplayPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset display page entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetDisplayPageEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset display page entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1708,68 +1520,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 
 		List<AssetDisplayPageEntry> list = findByLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset display page entry in the ordered set where layoutPageTemplateEntryId = &#63;.
-	 *
-	 * @param layoutPageTemplateEntryId the layout page template entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByLayoutPageTemplateEntryId_Last(
-			long layoutPageTemplateEntryId,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException {
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			fetchByLayoutPageTemplateEntryId_Last(
-				layoutPageTemplateEntryId, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutPageTemplateEntryId=");
-		sb.append(layoutPageTemplateEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchDisplayPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset display page entry in the ordered set where layoutPageTemplateEntryId = &#63;.
-	 *
-	 * @param layoutPageTemplateEntryId the layout page template entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByLayoutPageTemplateEntryId_Last(
-		long layoutPageTemplateEntryId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
-
-		int count = countByLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetDisplayPageEntry> list = findByLayoutPageTemplateEntryId(
-			layoutPageTemplateEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2096,72 +1846,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 
 		List<AssetDisplayPageEntry> list = findByG_CN(
 			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset display page entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByG_CN_Last(
-			long groupId, long classNameId,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException {
-
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByG_CN_Last(
-			groupId, classNameId, orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchDisplayPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset display page entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByG_CN_Last(
-		long groupId, long classNameId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
-
-		int count = countByG_CN(groupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetDisplayPageEntry> list = findByG_CN(
-			groupId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3565,4 +3249,4 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-997752813
+// LIFERAY-SERVICE-BUILDER-HASH:2036912990

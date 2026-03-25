@@ -215,37 +215,6 @@ public class MicroblogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last microblogs entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the microblogs entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -421,34 +390,6 @@ public class MicroblogsEntryUtil {
 		long userId, OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByUserId_Last(
-			long userId, OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByUserId_Last(
-		long userId, OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -636,39 +577,6 @@ public class MicroblogsEntryUtil {
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByU_T_First(
-			userId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where userId = &#63; and type = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByU_T_Last(
-			long userId, int type,
-			OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByU_T_Last(userId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where userId = &#63; and type = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByU_T_Last(
-		long userId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByU_T_Last(
 			userId, type, orderByComparator);
 	}
 
@@ -868,40 +776,6 @@ public class MicroblogsEntryUtil {
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByCCNI_CCPK_First(
-			creatorClassNameId, creatorClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63;.
-	 *
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByCCNI_CCPK_Last(
-			long creatorClassNameId, long creatorClassPK,
-			OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByCCNI_CCPK_Last(
-			creatorClassNameId, creatorClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63;.
-	 *
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByCCNI_CCPK_Last(
-		long creatorClassNameId, long creatorClassPK,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByCCNI_CCPK_Last(
 			creatorClassNameId, creatorClassPK, orderByComparator);
 	}
 
@@ -1285,40 +1159,6 @@ public class MicroblogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and type = &#63;.
-	 *
-	 * @param creatorClassNameId the creator class name ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByCCNI_T_Last(
-			long creatorClassNameId, int type,
-			OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByCCNI_T_Last(
-			creatorClassNameId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and type = &#63;.
-	 *
-	 * @param creatorClassNameId the creator class name ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByCCNI_T_Last(
-		long creatorClassNameId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByCCNI_T_Last(
-			creatorClassNameId, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the microblogs entries that the user has permission to view where creatorClassNameId = &#63; and type = &#63;.
 	 *
 	 * @param creatorClassNameId the creator class name ID
@@ -1516,40 +1356,6 @@ public class MicroblogsEntryUtil {
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByT_P_First(
-			type, parentMicroblogsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where type = &#63; and parentMicroblogsEntryId = &#63;.
-	 *
-	 * @param type the type
-	 * @param parentMicroblogsEntryId the parent microblogs entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByT_P_Last(
-			int type, long parentMicroblogsEntryId,
-			OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByT_P_Last(
-			type, parentMicroblogsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where type = &#63; and parentMicroblogsEntryId = &#63;.
-	 *
-	 * @param type the type
-	 * @param parentMicroblogsEntryId the parent microblogs entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByT_P_Last(
-		int type, long parentMicroblogsEntryId,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByT_P_Last(
 			type, parentMicroblogsEntryId, orderByComparator);
 	}
 
@@ -1760,42 +1566,6 @@ public class MicroblogsEntryUtil {
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_CCNI_CCPK_First(
-			companyId, creatorClassNameId, creatorClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByC_CCNI_CCPK_Last(
-			long companyId, long creatorClassNameId, long creatorClassPK,
-			OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_CCNI_CCPK_Last(
-			companyId, creatorClassNameId, creatorClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByC_CCNI_CCPK_Last(
-		long companyId, long creatorClassNameId, long creatorClassPK,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_CCNI_CCPK_Last(
 			companyId, creatorClassNameId, creatorClassPK, orderByComparator);
 	}
 
@@ -2211,42 +1981,6 @@ public class MicroblogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last microblogs entry in the ordered set where companyId = &#63; and creatorClassNameId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param creatorClassNameId the creator class name ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByC_CCNI_T_Last(
-			long companyId, long creatorClassNameId, int type,
-			OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_CCNI_T_Last(
-			companyId, creatorClassNameId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where companyId = &#63; and creatorClassNameId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param creatorClassNameId the creator class name ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByC_CCNI_T_Last(
-		long companyId, long creatorClassNameId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_CCNI_T_Last(
-			companyId, creatorClassNameId, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the microblogs entries that the user has permission to view where companyId = &#63; and creatorClassNameId = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2468,42 +2202,6 @@ public class MicroblogsEntryUtil {
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByCCNI_CCPK_T_First(
-			creatorClassNameId, creatorClassPK, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
-	 *
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByCCNI_CCPK_T_Last(
-			long creatorClassNameId, long creatorClassPK, int type,
-			OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByCCNI_CCPK_T_Last(
-			creatorClassNameId, creatorClassPK, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
-	 *
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByCCNI_CCPK_T_Last(
-		long creatorClassNameId, long creatorClassPK, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByCCNI_CCPK_T_Last(
 			creatorClassNameId, creatorClassPK, type, orderByComparator);
 	}
 
@@ -2924,46 +2622,6 @@ public class MicroblogsEntryUtil {
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_CCNI_CCPK_T_First(
-			companyId, creatorClassNameId, creatorClassPK, type,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByC_CCNI_CCPK_T_Last(
-			long companyId, long creatorClassNameId, long creatorClassPK,
-			int type, OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_CCNI_CCPK_T_Last(
-			companyId, creatorClassNameId, creatorClassPK, type,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByC_CCNI_CCPK_T_Last(
-		long companyId, long creatorClassNameId, long creatorClassPK, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_CCNI_CCPK_T_Last(
 			companyId, creatorClassNameId, creatorClassPK, type,
 			orderByComparator);
 	}
@@ -3414,44 +3072,6 @@ public class MicroblogsEntryUtil {
 	}
 
 	/**
-	 * Returns the last microblogs entry in the ordered set where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param type the type
-	 * @param socialRelationType the social relation type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry
-	 * @throws NoSuchEntryException if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry findByU_C_T_S_Last(
-			long userId, Date createDate, int type, int socialRelationType,
-			OrderByComparator<MicroblogsEntry> orderByComparator)
-		throws com.liferay.microblogs.exception.NoSuchEntryException {
-
-		return getPersistence().findByU_C_T_S_Last(
-			userId, createDate, type, socialRelationType, orderByComparator);
-	}
-
-	/**
-	 * Returns the last microblogs entry in the ordered set where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param type the type
-	 * @param socialRelationType the social relation type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
-	 */
-	public static MicroblogsEntry fetchByU_C_T_S_Last(
-		long userId, Date createDate, int type, int socialRelationType,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
-
-		return getPersistence().fetchByU_C_T_S_Last(
-			userId, createDate, type, socialRelationType, orderByComparator);
-	}
-
-	/**
 	 * Returns all the microblogs entries that the user has permission to view where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
 	 *
 	 * @param userId the user ID
@@ -3723,4 +3343,4 @@ public class MicroblogsEntryUtil {
 	private static volatile MicroblogsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-198461800
+// LIFERAY-SERVICE-BUILDER-HASH:-1843104420

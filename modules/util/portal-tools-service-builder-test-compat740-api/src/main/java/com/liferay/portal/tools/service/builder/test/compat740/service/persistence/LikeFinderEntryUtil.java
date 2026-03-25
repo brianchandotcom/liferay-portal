@@ -320,45 +320,6 @@ public class LikeFinderEntryUtil {
 	}
 
 	/**
-	 * Returns the last like finder entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching like finder entry
-	 * @throws NoSuchLikeFinderEntryException if a matching like finder entry could not be found
-	 */
-	public static LikeFinderEntry findByC_O_O_LikeP_Last(
-			long companyId, long ownerId, int ownerType, String portletId,
-			OrderByComparator<LikeFinderEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchLikeFinderEntryException {
-
-		return getPersistence().findByC_O_O_LikeP_Last(
-			companyId, ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last like finder entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	public static LikeFinderEntry fetchByC_O_O_LikeP_Last(
-		long companyId, long ownerId, int ownerType, String portletId,
-		OrderByComparator<LikeFinderEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_O_O_LikeP_Last(
-			companyId, ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the like finder entries where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -551,4 +512,4 @@ public class LikeFinderEntryUtil {
 	private static volatile LikeFinderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1023886687
+// LIFERAY-SERVICE-BUILDER-HASH:-1663112722

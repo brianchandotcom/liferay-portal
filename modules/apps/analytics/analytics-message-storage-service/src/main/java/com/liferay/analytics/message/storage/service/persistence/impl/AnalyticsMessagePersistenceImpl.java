@@ -320,66 +320,6 @@ public class AnalyticsMessagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last analytics message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics message
-	 * @throws NoSuchMessageException if a matching analytics message could not be found
-	 */
-	@Override
-	public AnalyticsMessage findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AnalyticsMessage> orderByComparator)
-		throws NoSuchMessageException {
-
-		AnalyticsMessage analyticsMessage = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (analyticsMessage != null) {
-			return analyticsMessage;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last analytics message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics message, or <code>null</code> if a matching analytics message could not be found
-	 */
-	@Override
-	public AnalyticsMessage fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AnalyticsMessage> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnalyticsMessage> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the analytics messages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1345,4 +1285,4 @@ public class AnalyticsMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:520492236
+// LIFERAY-SERVICE-BUILDER-HASH:-28951026

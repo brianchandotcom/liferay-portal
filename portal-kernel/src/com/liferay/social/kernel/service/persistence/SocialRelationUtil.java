@@ -210,34 +210,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByUuid_Last(
-			String uuid, OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByUuid_Last(
-		String uuid, OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -369,40 +341,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -522,36 +460,6 @@ public class SocialRelationUtil {
 		long companyId, OrderByComparator<SocialRelation> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByCompanyId_Last(
-			long companyId, OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByCompanyId_Last(
-		long companyId, OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -676,34 +584,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByUserId1_Last(
-			long userId1, OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByUserId1_Last(userId1, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByUserId1_Last(
-		long userId1, OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByUserId1_Last(userId1, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where userId1 = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
@@ -824,34 +704,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where userId2 = &#63;.
-	 *
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByUserId2_Last(
-			long userId2, OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByUserId2_Last(userId2, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId2 = &#63;.
-	 *
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByUserId2_Last(
-		long userId2, OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByUserId2_Last(userId2, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where userId2 = &#63; from the database.
 	 *
 	 * @param userId2 the user id2
@@ -967,34 +819,6 @@ public class SocialRelationUtil {
 		int type, OrderByComparator<SocialRelation> orderByComparator) {
 
 		return getPersistence().fetchByType_First(type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByType_Last(
-			int type, OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByType_Last(type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByType_Last(
-		int type, OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByType_Last(type, orderByComparator);
 	}
 
 	/**
@@ -1123,40 +947,6 @@ public class SocialRelationUtil {
 		OrderByComparator<SocialRelation> orderByComparator) {
 
 		return getPersistence().fetchByC_T_First(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByC_T_Last(
-			long companyId, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByC_T_Last(
-			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByC_T_Last(
-		long companyId, int type,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByC_T_Last(
 			companyId, type, orderByComparator);
 	}
 
@@ -1292,40 +1082,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByU1_U2_Last(
-			long userId1, long userId2,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByU1_U2_Last(
-			userId1, userId2, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByU1_U2_Last(
-		long userId1, long userId2,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByU1_U2_Last(
-			userId1, userId2, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where userId1 = &#63; and userId2 = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
@@ -1457,40 +1213,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63; and type = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByU1_T_Last(
-			long userId1, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByU1_T_Last(
-			userId1, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId1 = &#63; and type = &#63;.
-	 *
-	 * @param userId1 the user id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByU1_T_Last(
-		long userId1, int type,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByU1_T_Last(
-			userId1, type, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where userId1 = &#63; and type = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
@@ -1618,40 +1340,6 @@ public class SocialRelationUtil {
 		OrderByComparator<SocialRelation> orderByComparator) {
 
 		return getPersistence().fetchByU2_T_First(
-			userId2, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId2 = &#63; and type = &#63;.
-	 *
-	 * @param userId2 the user id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation
-	 * @throws NoSuchRelationException if a matching social relation could not be found
-	 */
-	public static SocialRelation findByU2_T_Last(
-			long userId2, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByU2_T_Last(
-			userId2, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last social relation in the ordered set where userId2 = &#63; and type = &#63;.
-	 *
-	 * @param userId2 the user id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 */
-	public static SocialRelation fetchByU2_T_Last(
-		long userId2, int type,
-		OrderByComparator<SocialRelation> orderByComparator) {
-
-		return getPersistence().fetchByU2_T_Last(
 			userId2, type, orderByComparator);
 	}
 
@@ -1908,4 +1596,4 @@ public class SocialRelationUtil {
 	private static volatile SocialRelationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-88229531
+// LIFERAY-SERVICE-BUILDER-HASH:-193835753

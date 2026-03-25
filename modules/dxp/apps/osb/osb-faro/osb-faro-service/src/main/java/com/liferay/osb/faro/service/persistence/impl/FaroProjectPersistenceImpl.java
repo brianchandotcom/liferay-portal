@@ -460,64 +460,6 @@ public class FaroProjectPersistenceImpl
 	}
 
 	/**
-	 * Returns the last faro project in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project
-	 * @throws NoSuchFaroProjectException if a matching faro project could not be found
-	 */
-	@Override
-	public FaroProject findByUserId_Last(
-			long userId, OrderByComparator<FaroProject> orderByComparator)
-		throws NoSuchFaroProjectException {
-
-		FaroProject faroProject = fetchByUserId_Last(userId, orderByComparator);
-
-		if (faroProject != null) {
-			return faroProject;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroProjectException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro project in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project, or <code>null</code> if a matching faro project could not be found
-	 */
-	@Override
-	public FaroProject fetchByUserId_Last(
-		long userId, OrderByComparator<FaroProject> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroProject> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the faro projects where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1000,67 +942,6 @@ public class FaroProjectPersistenceImpl
 
 		List<FaroProject> list = findByServerLocation(
 			serverLocation, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last faro project in the ordered set where serverLocation = &#63;.
-	 *
-	 * @param serverLocation the server location
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project
-	 * @throws NoSuchFaroProjectException if a matching faro project could not be found
-	 */
-	@Override
-	public FaroProject findByServerLocation_Last(
-			String serverLocation,
-			OrderByComparator<FaroProject> orderByComparator)
-		throws NoSuchFaroProjectException {
-
-		FaroProject faroProject = fetchByServerLocation_Last(
-			serverLocation, orderByComparator);
-
-		if (faroProject != null) {
-			return faroProject;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("serverLocation=");
-		sb.append(serverLocation);
-
-		sb.append("}");
-
-		throw new NoSuchFaroProjectException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro project in the ordered set where serverLocation = &#63;.
-	 *
-	 * @param serverLocation the server location
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project, or <code>null</code> if a matching faro project could not be found
-	 */
-	@Override
-	public FaroProject fetchByServerLocation_Last(
-		String serverLocation,
-		OrderByComparator<FaroProject> orderByComparator) {
-
-		int count = countByServerLocation(serverLocation);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroProject> list = findByServerLocation(
-			serverLocation, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2016,4 +1897,4 @@ public class FaroProjectPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1742906010
+// LIFERAY-SERVICE-BUILDER-HASH:1095797706

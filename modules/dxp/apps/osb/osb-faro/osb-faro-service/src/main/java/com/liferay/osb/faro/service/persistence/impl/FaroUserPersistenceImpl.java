@@ -298,64 +298,6 @@ public class FaroUserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser findByGroupId_Last(
-			long groupId, OrderByComparator<FaroUser> orderByComparator)
-		throws NoSuchFaroUserException {
-
-		FaroUser faroUser = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser fetchByGroupId_Last(
-		long groupId, OrderByComparator<FaroUser> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroUser> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the faro users where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -634,65 +576,6 @@ public class FaroUserPersistenceImpl
 
 		List<FaroUser> list = findByLiveUserId(
 			liveUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where liveUserId = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser findByLiveUserId_Last(
-			long liveUserId, OrderByComparator<FaroUser> orderByComparator)
-		throws NoSuchFaroUserException {
-
-		FaroUser faroUser = fetchByLiveUserId_Last(
-			liveUserId, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("liveUserId=");
-		sb.append(liveUserId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where liveUserId = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser fetchByLiveUserId_Last(
-		long liveUserId, OrderByComparator<FaroUser> orderByComparator) {
-
-		int count = countByLiveUserId(liveUserId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroUser> list = findByLiveUserId(
-			liveUserId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1376,71 +1259,6 @@ public class FaroUserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser findByG_R_Last(
-			long groupId, long roleId,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws NoSuchFaroUserException {
-
-		FaroUser faroUser = fetchByG_R_Last(groupId, roleId, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", roleId=");
-		sb.append(roleId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser fetchByG_R_Last(
-		long groupId, long roleId,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		int count = countByG_R(groupId, roleId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroUser> list = findByG_R(
-			groupId, roleId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the faro users where groupId = &#63; and roleId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1952,71 +1770,6 @@ public class FaroUserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws NoSuchFaroUserException {
-
-		FaroUser faroUser = fetchByG_S_Last(groupId, status, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		int count = countByG_S(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroUser> list = findByG_S(
-			groupId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the faro users where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2322,72 +2075,6 @@ public class FaroUserPersistenceImpl
 
 		List<FaroUser> list = findByL_S(
 			liveUserId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where liveUserId = &#63; and status = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser findByL_S_Last(
-			long liveUserId, int status,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws NoSuchFaroUserException {
-
-		FaroUser faroUser = fetchByL_S_Last(
-			liveUserId, status, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("liveUserId=");
-		sb.append(liveUserId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where liveUserId = &#63; and status = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser fetchByL_S_Last(
-		long liveUserId, int status,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		int count = countByL_S(liveUserId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroUser> list = findByL_S(
-			liveUserId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2715,72 +2402,6 @@ public class FaroUserPersistenceImpl
 
 		List<FaroUser> list = findByE_S(
 			emailAddress, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where emailAddress = &#63; and status = &#63;.
-	 *
-	 * @param emailAddress the email address
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user
-	 * @throws NoSuchFaroUserException if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser findByE_S_Last(
-			String emailAddress, int status,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws NoSuchFaroUserException {
-
-		FaroUser faroUser = fetchByE_S_Last(
-			emailAddress, status, orderByComparator);
-
-		if (faroUser != null) {
-			return faroUser;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("emailAddress=");
-		sb.append(emailAddress);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro user in the ordered set where emailAddress = &#63; and status = &#63;.
-	 *
-	 * @param emailAddress the email address
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser fetchByE_S_Last(
-		String emailAddress, int status,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		int count = countByE_S(emailAddress, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroUser> list = findByE_S(
-			emailAddress, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3638,4 +3259,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:405125783
+// LIFERAY-SERVICE-BUILDER-HASH:139945768

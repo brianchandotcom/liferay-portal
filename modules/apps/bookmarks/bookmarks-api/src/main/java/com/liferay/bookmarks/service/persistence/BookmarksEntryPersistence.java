@@ -121,32 +121,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last bookmarks entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the bookmarks entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last bookmarks entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the bookmarks entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface BookmarksEntryPersistence
 	 * @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	 */
 	public BookmarksEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
@@ -568,34 +488,6 @@ public interface BookmarksEntryPersistence
 	 * @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	 */
 	public BookmarksEntry fetchByG_F_First(
-		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByG_F_Last(
-			long groupId, long folderId,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByG_F_Last(
 		long groupId, long folderId,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
@@ -898,34 +790,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByG_S_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByG_S_Last(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1086,34 +950,6 @@ public interface BookmarksEntryPersistence
 	 * @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	 */
 	public BookmarksEntry fetchByG_NotS_First(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByG_NotS_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByG_NotS_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
@@ -1284,34 +1120,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last bookmarks entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByC_NotS_Last(
-			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByC_NotS_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the bookmarks entries where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1424,36 +1232,6 @@ public interface BookmarksEntryPersistence
 	 * @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	 */
 	public BookmarksEntry fetchByG_U_S_First(
-		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByG_U_S_Last(
-			long groupId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByG_U_S_Last(
 		long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
@@ -1636,36 +1414,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByG_U_NotS_Last(
-			long groupId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByG_U_NotS_Last(
-		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1838,36 +1586,6 @@ public interface BookmarksEntryPersistence
 	 * @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	 */
 	public BookmarksEntry fetchByG_F_S_First(
-		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByG_F_S_Last(
-			long groupId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByG_F_S_Last(
 		long groupId, long folderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
@@ -2187,36 +1905,6 @@ public interface BookmarksEntryPersistence
 	 * @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	 */
 	public BookmarksEntry fetchByG_F_NotS_First(
-		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and folderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByG_F_NotS_Last(
-			long groupId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and folderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByG_F_NotS_Last(
 		long groupId, long folderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
@@ -2546,38 +2234,6 @@ public interface BookmarksEntryPersistence
 	 * @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	 */
 	public BookmarksEntry fetchByG_U_F_S_First(
-		long groupId, long userId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry
-	 * @throws NoSuchEntryException if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry findByG_U_F_S_Last(
-			long groupId, long userId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last bookmarks entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	 */
-	public BookmarksEntry fetchByG_U_F_S_Last(
 		long groupId, long userId, long folderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
@@ -2948,4 +2604,4 @@ public interface BookmarksEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-224004206
+// LIFERAY-SERVICE-BUILDER-HASH:1746830896

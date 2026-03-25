@@ -120,32 +120,6 @@ public interface ChangesetEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last changeset entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry
-	 * @throws NoSuchEntryException if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last changeset entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the changeset entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -243,32 +217,6 @@ public interface ChangesetEntryPersistence
 	 * @return the first matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last changeset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry
-	 * @throws NoSuchEntryException if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last changeset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
 			orderByComparator);
@@ -372,32 +320,6 @@ public interface ChangesetEntryPersistence
 	 * @return the first matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry fetchByChangesetCollectionId_First(
-		long changesetCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last changeset entry in the ordered set where changesetCollectionId = &#63;.
-	 *
-	 * @param changesetCollectionId the changeset collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry
-	 * @throws NoSuchEntryException if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry findByChangesetCollectionId_Last(
-			long changesetCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last changeset entry in the ordered set where changesetCollectionId = &#63;.
-	 *
-	 * @param changesetCollectionId the changeset collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry fetchByChangesetCollectionId_Last(
 		long changesetCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
 			orderByComparator);
@@ -512,34 +434,6 @@ public interface ChangesetEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last changeset entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry
-	 * @throws NoSuchEntryException if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry findByG_C_Last(
-			long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last changeset entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry fetchByG_C_Last(
-		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the changeset entries where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -646,34 +540,6 @@ public interface ChangesetEntryPersistence
 	 * @return the first matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry fetchByC_C_First(
-		long changesetCollectionId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last changeset entry in the ordered set where changesetCollectionId = &#63; and classNameId = &#63;.
-	 *
-	 * @param changesetCollectionId the changeset collection ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry
-	 * @throws NoSuchEntryException if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry findByC_C_Last(
-			long changesetCollectionId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last changeset entry in the ordered set where changesetCollectionId = &#63; and classNameId = &#63;.
-	 *
-	 * @param changesetCollectionId the changeset collection ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
-	 */
-	public ChangesetEntry fetchByC_C_Last(
 		long changesetCollectionId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
 			orderByComparator);
@@ -940,4 +806,4 @@ public interface ChangesetEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:17752073
+// LIFERAY-SERVICE-BUILDER-HASH:-928115063

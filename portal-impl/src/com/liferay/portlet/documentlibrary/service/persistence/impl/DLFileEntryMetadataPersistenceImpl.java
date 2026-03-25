@@ -329,66 +329,6 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry metadata in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry metadata
-	 * @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata findByUuid_Last(
-			String uuid,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws NoSuchFileEntryMetadataException {
-
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (dlFileEntryMetadata != null) {
-			return dlFileEntryMetadata;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryMetadataException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry metadata in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata fetchByUuid_Last(
-		String uuid, OrderByComparator<DLFileEntryMetadata> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntryMetadata> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entry metadatas where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -733,72 +673,6 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry metadata in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry metadata
-	 * @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws NoSuchFileEntryMetadataException {
-
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (dlFileEntryMetadata != null) {
-			return dlFileEntryMetadata;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryMetadataException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry metadata in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntryMetadata> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entry metadatas where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1128,67 +1002,6 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry metadata in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry metadata
-	 * @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata findByFileEntryId_Last(
-			long fileEntryId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws NoSuchFileEntryMetadataException {
-
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileEntryId_Last(
-			fileEntryId, orderByComparator);
-
-		if (dlFileEntryMetadata != null) {
-			return dlFileEntryMetadata;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryMetadataException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry metadata in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata fetchByFileEntryId_Last(
-		long fileEntryId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
-
-		int count = countByFileEntryId(fileEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntryMetadata> list = findByFileEntryId(
-			fileEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entry metadatas where fileEntryId = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -1484,67 +1297,6 @@ public class DLFileEntryMetadataPersistenceImpl
 
 		List<DLFileEntryMetadata> list = findByFileVersionId(
 			fileVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry metadata in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry metadata
-	 * @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata findByFileVersionId_Last(
-			long fileVersionId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws NoSuchFileEntryMetadataException {
-
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByFileVersionId_Last(
-			fileVersionId, orderByComparator);
-
-		if (dlFileEntryMetadata != null) {
-			return dlFileEntryMetadata;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileVersionId=");
-		sb.append(fileVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryMetadataException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry metadata in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata fetchByFileVersionId_Last(
-		long fileVersionId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
-
-		int count = countByFileVersionId(fileVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntryMetadata> list = findByFileVersionId(
-			fileVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3091,4 +2843,4 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1212771287
+// LIFERAY-SERVICE-BUILDER-HASH:1651510375

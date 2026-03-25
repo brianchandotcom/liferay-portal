@@ -305,68 +305,6 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last portal preference value in the ordered set where portalPreferencesId = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preference value
-	 * @throws NoSuchPreferenceValueException if a matching portal preference value could not be found
-	 */
-	@Override
-	public PortalPreferenceValue findByPortalPreferencesId_Last(
-			long portalPreferencesId,
-			OrderByComparator<PortalPreferenceValue> orderByComparator)
-		throws NoSuchPreferenceValueException {
-
-		PortalPreferenceValue portalPreferenceValue =
-			fetchByPortalPreferencesId_Last(
-				portalPreferencesId, orderByComparator);
-
-		if (portalPreferenceValue != null) {
-			return portalPreferenceValue;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portalPreferencesId=");
-		sb.append(portalPreferencesId);
-
-		sb.append("}");
-
-		throw new NoSuchPreferenceValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portal preference value in the ordered set where portalPreferencesId = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preference value, or <code>null</code> if a matching portal preference value could not be found
-	 */
-	@Override
-	public PortalPreferenceValue fetchByPortalPreferencesId_Last(
-		long portalPreferencesId,
-		OrderByComparator<PortalPreferenceValue> orderByComparator) {
-
-		int count = countByPortalPreferencesId(portalPreferencesId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortalPreferenceValue> list = findByPortalPreferencesId(
-			portalPreferencesId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the portal preference values where portalPreferencesId = any &#63;.
 	 *
 	 * <p>
@@ -959,73 +897,6 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the last portal preference value in the ordered set where portalPreferencesId = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param namespace the namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preference value
-	 * @throws NoSuchPreferenceValueException if a matching portal preference value could not be found
-	 */
-	@Override
-	public PortalPreferenceValue findByP_N_Last(
-			long portalPreferencesId, String namespace,
-			OrderByComparator<PortalPreferenceValue> orderByComparator)
-		throws NoSuchPreferenceValueException {
-
-		PortalPreferenceValue portalPreferenceValue = fetchByP_N_Last(
-			portalPreferencesId, namespace, orderByComparator);
-
-		if (portalPreferenceValue != null) {
-			return portalPreferenceValue;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portalPreferencesId=");
-		sb.append(portalPreferencesId);
-
-		sb.append(", namespace=");
-		sb.append(namespace);
-
-		sb.append("}");
-
-		throw new NoSuchPreferenceValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portal preference value in the ordered set where portalPreferencesId = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param namespace the namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preference value, or <code>null</code> if a matching portal preference value could not be found
-	 */
-	@Override
-	public PortalPreferenceValue fetchByP_N_Last(
-		long portalPreferencesId, String namespace,
-		OrderByComparator<PortalPreferenceValue> orderByComparator) {
-
-		int count = countByP_N(portalPreferencesId, namespace);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortalPreferenceValue> list = findByP_N(
-			portalPreferencesId, namespace, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the portal preference values where portalPreferencesId = &#63; and namespace = &#63; from the database.
 	 *
 	 * @param portalPreferencesId the portal preferences ID
@@ -1397,78 +1268,6 @@ public class PortalPreferenceValuePersistenceImpl
 
 		List<PortalPreferenceValue> list = findByP_K_N(
 			portalPreferencesId, key, namespace, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portal preference value in the ordered set where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preference value
-	 * @throws NoSuchPreferenceValueException if a matching portal preference value could not be found
-	 */
-	@Override
-	public PortalPreferenceValue findByP_K_N_Last(
-			long portalPreferencesId, String key, String namespace,
-			OrderByComparator<PortalPreferenceValue> orderByComparator)
-		throws NoSuchPreferenceValueException {
-
-		PortalPreferenceValue portalPreferenceValue = fetchByP_K_N_Last(
-			portalPreferencesId, key, namespace, orderByComparator);
-
-		if (portalPreferenceValue != null) {
-			return portalPreferenceValue;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portalPreferencesId=");
-		sb.append(portalPreferencesId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append(", namespace=");
-		sb.append(namespace);
-
-		sb.append("}");
-
-		throw new NoSuchPreferenceValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portal preference value in the ordered set where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preference value, or <code>null</code> if a matching portal preference value could not be found
-	 */
-	@Override
-	public PortalPreferenceValue fetchByP_K_N_Last(
-		long portalPreferencesId, String key, String namespace,
-		OrderByComparator<PortalPreferenceValue> orderByComparator) {
-
-		int count = countByP_K_N(portalPreferencesId, key, namespace);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortalPreferenceValue> list = findByP_K_N(
-			portalPreferencesId, key, namespace, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2173,86 +1972,6 @@ public class PortalPreferenceValuePersistenceImpl
 
 		List<PortalPreferenceValue> list = findByP_K_N_SV(
 			portalPreferencesId, key, namespace, smallValue, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portal preference value in the ordered set where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preference value
-	 * @throws NoSuchPreferenceValueException if a matching portal preference value could not be found
-	 */
-	@Override
-	public PortalPreferenceValue findByP_K_N_SV_Last(
-			long portalPreferencesId, String key, String namespace,
-			String smallValue,
-			OrderByComparator<PortalPreferenceValue> orderByComparator)
-		throws NoSuchPreferenceValueException {
-
-		PortalPreferenceValue portalPreferenceValue = fetchByP_K_N_SV_Last(
-			portalPreferencesId, key, namespace, smallValue, orderByComparator);
-
-		if (portalPreferenceValue != null) {
-			return portalPreferenceValue;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portalPreferencesId=");
-		sb.append(portalPreferencesId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append(", namespace=");
-		sb.append(namespace);
-
-		sb.append(", smallValue=");
-		sb.append(smallValue);
-
-		sb.append("}");
-
-		throw new NoSuchPreferenceValueException(sb.toString());
-	}
-
-	/**
-	 * Returns the last portal preference value in the ordered set where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portal preference value, or <code>null</code> if a matching portal preference value could not be found
-	 */
-	@Override
-	public PortalPreferenceValue fetchByP_K_N_SV_Last(
-		long portalPreferencesId, String key, String namespace,
-		String smallValue,
-		OrderByComparator<PortalPreferenceValue> orderByComparator) {
-
-		int count = countByP_K_N_SV(
-			portalPreferencesId, key, namespace, smallValue);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PortalPreferenceValue> list = findByP_K_N_SV(
-			portalPreferencesId, key, namespace, smallValue, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3145,4 +2864,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:864156102
+// LIFERAY-SERVICE-BUILDER-HASH:455394452

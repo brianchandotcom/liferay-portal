@@ -123,32 +123,6 @@ public interface KaleoDefinitionVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo definition version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition version
-	 * @throws NoSuchDefinitionVersionException if a matching kaleo definition version could not be found
-	 */
-	public KaleoDefinitionVersion findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoDefinitionVersion> orderByComparator)
-		throws NoSuchDefinitionVersionException;
-
-	/**
-	 * Returns the last kaleo definition version in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
-	 */
-	public KaleoDefinitionVersion fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo definition versions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -253,34 +227,6 @@ public interface KaleoDefinitionVersionPersistence
 	 * @return the first matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
 	 */
 	public KaleoDefinitionVersion fetchByC_N_First(
-		long companyId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo definition version in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition version
-	 * @throws NoSuchDefinitionVersionException if a matching kaleo definition version could not be found
-	 */
-	public KaleoDefinitionVersion findByC_N_Last(
-			long companyId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoDefinitionVersion> orderByComparator)
-		throws NoSuchDefinitionVersionException;
-
-	/**
-	 * Returns the last kaleo definition version in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo definition version, or <code>null</code> if a matching kaleo definition version could not be found
-	 */
-	public KaleoDefinitionVersion fetchByC_N_Last(
 		long companyId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinitionVersion>
 			orderByComparator);
@@ -485,4 +431,4 @@ public interface KaleoDefinitionVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1669320052
+// LIFERAY-SERVICE-BUILDER-HASH:-1566247532

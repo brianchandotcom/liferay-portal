@@ -211,34 +211,6 @@ public class SharingEntryUtil {
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByUuid_Last(
-			String uuid, OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the sharing entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -431,40 +403,6 @@ public class SharingEntryUtil {
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the sharing entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -587,34 +525,6 @@ public class SharingEntryUtil {
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByGroupId_Last(
-			long groupId, OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the sharing entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -731,34 +641,6 @@ public class SharingEntryUtil {
 		long userId, OrderByComparator<SharingEntry> orderByComparator) {
 
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByUserId_Last(
-			long userId, OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByUserId_Last(
-		long userId, OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -879,36 +761,6 @@ public class SharingEntryUtil {
 		long toUserId, OrderByComparator<SharingEntry> orderByComparator) {
 
 		return getPersistence().fetchByToUserId_First(
-			toUserId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where toUserId = &#63;.
-	 *
-	 * @param toUserId the to user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByToUserId_Last(
-			long toUserId, OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByToUserId_Last(
-			toUserId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where toUserId = &#63;.
-	 *
-	 * @param toUserId the to user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByToUserId_Last(
-		long toUserId, OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByToUserId_Last(
 			toUserId, orderByComparator);
 	}
 
@@ -1035,38 +887,6 @@ public class SharingEntryUtil {
 		OrderByComparator<SharingEntry> orderByComparator) {
 
 		return getPersistence().fetchByLtExpirationDate_First(
-			expirationDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByLtExpirationDate_Last(
-			Date expirationDate,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByLtExpirationDate_Last(
-			expirationDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByLtExpirationDate_Last(
-		Date expirationDate,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByLtExpirationDate_Last(
 			expirationDate, orderByComparator);
 	}
 
@@ -1203,40 +1023,6 @@ public class SharingEntryUtil {
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByC_CN_Last(
-			long companyId, long classNameId,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByC_CN_Last(
-		long companyId, long classNameId,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the sharing entries where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1364,40 +1150,6 @@ public class SharingEntryUtil {
 		OrderByComparator<SharingEntry> orderByComparator) {
 
 		return getPersistence().fetchByU_C_First(
-			userId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByU_C_Last(
-			long userId, long classNameId,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByU_C_Last(
-			userId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByU_C_Last(
-		long userId, long classNameId,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByU_C_Last(
 			userId, classNameId, orderByComparator);
 	}
 
@@ -1536,40 +1288,6 @@ public class SharingEntryUtil {
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where toUserId = &#63; and classNameId = &#63;.
-	 *
-	 * @param toUserId the to user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByTU_C_Last(
-			long toUserId, long classNameId,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByTU_C_Last(
-			toUserId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where toUserId = &#63; and classNameId = &#63;.
-	 *
-	 * @param toUserId the to user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByTU_C_Last(
-		long toUserId, long classNameId,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByTU_C_Last(
-			toUserId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the sharing entries where toUserId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param toUserId the to user ID
@@ -1698,40 +1416,6 @@ public class SharingEntryUtil {
 		OrderByComparator<SharingEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	public static SharingEntry findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws com.liferay.sharing.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	public static SharingEntry fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
 	}
 
@@ -2067,4 +1751,4 @@ public class SharingEntryUtil {
 	private static volatile SharingEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1362162251
+// LIFERAY-SERVICE-BUILDER-HASH:1194805893

@@ -324,68 +324,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce shipping fixed option in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option
-	 * @throws NoSuchShippingFixedOptionException if a matching commerce shipping fixed option could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOption findByCommerceShippingMethodId_Last(
-			long commerceShippingMethodId,
-			OrderByComparator<CommerceShippingFixedOption> orderByComparator)
-		throws NoSuchShippingFixedOptionException {
-
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			fetchByCommerceShippingMethodId_Last(
-				commerceShippingMethodId, orderByComparator);
-
-		if (commerceShippingFixedOption != null) {
-			return commerceShippingFixedOption;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingMethodId=");
-		sb.append(commerceShippingMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option, or <code>null</code> if a matching commerce shipping fixed option could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOption fetchByCommerceShippingMethodId_Last(
-		long commerceShippingMethodId,
-		OrderByComparator<CommerceShippingFixedOption> orderByComparator) {
-
-		int count = countByCommerceShippingMethodId(commerceShippingMethodId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShippingFixedOption> list = findByCommerceShippingMethodId(
-			commerceShippingMethodId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce shipping fixed options where commerceShippingMethodId = &#63; from the database.
 	 *
 	 * @param commerceShippingMethodId the commerce shipping method ID
@@ -1389,4 +1327,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:344148293
+// LIFERAY-SERVICE-BUILDER-HASH:1975634242

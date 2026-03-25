@@ -332,67 +332,6 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal article resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource
-	 * @throws NoSuchArticleResourceException if a matching journal article resource could not be found
-	 */
-	@Override
-	public JournalArticleResource findByUuid_Last(
-			String uuid,
-			OrderByComparator<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException {
-
-		JournalArticleResource journalArticleResource = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (journalArticleResource != null) {
-			return journalArticleResource;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchArticleResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal article resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
-	 */
-	@Override
-	public JournalArticleResource fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<JournalArticleResource> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalArticleResource> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal article resources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -948,72 +887,6 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal article resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource
-	 * @throws NoSuchArticleResourceException if a matching journal article resource could not be found
-	 */
-	@Override
-	public JournalArticleResource findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException {
-
-		JournalArticleResource journalArticleResource = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (journalArticleResource != null) {
-			return journalArticleResource;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchArticleResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal article resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
-	 */
-	@Override
-	public JournalArticleResource fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<JournalArticleResource> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalArticleResource> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal article resources where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1331,67 +1204,6 @@ public class JournalArticleResourcePersistenceImpl
 
 		List<JournalArticleResource> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal article resource in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource
-	 * @throws NoSuchArticleResourceException if a matching journal article resource could not be found
-	 */
-	@Override
-	public JournalArticleResource findByGroupId_Last(
-			long groupId,
-			OrderByComparator<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException {
-
-		JournalArticleResource journalArticleResource = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (journalArticleResource != null) {
-			return journalArticleResource;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchArticleResourceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal article resource in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
-	 */
-	@Override
-	public JournalArticleResource fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<JournalArticleResource> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalArticleResource> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2699,4 +2511,4 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1933719501
+// LIFERAY-SERVICE-BUILDER-HASH:-815508176

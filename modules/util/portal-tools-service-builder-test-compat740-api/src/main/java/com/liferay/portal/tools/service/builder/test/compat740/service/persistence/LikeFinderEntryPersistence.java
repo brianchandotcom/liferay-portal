@@ -200,38 +200,6 @@ public interface LikeFinderEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last like finder entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching like finder entry
-	 * @throws NoSuchLikeFinderEntryException if a matching like finder entry could not be found
-	 */
-	public LikeFinderEntry findByC_O_O_LikeP_Last(
-			long companyId, long ownerId, int ownerType, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<LikeFinderEntry>
-				orderByComparator)
-		throws NoSuchLikeFinderEntryException;
-
-	/**
-	 * Returns the last like finder entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	public LikeFinderEntry fetchByC_O_O_LikeP_Last(
-		long companyId, long ownerId, int ownerType, String portletId,
-		com.liferay.portal.kernel.util.OrderByComparator<LikeFinderEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the like finder entries where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -375,4 +343,4 @@ public interface LikeFinderEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1667231705
+// LIFERAY-SERVICE-BUILDER-HASH:1824993553

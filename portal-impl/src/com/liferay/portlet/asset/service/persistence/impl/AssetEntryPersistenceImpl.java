@@ -317,64 +317,6 @@ public class AssetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByGroupId_Last(
-			long groupId, OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetEntry assetEntry = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<AssetEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -673,65 +615,6 @@ public class AssetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetEntry assetEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AssetEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1018,64 +901,6 @@ public class AssetEntryPersistenceImpl
 		boolean visible, OrderByComparator<AssetEntry> orderByComparator) {
 
 		List<AssetEntry> list = findByVisible(visible, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where visible = &#63;.
-	 *
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByVisible_Last(
-			boolean visible, OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetEntry assetEntry = fetchByVisible_Last(visible, orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("visible=");
-		sb.append(visible);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where visible = &#63;.
-	 *
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByVisible_Last(
-		boolean visible, OrderByComparator<AssetEntry> orderByComparator) {
-
-		int count = countByVisible(visible);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByVisible(
-			visible, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1388,65 +1213,6 @@ public class AssetEntryPersistenceImpl
 
 		List<AssetEntry> list = findByPublishDate(
 			publishDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where publishDate = &#63;.
-	 *
-	 * @param publishDate the publish date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByPublishDate_Last(
-			Date publishDate, OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetEntry assetEntry = fetchByPublishDate_Last(
-			publishDate, orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("publishDate=");
-		sb.append(publishDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where publishDate = &#63;.
-	 *
-	 * @param publishDate the publish date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByPublishDate_Last(
-		Date publishDate, OrderByComparator<AssetEntry> orderByComparator) {
-
-		int count = countByPublishDate(publishDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByPublishDate(
-			publishDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1785,66 +1551,6 @@ public class AssetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset entry in the ordered set where expirationDate = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByExpirationDate_Last(
-			Date expirationDate,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetEntry assetEntry = fetchByExpirationDate_Last(
-			expirationDate, orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate=");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where expirationDate = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByExpirationDate_Last(
-		Date expirationDate, OrderByComparator<AssetEntry> orderByComparator) {
-
-		int count = countByExpirationDate(expirationDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByExpirationDate(
-			expirationDate, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset entries where expirationDate = &#63; from the database.
 	 *
 	 * @param expirationDate the expiration date
@@ -2163,65 +1869,6 @@ public class AssetEntryPersistenceImpl
 
 		List<AssetEntry> list = findByLayoutUuid(
 			layoutUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where layoutUuid = &#63;.
-	 *
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByLayoutUuid_Last(
-			String layoutUuid, OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetEntry assetEntry = fetchByLayoutUuid_Last(
-			layoutUuid, orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutUuid=");
-		sb.append(layoutUuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where layoutUuid = &#63;.
-	 *
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByLayoutUuid_Last(
-		String layoutUuid, OrderByComparator<AssetEntry> orderByComparator) {
-
-		int count = countByLayoutUuid(layoutUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByLayoutUuid(
-			layoutUuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2783,72 +2430,6 @@ public class AssetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByC_CN_Last(
-			long companyId, long classNameId,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetEntry assetEntry = fetchByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByC_CN_Last(
-		long companyId, long classNameId,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		int count = countByC_CN(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByC_CN(
-			companyId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset entries where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3379,77 +2960,6 @@ public class AssetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and visible = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByG_C_V_Last(
-			long groupId, long classNameId, boolean visible,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetEntry assetEntry = fetchByG_C_V_Last(
-			groupId, classNameId, visible, orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", visible=");
-		sb.append(visible);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and visible = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByG_C_V_Last(
-		long groupId, long classNameId, boolean visible,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		int count = countByG_C_V(groupId, classNameId, visible);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByG_C_V(
-			groupId, classNameId, visible, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset entries where groupId = &#63; and classNameId = &#63; and visible = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3842,86 +3352,6 @@ public class AssetEntryPersistenceImpl
 
 		List<AssetEntry> list = findByG_C_P_E(
 			groupId, classNameId, publishDate, expirationDate, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param publishDate the publish date
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByG_C_P_E_Last(
-			long groupId, long classNameId, Date publishDate,
-			Date expirationDate,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AssetEntry assetEntry = fetchByG_C_P_E_Last(
-			groupId, classNameId, publishDate, expirationDate,
-			orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", publishDate=");
-		sb.append(publishDate);
-
-		sb.append(", expirationDate=");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param publishDate the publish date
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByG_C_P_E_Last(
-		long groupId, long classNameId, Date publishDate, Date expirationDate,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		int count = countByG_C_P_E(
-			groupId, classNameId, publishDate, expirationDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByG_C_P_E(
-			groupId, classNameId, publishDate, expirationDate, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5507,4 +4937,4 @@ public class AssetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1937427078
+// LIFERAY-SERVICE-BUILDER-HASH:-173977884

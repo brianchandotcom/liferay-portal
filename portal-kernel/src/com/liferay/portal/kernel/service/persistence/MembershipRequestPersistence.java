@@ -119,32 +119,6 @@ public interface MembershipRequestPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request
-	 * @throws NoSuchMembershipRequestException if a matching membership request could not be found
-	 */
-	public MembershipRequest findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-				orderByComparator)
-		throws NoSuchMembershipRequestException;
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
-	 */
-	public MembershipRequest fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-			orderByComparator);
-
-	/**
 	 * Removes all the membership requests where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -242,32 +216,6 @@ public interface MembershipRequestPersistence
 	 * @return the first matching membership request, or <code>null</code> if a matching membership request could not be found
 	 */
 	public MembershipRequest fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-			orderByComparator);
-
-	/**
-	 * Returns the last membership request in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request
-	 * @throws NoSuchMembershipRequestException if a matching membership request could not be found
-	 */
-	public MembershipRequest findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-				orderByComparator)
-		throws NoSuchMembershipRequestException;
-
-	/**
-	 * Returns the last membership request in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
-	 */
-	public MembershipRequest fetchByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator);
@@ -377,34 +325,6 @@ public interface MembershipRequestPersistence
 	 * @return the first matching membership request, or <code>null</code> if a matching membership request could not be found
 	 */
 	public MembershipRequest fetchByG_S_First(
-		long groupId, long statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-			orderByComparator);
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63; and statusId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request
-	 * @throws NoSuchMembershipRequestException if a matching membership request could not be found
-	 */
-	public MembershipRequest findByG_S_Last(
-			long groupId, long statusId,
-			com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-				orderByComparator)
-		throws NoSuchMembershipRequestException;
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63; and statusId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
-	 */
-	public MembershipRequest fetchByG_S_Last(
 		long groupId, long statusId,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator);
@@ -522,36 +442,6 @@ public interface MembershipRequestPersistence
 	 * @return the first matching membership request, or <code>null</code> if a matching membership request could not be found
 	 */
 	public MembershipRequest fetchByG_U_S_First(
-		long groupId, long userId, long statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-			orderByComparator);
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request
-	 * @throws NoSuchMembershipRequestException if a matching membership request could not be found
-	 */
-	public MembershipRequest findByG_U_S_Last(
-			long groupId, long userId, long statusId,
-			com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-				orderByComparator)
-		throws NoSuchMembershipRequestException;
-
-	/**
-	 * Returns the last membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching membership request, or <code>null</code> if a matching membership request could not be found
-	 */
-	public MembershipRequest fetchByG_U_S_Last(
 		long groupId, long userId, long statusId,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator);
@@ -697,4 +587,4 @@ public interface MembershipRequestPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:844366023
+// LIFERAY-SERVICE-BUILDER-HASH:230487059

@@ -121,32 +121,6 @@ public interface DEDataListViewPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last de data list view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view
-	 * @throws NoSuchDataListViewException if a matching de data list view could not be found
-	 */
-	public DEDataListView findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-				orderByComparator)
-		throws NoSuchDataListViewException;
-
-	/**
-	 * Returns the last de data list view in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view, or <code>null</code> if a matching de data list view could not be found
-	 */
-	public DEDataListView fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-			orderByComparator);
-
-	/**
 	 * Removes all the de data list views where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface DEDataListViewPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last de data list view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view
-	 * @throws NoSuchDataListViewException if a matching de data list view could not be found
-	 */
-	public DEDataListView findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-				orderByComparator)
-		throws NoSuchDataListViewException;
-
-	/**
-	 * Returns the last de data list view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view, or <code>null</code> if a matching de data list view could not be found
-	 */
-	public DEDataListView fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-			orderByComparator);
-
-	/**
 	 * Removes all the de data list views where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface DEDataListViewPersistence
 	 * @return the first matching de data list view, or <code>null</code> if a matching de data list view could not be found
 	 */
 	public DEDataListView fetchByDDMStructureId_First(
-		long ddmStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-			orderByComparator);
-
-	/**
-	 * Returns the last de data list view in the ordered set where ddmStructureId = &#63;.
-	 *
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view
-	 * @throws NoSuchDataListViewException if a matching de data list view could not be found
-	 */
-	public DEDataListView findByDDMStructureId_Last(
-			long ddmStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-				orderByComparator)
-		throws NoSuchDataListViewException;
-
-	/**
-	 * Returns the last de data list view in the ordered set where ddmStructureId = &#63;.
-	 *
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view, or <code>null</code> if a matching de data list view could not be found
-	 */
-	public DEDataListView fetchByDDMStructureId_Last(
 		long ddmStructureId,
 		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
 			orderByComparator);
@@ -575,36 +495,6 @@ public interface DEDataListViewPersistence
 	 * @return the first matching de data list view, or <code>null</code> if a matching de data list view could not be found
 	 */
 	public DEDataListView fetchByG_C_DDMSI_First(
-		long groupId, long companyId, long ddmStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-			orderByComparator);
-
-	/**
-	 * Returns the last de data list view in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view
-	 * @throws NoSuchDataListViewException if a matching de data list view could not be found
-	 */
-	public DEDataListView findByG_C_DDMSI_Last(
-			long groupId, long companyId, long ddmStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-				orderByComparator)
-		throws NoSuchDataListViewException;
-
-	/**
-	 * Returns the last de data list view in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching de data list view, or <code>null</code> if a matching de data list view could not be found
-	 */
-	public DEDataListView fetchByG_C_DDMSI_Last(
 		long groupId, long companyId, long ddmStructureId,
 		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
 			orderByComparator);
@@ -751,4 +641,4 @@ public interface DEDataListViewPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1000913111
+// LIFERAY-SERVICE-BUILDER-HASH:-938324121

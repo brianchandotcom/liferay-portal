@@ -327,64 +327,6 @@ public class EmailAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last email address in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress findByUuid_Last(
-			String uuid, OrderByComparator<EmailAddress> orderByComparator)
-		throws NoSuchEmailAddressException {
-
-		EmailAddress emailAddress = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEmailAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress fetchByUuid_Last(
-		String uuid, OrderByComparator<EmailAddress> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<EmailAddress> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the email addresses where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -729,72 +671,6 @@ public class EmailAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last email address in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<EmailAddress> orderByComparator)
-		throws NoSuchEmailAddressException {
-
-		EmailAddress emailAddress = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEmailAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<EmailAddress> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<EmailAddress> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the email addresses where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1119,65 +995,6 @@ public class EmailAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last email address in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress findByCompanyId_Last(
-			long companyId, OrderByComparator<EmailAddress> orderByComparator)
-		throws NoSuchEmailAddressException {
-
-		EmailAddress emailAddress = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEmailAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress fetchByCompanyId_Last(
-		long companyId, OrderByComparator<EmailAddress> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<EmailAddress> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the email addresses where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1463,65 +1280,6 @@ public class EmailAddressPersistenceImpl
 		long userId, OrderByComparator<EmailAddress> orderByComparator) {
 
 		List<EmailAddress> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress findByUserId_Last(
-			long userId, OrderByComparator<EmailAddress> orderByComparator)
-		throws NoSuchEmailAddressException {
-
-		EmailAddress emailAddress = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEmailAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress fetchByUserId_Last(
-		long userId, OrderByComparator<EmailAddress> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<EmailAddress> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1838,72 +1596,6 @@ public class EmailAddressPersistenceImpl
 
 		List<EmailAddress> list = findByC_C(
 			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<EmailAddress> orderByComparator)
-		throws NoSuchEmailAddressException {
-
-		EmailAddress emailAddress = fetchByC_C_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEmailAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<EmailAddress> orderByComparator) {
-
-		int count = countByC_C(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<EmailAddress> list = findByC_C(
-			companyId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2249,78 +1941,6 @@ public class EmailAddressPersistenceImpl
 
 		List<EmailAddress> list = findByC_C_C(
 			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<EmailAddress> orderByComparator)
-		throws NoSuchEmailAddressException {
-
-		EmailAddress emailAddress = fetchByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEmailAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<EmailAddress> orderByComparator) {
-
-		int count = countByC_C_C(companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<EmailAddress> list = findByC_C_C(
-			companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2695,83 +2315,6 @@ public class EmailAddressPersistenceImpl
 
 		List<EmailAddress> list = findByC_C_C_P(
 			companyId, classNameId, classPK, primary, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress findByC_C_C_P_Last(
-			long companyId, long classNameId, long classPK, boolean primary,
-			OrderByComparator<EmailAddress> orderByComparator)
-		throws NoSuchEmailAddressException {
-
-		EmailAddress emailAddress = fetchByC_C_C_P_Last(
-			companyId, classNameId, classPK, primary, orderByComparator);
-
-		if (emailAddress != null) {
-			return emailAddress;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append("}");
-
-		throw new NoSuchEmailAddressException(sb.toString());
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	@Override
-	public EmailAddress fetchByC_C_C_P_Last(
-		long companyId, long classNameId, long classPK, boolean primary,
-		OrderByComparator<EmailAddress> orderByComparator) {
-
-		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<EmailAddress> list = findByC_C_C_P(
-			companyId, classNameId, classPK, primary, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4204,4 +3747,4 @@ public class EmailAddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:437964062
+// LIFERAY-SERVICE-BUILDER-HASH:370196057

@@ -321,67 +321,6 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
-	 */
-	@Override
-	public DDMFieldAttribute findByStorageId_Last(
-			long storageId,
-			OrderByComparator<DDMFieldAttribute> orderByComparator)
-		throws NoSuchFieldAttributeException {
-
-		DDMFieldAttribute ddmFieldAttribute = fetchByStorageId_Last(
-			storageId, orderByComparator);
-
-		if (ddmFieldAttribute != null) {
-			return ddmFieldAttribute;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append("}");
-
-		throw new NoSuchFieldAttributeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	@Override
-	public DDMFieldAttribute fetchByStorageId_Last(
-		long storageId,
-		OrderByComparator<DDMFieldAttribute> orderByComparator) {
-
-		int count = countByStorageId(storageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFieldAttribute> list = findByStorageId(
-			storageId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm field attributes where storageId = &#63; from the database.
 	 *
 	 * @param storageId the storage ID
@@ -706,72 +645,6 @@ public class DDMFieldAttributePersistenceImpl
 
 		List<DDMFieldAttribute> list = findByS_AN(
 			storageId, attributeName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
-	 */
-	@Override
-	public DDMFieldAttribute findByS_AN_Last(
-			long storageId, String attributeName,
-			OrderByComparator<DDMFieldAttribute> orderByComparator)
-		throws NoSuchFieldAttributeException {
-
-		DDMFieldAttribute ddmFieldAttribute = fetchByS_AN_Last(
-			storageId, attributeName, orderByComparator);
-
-		if (ddmFieldAttribute != null) {
-			return ddmFieldAttribute;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append(", attributeName=");
-		sb.append(attributeName);
-
-		sb.append("}");
-
-		throw new NoSuchFieldAttributeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	@Override
-	public DDMFieldAttribute fetchByS_AN_Last(
-		long storageId, String attributeName,
-		OrderByComparator<DDMFieldAttribute> orderByComparator) {
-
-		int count = countByS_AN(storageId, attributeName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFieldAttribute> list = findByS_AN(
-			storageId, attributeName, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1131,72 +1004,6 @@ public class DDMFieldAttributePersistenceImpl
 
 		List<DDMFieldAttribute> list = findByS_L(
 			storageId, languageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and languageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
-	 */
-	@Override
-	public DDMFieldAttribute findByS_L_Last(
-			long storageId, String languageId,
-			OrderByComparator<DDMFieldAttribute> orderByComparator)
-		throws NoSuchFieldAttributeException {
-
-		DDMFieldAttribute ddmFieldAttribute = fetchByS_L_Last(
-			storageId, languageId, orderByComparator);
-
-		if (ddmFieldAttribute != null) {
-			return ddmFieldAttribute;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append(", languageId=");
-		sb.append(languageId);
-
-		sb.append("}");
-
-		throw new NoSuchFieldAttributeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and languageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	@Override
-	public DDMFieldAttribute fetchByS_L_Last(
-		long storageId, String languageId,
-		OrderByComparator<DDMFieldAttribute> orderByComparator) {
-
-		int count = countByS_L(storageId, languageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFieldAttribute> list = findByS_L(
-			storageId, languageId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1897,73 +1704,6 @@ public class DDMFieldAttributePersistenceImpl
 
 		List<DDMFieldAttribute> list = findByAN_SAV(
 			attributeName, smallAttributeValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
-	 */
-	@Override
-	public DDMFieldAttribute findByAN_SAV_Last(
-			String attributeName, String smallAttributeValue,
-			OrderByComparator<DDMFieldAttribute> orderByComparator)
-		throws NoSuchFieldAttributeException {
-
-		DDMFieldAttribute ddmFieldAttribute = fetchByAN_SAV_Last(
-			attributeName, smallAttributeValue, orderByComparator);
-
-		if (ddmFieldAttribute != null) {
-			return ddmFieldAttribute;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("attributeName=");
-		sb.append(attributeName);
-
-		sb.append(", smallAttributeValue=");
-		sb.append(smallAttributeValue);
-
-		sb.append("}");
-
-		throw new NoSuchFieldAttributeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm field attribute in the ordered set where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	@Override
-	public DDMFieldAttribute fetchByAN_SAV_Last(
-		String attributeName, String smallAttributeValue,
-		OrderByComparator<DDMFieldAttribute> orderByComparator) {
-
-		int count = countByAN_SAV(attributeName, smallAttributeValue);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMFieldAttribute> list = findByAN_SAV(
-			attributeName, smallAttributeValue, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3318,4 +3058,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1391744756
+// LIFERAY-SERVICE-BUILDER-HASH:-1892704944

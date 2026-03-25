@@ -324,64 +324,6 @@ public class AccountEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last account entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry findByUuid_Last(
-			String uuid, OrderByComparator<AccountEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AccountEntry accountEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<AccountEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the account entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -935,72 +877,6 @@ public class AccountEntryPersistenceImpl
 
 		List<AccountEntry> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AccountEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AccountEntry accountEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AccountEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1564,65 +1440,6 @@ public class AccountEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last account entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<AccountEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AccountEntry accountEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AccountEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the account entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2116,72 +1933,6 @@ public class AccountEntryPersistenceImpl
 
 		List<AccountEntry> list = findByC_S(
 			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<AccountEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AccountEntry accountEntry = fetchByC_S_Last(
-			companyId, status, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<AccountEntry> orderByComparator) {
-
-		int count = countByC_S(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountEntry> list = findByC_S(
-			companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2718,72 +2469,6 @@ public class AccountEntryPersistenceImpl
 
 		List<AccountEntry> list = findByU_T(
 			userId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where userId = &#63; and type = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry findByU_T_Last(
-			long userId, String type,
-			OrderByComparator<AccountEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		AccountEntry accountEntry = fetchByU_T_Last(
-			userId, type, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where userId = &#63; and type = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	@Override
-	public AccountEntry fetchByU_T_Last(
-		long userId, String type,
-		OrderByComparator<AccountEntry> orderByComparator) {
-
-		int count = countByU_T(userId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountEntry> list = findByU_T(
-			userId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4172,4 +3857,4 @@ public class AccountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2062305949
+// LIFERAY-SERVICE-BUILDER-HASH:-2070024175

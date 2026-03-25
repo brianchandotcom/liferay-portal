@@ -277,39 +277,6 @@ public class MemberRequestUtil {
 	}
 
 	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request
-	 * @throws NoSuchMemberRequestException if a matching member request could not be found
-	 */
-	public static MemberRequest findByReceiverUserId_Last(
-			long receiverUserId,
-			OrderByComparator<MemberRequest> orderByComparator)
-		throws com.liferay.invitation.invite.members.exception.
-			NoSuchMemberRequestException {
-
-		return getPersistence().findByReceiverUserId_Last(
-			receiverUserId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request, or <code>null</code> if a matching member request could not be found
-	 */
-	public static MemberRequest fetchByReceiverUserId_Last(
-		long receiverUserId,
-		OrderByComparator<MemberRequest> orderByComparator) {
-
-		return getPersistence().fetchByReceiverUserId_Last(
-			receiverUserId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the member requests where receiverUserId = &#63; from the database.
 	 *
 	 * @param receiverUserId the receiver user ID
@@ -439,41 +406,6 @@ public class MemberRequestUtil {
 		OrderByComparator<MemberRequest> orderByComparator) {
 
 		return getPersistence().fetchByR_S_First(
-			receiverUserId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request
-	 * @throws NoSuchMemberRequestException if a matching member request could not be found
-	 */
-	public static MemberRequest findByR_S_Last(
-			long receiverUserId, int status,
-			OrderByComparator<MemberRequest> orderByComparator)
-		throws com.liferay.invitation.invite.members.exception.
-			NoSuchMemberRequestException {
-
-		return getPersistence().findByR_S_Last(
-			receiverUserId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request, or <code>null</code> if a matching member request could not be found
-	 */
-	public static MemberRequest fetchByR_S_Last(
-		long receiverUserId, int status,
-		OrderByComparator<MemberRequest> orderByComparator) {
-
-		return getPersistence().fetchByR_S_Last(
 			receiverUserId, status, orderByComparator);
 	}
 
@@ -736,4 +668,4 @@ public class MemberRequestUtil {
 	private static volatile MemberRequestPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1864663782
+// LIFERAY-SERVICE-BUILDER-HASH:570400756

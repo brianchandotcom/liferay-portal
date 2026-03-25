@@ -121,32 +121,6 @@ public interface DDMFieldPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	public DDMField findByStorageId_Last(
-			long storageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMField>
-				orderByComparator)
-		throws NoSuchFieldException;
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	public DDMField fetchByStorageId_Last(
-		long storageId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMField>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm fields where storageId = &#63; from the database.
 	 *
 	 * @param storageId the storage ID
@@ -245,32 +219,6 @@ public interface DDMFieldPersistence
 	 * @return the first matching ddm field, or <code>null</code> if a matching ddm field could not be found
 	 */
 	public DDMField fetchByStructureVersionId_First(
-		long structureVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMField>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm field in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	public DDMField findByStructureVersionId_Last(
-			long structureVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMField>
-				orderByComparator)
-		throws NoSuchFieldException;
-
-	/**
-	 * Returns the last ddm field in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	public DDMField fetchByStructureVersionId_Last(
 		long structureVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMField>
 			orderByComparator);
@@ -384,34 +332,6 @@ public interface DDMFieldPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm field in the ordered set where companyId = &#63; and fieldType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param fieldType the field type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	public DDMField findByC_F_Last(
-			long companyId, String fieldType,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMField>
-				orderByComparator)
-		throws NoSuchFieldException;
-
-	/**
-	 * Returns the last ddm field in the ordered set where companyId = &#63; and fieldType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param fieldType the field type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	public DDMField fetchByC_F_Last(
-		long companyId, String fieldType,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMField>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm fields where companyId = &#63; and fieldType = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -517,34 +437,6 @@ public interface DDMFieldPersistence
 	 * @return the first matching ddm field, or <code>null</code> if a matching ddm field could not be found
 	 */
 	public DDMField fetchByS_F_First(
-		long storageId, String fieldName,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMField>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63; and fieldName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	public DDMField findByS_F_Last(
-			long storageId, String fieldName,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMField>
-				orderByComparator)
-		throws NoSuchFieldException;
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63; and fieldName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	public DDMField fetchByS_F_Last(
 		long storageId, String fieldName,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMField>
 			orderByComparator);
@@ -735,4 +627,4 @@ public interface DDMFieldPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:644985698
+// LIFERAY-SERVICE-BUILDER-HASH:-1459779074

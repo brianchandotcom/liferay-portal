@@ -215,38 +215,6 @@ public class DDMTemplateLinkUtil {
 	}
 
 	/**
-	 * Returns the last ddm template link in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template link
-	 * @throws NoSuchTemplateLinkException if a matching ddm template link could not be found
-	 */
-	public static DDMTemplateLink findByTemplateId_Last(
-			long templateId,
-			OrderByComparator<DDMTemplateLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchTemplateLinkException {
-
-		return getPersistence().findByTemplateId_Last(
-			templateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm template link in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
-	 */
-	public static DDMTemplateLink fetchByTemplateId_Last(
-		long templateId, OrderByComparator<DDMTemplateLink> orderByComparator) {
-
-		return getPersistence().fetchByTemplateId_Last(
-			templateId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm template links where templateId = &#63; from the database.
 	 *
 	 * @param templateId the template ID
@@ -493,4 +461,4 @@ public class DDMTemplateLinkUtil {
 	private static volatile DDMTemplateLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1844203809
+// LIFERAY-SERVICE-BUILDER-HASH:1882028513

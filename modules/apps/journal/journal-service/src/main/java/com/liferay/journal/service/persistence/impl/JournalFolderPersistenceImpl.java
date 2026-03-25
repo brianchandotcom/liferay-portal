@@ -340,64 +340,6 @@ public class JournalFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder findByUuid_Last(
-			String uuid, OrderByComparator<JournalFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (journalFolder != null) {
-			return journalFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder fetchByUuid_Last(
-		String uuid, OrderByComparator<JournalFolder> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFolder> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -945,72 +887,6 @@ public class JournalFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<JournalFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (journalFolder != null) {
-			return journalFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<JournalFolder> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFolder> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal folders where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1324,65 +1200,6 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder findByGroupId_Last(
-			long groupId, OrderByComparator<JournalFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (journalFolder != null) {
-			return journalFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder fetchByGroupId_Last(
-		long groupId, OrderByComparator<JournalFolder> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFolder> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1889,65 +1706,6 @@ public class JournalFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder findByCompanyId_Last(
-			long companyId, OrderByComparator<JournalFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (journalFolder != null) {
-			return journalFolder;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder fetchByCompanyId_Last(
-		long companyId, OrderByComparator<JournalFolder> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFolder> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal folders where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2257,72 +2015,6 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = findByG_P(
 			groupId, parentFolderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder findByG_P_Last(
-			long groupId, long parentFolderId,
-			OrderByComparator<JournalFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByG_P_Last(
-			groupId, parentFolderId, orderByComparator);
-
-		if (journalFolder != null) {
-			return journalFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder fetchByG_P_Last(
-		long groupId, long parentFolderId,
-		OrderByComparator<JournalFolder> orderByComparator) {
-
-		int count = countByG_P(groupId, parentFolderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFolder> list = findByG_P(
-			groupId, parentFolderId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3081,72 +2773,6 @@ public class JournalFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder findByC_NotS_Last(
-			long companyId, int status,
-			OrderByComparator<JournalFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByC_NotS_Last(
-			companyId, status, orderByComparator);
-
-		if (journalFolder != null) {
-			return journalFolder;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder fetchByC_NotS_Last(
-		long companyId, int status,
-		OrderByComparator<JournalFolder> orderByComparator) {
-
-		int count = countByC_NotS(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFolder> list = findByC_NotS(
-			companyId, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the journal folders where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3711,78 +3337,6 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = findByG_P_S(
 			groupId, parentFolderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder findByG_P_S_Last(
-			long groupId, long parentFolderId, int status,
-			OrderByComparator<JournalFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByG_P_S_Last(
-			groupId, parentFolderId, status, orderByComparator);
-
-		if (journalFolder != null) {
-			return journalFolder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder fetchByG_P_S_Last(
-		long groupId, long parentFolderId, int status,
-		OrderByComparator<JournalFolder> orderByComparator) {
-
-		int count = countByG_P_S(groupId, parentFolderId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFolder> list = findByG_P_S(
-			groupId, parentFolderId, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4360,78 +3914,6 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = findByG_P_NotS(
 			groupId, parentFolderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder findByG_P_NotS_Last(
-			long groupId, long parentFolderId, int status,
-			OrderByComparator<JournalFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByG_P_NotS_Last(
-			groupId, parentFolderId, status, orderByComparator);
-
-		if (journalFolder != null) {
-			return journalFolder;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder fetchByG_P_NotS_Last(
-		long groupId, long parentFolderId, int status,
-		OrderByComparator<JournalFolder> orderByComparator) {
-
-		int count = countByG_P_NotS(groupId, parentFolderId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFolder> list = findByG_P_NotS(
-			groupId, parentFolderId, status, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5028,84 +4510,6 @@ public class JournalFolderPersistenceImpl
 
 		List<JournalFolder> list = findByGtF_C_P_NotS(
 			folderId, companyId, parentFolderId, status, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param companyId the company ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder
-	 * @throws NoSuchFolderException if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder findByGtF_C_P_NotS_Last(
-			long folderId, long companyId, long parentFolderId, int status,
-			OrderByComparator<JournalFolder> orderByComparator)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByGtF_C_P_NotS_Last(
-			folderId, companyId, parentFolderId, status, orderByComparator);
-
-		if (journalFolder != null) {
-			return journalFolder;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("folderId>");
-		sb.append(folderId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
-	}
-
-	/**
-	 * Returns the last journal folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param companyId the company ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
-	@Override
-	public JournalFolder fetchByGtF_C_P_NotS_Last(
-		long folderId, long companyId, long parentFolderId, int status,
-		OrderByComparator<JournalFolder> orderByComparator) {
-
-		int count = countByGtF_C_P_NotS(
-			folderId, companyId, parentFolderId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<JournalFolder> list = findByGtF_C_P_NotS(
-			folderId, companyId, parentFolderId, status, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -6701,4 +6105,4 @@ public class JournalFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2048366241
+// LIFERAY-SERVICE-BUILDER-HASH:1943146704

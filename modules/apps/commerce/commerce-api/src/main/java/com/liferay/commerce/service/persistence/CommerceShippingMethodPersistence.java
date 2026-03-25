@@ -120,32 +120,6 @@ public interface CommerceShippingMethodPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce shipping method in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping method
-	 * @throws NoSuchShippingMethodException if a matching commerce shipping method could not be found
-	 */
-	public CommerceShippingMethod findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceShippingMethod> orderByComparator)
-		throws NoSuchShippingMethodException;
-
-	/**
-	 * Returns the last commerce shipping method in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping method, or <code>null</code> if a matching commerce shipping method could not be found
-	 */
-	public CommerceShippingMethod fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceShippingMethod>
-			orderByComparator);
-
-	/**
 	 * Removes all the commerce shipping methods where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -250,34 +224,6 @@ public interface CommerceShippingMethodPersistence
 	 * @return the first matching commerce shipping method, or <code>null</code> if a matching commerce shipping method could not be found
 	 */
 	public CommerceShippingMethod fetchByG_A_First(
-		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceShippingMethod>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce shipping method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping method
-	 * @throws NoSuchShippingMethodException if a matching commerce shipping method could not be found
-	 */
-	public CommerceShippingMethod findByG_A_Last(
-			long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceShippingMethod> orderByComparator)
-		throws NoSuchShippingMethodException;
-
-	/**
-	 * Returns the last commerce shipping method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping method, or <code>null</code> if a matching commerce shipping method could not be found
-	 */
-	public CommerceShippingMethod fetchByG_A_Last(
 		long groupId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShippingMethod>
 			orderByComparator);
@@ -474,4 +420,4 @@ public interface CommerceShippingMethodPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-349994074
+// LIFERAY-SERVICE-BUILDER-HASH:812101130

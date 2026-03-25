@@ -311,67 +311,6 @@ public class DispatchLogPersistenceImpl
 	}
 
 	/**
-	 * Returns the last dispatch log in the ordered set where dispatchTriggerId = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch log
-	 * @throws NoSuchLogException if a matching dispatch log could not be found
-	 */
-	@Override
-	public DispatchLog findByDispatchTriggerId_Last(
-			long dispatchTriggerId,
-			OrderByComparator<DispatchLog> orderByComparator)
-		throws NoSuchLogException {
-
-		DispatchLog dispatchLog = fetchByDispatchTriggerId_Last(
-			dispatchTriggerId, orderByComparator);
-
-		if (dispatchLog != null) {
-			return dispatchLog;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("dispatchTriggerId=");
-		sb.append(dispatchTriggerId);
-
-		sb.append("}");
-
-		throw new NoSuchLogException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch log in the ordered set where dispatchTriggerId = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch log, or <code>null</code> if a matching dispatch log could not be found
-	 */
-	@Override
-	public DispatchLog fetchByDispatchTriggerId_Last(
-		long dispatchTriggerId,
-		OrderByComparator<DispatchLog> orderByComparator) {
-
-		int count = countByDispatchTriggerId(dispatchTriggerId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchLog> list = findByDispatchTriggerId(
-			dispatchTriggerId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the dispatch logs where dispatchTriggerId = &#63; from the database.
 	 *
 	 * @param dispatchTriggerId the dispatch trigger ID
@@ -672,72 +611,6 @@ public class DispatchLogPersistenceImpl
 
 		List<DispatchLog> list = findByDTI_S(
 			dispatchTriggerId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last dispatch log in the ordered set where dispatchTriggerId = &#63; and status = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch log
-	 * @throws NoSuchLogException if a matching dispatch log could not be found
-	 */
-	@Override
-	public DispatchLog findByDTI_S_Last(
-			long dispatchTriggerId, int status,
-			OrderByComparator<DispatchLog> orderByComparator)
-		throws NoSuchLogException {
-
-		DispatchLog dispatchLog = fetchByDTI_S_Last(
-			dispatchTriggerId, status, orderByComparator);
-
-		if (dispatchLog != null) {
-			return dispatchLog;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("dispatchTriggerId=");
-		sb.append(dispatchTriggerId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchLogException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch log in the ordered set where dispatchTriggerId = &#63; and status = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch log, or <code>null</code> if a matching dispatch log could not be found
-	 */
-	@Override
-	public DispatchLog fetchByDTI_S_Last(
-		long dispatchTriggerId, int status,
-		OrderByComparator<DispatchLog> orderByComparator) {
-
-		int count = countByDTI_S(dispatchTriggerId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchLog> list = findByDTI_S(
-			dispatchTriggerId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1481,4 +1354,4 @@ public class DispatchLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-982365927
+// LIFERAY-SERVICE-BUILDER-HASH:195212893

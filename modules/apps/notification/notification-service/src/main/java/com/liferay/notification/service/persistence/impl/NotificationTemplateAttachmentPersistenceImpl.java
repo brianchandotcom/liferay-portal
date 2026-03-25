@@ -319,69 +319,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last notification template attachment in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template attachment
-	 * @throws NoSuchNotificationTemplateAttachmentException if a matching notification template attachment could not be found
-	 */
-	@Override
-	public NotificationTemplateAttachment findByNotificationTemplateId_Last(
-			long notificationTemplateId,
-			OrderByComparator<NotificationTemplateAttachment> orderByComparator)
-		throws NoSuchNotificationTemplateAttachmentException {
-
-		NotificationTemplateAttachment notificationTemplateAttachment =
-			fetchByNotificationTemplateId_Last(
-				notificationTemplateId, orderByComparator);
-
-		if (notificationTemplateAttachment != null) {
-			return notificationTemplateAttachment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("notificationTemplateId=");
-		sb.append(notificationTemplateId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateAttachmentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification template attachment in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template attachment, or <code>null</code> if a matching notification template attachment could not be found
-	 */
-	@Override
-	public NotificationTemplateAttachment fetchByNotificationTemplateId_Last(
-		long notificationTemplateId,
-		OrderByComparator<NotificationTemplateAttachment> orderByComparator) {
-
-		int count = countByNotificationTemplateId(notificationTemplateId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationTemplateAttachment> list =
-			findByNotificationTemplateId(
-				notificationTemplateId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the notification template attachments where notificationTemplateId = &#63; from the database.
 	 *
 	 * @param notificationTemplateId the notification template ID
@@ -1360,4 +1297,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2064480766
+// LIFERAY-SERVICE-BUILDER-HASH:-44449938

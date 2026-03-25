@@ -326,64 +326,6 @@ public class RepositoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last repository in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository
-	 * @throws NoSuchRepositoryException if a matching repository could not be found
-	 */
-	@Override
-	public Repository findByUuid_Last(
-			String uuid, OrderByComparator<Repository> orderByComparator)
-		throws NoSuchRepositoryException {
-
-		Repository repository = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRepositoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last repository in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository, or <code>null</code> if a matching repository could not be found
-	 */
-	@Override
-	public Repository fetchByUuid_Last(
-		String uuid, OrderByComparator<Repository> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Repository> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the repositories where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -931,72 +873,6 @@ public class RepositoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last repository in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository
-	 * @throws NoSuchRepositoryException if a matching repository could not be found
-	 */
-	@Override
-	public Repository findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Repository> orderByComparator)
-		throws NoSuchRepositoryException {
-
-		Repository repository = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRepositoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last repository in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository, or <code>null</code> if a matching repository could not be found
-	 */
-	@Override
-	public Repository fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Repository> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Repository> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the repositories where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1318,64 +1194,6 @@ public class RepositoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last repository in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository
-	 * @throws NoSuchRepositoryException if a matching repository could not be found
-	 */
-	@Override
-	public Repository findByGroupId_Last(
-			long groupId, OrderByComparator<Repository> orderByComparator)
-		throws NoSuchRepositoryException {
-
-		Repository repository = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchRepositoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last repository in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository, or <code>null</code> if a matching repository could not be found
-	 */
-	@Override
-	public Repository fetchByGroupId_Last(
-		long groupId, OrderByComparator<Repository> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Repository> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the repositories where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1678,65 +1496,6 @@ public class RepositoryPersistenceImpl
 
 		List<Repository> list = findByPortletId(
 			portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last repository in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository
-	 * @throws NoSuchRepositoryException if a matching repository could not be found
-	 */
-	@Override
-	public Repository findByPortletId_Last(
-			String portletId, OrderByComparator<Repository> orderByComparator)
-		throws NoSuchRepositoryException {
-
-		Repository repository = fetchByPortletId_Last(
-			portletId, orderByComparator);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchRepositoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last repository in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository, or <code>null</code> if a matching repository could not be found
-	 */
-	@Override
-	public Repository fetchByPortletId_Last(
-		String portletId, OrderByComparator<Repository> orderByComparator) {
-
-		int count = countByPortletId(portletId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Repository> list = findByPortletId(
-			portletId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3353,4 +3112,4 @@ public class RepositoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1886320256
+// LIFERAY-SERVICE-BUILDER-HASH:10604430

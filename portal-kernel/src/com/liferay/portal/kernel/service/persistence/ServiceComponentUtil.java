@@ -219,39 +219,6 @@ public class ServiceComponentUtil {
 	}
 
 	/**
-	 * Returns the last service component in the ordered set where buildNamespace = &#63;.
-	 *
-	 * @param buildNamespace the build namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching service component
-	 * @throws NoSuchServiceComponentException if a matching service component could not be found
-	 */
-	public static ServiceComponent findByBuildNamespace_Last(
-			String buildNamespace,
-			OrderByComparator<ServiceComponent> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchServiceComponentException {
-
-		return getPersistence().findByBuildNamespace_Last(
-			buildNamespace, orderByComparator);
-	}
-
-	/**
-	 * Returns the last service component in the ordered set where buildNamespace = &#63;.
-	 *
-	 * @param buildNamespace the build namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching service component, or <code>null</code> if a matching service component could not be found
-	 */
-	public static ServiceComponent fetchByBuildNamespace_Last(
-		String buildNamespace,
-		OrderByComparator<ServiceComponent> orderByComparator) {
-
-		return getPersistence().fetchByBuildNamespace_Last(
-			buildNamespace, orderByComparator);
-	}
-
-	/**
 	 * Removes all the service components where buildNamespace = &#63; from the database.
 	 *
 	 * @param buildNamespace the build namespace
@@ -504,4 +471,4 @@ public class ServiceComponentUtil {
 	private static volatile ServiceComponentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:476532383
+// LIFERAY-SERVICE-BUILDER-HASH:1798779011

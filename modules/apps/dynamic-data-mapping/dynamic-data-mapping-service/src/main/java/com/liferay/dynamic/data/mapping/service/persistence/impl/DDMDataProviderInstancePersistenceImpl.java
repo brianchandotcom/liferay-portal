@@ -341,67 +341,6 @@ public class DDMDataProviderInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm data provider instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a matching ddm data provider instance could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance findByUuid_Last(
-			String uuid,
-			OrderByComparator<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException {
-
-		DDMDataProviderInstance ddmDataProviderInstance = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (ddmDataProviderInstance != null) {
-			return ddmDataProviderInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMDataProviderInstance> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm data provider instances where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -959,72 +898,6 @@ public class DDMDataProviderInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm data provider instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a matching ddm data provider instance could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException {
-
-		DDMDataProviderInstance ddmDataProviderInstance = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ddmDataProviderInstance != null) {
-			return ddmDataProviderInstance;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMDataProviderInstance> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm data provider instances where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1345,67 +1218,6 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		List<DDMDataProviderInstance> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a matching ddm data provider instance could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance findByGroupId_Last(
-			long groupId,
-			OrderByComparator<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException {
-
-		DDMDataProviderInstance ddmDataProviderInstance = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (ddmDataProviderInstance != null) {
-			return ddmDataProviderInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMDataProviderInstance> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2399,67 +2211,6 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		List<DDMDataProviderInstance> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a matching ddm data provider instance could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException {
-
-		DDMDataProviderInstance ddmDataProviderInstance = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ddmDataProviderInstance != null) {
-			return ddmDataProviderInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm data provider instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMDataProviderInstance> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3627,4 +3378,4 @@ public class DDMDataProviderInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:249683944
+// LIFERAY-SERVICE-BUILDER-HASH:1989546484

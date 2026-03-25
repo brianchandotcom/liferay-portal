@@ -210,34 +210,6 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
-	 * Returns the last list type entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry findByUuid_Last(
-			String uuid, OrderByComparator<ListTypeEntry> orderByComparator)
-		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the list type entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -369,40 +341,6 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
-	 * Returns the last list type entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ListTypeEntry> orderByComparator)
-		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the list type entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -527,38 +465,6 @@ public class ListTypeEntryUtil {
 		OrderByComparator<ListTypeEntry> orderByComparator) {
 
 		return getPersistence().fetchByListTypeEntryId_First(
-			listTypeEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry findByListTypeEntryId_Last(
-			long listTypeEntryId,
-			OrderByComparator<ListTypeEntry> orderByComparator)
-		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
-
-		return getPersistence().findByListTypeEntryId_Last(
-			listTypeEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry fetchByListTypeEntryId_Last(
-		long listTypeEntryId,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().fetchByListTypeEntryId_Last(
 			listTypeEntryId, orderByComparator);
 	}
 
@@ -776,38 +682,6 @@ public class ListTypeEntryUtil {
 		OrderByComparator<ListTypeEntry> orderByComparator) {
 
 		return getPersistence().fetchByListTypeDefinitionId_First(
-			listTypeDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry findByListTypeDefinitionId_Last(
-			long listTypeDefinitionId,
-			OrderByComparator<ListTypeEntry> orderByComparator)
-		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
-
-		return getPersistence().findByListTypeDefinitionId_Last(
-			listTypeDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry fetchByListTypeDefinitionId_Last(
-		long listTypeDefinitionId,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().fetchByListTypeDefinitionId_Last(
 			listTypeDefinitionId, orderByComparator);
 	}
 
@@ -1032,40 +906,6 @@ public class ListTypeEntryUtil {
 		OrderByComparator<ListTypeEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_U_First(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<ListTypeEntry> orderByComparator)
-		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
-
-		return getPersistence().findByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last list type entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_U_Last(
 			companyId, userId, orderByComparator);
 	}
 
@@ -1402,4 +1242,4 @@ public class ListTypeEntryUtil {
 	private static volatile ListTypeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2081417940
+// LIFERAY-SERVICE-BUILDER-HASH:296557125

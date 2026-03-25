@@ -217,37 +217,6 @@ public class CommercePriceModifierUtil {
 	}
 
 	/**
-	 * Returns the last commerce price modifier in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPriceModifierException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price modifiers where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -448,41 +417,6 @@ public class CommercePriceModifierUtil {
 	}
 
 	/**
-	 * Returns the last commerce price modifier in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPriceModifierException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price modifiers where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -605,39 +539,6 @@ public class CommercePriceModifierUtil {
 		OrderByComparator<CommercePriceModifier> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPriceModifierException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -765,39 +666,6 @@ public class CommercePriceModifierUtil {
 		OrderByComparator<CommercePriceModifier> orderByComparator) {
 
 		return getPersistence().fetchByCommercePriceListId_First(
-			commercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier findByCommercePriceListId_Last(
-			long commercePriceListId,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPriceModifierException {
-
-		return getPersistence().findByCommercePriceListId_Last(
-			commercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier fetchByCommercePriceListId_Last(
-		long commercePriceListId,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		return getPersistence().fetchByCommercePriceListId_Last(
 			commercePriceListId, orderByComparator);
 	}
 
@@ -930,41 +798,6 @@ public class CommercePriceModifierUtil {
 		OrderByComparator<CommercePriceModifier> orderByComparator) {
 
 		return getPersistence().fetchByC_T_First(
-			companyId, target, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where companyId = &#63; and target = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param target the target
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier findByC_T_Last(
-			long companyId, String target,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPriceModifierException {
-
-		return getPersistence().findByC_T_Last(
-			companyId, target, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where companyId = &#63; and target = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param target the target
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier fetchByC_T_Last(
-		long companyId, String target,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		return getPersistence().fetchByC_T_Last(
 			companyId, target, orderByComparator);
 	}
 
@@ -1103,41 +936,6 @@ public class CommercePriceModifierUtil {
 	}
 
 	/**
-	 * Returns the last commerce price modifier in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPriceModifierException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price modifiers where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -1269,41 +1067,6 @@ public class CommercePriceModifierUtil {
 		OrderByComparator<CommercePriceModifier> orderByComparator) {
 
 		return getPersistence().fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPriceModifierException {
-
-		return getPersistence().findByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		return getPersistence().fetchByLtE_S_Last(
 			expirationDate, status, orderByComparator);
 	}
 
@@ -1446,43 +1209,6 @@ public class CommercePriceModifierUtil {
 		OrderByComparator<CommercePriceModifier> orderByComparator) {
 
 		return getPersistence().fetchByG_C_S_First(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier findByG_C_S_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPriceModifierException {
-
-		return getPersistence().findByG_C_S_Last(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier fetchByG_C_S_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		return getPersistence().fetchByG_C_S_Last(
 			groupId, companyId, status, orderByComparator);
 	}
 
@@ -1729,43 +1455,6 @@ public class CommercePriceModifierUtil {
 		OrderByComparator<CommercePriceModifier> orderByComparator) {
 
 		return getPersistence().fetchByG_C_NotS_First(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier findByG_C_NotS_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPriceModifierException {
-
-		return getPersistence().findByG_C_NotS_Last(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	public static CommercePriceModifier fetchByG_C_NotS_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		return getPersistence().fetchByG_C_NotS_Last(
 			groupId, companyId, status, orderByComparator);
 	}
 
@@ -2143,4 +1832,4 @@ public class CommercePriceModifierUtil {
 	private static volatile CommercePriceModifierPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:293957608
+// LIFERAY-SERVICE-BUILDER-HASH:-1670838792

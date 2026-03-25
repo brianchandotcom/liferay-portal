@@ -325,67 +325,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws NoSuchTaskInstanceTokenException {
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoTaskInstanceToken != null) {
-			return kaleoTaskInstanceToken;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskInstanceTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskInstanceToken> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo task instance tokens where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -690,68 +629,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		List<KaleoTaskInstanceToken> list = findByKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws NoSuchTaskInstanceTokenException {
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			fetchByKaleoDefinitionVersionId_Last(
-				kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoTaskInstanceToken != null) {
-			return kaleoTaskInstanceToken;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskInstanceTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		int count = countByKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskInstanceToken> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1072,67 +949,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo task instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken findByKaleoInstanceId_Last(
-			long kaleoInstanceId,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws NoSuchTaskInstanceTokenException {
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			fetchByKaleoInstanceId_Last(kaleoInstanceId, orderByComparator);
-
-		if (kaleoTaskInstanceToken != null) {
-			return kaleoTaskInstanceToken;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoInstanceId=");
-		sb.append(kaleoInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskInstanceTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken fetchByKaleoInstanceId_Last(
-		long kaleoInstanceId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		int count = countByKaleoInstanceId(kaleoInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskInstanceToken> list = findByKaleoInstanceId(
-			kaleoInstanceId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo task instance tokens where kaleoInstanceId = &#63; from the database.
 	 *
 	 * @param kaleoInstanceId the kaleo instance ID
@@ -1443,72 +1259,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		List<KaleoTaskInstanceToken> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws NoSuchTaskInstanceTokenException {
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (kaleoTaskInstanceToken != null) {
-			return kaleoTaskInstanceToken;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchTaskInstanceTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskInstanceToken> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2074,72 +1824,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo task instance token in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken findByCN_CPK_Last(
-			String className, long classPK,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws NoSuchTaskInstanceTokenException {
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByCN_CPK_Last(
-			className, classPK, orderByComparator);
-
-		if (kaleoTaskInstanceToken != null) {
-			return kaleoTaskInstanceToken;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("className=");
-		sb.append(className);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchTaskInstanceTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken fetchByCN_CPK_Last(
-		String className, long classPK,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		int count = countByCN_CPK(className, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskInstanceToken> list = findByCN_CPK(
-			className, classPK, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo task instance tokens where className = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param className the class name
@@ -2492,77 +2176,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		List<KaleoTaskInstanceToken> list = findByC_U_C(
 			companyId, userId, completed, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63; and completed = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken findByC_U_C_Last(
-			long companyId, long userId, boolean completed,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws NoSuchTaskInstanceTokenException {
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByC_U_C_Last(
-			companyId, userId, completed, orderByComparator);
-
-		if (kaleoTaskInstanceToken != null) {
-			return kaleoTaskInstanceToken;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", completed=");
-		sb.append(completed);
-
-		sb.append("}");
-
-		throw new NoSuchTaskInstanceTokenException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63; and completed = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken fetchByC_U_C_Last(
-		long companyId, long userId, boolean completed,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-		int count = countByC_U_C(companyId, userId, completed);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskInstanceToken> list = findByC_U_C(
-			companyId, userId, completed, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3744,4 +3357,4 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2025648983
+// LIFERAY-SERVICE-BUILDER-HASH:-1463829024

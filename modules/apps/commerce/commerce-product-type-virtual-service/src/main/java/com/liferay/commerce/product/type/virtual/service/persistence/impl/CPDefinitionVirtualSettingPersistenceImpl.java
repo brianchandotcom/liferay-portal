@@ -323,67 +323,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition virtual setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition virtual setting
-	 * @throws NoSuchCPDefinitionVirtualSettingException if a matching cp definition virtual setting could not be found
-	 */
-	@Override
-	public CPDefinitionVirtualSetting findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPDefinitionVirtualSetting> orderByComparator)
-		throws NoSuchCPDefinitionVirtualSettingException {
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (cpDefinitionVirtualSetting != null) {
-			return cpDefinitionVirtualSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionVirtualSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition virtual setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
-	 */
-	@Override
-	public CPDefinitionVirtualSetting fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CPDefinitionVirtualSetting> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionVirtualSetting> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp definition virtual settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -916,72 +855,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 
 		List<CPDefinitionVirtualSetting> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition virtual setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition virtual setting
-	 * @throws NoSuchCPDefinitionVirtualSettingException if a matching cp definition virtual setting could not be found
-	 */
-	@Override
-	public CPDefinitionVirtualSetting findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDefinitionVirtualSetting> orderByComparator)
-		throws NoSuchCPDefinitionVirtualSettingException {
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (cpDefinitionVirtualSetting != null) {
-			return cpDefinitionVirtualSetting;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionVirtualSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition virtual setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
-	 */
-	@Override
-	public CPDefinitionVirtualSetting fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDefinitionVirtualSetting> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionVirtualSetting> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2047,4 +1920,4 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-137887456
+// LIFERAY-SERVICE-BUILDER-HASH:-1784117154

@@ -324,64 +324,6 @@ public class RedirectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last redirect entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry
-	 * @throws NoSuchEntryException if a matching redirect entry could not be found
-	 */
-	@Override
-	public RedirectEntry findByUuid_Last(
-			String uuid, OrderByComparator<RedirectEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		RedirectEntry redirectEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (redirectEntry != null) {
-			return redirectEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	@Override
-	public RedirectEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<RedirectEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RedirectEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the redirect entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -913,72 +855,6 @@ public class RedirectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last redirect entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry
-	 * @throws NoSuchEntryException if a matching redirect entry could not be found
-	 */
-	@Override
-	public RedirectEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<RedirectEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		RedirectEntry redirectEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (redirectEntry != null) {
-			return redirectEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	@Override
-	public RedirectEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<RedirectEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RedirectEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the redirect entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1279,65 +1155,6 @@ public class RedirectEntryPersistenceImpl
 
 		List<RedirectEntry> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry
-	 * @throws NoSuchEntryException if a matching redirect entry could not be found
-	 */
-	@Override
-	public RedirectEntry findByGroupId_Last(
-			long groupId, OrderByComparator<RedirectEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		RedirectEntry redirectEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (redirectEntry != null) {
-			return redirectEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	@Override
-	public RedirectEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<RedirectEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RedirectEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1857,72 +1674,6 @@ public class RedirectEntryPersistenceImpl
 
 		List<RedirectEntry> list = findByG_D(
 			groupId, destinationURL, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry
-	 * @throws NoSuchEntryException if a matching redirect entry could not be found
-	 */
-	@Override
-	public RedirectEntry findByG_D_Last(
-			long groupId, String destinationURL,
-			OrderByComparator<RedirectEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		RedirectEntry redirectEntry = fetchByG_D_Last(
-			groupId, destinationURL, orderByComparator);
-
-		if (redirectEntry != null) {
-			return redirectEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", destinationURL=");
-		sb.append(destinationURL);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	@Override
-	public RedirectEntry fetchByG_D_Last(
-		long groupId, String destinationURL,
-		OrderByComparator<RedirectEntry> orderByComparator) {
-
-		int count = countByG_D(groupId, destinationURL);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RedirectEntry> list = findByG_D(
-			groupId, destinationURL, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3275,4 +3026,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1089845504
+// LIFERAY-SERVICE-BUILDER-HASH:-1058170367

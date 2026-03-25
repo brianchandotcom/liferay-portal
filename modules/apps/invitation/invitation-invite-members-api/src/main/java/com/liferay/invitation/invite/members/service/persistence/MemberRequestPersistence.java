@@ -165,32 +165,6 @@ public interface MemberRequestPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request
-	 * @throws NoSuchMemberRequestException if a matching member request could not be found
-	 */
-	public MemberRequest findByReceiverUserId_Last(
-			long receiverUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<MemberRequest>
-				orderByComparator)
-		throws NoSuchMemberRequestException;
-
-	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request, or <code>null</code> if a matching member request could not be found
-	 */
-	public MemberRequest fetchByReceiverUserId_Last(
-		long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<MemberRequest>
-			orderByComparator);
-
-	/**
 	 * Removes all the member requests where receiverUserId = &#63; from the database.
 	 *
 	 * @param receiverUserId the receiver user ID
@@ -295,34 +269,6 @@ public interface MemberRequestPersistence
 	 * @return the first matching member request, or <code>null</code> if a matching member request could not be found
 	 */
 	public MemberRequest fetchByR_S_First(
-		long receiverUserId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MemberRequest>
-			orderByComparator);
-
-	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request
-	 * @throws NoSuchMemberRequestException if a matching member request could not be found
-	 */
-	public MemberRequest findByR_S_Last(
-			long receiverUserId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MemberRequest>
-				orderByComparator)
-		throws NoSuchMemberRequestException;
-
-	/**
-	 * Returns the last member request in the ordered set where receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching member request, or <code>null</code> if a matching member request could not be found
-	 */
-	public MemberRequest fetchByR_S_Last(
 		long receiverUserId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MemberRequest>
 			orderByComparator);
@@ -523,4 +469,4 @@ public interface MemberRequestPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-900918226
+// LIFERAY-SERVICE-BUILDER-HASH:-1918177704

@@ -121,32 +121,6 @@ public interface CTEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ct entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchCTEntryException if a matching ct entry could not be found
-	 */
-	public CTEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchCTEntryException;
-
-	/**
-	 * Returns the last ct entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	public CTEntry fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the ct entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -331,4 +305,4 @@ public interface CTEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1726676004
+// LIFERAY-SERVICE-BUILDER-HASH:-1372005570

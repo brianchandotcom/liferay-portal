@@ -318,65 +318,6 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object state flow in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state flow
-	 * @throws NoSuchObjectStateFlowException if a matching object state flow could not be found
-	 */
-	@Override
-	public ObjectStateFlow findByUuid_Last(
-			String uuid, OrderByComparator<ObjectStateFlow> orderByComparator)
-		throws NoSuchObjectStateFlowException {
-
-		ObjectStateFlow objectStateFlow = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectStateFlow != null) {
-			return objectStateFlow;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateFlowException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state flow in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state flow, or <code>null</code> if a matching object state flow could not be found
-	 */
-	@Override
-	public ObjectStateFlow fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectStateFlow> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectStateFlow> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object state flows where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -701,72 +642,6 @@ public class ObjectStateFlowPersistenceImpl
 
 		List<ObjectStateFlow> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object state flow in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state flow
-	 * @throws NoSuchObjectStateFlowException if a matching object state flow could not be found
-	 */
-	@Override
-	public ObjectStateFlow findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectStateFlow> orderByComparator)
-		throws NoSuchObjectStateFlowException {
-
-		ObjectStateFlow objectStateFlow = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectStateFlow != null) {
-			return objectStateFlow;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateFlowException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object state flow in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state flow, or <code>null</code> if a matching object state flow could not be found
-	 */
-	@Override
-	public ObjectStateFlow fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectStateFlow> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectStateFlow> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1749,4 +1624,4 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1528100539
+// LIFERAY-SERVICE-BUILDER-HASH:-617052607

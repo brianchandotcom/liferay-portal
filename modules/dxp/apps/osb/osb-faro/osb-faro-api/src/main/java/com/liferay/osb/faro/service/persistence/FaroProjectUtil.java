@@ -269,34 +269,6 @@ public class FaroProjectUtil {
 	}
 
 	/**
-	 * Returns the last faro project in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project
-	 * @throws NoSuchFaroProjectException if a matching faro project could not be found
-	 */
-	public static FaroProject findByUserId_Last(
-			long userId, OrderByComparator<FaroProject> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroProjectException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro project in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project, or <code>null</code> if a matching faro project could not be found
-	 */
-	public static FaroProject fetchByUserId_Last(
-		long userId, OrderByComparator<FaroProject> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro projects where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -478,38 +450,6 @@ public class FaroProjectUtil {
 		OrderByComparator<FaroProject> orderByComparator) {
 
 		return getPersistence().fetchByServerLocation_First(
-			serverLocation, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro project in the ordered set where serverLocation = &#63;.
-	 *
-	 * @param serverLocation the server location
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project
-	 * @throws NoSuchFaroProjectException if a matching faro project could not be found
-	 */
-	public static FaroProject findByServerLocation_Last(
-			String serverLocation,
-			OrderByComparator<FaroProject> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroProjectException {
-
-		return getPersistence().findByServerLocation_Last(
-			serverLocation, orderByComparator);
-	}
-
-	/**
-	 * Returns the last faro project in the ordered set where serverLocation = &#63;.
-	 *
-	 * @param serverLocation the server location
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro project, or <code>null</code> if a matching faro project could not be found
-	 */
-	public static FaroProject fetchByServerLocation_Last(
-		String serverLocation,
-		OrderByComparator<FaroProject> orderByComparator) {
-
-		return getPersistence().fetchByServerLocation_Last(
 			serverLocation, orderByComparator);
 	}
 
@@ -748,4 +688,4 @@ public class FaroProjectUtil {
 	private static volatile FaroProjectPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1380232667
+// LIFERAY-SERVICE-BUILDER-HASH:-194057237

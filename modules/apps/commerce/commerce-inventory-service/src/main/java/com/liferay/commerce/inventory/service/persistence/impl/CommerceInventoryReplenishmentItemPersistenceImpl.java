@@ -339,69 +339,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceInventoryReplenishmentItem>
-				orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException {
-
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryReplenishmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce inventory replenishment items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -740,74 +677,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		List<CommerceInventoryReplenishmentItem> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceInventoryReplenishmentItem>
-				orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException {
-
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryReplenishmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1161,75 +1030,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem
-			findByCommerceInventoryWarehouseId_Last(
-				long commerceInventoryWarehouseId,
-				OrderByComparator<CommerceInventoryReplenishmentItem>
-					orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException {
-
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByCommerceInventoryWarehouseId_Last(
-				commerceInventoryWarehouseId, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceInventoryWarehouseId=");
-		sb.append(commerceInventoryWarehouseId);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryReplenishmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem
-		fetchByCommerceInventoryWarehouseId_Last(
-			long commerceInventoryWarehouseId,
-			OrderByComparator<CommerceInventoryReplenishmentItem>
-				orderByComparator) {
-
-		int count = countByCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryReplenishmentItem> list =
-			findByCommerceInventoryWarehouseId(
-				commerceInventoryWarehouseId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce inventory replenishment items where commerceInventoryWarehouseId = &#63; from the database.
 	 *
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
@@ -1543,69 +1343,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		List<CommerceInventoryReplenishmentItem> list = findByAvailabilityDate(
 			availabilityDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where availabilityDate = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem findByAvailabilityDate_Last(
-			Date availabilityDate,
-			OrderByComparator<CommerceInventoryReplenishmentItem>
-				orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException {
-
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByAvailabilityDate_Last(availabilityDate, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("availabilityDate=");
-		sb.append(availabilityDate);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryReplenishmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where availabilityDate = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem fetchByAvailabilityDate_Last(
-		Date availabilityDate,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		int count = countByAvailabilityDate(availabilityDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = findByAvailabilityDate(
-			availabilityDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1932,69 +1669,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		List<CommerceInventoryReplenishmentItem> list = findBySku(
 			sku, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where sku = &#63;.
-	 *
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem findBySku_Last(
-			String sku,
-			OrderByComparator<CommerceInventoryReplenishmentItem>
-				orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException {
-
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchBySku_Last(sku, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sku=");
-		sb.append(sku);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryReplenishmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where sku = &#63;.
-	 *
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem fetchBySku_Last(
-		String sku,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		int count = countBySku(sku);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = findBySku(
-			sku, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2374,81 +2048,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		List<CommerceInventoryReplenishmentItem> list = findByC_S_U(
 			companyId, sku, unitOfMeasureKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem findByC_S_U_Last(
-			long companyId, String sku, String unitOfMeasureKey,
-			OrderByComparator<CommerceInventoryReplenishmentItem>
-				orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException {
-
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByC_S_U_Last(
-				companyId, sku, unitOfMeasureKey, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryReplenishmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem fetchByC_S_U_Last(
-		long companyId, String sku, String unitOfMeasureKey,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		int count = countByC_S_U(companyId, sku, unitOfMeasureKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = findByC_S_U(
-			companyId, sku, unitOfMeasureKey, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2884,81 +2483,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		List<CommerceInventoryReplenishmentItem> list = findByAD_S_U(
 			availabilityDate, sku, unitOfMeasureKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem findByAD_S_U_Last(
-			Date availabilityDate, String sku, String unitOfMeasureKey,
-			OrderByComparator<CommerceInventoryReplenishmentItem>
-				orderByComparator)
-		throws NoSuchInventoryReplenishmentItemException {
-
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByAD_S_U_Last(
-				availabilityDate, sku, unitOfMeasureKey, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("availabilityDate=");
-		sb.append(availabilityDate);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryReplenishmentItemException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory replenishment item in the ordered set where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem fetchByAD_S_U_Last(
-		Date availabilityDate, String sku, String unitOfMeasureKey,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		int count = countByAD_S_U(availabilityDate, sku, unitOfMeasureKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = findByAD_S_U(
-			availabilityDate, sku, unitOfMeasureKey, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4293,4 +3817,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-16032313
+// LIFERAY-SERVICE-BUILDER-HASH:-485682535

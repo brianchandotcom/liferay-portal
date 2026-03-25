@@ -214,36 +214,6 @@ public class LayoutSetPrototypeUtil {
 	}
 
 	/**
-	 * Returns the last layout set prototype in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
-	 */
-	public static LayoutSetPrototype findByUuid_Last(
-			String uuid,
-			OrderByComparator<LayoutSetPrototype> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetPrototypeException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
-	 */
-	public static LayoutSetPrototype fetchByUuid_Last(
-		String uuid, OrderByComparator<LayoutSetPrototype> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout set prototypes that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -431,41 +401,6 @@ public class LayoutSetPrototypeUtil {
 		OrderByComparator<LayoutSetPrototype> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
-	 */
-	public static LayoutSetPrototype findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutSetPrototype> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetPrototypeException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
-	 */
-	public static LayoutSetPrototype fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutSetPrototype> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -661,39 +596,6 @@ public class LayoutSetPrototypeUtil {
 	}
 
 	/**
-	 * Returns the last layout set prototype in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
-	 */
-	public static LayoutSetPrototype findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<LayoutSetPrototype> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetPrototypeException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
-	 */
-	public static LayoutSetPrototype fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<LayoutSetPrototype> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout set prototypes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -883,41 +785,6 @@ public class LayoutSetPrototypeUtil {
 		OrderByComparator<LayoutSetPrototype> orderByComparator) {
 
 		return getPersistence().fetchByC_A_First(
-			companyId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
-	 */
-	public static LayoutSetPrototype findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<LayoutSetPrototype> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetPrototypeException {
-
-		return getPersistence().findByC_A_Last(
-			companyId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
-	 */
-	public static LayoutSetPrototype fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<LayoutSetPrototype> orderByComparator) {
-
-		return getPersistence().fetchByC_A_Last(
 			companyId, active, orderByComparator);
 	}
 
@@ -1177,4 +1044,4 @@ public class LayoutSetPrototypeUtil {
 	private static volatile LayoutSetPrototypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1255740128
+// LIFERAY-SERVICE-BUILDER-HASH:810246334

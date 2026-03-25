@@ -119,32 +119,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter
-	 * @throws NoSuchObjectFilterException if a matching object filter could not be found
-	 */
-	public ObjectFilter findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-				orderByComparator)
-		throws NoSuchObjectFilterException;
-
-	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter, or <code>null</code> if a matching object filter could not be found
-	 */
-	public ObjectFilter fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-			orderByComparator);
-
-	/**
 	 * Removes all the object filters where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -254,34 +228,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 			orderByComparator);
 
 	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter
-	 * @throws NoSuchObjectFilterException if a matching object filter could not be found
-	 */
-	public ObjectFilter findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-				orderByComparator)
-		throws NoSuchObjectFilterException;
-
-	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter, or <code>null</code> if a matching object filter could not be found
-	 */
-	public ObjectFilter fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-			orderByComparator);
-
-	/**
 	 * Removes all the object filters where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -381,32 +327,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	 * @return the first matching object filter, or <code>null</code> if a matching object filter could not be found
 	 */
 	public ObjectFilter fetchByObjectFieldId_First(
-		long objectFieldId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-			orderByComparator);
-
-	/**
-	 * Returns the last object filter in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter
-	 * @throws NoSuchObjectFilterException if a matching object filter could not be found
-	 */
-	public ObjectFilter findByObjectFieldId_Last(
-			long objectFieldId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-				orderByComparator)
-		throws NoSuchObjectFilterException;
-
-	/**
-	 * Returns the last object filter in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter, or <code>null</code> if a matching object filter could not be found
-	 */
-	public ObjectFilter fetchByObjectFieldId_Last(
 		long objectFieldId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
 			orderByComparator);
@@ -547,4 +467,4 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2134943430
+// LIFERAY-SERVICE-BUILDER-HASH:-584933065

@@ -119,32 +119,6 @@ public interface ResourceActionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last resource action in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource action
-	 * @throws NoSuchResourceActionException if a matching resource action could not be found
-	 */
-	public ResourceAction findByName_Last(
-			String name,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
-				orderByComparator)
-		throws NoSuchResourceActionException;
-
-	/**
-	 * Returns the last resource action in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource action, or <code>null</code> if a matching resource action could not be found
-	 */
-	public ResourceAction fetchByName_Last(
-		String name,
-		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
-			orderByComparator);
-
-	/**
 	 * Removes all the resource actions where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -330,4 +304,4 @@ public interface ResourceActionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-731677688
+// LIFERAY-SERVICE-BUILDER-HASH:-414402101

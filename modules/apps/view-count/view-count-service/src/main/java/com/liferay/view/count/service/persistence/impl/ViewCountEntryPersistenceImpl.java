@@ -321,72 +321,6 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last view count entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching view count entry
-	 * @throws NoSuchEntryException if a matching view count entry could not be found
-	 */
-	@Override
-	public ViewCountEntry findByC_CN_Last(
-			long companyId, long classNameId,
-			OrderByComparator<ViewCountEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		ViewCountEntry viewCountEntry = fetchByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (viewCountEntry != null) {
-			return viewCountEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last view count entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching view count entry, or <code>null</code> if a matching view count entry could not be found
-	 */
-	@Override
-	public ViewCountEntry fetchByC_CN_Last(
-		long companyId, long classNameId,
-		OrderByComparator<ViewCountEntry> orderByComparator) {
-
-		int count = countByC_CN(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ViewCountEntry> list = findByC_CN(
-			companyId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the view count entries where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1080,4 +1014,4 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1752827025
+// LIFERAY-SERVICE-BUILDER-HASH:1429150294

@@ -122,32 +122,6 @@ public interface CPConfigurationEntrySettingPersistence
 			<CPConfigurationEntrySetting> orderByComparator);
 
 	/**
-	 * Returns the last cp configuration entry setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a matching cp configuration entry setting could not be found
-	 */
-	public CPConfigurationEntrySetting findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationEntrySetting> orderByComparator)
-		throws NoSuchCPConfigurationEntrySettingException;
-
-	/**
-	 * Returns the last cp configuration entry setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting, or <code>null</code> if a matching cp configuration entry setting could not be found
-	 */
-	public CPConfigurationEntrySetting fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPConfigurationEntrySetting> orderByComparator);
-
-	/**
 	 * Removes all the cp configuration entry settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface CPConfigurationEntrySettingPersistence
 			<CPConfigurationEntrySetting> orderByComparator);
 
 	/**
-	 * Returns the last cp configuration entry setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a matching cp configuration entry setting could not be found
-	 */
-	public CPConfigurationEntrySetting findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationEntrySetting> orderByComparator)
-		throws NoSuchCPConfigurationEntrySettingException;
-
-	/**
-	 * Returns the last cp configuration entry setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting, or <code>null</code> if a matching cp configuration entry setting could not be found
-	 */
-	public CPConfigurationEntrySetting fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPConfigurationEntrySetting> orderByComparator);
-
-	/**
 	 * Removes all the cp configuration entry settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,32 +381,6 @@ public interface CPConfigurationEntrySettingPersistence
 	 * @return the first matching cp configuration entry setting, or <code>null</code> if a matching cp configuration entry setting could not be found
 	 */
 	public CPConfigurationEntrySetting fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPConfigurationEntrySetting> orderByComparator);
-
-	/**
-	 * Returns the last cp configuration entry setting in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a matching cp configuration entry setting could not be found
-	 */
-	public CPConfigurationEntrySetting findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationEntrySetting> orderByComparator)
-		throws NoSuchCPConfigurationEntrySettingException;
-
-	/**
-	 * Returns the last cp configuration entry setting in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration entry setting, or <code>null</code> if a matching cp configuration entry setting could not be found
-	 */
-	public CPConfigurationEntrySetting fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPConfigurationEntrySetting> orderByComparator);
@@ -663,4 +583,4 @@ public interface CPConfigurationEntrySettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1220208641
+// LIFERAY-SERVICE-BUILDER-HASH:1119089545

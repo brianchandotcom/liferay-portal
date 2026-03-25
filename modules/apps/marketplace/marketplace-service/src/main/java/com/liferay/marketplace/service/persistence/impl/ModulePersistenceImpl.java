@@ -310,64 +310,6 @@ public class ModulePersistenceImpl
 	}
 
 	/**
-	 * Returns the last module in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	@Override
-	public Module findByUuid_Last(
-			String uuid, OrderByComparator<Module> orderByComparator)
-		throws NoSuchModuleException {
-
-		Module module = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last module in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	@Override
-	public Module fetchByUuid_Last(
-		String uuid, OrderByComparator<Module> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Module> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the modules where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -698,71 +640,6 @@ public class ModulePersistenceImpl
 	}
 
 	/**
-	 * Returns the last module in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	@Override
-	public Module findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Module> orderByComparator)
-		throws NoSuchModuleException {
-
-		Module module = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last module in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	@Override
-	public Module fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Module> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Module> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the modules where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1059,64 +936,6 @@ public class ModulePersistenceImpl
 		long appId, OrderByComparator<Module> orderByComparator) {
 
 		List<Module> list = findByAppId(appId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	@Override
-	public Module findByAppId_Last(
-			long appId, OrderByComparator<Module> orderByComparator)
-		throws NoSuchModuleException {
-
-		Module module = fetchByAppId_Last(appId, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("appId=");
-		sb.append(appId);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	@Override
-	public Module fetchByAppId_Last(
-		long appId, OrderByComparator<Module> orderByComparator) {
-
-		int count = countByAppId(appId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Module> list = findByAppId(
-			appId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1424,67 +1243,6 @@ public class ModulePersistenceImpl
 
 		List<Module> list = findByBundleSymbolicName(
 			bundleSymbolicName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	@Override
-	public Module findByBundleSymbolicName_Last(
-			String bundleSymbolicName,
-			OrderByComparator<Module> orderByComparator)
-		throws NoSuchModuleException {
-
-		Module module = fetchByBundleSymbolicName_Last(
-			bundleSymbolicName, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("bundleSymbolicName=");
-		sb.append(bundleSymbolicName);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	@Override
-	public Module fetchByBundleSymbolicName_Last(
-		String bundleSymbolicName,
-		OrderByComparator<Module> orderByComparator) {
-
-		int count = countByBundleSymbolicName(bundleSymbolicName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Module> list = findByBundleSymbolicName(
-			bundleSymbolicName, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1806,64 +1564,6 @@ public class ModulePersistenceImpl
 
 		List<Module> list = findByContextName(
 			contextName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last module in the ordered set where contextName = &#63;.
-	 *
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	@Override
-	public Module findByContextName_Last(
-			String contextName, OrderByComparator<Module> orderByComparator)
-		throws NoSuchModuleException {
-
-		Module module = fetchByContextName_Last(contextName, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("contextName=");
-		sb.append(contextName);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last module in the ordered set where contextName = &#63;.
-	 *
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	@Override
-	public Module fetchByContextName_Last(
-		String contextName, OrderByComparator<Module> orderByComparator) {
-
-		int count = countByContextName(contextName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Module> list = findByContextName(
-			contextName, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2197,71 +1897,6 @@ public class ModulePersistenceImpl
 
 		List<Module> list = findByA_CN(
 			appId, contextName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63; and contextName = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	@Override
-	public Module findByA_CN_Last(
-			long appId, String contextName,
-			OrderByComparator<Module> orderByComparator)
-		throws NoSuchModuleException {
-
-		Module module = fetchByA_CN_Last(appId, contextName, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("appId=");
-		sb.append(appId);
-
-		sb.append(", contextName=");
-		sb.append(contextName);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63; and contextName = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	@Override
-	public Module fetchByA_CN_Last(
-		long appId, String contextName,
-		OrderByComparator<Module> orderByComparator) {
-
-		int count = countByA_CN(appId, contextName);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Module> list = findByA_CN(
-			appId, contextName, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3340,4 +2975,4 @@ public class ModulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-415307813
+// LIFERAY-SERVICE-BUILDER-HASH:-1742784418

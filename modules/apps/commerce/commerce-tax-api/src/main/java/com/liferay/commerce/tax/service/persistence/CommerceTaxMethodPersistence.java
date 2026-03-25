@@ -120,32 +120,6 @@ public interface CommerceTaxMethodPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce tax method in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax method
-	 * @throws NoSuchTaxMethodException if a matching commerce tax method could not be found
-	 */
-	public CommerceTaxMethod findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTaxMethod>
-				orderByComparator)
-		throws NoSuchTaxMethodException;
-
-	/**
-	 * Returns the last commerce tax method in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
-	 */
-	public CommerceTaxMethod fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceTaxMethod>
-			orderByComparator);
-
-	/**
 	 * Removes all the commerce tax methods where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -305,34 +279,6 @@ public interface CommerceTaxMethodPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce tax method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax method
-	 * @throws NoSuchTaxMethodException if a matching commerce tax method could not be found
-	 */
-	public CommerceTaxMethod findByG_A_Last(
-			long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTaxMethod>
-				orderByComparator)
-		throws NoSuchTaxMethodException;
-
-	/**
-	 * Returns the last commerce tax method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
-	 */
-	public CommerceTaxMethod fetchByG_A_Last(
-		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceTaxMethod>
-			orderByComparator);
-
-	/**
 	 * Removes all the commerce tax methods where groupId = &#63; and active = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -471,4 +417,4 @@ public interface CommerceTaxMethodPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1345333361
+// LIFERAY-SERVICE-BUILDER-HASH:-819904841

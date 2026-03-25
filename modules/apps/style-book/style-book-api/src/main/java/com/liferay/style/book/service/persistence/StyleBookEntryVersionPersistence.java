@@ -123,32 +123,6 @@ public interface StyleBookEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last style book entry version in the ordered set where styleBookEntryId = &#63;.
-	 *
-	 * @param styleBookEntryId the style book entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByStyleBookEntryId_Last(
-			long styleBookEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where styleBookEntryId = &#63;.
-	 *
-	 * @param styleBookEntryId the style book entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByStyleBookEntryId_Last(
-		long styleBookEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the style book entry versions where styleBookEntryId = &#63; from the database.
 	 *
 	 * @param styleBookEntryId the style book entry ID
@@ -305,32 +279,6 @@ public interface StyleBookEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the style book entry versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,34 +383,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByUuid_Version_First(
-		String uuid, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByUuid_Version_Last(
-			String uuid, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByUuid_Version_Last(
 		String uuid, int version,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
 			orderByComparator);
@@ -574,34 +494,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByUUID_G_First(
-		String uuid, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByUUID_G_Last(
-			String uuid, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByUUID_G_Last(
 		String uuid, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
 			orderByComparator);
@@ -776,34 +668,6 @@ public interface StyleBookEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the style book entry versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -921,36 +785,6 @@ public interface StyleBookEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByUuid_C_Version_Last(
-			String uuid, long companyId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByUuid_C_Version_Last(
-		String uuid, long companyId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the style book entry versions where uuid = &#63; and companyId = &#63; and version = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1053,32 +887,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
 			orderByComparator);
@@ -1193,34 +1001,6 @@ public interface StyleBookEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByGroupId_Version_Last(
-			long groupId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByGroupId_Version_Last(
-		long groupId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the style book entry versions where groupId = &#63; and version = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1327,34 +1107,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByG_D_First(
-		long groupId, boolean defaultStyleBookEntry,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_D_Last(
-			long groupId, boolean defaultStyleBookEntry,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_D_Last(
 		long groupId, boolean defaultStyleBookEntry,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
 			orderByComparator);
@@ -1480,36 +1232,6 @@ public interface StyleBookEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_D_Version_Last(
-			long groupId, boolean defaultStyleBookEntry, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_D_Version_Last(
-		long groupId, boolean defaultStyleBookEntry, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and version = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1620,34 +1342,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByG_N_First(
-		long groupId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_N_Last(
-			long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_N_Last(
 		long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
 			orderByComparator);
@@ -1770,36 +1464,6 @@ public interface StyleBookEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_N_Version_Last(
-			long groupId, String name, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_N_Version_Last(
-		long groupId, String name, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1908,34 +1572,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByG_LikeN_First(
-		long groupId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_LikeN_Last(
-			long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_LikeN_Last(
 		long groupId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
 			orderByComparator);
@@ -2058,36 +1694,6 @@ public interface StyleBookEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_LikeN_Version_Last(
-			long groupId, String name, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_LikeN_Version_Last(
-		long groupId, String name, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2196,34 +1802,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByG_SBEK_First(
-		long groupId, String styleBookEntryKey,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and styleBookEntryKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param styleBookEntryKey the style book entry key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_SBEK_Last(
-			long groupId, String styleBookEntryKey,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and styleBookEntryKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param styleBookEntryKey the style book entry key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_SBEK_Last(
 		long groupId, String styleBookEntryKey,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
 			orderByComparator);
@@ -2400,34 +1978,6 @@ public interface StyleBookEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and themeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_T_Last(
-			long groupId, String themeId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and themeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_T_Last(
-		long groupId, String themeId,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the style book entry versions where groupId = &#63; and themeId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2540,36 +2090,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByG_T_Version_First(
-		long groupId, String themeId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_T_Version_Last(
-			long groupId, String themeId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_T_Version_Last(
 		long groupId, String themeId, int version,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
 			orderByComparator);
@@ -2692,36 +2212,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByG_D_T_First(
-		long groupId, boolean defaultStyleBookEntry, String themeId,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_D_T_Last(
-			long groupId, boolean defaultStyleBookEntry, String themeId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_D_T_Last(
 		long groupId, boolean defaultStyleBookEntry, String themeId,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
 			orderByComparator);
@@ -2854,40 +2344,6 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the first matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
 	 */
 	public StyleBookEntryVersion fetchByG_D_T_Version_First(
-		long groupId, boolean defaultStyleBookEntry, String themeId,
-		int version,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version
-	 * @throws NoSuchEntryVersionException if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion findByG_D_T_Version_Last(
-			long groupId, boolean defaultStyleBookEntry, String themeId,
-			int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<StyleBookEntryVersion> orderByComparator)
-		throws NoSuchEntryVersionException;
-
-	/**
-	 * Returns the last style book entry version in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	public StyleBookEntryVersion fetchByG_D_T_Version_Last(
 		long groupId, boolean defaultStyleBookEntry, String themeId,
 		int version,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntryVersion>
@@ -3042,4 +2498,4 @@ public interface StyleBookEntryVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-785191964
+// LIFERAY-SERVICE-BUILDER-HASH:940642738

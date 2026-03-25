@@ -122,32 +122,6 @@ public interface CPDefinitionOptionValueRelPersistence
 			<CPDefinitionOptionValueRel> orderByComparator);
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException;
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionOptionValueRel> orderByComparator);
-
-	/**
 	 * Removes all the cp definition option value rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface CPDefinitionOptionValueRelPersistence
 			<CPDefinitionOptionValueRel> orderByComparator);
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException;
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionOptionValueRel> orderByComparator);
-
-	/**
 	 * Removes all the cp definition option value rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -440,32 +386,6 @@ public interface CPDefinitionOptionValueRelPersistence
 			<CPDefinitionOptionValueRel> orderByComparator);
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException;
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionOptionValueRel> orderByComparator);
-
-	/**
 	 * Removes all the cp definition option value rels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -564,32 +484,6 @@ public interface CPDefinitionOptionValueRelPersistence
 	 * @return the first matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	 */
 	public CPDefinitionOptionValueRel fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionOptionValueRel> orderByComparator);
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException;
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDefinitionOptionValueRel> orderByComparator);
@@ -701,32 +595,6 @@ public interface CPDefinitionOptionValueRelPersistence
 			<CPDefinitionOptionValueRel> orderByComparator);
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel findByCPDefinitionOptionRelId_Last(
-			long CPDefinitionOptionRelId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException;
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel fetchByCPDefinitionOptionRelId_Last(
-		long CPDefinitionOptionRelId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionOptionValueRel> orderByComparator);
-
-	/**
 	 * Removes all the cp definition option value rels where CPDefinitionOptionRelId = &#63; from the database.
 	 *
 	 * @param CPDefinitionOptionRelId the cp definition option rel ID
@@ -830,32 +698,6 @@ public interface CPDefinitionOptionValueRelPersistence
 			<CPDefinitionOptionValueRel> orderByComparator);
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel findByCPInstanceUuid_Last(
-			String CPInstanceUuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException;
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel fetchByCPInstanceUuid_Last(
-		String CPInstanceUuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionOptionValueRel> orderByComparator);
-
-	/**
 	 * Removes all the cp definition option value rels where CPInstanceUuid = &#63; from the database.
 	 *
 	 * @param CPInstanceUuid the cp instance uuid
@@ -953,32 +795,6 @@ public interface CPDefinitionOptionValueRelPersistence
 	 * @return the first matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
 	 */
 	public CPDefinitionOptionValueRel fetchByKey_First(
-		String key,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionOptionValueRel> orderByComparator);
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where key = &#63;.
-	 *
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel findByKey_Last(
-			String key,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException;
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where key = &#63;.
-	 *
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel fetchByKey_Last(
 		String key,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDefinitionOptionValueRel> orderByComparator);
@@ -1146,34 +962,6 @@ public interface CPDefinitionOptionValueRelPersistence
 			<CPDefinitionOptionValueRel> orderByComparator);
 
 	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param preselected the preselected
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel findByCDORI_P_Last(
-			long CPDefinitionOptionRelId, boolean preselected,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionOptionValueRel> orderByComparator)
-		throws NoSuchCPDefinitionOptionValueRelException;
-
-	/**
-	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param preselected the preselected
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	public CPDefinitionOptionValueRel fetchByCDORI_P_Last(
-		long CPDefinitionOptionRelId, boolean preselected,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionOptionValueRel> orderByComparator);
-
-	/**
 	 * Removes all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63; from the database.
 	 *
 	 * @param CPDefinitionOptionRelId the cp definition option rel ID
@@ -1319,4 +1107,4 @@ public interface CPDefinitionOptionValueRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:217626750
+// LIFERAY-SERVICE-BUILDER-HASH:308021480

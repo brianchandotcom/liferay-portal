@@ -121,32 +121,6 @@ public interface VersionedEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last versioned entry version in the ordered set where versionedEntryId = &#63;.
-	 *
-	 * @param versionedEntryId the versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a matching versioned entry version could not be found
-	 */
-	public VersionedEntryVersion findByVersionedEntryId_Last(
-			long versionedEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<VersionedEntryVersion> orderByComparator)
-		throws NoSuchVersionedEntryVersionException;
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where versionedEntryId = &#63;.
-	 *
-	 * @param versionedEntryId the versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
-	 */
-	public VersionedEntryVersion fetchByVersionedEntryId_Last(
-		long versionedEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the versioned entry versions where versionedEntryId = &#63; from the database.
 	 *
 	 * @param versionedEntryId the versioned entry ID
@@ -303,32 +277,6 @@ public interface VersionedEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a matching versioned entry version could not be found
-	 */
-	public VersionedEntryVersion findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<VersionedEntryVersion> orderByComparator)
-		throws NoSuchVersionedEntryVersionException;
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
-	 */
-	public VersionedEntryVersion fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the versioned entry versions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -433,34 +381,6 @@ public interface VersionedEntryVersionPersistence
 	 * @return the first matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
 	 */
 	public VersionedEntryVersion fetchByGroupId_Version_First(
-		long groupId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a matching versioned entry version could not be found
-	 */
-	public VersionedEntryVersion findByGroupId_Version_Last(
-			long groupId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<VersionedEntryVersion> orderByComparator)
-		throws NoSuchVersionedEntryVersionException;
-
-	/**
-	 * Returns the last versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
-	 */
-	public VersionedEntryVersion fetchByGroupId_Version_Last(
 		long groupId, int version,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
 			orderByComparator);
@@ -606,4 +526,4 @@ public interface VersionedEntryVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:560236595
+// LIFERAY-SERVICE-BUILDER-HASH:340397808

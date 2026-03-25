@@ -298,65 +298,6 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch findByGroupId_Last(
-			long groupId, OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws NoSuchLayoutSetBranchException {
-
-		LayoutSetBranch layoutSetBranch = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (layoutSetBranch != null) {
-			return layoutSetBranch;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutSetBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch fetchByGroupId_Last(
-		long groupId, OrderByComparator<LayoutSetBranch> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutSetBranch> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the layout set branches that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -856,72 +797,6 @@ public class LayoutSetBranchPersistenceImpl
 
 		List<LayoutSetBranch> list = findByG_P(
 			groupId, privateLayout, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch findByG_P_Last(
-			long groupId, boolean privateLayout,
-			OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws NoSuchLayoutSetBranchException {
-
-		LayoutSetBranch layoutSetBranch = fetchByG_P_Last(
-			groupId, privateLayout, orderByComparator);
-
-		if (layoutSetBranch != null) {
-			return layoutSetBranch;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutSetBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch fetchByG_P_Last(
-		long groupId, boolean privateLayout,
-		OrderByComparator<LayoutSetBranch> orderByComparator) {
-
-		int count = countByG_P(groupId, privateLayout);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutSetBranch> list = findByG_P(
-			groupId, privateLayout, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1695,78 +1570,6 @@ public class LayoutSetBranchPersistenceImpl
 
 		List<LayoutSetBranch> list = findByG_P_M(
 			groupId, privateLayout, master, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch findByG_P_M_Last(
-			long groupId, boolean privateLayout, boolean master,
-			OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws NoSuchLayoutSetBranchException {
-
-		LayoutSetBranch layoutSetBranch = fetchByG_P_M_Last(
-			groupId, privateLayout, master, orderByComparator);
-
-		if (layoutSetBranch != null) {
-			return layoutSetBranch;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", master=");
-		sb.append(master);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutSetBranchException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch fetchByG_P_M_Last(
-		long groupId, boolean privateLayout, boolean master,
-		OrderByComparator<LayoutSetBranch> orderByComparator) {
-
-		int count = countByG_P_M(groupId, privateLayout, master);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutSetBranch> list = findByG_P_M(
-			groupId, privateLayout, master, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2814,4 +2617,4 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-369572623
+// LIFERAY-SERVICE-BUILDER-HASH:931965027

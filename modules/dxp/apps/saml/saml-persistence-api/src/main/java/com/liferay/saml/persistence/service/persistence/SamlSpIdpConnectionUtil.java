@@ -219,39 +219,6 @@ public class SamlSpIdpConnectionUtil {
 	}
 
 	/**
-	 * Returns the last saml sp idp connection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp idp connection
-	 * @throws NoSuchSpIdpConnectionException if a matching saml sp idp connection could not be found
-	 */
-	public static SamlSpIdpConnection findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<SamlSpIdpConnection> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchSpIdpConnectionException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last saml sp idp connection in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
-	 */
-	public static SamlSpIdpConnection fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<SamlSpIdpConnection> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saml sp idp connections where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -511,4 +478,4 @@ public class SamlSpIdpConnectionUtil {
 	private static volatile SamlSpIdpConnectionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:438338797
+// LIFERAY-SERVICE-BUILDER-HASH:-1648629670

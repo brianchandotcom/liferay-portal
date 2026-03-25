@@ -211,35 +211,6 @@ public class CPTaxCategoryUtil {
 	}
 
 	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
-	 */
-	public static CPTaxCategory findByUuid_Last(
-			String uuid, OrderByComparator<CPTaxCategory> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPTaxCategoryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
-	 */
-	public static CPTaxCategory fetchByUuid_Last(
-		String uuid, OrderByComparator<CPTaxCategory> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the cp tax categories that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -431,41 +402,6 @@ public class CPTaxCategoryUtil {
 	}
 
 	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
-	 */
-	public static CPTaxCategory findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPTaxCategory> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPTaxCategoryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp tax category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
-	 */
-	public static CPTaxCategory fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPTaxCategory> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the cp tax categories that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -651,37 +587,6 @@ public class CPTaxCategoryUtil {
 		long companyId, OrderByComparator<CPTaxCategory> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp tax category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
-	 */
-	public static CPTaxCategory findByCompanyId_Last(
-			long companyId, OrderByComparator<CPTaxCategory> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPTaxCategoryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp tax category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
-	 */
-	public static CPTaxCategory fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CPTaxCategory> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -996,4 +901,4 @@ public class CPTaxCategoryUtil {
 	private static volatile CPTaxCategoryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1167111921
+// LIFERAY-SERVICE-BUILDER-HASH:874758798

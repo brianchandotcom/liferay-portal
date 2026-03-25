@@ -124,32 +124,6 @@ public interface CommerceShippingFixedOptionPersistence
 			<CommerceShippingFixedOption> orderByComparator);
 
 	/**
-	 * Returns the last commerce shipping fixed option in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option
-	 * @throws NoSuchShippingFixedOptionException if a matching commerce shipping fixed option could not be found
-	 */
-	public CommerceShippingFixedOption findByCommerceShippingMethodId_Last(
-			long commerceShippingMethodId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceShippingFixedOption> orderByComparator)
-		throws NoSuchShippingFixedOptionException;
-
-	/**
-	 * Returns the last commerce shipping fixed option in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option, or <code>null</code> if a matching commerce shipping fixed option could not be found
-	 */
-	public CommerceShippingFixedOption fetchByCommerceShippingMethodId_Last(
-		long commerceShippingMethodId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceShippingFixedOption> orderByComparator);
-
-	/**
 	 * Removes all the commerce shipping fixed options where commerceShippingMethodId = &#63; from the database.
 	 *
 	 * @param commerceShippingMethodId the commerce shipping method ID
@@ -344,4 +318,4 @@ public interface CommerceShippingFixedOptionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1353990650
+// LIFERAY-SERVICE-BUILDER-HASH:-23937913

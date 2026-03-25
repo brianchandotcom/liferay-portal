@@ -213,35 +213,6 @@ public class IndexEntryUtil {
 	}
 
 	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	public static IndexEntry findByOwnerId_Last(
-			long ownerId, OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByOwnerId_Last(ownerId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	public static IndexEntry fetchByOwnerId_Last(
-		long ownerId, OrderByComparator<IndexEntry> orderByComparator) {
-
-		return getPersistence().fetchByOwnerId_Last(ownerId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the index entries where ownerId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -356,35 +327,6 @@ public class IndexEntryUtil {
 		long plid, OrderByComparator<IndexEntry> orderByComparator) {
 
 		return getPersistence().fetchByPlid_First(plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	public static IndexEntry findByPlid_Last(
-			long plid, OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByPlid_Last(plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	public static IndexEntry fetchByPlid_Last(
-		long plid, OrderByComparator<IndexEntry> orderByComparator) {
-
-		return getPersistence().fetchByPlid_Last(plid, orderByComparator);
 	}
 
 	/**
@@ -506,37 +448,6 @@ public class IndexEntryUtil {
 		String portletId, OrderByComparator<IndexEntry> orderByComparator) {
 
 		return getPersistence().fetchByPortletId_First(
-			portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	public static IndexEntry findByPortletId_Last(
-			String portletId, OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByPortletId_Last(
-			portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	public static IndexEntry fetchByPortletId_Last(
-		String portletId, OrderByComparator<IndexEntry> orderByComparator) {
-
-		return getPersistence().fetchByPortletId_Last(
 			portletId, orderByComparator);
 	}
 
@@ -672,41 +583,6 @@ public class IndexEntryUtil {
 	}
 
 	/**
-	 * Returns the last index entry in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	public static IndexEntry findByO_P_Last(
-			int ownerType, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByO_P_Last(
-			ownerType, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	public static IndexEntry fetchByO_P_Last(
-		int ownerType, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		return getPersistence().fetchByO_P_Last(
-			ownerType, portletId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the index entries where ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerType the owner type
@@ -835,41 +711,6 @@ public class IndexEntryUtil {
 		OrderByComparator<IndexEntry> orderByComparator) {
 
 		return getPersistence().fetchByP_P_First(
-			plid, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	public static IndexEntry findByP_P_Last(
-			long plid, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByP_P_Last(
-			plid, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	public static IndexEntry fetchByP_P_Last(
-		long plid, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		return getPersistence().fetchByP_P_Last(
 			plid, portletId, orderByComparator);
 	}
 
@@ -1012,43 +853,6 @@ public class IndexEntryUtil {
 		OrderByComparator<IndexEntry> orderByComparator) {
 
 		return getPersistence().fetchByO_O_P_First(
-			ownerId, ownerType, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	public static IndexEntry findByO_O_P_Last(
-			long ownerId, int ownerType, long plid,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByO_O_P_Last(
-			ownerId, ownerType, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	public static IndexEntry fetchByO_O_P_Last(
-		long ownerId, int ownerType, long plid,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		return getPersistence().fetchByO_O_P_Last(
 			ownerId, ownerType, plid, orderByComparator);
 	}
 
@@ -1197,43 +1001,6 @@ public class IndexEntryUtil {
 	}
 
 	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	public static IndexEntry findByO_O_PI_Last(
-			long ownerId, int ownerType, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByO_O_PI_Last(
-			ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	public static IndexEntry fetchByO_O_PI_Last(
-		long ownerId, int ownerType, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		return getPersistence().fetchByO_O_PI_Last(
-			ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the index entries where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -1378,43 +1145,6 @@ public class IndexEntryUtil {
 		OrderByComparator<IndexEntry> orderByComparator) {
 
 		return getPersistence().fetchByO_P_P_First(
-			ownerType, plid, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	public static IndexEntry findByO_P_P_Last(
-			int ownerType, long plid, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByO_P_P_Last(
-			ownerType, plid, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	public static IndexEntry fetchByO_P_P_Last(
-		int ownerType, long plid, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		return getPersistence().fetchByO_P_P_Last(
 			ownerType, plid, portletId, orderByComparator);
 	}
 
@@ -1570,45 +1300,6 @@ public class IndexEntryUtil {
 		OrderByComparator<IndexEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_O_O_LikeP_First(
-			companyId, ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry
-	 * @throws NoSuchIndexEntryException if a matching index entry could not be found
-	 */
-	public static IndexEntry findByC_O_O_LikeP_Last(
-			long companyId, long ownerId, int ownerType, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByC_O_O_LikeP_Last(
-			companyId, ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last index entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching index entry, or <code>null</code> if a matching index entry could not be found
-	 */
-	public static IndexEntry fetchByC_O_O_LikeP_Last(
-		long companyId, long ownerId, int ownerType, String portletId,
-		OrderByComparator<IndexEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_O_O_LikeP_Last(
 			companyId, ownerId, ownerType, portletId, orderByComparator);
 	}
 
@@ -1962,4 +1653,4 @@ public class IndexEntryUtil {
 	private static volatile IndexEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:937572408
+// LIFERAY-SERVICE-BUILDER-HASH:-813399470

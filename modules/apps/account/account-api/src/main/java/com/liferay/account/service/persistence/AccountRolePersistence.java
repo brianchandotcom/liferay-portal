@@ -119,32 +119,6 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 			orderByComparator);
 
 	/**
-	 * Returns the last account role in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role
-	 * @throws NoSuchRoleException if a matching account role could not be found
-	 */
-	public AccountRole findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountRole>
-				orderByComparator)
-		throws NoSuchRoleException;
-
-	/**
-	 * Returns the last account role in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role, or <code>null</code> if a matching account role could not be found
-	 */
-	public AccountRole fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountRole>
-			orderByComparator);
-
-	/**
 	 * Returns all the account roles that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -292,32 +266,6 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	 * @return the first matching account role, or <code>null</code> if a matching account role could not be found
 	 */
 	public AccountRole fetchByAccountEntryId_First(
-		long accountEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountRole>
-			orderByComparator);
-
-	/**
-	 * Returns the last account role in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role
-	 * @throws NoSuchRoleException if a matching account role could not be found
-	 */
-	public AccountRole findByAccountEntryId_Last(
-			long accountEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountRole>
-				orderByComparator)
-		throws NoSuchRoleException;
-
-	/**
-	 * Returns the last account role in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role, or <code>null</code> if a matching account role could not be found
-	 */
-	public AccountRole fetchByAccountEntryId_Last(
 		long accountEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountRole>
 			orderByComparator);
@@ -643,34 +591,6 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	 * @return the first matching account role, or <code>null</code> if a matching account role could not be found
 	 */
 	public AccountRole fetchByC_A_First(
-		long companyId, long accountEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountRole>
-			orderByComparator);
-
-	/**
-	 * Returns the last account role in the ordered set where companyId = &#63; and accountEntryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role
-	 * @throws NoSuchRoleException if a matching account role could not be found
-	 */
-	public AccountRole findByC_A_Last(
-			long companyId, long accountEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountRole>
-				orderByComparator)
-		throws NoSuchRoleException;
-
-	/**
-	 * Returns the last account role in the ordered set where companyId = &#63; and accountEntryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account role, or <code>null</code> if a matching account role could not be found
-	 */
-	public AccountRole fetchByC_A_Last(
 		long companyId, long accountEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountRole>
 			orderByComparator);
@@ -1051,4 +971,4 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:715207393
+// LIFERAY-SERVICE-BUILDER-HASH:-617038724

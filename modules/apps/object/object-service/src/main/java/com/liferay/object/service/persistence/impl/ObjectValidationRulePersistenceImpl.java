@@ -327,67 +327,6 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 	/**
-	 * Returns the last object validation rule in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException {
-
-		ObjectValidationRule objectValidationRule = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectValidationRule> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object validation rules where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -723,72 +662,6 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 	/**
-	 * Returns the last object validation rule in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException {
-
-		ObjectValidationRule objectValidationRule = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectValidationRule> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object validation rules where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1111,68 +984,6 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException {
-
-		ObjectValidationRule objectValidationRule =
-			fetchByObjectDefinitionId_Last(
-				objectDefinitionId, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		int count = countByObjectDefinitionId(objectDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectValidationRule> list = findByObjectDefinitionId(
-			objectDefinitionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1475,72 +1286,6 @@ public class ObjectValidationRulePersistenceImpl
 
 		List<ObjectValidationRule> list = findByODI_A(
 			objectDefinitionId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and active = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule findByODI_A_Last(
-			long objectDefinitionId, boolean active,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException {
-
-		ObjectValidationRule objectValidationRule = fetchByODI_A_Last(
-			objectDefinitionId, active, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and active = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule fetchByODI_A_Last(
-		long objectDefinitionId, boolean active,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		int count = countByODI_A(objectDefinitionId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectValidationRule> list = findByODI_A(
-			objectDefinitionId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1873,72 +1618,6 @@ public class ObjectValidationRulePersistenceImpl
 
 		List<ObjectValidationRule> list = findByODI_E(
 			objectDefinitionId, engine, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and engine = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule findByODI_E_Last(
-			long objectDefinitionId, String engine,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException {
-
-		ObjectValidationRule objectValidationRule = fetchByODI_E_Last(
-			objectDefinitionId, engine, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", engine=");
-		sb.append(engine);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and engine = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule fetchByODI_E_Last(
-		long objectDefinitionId, String engine,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		int count = countByODI_E(objectDefinitionId, engine);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectValidationRule> list = findByODI_E(
-			objectDefinitionId, engine, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2298,73 +1977,6 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param outputType the output type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule findByODI_O_Last(
-			long objectDefinitionId, String outputType,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException {
-
-		ObjectValidationRule objectValidationRule = fetchByODI_O_Last(
-			objectDefinitionId, outputType, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", outputType=");
-		sb.append(outputType);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param outputType the output type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule fetchByODI_O_Last(
-		long objectDefinitionId, String outputType,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		int count = countByODI_O(objectDefinitionId, outputType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectValidationRule> list = findByODI_O(
-			objectDefinitionId, outputType, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; and outputType = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -2699,72 +2311,6 @@ public class ObjectValidationRulePersistenceImpl
 
 		List<ObjectValidationRule> list = findByA_E(
 			active, engine, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where active = &#63; and engine = &#63;.
-	 *
-	 * @param active the active
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule findByA_E_Last(
-			boolean active, String engine,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException {
-
-		ObjectValidationRule objectValidationRule = fetchByA_E_Last(
-			active, engine, orderByComparator);
-
-		if (objectValidationRule != null) {
-			return objectValidationRule;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append(", engine=");
-		sb.append(engine);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object validation rule in the ordered set where active = &#63; and engine = &#63;.
-	 *
-	 * @param active the active
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule fetchByA_E_Last(
-		boolean active, String engine,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		int count = countByA_E(active, engine);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectValidationRule> list = findByA_E(
-			active, engine, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3967,4 +3513,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:205815746
+// LIFERAY-SERVICE-BUILDER-HASH:1224290959

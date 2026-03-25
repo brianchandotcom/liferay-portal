@@ -353,75 +353,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a matching cp specification option list type definition rel could not be found
-	 */
-	@Override
-	public CPSpecificationOptionListTypeDefinitionRel
-			findByCPSpecificationOptionId_Last(
-				long CPSpecificationOptionId,
-				OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-					orderByComparator)
-		throws NoSuchCPSpecificationOptionListTypeDefinitionRelException {
-
-		CPSpecificationOptionListTypeDefinitionRel
-			cpSpecificationOptionListTypeDefinitionRel =
-				fetchByCPSpecificationOptionId_Last(
-					CPSpecificationOptionId, orderByComparator);
-
-		if (cpSpecificationOptionListTypeDefinitionRel != null) {
-			return cpSpecificationOptionListTypeDefinitionRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPSpecificationOptionId=");
-		sb.append(CPSpecificationOptionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionListTypeDefinitionRelException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel, or <code>null</code> if a matching cp specification option list type definition rel could not be found
-	 */
-	@Override
-	public CPSpecificationOptionListTypeDefinitionRel
-		fetchByCPSpecificationOptionId_Last(
-			long CPSpecificationOptionId,
-			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-				orderByComparator) {
-
-		int count = countByCPSpecificationOptionId(CPSpecificationOptionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPSpecificationOptionListTypeDefinitionRel> list =
-			findByCPSpecificationOptionId(
-				CPSpecificationOptionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp specification option list type definition rels where CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPSpecificationOptionId the cp specification option ID
@@ -748,75 +679,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 		List<CPSpecificationOptionListTypeDefinitionRel> list =
 			findByListTypeDefinitionId(
 				listTypeDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a matching cp specification option list type definition rel could not be found
-	 */
-	@Override
-	public CPSpecificationOptionListTypeDefinitionRel
-			findByListTypeDefinitionId_Last(
-				long listTypeDefinitionId,
-				OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-					orderByComparator)
-		throws NoSuchCPSpecificationOptionListTypeDefinitionRelException {
-
-		CPSpecificationOptionListTypeDefinitionRel
-			cpSpecificationOptionListTypeDefinitionRel =
-				fetchByListTypeDefinitionId_Last(
-					listTypeDefinitionId, orderByComparator);
-
-		if (cpSpecificationOptionListTypeDefinitionRel != null) {
-			return cpSpecificationOptionListTypeDefinitionRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeDefinitionId=");
-		sb.append(listTypeDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionListTypeDefinitionRelException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last cp specification option list type definition rel in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp specification option list type definition rel, or <code>null</code> if a matching cp specification option list type definition rel could not be found
-	 */
-	@Override
-	public CPSpecificationOptionListTypeDefinitionRel
-		fetchByListTypeDefinitionId_Last(
-			long listTypeDefinitionId,
-			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-				orderByComparator) {
-
-		int count = countByListTypeDefinitionId(listTypeDefinitionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPSpecificationOptionListTypeDefinitionRel> list =
-			findByListTypeDefinitionId(
-				listTypeDefinitionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2183,4 +2045,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-31472197
+// LIFERAY-SERVICE-BUILDER-HASH:86614143

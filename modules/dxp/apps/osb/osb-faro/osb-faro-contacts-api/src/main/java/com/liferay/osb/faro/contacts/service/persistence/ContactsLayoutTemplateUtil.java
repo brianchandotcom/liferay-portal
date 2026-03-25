@@ -220,37 +220,6 @@ public class ContactsLayoutTemplateUtil {
 	}
 
 	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template
-	 * @throws NoSuchContactsLayoutTemplateException if a matching contacts layout template could not be found
-	 */
-	public static ContactsLayoutTemplate findByGroupId_Last(
-			long groupId,
-			OrderByComparator<ContactsLayoutTemplate> orderByComparator)
-		throws com.liferay.osb.faro.contacts.exception.
-			NoSuchContactsLayoutTemplateException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template, or <code>null</code> if a matching contacts layout template could not be found
-	 */
-	public static ContactsLayoutTemplate fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<ContactsLayoutTemplate> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the contacts layout templates where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -379,41 +348,6 @@ public class ContactsLayoutTemplateUtil {
 		OrderByComparator<ContactsLayoutTemplate> orderByComparator) {
 
 		return getPersistence().fetchByG_T_First(
-			groupId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template
-	 * @throws NoSuchContactsLayoutTemplateException if a matching contacts layout template could not be found
-	 */
-	public static ContactsLayoutTemplate findByG_T_Last(
-			long groupId, int type,
-			OrderByComparator<ContactsLayoutTemplate> orderByComparator)
-		throws com.liferay.osb.faro.contacts.exception.
-			NoSuchContactsLayoutTemplateException {
-
-		return getPersistence().findByG_T_Last(
-			groupId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last contacts layout template in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching contacts layout template, or <code>null</code> if a matching contacts layout template could not be found
-	 */
-	public static ContactsLayoutTemplate fetchByG_T_Last(
-		long groupId, int type,
-		OrderByComparator<ContactsLayoutTemplate> orderByComparator) {
-
-		return getPersistence().fetchByG_T_Last(
 			groupId, type, orderByComparator);
 	}
 
@@ -611,4 +545,4 @@ public class ContactsLayoutTemplateUtil {
 	private static volatile ContactsLayoutTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2052768321
+// LIFERAY-SERVICE-BUILDER-HASH:-1444811209

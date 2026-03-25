@@ -120,32 +120,6 @@ public interface ObjectViewSortColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object view sort column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view sort column
-	 * @throws NoSuchObjectViewSortColumnException if a matching object view sort column could not be found
-	 */
-	public ObjectViewSortColumn findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectViewSortColumn> orderByComparator)
-		throws NoSuchObjectViewSortColumnException;
-
-	/**
-	 * Returns the last object view sort column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view sort column, or <code>null</code> if a matching object view sort column could not be found
-	 */
-	public ObjectViewSortColumn fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewSortColumn>
-			orderByComparator);
-
-	/**
 	 * Removes all the object view sort columns where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -250,34 +224,6 @@ public interface ObjectViewSortColumnPersistence
 	 * @return the first matching object view sort column, or <code>null</code> if a matching object view sort column could not be found
 	 */
 	public ObjectViewSortColumn fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewSortColumn>
-			orderByComparator);
-
-	/**
-	 * Returns the last object view sort column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view sort column
-	 * @throws NoSuchObjectViewSortColumnException if a matching object view sort column could not be found
-	 */
-	public ObjectViewSortColumn findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectViewSortColumn> orderByComparator)
-		throws NoSuchObjectViewSortColumnException;
-
-	/**
-	 * Returns the last object view sort column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view sort column, or <code>null</code> if a matching object view sort column could not be found
-	 */
-	public ObjectViewSortColumn fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewSortColumn>
 			orderByComparator);
@@ -388,32 +334,6 @@ public interface ObjectViewSortColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object view sort column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view sort column
-	 * @throws NoSuchObjectViewSortColumnException if a matching object view sort column could not be found
-	 */
-	public ObjectViewSortColumn findByObjectViewId_Last(
-			long objectViewId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectViewSortColumn> orderByComparator)
-		throws NoSuchObjectViewSortColumnException;
-
-	/**
-	 * Returns the last object view sort column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view sort column, or <code>null</code> if a matching object view sort column could not be found
-	 */
-	public ObjectViewSortColumn fetchByObjectViewId_Last(
-		long objectViewId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewSortColumn>
-			orderByComparator);
-
-	/**
 	 * Removes all the object view sort columns where objectViewId = &#63; from the database.
 	 *
 	 * @param objectViewId the object view ID
@@ -518,34 +438,6 @@ public interface ObjectViewSortColumnPersistence
 	 * @return the first matching object view sort column, or <code>null</code> if a matching object view sort column could not be found
 	 */
 	public ObjectViewSortColumn fetchByOVI_OFN_First(
-		long objectViewId, String objectFieldName,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewSortColumn>
-			orderByComparator);
-
-	/**
-	 * Returns the last object view sort column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view sort column
-	 * @throws NoSuchObjectViewSortColumnException if a matching object view sort column could not be found
-	 */
-	public ObjectViewSortColumn findByOVI_OFN_Last(
-			long objectViewId, String objectFieldName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectViewSortColumn> orderByComparator)
-		throws NoSuchObjectViewSortColumnException;
-
-	/**
-	 * Returns the last object view sort column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view sort column, or <code>null</code> if a matching object view sort column could not be found
-	 */
-	public ObjectViewSortColumn fetchByOVI_OFN_Last(
 		long objectViewId, String objectFieldName,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewSortColumn>
 			orderByComparator);
@@ -690,4 +582,4 @@ public interface ObjectViewSortColumnPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1961112500
+// LIFERAY-SERVICE-BUILDER-HASH:-1451862784

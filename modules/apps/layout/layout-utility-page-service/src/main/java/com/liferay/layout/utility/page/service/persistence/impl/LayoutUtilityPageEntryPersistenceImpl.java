@@ -346,67 +346,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout utility page entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException {
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutUtilityPageEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout utility page entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -962,72 +901,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout utility page entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException {
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutUtilityPageEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout utility page entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1345,67 +1218,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		List<LayoutUtilityPageEntry> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException {
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutUtilityPageEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2109,72 +1921,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		List<LayoutUtilityPageEntry> list = findByG_T(
 			groupId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry findByG_T_Last(
-			long groupId, String type,
-			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException {
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_T_Last(
-			groupId, type, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByG_T_Last(
-		long groupId, String type,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		int count = countByG_T(groupId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutUtilityPageEntry> list = findByG_T(
-			groupId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3414,78 +3160,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry findByG_D_T_Last(
-			long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException {
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_D_T_Last(
-			groupId, defaultLayoutUtilityPageEntry, type, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", defaultLayoutUtilityPageEntry=");
-		sb.append(defaultLayoutUtilityPageEntry);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByG_D_T_Last(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		int count = countByG_D_T(groupId, defaultLayoutUtilityPageEntry, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutUtilityPageEntry> list = findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4378,77 +4052,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		List<LayoutUtilityPageEntry> list = findByG_LikeN_T(
 			groupId, name, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry findByG_LikeN_T_Last(
-			long groupId, String name, String type,
-			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchLayoutUtilityPageEntryException {
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_LikeN_T_Last(
-			groupId, name, type, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByG_LikeN_T_Last(
-		long groupId, String name, String type,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		int count = countByG_LikeN_T(groupId, name, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutUtilityPageEntry> list = findByG_LikeN_T(
-			groupId, name, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7033,4 +6636,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1006620838
+// LIFERAY-SERVICE-BUILDER-HASH:1256422794

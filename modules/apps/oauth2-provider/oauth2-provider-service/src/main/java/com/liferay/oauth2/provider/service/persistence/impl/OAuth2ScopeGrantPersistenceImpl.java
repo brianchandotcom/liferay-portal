@@ -329,70 +329,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 	/**
-	 * Returns the last o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 scope grant
-	 * @throws NoSuchOAuth2ScopeGrantException if a matching o auth2 scope grant could not be found
-	 */
-	@Override
-	public OAuth2ScopeGrant findByOAuth2ApplicationScopeAliasesId_Last(
-			long oAuth2ApplicationScopeAliasesId,
-			OrderByComparator<OAuth2ScopeGrant> orderByComparator)
-		throws NoSuchOAuth2ScopeGrantException {
-
-		OAuth2ScopeGrant oAuth2ScopeGrant =
-			fetchByOAuth2ApplicationScopeAliasesId_Last(
-				oAuth2ApplicationScopeAliasesId, orderByComparator);
-
-		if (oAuth2ScopeGrant != null) {
-			return oAuth2ScopeGrant;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("oAuth2ApplicationScopeAliasesId=");
-		sb.append(oAuth2ApplicationScopeAliasesId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ScopeGrantException(sb.toString());
-	}
-
-	/**
-	 * Returns the last o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
-	 */
-	@Override
-	public OAuth2ScopeGrant fetchByOAuth2ApplicationScopeAliasesId_Last(
-		long oAuth2ApplicationScopeAliasesId,
-		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
-
-		int count = countByOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OAuth2ScopeGrant> list = findByOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63; from the database.
 	 *
 	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
@@ -1832,4 +1768,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1633561310
+// LIFERAY-SERVICE-BUILDER-HASH:-357765978

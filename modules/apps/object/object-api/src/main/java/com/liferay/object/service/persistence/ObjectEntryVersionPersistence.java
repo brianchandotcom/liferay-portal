@@ -122,32 +122,6 @@ public interface ObjectEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
-	 * Returns the last object entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the object entry versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -252,34 +226,6 @@ public interface ObjectEntryVersionPersistence
 	 * @return the first matching object entry version, or <code>null</code> if a matching object entry version could not be found
 	 */
 	public ObjectEntryVersion fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last object entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
-	 * Returns the last object entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 			orderByComparator);
@@ -390,32 +336,6 @@ public interface ObjectEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object entry version in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion findByObjectDefinitionId_Last(
-			long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
-	 * Returns the last object entry version in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion fetchByObjectDefinitionId_Last(
-		long objectDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the object entry versions where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -514,32 +434,6 @@ public interface ObjectEntryVersionPersistence
 	 * @return the first matching object entry version, or <code>null</code> if a matching object entry version could not be found
 	 */
 	public ObjectEntryVersion fetchByObjectEntryId_First(
-		long objectEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last object entry version in the ordered set where objectEntryId = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion findByObjectEntryId_Last(
-			long objectEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
-	 * Returns the last object entry version in the ordered set where objectEntryId = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion fetchByObjectEntryId_Last(
 		long objectEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 			orderByComparator);
@@ -649,34 +543,6 @@ public interface ObjectEntryVersionPersistence
 	 * @return the first matching object entry version, or <code>null</code> if a matching object entry version could not be found
 	 */
 	public ObjectEntryVersion fetchByC_CD_First(
-		long companyId, Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
-
-	/**
-	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion findByC_CD_Last(
-			long companyId, Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
-	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion fetchByC_CD_Last(
 		long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 			orderByComparator);
@@ -843,34 +709,6 @@ public interface ObjectEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object entry version in the ordered set where objectEntryId = &#63; and status = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version
-	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion findByOEI_S_Last(
-			long objectEntryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
-	 * Returns the last object entry version in the ordered set where objectEntryId = &#63; and status = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion fetchByOEI_S_Last(
-		long objectEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the object entry versions where objectEntryId = &#63; and status = &#63; from the database.
 	 *
 	 * @param objectEntryId the object entry ID
@@ -1009,4 +847,4 @@ public interface ObjectEntryVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1451929806
+// LIFERAY-SERVICE-BUILDER-HASH:-1338349336

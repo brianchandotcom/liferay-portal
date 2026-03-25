@@ -123,32 +123,6 @@ public interface SegmentsExperimentRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
-	 *
-	 * @param segmentsExperimentId the segments experiment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel
-	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
-	 */
-	public SegmentsExperimentRel findBySegmentsExperimentId_Last(
-			long segmentsExperimentId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SegmentsExperimentRel> orderByComparator)
-		throws NoSuchExperimentRelException;
-
-	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
-	 *
-	 * @param segmentsExperimentId the segments experiment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
-	 */
-	public SegmentsExperimentRel fetchBySegmentsExperimentId_Last(
-		long segmentsExperimentId,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
-			orderByComparator);
-
-	/**
 	 * Removes all the segments experiment rels where segmentsExperimentId = &#63; from the database.
 	 *
 	 * @param segmentsExperimentId the segments experiment ID
@@ -247,32 +221,6 @@ public interface SegmentsExperimentRelPersistence
 	 * @return the first matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
 	 */
 	public SegmentsExperimentRel fetchBySegmentsExperienceId_First(
-		long segmentsExperienceId,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
-			orderByComparator);
-
-	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel
-	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
-	 */
-	public SegmentsExperimentRel findBySegmentsExperienceId_Last(
-			long segmentsExperienceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SegmentsExperimentRel> orderByComparator)
-		throws NoSuchExperimentRelException;
-
-	/**
-	 * Returns the last segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
-	 */
-	public SegmentsExperimentRel fetchBySegmentsExperienceId_Last(
 		long segmentsExperienceId,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
 			orderByComparator);
@@ -470,4 +418,4 @@ public interface SegmentsExperimentRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1540404338
+// LIFERAY-SERVICE-BUILDER-HASH:-1991485402

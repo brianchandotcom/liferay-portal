@@ -121,32 +121,6 @@ public interface SubscriptionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last subscription in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	public Subscription findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
-
-	/**
-	 * Returns the last subscription in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	public Subscription fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-			orderByComparator);
-
-	/**
 	 * Removes all the subscriptions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -244,32 +218,6 @@ public interface SubscriptionPersistence
 	 * @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
 	public Subscription fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-			orderByComparator);
-
-	/**
-	 * Returns the last subscription in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	public Subscription findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
-
-	/**
-	 * Returns the last subscription in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	public Subscription fetchByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
@@ -378,34 +326,6 @@ public interface SubscriptionPersistence
 	 * @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
 	public Subscription fetchByG_U_First(
-		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-			orderByComparator);
-
-	/**
-	 * Returns the last subscription in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	public Subscription findByG_U_Last(
-			long groupId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
-
-	/**
-	 * Returns the last subscription in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	public Subscription fetchByG_U_Last(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
@@ -522,34 +442,6 @@ public interface SubscriptionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	public Subscription findByC_C_Last(
-			long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
-
-	/**
-	 * Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	public Subscription fetchByC_C_Last(
-		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-			orderByComparator);
-
-	/**
 	 * Removes all the subscriptions where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -656,34 +548,6 @@ public interface SubscriptionPersistence
 	 * @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
 	public Subscription fetchByU_C_First(
-		long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-			orderByComparator);
-
-	/**
-	 * Returns the last subscription in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	public Subscription findByU_C_Last(
-			long userId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
-
-	/**
-	 * Returns the last subscription in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	public Subscription fetchByU_C_Last(
 		long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
@@ -801,36 +665,6 @@ public interface SubscriptionPersistence
 	 * @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
 	public Subscription fetchByC_C_C_First(
-		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-			orderByComparator);
-
-	/**
-	 * Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription
-	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
-	 */
-	public Subscription findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
-
-	/**
-	 * Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
-	 */
-	public Subscription fetchByC_C_C_Last(
 		long companyId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
@@ -1133,4 +967,4 @@ public interface SubscriptionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1173876682
+// LIFERAY-SERVICE-BUILDER-HASH:-622468696

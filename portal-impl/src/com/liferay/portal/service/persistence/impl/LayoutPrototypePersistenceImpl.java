@@ -323,65 +323,6 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout prototype in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout prototype
-	 * @throws NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	 */
-	@Override
-	public LayoutPrototype findByUuid_Last(
-			String uuid, OrderByComparator<LayoutPrototype> orderByComparator)
-		throws NoSuchLayoutPrototypeException {
-
-		LayoutPrototype layoutPrototype = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (layoutPrototype != null) {
-			return layoutPrototype;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutPrototypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout prototype in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	 */
-	@Override
-	public LayoutPrototype fetchByUuid_Last(
-		String uuid, OrderByComparator<LayoutPrototype> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPrototype> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the layout prototypes that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -947,72 +888,6 @@ public class LayoutPrototypePersistenceImpl
 
 		List<LayoutPrototype> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout prototype in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout prototype
-	 * @throws NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	 */
-	@Override
-	public LayoutPrototype findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutPrototype> orderByComparator)
-		throws NoSuchLayoutPrototypeException {
-
-		LayoutPrototype layoutPrototype = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (layoutPrototype != null) {
-			return layoutPrototype;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutPrototypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout prototype in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	 */
-	@Override
-	public LayoutPrototype fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutPrototype> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPrototype> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1592,66 +1467,6 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout prototype in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout prototype
-	 * @throws NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	 */
-	@Override
-	public LayoutPrototype findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<LayoutPrototype> orderByComparator)
-		throws NoSuchLayoutPrototypeException {
-
-		LayoutPrototype layoutPrototype = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (layoutPrototype != null) {
-			return layoutPrototype;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutPrototypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout prototype in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	 */
-	@Override
-	public LayoutPrototype fetchByCompanyId_Last(
-		long companyId, OrderByComparator<LayoutPrototype> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPrototype> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the layout prototypes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2157,72 +1972,6 @@ public class LayoutPrototypePersistenceImpl
 
 		List<LayoutPrototype> list = findByC_A(
 			companyId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout prototype in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout prototype
-	 * @throws NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	 */
-	@Override
-	public LayoutPrototype findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<LayoutPrototype> orderByComparator)
-		throws NoSuchLayoutPrototypeException {
-
-		LayoutPrototype layoutPrototype = fetchByC_A_Last(
-			companyId, active, orderByComparator);
-
-		if (layoutPrototype != null) {
-			return layoutPrototype;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutPrototypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout prototype in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	 */
-	@Override
-	public LayoutPrototype fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<LayoutPrototype> orderByComparator) {
-
-		int count = countByC_A(companyId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutPrototype> list = findByC_A(
-			companyId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3504,4 +3253,4 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:988746097
+// LIFERAY-SERVICE-BUILDER-HASH:-922042416

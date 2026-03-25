@@ -211,35 +211,6 @@ public class LazyBlobEntryUtil {
 	}
 
 	/**
-	 * Returns the last lazy blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lazy blob entry
-	 * @throws NoSuchLazyBlobEntryException if a matching lazy blob entry could not be found
-	 */
-	public static LazyBlobEntry findByUuid_Last(
-			String uuid, OrderByComparator<LazyBlobEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchLazyBlobEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last lazy blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lazy blob entry, or <code>null</code> if a matching lazy blob entry could not be found
-	 */
-	public static LazyBlobEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<LazyBlobEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lazy blob entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -484,4 +455,4 @@ public class LazyBlobEntryUtil {
 	private static volatile LazyBlobEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1054546533
+// LIFERAY-SERVICE-BUILDER-HASH:2068466178

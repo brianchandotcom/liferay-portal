@@ -121,32 +121,6 @@ public interface DDMContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm content in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content
-	 * @throws NoSuchContentException if a matching ddm content could not be found
-	 */
-	public DDMContent findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
-	 * Returns the last ddm content in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
-	 */
-	public DDMContent fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm contents where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface DDMContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content
-	 * @throws NoSuchContentException if a matching ddm content could not be found
-	 */
-	public DDMContent findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
-	 * Returns the last ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
-	 */
-	public DDMContent fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm contents where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -437,32 +383,6 @@ public interface DDMContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm content in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content
-	 * @throws NoSuchContentException if a matching ddm content could not be found
-	 */
-	public DDMContent findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
-	 * Returns the last ddm content in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
-	 */
-	public DDMContent fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm contents where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -560,32 +480,6 @@ public interface DDMContentPersistence
 	 * @return the first matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	 */
 	public DDMContent fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-			orderByComparator);
-
-	/**
-	 * Returns the last ddm content in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content
-	 * @throws NoSuchContentException if a matching ddm content could not be found
-	 */
-	public DDMContent findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
-	 * Returns the last ddm content in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
-	 */
-	public DDMContent fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
 			orderByComparator);
@@ -725,4 +619,4 @@ public interface DDMContentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:493174120
+// LIFERAY-SERVICE-BUILDER-HASH:975969700

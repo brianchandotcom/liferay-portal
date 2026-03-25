@@ -218,37 +218,6 @@ public class ObjectViewFilterColumnUtil {
 	}
 
 	/**
-	 * Returns the last object view filter column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view filter column
-	 * @throws NoSuchObjectViewFilterColumnException if a matching object view filter column could not be found
-	 */
-	public static ObjectViewFilterColumn findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectViewFilterColumn> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectViewFilterColumnException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view filter column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view filter column, or <code>null</code> if a matching object view filter column could not be found
-	 */
-	public static ObjectViewFilterColumn fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object view filter columns where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -381,41 +350,6 @@ public class ObjectViewFilterColumnUtil {
 	}
 
 	/**
-	 * Returns the last object view filter column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view filter column
-	 * @throws NoSuchObjectViewFilterColumnException if a matching object view filter column could not be found
-	 */
-	public static ObjectViewFilterColumn findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectViewFilterColumn> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectViewFilterColumnException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view filter column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view filter column, or <code>null</code> if a matching object view filter column could not be found
-	 */
-	public static ObjectViewFilterColumn fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object view filter columns where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -540,39 +474,6 @@ public class ObjectViewFilterColumnUtil {
 		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
 
 		return getPersistence().fetchByObjectViewId_First(
-			objectViewId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view filter column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view filter column
-	 * @throws NoSuchObjectViewFilterColumnException if a matching object view filter column could not be found
-	 */
-	public static ObjectViewFilterColumn findByObjectViewId_Last(
-			long objectViewId,
-			OrderByComparator<ObjectViewFilterColumn> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectViewFilterColumnException {
-
-		return getPersistence().findByObjectViewId_Last(
-			objectViewId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view filter column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view filter column, or <code>null</code> if a matching object view filter column could not be found
-	 */
-	public static ObjectViewFilterColumn fetchByObjectViewId_Last(
-		long objectViewId,
-		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
-
-		return getPersistence().fetchByObjectViewId_Last(
 			objectViewId, orderByComparator);
 	}
 
@@ -707,41 +608,6 @@ public class ObjectViewFilterColumnUtil {
 		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
 
 		return getPersistence().fetchByOVI_OFN_First(
-			objectViewId, objectFieldName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view filter column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view filter column
-	 * @throws NoSuchObjectViewFilterColumnException if a matching object view filter column could not be found
-	 */
-	public static ObjectViewFilterColumn findByOVI_OFN_Last(
-			long objectViewId, String objectFieldName,
-			OrderByComparator<ObjectViewFilterColumn> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectViewFilterColumnException {
-
-		return getPersistence().findByOVI_OFN_Last(
-			objectViewId, objectFieldName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object view filter column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object view filter column, or <code>null</code> if a matching object view filter column could not be found
-	 */
-	public static ObjectViewFilterColumn fetchByOVI_OFN_Last(
-		long objectViewId, String objectFieldName,
-		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
-
-		return getPersistence().fetchByOVI_OFN_Last(
 			objectViewId, objectFieldName, orderByComparator);
 	}
 
@@ -943,4 +809,4 @@ public class ObjectViewFilterColumnUtil {
 	private static volatile ObjectViewFilterColumnPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-229116876
+// LIFERAY-SERVICE-BUILDER-HASH:1806999526

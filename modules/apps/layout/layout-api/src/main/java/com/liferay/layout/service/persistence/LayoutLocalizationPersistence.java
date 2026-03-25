@@ -122,32 +122,6 @@ public interface LayoutLocalizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last layout localization in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization
-	 * @throws NoSuchLayoutLocalizationException if a matching layout localization could not be found
-	 */
-	public LayoutLocalization findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-				orderByComparator)
-		throws NoSuchLayoutLocalizationException;
-
-	/**
-	 * Returns the last layout localization in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization, or <code>null</code> if a matching layout localization could not be found
-	 */
-	public LayoutLocalization fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-			orderByComparator);
-
-	/**
 	 * Removes all the layout localizations where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -307,34 +281,6 @@ public interface LayoutLocalizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last layout localization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization
-	 * @throws NoSuchLayoutLocalizationException if a matching layout localization could not be found
-	 */
-	public LayoutLocalization findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-				orderByComparator)
-		throws NoSuchLayoutLocalizationException;
-
-	/**
-	 * Returns the last layout localization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization, or <code>null</code> if a matching layout localization could not be found
-	 */
-	public LayoutLocalization fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-			orderByComparator);
-
-	/**
 	 * Removes all the layout localizations where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,32 +380,6 @@ public interface LayoutLocalizationPersistence
 	 * @return the first matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
 	public LayoutLocalization fetchByPlid_First(
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout localization in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization
-	 * @throws NoSuchLayoutLocalizationException if a matching layout localization could not be found
-	 */
-	public LayoutLocalization findByPlid_Last(
-			long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-				orderByComparator)
-		throws NoSuchLayoutLocalizationException;
-
-	/**
-	 * Returns the last layout localization in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout localization, or <code>null</code> if a matching layout localization could not be found
-	 */
-	public LayoutLocalization fetchByPlid_Last(
 		long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
 			orderByComparator);
@@ -709,4 +629,4 @@ public interface LayoutLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:645978740
+// LIFERAY-SERVICE-BUILDER-HASH:677892002

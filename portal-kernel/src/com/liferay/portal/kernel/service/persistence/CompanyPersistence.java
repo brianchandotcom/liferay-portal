@@ -160,32 +160,6 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 			orderByComparator);
 
 	/**
-	 * Returns the last company in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching company
-	 * @throws NoSuchCompanyException if a matching company could not be found
-	 */
-	public Company findByLogoId_Last(
-			long logoId,
-			com.liferay.portal.kernel.util.OrderByComparator<Company>
-				orderByComparator)
-		throws NoSuchCompanyException;
-
-	/**
-	 * Returns the last company in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching company, or <code>null</code> if a matching company could not be found
-	 */
-	public Company fetchByLogoId_Last(
-		long logoId,
-		com.liferay.portal.kernel.util.OrderByComparator<Company>
-			orderByComparator);
-
-	/**
 	 * Removes all the companies where logoId = &#63; from the database.
 	 *
 	 * @param logoId the logo ID
@@ -320,4 +294,4 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1627967768
+// LIFERAY-SERVICE-BUILDER-HASH:1552376487

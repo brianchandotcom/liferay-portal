@@ -304,65 +304,6 @@ public class COREntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cor entry rel in the ordered set where COREntryId = &#63;.
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry rel
-	 * @throws NoSuchCOREntryRelException if a matching cor entry rel could not be found
-	 */
-	@Override
-	public COREntryRel findByCOREntryId_Last(
-			long COREntryId, OrderByComparator<COREntryRel> orderByComparator)
-		throws NoSuchCOREntryRelException {
-
-		COREntryRel corEntryRel = fetchByCOREntryId_Last(
-			COREntryId, orderByComparator);
-
-		if (corEntryRel != null) {
-			return corEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("COREntryId=");
-		sb.append(COREntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cor entry rel in the ordered set where COREntryId = &#63;.
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry rel, or <code>null</code> if a matching cor entry rel could not be found
-	 */
-	@Override
-	public COREntryRel fetchByCOREntryId_Last(
-		long COREntryId, OrderByComparator<COREntryRel> orderByComparator) {
-
-		int count = countByCOREntryId(COREntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<COREntryRel> list = findByCOREntryId(
-			COREntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cor entry rels where COREntryId = &#63; from the database.
 	 *
 	 * @param COREntryId the cor entry ID
@@ -660,72 +601,6 @@ public class COREntryRelPersistenceImpl
 
 		List<COREntryRel> list = findByC_C(
 			classNameId, COREntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cor entry rel in the ordered set where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry rel
-	 * @throws NoSuchCOREntryRelException if a matching cor entry rel could not be found
-	 */
-	@Override
-	public COREntryRel findByC_C_Last(
-			long classNameId, long COREntryId,
-			OrderByComparator<COREntryRel> orderByComparator)
-		throws NoSuchCOREntryRelException {
-
-		COREntryRel corEntryRel = fetchByC_C_Last(
-			classNameId, COREntryId, orderByComparator);
-
-		if (corEntryRel != null) {
-			return corEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", COREntryId=");
-		sb.append(COREntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cor entry rel in the ordered set where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry rel, or <code>null</code> if a matching cor entry rel could not be found
-	 */
-	@Override
-	public COREntryRel fetchByC_C_Last(
-		long classNameId, long COREntryId,
-		OrderByComparator<COREntryRel> orderByComparator) {
-
-		int count = countByC_C(classNameId, COREntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<COREntryRel> list = findByC_C(
-			classNameId, COREntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1692,4 +1567,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-739142867
+// LIFERAY-SERVICE-BUILDER-HASH:313695771

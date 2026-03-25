@@ -299,65 +299,6 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Returns the last faro preferences in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro preferences
-	 * @throws NoSuchFaroPreferencesException if a matching faro preferences could not be found
-	 */
-	@Override
-	public FaroPreferences findByGroupId_Last(
-			long groupId, OrderByComparator<FaroPreferences> orderByComparator)
-		throws NoSuchFaroPreferencesException {
-
-		FaroPreferences faroPreferences = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (faroPreferences != null) {
-			return faroPreferences;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last faro preferences in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching faro preferences, or <code>null</code> if a matching faro preferences could not be found
-	 */
-	@Override
-	public FaroPreferences fetchByGroupId_Last(
-		long groupId, OrderByComparator<FaroPreferences> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FaroPreferences> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the faro preferenceses where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1243,4 +1184,4 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:370944795
+// LIFERAY-SERVICE-BUILDER-HASH:-1627002075

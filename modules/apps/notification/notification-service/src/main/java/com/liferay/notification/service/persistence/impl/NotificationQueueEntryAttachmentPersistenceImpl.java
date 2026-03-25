@@ -333,73 +333,6 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	}
 
 	/**
-	 * Returns the last notification queue entry attachment in the ordered set where notificationQueueEntryId = &#63;.
-	 *
-	 * @param notificationQueueEntryId the notification queue entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry attachment
-	 * @throws NoSuchNotificationQueueEntryAttachmentException if a matching notification queue entry attachment could not be found
-	 */
-	@Override
-	public NotificationQueueEntryAttachment findByNotificationQueueEntryId_Last(
-			long notificationQueueEntryId,
-			OrderByComparator<NotificationQueueEntryAttachment>
-				orderByComparator)
-		throws NoSuchNotificationQueueEntryAttachmentException {
-
-		NotificationQueueEntryAttachment notificationQueueEntryAttachment =
-			fetchByNotificationQueueEntryId_Last(
-				notificationQueueEntryId, orderByComparator);
-
-		if (notificationQueueEntryAttachment != null) {
-			return notificationQueueEntryAttachment;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("notificationQueueEntryId=");
-		sb.append(notificationQueueEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryAttachmentException(
-			sb.toString());
-	}
-
-	/**
-	 * Returns the last notification queue entry attachment in the ordered set where notificationQueueEntryId = &#63;.
-	 *
-	 * @param notificationQueueEntryId the notification queue entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification queue entry attachment, or <code>null</code> if a matching notification queue entry attachment could not be found
-	 */
-	@Override
-	public NotificationQueueEntryAttachment
-		fetchByNotificationQueueEntryId_Last(
-			long notificationQueueEntryId,
-			OrderByComparator<NotificationQueueEntryAttachment>
-				orderByComparator) {
-
-		int count = countByNotificationQueueEntryId(notificationQueueEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationQueueEntryAttachment> list =
-			findByNotificationQueueEntryId(
-				notificationQueueEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the notification queue entry attachments where notificationQueueEntryId = &#63; from the database.
 	 *
 	 * @param notificationQueueEntryId the notification queue entry ID
@@ -1159,4 +1092,4 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-787979833
+// LIFERAY-SERVICE-BUILDER-HASH:-2088355111

@@ -222,39 +222,6 @@ public class AnalyticsDeleteMessageUtil {
 	}
 
 	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message
-	 * @throws NoSuchDeleteMessageException if a matching analytics delete message could not be found
-	 */
-	public static AnalyticsDeleteMessage findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AnalyticsDeleteMessage> orderByComparator)
-		throws com.liferay.analytics.message.storage.exception.
-			NoSuchDeleteMessageException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message, or <code>null</code> if a matching analytics delete message could not be found
-	 */
-	public static AnalyticsDeleteMessage fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<AnalyticsDeleteMessage> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the analytics delete messages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -385,41 +352,6 @@ public class AnalyticsDeleteMessageUtil {
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator) {
 
 		return getPersistence().fetchByC_GtM_First(
-			companyId, modifiedDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63; and modifiedDate &gt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message
-	 * @throws NoSuchDeleteMessageException if a matching analytics delete message could not be found
-	 */
-	public static AnalyticsDeleteMessage findByC_GtM_Last(
-			long companyId, Date modifiedDate,
-			OrderByComparator<AnalyticsDeleteMessage> orderByComparator)
-		throws com.liferay.analytics.message.storage.exception.
-			NoSuchDeleteMessageException {
-
-		return getPersistence().findByC_GtM_Last(
-			companyId, modifiedDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last analytics delete message in the ordered set where companyId = &#63; and modifiedDate &gt; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics delete message, or <code>null</code> if a matching analytics delete message could not be found
-	 */
-	public static AnalyticsDeleteMessage fetchByC_GtM_Last(
-		long companyId, Date modifiedDate,
-		OrderByComparator<AnalyticsDeleteMessage> orderByComparator) {
-
-		return getPersistence().fetchByC_GtM_Last(
 			companyId, modifiedDate, orderByComparator);
 	}
 
@@ -617,4 +549,4 @@ public class AnalyticsDeleteMessageUtil {
 	private static volatile AnalyticsDeleteMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1500197908
+// LIFERAY-SERVICE-BUILDER-HASH:652355070

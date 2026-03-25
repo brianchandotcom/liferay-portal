@@ -208,34 +208,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns the last ddl record in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	public static DDLRecord findByUuid_Last(
-			String uuid, OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	public static DDLRecord fetchByUuid_Last(
-		String uuid, OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl records where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -428,40 +400,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns the last ddl record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	public static DDLRecord findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	public static DDLRecord fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl records where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -585,36 +523,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns the last ddl record in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	public static DDLRecord findByCompanyId_Last(
-			long companyId, OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	public static DDLRecord fetchByCompanyId_Last(
-		long companyId, OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl records where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -732,36 +640,6 @@ public class DDLRecordUtil {
 		long recordSetId, OrderByComparator<DDLRecord> orderByComparator) {
 
 		return getPersistence().fetchByRecordSetId_First(
-			recordSetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	public static DDLRecord findByRecordSetId_Last(
-			long recordSetId, OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByRecordSetId_Last(
-			recordSetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	public static DDLRecord fetchByRecordSetId_Last(
-		long recordSetId, OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().fetchByRecordSetId_Last(
 			recordSetId, orderByComparator);
 	}
 
@@ -891,40 +769,6 @@ public class DDLRecordUtil {
 		OrderByComparator<DDLRecord> orderByComparator) {
 
 		return getPersistence().fetchByR_U_First(
-			recordSetId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and userId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	public static DDLRecord findByR_U_Last(
-			long recordSetId, long userId,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByR_U_Last(
-			recordSetId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and userId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	public static DDLRecord fetchByR_U_Last(
-		long recordSetId, long userId,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().fetchByR_U_Last(
 			recordSetId, userId, orderByComparator);
 	}
 
@@ -1064,40 +908,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	public static DDLRecord findByR_R_Last(
-			long recordSetId, String recordSetVersion,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByR_R_Last(
-			recordSetId, recordSetVersion, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	public static DDLRecord fetchByR_R_Last(
-		long recordSetId, String recordSetVersion,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().fetchByR_R_Last(
-			recordSetId, recordSetVersion, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl records where recordSetId = &#63; and recordSetVersion = &#63; from the database.
 	 *
 	 * @param recordSetId the record set ID
@@ -1225,40 +1035,6 @@ public class DDLRecordUtil {
 		OrderByComparator<DDLRecord> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			className, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record
-	 * @throws NoSuchRecordException if a matching ddl record could not be found
-	 */
-	public static DDLRecord findByC_C_Last(
-			String className, long classPK,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByC_C_Last(
-			className, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddl record in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	public static DDLRecord fetchByC_C_Last(
-		String className, long classPK,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			className, classPK, orderByComparator);
 	}
 
@@ -1441,4 +1217,4 @@ public class DDLRecordUtil {
 	private static volatile DDLRecordPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:131797478
+// LIFERAY-SERVICE-BUILDER-HASH:2008151669

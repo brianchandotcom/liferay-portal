@@ -336,64 +336,6 @@ public class KBTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last kb template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template
-	 * @throws NoSuchTemplateException if a matching kb template could not be found
-	 */
-	@Override
-	public KBTemplate findByUuid_Last(
-			String uuid, OrderByComparator<KBTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		KBTemplate kbTemplate = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (kbTemplate != null) {
-			return kbTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
-	 */
-	@Override
-	public KBTemplate fetchByUuid_Last(
-		String uuid, OrderByComparator<KBTemplate> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBTemplate> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kb templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -941,72 +883,6 @@ public class KBTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last kb template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template
-	 * @throws NoSuchTemplateException if a matching kb template could not be found
-	 */
-	@Override
-	public KBTemplate findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<KBTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		KBTemplate kbTemplate = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (kbTemplate != null) {
-			return kbTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
-	 */
-	@Override
-	public KBTemplate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<KBTemplate> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBTemplate> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kb templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1319,64 +1195,6 @@ public class KBTemplatePersistenceImpl
 		long groupId, OrderByComparator<KBTemplate> orderByComparator) {
 
 		List<KBTemplate> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kb template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template
-	 * @throws NoSuchTemplateException if a matching kb template could not be found
-	 */
-	@Override
-	public KBTemplate findByGroupId_Last(
-			long groupId, OrderByComparator<KBTemplate> orderByComparator)
-		throws NoSuchTemplateException {
-
-		KBTemplate kbTemplate = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (kbTemplate != null) {
-			return kbTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kb template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
-	 */
-	@Override
-	public KBTemplate fetchByGroupId_Last(
-		long groupId, OrderByComparator<KBTemplate> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KBTemplate> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2678,4 +2496,4 @@ public class KBTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1162968134
+// LIFERAY-SERVICE-BUILDER-HASH:-1971761511

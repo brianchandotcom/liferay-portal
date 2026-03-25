@@ -233,41 +233,6 @@ public class ExportImportReportEntryUtil {
 	}
 
 	/**
-	 * Returns the last export import report entry in the ordered set where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import report entry
-	 * @throws NoSuchExportImportReportEntryException if a matching export import report entry could not be found
-	 */
-	public static ExportImportReportEntry findByC_E_Last(
-			long companyId, long exportImportConfigurationId,
-			OrderByComparator<ExportImportReportEntry> orderByComparator)
-		throws com.liferay.exportimport.report.exception.
-			NoSuchExportImportReportEntryException {
-
-		return getPersistence().findByC_E_Last(
-			companyId, exportImportConfigurationId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last export import report entry in the ordered set where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import report entry, or <code>null</code> if a matching export import report entry could not be found
-	 */
-	public static ExportImportReportEntry fetchByC_E_Last(
-		long companyId, long exportImportConfigurationId,
-		OrderByComparator<ExportImportReportEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_E_Last(
-			companyId, exportImportConfigurationId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -575,4 +540,4 @@ public class ExportImportReportEntryUtil {
 	private static volatile ExportImportReportEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1956367923
+// LIFERAY-SERVICE-BUILDER-HASH:-367329363

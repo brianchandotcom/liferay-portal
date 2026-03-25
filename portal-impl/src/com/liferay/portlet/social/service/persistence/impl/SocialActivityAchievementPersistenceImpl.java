@@ -313,67 +313,6 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement findByGroupId_Last(
-			long groupId,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException {
-
-		SocialActivityAchievement socialActivityAchievement =
-			fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (socialActivityAchievement != null) {
-			return socialActivityAchievement;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityAchievement> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social activity achievements where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -686,72 +625,6 @@ public class SocialActivityAchievementPersistenceImpl
 
 		List<SocialActivityAchievement> list = findByG_U(
 			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException {
-
-		SocialActivityAchievement socialActivityAchievement = fetchByG_U_Last(
-			groupId, userId, orderByComparator);
-
-		if (socialActivityAchievement != null) {
-			return socialActivityAchievement;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
-
-		int count = countByG_U(groupId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityAchievement> list = findByG_U(
-			groupId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1105,72 +978,6 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement findByG_N_Last(
-			long groupId, String name,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException {
-
-		SocialActivityAchievement socialActivityAchievement = fetchByG_N_Last(
-			groupId, name, orderByComparator);
-
-		if (socialActivityAchievement != null) {
-			return socialActivityAchievement;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement fetchByG_N_Last(
-		long groupId, String name,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
-
-		int count = countByG_N(groupId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityAchievement> list = findByG_N(
-			groupId, name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the social activity achievements where groupId = &#63; and name = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1511,72 +1318,6 @@ public class SocialActivityAchievementPersistenceImpl
 
 		List<SocialActivityAchievement> list = findByG_F(
 			groupId, firstInGroup, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement findByG_F_Last(
-			long groupId, boolean firstInGroup,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException {
-
-		SocialActivityAchievement socialActivityAchievement = fetchByG_F_Last(
-			groupId, firstInGroup, orderByComparator);
-
-		if (socialActivityAchievement != null) {
-			return socialActivityAchievement;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", firstInGroup=");
-		sb.append(firstInGroup);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement fetchByG_F_Last(
-		long groupId, boolean firstInGroup,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
-
-		int count = countByG_F(groupId, firstInGroup);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityAchievement> list = findByG_F(
-			groupId, firstInGroup, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2155,77 +1896,6 @@ public class SocialActivityAchievementPersistenceImpl
 
 		List<SocialActivityAchievement> list = findByG_U_F(
 			groupId, userId, firstInGroup, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement
-	 * @throws NoSuchActivityAchievementException if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement findByG_U_F_Last(
-			long groupId, long userId, boolean firstInGroup,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws NoSuchActivityAchievementException {
-
-		SocialActivityAchievement socialActivityAchievement = fetchByG_U_F_Last(
-			groupId, userId, firstInGroup, orderByComparator);
-
-		if (socialActivityAchievement != null) {
-			return socialActivityAchievement;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", firstInGroup=");
-		sb.append(firstInGroup);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
-	}
-
-	/**
-	 * Returns the last social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
-	 */
-	@Override
-	public SocialActivityAchievement fetchByG_U_F_Last(
-		long groupId, long userId, boolean firstInGroup,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
-
-		int count = countByG_U_F(groupId, userId, firstInGroup);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SocialActivityAchievement> list = findByG_U_F(
-			groupId, userId, firstInGroup, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3326,4 +2996,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2090606981
+// LIFERAY-SERVICE-BUILDER-HASH:-1296676180

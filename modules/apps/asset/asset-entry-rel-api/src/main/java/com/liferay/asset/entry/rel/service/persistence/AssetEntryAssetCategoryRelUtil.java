@@ -224,39 +224,6 @@ public class AssetEntryAssetCategoryRelUtil {
 	}
 
 	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
-	 */
-	public static AssetEntryAssetCategoryRel findByAssetEntryId_Last(
-			long assetEntryId,
-			OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
-		throws com.liferay.asset.entry.rel.exception.
-			NoSuchEntryAssetCategoryRelException {
-
-		return getPersistence().findByAssetEntryId_Last(
-			assetEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
-	 */
-	public static AssetEntryAssetCategoryRel fetchByAssetEntryId_Last(
-		long assetEntryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-
-		return getPersistence().fetchByAssetEntryId_Last(
-			assetEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset entry asset category rels where assetEntryId = &#63; from the database.
 	 *
 	 * @param assetEntryId the asset entry ID
@@ -380,39 +347,6 @@ public class AssetEntryAssetCategoryRelUtil {
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
 
 		return getPersistence().fetchByAssetCategoryId_First(
-			assetCategoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
-	 */
-	public static AssetEntryAssetCategoryRel findByAssetCategoryId_Last(
-			long assetCategoryId,
-			OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
-		throws com.liferay.asset.entry.rel.exception.
-			NoSuchEntryAssetCategoryRelException {
-
-		return getPersistence().findByAssetCategoryId_Last(
-			assetCategoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
-	 */
-	public static AssetEntryAssetCategoryRel fetchByAssetCategoryId_Last(
-		long assetCategoryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-
-		return getPersistence().fetchByAssetCategoryId_Last(
 			assetCategoryId, orderByComparator);
 	}
 
@@ -681,4 +615,4 @@ public class AssetEntryAssetCategoryRelUtil {
 	private static volatile AssetEntryAssetCategoryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2047070708
+// LIFERAY-SERVICE-BUILDER-HASH:-551230920

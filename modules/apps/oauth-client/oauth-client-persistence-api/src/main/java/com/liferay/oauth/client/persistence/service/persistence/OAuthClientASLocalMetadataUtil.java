@@ -219,37 +219,6 @@ public class OAuthClientASLocalMetadataUtil {
 	}
 
 	/**
-	 * Returns the last o auth client as local metadata in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata findByUuid_Last(
-			String uuid,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
-		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchOAuthClientASLocalMetadataException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the o auth client as local metadatas that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -439,41 +408,6 @@ public class OAuthClientASLocalMetadataUtil {
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
-		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchOAuthClientASLocalMetadataException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -671,39 +605,6 @@ public class OAuthClientASLocalMetadataUtil {
 	}
 
 	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
-		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchOAuthClientASLocalMetadataException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the o auth client as local metadatas that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -884,37 +785,6 @@ public class OAuthClientASLocalMetadataUtil {
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata findByUserId_Last(
-			long userId,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
-		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchOAuthClientASLocalMetadataException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata fetchByUserId_Last(
-		long userId,
-		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -1243,41 +1113,6 @@ public class OAuthClientASLocalMetadataUtil {
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 
 		return getPersistence().fetchByC_L_First(
-			companyId, localWellKnownEnabled, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param localWellKnownEnabled the local well known enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata findByC_L_Last(
-			long companyId, boolean localWellKnownEnabled,
-			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
-		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchOAuthClientASLocalMetadataException {
-
-		return getPersistence().findByC_L_Last(
-			companyId, localWellKnownEnabled, orderByComparator);
-	}
-
-	/**
-	 * Returns the last o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param localWellKnownEnabled the local well known enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
-	 */
-	public static OAuthClientASLocalMetadata fetchByC_L_Last(
-		long companyId, boolean localWellKnownEnabled,
-		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
-
-		return getPersistence().fetchByC_L_Last(
 			companyId, localWellKnownEnabled, orderByComparator);
 	}
 
@@ -1698,4 +1533,4 @@ public class OAuthClientASLocalMetadataUtil {
 	private static volatile OAuthClientASLocalMetadataPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-608255546
+// LIFERAY-SERVICE-BUILDER-HASH:-204179326

@@ -324,64 +324,6 @@ public class SharingEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByUuid_Last(
-			String uuid, OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sharing entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -913,72 +855,6 @@ public class SharingEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sharing entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1288,65 +1164,6 @@ public class SharingEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByGroupId_Last(
-			long groupId, OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sharing entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1619,65 +1436,6 @@ public class SharingEntryPersistenceImpl
 		long userId, OrderByComparator<SharingEntry> orderByComparator) {
 
 		List<SharingEntry> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByUserId_Last(
-			long userId, OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByUserId_Last(
-			userId, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByUserId_Last(
-		long userId, OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1972,65 +1730,6 @@ public class SharingEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where toUserId = &#63;.
-	 *
-	 * @param toUserId the to user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByToUserId_Last(
-			long toUserId, OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByToUserId_Last(
-			toUserId, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("toUserId=");
-		sb.append(toUserId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where toUserId = &#63;.
-	 *
-	 * @param toUserId the to user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByToUserId_Last(
-		long toUserId, OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByToUserId(toUserId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByToUserId(
-			toUserId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sharing entries where toUserId = &#63; from the database.
 	 *
 	 * @param toUserId the to user ID
@@ -2315,67 +2014,6 @@ public class SharingEntryPersistenceImpl
 
 		List<SharingEntry> list = findByLtExpirationDate(
 			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByLtExpirationDate_Last(
-			Date expirationDate,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByLtExpirationDate_Last(
-			expirationDate, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByLtExpirationDate_Last(
-		Date expirationDate,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByLtExpirationDate(expirationDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByLtExpirationDate(
-			expirationDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2708,72 +2346,6 @@ public class SharingEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByC_CN_Last(
-			long companyId, long classNameId,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByC_CN_Last(
-		long companyId, long classNameId,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByC_CN(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByC_CN(
-			companyId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sharing entries where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3080,72 +2652,6 @@ public class SharingEntryPersistenceImpl
 
 		List<SharingEntry> list = findByU_C(
 			userId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByU_C_Last(
-			long userId, long classNameId,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByU_C_Last(
-			userId, classNameId, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByU_C_Last(
-		long userId, long classNameId,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByU_C(userId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByU_C(
-			userId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3470,72 +2976,6 @@ public class SharingEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last sharing entry in the ordered set where toUserId = &#63; and classNameId = &#63;.
-	 *
-	 * @param toUserId the to user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByTU_C_Last(
-			long toUserId, long classNameId,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByTU_C_Last(
-			toUserId, classNameId, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("toUserId=");
-		sb.append(toUserId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where toUserId = &#63; and classNameId = &#63;.
-	 *
-	 * @param toUserId the to user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByTU_C_Last(
-		long toUserId, long classNameId,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByTU_C(toUserId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByTU_C(
-			toUserId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the sharing entries where toUserId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param toUserId the to user ID
@@ -3842,72 +3282,6 @@ public class SharingEntryPersistenceImpl
 
 		List<SharingEntry> list = findByC_C(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry
-	 * @throws NoSuchEntryException if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<SharingEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (sharingEntry != null) {
-			return sharingEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last sharing entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
-	 */
-	@Override
-	public SharingEntry fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SharingEntry> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5381,4 +4755,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2114120494
+// LIFERAY-SERVICE-BUILDER-HASH:-1899815425

@@ -322,66 +322,6 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo transition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
-	 */
-	@Override
-	public KaleoTransition findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<KaleoTransition> orderByComparator)
-		throws NoSuchTransitionException {
-
-		KaleoTransition kaleoTransition = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (kaleoTransition != null) {
-			return kaleoTransition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTransitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo transition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	 */
-	@Override
-	public KaleoTransition fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KaleoTransition> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTransition> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo transitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -693,67 +633,6 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last kaleo transition in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
-	 */
-	@Override
-	public KaleoTransition findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTransition> orderByComparator)
-		throws NoSuchTransitionException {
-
-		KaleoTransition kaleoTransition = fetchByKaleoDefinitionVersionId_Last(
-			kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoTransition != null) {
-			return kaleoTransition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchTransitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo transition in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	 */
-	@Override
-	public KaleoTransition fetchByKaleoDefinitionVersionId_Last(
-		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoTransition> orderByComparator) {
-
-		int count = countByKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTransition> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the kaleo transitions where kaleoDefinitionVersionId = &#63; from the database.
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -1051,67 +930,6 @@ public class KaleoTransitionPersistenceImpl
 
 		List<KaleoTransition> list = findByKaleoNodeId(
 			kaleoNodeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo transition in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
-	 */
-	@Override
-	public KaleoTransition findByKaleoNodeId_Last(
-			long kaleoNodeId,
-			OrderByComparator<KaleoTransition> orderByComparator)
-		throws NoSuchTransitionException {
-
-		KaleoTransition kaleoTransition = fetchByKaleoNodeId_Last(
-			kaleoNodeId, orderByComparator);
-
-		if (kaleoTransition != null) {
-			return kaleoTransition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoNodeId=");
-		sb.append(kaleoNodeId);
-
-		sb.append("}");
-
-		throw new NoSuchTransitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last kaleo transition in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	 */
-	@Override
-	public KaleoTransition fetchByKaleoNodeId_Last(
-		long kaleoNodeId,
-		OrderByComparator<KaleoTransition> orderByComparator) {
-
-		int count = countByKaleoNodeId(kaleoNodeId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTransition> list = findByKaleoNodeId(
-			kaleoNodeId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2630,4 +2448,4 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1385122897
+// LIFERAY-SERVICE-BUILDER-HASH:1858541871

@@ -326,67 +326,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel findByAssetEntryId_Last(
-			long assetEntryId,
-			OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
-		throws NoSuchEntryAssetCategoryRelException {
-
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			fetchByAssetEntryId_Last(assetEntryId, orderByComparator);
-
-		if (assetEntryAssetCategoryRel != null) {
-			return assetEntryAssetCategoryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetEntryId=");
-		sb.append(assetEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryAssetCategoryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel fetchByAssetEntryId_Last(
-		long assetEntryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-
-		int count = countByAssetEntryId(assetEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntryAssetCategoryRel> list = findByAssetEntryId(
-			assetEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset entry asset category rels where assetEntryId = &#63; from the database.
 	 *
 	 * @param assetEntryId the asset entry ID
@@ -688,67 +627,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		List<AssetEntryAssetCategoryRel> list = findByAssetCategoryId(
 			assetCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel findByAssetCategoryId_Last(
-			long assetCategoryId,
-			OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
-		throws NoSuchEntryAssetCategoryRelException {
-
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			fetchByAssetCategoryId_Last(assetCategoryId, orderByComparator);
-
-		if (assetEntryAssetCategoryRel != null) {
-			return assetEntryAssetCategoryRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetCategoryId=");
-		sb.append(assetCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryAssetCategoryRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel fetchByAssetCategoryId_Last(
-		long assetCategoryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-
-		int count = countByAssetCategoryId(assetCategoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntryAssetCategoryRel> list = findByAssetCategoryId(
-			assetCategoryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2003,4 +1881,4 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-930483838
+// LIFERAY-SERVICE-BUILDER-HASH:1191159156

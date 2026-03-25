@@ -299,65 +299,6 @@ public class ResourceActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last resource action in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource action
-	 * @throws NoSuchResourceActionException if a matching resource action could not be found
-	 */
-	@Override
-	public ResourceAction findByName_Last(
-			String name, OrderByComparator<ResourceAction> orderByComparator)
-		throws NoSuchResourceActionException {
-
-		ResourceAction resourceAction = fetchByName_Last(
-			name, orderByComparator);
-
-		if (resourceAction != null) {
-			return resourceAction;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchResourceActionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last resource action in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource action, or <code>null</code> if a matching resource action could not be found
-	 */
-	@Override
-	public ResourceAction fetchByName_Last(
-		String name, OrderByComparator<ResourceAction> orderByComparator) {
-
-		int count = countByName(name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ResourceAction> list = findByName(
-			name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the resource actions where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -1250,4 +1191,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-139913603
+// LIFERAY-SERVICE-BUILDER-HASH:-1033488077

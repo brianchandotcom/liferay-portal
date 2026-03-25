@@ -121,32 +121,6 @@ public interface CTermEntryLocalizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last c term entry localization in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c term entry localization
-	 * @throws NoSuchCTermEntryLocalizationException if a matching c term entry localization could not be found
-	 */
-	public CTermEntryLocalization findByCommerceTermEntryId_Last(
-			long commerceTermEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CTermEntryLocalization> orderByComparator)
-		throws NoSuchCTermEntryLocalizationException;
-
-	/**
-	 * Returns the last c term entry localization in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c term entry localization, or <code>null</code> if a matching c term entry localization could not be found
-	 */
-	public CTermEntryLocalization fetchByCommerceTermEntryId_Last(
-		long commerceTermEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTermEntryLocalization>
-			orderByComparator);
-
-	/**
 	 * Removes all the c term entry localizations where commerceTermEntryId = &#63; from the database.
 	 *
 	 * @param commerceTermEntryId the commerce term entry ID
@@ -340,4 +314,4 @@ public interface CTermEntryLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1178415042
+// LIFERAY-SERVICE-BUILDER-HASH:-1260855091

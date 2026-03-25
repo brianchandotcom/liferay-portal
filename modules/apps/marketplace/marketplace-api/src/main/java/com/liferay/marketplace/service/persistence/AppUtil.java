@@ -203,34 +203,6 @@ public class AppUtil {
 	}
 
 	/**
-	 * Returns the last app in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	public static App findByUuid_Last(
-			String uuid, OrderByComparator<App> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchAppException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last app in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	public static App fetchByUuid_Last(
-		String uuid, OrderByComparator<App> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the apps where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -358,39 +330,6 @@ public class AppUtil {
 	}
 
 	/**
-	 * Returns the last app in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	public static App findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<App> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchAppException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last app in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	public static App fetchByUuid_C_Last(
-		String uuid, long companyId, OrderByComparator<App> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the apps where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -509,36 +448,6 @@ public class AppUtil {
 		long companyId, OrderByComparator<App> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last app in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	public static App findByCompanyId_Last(
-			long companyId, OrderByComparator<App> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchAppException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last app in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	public static App fetchByCompanyId_Last(
-		long companyId, OrderByComparator<App> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -721,36 +630,6 @@ public class AppUtil {
 	}
 
 	/**
-	 * Returns the last app in the ordered set where category = &#63;.
-	 *
-	 * @param category the category
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	public static App findByCategory_Last(
-			String category, OrderByComparator<App> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchAppException {
-
-		return getPersistence().findByCategory_Last(
-			category, orderByComparator);
-	}
-
-	/**
-	 * Returns the last app in the ordered set where category = &#63;.
-	 *
-	 * @param category the category
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching app, or <code>null</code> if a matching app could not be found
-	 */
-	public static App fetchByCategory_Last(
-		String category, OrderByComparator<App> orderByComparator) {
-
-		return getPersistence().fetchByCategory_Last(
-			category, orderByComparator);
-	}
-
-	/**
 	 * Removes all the apps where category = &#63; from the database.
 	 *
 	 * @param category the category
@@ -927,4 +806,4 @@ public class AppUtil {
 	private static volatile AppPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1280921191
+// LIFERAY-SERVICE-BUILDER-HASH:-2072777521

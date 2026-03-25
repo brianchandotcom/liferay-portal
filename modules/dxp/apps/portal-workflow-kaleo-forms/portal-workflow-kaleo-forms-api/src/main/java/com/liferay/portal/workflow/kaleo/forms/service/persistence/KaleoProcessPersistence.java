@@ -119,32 +119,6 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process
-	 * @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
-	 */
-	public KaleoProcess findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-				orderByComparator)
-		throws NoSuchKaleoProcessException;
-
-	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	public KaleoProcess fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -304,34 +278,6 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process
-	 * @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
-	 */
-	public KaleoProcess findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-				orderByComparator)
-		throws NoSuchKaleoProcessException;
-
-	/**
-	 * Returns the last kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	public KaleoProcess fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -431,32 +377,6 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	 * @return the first matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
 	 */
 	public KaleoProcess fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo process in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process
-	 * @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
-	 */
-	public KaleoProcess findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-				orderByComparator)
-		throws NoSuchKaleoProcessException;
-
-	/**
-	 * Returns the last kaleo process in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	public KaleoProcess fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
 			orderByComparator);
@@ -691,4 +611,4 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:255566257
+// LIFERAY-SERVICE-BUILDER-HASH:-83833973

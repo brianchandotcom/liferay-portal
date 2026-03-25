@@ -346,67 +346,6 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price modifier in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifier> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price modifiers where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -962,72 +901,6 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price modifier in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifier> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price modifiers where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1354,67 +1227,6 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price modifier in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifier> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price modifiers where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1715,68 +1527,6 @@ public class CommercePriceModifierPersistenceImpl
 
 		List<CommercePriceModifier> list = findByCommercePriceListId(
 			commercePriceListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByCommercePriceListId_Last(
-			long commercePriceListId,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier =
-			fetchByCommercePriceListId_Last(
-				commercePriceListId, orderByComparator);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier fetchByCommercePriceListId_Last(
-		long commercePriceListId,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		int count = countByCommercePriceListId(commercePriceListId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifier> list = findByCommercePriceListId(
-			commercePriceListId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2112,72 +1862,6 @@ public class CommercePriceModifierPersistenceImpl
 
 		List<CommercePriceModifier> list = findByC_T(
 			companyId, target, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where companyId = &#63; and target = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param target the target
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByC_T_Last(
-			long companyId, String target,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier = fetchByC_T_Last(
-			companyId, target, orderByComparator);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", target=");
-		sb.append(target);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where companyId = &#63; and target = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param target the target
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier fetchByC_T_Last(
-		long companyId, String target,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		int count = countByC_T(companyId, target);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifier> list = findByC_T(
-			companyId, target, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2533,72 +2217,6 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce price modifier in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifier> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce price modifiers where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -2934,72 +2552,6 @@ public class CommercePriceModifierPersistenceImpl
 
 		List<CommercePriceModifier> list = findByLtE_S(
 			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier = fetchByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		int count = countByLtE_S(expirationDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifier> list = findByLtE_S(
-			expirationDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3361,77 +2913,6 @@ public class CommercePriceModifierPersistenceImpl
 
 		List<CommercePriceModifier> list = findByG_C_S(
 			groupId, companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByG_C_S_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier = fetchByG_C_S_Last(
-			groupId, companyId, status, orderByComparator);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier fetchByG_C_S_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		int count = countByG_C_S(groupId, companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifier> list = findByG_C_S(
-			groupId, companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4082,77 +3563,6 @@ public class CommercePriceModifierPersistenceImpl
 
 		List<CommercePriceModifier> list = findByG_C_NotS(
 			groupId, companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier
-	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByG_C_NotS_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceModifier> orderByComparator)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier = fetchByG_C_NotS_Last(
-			groupId, companyId, status, orderByComparator);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceModifierException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce price modifier in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
-	@Override
-	public CommercePriceModifier fetchByG_C_NotS_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CommercePriceModifier> orderByComparator) {
-
-		int count = countByG_C_NotS(groupId, companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePriceModifier> list = findByG_C_NotS(
-			groupId, companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6030,4 +5440,4 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1280936242
+// LIFERAY-SERVICE-BUILDER-HASH:1757661640

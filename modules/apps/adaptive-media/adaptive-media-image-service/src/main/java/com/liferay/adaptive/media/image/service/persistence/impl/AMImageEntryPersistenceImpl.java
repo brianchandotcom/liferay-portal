@@ -329,64 +329,6 @@ public class AMImageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last am image entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry findByUuid_Last(
-			String uuid, OrderByComparator<AMImageEntry> orderByComparator)
-		throws NoSuchAMImageEntryException {
-
-		AMImageEntry amImageEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<AMImageEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AMImageEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the am image entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -934,72 +876,6 @@ public class AMImageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last am image entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws NoSuchAMImageEntryException {
-
-		AMImageEntry amImageEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AMImageEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the am image entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1322,65 +1198,6 @@ public class AMImageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last am image entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry findByGroupId_Last(
-			long groupId, OrderByComparator<AMImageEntry> orderByComparator)
-		throws NoSuchAMImageEntryException {
-
-		AMImageEntry amImageEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<AMImageEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AMImageEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the am image entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1670,65 +1487,6 @@ public class AMImageEntryPersistenceImpl
 
 		List<AMImageEntry> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<AMImageEntry> orderByComparator)
-		throws NoSuchAMImageEntryException {
-
-		AMImageEntry amImageEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AMImageEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AMImageEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2059,67 +1817,6 @@ public class AMImageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last am image entry in the ordered set where configurationUuid = &#63;.
-	 *
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry findByConfigurationUuid_Last(
-			String configurationUuid,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws NoSuchAMImageEntryException {
-
-		AMImageEntry amImageEntry = fetchByConfigurationUuid_Last(
-			configurationUuid, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("configurationUuid=");
-		sb.append(configurationUuid);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where configurationUuid = &#63;.
-	 *
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry fetchByConfigurationUuid_Last(
-		String configurationUuid,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		int count = countByConfigurationUuid(configurationUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AMImageEntry> list = findByConfigurationUuid(
-			configurationUuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the am image entries where configurationUuid = &#63; from the database.
 	 *
 	 * @param configurationUuid the configuration uuid
@@ -2433,66 +2130,6 @@ public class AMImageEntryPersistenceImpl
 
 		List<AMImageEntry> list = findByFileVersionId(
 			fileVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry findByFileVersionId_Last(
-			long fileVersionId,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws NoSuchAMImageEntryException {
-
-		AMImageEntry amImageEntry = fetchByFileVersionId_Last(
-			fileVersionId, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileVersionId=");
-		sb.append(fileVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry fetchByFileVersionId_Last(
-		long fileVersionId, OrderByComparator<AMImageEntry> orderByComparator) {
-
-		int count = countByFileVersionId(fileVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AMImageEntry> list = findByFileVersionId(
-			fileVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2827,72 +2464,6 @@ public class AMImageEntryPersistenceImpl
 
 		List<AMImageEntry> list = findByC_C(
 			companyId, configurationUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where companyId = &#63; and configurationUuid = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry
-	 * @throws NoSuchAMImageEntryException if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry findByC_C_Last(
-			long companyId, String configurationUuid,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws NoSuchAMImageEntryException {
-
-		AMImageEntry amImageEntry = fetchByC_C_Last(
-			companyId, configurationUuid, orderByComparator);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", configurationUuid=");
-		sb.append(configurationUuid);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last am image entry in the ordered set where companyId = &#63; and configurationUuid = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	@Override
-	public AMImageEntry fetchByC_C_Last(
-		long companyId, String configurationUuid,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		int count = countByC_C(companyId, configurationUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AMImageEntry> list = findByC_C(
-			companyId, configurationUuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4281,4 +3852,4 @@ public class AMImageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1245814964
+// LIFERAY-SERVICE-BUILDER-HASH:1937918240

@@ -122,32 +122,6 @@ public interface JournalContentSearchPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last journal content search in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	public JournalContentSearch findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException;
-
-	/**
-	 * Returns the last journal content search in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	public JournalContentSearch fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
-			orderByComparator);
-
-	/**
 	 * Removes all the journal content searches where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -251,32 +225,6 @@ public interface JournalContentSearchPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last journal content search in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	public JournalContentSearch findByPortletId_Last(
-			String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException;
-
-	/**
-	 * Returns the last journal content search in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	public JournalContentSearch fetchByPortletId_Last(
-		String portletId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
-			orderByComparator);
-
-	/**
 	 * Removes all the journal content searches where portletId = &#63; from the database.
 	 *
 	 * @param portletId the portlet ID
@@ -375,32 +323,6 @@ public interface JournalContentSearchPersistence
 	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	 */
 	public JournalContentSearch fetchByArticleId_First(
-		String articleId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal content search in the ordered set where articleId = &#63;.
-	 *
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	public JournalContentSearch findByArticleId_Last(
-			String articleId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException;
-
-	/**
-	 * Returns the last journal content search in the ordered set where articleId = &#63;.
-	 *
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	public JournalContentSearch fetchByArticleId_Last(
 		String articleId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
 			orderByComparator);
@@ -515,34 +437,6 @@ public interface JournalContentSearchPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	public JournalContentSearch findByG_P_Last(
-			long groupId, boolean privateLayout,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException;
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	public JournalContentSearch fetchByG_P_Last(
-		long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
-			orderByComparator);
-
-	/**
 	 * Removes all the journal content searches where groupId = &#63; and privateLayout = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -649,34 +543,6 @@ public interface JournalContentSearchPersistence
 	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	 */
 	public JournalContentSearch fetchByG_A_First(
-		long groupId, String articleId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	public JournalContentSearch findByG_A_Last(
-			long groupId, String articleId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException;
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	public JournalContentSearch fetchByG_A_Last(
 		long groupId, String articleId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
 			orderByComparator);
@@ -794,36 +660,6 @@ public interface JournalContentSearchPersistence
 	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	 */
 	public JournalContentSearch fetchByG_P_L_First(
-		long groupId, boolean privateLayout, long layoutId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutId the layout ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	public JournalContentSearch findByG_P_L_Last(
-			long groupId, boolean privateLayout, long layoutId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException;
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutId the layout ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	public JournalContentSearch fetchByG_P_L_Last(
 		long groupId, boolean privateLayout, long layoutId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
 			orderByComparator);
@@ -947,36 +783,6 @@ public interface JournalContentSearchPersistence
 	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	 */
 	public JournalContentSearch fetchByG_P_A_First(
-		long groupId, boolean privateLayout, String articleId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	public JournalContentSearch findByG_P_A_Last(
-			long groupId, boolean privateLayout, String articleId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException;
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	public JournalContentSearch fetchByG_P_A_Last(
 		long groupId, boolean privateLayout, String articleId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
 			orderByComparator);
@@ -1108,39 +914,6 @@ public interface JournalContentSearchPersistence
 	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	 */
 	public JournalContentSearch fetchByG_P_L_P_First(
-		long groupId, boolean privateLayout, long layoutId, String portletId,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
-			orderByComparator);
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutId the layout ID
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search
-	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
-	 */
-	public JournalContentSearch findByG_P_L_P_Last(
-			long groupId, boolean privateLayout, long layoutId,
-			String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalContentSearch> orderByComparator)
-		throws NoSuchContentSearchException;
-
-	/**
-	 * Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutId the layout ID
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	 */
-	public JournalContentSearch fetchByG_P_L_P_Last(
 		long groupId, boolean privateLayout, long layoutId, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
 			orderByComparator);
@@ -1365,4 +1138,4 @@ public interface JournalContentSearchPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1978078436
+// LIFERAY-SERVICE-BUILDER-HASH:-1696799880

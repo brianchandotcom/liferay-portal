@@ -299,67 +299,6 @@ public class PasswordPolicyRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last password policy rel in the ordered set where passwordPolicyId = &#63;.
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy rel
-	 * @throws NoSuchPasswordPolicyRelException if a matching password policy rel could not be found
-	 */
-	@Override
-	public PasswordPolicyRel findByPasswordPolicyId_Last(
-			long passwordPolicyId,
-			OrderByComparator<PasswordPolicyRel> orderByComparator)
-		throws NoSuchPasswordPolicyRelException {
-
-		PasswordPolicyRel passwordPolicyRel = fetchByPasswordPolicyId_Last(
-			passwordPolicyId, orderByComparator);
-
-		if (passwordPolicyRel != null) {
-			return passwordPolicyRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("passwordPolicyId=");
-		sb.append(passwordPolicyId);
-
-		sb.append("}");
-
-		throw new NoSuchPasswordPolicyRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last password policy rel in the ordered set where passwordPolicyId = &#63;.
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
-	 */
-	@Override
-	public PasswordPolicyRel fetchByPasswordPolicyId_Last(
-		long passwordPolicyId,
-		OrderByComparator<PasswordPolicyRel> orderByComparator) {
-
-		int count = countByPasswordPolicyId(passwordPolicyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PasswordPolicyRel> list = findByPasswordPolicyId(
-			passwordPolicyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the password policy rels where passwordPolicyId = &#63; from the database.
 	 *
 	 * @param passwordPolicyId the password policy ID
@@ -1221,4 +1160,4 @@ public class PasswordPolicyRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1668958324
+// LIFERAY-SERVICE-BUILDER-HASH:-1679483038

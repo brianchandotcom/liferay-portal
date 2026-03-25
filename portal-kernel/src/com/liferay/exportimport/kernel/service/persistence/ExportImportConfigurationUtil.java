@@ -221,37 +221,6 @@ public class ExportImportConfigurationUtil {
 	}
 
 	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration findByGroupId_Last(
-			long groupId,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.exportimport.kernel.exception.
-			NoSuchConfigurationException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the export import configurations where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -374,39 +343,6 @@ public class ExportImportConfigurationUtil {
 		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.exportimport.kernel.exception.
-			NoSuchConfigurationException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -543,41 +479,6 @@ public class ExportImportConfigurationUtil {
 	}
 
 	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration findByG_T_Last(
-			long groupId, int type,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.exportimport.kernel.exception.
-			NoSuchConfigurationException {
-
-		return getPersistence().findByG_T_Last(
-			groupId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration fetchByG_T_Last(
-		long groupId, int type,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		return getPersistence().fetchByG_T_Last(
-			groupId, type, orderByComparator);
-	}
-
-	/**
 	 * Removes all the export import configurations where groupId = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -708,41 +609,6 @@ public class ExportImportConfigurationUtil {
 		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 
 		return getPersistence().fetchByG_S_First(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration findByG_S_Last(
-			long groupId, int status,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.exportimport.kernel.exception.
-			NoSuchConfigurationException {
-
-		return getPersistence().findByG_S_Last(
-			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration fetchByG_S_Last(
-		long groupId, int status,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		return getPersistence().fetchByG_S_Last(
 			groupId, status, orderByComparator);
 	}
 
@@ -884,43 +750,6 @@ public class ExportImportConfigurationUtil {
 		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 
 		return getPersistence().fetchByG_T_S_First(
-			groupId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration
-	 * @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration findByG_T_S_Last(
-			long groupId, int type, int status,
-			OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.exportimport.kernel.exception.
-			NoSuchConfigurationException {
-
-		return getPersistence().findByG_T_S_Last(
-			groupId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	 */
-	public static ExportImportConfiguration fetchByG_T_S_Last(
-		long groupId, int type, int status,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-
-		return getPersistence().fetchByG_T_S_Last(
 			groupId, type, status, orderByComparator);
 	}
 
@@ -1123,4 +952,4 @@ public class ExportImportConfigurationUtil {
 	private static volatile ExportImportConfigurationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1793841428
+// LIFERAY-SERVICE-BUILDER-HASH:-568511665

@@ -123,32 +123,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -308,34 +282,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,32 +381,6 @@ public interface CPDefinitionPersistence
 	 * @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	public CPDefinition fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
@@ -617,32 +537,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp definitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -740,32 +634,6 @@ public interface CPDefinitionPersistence
 	 * @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	public CPDefinition fetchByCProductId_First(
-		long CProductId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByCProductId_Last(
-			long CProductId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByCProductId_Last(
 		long CProductId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
@@ -869,32 +737,6 @@ public interface CPDefinitionPersistence
 	 * @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	public CPDefinition fetchByCPTaxCategoryId_First(
-		long CPTaxCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp definition in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByCPTaxCategoryId_Last(
-			long CPTaxCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByCPTaxCategoryId_Last(
 		long CPTaxCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
@@ -1004,34 +846,6 @@ public interface CPDefinitionPersistence
 	 * @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	public CPDefinition fetchByG_SE_First(
-		long groupId, boolean subscriptionEnabled,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByG_SE_Last(
-			long groupId, boolean subscriptionEnabled,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByG_SE_Last(
 		long groupId, boolean subscriptionEnabled,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
@@ -1196,34 +1010,6 @@ public interface CPDefinitionPersistence
 	 * @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	public CPDefinition fetchByG_S_First(
-		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByG_S_Last(
-			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByG_S_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
@@ -1443,34 +1229,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByC_S_Last(
-			long CProductId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByC_S_Last(
-		long CProductId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
 	 * Removes all the cp definitions where CProductId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CProductId the c product ID
@@ -1577,34 +1335,6 @@ public interface CPDefinitionPersistence
 	 * @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	public CPDefinition fetchByLtD_S_First(
-		Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	public CPDefinition findByLtD_S_Last(
-			Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
-	 * Returns the last cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	public CPDefinition fetchByLtD_S_Last(
 		Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
@@ -1747,4 +1477,4 @@ public interface CPDefinitionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1133765655
+// LIFERAY-SERVICE-BUILDER-HASH:503981087

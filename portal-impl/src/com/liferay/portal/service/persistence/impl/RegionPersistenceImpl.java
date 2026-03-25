@@ -320,64 +320,6 @@ public class RegionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last region in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	@Override
-	public Region findByUuid_Last(
-			String uuid, OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
-
-		Region region = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (region != null) {
-			return region;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last region in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	@Override
-	public Region fetchByUuid_Last(
-		String uuid, OrderByComparator<Region> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Region> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the regions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -719,71 +661,6 @@ public class RegionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last region in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	@Override
-	public Region findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
-
-		Region region = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (region != null) {
-			return region;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last region in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	@Override
-	public Region fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Region> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Region> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the regions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1103,64 +980,6 @@ public class RegionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last region in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	@Override
-	public Region findByCountryId_Last(
-			long countryId, OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
-
-		Region region = fetchByCountryId_Last(countryId, orderByComparator);
-
-		if (region != null) {
-			return region;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last region in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	@Override
-	public Region fetchByCountryId_Last(
-		long countryId, OrderByComparator<Region> orderByComparator) {
-
-		int count = countByCountryId(countryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Region> list = findByCountryId(
-			countryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the regions where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -1444,64 +1263,6 @@ public class RegionPersistenceImpl
 		boolean active, OrderByComparator<Region> orderByComparator) {
 
 		List<Region> list = findByActive(active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last region in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	@Override
-	public Region findByActive_Last(
-			boolean active, OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
-
-		Region region = fetchByActive_Last(active, orderByComparator);
-
-		if (region != null) {
-			return region;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last region in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	@Override
-	public Region fetchByActive_Last(
-		boolean active, OrderByComparator<Region> orderByComparator) {
-
-		int count = countByActive(active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Region> list = findByActive(
-			active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1816,71 +1577,6 @@ public class RegionPersistenceImpl
 
 		List<Region> list = findByC_A(
 			countryId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	@Override
-	public Region findByC_A_Last(
-			long countryId, boolean active,
-			OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
-
-		Region region = fetchByC_A_Last(countryId, active, orderByComparator);
-
-		if (region != null) {
-			return region;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	@Override
-	public Region fetchByC_A_Last(
-		long countryId, boolean active,
-		OrderByComparator<Region> orderByComparator) {
-
-		int count = countByC_A(countryId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Region> list = findByC_A(
-			countryId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3147,4 +2843,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:120699156
+// LIFERAY-SERVICE-BUILDER-HASH:-126988796

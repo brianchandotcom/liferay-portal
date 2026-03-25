@@ -323,64 +323,6 @@ public class LaunchSetPersistenceImpl
 	}
 
 	/**
-	 * Returns the last launch set in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet findByUuid_Last(
-			String uuid, OrderByComparator<LaunchSet> orderByComparator)
-		throws NoSuchLaunchSetException {
-
-		LaunchSet launchSet = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (launchSet != null) {
-			return launchSet;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLaunchSetException(sb.toString());
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet fetchByUuid_Last(
-		String uuid, OrderByComparator<LaunchSet> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LaunchSet> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the launch sets where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -714,72 +656,6 @@ public class LaunchSetPersistenceImpl
 	}
 
 	/**
-	 * Returns the last launch set in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LaunchSet> orderByComparator)
-		throws NoSuchLaunchSetException {
-
-		LaunchSet launchSet = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (launchSet != null) {
-			return launchSet;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLaunchSetException(sb.toString());
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LaunchSet> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the launch sets where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1091,65 +967,6 @@ public class LaunchSetPersistenceImpl
 	}
 
 	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet findByCompanyId_Last(
-			long companyId, OrderByComparator<LaunchSet> orderByComparator)
-		throws NoSuchLaunchSetException {
-
-		LaunchSet launchSet = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (launchSet != null) {
-			return launchSet;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLaunchSetException(sb.toString());
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet fetchByCompanyId_Last(
-		long companyId, OrderByComparator<LaunchSet> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LaunchSet> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the launch sets where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1446,72 +1263,6 @@ public class LaunchSetPersistenceImpl
 
 		List<LaunchSet> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<LaunchSet> orderByComparator)
-		throws NoSuchLaunchSetException {
-
-		LaunchSet launchSet = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (launchSet != null) {
-			return launchSet;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchLaunchSetException(sb.toString());
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LaunchSet> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1828,72 +1579,6 @@ public class LaunchSetPersistenceImpl
 
 		List<LaunchSet> list = findByC_S(
 			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<LaunchSet> orderByComparator)
-		throws NoSuchLaunchSetException {
-
-		LaunchSet launchSet = fetchByC_S_Last(
-			companyId, status, orderByComparator);
-
-		if (launchSet != null) {
-			return launchSet;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchLaunchSetException(sb.toString());
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	@Override
-	public LaunchSet fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		int count = countByC_S(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LaunchSet> list = findByC_S(
-			companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3265,4 +2950,4 @@ public class LaunchSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1296736053
+// LIFERAY-SERVICE-BUILDER-HASH:59595941

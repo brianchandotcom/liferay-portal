@@ -224,40 +224,6 @@ public class ViewCountEntryUtil {
 	}
 
 	/**
-	 * Returns the last view count entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching view count entry
-	 * @throws NoSuchEntryException if a matching view count entry could not be found
-	 */
-	public static ViewCountEntry findByC_CN_Last(
-			long companyId, long classNameId,
-			OrderByComparator<ViewCountEntry> orderByComparator)
-		throws com.liferay.view.count.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last view count entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching view count entry, or <code>null</code> if a matching view count entry could not be found
-	 */
-	public static ViewCountEntry fetchByC_CN_Last(
-		long companyId, long classNameId,
-		OrderByComparator<ViewCountEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_CN_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the view count entries where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -444,4 +410,4 @@ public class ViewCountEntryUtil {
 	private static volatile ViewCountEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-99661562
+// LIFERAY-SERVICE-BUILDER-HASH:1005269535

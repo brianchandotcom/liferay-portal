@@ -323,67 +323,6 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 	/**
-	 * Returns the last notification recipient in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient
-	 * @throws NoSuchNotificationRecipientException if a matching notification recipient could not be found
-	 */
-	@Override
-	public NotificationRecipient findByUuid_Last(
-			String uuid,
-			OrderByComparator<NotificationRecipient> orderByComparator)
-		throws NoSuchNotificationRecipientException {
-
-		NotificationRecipient notificationRecipient = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (notificationRecipient != null) {
-			return notificationRecipient;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationRecipientException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification recipient in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient, or <code>null</code> if a matching notification recipient could not be found
-	 */
-	@Override
-	public NotificationRecipient fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<NotificationRecipient> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationRecipient> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the notification recipients where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -710,72 +649,6 @@ public class NotificationRecipientPersistenceImpl
 
 		List<NotificationRecipient> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last notification recipient in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient
-	 * @throws NoSuchNotificationRecipientException if a matching notification recipient could not be found
-	 */
-	@Override
-	public NotificationRecipient findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<NotificationRecipient> orderByComparator)
-		throws NoSuchNotificationRecipientException {
-
-		NotificationRecipient notificationRecipient = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (notificationRecipient != null) {
-			return notificationRecipient;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationRecipientException(sb.toString());
-	}
-
-	/**
-	 * Returns the last notification recipient in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification recipient, or <code>null</code> if a matching notification recipient could not be found
-	 */
-	@Override
-	public NotificationRecipient fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<NotificationRecipient> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<NotificationRecipient> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1782,4 +1655,4 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1947719139
+// LIFERAY-SERVICE-BUILDER-HASH:-159902701

@@ -313,67 +313,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
-	 */
-	@Override
-	public CTAutoResolutionInfo findByCtCollectionId_Last(
-			long ctCollectionId,
-			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
-		throws NoSuchAutoResolutionInfoException {
-
-		CTAutoResolutionInfo ctAutoResolutionInfo = fetchByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-
-		if (ctAutoResolutionInfo != null) {
-			return ctAutoResolutionInfo;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchAutoResolutionInfoException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
-	 */
-	@Override
-	public CTAutoResolutionInfo fetchByCtCollectionId_Last(
-		long ctCollectionId,
-		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
-
-		int count = countByCtCollectionId(ctCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTAutoResolutionInfo> list = findByCtCollectionId(
-			ctCollectionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ct auto resolution infos where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -703,80 +642,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 		List<CTAutoResolutionInfo> list = findByC_MCNI_SMCPK(
 			ctCollectionId, modelClassNameId, sourceModelClassPK, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
-	 */
-	@Override
-	public CTAutoResolutionInfo findByC_MCNI_SMCPK_Last(
-			long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
-			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
-		throws NoSuchAutoResolutionInfoException {
-
-		CTAutoResolutionInfo ctAutoResolutionInfo = fetchByC_MCNI_SMCPK_Last(
-			ctCollectionId, modelClassNameId, sourceModelClassPK,
-			orderByComparator);
-
-		if (ctAutoResolutionInfo != null) {
-			return ctAutoResolutionInfo;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append(", modelClassNameId=");
-		sb.append(modelClassNameId);
-
-		sb.append(", sourceModelClassPK=");
-		sb.append(sourceModelClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchAutoResolutionInfoException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
-	 */
-	@Override
-	public CTAutoResolutionInfo fetchByC_MCNI_SMCPK_Last(
-		long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
-		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
-
-		int count = countByC_MCNI_SMCPK(
-			ctCollectionId, modelClassNameId, sourceModelClassPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTAutoResolutionInfo> list = findByC_MCNI_SMCPK(
-			ctCollectionId, modelClassNameId, sourceModelClassPK, count - 1,
-			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1871,4 +1736,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:390833966
+// LIFERAY-SERVICE-BUILDER-HASH:-1469446170

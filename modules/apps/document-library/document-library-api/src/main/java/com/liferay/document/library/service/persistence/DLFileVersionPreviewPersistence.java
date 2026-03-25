@@ -123,32 +123,6 @@ public interface DLFileVersionPreviewPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last dl file version preview in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl file version preview
-	 * @throws NoSuchFileVersionPreviewException if a matching dl file version preview could not be found
-	 */
-	public DLFileVersionPreview findByFileEntryId_Last(
-			long fileEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DLFileVersionPreview> orderByComparator)
-		throws NoSuchFileVersionPreviewException;
-
-	/**
-	 * Returns the last dl file version preview in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl file version preview, or <code>null</code> if a matching dl file version preview could not be found
-	 */
-	public DLFileVersionPreview fetchByFileEntryId_Last(
-		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersionPreview>
-			orderByComparator);
-
-	/**
 	 * Removes all the dl file version previews where fileEntryId = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -247,32 +221,6 @@ public interface DLFileVersionPreviewPersistence
 	 * @return the first matching dl file version preview, or <code>null</code> if a matching dl file version preview could not be found
 	 */
 	public DLFileVersionPreview fetchByFileVersionId_First(
-		long fileVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersionPreview>
-			orderByComparator);
-
-	/**
-	 * Returns the last dl file version preview in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl file version preview
-	 * @throws NoSuchFileVersionPreviewException if a matching dl file version preview could not be found
-	 */
-	public DLFileVersionPreview findByFileVersionId_Last(
-			long fileVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DLFileVersionPreview> orderByComparator)
-		throws NoSuchFileVersionPreviewException;
-
-	/**
-	 * Returns the last dl file version preview in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl file version preview, or <code>null</code> if a matching dl file version preview could not be found
-	 */
-	public DLFileVersionPreview fetchByFileVersionId_Last(
 		long fileVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersionPreview>
 			orderByComparator);
@@ -527,4 +475,4 @@ public interface DLFileVersionPreviewPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-604663217
+// LIFERAY-SERVICE-BUILDER-HASH:-851693885

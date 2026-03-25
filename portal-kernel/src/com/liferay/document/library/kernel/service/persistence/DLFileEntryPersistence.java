@@ -121,32 +121,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface DLFileEntryPersistence
 	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator);
@@ -615,32 +535,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -743,32 +637,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByRepositoryId_Last(
-			long repositoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByRepositoryId_Last(
-		long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file entries where repositoryId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -866,32 +734,6 @@ public interface DLFileEntryPersistence
 	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByMimeType_First(
-		String mimeType,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file entry in the ordered set where mimeType = &#63;.
-	 *
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByMimeType_Last(
-			String mimeType,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where mimeType = &#63;.
-	 *
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByMimeType_Last(
 		String mimeType,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator);
@@ -1000,32 +842,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where fileEntryTypeId = &#63;.
-	 *
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByFileEntryTypeId_Last(
-			long fileEntryTypeId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where fileEntryTypeId = &#63;.
-	 *
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByFileEntryTypeId_Last(
-		long fileEntryTypeId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file entries where fileEntryTypeId = &#63; from the database.
 	 *
 	 * @param fileEntryTypeId the file entry type ID
@@ -1128,32 +944,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where smallImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findBySmallImageId_Last(
-			long smallImageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where smallImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchBySmallImageId_Last(
-		long smallImageId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file entries where smallImageId = &#63; from the database.
 	 *
 	 * @param smallImageId the small image ID
@@ -1251,32 +1041,6 @@ public interface DLFileEntryPersistence
 	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByLargeImageId_First(
-		long largeImageId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file entry in the ordered set where largeImageId = &#63;.
-	 *
-	 * @param largeImageId the large image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByLargeImageId_Last(
-			long largeImageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where largeImageId = &#63;.
-	 *
-	 * @param largeImageId the large image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByLargeImageId_Last(
 		long largeImageId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator);
@@ -1385,32 +1149,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where custom1ImageId = &#63;.
-	 *
-	 * @param custom1ImageId the custom1 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByCustom1ImageId_Last(
-			long custom1ImageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where custom1ImageId = &#63;.
-	 *
-	 * @param custom1ImageId the custom1 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByCustom1ImageId_Last(
-		long custom1ImageId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file entries where custom1ImageId = &#63; from the database.
 	 *
 	 * @param custom1ImageId the custom1 image ID
@@ -1509,32 +1247,6 @@ public interface DLFileEntryPersistence
 	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByCustom2ImageId_First(
-		long custom2ImageId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file entry in the ordered set where custom2ImageId = &#63;.
-	 *
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByCustom2ImageId_Last(
-			long custom2ImageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where custom2ImageId = &#63;.
-	 *
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByCustom2ImageId_Last(
 		long custom2ImageId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator);
@@ -1643,34 +1355,6 @@ public interface DLFileEntryPersistence
 	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByG_U_First(
-		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByG_U_Last(
-			long groupId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByG_U_Last(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator);
@@ -1835,34 +1519,6 @@ public interface DLFileEntryPersistence
 	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByG_F_First(
-		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByG_F_Last(
-			long groupId, long folderId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByG_F_Last(
 		long groupId, long folderId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator);
@@ -2166,34 +1822,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByR_F_Last(
-			long repositoryId, long folderId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByR_F_Last(
-		long repositoryId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file entries where repositoryId = &#63; and folderId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -2299,34 +1927,6 @@ public interface DLFileEntryPersistence
 	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByF_N_First(
-		long folderId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file entry in the ordered set where folderId = &#63; and name = &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByF_N_Last(
-			long folderId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where folderId = &#63; and name = &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByF_N_Last(
 		long folderId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator);
@@ -2444,36 +2044,6 @@ public interface DLFileEntryPersistence
 	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByG_U_F_First(
-		long groupId, long userId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByG_U_F_Last(
-			long groupId, long userId, long folderId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByG_U_F_Last(
 		long groupId, long userId, long folderId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
 			orderByComparator);
@@ -2966,36 +2536,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByG_F_F_Last(
-			long groupId, long folderId, long fileEntryTypeId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByG_F_F_Last(
-		long groupId, long folderId, long fileEntryTypeId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3324,36 +2864,6 @@ public interface DLFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last document library file entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the document library file entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3479,40 +2989,6 @@ public interface DLFileEntryPersistence
 	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 */
 	public DLFileEntry fetchByS_L_C1_C2_First(
-		long smallImageId, long largeImageId, long custom1ImageId,
-		long custom2ImageId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param largeImageId the large image ID
-	 * @param custom1ImageId the custom1 image ID
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	public DLFileEntry findByS_L_C1_C2_Last(
-			long smallImageId, long largeImageId, long custom1ImageId,
-			long custom2ImageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
-				orderByComparator)
-		throws NoSuchFileEntryException;
-
-	/**
-	 * Returns the last document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param largeImageId the large image ID
-	 * @param custom1ImageId the custom1 image ID
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	public DLFileEntry fetchByS_L_C1_C2_Last(
 		long smallImageId, long largeImageId, long custom1ImageId,
 		long custom2ImageId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntry>
@@ -3713,4 +3189,4 @@ public interface DLFileEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1596577972
+// LIFERAY-SERVICE-BUILDER-HASH:-2034941573

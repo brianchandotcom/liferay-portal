@@ -210,34 +210,6 @@ public class EmailAddressUtil {
 	}
 
 	/**
-	 * Returns the last email address in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	public static EmailAddress findByUuid_Last(
-			String uuid, OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchEmailAddressException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	public static EmailAddress fetchByUuid_Last(
-		String uuid, OrderByComparator<EmailAddress> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the email addresses where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -367,40 +339,6 @@ public class EmailAddressUtil {
 	}
 
 	/**
-	 * Returns the last email address in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	public static EmailAddress findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchEmailAddressException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	public static EmailAddress fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<EmailAddress> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the email addresses where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -524,36 +462,6 @@ public class EmailAddressUtil {
 	}
 
 	/**
-	 * Returns the last email address in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	public static EmailAddress findByCompanyId_Last(
-			long companyId, OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchEmailAddressException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	public static EmailAddress fetchByCompanyId_Last(
-		long companyId, OrderByComparator<EmailAddress> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the email addresses where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -670,34 +578,6 @@ public class EmailAddressUtil {
 		long userId, OrderByComparator<EmailAddress> orderByComparator) {
 
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	public static EmailAddress findByUserId_Last(
-			long userId, OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchEmailAddressException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	public static EmailAddress fetchByUserId_Last(
-		long userId, OrderByComparator<EmailAddress> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -829,40 +709,6 @@ public class EmailAddressUtil {
 		OrderByComparator<EmailAddress> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	public static EmailAddress findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchEmailAddressException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	public static EmailAddress fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<EmailAddress> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			companyId, classNameId, orderByComparator);
 	}
 
@@ -1004,42 +850,6 @@ public class EmailAddressUtil {
 		OrderByComparator<EmailAddress> orderByComparator) {
 
 		return getPersistence().fetchByC_C_C_First(
-			companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	public static EmailAddress findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchEmailAddressException {
-
-		return getPersistence().findByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	public static EmailAddress fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<EmailAddress> orderByComparator) {
-
-		return getPersistence().fetchByC_C_C_Last(
 			companyId, classNameId, classPK, orderByComparator);
 	}
 
@@ -1196,44 +1006,6 @@ public class EmailAddressUtil {
 		OrderByComparator<EmailAddress> orderByComparator) {
 
 		return getPersistence().fetchByC_C_C_P_First(
-			companyId, classNameId, classPK, primary, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address
-	 * @throws NoSuchEmailAddressException if a matching email address could not be found
-	 */
-	public static EmailAddress findByC_C_C_P_Last(
-			long companyId, long classNameId, long classPK, boolean primary,
-			OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchEmailAddressException {
-
-		return getPersistence().findByC_C_C_P_Last(
-			companyId, classNameId, classPK, primary, orderByComparator);
-	}
-
-	/**
-	 * Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching email address, or <code>null</code> if a matching email address could not be found
-	 */
-	public static EmailAddress fetchByC_C_C_P_Last(
-		long companyId, long classNameId, long classPK, boolean primary,
-		OrderByComparator<EmailAddress> orderByComparator) {
-
-		return getPersistence().fetchByC_C_C_P_Last(
 			companyId, classNameId, classPK, primary, orderByComparator);
 	}
 
@@ -1496,4 +1268,4 @@ public class EmailAddressUtil {
 	private static volatile EmailAddressPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2026954273
+// LIFERAY-SERVICE-BUILDER-HASH:91950745

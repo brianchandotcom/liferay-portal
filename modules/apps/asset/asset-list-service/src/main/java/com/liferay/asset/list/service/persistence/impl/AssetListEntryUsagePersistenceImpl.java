@@ -334,66 +334,6 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry usage in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage
-	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage findByUuid_Last(
-			String uuid,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException {
-
-		AssetListEntryUsage assetListEntryUsage = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUsageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByUuid_Last(
-		String uuid, OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntryUsage> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset list entry usages where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -942,72 +882,6 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry usage in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage
-	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException {
-
-		AssetListEntryUsage assetListEntryUsage = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUsageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntryUsage> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset list entry usages where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1327,65 +1201,6 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry usage in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage
-	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage findByPlid_Last(
-			long plid, OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException {
-
-		AssetListEntryUsage assetListEntryUsage = fetchByPlid_Last(
-			plid, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUsageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByPlid_Last(
-		long plid, OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		int count = countByPlid(plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntryUsage> list = findByPlid(
-			plid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset list entry usages where plid = &#63; from the database.
 	 *
 	 * @param plid the plid
@@ -1693,72 +1508,6 @@ public class AssetListEntryUsagePersistenceImpl
 
 		List<AssetListEntryUsage> list = findByCT_P(
 			containerType, plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where containerType = &#63; and plid = &#63;.
-	 *
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage
-	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage findByCT_P_Last(
-			long containerType, long plid,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException {
-
-		AssetListEntryUsage assetListEntryUsage = fetchByCT_P_Last(
-			containerType, plid, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("containerType=");
-		sb.append(containerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUsageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where containerType = &#63; and plid = &#63;.
-	 *
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByCT_P_Last(
-		long containerType, long plid,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		int count = countByCT_P(containerType, plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntryUsage> list = findByCT_P(
-			containerType, plid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2116,77 +1865,6 @@ public class AssetListEntryUsagePersistenceImpl
 
 		List<AssetListEntryUsage> list = findByG_C_K(
 			groupId, classNameId, key, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where groupId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage
-	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage findByG_C_K_Last(
-			long groupId, long classNameId, String key,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException {
-
-		AssetListEntryUsage assetListEntryUsage = fetchByG_C_K_Last(
-			groupId, classNameId, key, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUsageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where groupId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByG_C_K_Last(
-		long groupId, long classNameId, String key,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		int count = countByG_C_K(groupId, classNameId, key);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntryUsage> list = findByG_C_K(
-			groupId, classNameId, key, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2578,77 +2256,6 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset list entry usage in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage
-	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage findByC_C_K_Last(
-			long companyId, long classNameId, String key,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException {
-
-		AssetListEntryUsage assetListEntryUsage = fetchByC_C_K_Last(
-			companyId, classNameId, key, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUsageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByC_C_K_Last(
-		long companyId, long classNameId, String key,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		int count = countByC_C_K(companyId, classNameId, key);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntryUsage> list = findByC_C_K(
-			companyId, classNameId, key, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3029,78 +2636,6 @@ public class AssetListEntryUsagePersistenceImpl
 
 		List<AssetListEntryUsage> list = findByCK_CT_P(
 			containerKey, containerType, plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
-	 *
-	 * @param containerKey the container key
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage
-	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage findByCK_CT_P_Last(
-			String containerKey, long containerType, long plid,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException {
-
-		AssetListEntryUsage assetListEntryUsage = fetchByCK_CT_P_Last(
-			containerKey, containerType, plid, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("containerKey=");
-		sb.append(containerKey);
-
-		sb.append(", containerType=");
-		sb.append(containerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUsageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
-	 *
-	 * @param containerKey the container key
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByCK_CT_P_Last(
-		String containerKey, long containerType, long plid,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		int count = countByCK_CT_P(containerKey, containerType, plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntryUsage> list = findByCK_CT_P(
-			containerKey, containerType, plid, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3506,83 +3041,6 @@ public class AssetListEntryUsagePersistenceImpl
 
 		List<AssetListEntryUsage> list = findByG_C_K_T(
 			groupId, classNameId, key, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage
-	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage findByG_C_K_T_Last(
-			long groupId, long classNameId, String key, int type,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException {
-
-		AssetListEntryUsage assetListEntryUsage = fetchByG_C_K_T_Last(
-			groupId, classNameId, key, type, orderByComparator);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUsageException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset list entry usage in the ordered set where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByG_C_K_T_Last(
-		long groupId, long classNameId, String key, int type,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		int count = countByG_C_K_T(groupId, classNameId, key, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetListEntryUsage> list = findByG_C_K_T(
-			groupId, classNameId, key, type, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5194,4 +4652,4 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-513367349
+// LIFERAY-SERVICE-BUILDER-HASH:-1970702134

@@ -119,32 +119,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last country in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
 	 * Returns all the countries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -297,34 +271,6 @@ public interface CountryPersistence
 	 * @return the first matching country, or <code>null</code> if a matching country could not be found
 	 */
 	public Country fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
-	 * Returns the last country in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
@@ -488,32 +434,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last country in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
 	 * Returns all the countries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -660,32 +580,6 @@ public interface CountryPersistence
 	 * @return the first matching country, or <code>null</code> if a matching country could not be found
 	 */
 	public Country fetchByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
-	 * Returns the last country in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByActive_Last(
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByActive_Last(
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
@@ -944,34 +838,6 @@ public interface CountryPersistence
 	 * @return the first matching country, or <code>null</code> if a matching country could not be found
 	 */
 	public Country fetchByC_Active_First(
-		long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
-	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByC_Active_Last(
-			long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByC_Active_Last(
 		long companyId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
@@ -1251,36 +1117,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param billingAllowed the billing allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByC_A_B_Last(
-			long companyId, boolean active, boolean billingAllowed,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param billingAllowed the billing allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByC_A_B_Last(
-		long companyId, boolean active, boolean billingAllowed,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
 	 * Returns all the countries that the user has permission to view where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1461,36 +1297,6 @@ public interface CountryPersistence
 	 * @return the first matching country, or <code>null</code> if a matching country could not be found
 	 */
 	public Country fetchByC_A_S_First(
-		long companyId, boolean active, boolean shippingAllowed,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
-	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param shippingAllowed the shipping allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByC_A_S_Last(
-			long companyId, boolean active, boolean shippingAllowed,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param shippingAllowed the shipping allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByC_A_S_Last(
 		long companyId, boolean active, boolean shippingAllowed,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
@@ -1684,40 +1490,6 @@ public interface CountryPersistence
 	 * @return the first matching country, or <code>null</code> if a matching country could not be found
 	 */
 	public Country fetchByC_A_B_G_First(
-		long countryId, boolean active, boolean billingAllowed,
-		boolean groupFilterEnabled,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
-	 * Returns the last country in the ordered set where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param billingAllowed the billing allowed
-	 * @param groupFilterEnabled the group filter enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByC_A_B_G_Last(
-			long countryId, boolean active, boolean billingAllowed,
-			boolean groupFilterEnabled,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param billingAllowed the billing allowed
-	 * @param groupFilterEnabled the group filter enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByC_A_B_G_Last(
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
@@ -1922,40 +1694,6 @@ public interface CountryPersistence
 	 * @return the first matching country, or <code>null</code> if a matching country could not be found
 	 */
 	public Country fetchByC_A_G_S_First(
-		long countryId, boolean active, boolean groupFilterEnabled,
-		boolean shippingAllowed,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
-	 * Returns the last country in the ordered set where countryId = &#63; and active = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param groupFilterEnabled the group filter enabled
-	 * @param shippingAllowed the shipping allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByC_A_G_S_Last(
-			long countryId, boolean active, boolean groupFilterEnabled,
-			boolean shippingAllowed,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where countryId = &#63; and active = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param groupFilterEnabled the group filter enabled
-	 * @param shippingAllowed the shipping allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByC_A_G_S_Last(
 		long countryId, boolean active, boolean groupFilterEnabled,
 		boolean shippingAllowed,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
@@ -2167,42 +1905,6 @@ public interface CountryPersistence
 	 * @return the first matching country, or <code>null</code> if a matching country could not be found
 	 */
 	public Country fetchByC_A_B_G_S_First(
-		long countryId, boolean active, boolean billingAllowed,
-		boolean groupFilterEnabled, boolean shippingAllowed,
-		com.liferay.portal.kernel.util.OrderByComparator<Country>
-			orderByComparator);
-
-	/**
-	 * Returns the last country in the ordered set where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param billingAllowed the billing allowed
-	 * @param groupFilterEnabled the group filter enabled
-	 * @param shippingAllowed the shipping allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByC_A_B_G_S_Last(
-			long countryId, boolean active, boolean billingAllowed,
-			boolean groupFilterEnabled, boolean shippingAllowed,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
-	 * Returns the last country in the ordered set where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param billingAllowed the billing allowed
-	 * @param groupFilterEnabled the group filter enabled
-	 * @param shippingAllowed the shipping allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByC_A_B_G_S_Last(
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled, boolean shippingAllowed,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
@@ -2427,4 +2129,4 @@ public interface CountryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1750921433
+// LIFERAY-SERVICE-BUILDER-HASH:650493059

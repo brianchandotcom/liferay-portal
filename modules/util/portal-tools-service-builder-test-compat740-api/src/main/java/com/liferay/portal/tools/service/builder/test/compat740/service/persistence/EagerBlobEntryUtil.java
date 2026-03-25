@@ -211,35 +211,6 @@ public class EagerBlobEntryUtil {
 	}
 
 	/**
-	 * Returns the last eager blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching eager blob entry
-	 * @throws NoSuchEagerBlobEntryException if a matching eager blob entry could not be found
-	 */
-	public static EagerBlobEntry findByUuid_Last(
-			String uuid, OrderByComparator<EagerBlobEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchEagerBlobEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last eager blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching eager blob entry, or <code>null</code> if a matching eager blob entry could not be found
-	 */
-	public static EagerBlobEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<EagerBlobEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the eager blob entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -484,4 +455,4 @@ public class EagerBlobEntryUtil {
 	private static volatile EagerBlobEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-868441439
+// LIFERAY-SERVICE-BUILDER-HASH:-1866804086

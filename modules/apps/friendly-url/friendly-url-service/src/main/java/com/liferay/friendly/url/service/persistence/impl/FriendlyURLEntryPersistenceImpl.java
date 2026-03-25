@@ -331,65 +331,6 @@ public class FriendlyURLEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry findByUuid_Last(
-			String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws NoSuchFriendlyURLEntryException {
-
-		FriendlyURLEntry friendlyURLEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (friendlyURLEntry != null) {
-			return friendlyURLEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FriendlyURLEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the friendly url entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -937,72 +878,6 @@ public class FriendlyURLEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws NoSuchFriendlyURLEntryException {
-
-		FriendlyURLEntry friendlyURLEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (friendlyURLEntry != null) {
-			return friendlyURLEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FriendlyURLEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the friendly url entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1346,72 +1221,6 @@ public class FriendlyURLEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry findByG_C_Last(
-			long groupId, long classNameId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws NoSuchFriendlyURLEntryException {
-
-		FriendlyURLEntry friendlyURLEntry = fetchByG_C_Last(
-			groupId, classNameId, orderByComparator);
-
-		if (friendlyURLEntry != null) {
-			return friendlyURLEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry fetchByG_C_Last(
-		long groupId, long classNameId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		int count = countByG_C(groupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FriendlyURLEntry> list = findByG_C(
-			groupId, classNameId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the friendly url entries where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1730,72 +1539,6 @@ public class FriendlyURLEntryPersistenceImpl
 
 		List<FriendlyURLEntry> list = findByC_C(
 			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws NoSuchFriendlyURLEntryException {
-
-		FriendlyURLEntry friendlyURLEntry = fetchByC_C_Last(
-			companyId, classNameId, orderByComparator);
-
-		if (friendlyURLEntry != null) {
-			return friendlyURLEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		int count = countByC_C(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FriendlyURLEntry> list = findByC_C(
-			companyId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2140,77 +1883,6 @@ public class FriendlyURLEntryPersistenceImpl
 
 		List<FriendlyURLEntry> list = findByG_C_C(
 			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws NoSuchFriendlyURLEntryException {
-
-		FriendlyURLEntry friendlyURLEntry = fetchByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-
-		if (friendlyURLEntry != null) {
-			return friendlyURLEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	@Override
-	public FriendlyURLEntry fetchByG_C_C_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		int count = countByG_C_C(groupId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FriendlyURLEntry> list = findByG_C_C(
-			groupId, classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3356,4 +3028,4 @@ public class FriendlyURLEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-235614344
+// LIFERAY-SERVICE-BUILDER-HASH:-906800396

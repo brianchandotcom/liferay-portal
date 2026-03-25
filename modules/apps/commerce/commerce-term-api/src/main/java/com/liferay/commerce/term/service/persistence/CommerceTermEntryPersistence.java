@@ -122,32 +122,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce term entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -301,34 +275,6 @@ public interface CommerceTermEntryPersistence
 	 * @return the first matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
 	 */
 	public CommerceTermEntry fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
@@ -494,34 +440,6 @@ public interface CommerceTermEntryPersistence
 	 * @return the first matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
 	 */
 	public CommerceTermEntry fetchByC_A_First(
-		long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry findByC_A_Last(
-			long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry fetchByC_A_Last(
 		long companyId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
@@ -742,34 +660,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry findByC_LikeType_Last(
-			long companyId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry fetchByC_LikeType_Last(
-		long companyId, String type,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -935,34 +825,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce term entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry findByLtD_S_Last(
-			Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry fetchByLtD_S_Last(
-		Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -1123,34 +985,6 @@ public interface CommerceTermEntryPersistence
 	 * @return the first matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
 	 */
 	public CommerceTermEntry fetchByLtE_S_First(
-		Date expirationDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry findByLtE_S_Last(
-			Date expirationDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry fetchByLtE_S_Last(
 		Date expirationDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
@@ -1322,36 +1156,6 @@ public interface CommerceTermEntryPersistence
 	 * @return the first matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
 	 */
 	public CommerceTermEntry fetchByC_A_LikeType_First(
-		long companyId, boolean active, String type,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry findByC_A_LikeType_Last(
-			long companyId, boolean active, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public CommerceTermEntry fetchByC_A_LikeType_Last(
 		long companyId, boolean active, String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
@@ -1668,4 +1472,4 @@ public interface CommerceTermEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:378756547
+// LIFERAY-SERVICE-BUILDER-HASH:833257494

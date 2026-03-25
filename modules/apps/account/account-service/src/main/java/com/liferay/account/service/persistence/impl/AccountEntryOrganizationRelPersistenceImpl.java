@@ -310,67 +310,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last account entry organization rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry organization rel
-	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
-	 */
-	@Override
-	public AccountEntryOrganizationRel findByAccountEntryId_Last(
-			long accountEntryId,
-			OrderByComparator<AccountEntryOrganizationRel> orderByComparator)
-		throws NoSuchEntryOrganizationRelException {
-
-		AccountEntryOrganizationRel accountEntryOrganizationRel =
-			fetchByAccountEntryId_Last(accountEntryId, orderByComparator);
-
-		if (accountEntryOrganizationRel != null) {
-			return accountEntryOrganizationRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryOrganizationRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account entry organization rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
-	 */
-	@Override
-	public AccountEntryOrganizationRel fetchByAccountEntryId_Last(
-		long accountEntryId,
-		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
-
-		int count = countByAccountEntryId(accountEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountEntryOrganizationRel> list = findByAccountEntryId(
-			accountEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the account entry organization rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -659,67 +598,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 
 		List<AccountEntryOrganizationRel> list = findByOrganizationId(
 			organizationId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry organization rel
-	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
-	 */
-	@Override
-	public AccountEntryOrganizationRel findByOrganizationId_Last(
-			long organizationId,
-			OrderByComparator<AccountEntryOrganizationRel> orderByComparator)
-		throws NoSuchEntryOrganizationRelException {
-
-		AccountEntryOrganizationRel accountEntryOrganizationRel =
-			fetchByOrganizationId_Last(organizationId, orderByComparator);
-
-		if (accountEntryOrganizationRel != null) {
-			return accountEntryOrganizationRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("organizationId=");
-		sb.append(organizationId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryOrganizationRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
-	 */
-	@Override
-	public AccountEntryOrganizationRel fetchByOrganizationId_Last(
-		long organizationId,
-		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
-
-		int count = countByOrganizationId(organizationId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AccountEntryOrganizationRel> list = findByOrganizationId(
-			organizationId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1692,4 +1570,4 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:847787827
+// LIFERAY-SERVICE-BUILDER-HASH:-1243963643

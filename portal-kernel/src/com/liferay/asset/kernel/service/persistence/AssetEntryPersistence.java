@@ -123,32 +123,6 @@ public interface AssetEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	public AssetEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	public AssetEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -246,32 +220,6 @@ public interface AssetEntryPersistence
 	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	 */
 	public AssetEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	public AssetEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	public AssetEntry fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
 			orderByComparator);
@@ -379,32 +327,6 @@ public interface AssetEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset entry in the ordered set where visible = &#63;.
-	 *
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	public AssetEntry findByVisible_Last(
-			boolean visible,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset entry in the ordered set where visible = &#63;.
-	 *
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	public AssetEntry fetchByVisible_Last(
-		boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset entries where visible = &#63; from the database.
 	 *
 	 * @param visible the visible
@@ -502,32 +424,6 @@ public interface AssetEntryPersistence
 	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	 */
 	public AssetEntry fetchByPublishDate_First(
-		Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset entry in the ordered set where publishDate = &#63;.
-	 *
-	 * @param publishDate the publish date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	public AssetEntry findByPublishDate_Last(
-			Date publishDate,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset entry in the ordered set where publishDate = &#63;.
-	 *
-	 * @param publishDate the publish date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	public AssetEntry fetchByPublishDate_Last(
 		Date publishDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
 			orderByComparator);
@@ -635,32 +531,6 @@ public interface AssetEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset entry in the ordered set where expirationDate = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	public AssetEntry findByExpirationDate_Last(
-			Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset entry in the ordered set where expirationDate = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	public AssetEntry fetchByExpirationDate_Last(
-		Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset entries where expirationDate = &#63; from the database.
 	 *
 	 * @param expirationDate the expiration date
@@ -758,32 +628,6 @@ public interface AssetEntryPersistence
 	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	 */
 	public AssetEntry fetchByLayoutUuid_First(
-		String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset entry in the ordered set where layoutUuid = &#63;.
-	 *
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	public AssetEntry findByLayoutUuid_Last(
-			String layoutUuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset entry in the ordered set where layoutUuid = &#63;.
-	 *
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	public AssetEntry fetchByLayoutUuid_Last(
 		String layoutUuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
 			orderByComparator);
@@ -943,34 +787,6 @@ public interface AssetEntryPersistence
 	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	 */
 	public AssetEntry fetchByC_CN_First(
-		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	public AssetEntry findByC_CN_Last(
-			long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	public AssetEntry fetchByC_CN_Last(
 		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
 			orderByComparator);
@@ -1143,36 +959,6 @@ public interface AssetEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and visible = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	public AssetEntry findByG_C_V_Last(
-			long groupId, long classNameId, boolean visible,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and visible = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	public AssetEntry fetchByG_C_V_Last(
-		long groupId, long classNameId, boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the asset entries where groupId = &#63; and classNameId = &#63; and visible = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1297,39 +1083,6 @@ public interface AssetEntryPersistence
 	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	 */
 	public AssetEntry fetchByG_C_P_E_First(
-		long groupId, long classNameId, Date publishDate, Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param publishDate the publish date
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	public AssetEntry findByG_C_P_E_Last(
-			long groupId, long classNameId, Date publishDate,
-			Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param publishDate the publish date
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	public AssetEntry fetchByG_C_P_E_Last(
 		long groupId, long classNameId, Date publishDate, Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry>
 			orderByComparator);
@@ -1651,4 +1404,4 @@ public interface AssetEntryPersistence
 		java.util.List<com.liferay.asset.kernel.model.AssetTag> assetTags);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-361622099
+// LIFERAY-SERVICE-BUILDER-HASH:-1650127182

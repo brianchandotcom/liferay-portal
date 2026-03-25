@@ -224,39 +224,6 @@ public class CommerceInventoryAuditUtil {
 	}
 
 	/**
-	 * Returns the last commerce inventory audit in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory audit
-	 * @throws NoSuchInventoryAuditException if a matching commerce inventory audit could not be found
-	 */
-	public static CommerceInventoryAudit findByLtCreateDate_Last(
-			Date createDate,
-			OrderByComparator<CommerceInventoryAudit> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryAuditException {
-
-		return getPersistence().findByLtCreateDate_Last(
-			createDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory audit in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory audit, or <code>null</code> if a matching commerce inventory audit could not be found
-	 */
-	public static CommerceInventoryAudit fetchByLtCreateDate_Last(
-		Date createDate,
-		OrderByComparator<CommerceInventoryAudit> orderByComparator) {
-
-		return getPersistence().fetchByLtCreateDate_Last(
-			createDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce inventory audits where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -394,43 +361,6 @@ public class CommerceInventoryAuditUtil {
 		OrderByComparator<CommerceInventoryAudit> orderByComparator) {
 
 		return getPersistence().fetchByC_S_U_First(
-			companyId, sku, unitOfMeasureKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory audit
-	 * @throws NoSuchInventoryAuditException if a matching commerce inventory audit could not be found
-	 */
-	public static CommerceInventoryAudit findByC_S_U_Last(
-			long companyId, String sku, String unitOfMeasureKey,
-			OrderByComparator<CommerceInventoryAudit> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryAuditException {
-
-		return getPersistence().findByC_S_U_Last(
-			companyId, sku, unitOfMeasureKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory audit, or <code>null</code> if a matching commerce inventory audit could not be found
-	 */
-	public static CommerceInventoryAudit fetchByC_S_U_Last(
-		long companyId, String sku, String unitOfMeasureKey,
-		OrderByComparator<CommerceInventoryAudit> orderByComparator) {
-
-		return getPersistence().fetchByC_S_U_Last(
 			companyId, sku, unitOfMeasureKey, orderByComparator);
 	}
 
@@ -634,4 +564,4 @@ public class CommerceInventoryAuditUtil {
 	private static volatile CommerceInventoryAuditPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-999179053
+// LIFERAY-SERVICE-BUILDER-HASH:70751209

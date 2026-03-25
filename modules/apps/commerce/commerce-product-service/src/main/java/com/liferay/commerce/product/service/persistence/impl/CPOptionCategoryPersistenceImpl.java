@@ -339,65 +339,6 @@ public class CPOptionCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp option category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category
-	 * @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
-	 */
-	@Override
-	public CPOptionCategory findByUuid_Last(
-			String uuid, OrderByComparator<CPOptionCategory> orderByComparator)
-		throws NoSuchCPOptionCategoryException {
-
-		CPOptionCategory cpOptionCategory = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpOptionCategory != null) {
-			return cpOptionCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPOptionCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp option category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category, or <code>null</code> if a matching cp option category could not be found
-	 */
-	@Override
-	public CPOptionCategory fetchByUuid_Last(
-		String uuid, OrderByComparator<CPOptionCategory> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPOptionCategory> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cp option categories that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -972,72 +913,6 @@ public class CPOptionCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp option category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category
-	 * @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
-	 */
-	@Override
-	public CPOptionCategory findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPOptionCategory> orderByComparator)
-		throws NoSuchCPOptionCategoryException {
-
-		CPOptionCategory cpOptionCategory = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpOptionCategory != null) {
-			return cpOptionCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPOptionCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp option category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category, or <code>null</code> if a matching cp option category could not be found
-	 */
-	@Override
-	public CPOptionCategory fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPOptionCategory> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPOptionCategory> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the cp option categories that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1599,66 +1474,6 @@ public class CPOptionCategoryPersistenceImpl
 
 		List<CPOptionCategory> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp option category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category
-	 * @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
-	 */
-	@Override
-	public CPOptionCategory findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPOptionCategory> orderByComparator)
-		throws NoSuchCPOptionCategoryException {
-
-		CPOptionCategory cpOptionCategory = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (cpOptionCategory != null) {
-			return cpOptionCategory;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPOptionCategoryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp option category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category, or <code>null</code> if a matching cp option category could not be found
-	 */
-	@Override
-	public CPOptionCategory fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CPOptionCategory> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPOptionCategory> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3469,4 +3284,4 @@ public class CPOptionCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1856863916
+// LIFERAY-SERVICE-BUILDER-HASH:-848080884

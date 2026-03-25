@@ -323,72 +323,6 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 	/**
-	 * Returns the last open ID connect user in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect user
-	 * @throws NoSuchUserException if a matching open ID connect user could not be found
-	 */
-	@Override
-	public OpenIdConnectUser findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<OpenIdConnectUser> orderByComparator)
-		throws NoSuchUserException {
-
-		OpenIdConnectUser openIdConnectUser = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (openIdConnectUser != null) {
-			return openIdConnectUser;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
-	}
-
-	/**
-	 * Returns the last open ID connect user in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching open ID connect user, or <code>null</code> if a matching open ID connect user could not be found
-	 */
-	@Override
-	public OpenIdConnectUser fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<OpenIdConnectUser> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<OpenIdConnectUser> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the open ID connect users where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1364,4 +1298,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-803010433
+// LIFERAY-SERVICE-BUILDER-HASH:1653216181

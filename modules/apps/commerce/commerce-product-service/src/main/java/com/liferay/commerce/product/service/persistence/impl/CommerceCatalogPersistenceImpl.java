@@ -339,65 +339,6 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce catalog in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog findByUuid_Last(
-			String uuid, OrderByComparator<CommerceCatalog> orderByComparator)
-		throws NoSuchCatalogException {
-
-		CommerceCatalog commerceCatalog = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCatalogException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceCatalog> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCatalog> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce catalogs that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -963,72 +904,6 @@ public class CommerceCatalogPersistenceImpl
 
 		List<CommerceCatalog> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws NoSuchCatalogException {
-
-		CommerceCatalog commerceCatalog = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCatalogException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceCatalog> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCatalog> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1608,66 +1483,6 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce catalog in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws NoSuchCatalogException {
-
-		CommerceCatalog commerceCatalog = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCatalogException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CommerceCatalog> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCatalog> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce catalogs that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2161,67 +1976,6 @@ public class CommerceCatalogPersistenceImpl
 
 		List<CommerceCatalog> list = findByAccountEntryId(
 			accountEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog findByAccountEntryId_Last(
-			long accountEntryId,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws NoSuchCatalogException {
-
-		CommerceCatalog commerceCatalog = fetchByAccountEntryId_Last(
-			accountEntryId, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCatalogException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog fetchByAccountEntryId_Last(
-		long accountEntryId,
-		OrderByComparator<CommerceCatalog> orderByComparator) {
-
-		int count = countByAccountEntryId(accountEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCatalog> list = findByAccountEntryId(
-			accountEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2741,72 +2495,6 @@ public class CommerceCatalogPersistenceImpl
 
 		List<CommerceCatalog> list = findByC_S(
 			companyId, system, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where companyId = &#63; and system = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog
-	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog findByC_S_Last(
-			long companyId, boolean system,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws NoSuchCatalogException {
-
-		CommerceCatalog commerceCatalog = fetchByC_S_Last(
-			companyId, system, orderByComparator);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", system=");
-		sb.append(system);
-
-		sb.append("}");
-
-		throw new NoSuchCatalogException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce catalog in the ordered set where companyId = &#63; and system = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
-	 */
-	@Override
-	public CommerceCatalog fetchByC_S_Last(
-		long companyId, boolean system,
-		OrderByComparator<CommerceCatalog> orderByComparator) {
-
-		int count = countByC_S(companyId, system);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceCatalog> list = findByC_S(
-			companyId, system, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4455,4 +4143,4 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:590270040
+// LIFERAY-SERVICE-BUILDER-HASH:-1020857771

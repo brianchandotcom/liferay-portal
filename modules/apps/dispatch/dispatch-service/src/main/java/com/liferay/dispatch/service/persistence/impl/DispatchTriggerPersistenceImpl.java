@@ -327,65 +327,6 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the last dispatch trigger in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByUuid_Last(
-			String uuid, OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByUuid_Last(
-		String uuid, OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchTrigger> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the dispatch triggers that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -940,72 +881,6 @@ public class DispatchTriggerPersistenceImpl
 
 		List<DispatchTrigger> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchTrigger> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1574,66 +1449,6 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByCompanyId_Last(
-		long companyId, OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchTrigger> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the dispatch triggers that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2108,66 +1923,6 @@ public class DispatchTriggerPersistenceImpl
 
 		List<DispatchTrigger> list = findByActive(
 			active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByActive_Last(
-			boolean active,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByActive_Last(
-			active, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByActive_Last(
-		boolean active, OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		int count = countByActive(active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchTrigger> list = findByActive(
-			active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2674,72 +2429,6 @@ public class DispatchTriggerPersistenceImpl
 
 		List<DispatchTrigger> list = findByC_U(
 			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		int count = countByC_U(companyId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchTrigger> list = findByC_U(
-			companyId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3287,73 +2976,6 @@ public class DispatchTriggerPersistenceImpl
 
 		List<DispatchTrigger> list = findByC_DTET(
 			companyId, dispatchTaskExecutorType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and dispatchTaskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param dispatchTaskExecutorType the dispatch task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByC_DTET_Last(
-			long companyId, String dispatchTaskExecutorType,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByC_DTET_Last(
-			companyId, dispatchTaskExecutorType, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", dispatchTaskExecutorType=");
-		sb.append(dispatchTaskExecutorType);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and dispatchTaskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param dispatchTaskExecutorType the dispatch task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByC_DTET_Last(
-		long companyId, String dispatchTaskExecutorType,
-		OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		int count = countByC_DTET(companyId, dispatchTaskExecutorType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchTrigger> list = findByC_DTET(
-			companyId, dispatchTaskExecutorType, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4143,73 +3765,6 @@ public class DispatchTriggerPersistenceImpl
 
 		List<DispatchTrigger> list = findByA_DTCM(
 			active, dispatchTaskClusterMode, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63; and dispatchTaskClusterMode = &#63;.
-	 *
-	 * @param active the active
-	 * @param dispatchTaskClusterMode the dispatch task cluster mode
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByA_DTCM_Last(
-			boolean active, int dispatchTaskClusterMode,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByA_DTCM_Last(
-			active, dispatchTaskClusterMode, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append(", dispatchTaskClusterMode=");
-		sb.append(dispatchTaskClusterMode);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63; and dispatchTaskClusterMode = &#63;.
-	 *
-	 * @param active the active
-	 * @param dispatchTaskClusterMode the dispatch task cluster mode
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByA_DTCM_Last(
-		boolean active, int dispatchTaskClusterMode,
-		OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		int count = countByA_DTCM(active, dispatchTaskClusterMode);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchTrigger> list = findByA_DTCM(
-			active, dispatchTaskClusterMode, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6167,4 +5722,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-416672263
+// LIFERAY-SERVICE-BUILDER-HASH:395839693

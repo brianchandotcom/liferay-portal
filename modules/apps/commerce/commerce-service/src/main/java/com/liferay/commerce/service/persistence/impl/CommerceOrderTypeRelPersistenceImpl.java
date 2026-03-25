@@ -328,67 +328,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order type rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type rel
-	 * @throws NoSuchOrderTypeRelException if a matching commerce order type rel could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
-		throws NoSuchOrderTypeRelException {
-
-		CommerceOrderTypeRel commerceOrderTypeRel = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceOrderTypeRel != null) {
-			return commerceOrderTypeRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderTypeRel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce order type rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -724,72 +663,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type rel
-	 * @throws NoSuchOrderTypeRelException if a matching commerce order type rel could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
-		throws NoSuchOrderTypeRelException {
-
-		CommerceOrderTypeRel commerceOrderTypeRel = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceOrderTypeRel != null) {
-			return commerceOrderTypeRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderTypeRel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce order type rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1112,68 +985,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce order type rel in the ordered set where commerceOrderTypeId = &#63;.
-	 *
-	 * @param commerceOrderTypeId the commerce order type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type rel
-	 * @throws NoSuchOrderTypeRelException if a matching commerce order type rel could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel findByCommerceOrderTypeId_Last(
-			long commerceOrderTypeId,
-			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
-		throws NoSuchOrderTypeRelException {
-
-		CommerceOrderTypeRel commerceOrderTypeRel =
-			fetchByCommerceOrderTypeId_Last(
-				commerceOrderTypeId, orderByComparator);
-
-		if (commerceOrderTypeRel != null) {
-			return commerceOrderTypeRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceOrderTypeId=");
-		sb.append(commerceOrderTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type rel in the ordered set where commerceOrderTypeId = &#63;.
-	 *
-	 * @param commerceOrderTypeId the commerce order type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel fetchByCommerceOrderTypeId_Last(
-		long commerceOrderTypeId,
-		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
-
-		int count = countByCommerceOrderTypeId(commerceOrderTypeId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderTypeRel> list = findByCommerceOrderTypeId(
-			commerceOrderTypeId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce order type rels where commerceOrderTypeId = &#63; from the database.
 	 *
 	 * @param commerceOrderTypeId the commerce order type ID
@@ -1478,73 +1289,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 
 		List<CommerceOrderTypeRel> list = findByC_C(
 			classNameId, commerceOrderTypeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce order type rel in the ordered set where classNameId = &#63; and commerceOrderTypeId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceOrderTypeId the commerce order type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type rel
-	 * @throws NoSuchOrderTypeRelException if a matching commerce order type rel could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel findByC_C_Last(
-			long classNameId, long commerceOrderTypeId,
-			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
-		throws NoSuchOrderTypeRelException {
-
-		CommerceOrderTypeRel commerceOrderTypeRel = fetchByC_C_Last(
-			classNameId, commerceOrderTypeId, orderByComparator);
-
-		if (commerceOrderTypeRel != null) {
-			return commerceOrderTypeRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", commerceOrderTypeId=");
-		sb.append(commerceOrderTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce order type rel in the ordered set where classNameId = &#63; and commerceOrderTypeId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceOrderTypeId the commerce order type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel fetchByC_C_Last(
-		long classNameId, long commerceOrderTypeId,
-		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
-
-		int count = countByC_C(classNameId, commerceOrderTypeId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceOrderTypeRel> list = findByC_C(
-			classNameId, commerceOrderTypeId, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2901,4 +2645,4 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1671814011
+// LIFERAY-SERVICE-BUILDER-HASH:-544276298

@@ -224,39 +224,6 @@ public class PatcherProjectVersionUtil {
 	}
 
 	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a matching patcher project version could not be found
-	 */
-	public static PatcherProjectVersion findByPatcherProductVersionId_Last(
-			long patcherProductVersionId,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().findByPatcherProductVersionId_Last(
-			patcherProductVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version, or <code>null</code> if a matching patcher project version could not be found
-	 */
-	public static PatcherProjectVersion fetchByPatcherProductVersionId_Last(
-		long patcherProductVersionId,
-		OrderByComparator<PatcherProjectVersion> orderByComparator) {
-
-		return getPersistence().fetchByPatcherProductVersionId_Last(
-			patcherProductVersionId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher project versions that the user has permission to view where patcherProductVersionId = &#63;.
 	 *
 	 * @param patcherProductVersionId the patcher product version ID
@@ -457,39 +424,6 @@ public class PatcherProjectVersionUtil {
 			OrderByComparator<PatcherProjectVersion> orderByComparator) {
 
 		return getPersistence().fetchByRootPatcherProjectVersionId_First(
-			rootPatcherProjectVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a matching patcher project version could not be found
-	 */
-	public static PatcherProjectVersion findByRootPatcherProjectVersionId_Last(
-			long rootPatcherProjectVersionId,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().findByRootPatcherProjectVersionId_Last(
-			rootPatcherProjectVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version, or <code>null</code> if a matching patcher project version could not be found
-	 */
-	public static PatcherProjectVersion fetchByRootPatcherProjectVersionId_Last(
-		long rootPatcherProjectVersionId,
-		OrderByComparator<PatcherProjectVersion> orderByComparator) {
-
-		return getPersistence().fetchByRootPatcherProjectVersionId_Last(
 			rootPatcherProjectVersionId, orderByComparator);
 	}
 
@@ -830,43 +764,6 @@ public class PatcherProjectVersionUtil {
 	}
 
 	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a matching patcher project version could not be found
-	 */
-	public static PatcherProjectVersion findByP_R_Last(
-			long patcherProductVersionId, long rootPatcherProjectVersionId,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().findByP_R_Last(
-			patcherProductVersionId, rootPatcherProjectVersionId,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version, or <code>null</code> if a matching patcher project version could not be found
-	 */
-	public static PatcherProjectVersion fetchByP_R_Last(
-		long patcherProductVersionId, long rootPatcherProjectVersionId,
-		OrderByComparator<PatcherProjectVersion> orderByComparator) {
-
-		return getPersistence().fetchByP_R_Last(
-			patcherProductVersionId, rootPatcherProjectVersionId,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher project versions that the user has permission to view where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
 	 *
 	 * @param patcherProductVersionId the patcher product version ID
@@ -1081,41 +978,6 @@ public class PatcherProjectVersionUtil {
 		OrderByComparator<PatcherProjectVersion> orderByComparator) {
 
 		return getPersistence().fetchByP_RN_First(
-			patcherProductVersionId, repositoryName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63; and repositoryName = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param repositoryName the repository name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a matching patcher project version could not be found
-	 */
-	public static PatcherProjectVersion findByP_RN_Last(
-			long patcherProductVersionId, String repositoryName,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().findByP_RN_Last(
-			patcherProductVersionId, repositoryName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher project version in the ordered set where patcherProductVersionId = &#63; and repositoryName = &#63;.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param repositoryName the repository name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher project version, or <code>null</code> if a matching patcher project version could not be found
-	 */
-	public static PatcherProjectVersion fetchByP_RN_Last(
-		long patcherProductVersionId, String repositoryName,
-		OrderByComparator<PatcherProjectVersion> orderByComparator) {
-
-		return getPersistence().fetchByP_RN_Last(
 			patcherProductVersionId, repositoryName, orderByComparator);
 	}
 
@@ -1390,4 +1252,4 @@ public class PatcherProjectVersionUtil {
 	private static volatile PatcherProjectVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1195338366
+// LIFERAY-SERVICE-BUILDER-HASH:-1526125708

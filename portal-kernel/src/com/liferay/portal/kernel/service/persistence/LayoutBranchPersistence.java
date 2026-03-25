@@ -119,32 +119,6 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 			orderByComparator);
 
 	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch
-	 * @throws NoSuchLayoutBranchException if a matching layout branch could not be found
-	 */
-	public LayoutBranch findByLayoutSetBranchId_Last(
-			long layoutSetBranchId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
-				orderByComparator)
-		throws NoSuchLayoutBranchException;
-
-	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch, or <code>null</code> if a matching layout branch could not be found
-	 */
-	public LayoutBranch fetchByLayoutSetBranchId_Last(
-		long layoutSetBranchId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
-			orderByComparator);
-
-	/**
 	 * Removes all the layout branches where layoutSetBranchId = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
@@ -242,32 +216,6 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 * @return the first matching layout branch, or <code>null</code> if a matching layout branch could not be found
 	 */
 	public LayoutBranch fetchByPlid_First(
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout branch in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch
-	 * @throws NoSuchLayoutBranchException if a matching layout branch could not be found
-	 */
-	public LayoutBranch findByPlid_Last(
-			long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
-				orderByComparator)
-		throws NoSuchLayoutBranchException;
-
-	/**
-	 * Returns the last layout branch in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch, or <code>null</code> if a matching layout branch could not be found
-	 */
-	public LayoutBranch fetchByPlid_Last(
 		long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
 			orderByComparator);
@@ -377,34 +325,6 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 * @return the first matching layout branch, or <code>null</code> if a matching layout branch could not be found
 	 */
 	public LayoutBranch fetchByL_P_First(
-		long layoutSetBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch
-	 * @throws NoSuchLayoutBranchException if a matching layout branch could not be found
-	 */
-	public LayoutBranch findByL_P_Last(
-			long layoutSetBranchId, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
-				orderByComparator)
-		throws NoSuchLayoutBranchException;
-
-	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch, or <code>null</code> if a matching layout branch could not be found
-	 */
-	public LayoutBranch fetchByL_P_Last(
 		long layoutSetBranchId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
 			orderByComparator);
@@ -585,36 +505,6 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 			orderByComparator);
 
 	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch
-	 * @throws NoSuchLayoutBranchException if a matching layout branch could not be found
-	 */
-	public LayoutBranch findByL_P_M_Last(
-			long layoutSetBranchId, long plid, boolean master,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
-				orderByComparator)
-		throws NoSuchLayoutBranchException;
-
-	/**
-	 * Returns the last layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout branch, or <code>null</code> if a matching layout branch could not be found
-	 */
-	public LayoutBranch fetchByL_P_M_Last(
-		long layoutSetBranchId, long plid, boolean master,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutBranch>
-			orderByComparator);
-
-	/**
 	 * Removes all the layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
@@ -755,4 +645,4 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1469816649
+// LIFERAY-SERVICE-BUILDER-HASH:-574280791

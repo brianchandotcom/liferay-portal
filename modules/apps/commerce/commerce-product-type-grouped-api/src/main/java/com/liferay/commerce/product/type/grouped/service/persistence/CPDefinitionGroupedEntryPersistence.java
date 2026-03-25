@@ -120,32 +120,6 @@ public interface CPDefinitionGroupedEntryPersistence
 			<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
-	 * Returns the last cp definition grouped entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException;
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionGroupedEntry> orderByComparator);
-
-	/**
 	 * Removes all the cp definition grouped entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface CPDefinitionGroupedEntryPersistence
 			<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
-	 * Returns the last cp definition grouped entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException;
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionGroupedEntry> orderByComparator);
-
-	/**
 	 * Removes all the cp definition grouped entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -438,32 +384,6 @@ public interface CPDefinitionGroupedEntryPersistence
 			<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
-	 * Returns the last cp definition grouped entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException;
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionGroupedEntry> orderByComparator);
-
-	/**
 	 * Removes all the cp definition grouped entries where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -562,32 +482,6 @@ public interface CPDefinitionGroupedEntryPersistence
 	 * @return the first matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
 	 */
 	public CPDefinitionGroupedEntry fetchByEntryCProductId_First(
-		long entryCProductId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionGroupedEntry> orderByComparator);
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where entryCProductId = &#63;.
-	 *
-	 * @param entryCProductId the entry c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry findByEntryCProductId_Last(
-			long entryCProductId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException;
-
-	/**
-	 * Returns the last cp definition grouped entry in the ordered set where entryCProductId = &#63;.
-	 *
-	 * @param entryCProductId the entry c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry fetchByEntryCProductId_Last(
 		long entryCProductId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDefinitionGroupedEntry> orderByComparator);
@@ -785,4 +679,4 @@ public interface CPDefinitionGroupedEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1567219888
+// LIFERAY-SERVICE-BUILDER-HASH:-65971626

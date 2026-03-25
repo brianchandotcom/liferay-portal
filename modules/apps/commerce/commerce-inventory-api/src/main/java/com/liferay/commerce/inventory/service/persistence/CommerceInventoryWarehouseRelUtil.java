@@ -235,43 +235,6 @@ public class CommerceInventoryWarehouseRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel
-	 * @throws NoSuchInventoryWarehouseRelException if a matching commerce inventory warehouse rel could not be found
-	 */
-	public static CommerceInventoryWarehouseRel
-			findByCommerceInventoryWarehouseId_Last(
-				long commerceInventoryWarehouseId,
-				OrderByComparator<CommerceInventoryWarehouseRel>
-					orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseRelException {
-
-		return getPersistence().findByCommerceInventoryWarehouseId_Last(
-			commerceInventoryWarehouseId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
-	 */
-	public static CommerceInventoryWarehouseRel
-		fetchByCommerceInventoryWarehouseId_Last(
-			long commerceInventoryWarehouseId,
-			OrderByComparator<CommerceInventoryWarehouseRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommerceInventoryWarehouseId_Last(
-			commerceInventoryWarehouseId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63; from the database.
 	 *
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
@@ -411,41 +374,6 @@ public class CommerceInventoryWarehouseRelUtil {
 		OrderByComparator<CommerceInventoryWarehouseRel> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, commerceInventoryWarehouseId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel
-	 * @throws NoSuchInventoryWarehouseRelException if a matching commerce inventory warehouse rel could not be found
-	 */
-	public static CommerceInventoryWarehouseRel findByC_C_Last(
-			long classNameId, long commerceInventoryWarehouseId,
-			OrderByComparator<CommerceInventoryWarehouseRel> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseRelException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, commerceInventoryWarehouseId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce inventory warehouse rel in the ordered set where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
-	 */
-	public static CommerceInventoryWarehouseRel fetchByC_C_Last(
-		long classNameId, long commerceInventoryWarehouseId,
-		OrderByComparator<CommerceInventoryWarehouseRel> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, commerceInventoryWarehouseId, orderByComparator);
 	}
 
@@ -738,4 +666,4 @@ public class CommerceInventoryWarehouseRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:273920242
+// LIFERAY-SERVICE-BUILDER-HASH:-435446610

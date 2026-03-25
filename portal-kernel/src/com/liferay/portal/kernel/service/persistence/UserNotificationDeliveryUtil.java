@@ -220,37 +220,6 @@ public class UserNotificationDeliveryUtil {
 	}
 
 	/**
-	 * Returns the last user notification delivery in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user notification delivery
-	 * @throws NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
-	 */
-	public static UserNotificationDelivery findByUserId_Last(
-			long userId,
-			OrderByComparator<UserNotificationDelivery> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserNotificationDeliveryException {
-
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last user notification delivery in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	 */
-	public static UserNotificationDelivery fetchByUserId_Last(
-		long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
-
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user notification deliveries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -542,4 +511,4 @@ public class UserNotificationDeliveryUtil {
 	private static volatile UserNotificationDeliveryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:135988040
+// LIFERAY-SERVICE-BUILDER-HASH:367410910

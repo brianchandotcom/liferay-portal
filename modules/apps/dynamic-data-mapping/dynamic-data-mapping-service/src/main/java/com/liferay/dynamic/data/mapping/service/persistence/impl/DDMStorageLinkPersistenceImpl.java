@@ -329,65 +329,6 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	@Override
-	public DDMStorageLink findByUuid_Last(
-			String uuid, OrderByComparator<DDMStorageLink> orderByComparator)
-		throws NoSuchStorageLinkException {
-
-		DDMStorageLink ddmStorageLink = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (ddmStorageLink != null) {
-			return ddmStorageLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchStorageLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	@Override
-	public DDMStorageLink fetchByUuid_Last(
-		String uuid, OrderByComparator<DDMStorageLink> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStorageLink> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm storage links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -723,72 +664,6 @@ public class DDMStorageLinkPersistenceImpl
 
 		List<DDMStorageLink> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	@Override
-	public DDMStorageLink findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws NoSuchStorageLinkException {
-
-		DDMStorageLink ddmStorageLink = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (ddmStorageLink != null) {
-			return ddmStorageLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchStorageLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	@Override
-	public DDMStorageLink fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDMStorageLink> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStorageLink> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1292,66 +1167,6 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddm storage link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	@Override
-	public DDMStorageLink findByStructureId_Last(
-			long structureId,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws NoSuchStorageLinkException {
-
-		DDMStorageLink ddmStorageLink = fetchByStructureId_Last(
-			structureId, orderByComparator);
-
-		if (ddmStorageLink != null) {
-			return ddmStorageLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append("}");
-
-		throw new NoSuchStorageLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	@Override
-	public DDMStorageLink fetchByStructureId_Last(
-		long structureId, OrderByComparator<DDMStorageLink> orderByComparator) {
-
-		int count = countByStructureId(structureId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStorageLink> list = findByStructureId(
-			structureId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddm storage links where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -1651,67 +1466,6 @@ public class DDMStorageLinkPersistenceImpl
 
 		List<DDMStorageLink> list = findByStructureVersionId(
 			structureVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link
-	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
-	 */
-	@Override
-	public DDMStorageLink findByStructureVersionId_Last(
-			long structureVersionId,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws NoSuchStorageLinkException {
-
-		DDMStorageLink ddmStorageLink = fetchByStructureVersionId_Last(
-			structureVersionId, orderByComparator);
-
-		if (ddmStorageLink != null) {
-			return ddmStorageLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureVersionId=");
-		sb.append(structureVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchStorageLinkException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm storage link in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
-	 */
-	@Override
-	public DDMStorageLink fetchByStructureVersionId_Last(
-		long structureVersionId,
-		OrderByComparator<DDMStorageLink> orderByComparator) {
-
-		int count = countByStructureVersionId(structureVersionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStorageLink> list = findByStructureVersionId(
-			structureVersionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3124,4 +2878,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1616633821
+// LIFERAY-SERVICE-BUILDER-HASH:35008901

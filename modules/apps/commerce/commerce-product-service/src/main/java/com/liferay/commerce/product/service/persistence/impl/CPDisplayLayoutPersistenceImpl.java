@@ -330,65 +330,6 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp display layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByUuid_Last(
-			String uuid, OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDisplayLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout fetchByUuid_Last(
-		String uuid, OrderByComparator<CPDisplayLayout> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDisplayLayout> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp display layouts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -936,72 +877,6 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp display layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDisplayLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDisplayLayout> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDisplayLayout> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp display layouts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1326,65 +1201,6 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp display layout in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByGroupId_Last(
-			long groupId, OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDisplayLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout fetchByGroupId_Last(
-		long groupId, OrderByComparator<CPDisplayLayout> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDisplayLayout> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp display layouts where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1692,72 +1508,6 @@ public class CPDisplayLayoutPersistenceImpl
 
 		List<CPDisplayLayout> list = findByG_C(
 			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByG_C_Last(
-			long groupId, long classNameId,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByG_C_Last(
-			groupId, classNameId, orderByComparator);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDisplayLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout fetchByG_C_Last(
-		long groupId, long classNameId,
-		OrderByComparator<CPDisplayLayout> orderByComparator) {
-
-		int count = countByG_C(groupId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDisplayLayout> list = findByG_C(
-			groupId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2110,73 +1860,6 @@ public class CPDisplayLayoutPersistenceImpl
 
 		List<CPDisplayLayout> list = findByG_LPTEU(
 			groupId, layoutPageTemplateEntryUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where groupId = &#63; and layoutPageTemplateEntryUuid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateEntryUuid the layout page template entry uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByG_LPTEU_Last(
-			long groupId, String layoutPageTemplateEntryUuid,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByG_LPTEU_Last(
-			groupId, layoutPageTemplateEntryUuid, orderByComparator);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", layoutPageTemplateEntryUuid=");
-		sb.append(layoutPageTemplateEntryUuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDisplayLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where groupId = &#63; and layoutPageTemplateEntryUuid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateEntryUuid the layout page template entry uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout fetchByG_LPTEU_Last(
-		long groupId, String layoutPageTemplateEntryUuid,
-		OrderByComparator<CPDisplayLayout> orderByComparator) {
-
-		int count = countByG_LPTEU(groupId, layoutPageTemplateEntryUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDisplayLayout> list = findByG_LPTEU(
-			groupId, layoutPageTemplateEntryUuid, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2553,72 +2236,6 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp display layout in the ordered set where groupId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByG_L_Last(
-			long groupId, String layoutUuid,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByG_L_Last(
-			groupId, layoutUuid, orderByComparator);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", layoutUuid=");
-		sb.append(layoutUuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDisplayLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where groupId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout fetchByG_L_Last(
-		long groupId, String layoutUuid,
-		OrderByComparator<CPDisplayLayout> orderByComparator) {
-
-		int count = countByG_L(groupId, layoutUuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDisplayLayout> list = findByG_L(
-			groupId, layoutUuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp display layouts where groupId = &#63; and layoutUuid = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2961,72 +2578,6 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchCPDisplayLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<CPDisplayLayout> orderByComparator) {
-
-		int count = countByC_C(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDisplayLayout> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp display layouts where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -3355,72 +2906,6 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByC_C_LPTEU_Last(
-			long classNameId, long classPK,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByC_C_LPTEU_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchCPDisplayLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout fetchByC_C_LPTEU_Last(
-		long classNameId, long classPK,
-		OrderByComparator<CPDisplayLayout> orderByComparator) {
-
-		int count = countByC_C_LPTEU(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDisplayLayout> list = findByC_C_LPTEU(
-			classNameId, classPK, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the cp display layouts where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -3738,72 +3223,6 @@ public class CPDisplayLayoutPersistenceImpl
 
 		List<CPDisplayLayout> list = findByC_C_L(
 			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByC_C_L_Last(
-			long classNameId, long classPK,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByC_C_L_Last(
-			classNameId, classPK, orderByComparator);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchCPDisplayLayoutException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	 */
-	@Override
-	public CPDisplayLayout fetchByC_C_L_Last(
-		long classNameId, long classPK,
-		OrderByComparator<CPDisplayLayout> orderByComparator) {
-
-		int count = countByC_C_L(classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDisplayLayout> list = findByC_C_L(
-			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5247,4 +4666,4 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-163377208
+// LIFERAY-SERVICE-BUILDER-HASH:1632911252

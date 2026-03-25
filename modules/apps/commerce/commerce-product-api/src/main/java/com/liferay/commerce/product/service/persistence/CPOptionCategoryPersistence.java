@@ -121,32 +121,6 @@ public interface CPOptionCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp option category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category
-	 * @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
-	 */
-	public CPOptionCategory findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-				orderByComparator)
-		throws NoSuchCPOptionCategoryException;
-
-	/**
-	 * Returns the last cp option category in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category, or <code>null</code> if a matching cp option category could not be found
-	 */
-	public CPOptionCategory fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-			orderByComparator);
-
-	/**
 	 * Returns all the cp option categories that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface CPOptionCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cp option category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category
-	 * @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
-	 */
-	public CPOptionCategory findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-				orderByComparator)
-		throws NoSuchCPOptionCategoryException;
-
-	/**
-	 * Returns the last cp option category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category, or <code>null</code> if a matching cp option category could not be found
-	 */
-	public CPOptionCategory fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-			orderByComparator);
-
-	/**
 	 * Returns all the cp option categories that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -486,32 +432,6 @@ public interface CPOptionCategoryPersistence
 	 * @return the first matching cp option category, or <code>null</code> if a matching cp option category could not be found
 	 */
 	public CPOptionCategory fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-			orderByComparator);
-
-	/**
-	 * Returns the last cp option category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category
-	 * @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
-	 */
-	public CPOptionCategory findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-				orderByComparator)
-		throws NoSuchCPOptionCategoryException;
-
-	/**
-	 * Returns the last cp option category in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp option category, or <code>null</code> if a matching cp option category could not be found
-	 */
-	public CPOptionCategory fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
 			orderByComparator);
@@ -806,4 +726,4 @@ public interface CPOptionCategoryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-642780181
+// LIFERAY-SERVICE-BUILDER-HASH:-856767095

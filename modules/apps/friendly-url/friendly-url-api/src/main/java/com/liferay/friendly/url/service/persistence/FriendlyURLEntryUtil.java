@@ -211,35 +211,6 @@ public class FriendlyURLEntryUtil {
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByUuid_Last(
-			String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the friendly url entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -437,41 +408,6 @@ public class FriendlyURLEntryUtil {
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the friendly url entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -607,41 +543,6 @@ public class FriendlyURLEntryUtil {
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByG_C_Last(
-			long groupId, long classNameId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByG_C_Last(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByG_C_Last(
-		long groupId, long classNameId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_Last(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the friendly url entries where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -773,41 +674,6 @@ public class FriendlyURLEntryUtil {
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByC_C_Last(
-			long companyId, long classNameId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByC_C_Last(
-			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByC_C_Last(
-		long companyId, long classNameId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			companyId, classNameId, orderByComparator);
 	}
 
@@ -950,43 +816,6 @@ public class FriendlyURLEntryUtil {
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
 		return getPersistence().fetchByG_C_C_First(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByG_C_C_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_Last(
 			groupId, classNameId, classPK, orderByComparator);
 	}
 
@@ -1181,4 +1010,4 @@ public class FriendlyURLEntryUtil {
 	private static volatile FriendlyURLEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1395907139
+// LIFERAY-SERVICE-BUILDER-HASH:75676644

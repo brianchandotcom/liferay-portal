@@ -122,32 +122,6 @@ public interface DDMTemplateVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version
-	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
-	 */
-	public DDMTemplateVersion findByTemplateId_Last(
-			long templateId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion>
-				orderByComparator)
-		throws NoSuchTemplateVersionException;
-
-	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
-	 */
-	public DDMTemplateVersion fetchByTemplateId_Last(
-		long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm template versions where templateId = &#63; from the database.
 	 *
 	 * @param templateId the template ID
@@ -307,34 +281,6 @@ public interface DDMTemplateVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version
-	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
-	 */
-	public DDMTemplateVersion findByT_S_Last(
-			long templateId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion>
-				orderByComparator)
-		throws NoSuchTemplateVersionException;
-
-	/**
-	 * Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
-	 */
-	public DDMTemplateVersion fetchByT_S_Last(
-		long templateId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion>
-			orderByComparator);
-
-	/**
 	 * Removes all the ddm template versions where templateId = &#63; and status = &#63; from the database.
 	 *
 	 * @param templateId the template ID
@@ -473,4 +419,4 @@ public interface DDMTemplateVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1169183754
+// LIFERAY-SERVICE-BUILDER-HASH:-1465122996

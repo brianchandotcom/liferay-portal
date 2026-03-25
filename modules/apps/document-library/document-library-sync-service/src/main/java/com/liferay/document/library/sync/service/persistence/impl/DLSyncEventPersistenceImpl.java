@@ -290,65 +290,6 @@ public class DLSyncEventPersistenceImpl
 	}
 
 	/**
-	 * Returns the last dl sync event in the ordered set where modifiedTime &gt; &#63;.
-	 *
-	 * @param modifiedTime the modified time
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl sync event
-	 * @throws NoSuchEventException if a matching dl sync event could not be found
-	 */
-	@Override
-	public DLSyncEvent findByGtModifiedTime_Last(
-			long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator)
-		throws NoSuchEventException {
-
-		DLSyncEvent dlSyncEvent = fetchByGtModifiedTime_Last(
-			modifiedTime, orderByComparator);
-
-		if (dlSyncEvent != null) {
-			return dlSyncEvent;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("modifiedTime>");
-		sb.append(modifiedTime);
-
-		sb.append("}");
-
-		throw new NoSuchEventException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dl sync event in the ordered set where modifiedTime &gt; &#63;.
-	 *
-	 * @param modifiedTime the modified time
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
-	 */
-	@Override
-	public DLSyncEvent fetchByGtModifiedTime_Last(
-		long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator) {
-
-		int count = countByGtModifiedTime(modifiedTime);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLSyncEvent> list = findByGtModifiedTime(
-			modifiedTime, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the dl sync events where modifiedTime &gt; &#63; from the database.
 	 *
 	 * @param modifiedTime the modified time
@@ -1203,4 +1144,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-898542491
+// LIFERAY-SERVICE-BUILDER-HASH:1563444882

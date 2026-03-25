@@ -302,65 +302,6 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry version in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version
-	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion findByLvEntryId_Last(
-			long lvEntryId, OrderByComparator<LVEntryVersion> orderByComparator)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByLvEntryId_Last(
-			lvEntryId, orderByComparator);
-
-		if (lvEntryVersion != null) {
-			return lvEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("lvEntryId=");
-		sb.append(lvEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByLvEntryId_Last(
-		long lvEntryId, OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		int count = countByLvEntryId(lvEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryVersion> list = findByLvEntryId(
-			lvEntryId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entry versions where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -843,65 +784,6 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version
-	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion findByUuid_Last(
-			String uuid, OrderByComparator<LVEntryVersion> orderByComparator)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (lvEntryVersion != null) {
-			return lvEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByUuid_Last(
-		String uuid, OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryVersion> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entry versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1226,72 +1108,6 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = findByUuid_Version(
 			uuid, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version
-	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion findByUuid_Version_Last(
-			String uuid, int version,
-			OrderByComparator<LVEntryVersion> orderByComparator)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByUuid_Version_Last(
-			uuid, version, orderByComparator);
-
-		if (lvEntryVersion != null) {
-			return lvEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByUuid_Version_Last(
-		String uuid, int version,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		int count = countByUuid_Version(uuid, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryVersion> list = findByUuid_Version(
-			uuid, version, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1635,72 +1451,6 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = findByUUID_G(
 			uuid, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version
-	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion findByUUID_G_Last(
-			String uuid, long groupId,
-			OrderByComparator<LVEntryVersion> orderByComparator)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByUUID_G_Last(
-			uuid, groupId, orderByComparator);
-
-		if (lvEntryVersion != null) {
-			return lvEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByUUID_G_Last(
-		String uuid, long groupId,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		int count = countByUUID_G(uuid, groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryVersion> list = findByUUID_G(
-			uuid, groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2275,72 +2025,6 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version
-	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LVEntryVersion> orderByComparator)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (lvEntryVersion != null) {
-			return lvEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryVersion> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entry versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -2702,77 +2386,6 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version
-	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion findByUuid_C_Version_Last(
-			String uuid, long companyId, int version,
-			OrderByComparator<LVEntryVersion> orderByComparator)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByUuid_C_Version_Last(
-			uuid, companyId, version, orderByComparator);
-
-		if (lvEntryVersion != null) {
-			return lvEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByUuid_C_Version_Last(
-		String uuid, long companyId, int version,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		int count = countByUuid_C_Version(uuid, companyId, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryVersion> list = findByUuid_C_Version(
-			uuid, companyId, version, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -3095,65 +2708,6 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last lv entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version
-	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion findByGroupId_Last(
-			long groupId, OrderByComparator<LVEntryVersion> orderByComparator)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (lvEntryVersion != null) {
-			return lvEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByGroupId_Last(
-		long groupId, OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryVersion> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the lv entry versions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3452,72 +3006,6 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = findByGroupId_Version(
 			groupId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version
-	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion findByGroupId_Version_Last(
-			long groupId, int version,
-			OrderByComparator<LVEntryVersion> orderByComparator)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByGroupId_Version_Last(
-			groupId, version, orderByComparator);
-
-		if (lvEntryVersion != null) {
-			return lvEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByGroupId_Version_Last(
-		long groupId, int version,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		int count = countByGroupId_Version(groupId, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryVersion> list = findByGroupId_Version(
-			groupId, version, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3850,72 +3338,6 @@ public class LVEntryVersionPersistenceImpl
 
 		List<LVEntryVersion> list = findByG_UGK(
 			groupId, uniqueGroupKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version
-	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion findByG_UGK_Last(
-			long groupId, String uniqueGroupKey,
-			OrderByComparator<LVEntryVersion> orderByComparator)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByG_UGK_Last(
-			groupId, uniqueGroupKey, orderByComparator);
-
-		if (lvEntryVersion != null) {
-			return lvEntryVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", uniqueGroupKey=");
-		sb.append(uniqueGroupKey);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last lv entry version in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByG_UGK_Last(
-		long groupId, String uniqueGroupKey,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		int count = countByG_UGK(groupId, uniqueGroupKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LVEntryVersion> list = findByG_UGK(
-			groupId, uniqueGroupKey, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5451,4 +4873,4 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1743158131
+// LIFERAY-SERVICE-BUILDER-HASH:1391212228

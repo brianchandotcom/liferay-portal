@@ -320,68 +320,6 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 	/**
-	 * Returns the last batch engine import task error in the ordered set where batchEngineImportTaskId = &#63;.
-	 *
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine import task error
-	 * @throws NoSuchImportTaskErrorException if a matching batch engine import task error could not be found
-	 */
-	@Override
-	public BatchEngineImportTaskError findByBatchEngineImportTaskId_Last(
-			long batchEngineImportTaskId,
-			OrderByComparator<BatchEngineImportTaskError> orderByComparator)
-		throws NoSuchImportTaskErrorException {
-
-		BatchEngineImportTaskError batchEngineImportTaskError =
-			fetchByBatchEngineImportTaskId_Last(
-				batchEngineImportTaskId, orderByComparator);
-
-		if (batchEngineImportTaskError != null) {
-			return batchEngineImportTaskError;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("batchEngineImportTaskId=");
-		sb.append(batchEngineImportTaskId);
-
-		sb.append("}");
-
-		throw new NoSuchImportTaskErrorException(sb.toString());
-	}
-
-	/**
-	 * Returns the last batch engine import task error in the ordered set where batchEngineImportTaskId = &#63;.
-	 *
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine import task error, or <code>null</code> if a matching batch engine import task error could not be found
-	 */
-	@Override
-	public BatchEngineImportTaskError fetchByBatchEngineImportTaskId_Last(
-		long batchEngineImportTaskId,
-		OrderByComparator<BatchEngineImportTaskError> orderByComparator) {
-
-		int count = countByBatchEngineImportTaskId(batchEngineImportTaskId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BatchEngineImportTaskError> list = findByBatchEngineImportTaskId(
-			batchEngineImportTaskId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the batch engine import task errors where batchEngineImportTaskId = &#63; from the database.
 	 *
 	 * @param batchEngineImportTaskId the batch engine import task ID
@@ -1131,4 +1069,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-356121512
+// LIFERAY-SERVICE-BUILDER-HASH:-961338414

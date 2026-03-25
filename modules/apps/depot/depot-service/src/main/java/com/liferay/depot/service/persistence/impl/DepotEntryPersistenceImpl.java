@@ -328,64 +328,6 @@ public class DepotEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	@Override
-	public DepotEntry findByUuid_Last(
-			String uuid, OrderByComparator<DepotEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		DepotEntry depotEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (depotEntry != null) {
-			return depotEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	@Override
-	public DepotEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<DepotEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -933,72 +875,6 @@ public class DepotEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	@Override
-	public DepotEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DepotEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		DepotEntry depotEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (depotEntry != null) {
-			return depotEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	@Override
-	public DepotEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DepotEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the depot entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1497,72 +1373,6 @@ public class DepotEntryPersistenceImpl
 
 		List<DepotEntry> list = findByC_T(
 			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last depot entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry
-	 * @throws NoSuchEntryException if a matching depot entry could not be found
-	 */
-	@Override
-	public DepotEntry findByC_T_Last(
-			long companyId, int type,
-			OrderByComparator<DepotEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		DepotEntry depotEntry = fetchByC_T_Last(
-			companyId, type, orderByComparator);
-
-		if (depotEntry != null) {
-			return depotEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last depot entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching depot entry, or <code>null</code> if a matching depot entry could not be found
-	 */
-	@Override
-	public DepotEntry fetchByC_T_Last(
-		long companyId, int type,
-		OrderByComparator<DepotEntry> orderByComparator) {
-
-		int count = countByC_T(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DepotEntry> list = findByC_T(
-			companyId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2648,4 +2458,4 @@ public class DepotEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-440934770
+// LIFERAY-SERVICE-BUILDER-HASH:797011326

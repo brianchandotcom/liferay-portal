@@ -219,37 +219,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	}
 
 	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel findByUuid_Last(
-			String uuid,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry segments entry rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -451,41 +420,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	}
 
 	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry segments entry rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -615,39 +549,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	}
 
 	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where assetListEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel findByAssetListEntryId_Last(
-			long assetListEntryId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findByAssetListEntryId_Last(
-			assetListEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where assetListEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel fetchByAssetListEntryId_Last(
-		long assetListEntryId,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		return getPersistence().fetchByAssetListEntryId_Last(
-			assetListEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry segments entry rels where assetListEntryId = &#63; from the database.
 	 *
 	 * @param assetListEntryId the asset list entry ID
@@ -771,39 +672,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
 
 		return getPersistence().fetchBySegmentsEntryId_First(
-			segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel findBySegmentsEntryId_Last(
-			long segmentsEntryId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findBySegmentsEntryId_Last(
-			segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel fetchBySegmentsEntryId_Last(
-		long segmentsEntryId,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		return getPersistence().fetchBySegmentsEntryId_Last(
 			segmentsEntryId, orderByComparator);
 	}
 
@@ -1008,41 +876,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
 
 		return getPersistence().fetchByA_S_C_First(
-			assetListEntryId, segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel findByA_S_C_Last(
-			long assetListEntryId, long segmentsEntryId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findByA_S_C_Last(
-			assetListEntryId, segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last asset list entry segments entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset list entry segments entry rel, or <code>null</code> if a matching asset list entry segments entry rel could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel fetchByA_S_C_Last(
-		long assetListEntryId, long segmentsEntryId,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		return getPersistence().fetchByA_S_C_Last(
 			assetListEntryId, segmentsEntryId, orderByComparator);
 	}
 
@@ -1350,4 +1183,4 @@ public class AssetListEntrySegmentsEntryRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1242515897
+// LIFERAY-SERVICE-BUILDER-HASH:-1405737866

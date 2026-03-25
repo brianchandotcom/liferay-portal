@@ -300,67 +300,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last permission check finder entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching permission check finder entry
-	 * @throws NoSuchPermissionCheckFinderEntryException if a matching permission check finder entry could not be found
-	 */
-	@Override
-	public PermissionCheckFinderEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<PermissionCheckFinderEntry> orderByComparator)
-		throws NoSuchPermissionCheckFinderEntryException {
-
-		PermissionCheckFinderEntry permissionCheckFinderEntry =
-			fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (permissionCheckFinderEntry != null) {
-			return permissionCheckFinderEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchPermissionCheckFinderEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last permission check finder entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching permission check finder entry, or <code>null</code> if a matching permission check finder entry could not be found
-	 */
-	@Override
-	public PermissionCheckFinderEntry fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<PermissionCheckFinderEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PermissionCheckFinderEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the permission check finder entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1778,4 +1717,4 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1539485289
+// LIFERAY-SERVICE-BUILDER-HASH:604552375

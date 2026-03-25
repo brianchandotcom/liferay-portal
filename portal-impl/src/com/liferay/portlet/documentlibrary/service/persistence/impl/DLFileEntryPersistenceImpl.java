@@ -330,64 +330,6 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByUuid_Last(
-			String uuid, OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -935,72 +877,6 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1314,65 +1190,6 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByGroupId_Last(
-			long groupId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1876,65 +1693,6 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2225,65 +1983,6 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = findByRepositoryId(
 			repositoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByRepositoryId_Last(
-			long repositoryId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByRepositoryId_Last(
-			repositoryId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByRepositoryId_Last(
-		long repositoryId, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByRepositoryId(repositoryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByRepositoryId(
-			repositoryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2595,65 +2294,6 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = findByMimeType(
 			mimeType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where mimeType = &#63;.
-	 *
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByMimeType_Last(
-			String mimeType, OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByMimeType_Last(
-			mimeType, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("mimeType=");
-		sb.append(mimeType);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where mimeType = &#63;.
-	 *
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByMimeType_Last(
-		String mimeType, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByMimeType(mimeType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByMimeType(
-			mimeType, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2983,67 +2623,6 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry in the ordered set where fileEntryTypeId = &#63;.
-	 *
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByFileEntryTypeId_Last(
-			long fileEntryTypeId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByFileEntryTypeId_Last(
-			fileEntryTypeId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryTypeId=");
-		sb.append(fileEntryTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where fileEntryTypeId = &#63;.
-	 *
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByFileEntryTypeId_Last(
-		long fileEntryTypeId,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByFileEntryTypeId(fileEntryTypeId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByFileEntryTypeId(
-			fileEntryTypeId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entries where fileEntryTypeId = &#63; from the database.
 	 *
 	 * @param fileEntryTypeId the file entry type ID
@@ -3345,65 +2924,6 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry in the ordered set where smallImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findBySmallImageId_Last(
-			long smallImageId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchBySmallImageId_Last(
-			smallImageId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("smallImageId=");
-		sb.append(smallImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where smallImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchBySmallImageId_Last(
-		long smallImageId, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countBySmallImageId(smallImageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findBySmallImageId(
-			smallImageId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entries where smallImageId = &#63; from the database.
 	 *
 	 * @param smallImageId the small image ID
@@ -3694,65 +3214,6 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = findByLargeImageId(
 			largeImageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where largeImageId = &#63;.
-	 *
-	 * @param largeImageId the large image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByLargeImageId_Last(
-			long largeImageId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByLargeImageId_Last(
-			largeImageId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("largeImageId=");
-		sb.append(largeImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where largeImageId = &#63;.
-	 *
-	 * @param largeImageId the large image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByLargeImageId_Last(
-		long largeImageId, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByLargeImageId(largeImageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByLargeImageId(
-			largeImageId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4063,66 +3524,6 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry in the ordered set where custom1ImageId = &#63;.
-	 *
-	 * @param custom1ImageId the custom1 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByCustom1ImageId_Last(
-			long custom1ImageId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByCustom1ImageId_Last(
-			custom1ImageId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("custom1ImageId=");
-		sb.append(custom1ImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where custom1ImageId = &#63;.
-	 *
-	 * @param custom1ImageId the custom1 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByCustom1ImageId_Last(
-		long custom1ImageId, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByCustom1ImageId(custom1ImageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByCustom1ImageId(
-			custom1ImageId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entries where custom1ImageId = &#63; from the database.
 	 *
 	 * @param custom1ImageId the custom1 image ID
@@ -4416,66 +3817,6 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = findByCustom2ImageId(
 			custom2ImageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where custom2ImageId = &#63;.
-	 *
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByCustom2ImageId_Last(
-			long custom2ImageId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByCustom2ImageId_Last(
-			custom2ImageId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("custom2ImageId=");
-		sb.append(custom2ImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where custom2ImageId = &#63;.
-	 *
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByCustom2ImageId_Last(
-		long custom2ImageId, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByCustom2ImageId(custom2ImageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByCustom2ImageId(
-			custom2ImageId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4792,72 +4133,6 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = findByG_U(
 			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByG_U_Last(
-			long groupId, long userId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByG_U_Last(
-			groupId, userId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByG_U_Last(
-		long groupId, long userId,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByG_U(groupId, userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByG_U(
-			groupId, userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5393,72 +4668,6 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = findByG_F(
 			groupId, folderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByG_F_Last(
-			long groupId, long folderId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByG_F_Last(
-			groupId, folderId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByG_F_Last(
-		long groupId, long folderId,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByG_F(groupId, folderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByG_F(
-			groupId, folderId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6522,72 +5731,6 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByR_F_Last(
-			long repositoryId, long folderId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByR_F_Last(
-			repositoryId, folderId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByR_F_Last(
-		long repositoryId, long folderId,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByR_F(repositoryId, folderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByR_F(
-			repositoryId, folderId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entries where repositoryId = &#63; and folderId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -6917,72 +6060,6 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = findByF_N(
 			folderId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where folderId = &#63; and name = &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByF_N_Last(
-			long folderId, String name,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByF_N_Last(
-			folderId, name, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("folderId=");
-		sb.append(folderId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where folderId = &#63; and name = &#63;.
-	 *
-	 * @param folderId the folder ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByF_N_Last(
-		long folderId, String name,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByF_N(folderId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByF_N(
-			folderId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7343,77 +6420,6 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = findByG_U_F(
 			groupId, userId, folderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByG_U_F_Last(
-			long groupId, long userId, long folderId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByG_U_F_Last(
-			groupId, userId, folderId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByG_U_F_Last(
-		long groupId, long userId, long folderId,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByG_U_F(groupId, userId, folderId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByG_U_F(
-			groupId, userId, folderId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -9222,78 +8228,6 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByG_F_F_Last(
-			long groupId, long folderId, long fileEntryTypeId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByG_F_F_Last(
-			groupId, folderId, fileEntryTypeId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append(", fileEntryTypeId=");
-		sb.append(fileEntryTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByG_F_F_Last(
-		long groupId, long folderId, long fileEntryTypeId,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByG_F_F(groupId, folderId, fileEntryTypeId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByG_F_F(
-			groupId, folderId, fileEntryTypeId, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -10455,78 +9389,6 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByC_C_C_Last(
-			long companyId, long classNameId, long classPK,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByC_C_C_Last(
-			companyId, classNameId, classPK, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByC_C_C(companyId, classNameId, classPK);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByC_C_C(
-			companyId, classNameId, classPK, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -10902,86 +9764,6 @@ public class DLFileEntryPersistenceImpl
 		List<DLFileEntry> list = findByS_L_C1_C2(
 			smallImageId, largeImageId, custom1ImageId, custom2ImageId, 0, 1,
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param largeImageId the large image ID
-	 * @param custom1ImageId the custom1 image ID
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry
-	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry findByS_L_C1_C2_Last(
-			long smallImageId, long largeImageId, long custom1ImageId,
-			long custom2ImageId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByS_L_C1_C2_Last(
-			smallImageId, largeImageId, custom1ImageId, custom2ImageId,
-			orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("smallImageId=");
-		sb.append(smallImageId);
-
-		sb.append(", largeImageId=");
-		sb.append(largeImageId);
-
-		sb.append(", custom1ImageId=");
-		sb.append(custom1ImageId);
-
-		sb.append(", custom2ImageId=");
-		sb.append(custom2ImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
-	 *
-	 * @param smallImageId the small image ID
-	 * @param largeImageId the large image ID
-	 * @param custom1ImageId the custom1 image ID
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByS_L_C1_C2_Last(
-		long smallImageId, long largeImageId, long custom1ImageId,
-		long custom2ImageId, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		int count = countByS_L_C1_C2(
-			smallImageId, largeImageId, custom1ImageId, custom2ImageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntry> list = findByS_L_C1_C2(
-			smallImageId, largeImageId, custom1ImageId, custom2ImageId,
-			count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -12814,4 +11596,4 @@ public class DLFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1075294247
+// LIFERAY-SERVICE-BUILDER-HASH:-733371206

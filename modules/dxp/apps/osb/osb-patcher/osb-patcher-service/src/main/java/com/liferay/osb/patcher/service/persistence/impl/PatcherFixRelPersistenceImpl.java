@@ -307,67 +307,6 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last patcher fix rel in the ordered set where childPatcherFixId = &#63;.
-	 *
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel
-	 * @throws NoSuchPatcherFixRelException if a matching patcher fix rel could not be found
-	 */
-	@Override
-	public PatcherFixRel findByChildPatcherFixId_Last(
-			long childPatcherFixId,
-			OrderByComparator<PatcherFixRel> orderByComparator)
-		throws NoSuchPatcherFixRelException {
-
-		PatcherFixRel patcherFixRel = fetchByChildPatcherFixId_Last(
-			childPatcherFixId, orderByComparator);
-
-		if (patcherFixRel != null) {
-			return patcherFixRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("childPatcherFixId=");
-		sb.append(childPatcherFixId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher fix rel in the ordered set where childPatcherFixId = &#63;.
-	 *
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel, or <code>null</code> if a matching patcher fix rel could not be found
-	 */
-	@Override
-	public PatcherFixRel fetchByChildPatcherFixId_Last(
-		long childPatcherFixId,
-		OrderByComparator<PatcherFixRel> orderByComparator) {
-
-		int count = countByChildPatcherFixId(childPatcherFixId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherFixRel> list = findByChildPatcherFixId(
-			childPatcherFixId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the patcher fix rels where childPatcherFixId = &#63; from the database.
 	 *
 	 * @param childPatcherFixId the child patcher fix ID
@@ -656,67 +595,6 @@ public class PatcherFixRelPersistenceImpl
 
 		List<PatcherFixRel> list = findByParentPatcherFixId(
 			parentPatcherFixId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last patcher fix rel in the ordered set where parentPatcherFixId = &#63;.
-	 *
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel
-	 * @throws NoSuchPatcherFixRelException if a matching patcher fix rel could not be found
-	 */
-	@Override
-	public PatcherFixRel findByParentPatcherFixId_Last(
-			long parentPatcherFixId,
-			OrderByComparator<PatcherFixRel> orderByComparator)
-		throws NoSuchPatcherFixRelException {
-
-		PatcherFixRel patcherFixRel = fetchByParentPatcherFixId_Last(
-			parentPatcherFixId, orderByComparator);
-
-		if (patcherFixRel != null) {
-			return patcherFixRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentPatcherFixId=");
-		sb.append(parentPatcherFixId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last patcher fix rel in the ordered set where parentPatcherFixId = &#63;.
-	 *
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher fix rel, or <code>null</code> if a matching patcher fix rel could not be found
-	 */
-	@Override
-	public PatcherFixRel fetchByParentPatcherFixId_Last(
-		long parentPatcherFixId,
-		OrderByComparator<PatcherFixRel> orderByComparator) {
-
-		int count = countByParentPatcherFixId(parentPatcherFixId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<PatcherFixRel> list = findByParentPatcherFixId(
-			parentPatcherFixId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1418,4 +1296,4 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:356449288
+// LIFERAY-SERVICE-BUILDER-HASH:-666848654

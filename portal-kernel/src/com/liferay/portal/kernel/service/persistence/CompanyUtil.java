@@ -264,34 +264,6 @@ public class CompanyUtil {
 	}
 
 	/**
-	 * Returns the last company in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching company
-	 * @throws NoSuchCompanyException if a matching company could not be found
-	 */
-	public static Company findByLogoId_Last(
-			long logoId, OrderByComparator<Company> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchCompanyException {
-
-		return getPersistence().findByLogoId_Last(logoId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last company in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching company, or <code>null</code> if a matching company could not be found
-	 */
-	public static Company fetchByLogoId_Last(
-		long logoId, OrderByComparator<Company> orderByComparator) {
-
-		return getPersistence().fetchByLogoId_Last(logoId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the companies where logoId = &#63; from the database.
 	 *
 	 * @param logoId the logo ID
@@ -468,4 +440,4 @@ public class CompanyUtil {
 	private static volatile CompanyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1355863643
+// LIFERAY-SERVICE-BUILDER-HASH:1374545385

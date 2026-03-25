@@ -327,64 +327,6 @@ public class MBBanPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards ban in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban
-	 * @throws NoSuchBanException if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan findByUuid_Last(
-			String uuid, OrderByComparator<MBBan> orderByComparator)
-		throws NoSuchBanException {
-
-		MBBan mbBan = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards ban in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan fetchByUuid_Last(
-		String uuid, OrderByComparator<MBBan> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBBan> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards bans where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -929,71 +871,6 @@ public class MBBanPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards ban in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban
-	 * @throws NoSuchBanException if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<MBBan> orderByComparator)
-		throws NoSuchBanException {
-
-		MBBan mbBan = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards ban in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<MBBan> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBBan> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards bans where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1313,64 +1190,6 @@ public class MBBanPersistenceImpl
 	}
 
 	/**
-	 * Returns the last message boards ban in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban
-	 * @throws NoSuchBanException if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan findByGroupId_Last(
-			long groupId, OrderByComparator<MBBan> orderByComparator)
-		throws NoSuchBanException {
-
-		MBBan mbBan = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards ban in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan fetchByGroupId_Last(
-		long groupId, OrderByComparator<MBBan> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBBan> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the message boards bans where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1654,64 +1473,6 @@ public class MBBanPersistenceImpl
 		long userId, OrderByComparator<MBBan> orderByComparator) {
 
 		List<MBBan> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards ban in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban
-	 * @throws NoSuchBanException if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan findByUserId_Last(
-			long userId, OrderByComparator<MBBan> orderByComparator)
-		throws NoSuchBanException {
-
-		MBBan mbBan = fetchByUserId_Last(userId, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards ban in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan fetchByUserId_Last(
-		long userId, OrderByComparator<MBBan> orderByComparator) {
-
-		int count = countByUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBBan> list = findByUserId(
-			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2005,64 +1766,6 @@ public class MBBanPersistenceImpl
 		long banUserId, OrderByComparator<MBBan> orderByComparator) {
 
 		List<MBBan> list = findByBanUserId(banUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards ban in the ordered set where banUserId = &#63;.
-	 *
-	 * @param banUserId the ban user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban
-	 * @throws NoSuchBanException if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan findByBanUserId_Last(
-			long banUserId, OrderByComparator<MBBan> orderByComparator)
-		throws NoSuchBanException {
-
-		MBBan mbBan = fetchByBanUserId_Last(banUserId, orderByComparator);
-
-		if (mbBan != null) {
-			return mbBan;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("banUserId=");
-		sb.append(banUserId);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
-	}
-
-	/**
-	 * Returns the last message boards ban in the ordered set where banUserId = &#63;.
-	 *
-	 * @param banUserId the ban user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
-	 */
-	@Override
-	public MBBan fetchByBanUserId_Last(
-		long banUserId, OrderByComparator<MBBan> orderByComparator) {
-
-		int count = countByBanUserId(banUserId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBBan> list = findByBanUserId(
-			banUserId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3340,4 +3043,4 @@ public class MBBanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2001836147
+// LIFERAY-SERVICE-BUILDER-HASH:1070148472

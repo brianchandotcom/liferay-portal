@@ -311,67 +311,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last redirect not found entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect not found entry
-	 * @throws NoSuchNotFoundEntryException if a matching redirect not found entry could not be found
-	 */
-	@Override
-	public RedirectNotFoundEntry findByGroupId_Last(
-			long groupId,
-			OrderByComparator<RedirectNotFoundEntry> orderByComparator)
-		throws NoSuchNotFoundEntryException {
-
-		RedirectNotFoundEntry redirectNotFoundEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (redirectNotFoundEntry != null) {
-			return redirectNotFoundEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchNotFoundEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last redirect not found entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching redirect not found entry, or <code>null</code> if a matching redirect not found entry could not be found
-	 */
-	@Override
-	public RedirectNotFoundEntry fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<RedirectNotFoundEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RedirectNotFoundEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the redirect not found entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1351,4 +1290,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-86267844
+// LIFERAY-SERVICE-BUILDER-HASH:-505945216

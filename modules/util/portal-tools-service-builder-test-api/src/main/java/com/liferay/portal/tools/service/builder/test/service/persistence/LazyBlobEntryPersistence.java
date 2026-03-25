@@ -120,32 +120,6 @@ public interface LazyBlobEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last lazy blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lazy blob entry
-	 * @throws NoSuchLazyBlobEntryException if a matching lazy blob entry could not be found
-	 */
-	public LazyBlobEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LazyBlobEntry>
-				orderByComparator)
-		throws NoSuchLazyBlobEntryException;
-
-	/**
-	 * Returns the last lazy blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lazy blob entry, or <code>null</code> if a matching lazy blob entry could not be found
-	 */
-	public LazyBlobEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LazyBlobEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the lazy blob entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -331,4 +305,4 @@ public interface LazyBlobEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-53595523
+// LIFERAY-SERVICE-BUILDER-HASH:1927697422

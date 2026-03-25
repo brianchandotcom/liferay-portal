@@ -210,34 +210,6 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	public static RatingsEntry findByUuid_Last(
-			String uuid, OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.ratings.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	public static RatingsEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<RatingsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ratings entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -363,40 +335,6 @@ public class RatingsEntryUtil {
 		OrderByComparator<RatingsEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	public static RatingsEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.ratings.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	public static RatingsEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<RatingsEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -529,40 +467,6 @@ public class RatingsEntryUtil {
 		OrderByComparator<RatingsEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	public static RatingsEntry findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.ratings.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	public static RatingsEntry fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<RatingsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
 	}
 
@@ -885,42 +789,6 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param score the score
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry
-	 * @throws NoSuchEntryException if a matching ratings entry could not be found
-	 */
-	public static RatingsEntry findByC_C_S_Last(
-			long classNameId, long classPK, double score,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.ratings.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_S_Last(
-			classNameId, classPK, score, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param score the score
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	 */
-	public static RatingsEntry fetchByC_C_S_Last(
-		long classNameId, long classPK, double score,
-		OrderByComparator<RatingsEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_C_S_Last(
-			classNameId, classPK, score, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -1105,4 +973,4 @@ public class RatingsEntryUtil {
 	private static volatile RatingsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:920583364
+// LIFERAY-SERVICE-BUILDER-HASH:667754658

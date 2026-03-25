@@ -305,65 +305,6 @@ public class CTProcessPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct process in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process
-	 * @throws NoSuchProcessException if a matching ct process could not be found
-	 */
-	@Override
-	public CTProcess findByCompanyId_Last(
-			long companyId, OrderByComparator<CTProcess> orderByComparator)
-		throws NoSuchProcessException {
-
-		CTProcess ctProcess = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (ctProcess != null) {
-			return ctProcess;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchProcessException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
-	 */
-	@Override
-	public CTProcess fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTProcess> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTProcess> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the ct processes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -836,65 +777,6 @@ public class CTProcessPersistenceImpl
 
 		List<CTProcess> list = findByCtCollectionId(
 			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process
-	 * @throws NoSuchProcessException if a matching ct process could not be found
-	 */
-	@Override
-	public CTProcess findByCtCollectionId_Last(
-			long ctCollectionId, OrderByComparator<CTProcess> orderByComparator)
-		throws NoSuchProcessException {
-
-		CTProcess ctProcess = fetchByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-
-		if (ctProcess != null) {
-			return ctProcess;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchProcessException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
-	 */
-	@Override
-	public CTProcess fetchByCtCollectionId_Last(
-		long ctCollectionId, OrderByComparator<CTProcess> orderByComparator) {
-
-		int count = countByCtCollectionId(ctCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTProcess> list = findByCtCollectionId(
-			ctCollectionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1395,72 +1277,6 @@ public class CTProcessPersistenceImpl
 
 		List<CTProcess> list = findByC_T(
 			ctCollectionId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process
-	 * @throws NoSuchProcessException if a matching ct process could not be found
-	 */
-	@Override
-	public CTProcess findByC_T_Last(
-			long ctCollectionId, int type,
-			OrderByComparator<CTProcess> orderByComparator)
-		throws NoSuchProcessException {
-
-		CTProcess ctProcess = fetchByC_T_Last(
-			ctCollectionId, type, orderByComparator);
-
-		if (ctProcess != null) {
-			return ctProcess;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchProcessException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
-	 */
-	@Override
-	public CTProcess fetchByC_T_Last(
-		long ctCollectionId, int type,
-		OrderByComparator<CTProcess> orderByComparator) {
-
-		int count = countByC_T(ctCollectionId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTProcess> list = findByC_T(
-			ctCollectionId, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2442,4 +2258,4 @@ public class CTProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:637268290
+// LIFERAY-SERVICE-BUILDER-HASH:-2117818751

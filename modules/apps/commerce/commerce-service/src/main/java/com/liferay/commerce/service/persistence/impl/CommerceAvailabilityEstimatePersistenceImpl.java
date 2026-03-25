@@ -325,67 +325,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce availability estimate in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a matching commerce availability estimate could not be found
-	 */
-	@Override
-	public CommerceAvailabilityEstimate findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws NoSuchAvailabilityEstimateException {
-
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (commerceAvailabilityEstimate != null) {
-			return commerceAvailabilityEstimate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchAvailabilityEstimateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce availability estimate in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate, or <code>null</code> if a matching commerce availability estimate could not be found
-	 */
-	@Override
-	public CommerceAvailabilityEstimate fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceAvailabilityEstimate> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce availability estimates that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -959,72 +898,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce availability estimate in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a matching commerce availability estimate could not be found
-	 */
-	@Override
-	public CommerceAvailabilityEstimate findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws NoSuchAvailabilityEstimateException {
-
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (commerceAvailabilityEstimate != null) {
-			return commerceAvailabilityEstimate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAvailabilityEstimateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce availability estimate in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate, or <code>null</code> if a matching commerce availability estimate could not be found
-	 */
-	@Override
-	public CommerceAvailabilityEstimate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceAvailabilityEstimate> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce availability estimates that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1584,67 +1457,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 
 		List<CommerceAvailabilityEstimate> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce availability estimate in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a matching commerce availability estimate could not be found
-	 */
-	@Override
-	public CommerceAvailabilityEstimate findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws NoSuchAvailabilityEstimateException {
-
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-			fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (commerceAvailabilityEstimate != null) {
-			return commerceAvailabilityEstimate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAvailabilityEstimateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce availability estimate in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate, or <code>null</code> if a matching commerce availability estimate could not be found
-	 */
-	@Override
-	public CommerceAvailabilityEstimate fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceAvailabilityEstimate> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2698,4 +2510,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1747539976
+// LIFERAY-SERVICE-BUILDER-HASH:1096163321

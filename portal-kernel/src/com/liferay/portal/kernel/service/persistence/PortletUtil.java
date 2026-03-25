@@ -212,36 +212,6 @@ public class PortletUtil {
 	}
 
 	/**
-	 * Returns the last portlet in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet
-	 * @throws NoSuchPortletException if a matching portlet could not be found
-	 */
-	public static Portlet findByCompanyId_Last(
-			long companyId, OrderByComparator<Portlet> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchPortletException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last portlet in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet, or <code>null</code> if a matching portlet could not be found
-	 */
-	public static Portlet fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Portlet> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the portlets where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -482,4 +452,4 @@ public class PortletUtil {
 	private static volatile PortletPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1573421428
+// LIFERAY-SERVICE-BUILDER-HASH:-92274580

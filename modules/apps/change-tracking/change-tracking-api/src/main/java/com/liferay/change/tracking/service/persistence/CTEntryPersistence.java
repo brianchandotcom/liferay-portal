@@ -118,32 +118,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last ct entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	public CTEntry findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ct entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	public CTEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the ct entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -247,34 +221,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @return the first matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
 	public CTEntry fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	public CTEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ct entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	public CTEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
@@ -384,32 +330,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the last ct entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	public CTEntry findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ct entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	public CTEntry fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the ct entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -507,32 +427,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @return the first matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
 	public CTEntry fetchByCtCollectionId_First(
-		long ctCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	public CTEntry findByCtCollectionId_Last(
-			long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	public CTEntry fetchByCtCollectionId_Last(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
@@ -642,34 +536,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @return the first matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
 	public CTEntry fetchByC_MCNI_First(
-		long ctCollectionId, long modelClassNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	public CTEntry findByC_MCNI_Last(
-			long ctCollectionId, long modelClassNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	public CTEntry fetchByC_MCNI_Last(
 		long ctCollectionId, long modelClassNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
@@ -850,36 +716,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @return the first matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
 	public CTEntry fetchByNotC_MCNI_MCPK_First(
-		long ctCollectionId, long modelClassNameId, long modelClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry
-	 * @throws NoSuchEntryException if a matching ct entry could not be found
-	 */
-	public CTEntry findByNotC_MCNI_MCPK_Last(
-			long ctCollectionId, long modelClassNameId, long modelClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
-	 */
-	public CTEntry fetchByNotC_MCNI_MCPK_Last(
 		long ctCollectionId, long modelClassNameId, long modelClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
@@ -1162,4 +998,4 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:50567683
+// LIFERAY-SERVICE-BUILDER-HASH:650207745

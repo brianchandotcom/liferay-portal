@@ -214,37 +214,6 @@ public class COREntryRelUtil {
 	}
 
 	/**
-	 * Returns the last cor entry rel in the ordered set where COREntryId = &#63;.
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry rel
-	 * @throws NoSuchCOREntryRelException if a matching cor entry rel could not be found
-	 */
-	public static COREntryRel findByCOREntryId_Last(
-			long COREntryId, OrderByComparator<COREntryRel> orderByComparator)
-		throws com.liferay.commerce.order.rule.exception.
-			NoSuchCOREntryRelException {
-
-		return getPersistence().findByCOREntryId_Last(
-			COREntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry rel in the ordered set where COREntryId = &#63;.
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry rel, or <code>null</code> if a matching cor entry rel could not be found
-	 */
-	public static COREntryRel fetchByCOREntryId_Last(
-		long COREntryId, OrderByComparator<COREntryRel> orderByComparator) {
-
-		return getPersistence().fetchByCOREntryId_Last(
-			COREntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cor entry rels where COREntryId = &#63; from the database.
 	 *
 	 * @param COREntryId the cor entry ID
@@ -374,41 +343,6 @@ public class COREntryRelUtil {
 		OrderByComparator<COREntryRel> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, COREntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry rel in the ordered set where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry rel
-	 * @throws NoSuchCOREntryRelException if a matching cor entry rel could not be found
-	 */
-	public static COREntryRel findByC_C_Last(
-			long classNameId, long COREntryId,
-			OrderByComparator<COREntryRel> orderByComparator)
-		throws com.liferay.commerce.order.rule.exception.
-			NoSuchCOREntryRelException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, COREntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cor entry rel in the ordered set where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cor entry rel, or <code>null</code> if a matching cor entry rel could not be found
-	 */
-	public static COREntryRel fetchByC_C_Last(
-		long classNameId, long COREntryId,
-		OrderByComparator<COREntryRel> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, COREntryId, orderByComparator);
 	}
 
@@ -671,4 +605,4 @@ public class COREntryRelUtil {
 	private static volatile COREntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1027784883
+// LIFERAY-SERVICE-BUILDER-HASH:-801291443

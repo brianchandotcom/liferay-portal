@@ -121,32 +121,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public CalendarBooking findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public CalendarBooking fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-			orderByComparator);
-
-	/**
 	 * Removes all the calendar bookings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public CalendarBooking findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
-	 * Returns the last calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public CalendarBooking fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-			orderByComparator);
-
-	/**
 	 * Removes all the calendar bookings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,32 +379,6 @@ public interface CalendarBookingPersistence
 	 * @return the first matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	 */
 	public CalendarBooking fetchByCalendarId_First(
-		long calendarId,
-		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-			orderByComparator);
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public CalendarBooking findByCalendarId_Last(
-			long calendarId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public CalendarBooking fetchByCalendarId_Last(
 		long calendarId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator);
@@ -567,32 +487,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last calendar booking in the ordered set where calendarResourceId = &#63;.
-	 *
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public CalendarBooking findByCalendarResourceId_Last(
-			long calendarResourceId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarResourceId = &#63;.
-	 *
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public CalendarBooking fetchByCalendarResourceId_Last(
-		long calendarResourceId,
-		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-			orderByComparator);
-
-	/**
 	 * Removes all the calendar bookings where calendarResourceId = &#63; from the database.
 	 *
 	 * @param calendarResourceId the calendar resource ID
@@ -696,32 +590,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public CalendarBooking findByParentCalendarBookingId_Last(
-			long parentCalendarBookingId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public CalendarBooking fetchByParentCalendarBookingId_Last(
-		long parentCalendarBookingId,
-		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-			orderByComparator);
-
-	/**
 	 * Removes all the calendar bookings where parentCalendarBookingId = &#63; from the database.
 	 *
 	 * @param parentCalendarBookingId the parent calendar booking ID
@@ -820,32 +688,6 @@ public interface CalendarBookingPersistence
 	 * @return the first matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	 */
 	public CalendarBooking fetchByRecurringCalendarBookingId_First(
-		long recurringCalendarBookingId,
-		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-			orderByComparator);
-
-	/**
-	 * Returns the last calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
-	 *
-	 * @param recurringCalendarBookingId the recurring calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public CalendarBooking findByRecurringCalendarBookingId_Last(
-			long recurringCalendarBookingId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
-	 * Returns the last calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
-	 *
-	 * @param recurringCalendarBookingId the recurring calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public CalendarBooking fetchByRecurringCalendarBookingId_Last(
 		long recurringCalendarBookingId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator);
@@ -1065,34 +907,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public CalendarBooking findByC_S_Last(
-			long calendarId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
-	 * Returns the last calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
-	 *
-	 * @param calendarId the calendar ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public CalendarBooking fetchByC_S_Last(
-		long calendarId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-			orderByComparator);
-
-	/**
 	 * Returns all the calendar bookings where calendarId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -1278,34 +1092,6 @@ public interface CalendarBookingPersistence
 	 * @return the first matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
 	 */
 	public CalendarBooking fetchByP_S_First(
-		long parentCalendarBookingId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-			orderByComparator);
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking
-	 * @throws NoSuchBookingException if a matching calendar booking could not be found
-	 */
-	public CalendarBooking findByP_S_Last(
-			long parentCalendarBookingId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
-	 * Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
-	 *
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
-	 */
-	public CalendarBooking fetchByP_S_Last(
 		long parentCalendarBookingId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator);
@@ -1501,4 +1287,4 @@ public interface CalendarBookingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1354963400
+// LIFERAY-SERVICE-BUILDER-HASH:209332896

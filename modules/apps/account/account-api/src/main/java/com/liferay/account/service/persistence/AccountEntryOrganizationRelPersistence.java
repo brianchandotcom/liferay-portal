@@ -121,32 +121,6 @@ public interface AccountEntryOrganizationRelPersistence
 			<AccountEntryOrganizationRel> orderByComparator);
 
 	/**
-	 * Returns the last account entry organization rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry organization rel
-	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
-	 */
-	public AccountEntryOrganizationRel findByAccountEntryId_Last(
-			long accountEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AccountEntryOrganizationRel> orderByComparator)
-		throws NoSuchEntryOrganizationRelException;
-
-	/**
-	 * Returns the last account entry organization rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
-	 */
-	public AccountEntryOrganizationRel fetchByAccountEntryId_Last(
-		long accountEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AccountEntryOrganizationRel> orderByComparator);
-
-	/**
 	 * Removes all the account entry organization rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -245,32 +219,6 @@ public interface AccountEntryOrganizationRelPersistence
 	 * @return the first matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
 	 */
 	public AccountEntryOrganizationRel fetchByOrganizationId_First(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<AccountEntryOrganizationRel> orderByComparator);
-
-	/**
-	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry organization rel
-	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
-	 */
-	public AccountEntryOrganizationRel findByOrganizationId_Last(
-			long organizationId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AccountEntryOrganizationRel> orderByComparator)
-		throws NoSuchEntryOrganizationRelException;
-
-	/**
-	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
-	 */
-	public AccountEntryOrganizationRel fetchByOrganizationId_Last(
 		long organizationId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AccountEntryOrganizationRel> orderByComparator);
@@ -473,4 +421,4 @@ public interface AccountEntryOrganizationRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1633454808
+// LIFERAY-SERVICE-BUILDER-HASH:838027226

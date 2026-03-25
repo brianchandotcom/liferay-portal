@@ -326,67 +326,6 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ddl record set version in the ordered set where recordSetId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set version
-	 * @throws NoSuchRecordSetVersionException if a matching ddl record set version could not be found
-	 */
-	@Override
-	public DDLRecordSetVersion findByRecordSetId_Last(
-			long recordSetId,
-			OrderByComparator<DDLRecordSetVersion> orderByComparator)
-		throws NoSuchRecordSetVersionException {
-
-		DDLRecordSetVersion ddlRecordSetVersion = fetchByRecordSetId_Last(
-			recordSetId, orderByComparator);
-
-		if (ddlRecordSetVersion != null) {
-			return ddlRecordSetVersion;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordSetVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddl record set version in the ordered set where recordSetId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set version, or <code>null</code> if a matching ddl record set version could not be found
-	 */
-	@Override
-	public DDLRecordSetVersion fetchByRecordSetId_Last(
-		long recordSetId,
-		OrderByComparator<DDLRecordSetVersion> orderByComparator) {
-
-		int count = countByRecordSetId(recordSetId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDLRecordSetVersion> list = findByRecordSetId(
-			recordSetId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ddl record set versions where recordSetId = &#63; from the database.
 	 *
 	 * @param recordSetId the record set ID
@@ -903,72 +842,6 @@ public class DDLRecordSetVersionPersistenceImpl
 
 		List<DDLRecordSetVersion> list = findByRS_S(
 			recordSetId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddl record set version in the ordered set where recordSetId = &#63; and status = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set version
-	 * @throws NoSuchRecordSetVersionException if a matching ddl record set version could not be found
-	 */
-	@Override
-	public DDLRecordSetVersion findByRS_S_Last(
-			long recordSetId, int status,
-			OrderByComparator<DDLRecordSetVersion> orderByComparator)
-		throws NoSuchRecordSetVersionException {
-
-		DDLRecordSetVersion ddlRecordSetVersion = fetchByRS_S_Last(
-			recordSetId, status, orderByComparator);
-
-		if (ddlRecordSetVersion != null) {
-			return ddlRecordSetVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRecordSetVersionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddl record set version in the ordered set where recordSetId = &#63; and status = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddl record set version, or <code>null</code> if a matching ddl record set version could not be found
-	 */
-	@Override
-	public DDLRecordSetVersion fetchByRS_S_Last(
-		long recordSetId, int status,
-		OrderByComparator<DDLRecordSetVersion> orderByComparator) {
-
-		int count = countByRS_S(recordSetId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDLRecordSetVersion> list = findByRS_S(
-			recordSetId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2035,4 +1908,4 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-616411883
+// LIFERAY-SERVICE-BUILDER-HASH:906944512

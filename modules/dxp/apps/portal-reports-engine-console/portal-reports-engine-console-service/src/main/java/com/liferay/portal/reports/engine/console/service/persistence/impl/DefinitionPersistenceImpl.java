@@ -316,64 +316,6 @@ public class DefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition
-	 * @throws NoSuchDefinitionException if a matching definition could not be found
-	 */
-	@Override
-	public Definition findByUuid_Last(
-			String uuid, OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		Definition definition = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (definition != null) {
-			return definition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
-	 */
-	@Override
-	public Definition fetchByUuid_Last(
-		String uuid, OrderByComparator<Definition> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Definition> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -905,72 +847,6 @@ public class DefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition
-	 * @throws NoSuchDefinitionException if a matching definition could not be found
-	 */
-	@Override
-	public Definition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		Definition definition = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (definition != null) {
-			return definition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
-	 */
-	@Override
-	public Definition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Definition> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Definition> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1270,64 +1146,6 @@ public class DefinitionPersistenceImpl
 		long groupId, OrderByComparator<Definition> orderByComparator) {
 
 		List<Definition> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition
-	 * @throws NoSuchDefinitionException if a matching definition could not be found
-	 */
-	@Override
-	public Definition findByGroupId_Last(
-			long groupId, OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		Definition definition = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (definition != null) {
-			return definition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
-	 */
-	@Override
-	public Definition fetchByGroupId_Last(
-		long groupId, OrderByComparator<Definition> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Definition> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1809,65 +1627,6 @@ public class DefinitionPersistenceImpl
 
 		List<Definition> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition
-	 * @throws NoSuchDefinitionException if a matching definition could not be found
-	 */
-	@Override
-	public Definition findByCompanyId_Last(
-			long companyId, OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
-
-		Definition definition = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (definition != null) {
-			return definition;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
-	 */
-	@Override
-	public Definition fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Definition> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Definition> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2694,4 +2453,4 @@ public class DefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1953342710
+// LIFERAY-SERVICE-BUILDER-HASH:225063816

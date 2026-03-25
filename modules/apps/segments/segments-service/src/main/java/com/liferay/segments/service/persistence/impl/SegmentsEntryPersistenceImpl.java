@@ -341,64 +341,6 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last segments entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry findByUuid_Last(
-			String uuid, OrderByComparator<SegmentsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SegmentsEntry segmentsEntry = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the segments entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -946,72 +888,6 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last segments entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SegmentsEntry segmentsEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the segments entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1334,67 +1210,6 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = findBySegmentsEntryId(
 			segmentsEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry findBySegmentsEntryId_Last(
-			long segmentsEntryId,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SegmentsEntry segmentsEntry = fetchBySegmentsEntryId_Last(
-			segmentsEntryId, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry fetchBySegmentsEntryId_Last(
-		long segmentsEntryId,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		int count = countBySegmentsEntryId(segmentsEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntry> list = findBySegmentsEntryId(
-			segmentsEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1966,65 +1781,6 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry findByGroupId_Last(
-			long groupId, OrderByComparator<SegmentsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SegmentsEntry segmentsEntry = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntry> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3012,65 +2768,6 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last segments entry in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry findByActive_Last(
-			boolean active, OrderByComparator<SegmentsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SegmentsEntry segmentsEntry = fetchByActive_Last(
-			active, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry fetchByActive_Last(
-		boolean active, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		int count = countByActive(active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntry> list = findByActive(
-			active, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the segments entries where active = &#63; from the database.
 	 *
 	 * @param active the active
@@ -3370,65 +3067,6 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = findBySource(
 			source, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where source = &#63;.
-	 *
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry findBySource_Last(
-			String source, OrderByComparator<SegmentsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SegmentsEntry segmentsEntry = fetchBySource_Last(
-			source, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("source=");
-		sb.append(source);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where source = &#63;.
-	 *
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry fetchBySource_Last(
-		String source, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		int count = countBySource(source);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntry> list = findBySource(
-			source, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3966,72 +3604,6 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = findByG_A(
 			groupId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry findByG_A_Last(
-			long groupId, boolean active,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SegmentsEntry segmentsEntry = fetchByG_A_Last(
-			groupId, active, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry fetchByG_A_Last(
-		long groupId, boolean active,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		int count = countByG_A(groupId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntry> list = findByG_A(
-			groupId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5117,72 +4689,6 @@ public class SegmentsEntryPersistenceImpl
 
 		List<SegmentsEntry> list = findByG_SRC(
 			groupId, source, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and source = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry
-	 * @throws NoSuchEntryException if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry findByG_SRC_Last(
-			long groupId, String source,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws NoSuchEntryException {
-
-		SegmentsEntry segmentsEntry = fetchByG_SRC_Last(
-			groupId, source, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", source=");
-		sb.append(source);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and source = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
-	 */
-	@Override
-	public SegmentsEntry fetchByG_SRC_Last(
-		long groupId, String source,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		int count = countByG_SRC(groupId, source);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsEntry> list = findByG_SRC(
-			groupId, source, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7566,4 +7072,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1802676504
+// LIFERAY-SERVICE-BUILDER-HASH:-316397816

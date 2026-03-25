@@ -311,67 +311,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce payment method group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a matching commerce payment method group rel could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRel findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CommercePaymentMethodGroupRel> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelException {
-
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-			fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (commercePaymentMethodGroupRel != null) {
-			return commercePaymentMethodGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentMethodGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce payment method group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRel fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CommercePaymentMethodGroupRel> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePaymentMethodGroupRel> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce payment method group rels that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -878,72 +817,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 
 		List<CommercePaymentMethodGroupRel> list = findByG_A(
 			groupId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce payment method group rel in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a matching commerce payment method group rel could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRel findByG_A_Last(
-			long groupId, boolean active,
-			OrderByComparator<CommercePaymentMethodGroupRel> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelException {
-
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-			fetchByG_A_Last(groupId, active, orderByComparator);
-
-		if (commercePaymentMethodGroupRel != null) {
-			return commercePaymentMethodGroupRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentMethodGroupRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce payment method group rel in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRel fetchByG_A_Last(
-		long groupId, boolean active,
-		OrderByComparator<CommercePaymentMethodGroupRel> orderByComparator) {
-
-		int count = countByG_A(groupId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommercePaymentMethodGroupRel> list = findByG_A(
-			groupId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2236,4 +2109,4 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:836227796
+// LIFERAY-SERVICE-BUILDER-HASH:1810045437

@@ -214,36 +214,6 @@ public class ResourcePermissionUtil {
 	}
 
 	/**
-	 * Returns the last resource permission in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission
-	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
-	 */
-	public static ResourcePermission findByName_Last(
-			String name,
-			OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourcePermissionException {
-
-		return getPersistence().findByName_Last(name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	public static ResourcePermission fetchByName_Last(
-		String name, OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return getPersistence().fetchByName_Last(name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the resource permissions where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -361,35 +331,6 @@ public class ResourcePermissionUtil {
 		int scope, OrderByComparator<ResourcePermission> orderByComparator) {
 
 		return getPersistence().fetchByScope_First(scope, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where scope = &#63;.
-	 *
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission
-	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
-	 */
-	public static ResourcePermission findByScope_Last(
-			int scope, OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourcePermissionException {
-
-		return getPersistence().findByScope_Last(scope, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where scope = &#63;.
-	 *
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	public static ResourcePermission fetchByScope_Last(
-		int scope, OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return getPersistence().fetchByScope_Last(scope, orderByComparator);
 	}
 
 	/**
@@ -600,36 +541,6 @@ public class ResourcePermissionUtil {
 	}
 
 	/**
-	 * Returns the last resource permission in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission
-	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
-	 */
-	public static ResourcePermission findByRoleId_Last(
-			long roleId,
-			OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourcePermissionException {
-
-		return getPersistence().findByRoleId_Last(roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	public static ResourcePermission fetchByRoleId_Last(
-		long roleId, OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return getPersistence().fetchByRoleId_Last(roleId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the resource permissions where roleId = &#63; from the database.
 	 *
 	 * @param roleId the role ID
@@ -758,41 +669,6 @@ public class ResourcePermissionUtil {
 		OrderByComparator<ResourcePermission> orderByComparator) {
 
 		return getPersistence().fetchByC_LikeP_First(
-			companyId, primKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primKey the prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission
-	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
-	 */
-	public static ResourcePermission findByC_LikeP_Last(
-			long companyId, String primKey,
-			OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourcePermissionException {
-
-		return getPersistence().findByC_LikeP_Last(
-			companyId, primKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primKey the prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	public static ResourcePermission fetchByC_LikeP_Last(
-		long companyId, String primKey,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return getPersistence().fetchByC_LikeP_Last(
 			companyId, primKey, orderByComparator);
 	}
 
@@ -938,43 +814,6 @@ public class ResourcePermissionUtil {
 	}
 
 	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission
-	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
-	 */
-	public static ResourcePermission findByC_N_S_Last(
-			long companyId, String name, int scope,
-			OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourcePermissionException {
-
-		return getPersistence().findByC_N_S_Last(
-			companyId, name, scope, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	public static ResourcePermission fetchByC_N_S_Last(
-		long companyId, String name, int scope,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return getPersistence().fetchByC_N_S_Last(
-			companyId, name, scope, orderByComparator);
-	}
-
-	/**
 	 * Removes all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1115,43 +954,6 @@ public class ResourcePermissionUtil {
 		OrderByComparator<ResourcePermission> orderByComparator) {
 
 		return getPersistence().fetchByC_S_P_First(
-			companyId, scope, primKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission
-	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
-	 */
-	public static ResourcePermission findByC_S_P_Last(
-			long companyId, int scope, String primKey,
-			OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourcePermissionException {
-
-		return getPersistence().findByC_S_P_Last(
-			companyId, scope, primKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	public static ResourcePermission fetchByC_S_P_Last(
-		long companyId, int scope, String primKey,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return getPersistence().fetchByC_S_P_Last(
 			companyId, scope, primKey, orderByComparator);
 	}
 
@@ -1305,45 +1107,6 @@ public class ResourcePermissionUtil {
 		OrderByComparator<ResourcePermission> orderByComparator) {
 
 		return getPersistence().fetchByC_N_S_P_First(
-			companyId, name, scope, primKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission
-	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
-	 */
-	public static ResourcePermission findByC_N_S_P_Last(
-			long companyId, String name, int scope, String primKey,
-			OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourcePermissionException {
-
-		return getPersistence().findByC_N_S_P_Last(
-			companyId, name, scope, primKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	public static ResourcePermission fetchByC_N_S_P_Last(
-		long companyId, String name, int scope, String primKey,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return getPersistence().fetchByC_N_S_P_Last(
 			companyId, name, scope, primKey, orderByComparator);
 	}
 
@@ -1610,45 +1373,6 @@ public class ResourcePermissionUtil {
 		OrderByComparator<ResourcePermission> orderByComparator) {
 
 		return getPersistence().fetchByC_N_S_R_First(
-			companyId, name, scope, roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission
-	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
-	 */
-	public static ResourcePermission findByC_N_S_R_Last(
-			long companyId, String name, int scope, long roleId,
-			OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourcePermissionException {
-
-		return getPersistence().findByC_N_S_R_Last(
-			companyId, name, scope, roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	public static ResourcePermission fetchByC_N_S_R_Last(
-		long companyId, String name, int scope, long roleId,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return getPersistence().fetchByC_N_S_R_Last(
 			companyId, name, scope, roleId, orderByComparator);
 	}
 
@@ -2035,49 +1759,6 @@ public class ResourcePermissionUtil {
 	}
 
 	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63; and viewActionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param viewActionId the view action ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission
-	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
-	 */
-	public static ResourcePermission findByC_N_S_R_V_Last(
-			long companyId, String name, int scope, long roleId,
-			boolean viewActionId,
-			OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchResourcePermissionException {
-
-		return getPersistence().findByC_N_S_R_V_Last(
-			companyId, name, scope, roleId, viewActionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63; and viewActionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param viewActionId the view action ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	public static ResourcePermission fetchByC_N_S_R_V_Last(
-		long companyId, String name, int scope, long roleId,
-		boolean viewActionId,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return getPersistence().fetchByC_N_S_R_V_Last(
-			companyId, name, scope, roleId, viewActionId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = any &#63; and viewActionId = &#63;.
 	 *
 	 * <p>
@@ -2402,4 +2083,4 @@ public class ResourcePermissionUtil {
 	private static volatile ResourcePermissionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1648000654
+// LIFERAY-SERVICE-BUILDER-HASH:695929174

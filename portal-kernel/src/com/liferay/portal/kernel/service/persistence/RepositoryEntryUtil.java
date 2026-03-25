@@ -211,35 +211,6 @@ public class RepositoryEntryUtil {
 	}
 
 	/**
-	 * Returns the last repository entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository entry
-	 * @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
-	 */
-	public static RepositoryEntry findByUuid_Last(
-			String uuid, OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchRepositoryEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last repository entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository entry, or <code>null</code> if a matching repository entry could not be found
-	 */
-	public static RepositoryEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<RepositoryEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the repository entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -437,41 +408,6 @@ public class RepositoryEntryUtil {
 	}
 
 	/**
-	 * Returns the last repository entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository entry
-	 * @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
-	 */
-	public static RepositoryEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchRepositoryEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last repository entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository entry, or <code>null</code> if a matching repository entry could not be found
-	 */
-	public static RepositoryEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<RepositoryEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the repository entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -594,39 +530,6 @@ public class RepositoryEntryUtil {
 		OrderByComparator<RepositoryEntry> orderByComparator) {
 
 		return getPersistence().fetchByRepositoryId_First(
-			repositoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last repository entry in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository entry
-	 * @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
-	 */
-	public static RepositoryEntry findByRepositoryId_Last(
-			long repositoryId,
-			OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchRepositoryEntryException {
-
-		return getPersistence().findByRepositoryId_Last(
-			repositoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last repository entry in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching repository entry, or <code>null</code> if a matching repository entry could not be found
-	 */
-	public static RepositoryEntry fetchByRepositoryId_Last(
-		long repositoryId,
-		OrderByComparator<RepositoryEntry> orderByComparator) {
-
-		return getPersistence().fetchByRepositoryId_Last(
 			repositoryId, orderByComparator);
 	}
 
@@ -880,4 +783,4 @@ public class RepositoryEntryUtil {
 	private static volatile RepositoryEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1011963932
+// LIFERAY-SERVICE-BUILDER-HASH:-1583770002

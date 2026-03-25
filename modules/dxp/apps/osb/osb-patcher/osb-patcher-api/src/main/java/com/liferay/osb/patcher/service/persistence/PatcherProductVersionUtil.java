@@ -222,39 +222,6 @@ public class PatcherProductVersionUtil {
 	}
 
 	/**
-	 * Returns the last patcher product version in the ordered set where fixDeliveryMethod = &#63;.
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher product version
-	 * @throws NoSuchPatcherProductVersionException if a matching patcher product version could not be found
-	 */
-	public static PatcherProductVersion findByFixDeliveryMethod_Last(
-			int fixDeliveryMethod,
-			OrderByComparator<PatcherProductVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProductVersionException {
-
-		return getPersistence().findByFixDeliveryMethod_Last(
-			fixDeliveryMethod, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher product version in the ordered set where fixDeliveryMethod = &#63;.
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher product version, or <code>null</code> if a matching patcher product version could not be found
-	 */
-	public static PatcherProductVersion fetchByFixDeliveryMethod_Last(
-		int fixDeliveryMethod,
-		OrderByComparator<PatcherProductVersion> orderByComparator) {
-
-		return getPersistence().fetchByFixDeliveryMethod_Last(
-			fixDeliveryMethod, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
 	 *
 	 * @param fixDeliveryMethod the fix delivery method
@@ -570,4 +537,4 @@ public class PatcherProductVersionUtil {
 	private static volatile PatcherProductVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1709392973
+// LIFERAY-SERVICE-BUILDER-HASH:-1685661885

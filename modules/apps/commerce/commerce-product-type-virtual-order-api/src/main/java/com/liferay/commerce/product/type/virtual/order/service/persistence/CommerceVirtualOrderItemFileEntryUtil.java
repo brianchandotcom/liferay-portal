@@ -225,39 +225,6 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce virtual order item file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a matching commerce virtual order item file entry could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceVirtualOrderItemFileEntry>
-				orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.order.exception.
-			NoSuchVirtualOrderItemFileEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce virtual order item file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item file entry, or <code>null</code> if a matching commerce virtual order item file entry could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceVirtualOrderItemFileEntry>
-			orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce virtual order item file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -462,43 +429,6 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 	}
 
 	/**
-	 * Returns the last commerce virtual order item file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a matching commerce virtual order item file entry could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceVirtualOrderItemFileEntry>
-				orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.order.exception.
-			NoSuchVirtualOrderItemFileEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce virtual order item file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item file entry, or <code>null</code> if a matching commerce virtual order item file entry could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceVirtualOrderItemFileEntry>
-			orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -635,43 +565,6 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchByCommerceVirtualOrderItemId_First(
-			commerceVirtualOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce virtual order item file entry in the ordered set where commerceVirtualOrderItemId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a matching commerce virtual order item file entry could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry
-			findByCommerceVirtualOrderItemId_Last(
-				long commerceVirtualOrderItemId,
-				OrderByComparator<CommerceVirtualOrderItemFileEntry>
-					orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.order.exception.
-			NoSuchVirtualOrderItemFileEntryException {
-
-		return getPersistence().findByCommerceVirtualOrderItemId_Last(
-			commerceVirtualOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce virtual order item file entry in the ordered set where commerceVirtualOrderItemId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item file entry, or <code>null</code> if a matching commerce virtual order item file entry could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry
-		fetchByCommerceVirtualOrderItemId_Last(
-			long commerceVirtualOrderItemId,
-			OrderByComparator<CommerceVirtualOrderItemFileEntry>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommerceVirtualOrderItemId_Last(
 			commerceVirtualOrderItemId, orderByComparator);
 	}
 
@@ -817,43 +710,6 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 			orderByComparator) {
 
 		return getPersistence().fetchByC_F_First(
-			commerceVirtualOrderItemId, fileEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce virtual order item file entry in the ordered set where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a matching commerce virtual order item file entry could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry findByC_F_Last(
-			long commerceVirtualOrderItemId, long fileEntryId,
-			OrderByComparator<CommerceVirtualOrderItemFileEntry>
-				orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.order.exception.
-			NoSuchVirtualOrderItemFileEntryException {
-
-		return getPersistence().findByC_F_Last(
-			commerceVirtualOrderItemId, fileEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce virtual order item file entry in the ordered set where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce virtual order item file entry, or <code>null</code> if a matching commerce virtual order item file entry could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry fetchByC_F_Last(
-		long commerceVirtualOrderItemId, long fileEntryId,
-		OrderByComparator<CommerceVirtualOrderItemFileEntry>
-			orderByComparator) {
-
-		return getPersistence().fetchByC_F_Last(
 			commerceVirtualOrderItemId, fileEntryId, orderByComparator);
 	}
 
@@ -1068,4 +924,4 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1496752768
+// LIFERAY-SERVICE-BUILDER-HASH:-1072156418

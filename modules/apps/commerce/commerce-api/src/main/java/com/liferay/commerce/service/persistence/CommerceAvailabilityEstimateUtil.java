@@ -219,37 +219,6 @@ public class CommerceAvailabilityEstimateUtil {
 	}
 
 	/**
-	 * Returns the last commerce availability estimate in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a matching commerce availability estimate could not be found
-	 */
-	public static CommerceAvailabilityEstimate findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAvailabilityEstimateException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce availability estimate in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate, or <code>null</code> if a matching commerce availability estimate could not be found
-	 */
-	public static CommerceAvailabilityEstimate fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce availability estimates that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -443,41 +412,6 @@ public class CommerceAvailabilityEstimateUtil {
 	}
 
 	/**
-	 * Returns the last commerce availability estimate in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a matching commerce availability estimate could not be found
-	 */
-	public static CommerceAvailabilityEstimate findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAvailabilityEstimateException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce availability estimate in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate, or <code>null</code> if a matching commerce availability estimate could not be found
-	 */
-	public static CommerceAvailabilityEstimate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce availability estimates that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -667,39 +601,6 @@ public class CommerceAvailabilityEstimateUtil {
 		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce availability estimate in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a matching commerce availability estimate could not be found
-	 */
-	public static CommerceAvailabilityEstimate findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAvailabilityEstimateException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce availability estimate in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce availability estimate, or <code>null</code> if a matching commerce availability estimate could not be found
-	 */
-	public static CommerceAvailabilityEstimate fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -964,4 +865,4 @@ public class CommerceAvailabilityEstimateUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:717849606
+// LIFERAY-SERVICE-BUILDER-HASH:-1828836162

@@ -208,34 +208,6 @@ public class LaunchSetUtil {
 	}
 
 	/**
-	 * Returns the last launch set in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	public static LaunchSet findByUuid_Last(
-			String uuid, OrderByComparator<LaunchSet> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchSetException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	public static LaunchSet fetchByUuid_Last(
-		String uuid, OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the launch sets where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -365,40 +337,6 @@ public class LaunchSetUtil {
 	}
 
 	/**
-	 * Returns the last launch set in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	public static LaunchSet findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LaunchSet> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchSetException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	public static LaunchSet fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the launch sets where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -518,36 +456,6 @@ public class LaunchSetUtil {
 		long companyId, OrderByComparator<LaunchSet> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	public static LaunchSet findByCompanyId_Last(
-			long companyId, OrderByComparator<LaunchSet> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchSetException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	public static LaunchSet fetchByCompanyId_Last(
-		long companyId, OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -681,40 +589,6 @@ public class LaunchSetUtil {
 	}
 
 	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	public static LaunchSet findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<LaunchSet> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchSetException {
-
-		return getPersistence().findByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	public static LaunchSet fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the launch sets where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -842,40 +716,6 @@ public class LaunchSetUtil {
 		OrderByComparator<LaunchSet> orderByComparator) {
 
 		return getPersistence().fetchByC_S_First(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set
-	 * @throws NoSuchLaunchSetException if a matching launch set could not be found
-	 */
-	public static LaunchSet findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<LaunchSet> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchSetException {
-
-		return getPersistence().findByC_S_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last launch set in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	public static LaunchSet fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().fetchByC_S_Last(
 			companyId, status, orderByComparator);
 	}
 
@@ -1219,4 +1059,4 @@ public class LaunchSetUtil {
 	private static volatile LaunchSetPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:211235083
+// LIFERAY-SERVICE-BUILDER-HASH:423235371

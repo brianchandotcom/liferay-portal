@@ -240,43 +240,6 @@ public class CommercePricingClassCPDefinitionRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce pricing class cp definition rel in the ordered set where commercePricingClassId = &#63;.
-	 *
-	 * @param commercePricingClassId the commerce pricing class ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class cp definition rel
-	 * @throws NoSuchPricingClassCPDefinitionRelException if a matching commerce pricing class cp definition rel could not be found
-	 */
-	public static CommercePricingClassCPDefinitionRel
-			findByCommercePricingClassId_Last(
-				long commercePricingClassId,
-				OrderByComparator<CommercePricingClassCPDefinitionRel>
-					orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPricingClassCPDefinitionRelException {
-
-		return getPersistence().findByCommercePricingClassId_Last(
-			commercePricingClassId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce pricing class cp definition rel in the ordered set where commercePricingClassId = &#63;.
-	 *
-	 * @param commercePricingClassId the commerce pricing class ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class cp definition rel, or <code>null</code> if a matching commerce pricing class cp definition rel could not be found
-	 */
-	public static CommercePricingClassCPDefinitionRel
-		fetchByCommercePricingClassId_Last(
-			long commercePricingClassId,
-			OrderByComparator<CommercePricingClassCPDefinitionRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByCommercePricingClassId_Last(
-			commercePricingClassId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce pricing class cp definition rels where commercePricingClassId = &#63; from the database.
 	 *
 	 * @param commercePricingClassId the commerce pricing class ID
@@ -413,42 +376,6 @@ public class CommercePricingClassCPDefinitionRelUtil {
 				orderByComparator) {
 
 		return getPersistence().fetchByCPDefinitionId_First(
-			CPDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce pricing class cp definition rel in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class cp definition rel
-	 * @throws NoSuchPricingClassCPDefinitionRelException if a matching commerce pricing class cp definition rel could not be found
-	 */
-	public static CommercePricingClassCPDefinitionRel findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CommercePricingClassCPDefinitionRel>
-				orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPricingClassCPDefinitionRelException {
-
-		return getPersistence().findByCPDefinitionId_Last(
-			CPDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce pricing class cp definition rel in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class cp definition rel, or <code>null</code> if a matching commerce pricing class cp definition rel could not be found
-	 */
-	public static CommercePricingClassCPDefinitionRel
-		fetchByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CommercePricingClassCPDefinitionRel>
-				orderByComparator) {
-
-		return getPersistence().fetchByCPDefinitionId_Last(
 			CPDefinitionId, orderByComparator);
 	}
 
@@ -736,4 +663,4 @@ public class CommercePricingClassCPDefinitionRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-664072153
+// LIFERAY-SERVICE-BUILDER-HASH:527543181

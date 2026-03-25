@@ -327,67 +327,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate findByUuid_Last(
-			String uuid,
-			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByUuid_Last(uuid, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationTemplate> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce notification templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -932,72 +871,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationTemplate> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce notification templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1304,67 +1177,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		List<CommerceNotificationTemplate> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationTemplate> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1880,72 +1692,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		List<CommerceNotificationTemplate> list = findByG_E(
 			groupId, enabled, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate findByG_E_Last(
-			long groupId, boolean enabled,
-			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByG_E_Last(groupId, enabled, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", enabled=");
-		sb.append(enabled);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate fetchByG_E_Last(
-		long groupId, boolean enabled,
-		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
-
-		int count = countByG_E(groupId, enabled);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationTemplate> list = findByG_E(
-			groupId, enabled, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2511,77 +2257,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		List<CommerceNotificationTemplate> list = findByG_T_E(
 			groupId, type, enabled, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and type = &#63; and enabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate findByG_T_E_Last(
-			long groupId, String type, boolean enabled,
-			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException {
-
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByG_T_E_Last(groupId, type, enabled, orderByComparator);
-
-		if (commerceNotificationTemplate != null) {
-			return commerceNotificationTemplate;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", enabled=");
-		sb.append(enabled);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and type = &#63; and enabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate fetchByG_T_E_Last(
-		long groupId, String type, boolean enabled,
-		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
-
-		int count = countByG_T_E(groupId, type, enabled);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceNotificationTemplate> list = findByG_T_E(
-			groupId, type, enabled, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3804,4 +3479,4 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:466726692
+// LIFERAY-SERVICE-BUILDER-HASH:-389753172

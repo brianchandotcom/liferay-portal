@@ -214,37 +214,6 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	 * Returns the last dl sync event in the ordered set where modifiedTime &gt; &#63;.
-	 *
-	 * @param modifiedTime the modified time
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl sync event
-	 * @throws NoSuchEventException if a matching dl sync event could not be found
-	 */
-	public static DLSyncEvent findByGtModifiedTime_Last(
-			long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator)
-		throws com.liferay.document.library.sync.exception.
-			NoSuchEventException {
-
-		return getPersistence().findByGtModifiedTime_Last(
-			modifiedTime, orderByComparator);
-	}
-
-	/**
-	 * Returns the last dl sync event in the ordered set where modifiedTime &gt; &#63;.
-	 *
-	 * @param modifiedTime the modified time
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
-	 */
-	public static DLSyncEvent fetchByGtModifiedTime_Last(
-		long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator) {
-
-		return getPersistence().fetchByGtModifiedTime_Last(
-			modifiedTime, orderByComparator);
-	}
-
-	/**
 	 * Removes all the dl sync events where modifiedTime &gt; &#63; from the database.
 	 *
 	 * @param modifiedTime the modified time
@@ -483,4 +452,4 @@ public class DLSyncEventUtil {
 	private static volatile DLSyncEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1119462387
+// LIFERAY-SERVICE-BUILDER-HASH:-909630811

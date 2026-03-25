@@ -304,67 +304,6 @@ public class CTPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct preferences in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct preferences
-	 * @throws NoSuchPreferencesException if a matching ct preferences could not be found
-	 */
-	@Override
-	public CTPreferences findByCtCollectionId_Last(
-			long ctCollectionId,
-			OrderByComparator<CTPreferences> orderByComparator)
-		throws NoSuchPreferencesException {
-
-		CTPreferences ctPreferences = fetchByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-
-		if (ctPreferences != null) {
-			return ctPreferences;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct preferences in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
-	 */
-	@Override
-	public CTPreferences fetchByCtCollectionId_Last(
-		long ctCollectionId,
-		OrderByComparator<CTPreferences> orderByComparator) {
-
-		int count = countByCtCollectionId(ctCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTPreferences> list = findByCtCollectionId(
-			ctCollectionId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the ct preferenceses where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -654,67 +593,6 @@ public class CTPreferencesPersistenceImpl
 
 		List<CTPreferences> list = findByPreviousCtCollectionId(
 			previousCtCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ct preferences in the ordered set where previousCtCollectionId = &#63;.
-	 *
-	 * @param previousCtCollectionId the previous ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct preferences
-	 * @throws NoSuchPreferencesException if a matching ct preferences could not be found
-	 */
-	@Override
-	public CTPreferences findByPreviousCtCollectionId_Last(
-			long previousCtCollectionId,
-			OrderByComparator<CTPreferences> orderByComparator)
-		throws NoSuchPreferencesException {
-
-		CTPreferences ctPreferences = fetchByPreviousCtCollectionId_Last(
-			previousCtCollectionId, orderByComparator);
-
-		if (ctPreferences != null) {
-			return ctPreferences;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("previousCtCollectionId=");
-		sb.append(previousCtCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchPreferencesException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ct preferences in the ordered set where previousCtCollectionId = &#63;.
-	 *
-	 * @param previousCtCollectionId the previous ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
-	 */
-	@Override
-	public CTPreferences fetchByPreviousCtCollectionId_Last(
-		long previousCtCollectionId,
-		OrderByComparator<CTPreferences> orderByComparator) {
-
-		int count = countByPreviousCtCollectionId(previousCtCollectionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTPreferences> list = findByPreviousCtCollectionId(
-			previousCtCollectionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1629,4 +1507,4 @@ public class CTPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-226307808
+// LIFERAY-SERVICE-BUILDER-HASH:-1445510972

@@ -122,32 +122,6 @@ public interface KaleoTaskAssignmentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kaleo task assignment in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	 */
-	public KaleoTaskAssignment findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException;
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	 */
-	public KaleoTaskAssignment fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment>
-			orderByComparator);
-
-	/**
 	 * Removes all the kaleo task assignments where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -246,32 +220,6 @@ public interface KaleoTaskAssignmentPersistence
 	 * @return the first matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
 	 */
 	public KaleoTaskAssignment fetchByKaleoDefinitionVersionId_First(
-		long kaleoDefinitionVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	 */
-	public KaleoTaskAssignment findByKaleoDefinitionVersionId_Last(
-			long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException;
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	 */
-	public KaleoTaskAssignment fetchByKaleoDefinitionVersionId_Last(
 		long kaleoDefinitionVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment>
 			orderByComparator);
@@ -381,34 +329,6 @@ public interface KaleoTaskAssignmentPersistence
 	 * @return the first matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
 	 */
 	public KaleoTaskAssignment fetchByKCN_KCPK_First(
-		String kaleoClassName, long kaleoClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	 */
-	public KaleoTaskAssignment findByKCN_KCPK_Last(
-			String kaleoClassName, long kaleoClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException;
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	 */
-	public KaleoTaskAssignment fetchByKCN_KCPK_Last(
 		String kaleoClassName, long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment>
 			orderByComparator);
@@ -529,36 +449,6 @@ public interface KaleoTaskAssignmentPersistence
 	 * @return the first matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
 	 */
 	public KaleoTaskAssignment fetchByKCN_KCPK_ACN_First(
-		String kaleoClassName, long kaleoClassPK, String assigneeClassName,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment>
-			orderByComparator);
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param assigneeClassName the assignee class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	 */
-	public KaleoTaskAssignment findByKCN_KCPK_ACN_Last(
-			String kaleoClassName, long kaleoClassPK, String assigneeClassName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException;
-
-	/**
-	 * Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
-	 *
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param assigneeClassName the assignee class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	 */
-	public KaleoTaskAssignment fetchByKCN_KCPK_ACN_Last(
 		String kaleoClassName, long kaleoClassPK, String assigneeClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment>
 			orderByComparator);
@@ -707,4 +597,4 @@ public interface KaleoTaskAssignmentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-179764821
+// LIFERAY-SERVICE-BUILDER-HASH:1095921071

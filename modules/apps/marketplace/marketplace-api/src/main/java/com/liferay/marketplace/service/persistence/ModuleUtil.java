@@ -203,34 +203,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Returns the last module in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public static Module findByUuid_Last(
-			String uuid, OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last module in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public static Module fetchByUuid_Last(
-		String uuid, OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the modules where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -359,40 +331,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Returns the last module in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public static Module findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last module in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public static Module fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the modules where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -508,34 +446,6 @@ public class ModuleUtil {
 		long appId, OrderByComparator<Module> orderByComparator) {
 
 		return getPersistence().fetchByAppId_First(appId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public static Module findByAppId_Last(
-			long appId, OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByAppId_Last(appId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public static Module fetchByAppId_Last(
-		long appId, OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().fetchByAppId_Last(appId, orderByComparator);
 	}
 
 	/**
@@ -664,38 +574,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Returns the last module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public static Module findByBundleSymbolicName_Last(
-			String bundleSymbolicName,
-			OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByBundleSymbolicName_Last(
-			bundleSymbolicName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public static Module fetchByBundleSymbolicName_Last(
-		String bundleSymbolicName,
-		OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().fetchByBundleSymbolicName_Last(
-			bundleSymbolicName, orderByComparator);
-	}
-
-	/**
 	 * Removes all the modules where bundleSymbolicName = &#63; from the database.
 	 *
 	 * @param bundleSymbolicName the bundle symbolic name
@@ -812,36 +690,6 @@ public class ModuleUtil {
 		String contextName, OrderByComparator<Module> orderByComparator) {
 
 		return getPersistence().fetchByContextName_First(
-			contextName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last module in the ordered set where contextName = &#63;.
-	 *
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public static Module findByContextName_Last(
-			String contextName, OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByContextName_Last(
-			contextName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last module in the ordered set where contextName = &#63;.
-	 *
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public static Module fetchByContextName_Last(
-		String contextName, OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().fetchByContextName_Last(
 			contextName, orderByComparator);
 	}
 
@@ -970,40 +818,6 @@ public class ModuleUtil {
 		OrderByComparator<Module> orderByComparator) {
 
 		return getPersistence().fetchByA_CN_First(
-			appId, contextName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63; and contextName = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public static Module findByA_CN_Last(
-			long appId, String contextName,
-			OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByA_CN_Last(
-			appId, contextName, orderByComparator);
-	}
-
-	/**
-	 * Returns the last module in the ordered set where appId = &#63; and contextName = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public static Module fetchByA_CN_Last(
-		long appId, String contextName,
-		OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().fetchByA_CN_Last(
 			appId, contextName, orderByComparator);
 	}
 
@@ -1266,4 +1080,4 @@ public class ModuleUtil {
 	private static volatile ModulePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1275856426
+// LIFERAY-SERVICE-BUILDER-HASH:9998898

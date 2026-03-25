@@ -221,39 +221,6 @@ public class CommerceChannelRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce channel rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel rel
-	 * @throws NoSuchChannelRelException if a matching commerce channel rel could not be found
-	 */
-	public static CommerceChannelRel findByCommerceChannelId_Last(
-			long commerceChannelId,
-			OrderByComparator<CommerceChannelRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchChannelRelException {
-
-		return getPersistence().findByCommerceChannelId_Last(
-			commerceChannelId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel rel, or <code>null</code> if a matching commerce channel rel could not be found
-	 */
-	public static CommerceChannelRel fetchByCommerceChannelId_Last(
-		long commerceChannelId,
-		OrderByComparator<CommerceChannelRel> orderByComparator) {
-
-		return getPersistence().fetchByCommerceChannelId_Last(
-			commerceChannelId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce channel rels where commerceChannelId = &#63; from the database.
 	 *
 	 * @param commerceChannelId the commerce channel ID
@@ -383,41 +350,6 @@ public class CommerceChannelRelUtil {
 		OrderByComparator<CommerceChannelRel> orderByComparator) {
 
 		return getPersistence().fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel rel
-	 * @throws NoSuchChannelRelException if a matching commerce channel rel could not be found
-	 */
-	public static CommerceChannelRel findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<CommerceChannelRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchChannelRelException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce channel rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel rel, or <code>null</code> if a matching commerce channel rel could not be found
-	 */
-	public static CommerceChannelRel fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<CommerceChannelRel> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
 	}
 
@@ -694,4 +626,4 @@ public class CommerceChannelRelUtil {
 	private static volatile CommerceChannelRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1184467803
+// LIFERAY-SERVICE-BUILDER-HASH:618202953

@@ -220,38 +220,6 @@ public class SegmentsEntryRoleUtil {
 	}
 
 	/**
-	 * Returns the last segments entry role in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry role
-	 * @throws NoSuchEntryRoleException if a matching segments entry role could not be found
-	 */
-	public static SegmentsEntryRole findBySegmentsEntryId_Last(
-			long segmentsEntryId,
-			OrderByComparator<SegmentsEntryRole> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryRoleException {
-
-		return getPersistence().findBySegmentsEntryId_Last(
-			segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry role in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry role, or <code>null</code> if a matching segments entry role could not be found
-	 */
-	public static SegmentsEntryRole fetchBySegmentsEntryId_Last(
-		long segmentsEntryId,
-		OrderByComparator<SegmentsEntryRole> orderByComparator) {
-
-		return getPersistence().fetchBySegmentsEntryId_Last(
-			segmentsEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the segments entry roles where segmentsEntryId = &#63; from the database.
 	 *
 	 * @param segmentsEntryId the segments entry ID
@@ -368,34 +336,6 @@ public class SegmentsEntryRoleUtil {
 		long roleId, OrderByComparator<SegmentsEntryRole> orderByComparator) {
 
 		return getPersistence().fetchByRoleId_First(roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry role in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry role
-	 * @throws NoSuchEntryRoleException if a matching segments entry role could not be found
-	 */
-	public static SegmentsEntryRole findByRoleId_Last(
-			long roleId, OrderByComparator<SegmentsEntryRole> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryRoleException {
-
-		return getPersistence().findByRoleId_Last(roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last segments entry role in the ordered set where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments entry role, or <code>null</code> if a matching segments entry role could not be found
-	 */
-	public static SegmentsEntryRole fetchByRoleId_Last(
-		long roleId, OrderByComparator<SegmentsEntryRole> orderByComparator) {
-
-		return getPersistence().fetchByRoleId_Last(roleId, orderByComparator);
 	}
 
 	/**
@@ -650,4 +590,4 @@ public class SegmentsEntryRoleUtil {
 	private static volatile SegmentsEntryRolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-802812153
+// LIFERAY-SERVICE-BUILDER-HASH:-1484380035

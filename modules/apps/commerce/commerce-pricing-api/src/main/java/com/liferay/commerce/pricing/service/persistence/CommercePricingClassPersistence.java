@@ -122,32 +122,6 @@ public interface CommercePricingClassPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce pricing class in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class
-	 * @throws NoSuchPricingClassException if a matching commerce pricing class could not be found
-	 */
-	public CommercePricingClass findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePricingClass> orderByComparator)
-		throws NoSuchPricingClassException;
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	public CommercePricingClass fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CommercePricingClass>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce pricing classes that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -306,34 +280,6 @@ public interface CommercePricingClassPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last commerce pricing class in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class
-	 * @throws NoSuchPricingClassException if a matching commerce pricing class could not be found
-	 */
-	public CommercePricingClass findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePricingClass> orderByComparator)
-		throws NoSuchPricingClassException;
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	public CommercePricingClass fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommercePricingClass>
-			orderByComparator);
-
-	/**
 	 * Returns all the commerce pricing classes that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -487,32 +433,6 @@ public interface CommercePricingClassPersistence
 	 * @return the first matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
 	 */
 	public CommercePricingClass fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommercePricingClass>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class
-	 * @throws NoSuchPricingClassException if a matching commerce pricing class could not be found
-	 */
-	public CommercePricingClass findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePricingClass> orderByComparator)
-		throws NoSuchPricingClassException;
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	public CommercePricingClass fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePricingClass>
 			orderByComparator);
@@ -758,4 +678,4 @@ public interface CommercePricingClassPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-706197185
+// LIFERAY-SERVICE-BUILDER-HASH:-1658923090

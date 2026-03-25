@@ -222,39 +222,6 @@ public class CTAutoResolutionInfoUtil {
 	}
 
 	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
-	 */
-	public static CTAutoResolutionInfo findByCtCollectionId_Last(
-			long ctCollectionId,
-			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
-		throws com.liferay.change.tracking.exception.
-			NoSuchAutoResolutionInfoException {
-
-		return getPersistence().findByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
-	 */
-	public static CTAutoResolutionInfo fetchByCtCollectionId_Last(
-		long ctCollectionId,
-		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
-
-		return getPersistence().fetchByCtCollectionId_Last(
-			ctCollectionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ct auto resolution infos where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -397,45 +364,6 @@ public class CTAutoResolutionInfoUtil {
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
 
 		return getPersistence().fetchByC_MCNI_SMCPK_First(
-			ctCollectionId, modelClassNameId, sourceModelClassPK,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
-	 */
-	public static CTAutoResolutionInfo findByC_MCNI_SMCPK_Last(
-			long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
-			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
-		throws com.liferay.change.tracking.exception.
-			NoSuchAutoResolutionInfoException {
-
-		return getPersistence().findByC_MCNI_SMCPK_Last(
-			ctCollectionId, modelClassNameId, sourceModelClassPK,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the last ct auto resolution info in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
-	 */
-	public static CTAutoResolutionInfo fetchByC_MCNI_SMCPK_Last(
-		long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
-		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
-
-		return getPersistence().fetchByC_MCNI_SMCPK_Last(
 			ctCollectionId, modelClassNameId, sourceModelClassPK,
 			orderByComparator);
 	}
@@ -750,4 +678,4 @@ public class CTAutoResolutionInfoUtil {
 	private static volatile CTAutoResolutionInfoPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1839991271
+// LIFERAY-SERVICE-BUILDER-HASH:1226551327

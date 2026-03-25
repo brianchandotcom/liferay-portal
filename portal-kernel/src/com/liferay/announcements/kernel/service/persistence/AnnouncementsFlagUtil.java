@@ -217,38 +217,6 @@ public class AnnouncementsFlagUtil {
 	}
 
 	/**
-	 * Returns the last announcements flag in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag
-	 * @throws NoSuchFlagException if a matching announcements flag could not be found
-	 */
-	public static AnnouncementsFlag findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchFlagException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements flag in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	 */
-	public static AnnouncementsFlag fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the announcements flags where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -367,35 +335,6 @@ public class AnnouncementsFlagUtil {
 
 		return getPersistence().fetchByEntryId_First(
 			entryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements flag in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag
-	 * @throws NoSuchFlagException if a matching announcements flag could not be found
-	 */
-	public static AnnouncementsFlag findByEntryId_Last(
-			long entryId,
-			OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchFlagException {
-
-		return getPersistence().findByEntryId_Last(entryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last announcements flag in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	 */
-	public static AnnouncementsFlag fetchByEntryId_Last(
-		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator) {
-
-		return getPersistence().fetchByEntryId_Last(entryId, orderByComparator);
 	}
 
 	/**
@@ -654,4 +593,4 @@ public class AnnouncementsFlagUtil {
 	private static volatile AnnouncementsFlagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:770695460
+// LIFERAY-SERVICE-BUILDER-HASH:-1632501538

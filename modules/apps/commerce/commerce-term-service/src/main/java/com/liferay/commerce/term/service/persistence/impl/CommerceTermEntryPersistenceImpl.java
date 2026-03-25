@@ -330,65 +330,6 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce term entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry findByUuid_Last(
-			String uuid, OrderByComparator<CommerceTermEntry> orderByComparator)
-		throws NoSuchTermEntryException {
-
-		CommerceTermEntry commerceTermEntry = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTermEntry> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -944,72 +885,6 @@ public class CommerceTermEntryPersistenceImpl
 
 		List<CommerceTermEntry> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceTermEntry> orderByComparator)
-		throws NoSuchTermEntryException {
-
-		CommerceTermEntry commerceTermEntry = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTermEntry> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1587,72 +1462,6 @@ public class CommerceTermEntryPersistenceImpl
 
 		List<CommerceTermEntry> list = findByC_A(
 			companyId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry findByC_A_Last(
-			long companyId, boolean active,
-			OrderByComparator<CommerceTermEntry> orderByComparator)
-		throws NoSuchTermEntryException {
-
-		CommerceTermEntry commerceTermEntry = fetchByC_A_Last(
-			companyId, active, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry fetchByC_A_Last(
-		long companyId, boolean active,
-		OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		int count = countByC_A(companyId, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTermEntry> list = findByC_A(
-			companyId, active, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2398,72 +2207,6 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry findByC_LikeType_Last(
-			long companyId, String type,
-			OrderByComparator<CommerceTermEntry> orderByComparator)
-		throws NoSuchTermEntryException {
-
-		CommerceTermEntry commerceTermEntry = fetchByC_LikeType_Last(
-			companyId, type, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", typeLIKE");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry fetchByC_LikeType_Last(
-		long companyId, String type,
-		OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		int count = countByC_LikeType(companyId, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTermEntry> list = findByC_LikeType(
-			companyId, type, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -3044,72 +2787,6 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce term entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CommerceTermEntry> orderByComparator)
-		throws NoSuchTermEntryException {
-
-		CommerceTermEntry commerceTermEntry = fetchByLtD_S_Last(
-			displayDate, status, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		int count = countByLtD_S(displayDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTermEntry> list = findByLtD_S(
-			displayDate, status, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -3671,72 +3348,6 @@ public class CommerceTermEntryPersistenceImpl
 
 		List<CommerceTermEntry> list = findByLtE_S(
 			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CommerceTermEntry> orderByComparator)
-		throws NoSuchTermEntryException {
-
-		CommerceTermEntry commerceTermEntry = fetchByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		int count = countByLtE_S(expirationDate, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTermEntry> list = findByLtE_S(
-			expirationDate, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4324,77 +3935,6 @@ public class CommerceTermEntryPersistenceImpl
 
 		List<CommerceTermEntry> list = findByC_A_LikeType(
 			companyId, active, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry
-	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry findByC_A_LikeType_Last(
-			long companyId, boolean active, String type,
-			OrderByComparator<CommerceTermEntry> orderByComparator)
-		throws NoSuchTermEntryException {
-
-		CommerceTermEntry commerceTermEntry = fetchByC_A_LikeType_Last(
-			companyId, active, type, orderByComparator);
-
-		if (commerceTermEntry != null) {
-			return commerceTermEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", typeLIKE");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce term entry in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	@Override
-	public CommerceTermEntry fetchByC_A_LikeType_Last(
-		long companyId, boolean active, String type,
-		OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		int count = countByC_A_LikeType(companyId, active, type);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceTermEntry> list = findByC_A_LikeType(
-			companyId, active, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6143,4 +5683,4 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1811315770
+// LIFERAY-SERVICE-BUILDER-HASH:-1007667154

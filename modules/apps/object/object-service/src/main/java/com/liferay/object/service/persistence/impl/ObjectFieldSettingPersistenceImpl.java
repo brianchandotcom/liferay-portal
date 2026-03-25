@@ -320,66 +320,6 @@ public class ObjectFieldSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting
-	 * @throws NoSuchObjectFieldSettingException if a matching object field setting could not be found
-	 */
-	@Override
-	public ObjectFieldSetting findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectFieldSetting> orderByComparator)
-		throws NoSuchObjectFieldSettingException {
-
-		ObjectFieldSetting objectFieldSetting = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectFieldSetting != null) {
-			return objectFieldSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting, or <code>null</code> if a matching object field setting could not be found
-	 */
-	@Override
-	public ObjectFieldSetting fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectFieldSetting> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFieldSetting> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object field settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -713,72 +653,6 @@ public class ObjectFieldSettingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object field setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting
-	 * @throws NoSuchObjectFieldSettingException if a matching object field setting could not be found
-	 */
-	@Override
-	public ObjectFieldSetting findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectFieldSetting> orderByComparator)
-		throws NoSuchObjectFieldSettingException {
-
-		ObjectFieldSetting objectFieldSetting = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectFieldSetting != null) {
-			return objectFieldSetting;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting, or <code>null</code> if a matching object field setting could not be found
-	 */
-	@Override
-	public ObjectFieldSetting fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectFieldSetting> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFieldSetting> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object field settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1088,67 +962,6 @@ public class ObjectFieldSettingPersistenceImpl
 
 		List<ObjectFieldSetting> list = findByObjectFieldId(
 			objectFieldId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object field setting in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting
-	 * @throws NoSuchObjectFieldSettingException if a matching object field setting could not be found
-	 */
-	@Override
-	public ObjectFieldSetting findByObjectFieldId_Last(
-			long objectFieldId,
-			OrderByComparator<ObjectFieldSetting> orderByComparator)
-		throws NoSuchObjectFieldSettingException {
-
-		ObjectFieldSetting objectFieldSetting = fetchByObjectFieldId_Last(
-			objectFieldId, orderByComparator);
-
-		if (objectFieldSetting != null) {
-			return objectFieldSetting;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectFieldId=");
-		sb.append(objectFieldId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldSettingException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object field setting in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object field setting, or <code>null</code> if a matching object field setting could not be found
-	 */
-	@Override
-	public ObjectFieldSetting fetchByObjectFieldId_Last(
-		long objectFieldId,
-		OrderByComparator<ObjectFieldSetting> orderByComparator) {
-
-		int count = countByObjectFieldId(objectFieldId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFieldSetting> list = findByObjectFieldId(
-			objectFieldId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2158,4 +1971,4 @@ public class ObjectFieldSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-714275216
+// LIFERAY-SERVICE-BUILDER-HASH:1280670964

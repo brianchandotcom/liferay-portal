@@ -337,65 +337,6 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
-	 */
-	@Override
-	public DLFileEntryType findByUuid_Last(
-			String uuid, OrderByComparator<DLFileEntryType> orderByComparator)
-		throws NoSuchFileEntryTypeException {
-
-		DLFileEntryType dlFileEntryType = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (dlFileEntryType != null) {
-			return dlFileEntryType;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	 */
-	@Override
-	public DLFileEntryType fetchByUuid_Last(
-		String uuid, OrderByComparator<DLFileEntryType> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntryType> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entry types where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -943,72 +884,6 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 	/**
-	 * Returns the last document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
-	 */
-	@Override
-	public DLFileEntryType findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DLFileEntryType> orderByComparator)
-		throws NoSuchFileEntryTypeException {
-
-		DLFileEntryType dlFileEntryType = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (dlFileEntryType != null) {
-			return dlFileEntryType;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	 */
-	@Override
-	public DLFileEntryType fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DLFileEntryType> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntryType> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the document library file entry types where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1325,65 +1200,6 @@ public class DLFileEntryTypePersistenceImpl
 
 		List<DLFileEntryType> list = findByGroupId(
 			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
-	 */
-	@Override
-	public DLFileEntryType findByGroupId_Last(
-			long groupId, OrderByComparator<DLFileEntryType> orderByComparator)
-		throws NoSuchFileEntryTypeException {
-
-		DLFileEntryType dlFileEntryType = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (dlFileEntryType != null) {
-			return dlFileEntryType;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	 */
-	@Override
-	public DLFileEntryType fetchByGroupId_Last(
-		long groupId, OrderByComparator<DLFileEntryType> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntryType> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2366,66 +2182,6 @@ public class DLFileEntryTypePersistenceImpl
 
 		List<DLFileEntryType> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
-	 */
-	@Override
-	public DLFileEntryType findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<DLFileEntryType> orderByComparator)
-		throws NoSuchFileEntryTypeException {
-
-		DLFileEntryType dlFileEntryType = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (dlFileEntryType != null) {
-			return dlFileEntryType;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryTypeException(sb.toString());
-	}
-
-	/**
-	 * Returns the last document library file entry type in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	 */
-	@Override
-	public DLFileEntryType fetchByCompanyId_Last(
-		long companyId, OrderByComparator<DLFileEntryType> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DLFileEntryType> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4624,4 +4380,4 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-451868935
+// LIFERAY-SERVICE-BUILDER-HASH:-1739813431

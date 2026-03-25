@@ -123,32 +123,6 @@ public interface TrashEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public TrashEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public TrashEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the trash entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -246,32 +220,6 @@ public interface TrashEntryPersistence
 	 * @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	 */
 	public TrashEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public TrashEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public TrashEntry fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator);
@@ -381,34 +329,6 @@ public interface TrashEntryPersistence
 	 * @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	 */
 	public TrashEntry fetchByG_LtCD_First(
-		long groupId, Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public TrashEntry findByG_LtCD_Last(
-			long groupId, Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public TrashEntry fetchByG_LtCD_Last(
 		long groupId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator);
@@ -525,34 +445,6 @@ public interface TrashEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public TrashEntry findByG_CN_Last(
-			long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last trash entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public TrashEntry fetchByG_CN_Last(
-		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-			orderByComparator);
-
-	/**
 	 * Removes all the trash entries where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -659,34 +551,6 @@ public interface TrashEntryPersistence
 	 * @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	 */
 	public TrashEntry fetchByC_CN_First(
-		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry
-	 * @throws NoSuchEntryException if a matching trash entry could not be found
-	 */
-	public TrashEntry findByC_CN_Last(
-			long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
-	 * Returns the last trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	public TrashEntry fetchByC_CN_Last(
 		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator);
@@ -878,4 +742,4 @@ public interface TrashEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2147319765
+// LIFERAY-SERVICE-BUILDER-HASH:-1907307771

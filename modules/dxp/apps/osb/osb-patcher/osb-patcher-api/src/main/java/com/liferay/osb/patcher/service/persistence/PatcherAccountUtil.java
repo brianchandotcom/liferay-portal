@@ -213,36 +213,6 @@ public class PatcherAccountUtil {
 	}
 
 	/**
-	 * Returns the last patcher account in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher account
-	 * @throws NoSuchPatcherAccountException if a matching patcher account could not be found
-	 */
-	public static PatcherAccount findByCompanyId_Last(
-			long companyId, OrderByComparator<PatcherAccount> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherAccountException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher account in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher account, or <code>null</code> if a matching patcher account could not be found
-	 */
-	public static PatcherAccount fetchByCompanyId_Last(
-		long companyId, OrderByComparator<PatcherAccount> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher accounts that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -493,40 +463,6 @@ public class PatcherAccountUtil {
 		OrderByComparator<PatcherAccount> orderByComparator) {
 
 		return getPersistence().fetchByC_LikeA_First(
-			companyId, accountEntryCode, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher account in the ordered set where companyId = &#63; and accountEntryCode LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryCode the account entry code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher account
-	 * @throws NoSuchPatcherAccountException if a matching patcher account could not be found
-	 */
-	public static PatcherAccount findByC_LikeA_Last(
-			long companyId, String accountEntryCode,
-			OrderByComparator<PatcherAccount> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherAccountException {
-
-		return getPersistence().findByC_LikeA_Last(
-			companyId, accountEntryCode, orderByComparator);
-	}
-
-	/**
-	 * Returns the last patcher account in the ordered set where companyId = &#63; and accountEntryCode LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryCode the account entry code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching patcher account, or <code>null</code> if a matching patcher account could not be found
-	 */
-	public static PatcherAccount fetchByC_LikeA_Last(
-		long companyId, String accountEntryCode,
-		OrderByComparator<PatcherAccount> orderByComparator) {
-
-		return getPersistence().fetchByC_LikeA_Last(
 			companyId, accountEntryCode, orderByComparator);
 	}
 
@@ -998,4 +934,4 @@ public class PatcherAccountUtil {
 	private static volatile PatcherAccountPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1102424295
+// LIFERAY-SERVICE-BUILDER-HASH:1981910535

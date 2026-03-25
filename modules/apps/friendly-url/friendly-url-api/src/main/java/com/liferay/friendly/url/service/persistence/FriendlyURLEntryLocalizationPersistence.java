@@ -125,32 +125,6 @@ public interface FriendlyURLEntryLocalizationPersistence
 			<FriendlyURLEntryLocalization> orderByComparator);
 
 	/**
-	 * Returns the last friendly url entry localization in the ordered set where friendlyURLEntryId = &#63;.
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization findByFriendlyURLEntryId_Last(
-			long friendlyURLEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FriendlyURLEntryLocalization> orderByComparator)
-		throws NoSuchFriendlyURLEntryLocalizationException;
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where friendlyURLEntryId = &#63;.
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_Last(
-		long friendlyURLEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<FriendlyURLEntryLocalization> orderByComparator);
-
-	/**
 	 * Removes all the friendly url entry localizations where friendlyURLEntryId = &#63; from the database.
 	 *
 	 * @param friendlyURLEntryId the friendly url entry ID
@@ -320,36 +294,6 @@ public interface FriendlyURLEntryLocalizationPersistence
 			<FriendlyURLEntryLocalization> orderByComparator);
 
 	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization findByG_C_U_Last(
-			long groupId, long classNameId, String urlTitle,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FriendlyURLEntryLocalization> orderByComparator)
-		throws NoSuchFriendlyURLEntryLocalizationException;
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization fetchByG_C_U_Last(
-		long groupId, long classNameId, String urlTitle,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<FriendlyURLEntryLocalization> orderByComparator);
-
-	/**
 	 * Removes all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -474,39 +418,6 @@ public interface FriendlyURLEntryLocalizationPersistence
 	 * @return the first matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	 */
 	public FriendlyURLEntryLocalization fetchByC_C_U_C_First(
-		long companyId, long classNameId, String urlTitle, long ctCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<FriendlyURLEntryLocalization> orderByComparator);
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where companyId = &#63; and classNameId = &#63; and urlTitle = &#63; and ctCollectionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization findByC_C_U_C_Last(
-			long companyId, long classNameId, String urlTitle,
-			long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FriendlyURLEntryLocalization> orderByComparator)
-		throws NoSuchFriendlyURLEntryLocalizationException;
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where companyId = &#63; and classNameId = &#63; and urlTitle = &#63; and ctCollectionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization fetchByC_C_U_C_Last(
 		long companyId, long classNameId, String urlTitle, long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<FriendlyURLEntryLocalization> orderByComparator);
@@ -639,38 +550,6 @@ public interface FriendlyURLEntryLocalizationPersistence
 	 * @return the first matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	 */
 	public FriendlyURLEntryLocalization fetchByG_C_C_L_First(
-		long groupId, long classNameId, long classPK, String languageId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<FriendlyURLEntryLocalization> orderByComparator);
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization findByG_C_C_L_Last(
-			long groupId, long classNameId, long classPK, String languageId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FriendlyURLEntryLocalization> orderByComparator)
-		throws NoSuchFriendlyURLEntryLocalizationException;
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization fetchByG_C_C_L_Last(
 		long groupId, long classNameId, long classPK, String languageId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<FriendlyURLEntryLocalization> orderByComparator);
@@ -873,38 +752,6 @@ public interface FriendlyURLEntryLocalizationPersistence
 			<FriendlyURLEntryLocalization> orderByComparator);
 
 	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and languageId &ne; &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization findByG_C_NotL_U_Last(
-			long groupId, long classNameId, String languageId, String urlTitle,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FriendlyURLEntryLocalization> orderByComparator)
-		throws NoSuchFriendlyURLEntryLocalizationException;
-
-	/**
-	 * Returns the last friendly url entry localization in the ordered set where groupId = &#63; and classNameId = &#63; and languageId &ne; &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	public FriendlyURLEntryLocalization fetchByG_C_NotL_U_Last(
-		long groupId, long classNameId, String languageId, String urlTitle,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<FriendlyURLEntryLocalization> orderByComparator);
-
-	/**
 	 * Removes all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and languageId &ne; &#63; and urlTitle = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1057,4 +904,4 @@ public interface FriendlyURLEntryLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1277861241
+// LIFERAY-SERVICE-BUILDER-HASH:683337053

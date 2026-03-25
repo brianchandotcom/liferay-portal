@@ -332,64 +332,6 @@ public class AssetTagPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset tag in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag findByUuid_Last(
-			String uuid, OrderByComparator<AssetTag> orderByComparator)
-		throws NoSuchTagException {
-
-		AssetTag assetTag = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (assetTag != null) {
-			return assetTag;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag fetchByUuid_Last(
-		String uuid, OrderByComparator<AssetTag> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetTag> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset tags where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -936,72 +878,6 @@ public class AssetTagPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AssetTag> orderByComparator)
-		throws NoSuchTagException {
-
-		AssetTag assetTag = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (assetTag != null) {
-			return assetTag;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AssetTag> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetTag> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset tags where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1313,64 +1189,6 @@ public class AssetTagPersistenceImpl
 		long groupId, OrderByComparator<AssetTag> orderByComparator) {
 
 		List<AssetTag> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag findByGroupId_Last(
-			long groupId, OrderByComparator<AssetTag> orderByComparator)
-		throws NoSuchTagException {
-
-		AssetTag assetTag = fetchByGroupId_Last(groupId, orderByComparator);
-
-		if (assetTag != null) {
-			return assetTag;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchTagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag fetchByGroupId_Last(
-		long groupId, OrderByComparator<AssetTag> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetTag> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1933,64 +1751,6 @@ public class AssetTagPersistenceImpl
 		String name, OrderByComparator<AssetTag> orderByComparator) {
 
 		List<AssetTag> list = findByName(name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag findByName_Last(
-			String name, OrderByComparator<AssetTag> orderByComparator)
-		throws NoSuchTagException {
-
-		AssetTag assetTag = fetchByName_Last(name, orderByComparator);
-
-		if (assetTag != null) {
-			return assetTag;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchTagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where name = &#63;.
-	 *
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag fetchByName_Last(
-		String name, OrderByComparator<AssetTag> orderByComparator) {
-
-		int count = countByName(name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetTag> list = findByName(
-			name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2634,71 +2394,6 @@ public class AssetTagPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag findByG_N_Last(
-			long groupId, String name,
-			OrderByComparator<AssetTag> orderByComparator)
-		throws NoSuchTagException {
-
-		AssetTag assetTag = fetchByG_N_Last(groupId, name, orderByComparator);
-
-		if (assetTag != null) {
-			return assetTag;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchTagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag fetchByG_N_Last(
-		long groupId, String name,
-		OrderByComparator<AssetTag> orderByComparator) {
-
-		int count = countByG_N(groupId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetTag> list = findByG_N(
-			groupId, name, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the asset tags where groupId = &#63; and name = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3035,72 +2730,6 @@ public class AssetTagPersistenceImpl
 
 		List<AssetTag> list = findByG_LikeN(
 			groupId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag
-	 * @throws NoSuchTagException if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag findByG_LikeN_Last(
-			long groupId, String name,
-			OrderByComparator<AssetTag> orderByComparator)
-		throws NoSuchTagException {
-
-		AssetTag assetTag = fetchByG_LikeN_Last(
-			groupId, name, orderByComparator);
-
-		if (assetTag != null) {
-			return assetTag;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchTagException(sb.toString());
-	}
-
-	/**
-	 * Returns the last asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	 */
-	@Override
-	public AssetTag fetchByG_LikeN_Last(
-		long groupId, String name,
-		OrderByComparator<AssetTag> orderByComparator) {
-
-		int count = countByG_LikeN(groupId, name);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetTag> list = findByG_LikeN(
-			groupId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5154,4 +4783,4 @@ public class AssetTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2140477331
+// LIFERAY-SERVICE-BUILDER-HASH:561856654

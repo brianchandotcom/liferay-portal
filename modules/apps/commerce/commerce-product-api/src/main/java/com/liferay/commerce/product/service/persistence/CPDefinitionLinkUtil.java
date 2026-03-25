@@ -212,35 +212,6 @@ public class CPDefinitionLinkUtil {
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByUuid_Last(
-			String uuid, OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByUuid_Last(
-		String uuid, OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -438,41 +409,6 @@ public class CPDefinitionLinkUtil {
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition links where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -602,39 +538,6 @@ public class CPDefinitionLinkUtil {
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByCPDefinitionId_Last(
-			long CPDefinitionId,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByCPDefinitionId_Last(
-			CPDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByCPDefinitionId_Last(
-		long CPDefinitionId,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByCPDefinitionId_Last(
-			CPDefinitionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition links where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -755,39 +658,6 @@ public class CPDefinitionLinkUtil {
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByCProductId_First(
-			CProductId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByCProductId_Last(
-			long CProductId,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByCProductId_Last(
-			CProductId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByCProductId_Last(
-		long CProductId,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByCProductId_Last(
 			CProductId, orderByComparator);
 	}
 
@@ -921,41 +791,6 @@ public class CPDefinitionLinkUtil {
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByCPD_T_First(
-			CPDefinitionId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and type = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByCPD_T_Last(
-			long CPDefinitionId, String type,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByCPD_T_Last(
-			CPDefinitionId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and type = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByCPD_T_Last(
-		long CPDefinitionId, String type,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByCPD_T_Last(
 			CPDefinitionId, type, orderByComparator);
 	}
 
@@ -1095,41 +930,6 @@ public class CPDefinitionLinkUtil {
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByCPD_S_Last(
-			long CPDefinitionId, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByCPD_S_Last(
-			CPDefinitionId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByCPD_S_Last(
-		long CPDefinitionId, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByCPD_S_Last(
-			CPDefinitionId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition links where CPDefinitionId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -1260,41 +1060,6 @@ public class CPDefinitionLinkUtil {
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByCP_T_First(
-			CProductId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and type = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByCP_T_Last(
-			long CProductId, String type,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByCP_T_Last(
-			CProductId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and type = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByCP_T_Last(
-		long CProductId, String type,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByCP_T_Last(
 			CProductId, type, orderByComparator);
 	}
 
@@ -1433,41 +1198,6 @@ public class CPDefinitionLinkUtil {
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByCP_S_Last(
-			long CProductId, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByCP_S_Last(
-			CProductId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByCP_S_Last(
-		long CProductId, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByCP_S_Last(
-			CProductId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition links where CProductId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CProductId the c product ID
@@ -1598,41 +1328,6 @@ public class CPDefinitionLinkUtil {
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
 			displayDate, status, orderByComparator);
 	}
 
@@ -1768,41 +1463,6 @@ public class CPDefinitionLinkUtil {
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByLtE_S_Last(
-			Date expirationDate, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByLtE_S_Last(
-			expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByLtE_S_Last(
-		Date expirationDate, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByLtE_S_Last(
 			expirationDate, status, orderByComparator);
 	}
 
@@ -2027,43 +1687,6 @@ public class CPDefinitionLinkUtil {
 	}
 
 	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByCPD_T_S_Last(
-			long CPDefinitionId, String type, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByCPD_T_S_Last(
-			CPDefinitionId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CPDefinitionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByCPD_T_S_Last(
-		long CPDefinitionId, String type, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByCPD_T_S_Last(
-			CPDefinitionId, type, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition links where CPDefinitionId = &#63; and type = &#63; and status = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -2208,43 +1831,6 @@ public class CPDefinitionLinkUtil {
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
 		return getPersistence().fetchByCP_T_S_First(
-			CProductId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink findByCP_T_S_Last(
-			long CProductId, String type, int status,
-			OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionLinkException {
-
-		return getPersistence().findByCP_T_S_Last(
-			CProductId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp definition link in the ordered set where CProductId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	 */
-	public static CPDefinitionLink fetchByCP_T_S_Last(
-		long CProductId, String type, int status,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return getPersistence().fetchByCP_T_S_Last(
 			CProductId, type, status, orderByComparator);
 	}
 
@@ -2437,4 +2023,4 @@ public class CPDefinitionLinkUtil {
 	private static volatile CPDefinitionLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-378045318
+// LIFERAY-SERVICE-BUILDER-HASH:401136578

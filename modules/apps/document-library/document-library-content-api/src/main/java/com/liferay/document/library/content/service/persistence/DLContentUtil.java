@@ -223,41 +223,6 @@ public class DLContentUtil {
 	}
 
 	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content
-	 * @throws NoSuchContentException if a matching document library content could not be found
-	 */
-	public static DLContent findByC_R_Last(
-			long companyId, long repositoryId,
-			OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.document.library.content.exception.
-			NoSuchContentException {
-
-		return getPersistence().findByC_R_Last(
-			companyId, repositoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content, or <code>null</code> if a matching document library content could not be found
-	 */
-	public static DLContent fetchByC_R_Last(
-		long companyId, long repositoryId,
-		OrderByComparator<DLContent> orderByComparator) {
-
-		return getPersistence().fetchByC_R_Last(
-			companyId, repositoryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library contents where companyId = &#63; and repositoryId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -396,43 +361,6 @@ public class DLContentUtil {
 		OrderByComparator<DLContent> orderByComparator) {
 
 		return getPersistence().fetchByC_R_P_First(
-			companyId, repositoryId, path, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content
-	 * @throws NoSuchContentException if a matching document library content could not be found
-	 */
-	public static DLContent findByC_R_P_Last(
-			long companyId, long repositoryId, String path,
-			OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.document.library.content.exception.
-			NoSuchContentException {
-
-		return getPersistence().findByC_R_P_Last(
-			companyId, repositoryId, path, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content, or <code>null</code> if a matching document library content could not be found
-	 */
-	public static DLContent fetchByC_R_P_Last(
-		long companyId, long repositoryId, String path,
-		OrderByComparator<DLContent> orderByComparator) {
-
-		return getPersistence().fetchByC_R_P_Last(
 			companyId, repositoryId, path, orderByComparator);
 	}
 
@@ -581,43 +509,6 @@ public class DLContentUtil {
 		OrderByComparator<DLContent> orderByComparator) {
 
 		return getPersistence().fetchByC_R_LikeP_First(
-			companyId, repositoryId, path, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content
-	 * @throws NoSuchContentException if a matching document library content could not be found
-	 */
-	public static DLContent findByC_R_LikeP_Last(
-			long companyId, long repositoryId, String path,
-			OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.document.library.content.exception.
-			NoSuchContentException {
-
-		return getPersistence().findByC_R_LikeP_Last(
-			companyId, repositoryId, path, orderByComparator);
-	}
-
-	/**
-	 * Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching document library content, or <code>null</code> if a matching document library content could not be found
-	 */
-	public static DLContent fetchByC_R_LikeP_Last(
-		long companyId, long repositoryId, String path,
-		OrderByComparator<DLContent> orderByComparator) {
-
-		return getPersistence().fetchByC_R_LikeP_Last(
 			companyId, repositoryId, path, orderByComparator);
 	}
 
@@ -895,4 +786,4 @@ public class DLContentUtil {
 	private static volatile DLContentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1680060897
+// LIFERAY-SERVICE-BUILDER-HASH:365833791

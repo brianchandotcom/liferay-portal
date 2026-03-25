@@ -216,37 +216,6 @@ public class NotificationTemplateUtil {
 	}
 
 	/**
-	 * Returns the last notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template
-	 * @throws NoSuchNotificationTemplateException if a matching notification template could not be found
-	 */
-	public static NotificationTemplate findByUuid_Last(
-			String uuid,
-			OrderByComparator<NotificationTemplate> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationTemplateException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template, or <code>null</code> if a matching notification template could not be found
-	 */
-	public static NotificationTemplate fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the notification templates that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -438,41 +407,6 @@ public class NotificationTemplateUtil {
 	}
 
 	/**
-	 * Returns the last notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template
-	 * @throws NoSuchNotificationTemplateException if a matching notification template could not be found
-	 */
-	public static NotificationTemplate findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<NotificationTemplate> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationTemplateException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template, or <code>null</code> if a matching notification template could not be found
-	 */
-	public static NotificationTemplate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the notification templates that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -660,39 +594,6 @@ public class NotificationTemplateUtil {
 		OrderByComparator<NotificationTemplate> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template
-	 * @throws NoSuchNotificationTemplateException if a matching notification template could not be found
-	 */
-	public static NotificationTemplate findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<NotificationTemplate> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationTemplateException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last notification template in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching notification template, or <code>null</code> if a matching notification template could not be found
-	 */
-	public static NotificationTemplate fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -1019,4 +920,4 @@ public class NotificationTemplateUtil {
 	private static volatile NotificationTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:832605599
+// LIFERAY-SERVICE-BUILDER-HASH:2055741909

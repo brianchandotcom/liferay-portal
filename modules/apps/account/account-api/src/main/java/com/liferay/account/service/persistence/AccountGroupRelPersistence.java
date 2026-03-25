@@ -121,32 +121,6 @@ public interface AccountGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last account group rel in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel
-	 * @throws NoSuchGroupRelException if a matching account group rel could not be found
-	 */
-	public AccountGroupRel findByAccountGroupId_Last(
-			long accountGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-				orderByComparator)
-		throws NoSuchGroupRelException;
-
-	/**
-	 * Returns the last account group rel in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel, or <code>null</code> if a matching account group rel could not be found
-	 */
-	public AccountGroupRel fetchByAccountGroupId_Last(
-		long accountGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-			orderByComparator);
-
-	/**
 	 * Removes all the account group rels where accountGroupId = &#63; from the database.
 	 *
 	 * @param accountGroupId the account group ID
@@ -251,34 +225,6 @@ public interface AccountGroupRelPersistence
 	 * @return the first matching account group rel, or <code>null</code> if a matching account group rel could not be found
 	 */
 	public AccountGroupRel fetchByA_C_First(
-		long accountGroupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-			orderByComparator);
-
-	/**
-	 * Returns the last account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel
-	 * @throws NoSuchGroupRelException if a matching account group rel could not be found
-	 */
-	public AccountGroupRel findByA_C_Last(
-			long accountGroupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-				orderByComparator)
-		throws NoSuchGroupRelException;
-
-	/**
-	 * Returns the last account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel, or <code>null</code> if a matching account group rel could not be found
-	 */
-	public AccountGroupRel fetchByA_C_Last(
 		long accountGroupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
 			orderByComparator);
@@ -390,34 +336,6 @@ public interface AccountGroupRelPersistence
 	 * @return the first matching account group rel, or <code>null</code> if a matching account group rel could not be found
 	 */
 	public AccountGroupRel fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-			orderByComparator);
-
-	/**
-	 * Returns the last account group rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel
-	 * @throws NoSuchGroupRelException if a matching account group rel could not be found
-	 */
-	public AccountGroupRel findByC_C_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-				orderByComparator)
-		throws NoSuchGroupRelException;
-
-	/**
-	 * Returns the last account group rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account group rel, or <code>null</code> if a matching account group rel could not be found
-	 */
-	public AccountGroupRel fetchByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
 			orderByComparator);
@@ -620,4 +538,4 @@ public interface AccountGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1237926579
+// LIFERAY-SERVICE-BUILDER-HASH:-1832639000

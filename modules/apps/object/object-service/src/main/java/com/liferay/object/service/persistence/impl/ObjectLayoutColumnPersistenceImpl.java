@@ -320,66 +320,6 @@ public class ObjectLayoutColumnPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a matching object layout column could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectLayoutColumn> orderByComparator)
-		throws NoSuchObjectLayoutColumnException {
-
-		ObjectLayoutColumn objectLayoutColumn = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (objectLayoutColumn != null) {
-			return objectLayoutColumn;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutColumnException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout column in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout column, or <code>null</code> if a matching object layout column could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectLayoutColumn> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutColumn> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout columns where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -713,72 +653,6 @@ public class ObjectLayoutColumnPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a matching object layout column could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectLayoutColumn> orderByComparator)
-		throws NoSuchObjectLayoutColumnException {
-
-		ObjectLayoutColumn objectLayoutColumn = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectLayoutColumn != null) {
-			return objectLayoutColumn;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutColumnException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout column, or <code>null</code> if a matching object layout column could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectLayoutColumn> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutColumn> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout columns where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1097,67 +971,6 @@ public class ObjectLayoutColumnPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object layout column in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a matching object layout column could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn findByObjectFieldId_Last(
-			long objectFieldId,
-			OrderByComparator<ObjectLayoutColumn> orderByComparator)
-		throws NoSuchObjectLayoutColumnException {
-
-		ObjectLayoutColumn objectLayoutColumn = fetchByObjectFieldId_Last(
-			objectFieldId, orderByComparator);
-
-		if (objectLayoutColumn != null) {
-			return objectLayoutColumn;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectFieldId=");
-		sb.append(objectFieldId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutColumnException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout column in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout column, or <code>null</code> if a matching object layout column could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn fetchByObjectFieldId_Last(
-		long objectFieldId,
-		OrderByComparator<ObjectLayoutColumn> orderByComparator) {
-
-		int count = countByObjectFieldId(objectFieldId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutColumn> list = findByObjectFieldId(
-			objectFieldId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object layout columns where objectFieldId = &#63; from the database.
 	 *
 	 * @param objectFieldId the object field ID
@@ -1445,67 +1258,6 @@ public class ObjectLayoutColumnPersistenceImpl
 
 		List<ObjectLayoutColumn> list = findByObjectLayoutRowId(
 			objectLayoutRowId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object layout column in the ordered set where objectLayoutRowId = &#63;.
-	 *
-	 * @param objectLayoutRowId the object layout row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a matching object layout column could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn findByObjectLayoutRowId_Last(
-			long objectLayoutRowId,
-			OrderByComparator<ObjectLayoutColumn> orderByComparator)
-		throws NoSuchObjectLayoutColumnException {
-
-		ObjectLayoutColumn objectLayoutColumn = fetchByObjectLayoutRowId_Last(
-			objectLayoutRowId, orderByComparator);
-
-		if (objectLayoutColumn != null) {
-			return objectLayoutColumn;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectLayoutRowId=");
-		sb.append(objectLayoutRowId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutColumnException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object layout column in the ordered set where objectLayoutRowId = &#63;.
-	 *
-	 * @param objectLayoutRowId the object layout row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout column, or <code>null</code> if a matching object layout column could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn fetchByObjectLayoutRowId_Last(
-		long objectLayoutRowId,
-		OrderByComparator<ObjectLayoutColumn> orderByComparator) {
-
-		int count = countByObjectLayoutRowId(objectLayoutRowId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectLayoutColumn> list = findByObjectLayoutRowId(
-			objectLayoutRowId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2307,4 +2059,4 @@ public class ObjectLayoutColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1180451709
+// LIFERAY-SERVICE-BUILDER-HASH:759746207

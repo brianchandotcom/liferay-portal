@@ -213,35 +213,6 @@ public class BasicEntryUtil {
 	}
 
 	/**
-	 * Returns the last basic entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching basic entry
-	 * @throws NoSuchBasicEntryException if a matching basic entry could not be found
-	 */
-	public static BasicEntry findByGroupId_Last(
-			long groupId, OrderByComparator<BasicEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchBasicEntryException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last basic entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching basic entry, or <code>null</code> if a matching basic entry could not be found
-	 */
-	public static BasicEntry fetchByGroupId_Last(
-		long groupId, OrderByComparator<BasicEntry> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the basic entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -711,4 +682,4 @@ public class BasicEntryUtil {
 	private static volatile BasicEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:281110133
+// LIFERAY-SERVICE-BUILDER-HASH:972724438

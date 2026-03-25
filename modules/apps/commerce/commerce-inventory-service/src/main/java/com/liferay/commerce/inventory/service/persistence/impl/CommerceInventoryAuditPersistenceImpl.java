@@ -315,67 +315,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce inventory audit in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory audit
-	 * @throws NoSuchInventoryAuditException if a matching commerce inventory audit could not be found
-	 */
-	@Override
-	public CommerceInventoryAudit findByLtCreateDate_Last(
-			Date createDate,
-			OrderByComparator<CommerceInventoryAudit> orderByComparator)
-		throws NoSuchInventoryAuditException {
-
-		CommerceInventoryAudit commerceInventoryAudit =
-			fetchByLtCreateDate_Last(createDate, orderByComparator);
-
-		if (commerceInventoryAudit != null) {
-			return commerceInventoryAudit;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryAuditException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory audit in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory audit, or <code>null</code> if a matching commerce inventory audit could not be found
-	 */
-	@Override
-	public CommerceInventoryAudit fetchByLtCreateDate_Last(
-		Date createDate,
-		OrderByComparator<CommerceInventoryAudit> orderByComparator) {
-
-		int count = countByLtCreateDate(createDate);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryAudit> list = findByLtCreateDate(
-			createDate, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the commerce inventory audits where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -731,78 +670,6 @@ public class CommerceInventoryAuditPersistenceImpl
 
 		List<CommerceInventoryAudit> list = findByC_S_U(
 			companyId, sku, unitOfMeasureKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory audit
-	 * @throws NoSuchInventoryAuditException if a matching commerce inventory audit could not be found
-	 */
-	@Override
-	public CommerceInventoryAudit findByC_S_U_Last(
-			long companyId, String sku, String unitOfMeasureKey,
-			OrderByComparator<CommerceInventoryAudit> orderByComparator)
-		throws NoSuchInventoryAuditException {
-
-		CommerceInventoryAudit commerceInventoryAudit = fetchByC_S_U_Last(
-			companyId, sku, unitOfMeasureKey, orderByComparator);
-
-		if (commerceInventoryAudit != null) {
-			return commerceInventoryAudit;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryAuditException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce inventory audit, or <code>null</code> if a matching commerce inventory audit could not be found
-	 */
-	@Override
-	public CommerceInventoryAudit fetchByC_S_U_Last(
-		long companyId, String sku, String unitOfMeasureKey,
-		OrderByComparator<CommerceInventoryAudit> orderByComparator) {
-
-		int count = countByC_S_U(companyId, sku, unitOfMeasureKey);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceInventoryAudit> list = findByC_S_U(
-			companyId, sku, unitOfMeasureKey, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1635,4 +1502,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1733061353
+// LIFERAY-SERVICE-BUILDER-HASH:-572787172

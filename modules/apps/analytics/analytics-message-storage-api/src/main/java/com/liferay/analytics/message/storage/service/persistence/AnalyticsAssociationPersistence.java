@@ -131,34 +131,6 @@ public interface AnalyticsAssociationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and associationClassName = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association
-	 * @throws NoSuchAssociationException if a matching analytics association could not be found
-	 */
-	public AnalyticsAssociation findByC_A_Last(
-			long companyId, String associationClassName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException;
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and associationClassName = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association, or <code>null</code> if a matching analytics association could not be found
-	 */
-	public AnalyticsAssociation fetchByC_A_Last(
-		long companyId, String associationClassName,
-		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
-			orderByComparator);
-
-	/**
 	 * Removes all the analytics associations where companyId = &#63; and associationClassName = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -274,36 +246,6 @@ public interface AnalyticsAssociationPersistence
 	 * @return the first matching analytics association, or <code>null</code> if a matching analytics association could not be found
 	 */
 	public AnalyticsAssociation fetchByC_GtM_A_First(
-		long companyId, Date modifiedDate, String associationClassName,
-		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
-			orderByComparator);
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and associationClassName = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association
-	 * @throws NoSuchAssociationException if a matching analytics association could not be found
-	 */
-	public AnalyticsAssociation findByC_GtM_A_Last(
-			long companyId, Date modifiedDate, String associationClassName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException;
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and associationClassName = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association, or <code>null</code> if a matching analytics association could not be found
-	 */
-	public AnalyticsAssociation fetchByC_GtM_A_Last(
 		long companyId, Date modifiedDate, String associationClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
 			orderByComparator);
@@ -429,37 +371,6 @@ public interface AnalyticsAssociationPersistence
 	 * @return the first matching analytics association, or <code>null</code> if a matching analytics association could not be found
 	 */
 	public AnalyticsAssociation fetchByC_A_A_First(
-		long companyId, String associationClassName, long associationClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
-			orderByComparator);
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param associationClassPK the association class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association
-	 * @throws NoSuchAssociationException if a matching analytics association could not be found
-	 */
-	public AnalyticsAssociation findByC_A_A_Last(
-			long companyId, String associationClassName,
-			long associationClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException;
-
-	/**
-	 * Returns the last analytics association in the ordered set where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param associationClassPK the association class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching analytics association, or <code>null</code> if a matching analytics association could not be found
-	 */
-	public AnalyticsAssociation fetchByC_A_A_Last(
 		long companyId, String associationClassName, long associationClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
 			orderByComparator);
@@ -608,4 +519,4 @@ public interface AnalyticsAssociationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:751612227
+// LIFERAY-SERVICE-BUILDER-HASH:616006239

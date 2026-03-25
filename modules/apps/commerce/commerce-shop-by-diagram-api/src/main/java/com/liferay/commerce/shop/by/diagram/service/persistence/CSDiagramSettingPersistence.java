@@ -121,32 +121,6 @@ public interface CSDiagramSettingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last cs diagram setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram setting
-	 * @throws NoSuchCSDiagramSettingException if a matching cs diagram setting could not be found
-	 */
-	public CSDiagramSetting findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramSetting>
-				orderByComparator)
-		throws NoSuchCSDiagramSettingException;
-
-	/**
-	 * Returns the last cs diagram setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram setting, or <code>null</code> if a matching cs diagram setting could not be found
-	 */
-	public CSDiagramSetting fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramSetting>
-			orderByComparator);
-
-	/**
 	 * Removes all the cs diagram settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -251,34 +225,6 @@ public interface CSDiagramSettingPersistence
 	 * @return the first matching cs diagram setting, or <code>null</code> if a matching cs diagram setting could not be found
 	 */
 	public CSDiagramSetting fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramSetting>
-			orderByComparator);
-
-	/**
-	 * Returns the last cs diagram setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram setting
-	 * @throws NoSuchCSDiagramSettingException if a matching cs diagram setting could not be found
-	 */
-	public CSDiagramSetting findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramSetting>
-				orderByComparator)
-		throws NoSuchCSDiagramSettingException;
-
-	/**
-	 * Returns the last cs diagram setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cs diagram setting, or <code>null</code> if a matching cs diagram setting could not be found
-	 */
-	public CSDiagramSetting fetchByUuid_C_Last(
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramSetting>
 			orderByComparator);
@@ -466,4 +412,4 @@ public interface CSDiagramSettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2034780948
+// LIFERAY-SERVICE-BUILDER-HASH:-1618707552

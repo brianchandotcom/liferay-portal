@@ -122,32 +122,6 @@ public interface PortletPreferenceValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
-	 */
-	public PortletPreferenceValue findByPortletPreferencesId_Last(
-			long portletPreferencesId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException;
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
-	 */
-	public PortletPreferenceValue fetchByPortletPreferencesId_Last(
-		long portletPreferencesId,
-		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferenceValue>
-			orderByComparator);
-
-	/**
 	 * Removes all the portlet preference values where portletPreferencesId = &#63; from the database.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
@@ -252,34 +226,6 @@ public interface PortletPreferenceValuePersistence
 	 * @return the first matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
 	 */
 	public PortletPreferenceValue fetchByP_N_First(
-		long portletPreferencesId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferenceValue>
-			orderByComparator);
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
-	 */
-	public PortletPreferenceValue findByP_N_Last(
-			long portletPreferencesId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException;
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
-	 */
-	public PortletPreferenceValue fetchByP_N_Last(
 		long portletPreferencesId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferenceValue>
 			orderByComparator);
@@ -397,36 +343,6 @@ public interface PortletPreferenceValuePersistence
 	 * @return the first matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
 	 */
 	public PortletPreferenceValue fetchByC_N_SV_First(
-		long companyId, String name, String smallValue,
-		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferenceValue>
-			orderByComparator);
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
-	 */
-	public PortletPreferenceValue findByC_N_SV_Last(
-			long companyId, String name, String smallValue,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException;
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
-	 */
-	public PortletPreferenceValue fetchByC_N_SV_Last(
 		long companyId, String name, String smallValue,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferenceValue>
 			orderByComparator);
@@ -613,36 +529,6 @@ public interface PortletPreferenceValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
-	 */
-	public PortletPreferenceValue findByP_N_SV_Last(
-			long portletPreferencesId, String name, String smallValue,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException;
-
-	/**
-	 * Returns the last portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
-	 */
-	public PortletPreferenceValue fetchByP_N_SV_Last(
-		long portletPreferencesId, String name, String smallValue,
-		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferenceValue>
-			orderByComparator);
-
-	/**
 	 * Removes all the portlet preference values where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63; from the database.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
@@ -788,4 +674,4 @@ public interface PortletPreferenceValuePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:700217328
+// LIFERAY-SERVICE-BUILDER-HASH:1819561808

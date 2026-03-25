@@ -121,32 +121,6 @@ public interface KBTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template
-	 * @throws NoSuchTemplateException if a matching kb template could not be found
-	 */
-	public KBTemplate findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<KBTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last kb template in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
-	 */
-	public KBTemplate fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -305,34 +279,6 @@ public interface KBTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last kb template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template
-	 * @throws NoSuchTemplateException if a matching kb template could not be found
-	 */
-	public KBTemplate findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last kb template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
-	 */
-	public KBTemplate fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate>
-			orderByComparator);
-
-	/**
 	 * Removes all the kb templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,32 +378,6 @@ public interface KBTemplatePersistence
 	 * @return the first matching kb template, or <code>null</code> if a matching kb template could not be found
 	 */
 	public KBTemplate fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the last kb template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template
-	 * @throws NoSuchTemplateException if a matching kb template could not be found
-	 */
-	public KBTemplate findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBTemplate>
-				orderByComparator)
-		throws NoSuchTemplateException;
-
-	/**
-	 * Returns the last kb template in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
-	 */
-	public KBTemplate fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<KBTemplate>
 			orderByComparator);
@@ -646,4 +566,4 @@ public interface KBTemplatePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2093828459
+// LIFERAY-SERVICE-BUILDER-HASH:942008066

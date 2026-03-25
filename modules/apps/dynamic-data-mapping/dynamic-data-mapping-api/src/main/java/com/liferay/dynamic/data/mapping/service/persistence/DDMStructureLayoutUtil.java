@@ -214,36 +214,6 @@ public class DDMStructureLayoutUtil {
 	}
 
 	/**
-	 * Returns the last ddm structure layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout findByUuid_Last(
-			String uuid,
-			OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByUuid_Last(
-		String uuid, OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm structure layouts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -441,41 +411,6 @@ public class DDMStructureLayoutUtil {
 	}
 
 	/**
-	 * Returns the last ddm structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm structure layouts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -597,36 +532,6 @@ public class DDMStructureLayoutUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout findByGroupId_Last(
-			long groupId,
-			OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByGroupId_Last(
-		long groupId, OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -753,39 +658,6 @@ public class DDMStructureLayoutUtil {
 		OrderByComparator<DDMStructureLayout> orderByComparator) {
 
 		return getPersistence().fetchByStructureLayoutKey_First(
-			structureLayoutKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where structureLayoutKey = &#63;.
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout findByStructureLayoutKey_Last(
-			String structureLayoutKey,
-			OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByStructureLayoutKey_Last(
-			structureLayoutKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where structureLayoutKey = &#63;.
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByStructureLayoutKey_Last(
-		String structureLayoutKey,
-		OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return getPersistence().fetchByStructureLayoutKey_Last(
 			structureLayoutKey, orderByComparator);
 	}
 
@@ -984,41 +856,6 @@ public class DDMStructureLayoutUtil {
 		OrderByComparator<DDMStructureLayout> orderByComparator) {
 
 		return getPersistence().fetchByG_C_First(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout findByG_C_Last(
-			long groupId, long classNameId,
-			OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByG_C_Last(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByG_C_Last(
-		long groupId, long classNameId,
-		OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return getPersistence().fetchByG_C_Last(
 			groupId, classNameId, orderByComparator);
 	}
 
@@ -1250,43 +1087,6 @@ public class DDMStructureLayoutUtil {
 	}
 
 	/**
-	 * Returns the last ddm structure layout in the ordered set where groupId = &#63; and classNameId = &#63; and structureVersionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout findByG_C_SV_Last(
-			long groupId, long classNameId, long structureVersionId,
-			OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByG_C_SV_Last(
-			groupId, classNameId, structureVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where groupId = &#63; and classNameId = &#63; and structureVersionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByG_C_SV_Last(
-		long groupId, long classNameId, long structureVersionId,
-		OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return getPersistence().fetchByG_C_SV_Last(
-			groupId, classNameId, structureVersionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm structure layouts where groupId = &#63; and classNameId = &#63; and structureVersionId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1483,4 +1283,4 @@ public class DDMStructureLayoutUtil {
 	private static volatile DDMStructureLayoutPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1453699572
+// LIFERAY-SERVICE-BUILDER-HASH:563931536

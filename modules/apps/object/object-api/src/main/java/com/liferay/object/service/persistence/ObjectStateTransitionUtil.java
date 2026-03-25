@@ -216,37 +216,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Returns the last object state transition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object state transitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -375,41 +344,6 @@ public class ObjectStateTransitionUtil {
 		OrderByComparator<ObjectStateTransition> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -543,39 +477,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Returns the last object state transition in the ordered set where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition findByObjectStateFlowId_Last(
-			long objectStateFlowId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findByObjectStateFlowId_Last(
-			objectStateFlowId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition fetchByObjectStateFlowId_Last(
-		long objectStateFlowId,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().fetchByObjectStateFlowId_Last(
-			objectStateFlowId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object state transitions where objectStateFlowId = &#63; from the database.
 	 *
 	 * @param objectStateFlowId the object state flow ID
@@ -703,39 +604,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Returns the last object state transition in the ordered set where sourceObjectStateId = &#63;.
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition findBySourceObjectStateId_Last(
-			long sourceObjectStateId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findBySourceObjectStateId_Last(
-			sourceObjectStateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where sourceObjectStateId = &#63;.
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition fetchBySourceObjectStateId_Last(
-		long sourceObjectStateId,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().fetchBySourceObjectStateId_Last(
-			sourceObjectStateId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object state transitions where sourceObjectStateId = &#63; from the database.
 	 *
 	 * @param sourceObjectStateId the source object state ID
@@ -859,39 +727,6 @@ public class ObjectStateTransitionUtil {
 		OrderByComparator<ObjectStateTransition> orderByComparator) {
 
 		return getPersistence().fetchByTargetObjectStateId_First(
-			targetObjectStateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where targetObjectStateId = &#63;.
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition
-	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition findByTargetObjectStateId_Last(
-			long targetObjectStateId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findByTargetObjectStateId_Last(
-			targetObjectStateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object state transition in the ordered set where targetObjectStateId = &#63;.
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
-	 */
-	public static ObjectStateTransition fetchByTargetObjectStateId_Last(
-		long targetObjectStateId,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().fetchByTargetObjectStateId_Last(
 			targetObjectStateId, orderByComparator);
 	}
 
@@ -1087,4 +922,4 @@ public class ObjectStateTransitionUtil {
 	private static volatile ObjectStateTransitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1224135808
+// LIFERAY-SERVICE-BUILDER-HASH:1220322336

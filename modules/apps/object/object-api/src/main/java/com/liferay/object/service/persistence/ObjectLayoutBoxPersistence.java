@@ -120,32 +120,6 @@ public interface ObjectLayoutBoxPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object layout box in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a matching object layout box could not be found
-	 */
-	public ObjectLayoutBox findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutBox>
-				orderByComparator)
-		throws NoSuchObjectLayoutBoxException;
-
-	/**
-	 * Returns the last object layout box in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box, or <code>null</code> if a matching object layout box could not be found
-	 */
-	public ObjectLayoutBox fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutBox>
-			orderByComparator);
-
-	/**
 	 * Removes all the object layout boxes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -255,34 +229,6 @@ public interface ObjectLayoutBoxPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the last object layout box in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a matching object layout box could not be found
-	 */
-	public ObjectLayoutBox findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutBox>
-				orderByComparator)
-		throws NoSuchObjectLayoutBoxException;
-
-	/**
-	 * Returns the last object layout box in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box, or <code>null</code> if a matching object layout box could not be found
-	 */
-	public ObjectLayoutBox fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutBox>
-			orderByComparator);
-
-	/**
 	 * Removes all the object layout boxes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -383,32 +329,6 @@ public interface ObjectLayoutBoxPersistence
 	 * @return the first matching object layout box, or <code>null</code> if a matching object layout box could not be found
 	 */
 	public ObjectLayoutBox fetchByObjectLayoutTabId_First(
-		long objectLayoutTabId,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutBox>
-			orderByComparator);
-
-	/**
-	 * Returns the last object layout box in the ordered set where objectLayoutTabId = &#63;.
-	 *
-	 * @param objectLayoutTabId the object layout tab ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a matching object layout box could not be found
-	 */
-	public ObjectLayoutBox findByObjectLayoutTabId_Last(
-			long objectLayoutTabId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutBox>
-				orderByComparator)
-		throws NoSuchObjectLayoutBoxException;
-
-	/**
-	 * Returns the last object layout box in the ordered set where objectLayoutTabId = &#63;.
-	 *
-	 * @param objectLayoutTabId the object layout tab ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object layout box, or <code>null</code> if a matching object layout box could not be found
-	 */
-	public ObjectLayoutBox fetchByObjectLayoutTabId_Last(
 		long objectLayoutTabId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutBox>
 			orderByComparator);
@@ -549,4 +469,4 @@ public interface ObjectLayoutBoxPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-481317294
+// LIFERAY-SERVICE-BUILDER-HASH:912144453

@@ -324,65 +324,6 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout friendly url in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByUuid_Last(
-			String uuid, OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-
-		LayoutFriendlyURL layoutFriendlyURL = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutFriendlyURLException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByUuid_Last(
-		String uuid, OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutFriendlyURL> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout friendly urls where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -930,72 +871,6 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout friendly url in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-
-		LayoutFriendlyURL layoutFriendlyURL = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutFriendlyURLException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutFriendlyURL> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout friendly urls where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1321,66 +1196,6 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout friendly url in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByGroupId_Last(
-			long groupId,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-
-		LayoutFriendlyURL layoutFriendlyURL = fetchByGroupId_Last(
-			groupId, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutFriendlyURLException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByGroupId_Last(
-		long groupId, OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutFriendlyURL> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout friendly urls where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1681,67 +1496,6 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout friendly url in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-
-		LayoutFriendlyURL layoutFriendlyURL = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutFriendlyURLException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutFriendlyURL> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the layout friendly urls where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2026,65 +1780,6 @@ public class LayoutFriendlyURLPersistenceImpl
 
 		List<LayoutFriendlyURL> list = findByPlid(
 			plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByPlid_Last(
-			long plid, OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-
-		LayoutFriendlyURL layoutFriendlyURL = fetchByPlid_Last(
-			plid, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutFriendlyURLException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByPlid_Last(
-		long plid, OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-
-		int count = countByPlid(plid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutFriendlyURL> list = findByPlid(
-			plid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2416,72 +2111,6 @@ public class LayoutFriendlyURLPersistenceImpl
 
 		List<LayoutFriendlyURL> list = findByC_F(
 			companyId, friendlyURL, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where companyId = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param friendlyURL the friendly url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByC_F_Last(
-			long companyId, String friendlyURL,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-
-		LayoutFriendlyURL layoutFriendlyURL = fetchByC_F_Last(
-			companyId, friendlyURL, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", friendlyURL=");
-		sb.append(friendlyURL);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutFriendlyURLException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where companyId = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param friendlyURL the friendly url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByC_F_Last(
-		long companyId, String friendlyURL,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-
-		int count = countByC_F(companyId, friendlyURL);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutFriendlyURL> list = findByC_F(
-			companyId, friendlyURL, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2838,72 +2467,6 @@ public class LayoutFriendlyURLPersistenceImpl
 
 		List<LayoutFriendlyURL> list = findByP_F(
 			plid, friendlyURL, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where plid = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param friendlyURL the friendly url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByP_F_Last(
-			long plid, String friendlyURL,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-
-		LayoutFriendlyURL layoutFriendlyURL = fetchByP_F_Last(
-			plid, friendlyURL, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append(", friendlyURL=");
-		sb.append(friendlyURL);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutFriendlyURLException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where plid = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param friendlyURL the friendly url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByP_F_Last(
-		long plid, String friendlyURL,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-
-		int count = countByP_F(plid, friendlyURL);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutFriendlyURL> list = findByP_F(
-			plid, friendlyURL, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3936,78 +3499,6 @@ public class LayoutFriendlyURLPersistenceImpl
 
 		List<LayoutFriendlyURL> list = findByG_P_F(
 			groupId, privateLayout, friendlyURL, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByG_P_F_Last(
-			long groupId, boolean privateLayout, String friendlyURL,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-
-		LayoutFriendlyURL layoutFriendlyURL = fetchByG_P_F_Last(
-			groupId, privateLayout, friendlyURL, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", friendlyURL=");
-		sb.append(friendlyURL);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutFriendlyURLException(sb.toString());
-	}
-
-	/**
-	 * Returns the last layout friendly url in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByG_P_F_Last(
-		long groupId, boolean privateLayout, String friendlyURL,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-
-		int count = countByG_P_F(groupId, privateLayout, friendlyURL);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutFriendlyURL> list = findByG_P_F(
-			groupId, privateLayout, friendlyURL, count - 1, count,
-			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5550,4 +5041,4 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1879797054
+// LIFERAY-SERVICE-BUILDER-HASH:-14446724

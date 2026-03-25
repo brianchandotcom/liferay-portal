@@ -339,65 +339,6 @@ public class CommerceChannelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce channel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel findByUuid_Last(
-			String uuid, OrderByComparator<CommerceChannel> orderByComparator)
-		throws NoSuchChannelException {
-
-		CommerceChannel commerceChannel = fetchByUuid_Last(
-			uuid, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchChannelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel fetchByUuid_Last(
-		String uuid, OrderByComparator<CommerceChannel> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannel> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -963,72 +904,6 @@ public class CommerceChannelPersistenceImpl
 
 		List<CommerceChannel> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws NoSuchChannelException {
-
-		CommerceChannel commerceChannel = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchChannelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CommerceChannel> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannel> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1608,66 +1483,6 @@ public class CommerceChannelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce channel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws NoSuchChannelException {
-
-		CommerceChannel commerceChannel = fetchByCompanyId_Last(
-			companyId, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchChannelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CommerceChannel> orderByComparator) {
-
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannel> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2161,67 +1976,6 @@ public class CommerceChannelPersistenceImpl
 
 		List<CommerceChannel> list = findByAccountEntryId(
 			accountEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel findByAccountEntryId_Last(
-			long accountEntryId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws NoSuchChannelException {
-
-		CommerceChannel commerceChannel = fetchByAccountEntryId_Last(
-			accountEntryId, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchChannelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel fetchByAccountEntryId_Last(
-		long accountEntryId,
-		OrderByComparator<CommerceChannel> orderByComparator) {
-
-		int count = countByAccountEntryId(accountEntryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannel> list = findByAccountEntryId(
-			accountEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2726,67 +2480,6 @@ public class CommerceChannelPersistenceImpl
 
 		List<CommerceChannel> list = findBySiteGroupId(
 			siteGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where siteGroupId = &#63;.
-	 *
-	 * @param siteGroupId the site group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel
-	 * @throws NoSuchChannelException if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel findBySiteGroupId_Last(
-			long siteGroupId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws NoSuchChannelException {
-
-		CommerceChannel commerceChannel = fetchBySiteGroupId_Last(
-			siteGroupId, orderByComparator);
-
-		if (commerceChannel != null) {
-			return commerceChannel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("siteGroupId=");
-		sb.append(siteGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchChannelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce channel in the ordered set where siteGroupId = &#63;.
-	 *
-	 * @param siteGroupId the site group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
-	 */
-	@Override
-	public CommerceChannel fetchBySiteGroupId_Last(
-		long siteGroupId,
-		OrderByComparator<CommerceChannel> orderByComparator) {
-
-		int count = countBySiteGroupId(siteGroupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceChannel> list = findBySiteGroupId(
-			siteGroupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4411,4 +4104,4 @@ public class CommerceChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2121674242
+// LIFERAY-SERVICE-BUILDER-HASH:270803507

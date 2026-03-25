@@ -222,40 +222,6 @@ public class PortletItemUtil {
 	}
 
 	/**
-	 * Returns the last portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet item
-	 * @throws NoSuchPortletItemException if a matching portlet item could not be found
-	 */
-	public static PortletItem findByG_C_Last(
-			long groupId, long classNameId,
-			OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchPortletItemException {
-
-		return getPersistence().findByG_C_Last(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet item, or <code>null</code> if a matching portlet item could not be found
-	 */
-	public static PortletItem fetchByG_C_Last(
-		long groupId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator) {
-
-		return getPersistence().fetchByG_C_Last(
-			groupId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the portlet items where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -393,42 +359,6 @@ public class PortletItemUtil {
 		OrderByComparator<PortletItem> orderByComparator) {
 
 		return getPersistence().fetchByG_P_C_First(
-			groupId, portletId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param portletId the portlet ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet item
-	 * @throws NoSuchPortletItemException if a matching portlet item could not be found
-	 */
-	public static PortletItem findByG_P_C_Last(
-			long groupId, String portletId, long classNameId,
-			OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchPortletItemException {
-
-		return getPersistence().findByG_P_C_Last(
-			groupId, portletId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param portletId the portlet ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet item, or <code>null</code> if a matching portlet item could not be found
-	 */
-	public static PortletItem fetchByG_P_C_Last(
-		long groupId, String portletId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator) {
-
-		return getPersistence().fetchByG_P_C_Last(
 			groupId, portletId, classNameId, orderByComparator);
 	}
 
@@ -702,4 +632,4 @@ public class PortletItemUtil {
 	private static volatile PortletItemPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1452354595
+// LIFERAY-SERVICE-BUILDER-HASH:1789189387

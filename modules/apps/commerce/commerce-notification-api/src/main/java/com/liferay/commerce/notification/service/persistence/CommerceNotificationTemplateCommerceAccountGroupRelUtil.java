@@ -253,45 +253,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelUtil {
 	}
 
 	/**
-	 * Returns the last commerce notification template commerce account group rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template commerce account group rel
-	 * @throws NoSuchNotificationTemplateCommerceAccountGroupRelException if a matching commerce notification template commerce account group rel could not be found
-	 */
-	public static CommerceNotificationTemplateCommerceAccountGroupRel
-			findByCommerceNotificationTemplateId_Last(
-				long commerceNotificationTemplateId,
-				OrderByComparator
-					<CommerceNotificationTemplateCommerceAccountGroupRel>
-						orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationTemplateCommerceAccountGroupRelException {
-
-		return getPersistence().findByCommerceNotificationTemplateId_Last(
-			commerceNotificationTemplateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification template commerce account group rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template commerce account group rel, or <code>null</code> if a matching commerce notification template commerce account group rel could not be found
-	 */
-	public static CommerceNotificationTemplateCommerceAccountGroupRel
-		fetchByCommerceNotificationTemplateId_Last(
-			long commerceNotificationTemplateId,
-			OrderByComparator
-				<CommerceNotificationTemplateCommerceAccountGroupRel>
-					orderByComparator) {
-
-		return getPersistence().fetchByCommerceNotificationTemplateId_Last(
-			commerceNotificationTemplateId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63; from the database.
 	 *
 	 * @param commerceNotificationTemplateId the commerce notification template ID
@@ -436,45 +397,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelUtil {
 					orderByComparator) {
 
 		return getPersistence().fetchByCommerceAccountGroupId_First(
-			commerceAccountGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification template commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template commerce account group rel
-	 * @throws NoSuchNotificationTemplateCommerceAccountGroupRelException if a matching commerce notification template commerce account group rel could not be found
-	 */
-	public static CommerceNotificationTemplateCommerceAccountGroupRel
-			findByCommerceAccountGroupId_Last(
-				long commerceAccountGroupId,
-				OrderByComparator
-					<CommerceNotificationTemplateCommerceAccountGroupRel>
-						orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationTemplateCommerceAccountGroupRelException {
-
-		return getPersistence().findByCommerceAccountGroupId_Last(
-			commerceAccountGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce notification template commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce notification template commerce account group rel, or <code>null</code> if a matching commerce notification template commerce account group rel could not be found
-	 */
-	public static CommerceNotificationTemplateCommerceAccountGroupRel
-		fetchByCommerceAccountGroupId_Last(
-			long commerceAccountGroupId,
-			OrderByComparator
-				<CommerceNotificationTemplateCommerceAccountGroupRel>
-					orderByComparator) {
-
-		return getPersistence().fetchByCommerceAccountGroupId_Last(
 			commerceAccountGroupId, orderByComparator);
 	}
 
@@ -788,4 +710,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelUtil {
 			_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1714681298
+// LIFERAY-SERVICE-BUILDER-HASH:-1015248942

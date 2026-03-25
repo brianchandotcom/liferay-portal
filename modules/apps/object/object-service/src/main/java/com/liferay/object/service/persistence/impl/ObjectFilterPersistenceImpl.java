@@ -315,64 +315,6 @@ public class ObjectFilterPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter
-	 * @throws NoSuchObjectFilterException if a matching object filter could not be found
-	 */
-	@Override
-	public ObjectFilter findByUuid_Last(
-			String uuid, OrderByComparator<ObjectFilter> orderByComparator)
-		throws NoSuchObjectFilterException {
-
-		ObjectFilter objectFilter = fetchByUuid_Last(uuid, orderByComparator);
-
-		if (objectFilter != null) {
-			return objectFilter;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFilterException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter, or <code>null</code> if a matching object filter could not be found
-	 */
-	@Override
-	public ObjectFilter fetchByUuid_Last(
-		String uuid, OrderByComparator<ObjectFilter> orderByComparator) {
-
-		int count = countByUuid(uuid);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFilter> list = findByUuid(
-			uuid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object filters where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -706,72 +648,6 @@ public class ObjectFilterPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter
-	 * @throws NoSuchObjectFilterException if a matching object filter could not be found
-	 */
-	@Override
-	public ObjectFilter findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectFilter> orderByComparator)
-		throws NoSuchObjectFilterException {
-
-		ObjectFilter objectFilter = fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-
-		if (objectFilter != null) {
-			return objectFilter;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFilterException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object filter in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter, or <code>null</code> if a matching object filter could not be found
-	 */
-	@Override
-	public ObjectFilter fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectFilter> orderByComparator) {
-
-		int count = countByUuid_C(uuid, companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFilter> list = findByUuid_C(
-			uuid, companyId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
 	 * Removes all the object filters where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1078,66 +954,6 @@ public class ObjectFilterPersistenceImpl
 
 		List<ObjectFilter> list = findByObjectFieldId(
 			objectFieldId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last object filter in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter
-	 * @throws NoSuchObjectFilterException if a matching object filter could not be found
-	 */
-	@Override
-	public ObjectFilter findByObjectFieldId_Last(
-			long objectFieldId,
-			OrderByComparator<ObjectFilter> orderByComparator)
-		throws NoSuchObjectFilterException {
-
-		ObjectFilter objectFilter = fetchByObjectFieldId_Last(
-			objectFieldId, orderByComparator);
-
-		if (objectFilter != null) {
-			return objectFilter;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectFieldId=");
-		sb.append(objectFieldId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFilterException(sb.toString());
-	}
-
-	/**
-	 * Returns the last object filter in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object filter, or <code>null</code> if a matching object filter could not be found
-	 */
-	@Override
-	public ObjectFilter fetchByObjectFieldId_Last(
-		long objectFieldId, OrderByComparator<ObjectFilter> orderByComparator) {
-
-		int count = countByObjectFieldId(objectFieldId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<ObjectFilter> list = findByObjectFieldId(
-			objectFieldId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1903,4 +1719,4 @@ public class ObjectFilterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:560662150
+// LIFERAY-SERVICE-BUILDER-HASH:-1315202938

@@ -210,34 +210,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the last organization in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByUuid_Last(
-			String uuid, OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByUuid_Last(
-		String uuid, OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -422,40 +394,6 @@ public class OrganizationUtil {
 		OrderByComparator<Organization> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -648,36 +586,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the last organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByCompanyId_Last(
-			long companyId, OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -854,36 +762,6 @@ public class OrganizationUtil {
 		long companyId, OrderByComparator<Organization> orderByComparator) {
 
 		return getPersistence().fetchByCompanyIdLocations_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByCompanyIdLocations_Last(
-			long companyId, OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByCompanyIdLocations_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByCompanyIdLocations_Last(
-		long companyId, OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByCompanyIdLocations_Last(
 			companyId, orderByComparator);
 	}
 
@@ -1066,34 +944,6 @@ public class OrganizationUtil {
 		long logoId, OrderByComparator<Organization> orderByComparator) {
 
 		return getPersistence().fetchByLogoId_First(logoId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByLogoId_Last(
-			long logoId, OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByLogoId_Last(logoId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByLogoId_Last(
-		long logoId, OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByLogoId_Last(logoId, orderByComparator);
 	}
 
 	/**
@@ -1285,40 +1135,6 @@ public class OrganizationUtil {
 		OrderByComparator<Organization> orderByComparator) {
 
 		return getPersistence().fetchByC_P_First(
-			companyId, parentOrganizationId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByC_P_Last(
-			long companyId, long parentOrganizationId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByC_P_Last(
-			companyId, parentOrganizationId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByC_P_Last(
-		long companyId, long parentOrganizationId,
-		OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByC_P_Last(
 			companyId, parentOrganizationId, orderByComparator);
 	}
 
@@ -1522,40 +1338,6 @@ public class OrganizationUtil {
 		OrderByComparator<Organization> orderByComparator) {
 
 		return getPersistence().fetchByC_LikeT_First(
-			companyId, treePath, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByC_LikeT_Last(
-			long companyId, String treePath,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByC_LikeT_Last(
-			companyId, treePath, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByC_LikeT_Last(
-		long companyId, String treePath,
-		OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByC_LikeT_Last(
 			companyId, treePath, orderByComparator);
 	}
 
@@ -1822,40 +1604,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByC_LikeN_Last(
-			long companyId, String name,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByC_LikeN_Last(
-			companyId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByC_LikeN_Last(
-		long companyId, String name,
-		OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByC_LikeN_Last(
-			companyId, name, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63; and name LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2062,42 +1810,6 @@ public class OrganizationUtil {
 		OrderByComparator<Organization> orderByComparator) {
 
 		return getPersistence().fetchByGtO_C_P_First(
-			organizationId, companyId, parentOrganizationId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where organizationId &gt; &#63; and companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByGtO_C_P_Last(
-			long organizationId, long companyId, long parentOrganizationId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByGtO_C_P_Last(
-			organizationId, companyId, parentOrganizationId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where organizationId &gt; &#63; and companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByGtO_C_P_Last(
-		long organizationId, long companyId, long parentOrganizationId,
-		OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByGtO_C_P_Last(
 			organizationId, companyId, parentOrganizationId, orderByComparator);
 	}
 
@@ -2326,42 +2038,6 @@ public class OrganizationUtil {
 		OrderByComparator<Organization> orderByComparator) {
 
 		return getPersistence().fetchByC_P_LikeN_First(
-			companyId, parentOrganizationId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization
-	 * @throws NoSuchOrganizationException if a matching organization could not be found
-	 */
-	public static Organization findByC_P_LikeN_Last(
-			long companyId, long parentOrganizationId, String name,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByC_P_LikeN_Last(
-			companyId, parentOrganizationId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63; and name LIKE &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 */
-	public static Organization fetchByC_P_LikeN_Last(
-		long companyId, long parentOrganizationId, String name,
-		OrderByComparator<Organization> orderByComparator) {
-
-		return getPersistence().fetchByC_P_LikeN_Last(
 			companyId, parentOrganizationId, name, orderByComparator);
 	}
 
@@ -3126,4 +2802,4 @@ public class OrganizationUtil {
 	private static volatile OrganizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1208973501
+// LIFERAY-SERVICE-BUILDER-HASH:689259175

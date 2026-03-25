@@ -122,32 +122,6 @@ public interface CommercePriceListAccountRelPersistence
 			<CommercePriceListAccountRel> orderByComparator);
 
 	/**
-	 * Returns the last commerce price list account rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list account rel
-	 * @throws NoSuchPriceListAccountRelException if a matching commerce price list account rel could not be found
-	 */
-	public CommercePriceListAccountRel findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePriceListAccountRel> orderByComparator)
-		throws NoSuchPriceListAccountRelException;
-
-	/**
-	 * Returns the last commerce price list account rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list account rel, or <code>null</code> if a matching commerce price list account rel could not be found
-	 */
-	public CommercePriceListAccountRel fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommercePriceListAccountRel> orderByComparator);
-
-	/**
 	 * Removes all the commerce price list account rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -257,34 +231,6 @@ public interface CommercePriceListAccountRelPersistence
 			<CommercePriceListAccountRel> orderByComparator);
 
 	/**
-	 * Returns the last commerce price list account rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list account rel
-	 * @throws NoSuchPriceListAccountRelException if a matching commerce price list account rel could not be found
-	 */
-	public CommercePriceListAccountRel findByUuid_C_Last(
-			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePriceListAccountRel> orderByComparator)
-		throws NoSuchPriceListAccountRelException;
-
-	/**
-	 * Returns the last commerce price list account rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list account rel, or <code>null</code> if a matching commerce price list account rel could not be found
-	 */
-	public CommercePriceListAccountRel fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommercePriceListAccountRel> orderByComparator);
-
-	/**
 	 * Removes all the commerce price list account rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -387,32 +333,6 @@ public interface CommercePriceListAccountRelPersistence
 	 * @return the first matching commerce price list account rel, or <code>null</code> if a matching commerce price list account rel could not be found
 	 */
 	public CommercePriceListAccountRel fetchByCommercePriceListId_First(
-		long commercePriceListId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommercePriceListAccountRel> orderByComparator);
-
-	/**
-	 * Returns the last commerce price list account rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list account rel
-	 * @throws NoSuchPriceListAccountRelException if a matching commerce price list account rel could not be found
-	 */
-	public CommercePriceListAccountRel findByCommercePriceListId_Last(
-			long commercePriceListId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePriceListAccountRel> orderByComparator)
-		throws NoSuchPriceListAccountRelException;
-
-	/**
-	 * Returns the last commerce price list account rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce price list account rel, or <code>null</code> if a matching commerce price list account rel could not be found
-	 */
-	public CommercePriceListAccountRel fetchByCommercePriceListId_Last(
 		long commercePriceListId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommercePriceListAccountRel> orderByComparator);
@@ -616,4 +536,4 @@ public interface CommercePriceListAccountRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1677549229
+// LIFERAY-SERVICE-BUILDER-HASH:-1842921209

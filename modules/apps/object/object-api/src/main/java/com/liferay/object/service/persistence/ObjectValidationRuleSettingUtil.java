@@ -219,37 +219,6 @@ public class ObjectValidationRuleSettingUtil {
 	}
 
 	/**
-	 * Returns the last object validation rule setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule setting
-	 * @throws NoSuchObjectValidationRuleSettingException if a matching object validation rule setting could not be found
-	 */
-	public static ObjectValidationRuleSetting findByUuid_Last(
-			String uuid,
-			OrderByComparator<ObjectValidationRuleSetting> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleSettingException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object validation rule setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule setting, or <code>null</code> if a matching object validation rule setting could not be found
-	 */
-	public static ObjectValidationRuleSetting fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object validation rule settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -378,41 +347,6 @@ public class ObjectValidationRuleSettingUtil {
 		OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object validation rule setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule setting
-	 * @throws NoSuchObjectValidationRuleSettingException if a matching object validation rule setting could not be found
-	 */
-	public static ObjectValidationRuleSetting findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<ObjectValidationRuleSetting> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleSettingException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object validation rule setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule setting, or <code>null</code> if a matching object validation rule setting could not be found
-	 */
-	public static ObjectValidationRuleSetting fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -554,40 +488,6 @@ public class ObjectValidationRuleSettingUtil {
 	}
 
 	/**
-	 * Returns the last object validation rule setting in the ordered set where objectValidationRuleId = &#63;.
-	 *
-	 * @param objectValidationRuleId the object validation rule ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule setting
-	 * @throws NoSuchObjectValidationRuleSettingException if a matching object validation rule setting could not be found
-	 */
-	public static ObjectValidationRuleSetting findByObjectValidationRuleId_Last(
-			long objectValidationRuleId,
-			OrderByComparator<ObjectValidationRuleSetting> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleSettingException {
-
-		return getPersistence().findByObjectValidationRuleId_Last(
-			objectValidationRuleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object validation rule setting in the ordered set where objectValidationRuleId = &#63;.
-	 *
-	 * @param objectValidationRuleId the object validation rule ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule setting, or <code>null</code> if a matching object validation rule setting could not be found
-	 */
-	public static ObjectValidationRuleSetting
-		fetchByObjectValidationRuleId_Last(
-			long objectValidationRuleId,
-			OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
-
-		return getPersistence().fetchByObjectValidationRuleId_Last(
-			objectValidationRuleId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object validation rule settings where objectValidationRuleId = &#63; from the database.
 	 *
 	 * @param objectValidationRuleId the object validation rule ID
@@ -723,41 +623,6 @@ public class ObjectValidationRuleSettingUtil {
 		OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
 
 		return getPersistence().fetchByOVRI_N_First(
-			objectValidationRuleId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object validation rule setting in the ordered set where objectValidationRuleId = &#63; and name = &#63;.
-	 *
-	 * @param objectValidationRuleId the object validation rule ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule setting
-	 * @throws NoSuchObjectValidationRuleSettingException if a matching object validation rule setting could not be found
-	 */
-	public static ObjectValidationRuleSetting findByOVRI_N_Last(
-			long objectValidationRuleId, String name,
-			OrderByComparator<ObjectValidationRuleSetting> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleSettingException {
-
-		return getPersistence().findByOVRI_N_Last(
-			objectValidationRuleId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object validation rule setting in the ordered set where objectValidationRuleId = &#63; and name = &#63;.
-	 *
-	 * @param objectValidationRuleId the object validation rule ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object validation rule setting, or <code>null</code> if a matching object validation rule setting could not be found
-	 */
-	public static ObjectValidationRuleSetting fetchByOVRI_N_Last(
-		long objectValidationRuleId, String name,
-		OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
-
-		return getPersistence().fetchByOVRI_N_Last(
 			objectValidationRuleId, name, orderByComparator);
 	}
 
@@ -1114,4 +979,4 @@ public class ObjectValidationRuleSettingUtil {
 	private static volatile ObjectValidationRuleSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:686124065
+// LIFERAY-SERVICE-BUILDER-HASH:1574747415

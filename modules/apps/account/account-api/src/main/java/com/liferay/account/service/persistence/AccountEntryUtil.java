@@ -210,34 +210,6 @@ public class AccountEntryUtil {
 	}
 
 	/**
-	 * Returns the last account entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	public static AccountEntry findByUuid_Last(
-			String uuid, OrderByComparator<AccountEntry> orderByComparator)
-		throws com.liferay.account.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	public static AccountEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<AccountEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the account entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -422,40 +394,6 @@ public class AccountEntryUtil {
 		OrderByComparator<AccountEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	public static AccountEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<AccountEntry> orderByComparator)
-		throws com.liferay.account.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	public static AccountEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<AccountEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 	}
 
@@ -648,36 +586,6 @@ public class AccountEntryUtil {
 	}
 
 	/**
-	 * Returns the last account entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	public static AccountEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<AccountEntry> orderByComparator)
-		throws com.liferay.account.exception.NoSuchEntryException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	public static AccountEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<AccountEntry> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the account entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -862,40 +770,6 @@ public class AccountEntryUtil {
 		OrderByComparator<AccountEntry> orderByComparator) {
 
 		return getPersistence().fetchByC_S_First(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	public static AccountEntry findByC_S_Last(
-			long companyId, int status,
-			OrderByComparator<AccountEntry> orderByComparator)
-		throws com.liferay.account.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_S_Last(
-			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	public static AccountEntry fetchByC_S_Last(
-		long companyId, int status,
-		OrderByComparator<AccountEntry> orderByComparator) {
-
-		return getPersistence().fetchByC_S_Last(
 			companyId, status, orderByComparator);
 	}
 
@@ -1092,39 +966,6 @@ public class AccountEntryUtil {
 		OrderByComparator<AccountEntry> orderByComparator) {
 
 		return getPersistence().fetchByU_T_First(
-			userId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where userId = &#63; and type = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry
-	 * @throws NoSuchEntryException if a matching account entry could not be found
-	 */
-	public static AccountEntry findByU_T_Last(
-			long userId, String type,
-			OrderByComparator<AccountEntry> orderByComparator)
-		throws com.liferay.account.exception.NoSuchEntryException {
-
-		return getPersistence().findByU_T_Last(userId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the last account entry in the ordered set where userId = &#63; and type = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
-	 */
-	public static AccountEntry fetchByU_T_Last(
-		long userId, String type,
-		OrderByComparator<AccountEntry> orderByComparator) {
-
-		return getPersistence().fetchByU_T_Last(
 			userId, type, orderByComparator);
 	}
 
@@ -1440,4 +1281,4 @@ public class AccountEntryUtil {
 	private static volatile AccountEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:950207100
+// LIFERAY-SERVICE-BUILDER-HASH:-1121510796

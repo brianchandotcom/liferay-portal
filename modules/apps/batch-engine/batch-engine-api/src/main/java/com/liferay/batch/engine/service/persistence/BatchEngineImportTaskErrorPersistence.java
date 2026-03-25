@@ -124,32 +124,6 @@ public interface BatchEngineImportTaskErrorPersistence
 			<BatchEngineImportTaskError> orderByComparator);
 
 	/**
-	 * Returns the last batch engine import task error in the ordered set where batchEngineImportTaskId = &#63;.
-	 *
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine import task error
-	 * @throws NoSuchImportTaskErrorException if a matching batch engine import task error could not be found
-	 */
-	public BatchEngineImportTaskError findByBatchEngineImportTaskId_Last(
-			long batchEngineImportTaskId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<BatchEngineImportTaskError> orderByComparator)
-		throws NoSuchImportTaskErrorException;
-
-	/**
-	 * Returns the last batch engine import task error in the ordered set where batchEngineImportTaskId = &#63;.
-	 *
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching batch engine import task error, or <code>null</code> if a matching batch engine import task error could not be found
-	 */
-	public BatchEngineImportTaskError fetchByBatchEngineImportTaskId_Last(
-		long batchEngineImportTaskId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<BatchEngineImportTaskError> orderByComparator);
-
-	/**
 	 * Removes all the batch engine import task errors where batchEngineImportTaskId = &#63; from the database.
 	 *
 	 * @param batchEngineImportTaskId the batch engine import task ID
@@ -291,4 +265,4 @@ public interface BatchEngineImportTaskErrorPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:779915802
+// LIFERAY-SERVICE-BUILDER-HASH:1118745056

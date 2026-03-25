@@ -216,36 +216,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the last cp configuration list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList findByUuid_Last(
-			String uuid,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByUuid_Last(
-		String uuid, OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,41 +413,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the last cp configuration list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -600,39 +535,6 @@ public class CPConfigurationListUtil {
 		OrderByComparator<CPConfigurationList> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList findByCompanyId_Last(
-			long companyId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByCompanyId_Last(
-		long companyId,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
 	}
 
@@ -762,39 +664,6 @@ public class CPConfigurationListUtil {
 		OrderByComparator<CPConfigurationList> orderByComparator) {
 
 		return getPersistence().fetchByParentCPConfigurationListId_First(
-			parentCPConfigurationListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList findByParentCPConfigurationListId_Last(
-			long parentCPConfigurationListId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByParentCPConfigurationListId_Last(
-			parentCPConfigurationListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByParentCPConfigurationListId_Last(
-		long parentCPConfigurationListId,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().fetchByParentCPConfigurationListId_Last(
 			parentCPConfigurationListId, orderByComparator);
 	}
 
@@ -933,41 +802,6 @@ public class CPConfigurationListUtil {
 		OrderByComparator<CPConfigurationList> orderByComparator) {
 
 		return getPersistence().fetchByG_C_First(
-			groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList findByG_C_Last(
-			long groupId, long companyId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByG_C_Last(
-			groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByG_C_Last(
-		long groupId, long companyId,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().fetchByG_C_Last(
 			groupId, companyId, orderByComparator);
 	}
 
@@ -1199,41 +1033,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList findByG_M_Last(
-			long groupId, boolean master,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByG_M_Last(
-			groupId, master, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByG_M_Last(
-		long groupId, boolean master,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().fetchByG_M_Last(
-			groupId, master, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration lists where groupId = &#63; and master = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1364,41 +1163,6 @@ public class CPConfigurationListUtil {
 		OrderByComparator<CPConfigurationList> orderByComparator) {
 
 		return getPersistence().fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList findByLtD_S_Last(
-			Date displayDate, int status,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByLtD_S_Last(
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByLtD_S_Last(
-		Date displayDate, int status,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().fetchByLtD_S_Last(
 			displayDate, status, orderByComparator);
 	}
 
@@ -1541,43 +1305,6 @@ public class CPConfigurationListUtil {
 		OrderByComparator<CPConfigurationList> orderByComparator) {
 
 		return getPersistence().fetchByG_C_S_First(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList findByG_C_S_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByG_C_S_Last(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByG_C_S_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().fetchByG_C_S_Last(
 			groupId, companyId, status, orderByComparator);
 	}
 
@@ -1824,43 +1551,6 @@ public class CPConfigurationListUtil {
 		OrderByComparator<CPConfigurationList> orderByComparator) {
 
 		return getPersistence().fetchByG_C_NotS_First(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList findByG_C_NotS_Last(
-			long groupId, long companyId, int status,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByG_C_NotS_Last(
-			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByG_C_NotS_Last(
-		long groupId, long companyId, int status,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().fetchByG_C_NotS_Last(
 			groupId, companyId, status, orderByComparator);
 	}
 
@@ -2236,4 +1926,4 @@ public class CPConfigurationListUtil {
 	private static volatile CPConfigurationListPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:233266247
+// LIFERAY-SERVICE-BUILDER-HASH:-317495638

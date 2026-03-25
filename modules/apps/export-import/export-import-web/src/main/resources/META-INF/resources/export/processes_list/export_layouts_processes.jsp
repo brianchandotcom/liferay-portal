@@ -80,7 +80,7 @@ PortletURL portletURL = exportLayoutsProcessesDisplayContext.getPortletURL();
 									icon="download"
 									markupView="lexicon"
 									method="get"
-									url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
+									url='<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "useTitle=true") %>'
 								/>
 
 							<%
@@ -203,7 +203,7 @@ PortletURL portletURL = exportLayoutsProcessesDisplayContext.getPortletURL();
 								markupView="lexicon"
 								message="<%= sb.toString() %>"
 								method="get"
-								url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
+								url='<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "useTitle=true") %>'
 							/>
 
 						<%

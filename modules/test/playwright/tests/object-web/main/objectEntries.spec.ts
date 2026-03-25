@@ -43,6 +43,7 @@ import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils
 import createSiteTemplate from '../../layout-set-prototype-web/main/utils/createSiteTemplate';
 import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
 import {
+	getFDSDateTimeFormat,
 	getObjectEntryUIDateTimeFormat,
 	getPageEditorDateFormat,
 	getUTCOffsetFormatted,
@@ -2521,6 +2522,60 @@ test.describe('Manage object entries through View Object Entries', () => {
 		).toBeVisible();
 	});
 
+	test('can create an object entry with date and time field and the time storage set to user input', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: [
+				{
+					businessType: 'DateTime',
+					objectFieldSettings: [
+						{
+							name: 'timeStorage',
+							value: 'useInputAsEntered',
+						} as any,
+					],
+				},
+			],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		const date = new Date('2023-06-01 12:00');
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: objectFields[0].label['en_US'],
+			objectFieldValue: getObjectEntryUIDateTimeFormat(date),
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.getByRole('cell', {name: getFDSDateTimeFormat(date)})
+		).toHaveText('Jun 1, 2023, 12:00:00 PM');
+	});
+
 	test('can delete a custom field when existing entries', async ({
 		apiHelpers,
 		objectFieldsPage,
@@ -2868,6 +2923,60 @@ test.describe('Manage object entries through View Object Entries', () => {
 			'Error:The integerField is already in use. Please enter a unique integerField.',
 			{type: 'danger'}
 		);
+	});
+
+	test('can update an object entry with a date and time field', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['DateTime'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+		const fieldName = objectFields[0].name;
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{[fieldName]: '2023-06-01T12:00:00.000Z'},
+			applicationName
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		const date = new Date('2024-07-02 10:00');
+
+		const objectFieldLabel = page.getByLabel(
+			objectFields[0].label['en_US']
+		);
+
+		await objectFieldLabel.clear();
+
+		await objectFieldLabel.fill(getObjectEntryUIDateTimeFormat(date));
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.getByRole('cell', {name: getFDSDateTimeFormat(date)})
+		).toHaveText('Jul 2, 2024, 10:00:00 AM');
 	});
 
 	test('can verify auto increment field is read only in object entries', async ({

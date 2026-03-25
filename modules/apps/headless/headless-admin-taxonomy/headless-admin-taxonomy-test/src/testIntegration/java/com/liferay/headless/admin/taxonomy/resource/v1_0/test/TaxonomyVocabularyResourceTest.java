@@ -31,12 +31,14 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -265,12 +267,14 @@ public class TaxonomyVocabularyResourceTest
 
 	@Override
 	@Test
+	@TestInfo("LPD-83785")
 	public void testPutSiteTaxonomyVocabularyByExternalReferenceCode()
 		throws Exception {
 
 		super.testPutSiteTaxonomyVocabularyByExternalReferenceCode();
 
 		_testPutSiteTaxonomyVocabularyByExternalReferenceCodeExternalReferenceCode();
+		_testPutSiteTaxonomyVocabularyByExternalReferenceCodeWithNonexistentAssetLibrary();
 	}
 
 	@Override
@@ -577,6 +581,52 @@ public class TaxonomyVocabularyResourceTest
 		Assert.assertEquals(
 			externalReferenceCode,
 			putTaxonomyVocabulary.getExternalReferenceCode());
+	}
+
+	private void _testPutSiteTaxonomyVocabularyByExternalReferenceCodeWithNonexistentAssetLibrary()
+		throws Exception {
+
+		// See LPD-83785
+
+		long nonexistentAssetLibraryId = RandomTestUtil.randomLong();
+
+		TaxonomyVocabulary taxonomyVocabulary = new TaxonomyVocabulary() {
+			{
+				assetLibraries = new AssetLibrary[] {
+					new AssetLibrary() {
+						{
+							id = nonexistentAssetLibraryId;
+						}
+					}
+				};
+				assetTypes = new AssetType[] {
+					new AssetType() {
+						{
+							required = false;
+							subtype = "AllAssetSubtypes";
+							type = "AllAssetTypes";
+							typeId = 0L;
+						}
+					}
+				};
+				description = RandomTestUtil.randomString();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = RandomTestUtil.randomString();
+				siteId = testGroup.getGroupId();
+				visibilityType = VisibilityType.PUBLIC;
+			}
+		};
+
+		TaxonomyVocabulary putTaxonomyVocabulary =
+			taxonomyVocabularyResource.
+				putSiteTaxonomyVocabularyByExternalReferenceCode(
+					testGroup.getGroupId(),
+					taxonomyVocabulary.getExternalReferenceCode(),
+					taxonomyVocabulary);
+
+		Assert.assertTrue(
+			ArrayUtil.isEmpty(putTaxonomyVocabulary.getAssetLibraries()));
 	}
 
 	private void _testPutTaxonomyVocabularyUpdatesEmptyVocabulary()

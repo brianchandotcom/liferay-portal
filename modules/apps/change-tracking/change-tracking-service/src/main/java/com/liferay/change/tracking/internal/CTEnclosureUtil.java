@@ -10,7 +10,6 @@ import com.liferay.change.tracking.closure.CTClosure;
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -70,65 +69,58 @@ public class CTEnclosureUtil {
 
 		Set<Map.Entry<Long, Long>> parentEntries = new HashSet<>();
 
-		visitParentEntries(
-			ctClosure,
-			(classNameId, classPK, backtraceEntries) -> {
-				Set<Long> classPKs = enclosureMap.get(classNameId);
+		Set<Map.Entry<Long, Long>> visited = new HashSet<>();
 
-				if ((classPKs != null) && classPKs.contains(classPK)) {
-					parentEntries.addAll(backtraceEntries);
+		Queue<Map.Entry<Long, Long>> queue = new LinkedList<>();
 
-					return true;
-				}
-
-				return false;
-			});
-
-		return parentEntries;
-	}
-
-	public static void visitParentEntries(
-		CTClosure ctClosure, BacktraceVisitor backtraceVisitor) {
-
-		_visitParentEntries(
-			ctClosure, ctClosure.getRootPKsMap(), new LinkedList<>(),
-			backtraceVisitor);
-	}
-
-	public interface BacktraceVisitor {
-
-		public boolean visit(
-			long classNameId, long classPK,
-			Deque<Map.Entry<Long, Long>> backtraceEntries);
-
-	}
-
-	private static void _visitParentEntries(
-		CTClosure ctClosure, Map<Long, List<Long>> childPKsMap,
-		Deque<Map.Entry<Long, Long>> backtraceEntries,
-		BacktraceVisitor backtraceVisitor) {
-
-		for (Map.Entry<Long, List<Long>> entry : childPKsMap.entrySet()) {
+		for (Map.Entry<Long, Set<Long>> entry : enclosureMap.entrySet()) {
 			long classNameId = entry.getKey();
 
 			for (long classPK : entry.getValue()) {
-				if (backtraceVisitor.visit(
-						classNameId, classPK, backtraceEntries)) {
-
-					continue;
-				}
-
-				backtraceEntries.push(
+				queue.add(
 					new AbstractMap.SimpleImmutableEntry<>(
 						classNameId, classPK));
-
-				_visitParentEntries(
-					ctClosure, ctClosure.getChildPKsMap(classNameId, classPK),
-					backtraceEntries, backtraceVisitor);
-
-				backtraceEntries.pop();
 			}
 		}
+
+		while (!queue.isEmpty()) {
+			Map.Entry<Long, Long> nodeEntry = queue.poll();
+
+			Map<Long, List<Long>> parentPKsMap = ctClosure.getParentPKsMap(
+				nodeEntry.getKey(), nodeEntry.getValue());
+
+			for (Map.Entry<Long, List<Long>> parentEntry :
+					parentPKsMap.entrySet()) {
+
+				long parentClassNameId = parentEntry.getKey();
+
+				for (long parentClassPK : parentEntry.getValue()) {
+					Map.Entry<Long, Long> parentNodeEntry =
+						new AbstractMap.SimpleImmutableEntry<>(
+							parentClassNameId, parentClassPK);
+
+					if (!visited.add(parentNodeEntry)) {
+						continue;
+					}
+
+					Set<Long> enclosureClassPKs = enclosureMap.get(
+						parentClassNameId);
+
+					if ((enclosureClassPKs != null) &&
+						enclosureClassPKs.contains(parentClassPK)) {
+
+						queue.add(parentNodeEntry);
+					}
+					else {
+						parentEntries.add(parentNodeEntry);
+
+						queue.add(parentNodeEntry);
+					}
+				}
+			}
+		}
+
+		return parentEntries;
 	}
 
 }

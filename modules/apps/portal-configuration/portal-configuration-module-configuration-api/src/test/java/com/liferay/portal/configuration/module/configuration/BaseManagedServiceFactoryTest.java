@@ -36,11 +36,10 @@ public class BaseManagedServiceFactoryTest {
 		managedServiceFactory.deleted(RandomTestUtil.randomString());
 
 		Assert.assertEquals(
+			CompanyConstants.SYSTEM, (long)CompanyThreadLocal.getCompanyId());
+		Assert.assertEquals(
 			CompanyConstants.SYSTEM,
 			managedServiceFactory.getExecutedDeletedCompanyId());
-
-		Assert.assertEquals(
-			CompanyConstants.SYSTEM, (long)CompanyThreadLocal.getCompanyId());
 	}
 
 	@Test
@@ -61,10 +60,9 @@ public class BaseManagedServiceFactoryTest {
 		managedServiceFactory.deleted(pid);
 
 		Assert.assertEquals(
-			companyId, managedServiceFactory.getExecutedDeletedCompanyId());
-
-		Assert.assertEquals(
 			CompanyConstants.SYSTEM, (long)CompanyThreadLocal.getCompanyId());
+		Assert.assertEquals(
+			companyId, managedServiceFactory.getExecutedDeletedCompanyId());
 	}
 
 	@Test
@@ -76,11 +74,10 @@ public class BaseManagedServiceFactoryTest {
 			RandomTestUtil.randomString(), new Hashtable<>());
 
 		Assert.assertEquals(
+			CompanyConstants.SYSTEM, (long)CompanyThreadLocal.getCompanyId());
+		Assert.assertEquals(
 			CompanyConstants.SYSTEM,
 			managedServiceFactory.getExecutedCompanyId());
-
-		Assert.assertEquals(
-			CompanyConstants.SYSTEM, (long)CompanyThreadLocal.getCompanyId());
 	}
 
 	@Test
@@ -98,9 +95,9 @@ public class BaseManagedServiceFactoryTest {
 			RandomTestUtil.randomString(), properties);
 
 		Assert.assertEquals(
-			companyId, managedServiceFactory.getExecutedCompanyId());
-		Assert.assertEquals(
 			CompanyConstants.SYSTEM, (long)CompanyThreadLocal.getCompanyId());
+		Assert.assertEquals(
+			companyId, managedServiceFactory.getExecutedCompanyId());
 	}
 
 	private class TestManagedServiceFactory extends BaseManagedServiceFactory {
@@ -115,7 +112,7 @@ public class BaseManagedServiceFactoryTest {
 
 		@Override
 		public String getName() {
-			return "TestManagedServiceFactory";
+			return RandomTestUtil.randomString();
 		}
 
 		@Override

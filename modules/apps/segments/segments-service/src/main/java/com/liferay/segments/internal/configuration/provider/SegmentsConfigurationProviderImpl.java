@@ -52,9 +52,8 @@ public class SegmentsConfigurationProviderImpl
 
 	@Override
 	public void clearSegmentsCompanyConfigurations() {
-		_segmentsCompanyConfigurationManagedServiceFactory.clear();
-
 		_pids.clear();
+		_segmentsCompanyConfigurationManagedServiceFactory.clear();
 		_segmentsCompanyConfigurations.clear();
 	}
 
@@ -300,11 +299,11 @@ public class SegmentsConfigurationProviderImpl
 			_unmapPid(companyId);
 
 			if (companyId != CompanyConstants.SYSTEM) {
+				_pids.put(companyId, pid);
 				_segmentsCompanyConfigurations.put(
 					companyId,
 					ConfigurableUtil.createConfigurable(
 						SegmentsCompanyConfiguration.class, dictionary));
-				_pids.put(companyId, pid);
 			}
 		}
 

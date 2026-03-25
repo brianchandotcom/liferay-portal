@@ -27,6 +27,9 @@ spec:
         metadata:
             annotations:
                 checksum/config: {{ include (print .root.Template.BasePath "/configmap.yaml") .root | sha256sum }}
+                {{- with .statefulset.annotations }}
+                {{- toYaml . | nindent 16 }}
+                {{- end }}
             labels:
                 app: {{ include "liferay.name" .root }}{{ $suffix }}
                 {{- include "liferay.labels" .root | nindent 16 }}

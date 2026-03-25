@@ -27,6 +27,10 @@ public class ProvisioningHubService extends BaseService {
 	public void provision(Order order, ProductPurchase productPurchase)
 		throws Exception {
 
+		if (1 == 1) {
+			return;
+		}
+
 		Product product = productPurchase.getProduct();
 
 		if (Objects.equals(product.getName(), "Liferay Data Platform")) {

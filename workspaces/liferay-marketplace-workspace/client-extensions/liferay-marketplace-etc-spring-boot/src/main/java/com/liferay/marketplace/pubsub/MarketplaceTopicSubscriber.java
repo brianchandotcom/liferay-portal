@@ -132,12 +132,12 @@ public class MarketplaceTopicSubscriber {
 					).setMaximumBackoff(
 						Duration.newBuilder(
 						).setSeconds(
-							1800
+							600
 						).build()
 					).setMinimumBackoff(
 						Duration.newBuilder(
 						).setSeconds(
-							600
+							60
 						).build()
 					).build()
 				).setTopic(

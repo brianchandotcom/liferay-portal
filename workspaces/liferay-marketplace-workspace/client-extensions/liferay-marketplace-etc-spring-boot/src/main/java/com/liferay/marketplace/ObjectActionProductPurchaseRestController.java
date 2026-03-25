@@ -6,6 +6,7 @@
 package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.headless.admin.address.client.dto.v1_0.Country;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
@@ -91,10 +92,6 @@ public class ObjectActionProductPurchaseRestController
 
 		if (Objects.equals(orderTypeExternalReferenceCode, "ADDONS")) {
 			_setUpAddOns(jwt, order, productSpecificationsMap);
-
-			_marketplaceService.updateOrder(
-				null, order.getId(),
-				MarketplaceConstants.ORDER_STATUS_COMPLETED);
 		}
 
 		if (Objects.equals(orderTypeExternalReferenceCode, "CLOUD_APP") ||
@@ -516,9 +513,14 @@ public class ObjectActionProductPurchaseRestController
 		UserAccount userAccount = _marketplaceService.getUserAccount(
 			order.getCreatorEmailAddress());
 
+		BillingAddress billingAddress = order.getBillingAddress();
+
+		Country country = _marketplaceService.getCountryByA2(
+			billingAddress.getCountryISOCode());
+
 		JSONObject jsonObject = _salesforceService.postSalesforceOpportunity(
 			new SalesforceOpportunity(
-				licenseType, order, orderItem, product, userAccount));
+				country, licenseType, order, orderItem, product, userAccount));
 
 		if (!jsonObject.optBoolean("success")) {
 			_log.error(

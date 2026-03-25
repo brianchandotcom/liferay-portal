@@ -214,10 +214,24 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				koroneikiAccount)
 		throws Exception {
 
+		Account account = _getAccount(koroneikiAccount.getKey());
+
+		if (account != null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Account \"" + koroneikiAccount.getKey() +
+						"\" not found in Marketplace");
+			}
+
+			_processKoroneikiAccountUpdate(koroneikiAccount);
+
+			return;
+		}
+
 		AccountResource accountResource =
 			_marketplaceService.getAccountResource();
 
-		Account account = accountResource.postAccount(
+		account = accountResource.postAccount(
 			new Account() {
 				{
 					setCustomFields(() -> _getCustomFields(koroneikiAccount));
@@ -272,6 +286,8 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					"Account \"" + koroneikiAccount.getKey() +
 						"\" not found in Marketplace");
 			}
+
+			_processKoroneikiAccountCreate(koroneikiAccount);
 
 			return;
 		}
@@ -369,16 +385,17 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 		OrderResource orderResource = _marketplaceService.getOrderResource();
 
-		com.liferay.headless.commerce.admin.order.client.pagination.Page<Order>
-			ordersPage = orderResource.getOrdersPage(
-				"", "externalReferenceCode eq '" + opportunityId + "'",
-				com.liferay.headless.commerce.admin.order.client.pagination.
-					Pagination.of(1, 1),
-				"");
+		Order order;
 
-		Order order = ordersPage.fetchFirstItem();
+		try {
+			order = orderResource.getOrderByExternalReferenceCode(
+				opportunityId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 
-		if (order == null) {
 			String finalAccountKey = accountKey;
 			String finalOpportunityId = opportunityId;
 
@@ -397,33 +414,19 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 											() -> new BigDecimal(
 												productPurchase.getQuantity()));
 										setSkuExternalReferenceCode(
-											productPurchase::getProductKey);
+											() -> "SF-01tcX000009wZReQAM");
 									}
 								}
 							});
-						setOrderStatus(
-							() -> MarketplaceConstants.ORDER_STATUS_COMPLETED);
-						setOrderTypeExternalReferenceCode(
-							() -> "SALESFORCE-ORDER");
-						setPaymentStatus(
-							() ->
-								MarketplaceConstants.
-									ORDER_PAYMENT_STATUS_COMPLETED);
-					}
-				});
-		}
-		else {
-			orderResource.patchOrder(
-				order.getId(),
-				new Order() {
-					{
-						setOrderStatus(
-							() -> MarketplaceConstants.ORDER_STATUS_COMPLETED);
+						setOrderTypeExternalReferenceCode(() -> "ADDONS");
 					}
 				});
 		}
 
 		_provisioningHubService.provision(order, productPurchase);
+
+		_marketplaceService.updateOrder(
+			null, order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
 	}
 
 	private static final String _LIFERAY_DATA_PLATFORM =

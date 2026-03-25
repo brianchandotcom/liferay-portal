@@ -76,7 +76,7 @@ public class DLFileEntryUADExporterTest
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
-				expectedLog = "No such file or directory",
+				expectedLog = "NoSuchFileException",
 				expectedType = ExpectedType.CONTAINS
 			)
 		},

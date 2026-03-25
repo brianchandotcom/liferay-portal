@@ -350,15 +350,6 @@ public class DisplayPageTemplateFolderResourceTest
 				DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
-		if (LazyReferencingThreadLocal.isEnabled()) {
-			return _toDisplayPageTemplateFolder(
-				_displayPageTemplateFolderResource.
-					postSiteDisplayPageTemplateFolder(
-						siteExternalReferenceCode,
-						_toDisplayPageTemplateFolder(
-							displayPageTemplateFolder)));
-		}
-
 		return displayPageTemplateFolderResource.
 			postSiteDisplayPageTemplateFolder(
 				siteExternalReferenceCode, displayPageTemplateFolder);
@@ -731,7 +722,7 @@ public class DisplayPageTemplateFolderResourceTest
 			_displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),
 				putDisplayPageTemplateFolder.getExternalReferenceCode(),
-				_toDisplayPageTemplateFolder(putDisplayPageTemplateFolder));
+				putDisplayPageTemplateFolder);
 
 			Assert.fail();
 		}
@@ -747,7 +738,7 @@ public class DisplayPageTemplateFolderResourceTest
 			_displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),
 				putDisplayPageTemplateFolder.getExternalReferenceCode(),
-				_toDisplayPageTemplateFolder(putDisplayPageTemplateFolder));
+				putDisplayPageTemplateFolder);
 
 			List<LayoutPageTemplateCollection>
 				parentLayoutPageTemplateCollections = new ArrayList<>();

@@ -8,6 +8,10 @@ package com.liferay.change.tracking.internal.closure;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Preston Crary
  */
@@ -18,6 +22,22 @@ public class Node {
 	public Node(long classNameId, long primaryKey) {
 		_classNameId = classNameId;
 		_primaryKey = primaryKey;
+	}
+
+	public void addChild(Node child) {
+		if (_children == Collections.<Node>emptyList()) {
+			_children = new ArrayList<>();
+		}
+
+		_children.add(child);
+	}
+
+	public void addParent(Node parent) {
+		if (_parents == Collections.<Node>emptyList()) {
+			_parents = new ArrayList<>();
+		}
+
+		_parents.add(parent);
 	}
 
 	@Override
@@ -41,8 +61,16 @@ public class Node {
 		return false;
 	}
 
+	public List<Node> getChildren() {
+		return _children;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
+	}
+
+	public List<Node> getParents() {
+		return _parents;
 	}
 
 	public long getPrimaryKey() {
@@ -62,7 +90,9 @@ public class Node {
 			"{classNameId=", _classNameId, ", primaryKey=", _primaryKey, "}");
 	}
 
+	private List<Node> _children = Collections.emptyList();
 	private final long _classNameId;
+	private List<Node> _parents = Collections.emptyList();
 	private final long _primaryKey;
 
 }

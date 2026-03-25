@@ -61,6 +61,8 @@ public class DepotRolesPortalInstanceLifecycleListener
 					ResourceActionsUtil.getResourceActions(
 						DepotEntry.class.getName());
 
+				resourceActions.remove(ActionKeys.ASSIGN_USER_ROLES);
+
 				_resourcePermissionLocalService.setResourcePermissions(
 					company.getCompanyId(), DepotEntry.class.getName(),
 					ResourceConstants.SCOPE_COMPANY,

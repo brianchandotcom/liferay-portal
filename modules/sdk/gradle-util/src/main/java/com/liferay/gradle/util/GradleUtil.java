@@ -540,12 +540,28 @@ public class GradleUtil {
 		extraPropertiesExtension.set(name, value);
 	}
 
+	public static File toFile(File parentFile, Object object) {
+		object = toObject(object);
+
+		if (object == null) {
+			return null;
+		}
+
+		File file = new File(object.toString());
+
+		if (file.isAbsolute()) {
+			return file;
+		}
+
+		return new File(parentFile, object.toString());
+	}
+
 	public static File toFile(Project project, Object object) {
 		if (object == null) {
 			return null;
 		}
 
-		return project.file(object);
+		return toFile(project.getProjectDir(), object);
 	}
 
 	public static Integer toInteger(Object object) {

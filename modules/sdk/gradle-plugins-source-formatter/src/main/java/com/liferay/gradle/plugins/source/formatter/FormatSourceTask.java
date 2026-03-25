@@ -18,7 +18,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.gradle.api.Project;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
@@ -35,6 +37,10 @@ import org.gradle.api.tasks.PathSensitivity;
 public class FormatSourceTask extends JavaExec {
 
 	public FormatSourceTask() {
+		Project project = getProject();
+
+		_projectDir = project.getProjectDir();
+
 		Property<String> mainClass = getMainClass();
 
 		mainClass.set("com.liferay.source.formatter.SourceFormatter");
@@ -56,7 +62,7 @@ public class FormatSourceTask extends JavaExec {
 	@Internal
 	public File getBaseDir() {
 		return GradleUtil.toFile(
-			getProject(), _sourceFormatterArgs.getBaseDirName());
+			_projectDir, _sourceFormatterArgs.getBaseDirName());
 	}
 
 	@Input
@@ -93,15 +99,23 @@ public class FormatSourceTask extends JavaExec {
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getFiles() {
-		Project project = getProject();
-
 		List<String> fileNames = _sourceFormatterArgs.getFileNames();
 
 		if (fileNames == null) {
 			fileNames = Collections.emptyList();
 		}
 
-		return project.files(fileNames);
+		ObjectFactory objectFactory = getObjectFactory();
+
+		ConfigurableFileCollection configurableFileCollection =
+			objectFactory.fileCollection();
+
+		for (String fileName : fileNames) {
+			configurableFileCollection.from(
+				GradleUtil.toFile(_projectDir, fileName));
+		}
+
+		return configurableFileCollection;
 	}
 
 	@Input
@@ -360,6 +374,7 @@ public class FormatSourceTask extends JavaExec {
 		);
 	}
 
+	private final File _projectDir;
 	private final SourceFormatterArgs _sourceFormatterArgs =
 		new SourceFormatterArgs();
 

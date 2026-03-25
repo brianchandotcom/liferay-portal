@@ -58,7 +58,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"No koroneiki account found for external reference code " +
+				"No Koroneiki account found for external reference code " +
 					externalReferenceCode,
 				exception);
 

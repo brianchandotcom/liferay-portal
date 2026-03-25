@@ -178,6 +178,18 @@ public class GroupModelListenerTest {
 				objectEntry2.getObjectEntryId()));
 
 		if (scope.equals(ObjectDefinitionConstants.SCOPE_DEPOT)) {
+			ObjectDefinitionSetting objectDefinitionSetting =
+				_objectDefinitionSettingLocalService.
+					fetchObjectDefinitionSetting(
+						objectDefinition1.getObjectDefinitionId(),
+						ObjectDefinitionSettingConstants.
+							NAME_ACCEPT_ALL_GROUPS);
+
+			Assert.assertNotNull(objectDefinitionSetting);
+
+			Assert.assertEquals(
+				StringPool.TRUE, objectDefinitionSetting.getValue());
+
 			AssertUtils.assertFailure(
 				NoSuchObjectDefinitionSettingException.class,
 				StringBundler.concat(
@@ -193,7 +205,7 @@ public class GroupModelListenerTest {
 							ObjectDefinitionSettingConstants.
 								NAME_ACCEPTED_GROUP_IDS));
 
-			ObjectDefinitionSetting objectDefinitionSetting =
+			objectDefinitionSetting =
 				_objectDefinitionSettingLocalService.getObjectDefinitionSetting(
 					objectDefinition2.getObjectDefinitionId(),
 					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);

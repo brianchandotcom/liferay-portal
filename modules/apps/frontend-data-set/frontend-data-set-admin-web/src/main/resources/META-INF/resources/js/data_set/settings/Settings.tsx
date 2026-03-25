@@ -11,7 +11,10 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {serializeFDSConfig} from '@liferay/frontend-data-set-web';
+import {
+	getConfigParamName,
+	serializeFDSConfig,
+} from '@liferay/frontend-data-set-web';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -82,7 +85,7 @@ const Settings = ({
 		};
 
 		url.searchParams.set(
-			`${namespace}ManageUserViews_fdsConfig`,
+			getConfigParamName(`${namespace}ManageUserViews`),
 			serializeFDSConfig(dataSetFilterConfig)
 		);
 

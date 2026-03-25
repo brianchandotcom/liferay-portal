@@ -419,6 +419,57 @@ test(
 );
 
 test(
+	'Can go to All page from Recent Assets button',
+	{tag: '@LPD-83675'},
+	async ({apiHelpers, homePage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = 'Default';
+		let objectEntry1;
+		let objectEntry2;
+
+		const file1Title = `title ${getRandomString()}`;
+
+		try {
+			objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: file1Title,
+				},
+				applicationName,
+				spaceName
+			);
+
+			objectEntry2 = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: `some content ${getRandomString()}`,
+				},
+				applicationName,
+				spaceName
+			);
+
+			await homePage.goto();
+
+			await homePage.viewAllButton.click();
+
+			await expect(
+				page.getByRole('heading', {name: 'All'})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry1.id)
+			);
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry2.id)
+			);
+		}
+	}
+);
+
+test(
 	'Can use Quick Actions to create new content',
 	{tag: '@LPD-58793'},
 	async ({apiHelpers, homePage, page}) => {

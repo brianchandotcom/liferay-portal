@@ -17,6 +17,7 @@ export class HomePage {
 	readonly basicWebContentButton: Locator;
 	readonly blogButton: Locator;
 	readonly knowledgeBaseButton: Locator;
+	readonly viewAllButton: Locator;
 	readonly vocabularyButton: Locator;
 	readonly workflowTaskFilterButton: Locator;
 
@@ -40,6 +41,9 @@ export class HomePage {
 		});
 		this.knowledgeBaseButton = page.getByRole('button', {
 			name: 'Knowledge Base',
+		});
+		this.viewAllButton = page.getByRole('button', {
+			name: 'View All ',
 		});
 		this.vocabularyButton = page.getByRole('button', {
 			name: 'Vocabulary',

@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.cell.rest.client.dto.v1_0.Token;
+import com.liferay.ai.hub.cell.rest.client.dto.v1_0.AuthorizationToken;
 import com.liferay.ai.hub.cell.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.cell.rest.client.pagination.Page;
-import com.liferay.ai.hub.cell.rest.client.resource.v1_0.TokenResource;
-import com.liferay.ai.hub.cell.rest.client.serdes.v1_0.TokenSerDes;
+import com.liferay.ai.hub.cell.rest.client.resource.v1_0.AuthorizationTokenResource;
+import com.liferay.ai.hub.cell.rest.client.serdes.v1_0.AuthorizationTokenSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -72,7 +72,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseTokenResourceTestCase {
+public abstract class BaseAuthorizationTokenResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -93,12 +93,12 @@ public abstract class BaseTokenResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_tokenResource.setContextCompany(testCompany);
+		_authorizationTokenResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		tokenResource = TokenResource.builder(
+		authorizationTokenResource = AuthorizationTokenResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -119,23 +119,24 @@ public abstract class BaseTokenResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Token token1 = randomToken();
+		AuthorizationToken authorizationToken1 = randomAuthorizationToken();
 
-		String json = objectMapper.writeValueAsString(token1);
+		String json = objectMapper.writeValueAsString(authorizationToken1);
 
-		Token token2 = TokenSerDes.toDTO(json);
+		AuthorizationToken authorizationToken2 = AuthorizationTokenSerDes.toDTO(
+			json);
 
-		Assert.assertTrue(equals(token1, token2));
+		Assert.assertTrue(equals(authorizationToken1, authorizationToken2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Token token = randomToken();
+		AuthorizationToken authorizationToken = randomAuthorizationToken();
 
-		String json1 = objectMapper.writeValueAsString(token);
-		String json2 = TokenSerDes.toJSON(token);
+		String json1 = objectMapper.writeValueAsString(authorizationToken);
+		String json2 = AuthorizationTokenSerDes.toJSON(authorizationToken);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -163,36 +164,43 @@ public abstract class BaseTokenResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Token token = randomToken();
+		AuthorizationToken authorizationToken = randomAuthorizationToken();
 
-		token.setAccessToken(regex);
-		token.setScope(regex);
-		token.setServiceURL(regex);
-		token.setUserToken(regex);
+		authorizationToken.setAccessToken(regex);
+		authorizationToken.setScope(regex);
+		authorizationToken.setServiceURL(regex);
+		authorizationToken.setUserToken(regex);
 
-		String json = TokenSerDes.toJSON(token);
+		String json = AuthorizationTokenSerDes.toJSON(authorizationToken);
 
 		Assert.assertFalse(json.contains(regex));
 
-		token = TokenSerDes.toDTO(json);
+		authorizationToken = AuthorizationTokenSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, token.getAccessToken());
-		Assert.assertEquals(regex, token.getScope());
-		Assert.assertEquals(regex, token.getServiceURL());
-		Assert.assertEquals(regex, token.getUserToken());
+		Assert.assertEquals(regex, authorizationToken.getAccessToken());
+		Assert.assertEquals(regex, authorizationToken.getScope());
+		Assert.assertEquals(regex, authorizationToken.getServiceURL());
+		Assert.assertEquals(regex, authorizationToken.getUserToken());
 	}
 
 	@Test
-	public void testPostToken() throws Exception {
-		Token randomToken = randomToken();
+	public void testPostAuthorizationToken() throws Exception {
+		AuthorizationToken randomAuthorizationToken =
+			randomAuthorizationToken();
 
-		Token postToken = testPostToken_addToken(randomToken);
+		AuthorizationToken postAuthorizationToken =
+			testPostAuthorizationToken_addAuthorizationToken(
+				randomAuthorizationToken);
 
-		assertEquals(randomToken, postToken);
-		assertValid(postToken);
+		assertEquals(randomAuthorizationToken, postAuthorizationToken);
+		assertValid(postAuthorizationToken);
 	}
 
-	protected Token testPostToken_addToken(Token token) throws Exception {
+	protected AuthorizationToken
+			testPostAuthorizationToken_addAuthorizationToken(
+				AuthorizationToken authorizationToken)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -202,18 +210,23 @@ public abstract class BaseTokenResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected void assertContains(Token token, List<Token> tokens) {
+	protected void assertContains(
+		AuthorizationToken authorizationToken,
+		List<AuthorizationToken> authorizationTokens) {
+
 		boolean contains = false;
 
-		for (Token item : tokens) {
-			if (equals(token, item)) {
+		for (AuthorizationToken item : authorizationTokens) {
+			if (equals(authorizationToken, item)) {
 				contains = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(tokens + " does not contain " + token, contains);
+		Assert.assertTrue(
+			authorizationTokens + " does not contain " + authorizationToken,
+			contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -224,32 +237,46 @@ public abstract class BaseTokenResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Token token1, Token token2) {
+	protected void assertEquals(
+		AuthorizationToken authorizationToken1,
+		AuthorizationToken authorizationToken2) {
+
 		Assert.assertTrue(
-			token1 + " does not equal " + token2, equals(token1, token2));
+			authorizationToken1 + " does not equal " + authorizationToken2,
+			equals(authorizationToken1, authorizationToken2));
 	}
 
-	protected void assertEquals(List<Token> tokens1, List<Token> tokens2) {
-		Assert.assertEquals(tokens1.size(), tokens2.size());
+	protected void assertEquals(
+		List<AuthorizationToken> authorizationTokens1,
+		List<AuthorizationToken> authorizationTokens2) {
 
-		for (int i = 0; i < tokens1.size(); i++) {
-			Token token1 = tokens1.get(i);
-			Token token2 = tokens2.get(i);
+		Assert.assertEquals(
+			authorizationTokens1.size(), authorizationTokens2.size());
 
-			assertEquals(token1, token2);
+		for (int i = 0; i < authorizationTokens1.size(); i++) {
+			AuthorizationToken authorizationToken1 = authorizationTokens1.get(
+				i);
+			AuthorizationToken authorizationToken2 = authorizationTokens2.get(
+				i);
+
+			assertEquals(authorizationToken1, authorizationToken2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Token> tokens1, List<Token> tokens2) {
+		List<AuthorizationToken> authorizationTokens1,
+		List<AuthorizationToken> authorizationTokens2) {
 
-		Assert.assertEquals(tokens1.size(), tokens2.size());
+		Assert.assertEquals(
+			authorizationTokens1.size(), authorizationTokens2.size());
 
-		for (Token token1 : tokens1) {
+		for (AuthorizationToken authorizationToken1 : authorizationTokens1) {
 			boolean contains = false;
 
-			for (Token token2 : tokens2) {
-				if (equals(token1, token2)) {
+			for (AuthorizationToken authorizationToken2 :
+					authorizationTokens2) {
+
+				if (equals(authorizationToken1, authorizationToken2)) {
 					contains = true;
 
 					break;
@@ -257,18 +284,22 @@ public abstract class BaseTokenResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				tokens2 + " does not contain " + token1, contains);
+				authorizationTokens2 + " does not contain " +
+					authorizationToken1,
+				contains);
 		}
 	}
 
-	protected void assertValid(Token token) throws Exception {
+	protected void assertValid(AuthorizationToken authorizationToken)
+		throws Exception {
+
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("accessToken", additionalAssertFieldName)) {
-				if (token.getAccessToken() == null) {
+				if (authorizationToken.getAccessToken() == null) {
 					valid = false;
 				}
 
@@ -276,7 +307,7 @@ public abstract class BaseTokenResourceTestCase {
 			}
 
 			if (Objects.equals("scope", additionalAssertFieldName)) {
-				if (token.getScope() == null) {
+				if (authorizationToken.getScope() == null) {
 					valid = false;
 				}
 
@@ -284,7 +315,7 @@ public abstract class BaseTokenResourceTestCase {
 			}
 
 			if (Objects.equals("serviceURL", additionalAssertFieldName)) {
-				if (token.getServiceURL() == null) {
+				if (authorizationToken.getServiceURL() == null) {
 					valid = false;
 				}
 
@@ -292,7 +323,7 @@ public abstract class BaseTokenResourceTestCase {
 			}
 
 			if (Objects.equals("userToken", additionalAssertFieldName)) {
-				if (token.getUserToken() == null) {
+				if (authorizationToken.getUserToken() == null) {
 					valid = false;
 				}
 
@@ -307,18 +338,20 @@ public abstract class BaseTokenResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Token> page) {
+	protected void assertValid(Page<AuthorizationToken> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<Token> page, Map<String, Map<String, String>> expectedActions) {
+		Page<AuthorizationToken> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<Token> tokens = page.getItems();
+		java.util.Collection<AuthorizationToken> authorizationTokens =
+			page.getItems();
 
-		int size = tokens.size();
+		int size = authorizationTokens.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -358,7 +391,8 @@ public abstract class BaseTokenResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.cell.rest.dto.v1_0.Token.class)) {
+					com.liferay.ai.hub.cell.rest.dto.v1_0.AuthorizationToken.
+						class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -406,8 +440,11 @@ public abstract class BaseTokenResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Token token1, Token token2) {
-		if (token1 == token2) {
+	protected boolean equals(
+		AuthorizationToken authorizationToken1,
+		AuthorizationToken authorizationToken2) {
+
+		if (authorizationToken1 == authorizationToken2) {
 			return true;
 		}
 
@@ -416,7 +453,8 @@ public abstract class BaseTokenResourceTestCase {
 
 			if (Objects.equals("accessToken", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						token1.getAccessToken(), token2.getAccessToken())) {
+						authorizationToken1.getAccessToken(),
+						authorizationToken2.getAccessToken())) {
 
 					return false;
 				}
@@ -425,7 +463,10 @@ public abstract class BaseTokenResourceTestCase {
 			}
 
 			if (Objects.equals("scope", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(token1.getScope(), token2.getScope())) {
+				if (!Objects.deepEquals(
+						authorizationToken1.getScope(),
+						authorizationToken2.getScope())) {
+
 					return false;
 				}
 
@@ -434,7 +475,8 @@ public abstract class BaseTokenResourceTestCase {
 
 			if (Objects.equals("serviceURL", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						token1.getServiceURL(), token2.getServiceURL())) {
+						authorizationToken1.getServiceURL(),
+						authorizationToken2.getServiceURL())) {
 
 					return false;
 				}
@@ -444,7 +486,8 @@ public abstract class BaseTokenResourceTestCase {
 
 			if (Objects.equals("userToken", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						token1.getUserToken(), token2.getUserToken())) {
+						authorizationToken1.getUserToken(),
+						authorizationToken2.getUserToken())) {
 
 					return false;
 				}
@@ -508,13 +551,13 @@ public abstract class BaseTokenResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_tokenResource instanceof EntityModelResource)) {
+		if (!(_authorizationTokenResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_tokenResource;
+			(EntityModelResource)_authorizationTokenResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -547,7 +590,8 @@ public abstract class BaseTokenResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Token token) {
+		EntityField entityField, String operator,
+		AuthorizationToken authorizationToken) {
 
 		StringBundler sb = new StringBundler();
 
@@ -560,7 +604,7 @@ public abstract class BaseTokenResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("accessToken")) {
-			Object object = token.getAccessToken();
+			Object object = authorizationToken.getAccessToken();
 
 			String value = String.valueOf(object);
 
@@ -606,7 +650,7 @@ public abstract class BaseTokenResourceTestCase {
 		}
 
 		if (entityFieldName.equals("scope")) {
-			Object object = token.getScope();
+			Object object = authorizationToken.getScope();
 
 			String value = String.valueOf(object);
 
@@ -652,7 +696,7 @@ public abstract class BaseTokenResourceTestCase {
 		}
 
 		if (entityFieldName.equals("serviceURL")) {
-			Object object = token.getServiceURL();
+			Object object = authorizationToken.getServiceURL();
 
 			String value = String.valueOf(object);
 
@@ -698,7 +742,7 @@ public abstract class BaseTokenResourceTestCase {
 		}
 
 		if (entityFieldName.equals("userToken")) {
-			Object object = token.getUserToken();
+			Object object = authorizationToken.getUserToken();
 
 			String value = String.valueOf(object);
 
@@ -785,8 +829,8 @@ public abstract class BaseTokenResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected Token randomToken() throws Exception {
-		return new Token() {
+	protected AuthorizationToken randomAuthorizationToken() throws Exception {
+		return new AuthorizationToken() {
 			{
 				accessToken = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -799,17 +843,22 @@ public abstract class BaseTokenResourceTestCase {
 		};
 	}
 
-	protected Token randomIrrelevantToken() throws Exception {
-		Token randomIrrelevantToken = randomToken();
+	protected AuthorizationToken randomIrrelevantAuthorizationToken()
+		throws Exception {
 
-		return randomIrrelevantToken;
+		AuthorizationToken randomIrrelevantAuthorizationToken =
+			randomAuthorizationToken();
+
+		return randomIrrelevantAuthorizationToken;
 	}
 
-	protected Token randomPatchToken() throws Exception {
-		return randomToken();
+	protected AuthorizationToken randomPatchAuthorizationToken()
+		throws Exception {
+
+		return randomAuthorizationToken();
 	}
 
-	protected TokenResource tokenResource;
+	protected AuthorizationTokenResource authorizationTokenResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -1008,14 +1057,15 @@ public abstract class BaseTokenResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseTokenResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseAuthorizationTokenResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource
-		_tokenResource;
+	private
+		com.liferay.ai.hub.cell.rest.resource.v1_0.AuthorizationTokenResource
+			_authorizationTokenResource;
 
 }

@@ -5,10 +5,10 @@
 
 package com.liferay.ai.hub.cell.rest.client.resource.v1_0;
 
-import com.liferay.ai.hub.cell.rest.client.dto.v1_0.Token;
+import com.liferay.ai.hub.cell.rest.client.dto.v1_0.AuthorizationToken;
 import com.liferay.ai.hub.cell.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.cell.rest.client.problem.Problem;
-import com.liferay.ai.hub.cell.rest.client.serdes.v1_0.TokenSerDes;
+import com.liferay.ai.hub.cell.rest.client.serdes.v1_0.AuthorizationTokenSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -26,20 +26,21 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface TokenResource {
+public interface AuthorizationTokenResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Token postToken() throws Exception;
+	public AuthorizationToken postAuthorizationToken() throws Exception;
 
-	public HttpInvoker.HttpResponse postTokenHttpResponse() throws Exception;
-
-	public void postTokenBatch(String callbackURL, Object object)
+	public HttpInvoker.HttpResponse postAuthorizationTokenHttpResponse()
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postTokenBatchHttpResponse(
+	public void postAuthorizationTokenBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postAuthorizationTokenBatchHttpResponse(
 			String callbackURL, Object object)
 		throws Exception;
 
@@ -56,8 +57,8 @@ public interface TokenResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public TokenResource build() {
-			return new TokenResourceImpl(this);
+		public AuthorizationTokenResource build() {
+			return new AuthorizationTokenResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -149,10 +150,12 @@ public interface TokenResource {
 
 	}
 
-	public static class TokenResourceImpl implements TokenResource {
+	public static class AuthorizationTokenResourceImpl
+		implements AuthorizationTokenResource {
 
-		public Token postToken() throws Exception {
-			HttpInvoker.HttpResponse httpResponse = postTokenHttpResponse();
+		public AuthorizationToken postAuthorizationToken() throws Exception {
+			HttpInvoker.HttpResponse httpResponse =
+				postAuthorizationTokenHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -202,7 +205,7 @@ public interface TokenResource {
 			}
 
 			try {
-				return TokenSerDes.toDTO(content);
+				return AuthorizationTokenSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -213,7 +216,7 @@ public interface TokenResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTokenHttpResponse()
+		public HttpInvoker.HttpResponse postAuthorizationTokenHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -242,7 +245,7 @@ public interface TokenResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub-cell/v1.0/tokens");
+						"/o/ai-hub-cell/v1.0/authorization-tokens");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -252,11 +255,12 @@ public interface TokenResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postTokenBatch(String callbackURL, Object object)
+		public void postAuthorizationTokenBatch(
+				String callbackURL, Object object)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postTokenBatchHttpResponse(
-				callbackURL, object);
+			HttpInvoker.HttpResponse httpResponse =
+				postAuthorizationTokenBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -306,7 +310,7 @@ public interface TokenResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTokenBatchHttpResponse(
+		public HttpInvoker.HttpResponse postAuthorizationTokenBatchHttpResponse(
 				String callbackURL, Object object)
 			throws Exception {
 
@@ -341,7 +345,7 @@ public interface TokenResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub-cell/v1.0/tokens/batch");
+						"/o/ai-hub-cell/v1.0/authorization-tokens/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -351,12 +355,12 @@ public interface TokenResource {
 			return httpInvoker.invoke();
 		}
 
-		private TokenResourceImpl(Builder builder) {
+		private AuthorizationTokenResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			TokenResource.class.getName());
+			AuthorizationTokenResource.class.getName());
 
 		private Builder _builder;
 

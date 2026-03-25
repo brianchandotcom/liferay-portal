@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.cell.rest.resource.v1_0;
 
-import com.liferay.ai.hub.cell.rest.dto.v1_0.Token;
+import com.liferay.ai.hub.cell.rest.dto.v1_0.AuthorizationToken;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -42,11 +42,12 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface TokenResource {
+public interface AuthorizationTokenResource {
 
-	public Token postToken() throws Exception;
+	public AuthorizationToken postAuthorizationToken() throws Exception;
 
-	public Response postTokenBatch(String callbackURL, Object object)
+	public Response postAuthorizationTokenBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -119,7 +120,7 @@ public interface TokenResource {
 	@ProviderType
 	public interface Builder {
 
-		public TokenResource build();
+		public AuthorizationTokenResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

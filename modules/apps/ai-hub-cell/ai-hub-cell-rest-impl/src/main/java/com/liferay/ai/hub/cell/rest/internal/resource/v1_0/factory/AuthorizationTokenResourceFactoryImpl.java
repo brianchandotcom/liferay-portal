@@ -6,7 +6,7 @@
 package com.liferay.ai.hub.cell.rest.internal.resource.v1_0.factory;
 
 import com.liferay.ai.hub.cell.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource;
+import com.liferay.ai.hub.cell.rest.resource.v1_0.AuthorizationTokenResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,28 +55,29 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/ai-hub-cell/v1.0/Token",
-	service = TokenResource.Factory.class
+	property = "resource.locator.key=/ai-hub-cell/v1.0/AuthorizationToken",
+	service = AuthorizationTokenResource.Factory.class
 )
 @Generated("")
-public class TokenResourceFactoryImpl implements TokenResource.Factory {
+public class AuthorizationTokenResourceFactoryImpl
+	implements AuthorizationTokenResource.Factory {
 
 	@Override
-	public TokenResource.Builder create() {
-		return new TokenResource.Builder() {
+	public AuthorizationTokenResource.Builder create() {
+		return new AuthorizationTokenResource.Builder() {
 
 			@Override
-			public TokenResource build() {
+			public AuthorizationTokenResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, TokenResource>
-					tokenResourceProxyProviderFunction =
+				Function<InvocationHandler, AuthorizationTokenResource>
+					authorizationTokenResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
-							_tokenResourceProxyProviderFunction;
+							_authorizationTokenResourceProxyProviderFunction;
 
-				return tokenResourceProxyProviderFunction.apply(
+				return authorizationTokenResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -84,7 +85,7 @@ public class TokenResourceFactoryImpl implements TokenResource.Factory {
 			}
 
 			@Override
-			public TokenResource.Builder checkPermissions(
+			public AuthorizationTokenResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -93,7 +94,7 @@ public class TokenResourceFactoryImpl implements TokenResource.Factory {
 			}
 
 			@Override
-			public TokenResource.Builder httpServletRequest(
+			public AuthorizationTokenResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -102,7 +103,7 @@ public class TokenResourceFactoryImpl implements TokenResource.Factory {
 			}
 
 			@Override
-			public TokenResource.Builder httpServletResponse(
+			public AuthorizationTokenResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -111,7 +112,7 @@ public class TokenResourceFactoryImpl implements TokenResource.Factory {
 			}
 
 			@Override
-			public TokenResource.Builder preferredLocale(
+			public AuthorizationTokenResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -120,14 +121,14 @@ public class TokenResourceFactoryImpl implements TokenResource.Factory {
 			}
 
 			@Override
-			public TokenResource.Builder uriInfo(UriInfo uriInfo) {
+			public AuthorizationTokenResource.Builder uriInfo(UriInfo uriInfo) {
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public TokenResource.Builder user(User user) {
+			public AuthorizationTokenResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -143,16 +144,17 @@ public class TokenResourceFactoryImpl implements TokenResource.Factory {
 		};
 	}
 
-	private static Function<InvocationHandler, TokenResource>
+	private static Function<InvocationHandler, AuthorizationTokenResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			TokenResource.class.getClassLoader(), TokenResource.class);
+			AuthorizationTokenResource.class.getClassLoader(),
+			AuthorizationTokenResource.class);
 
 		try {
-			Constructor<TokenResource> constructor =
-				(Constructor<TokenResource>)proxyClass.getConstructor(
-					InvocationHandler.class);
+			Constructor<AuthorizationTokenResource> constructor =
+				(Constructor<AuthorizationTokenResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
 
 			return invocationHandler -> {
 				try {
@@ -193,37 +195,41 @@ public class TokenResourceFactoryImpl implements TokenResource.Factory {
 				new LiberalPermissionChecker(user));
 		}
 
-		TokenResource tokenResource = _componentServiceObjects.getService();
+		AuthorizationTokenResource authorizationTokenResource =
+			_componentServiceObjects.getService();
 
-		tokenResource.setContextAcceptLanguage(
+		authorizationTokenResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		tokenResource.setContextCompany(company);
+		authorizationTokenResource.setContextCompany(company);
 
-		tokenResource.setContextHttpServletRequest(httpServletRequest);
-		tokenResource.setContextHttpServletResponse(httpServletResponse);
-		tokenResource.setContextUriInfo(uriInfo);
-		tokenResource.setContextUser(user);
-		tokenResource.setExpressionConvert(_expressionConvert);
-		tokenResource.setFilterParserProvider(_filterParserProvider);
-		tokenResource.setGroupLocalService(_groupLocalService);
-		tokenResource.setResourceActionLocalService(
+		authorizationTokenResource.setContextHttpServletRequest(
+			httpServletRequest);
+		authorizationTokenResource.setContextHttpServletResponse(
+			httpServletResponse);
+		authorizationTokenResource.setContextUriInfo(uriInfo);
+		authorizationTokenResource.setContextUser(user);
+		authorizationTokenResource.setExpressionConvert(_expressionConvert);
+		authorizationTokenResource.setFilterParserProvider(
+			_filterParserProvider);
+		authorizationTokenResource.setGroupLocalService(_groupLocalService);
+		authorizationTokenResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		tokenResource.setResourcePermissionLocalService(
+		authorizationTokenResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		tokenResource.setRoleLocalService(_roleLocalService);
-		tokenResource.setSortParserProvider(_sortParserProvider);
+		authorizationTokenResource.setRoleLocalService(_roleLocalService);
+		authorizationTokenResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(tokenResource, arguments);
+			return method.invoke(authorizationTokenResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(tokenResource);
+			_componentServiceObjects.ungetService(authorizationTokenResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -235,7 +241,8 @@ public class TokenResourceFactoryImpl implements TokenResource.Factory {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<TokenResource> _componentServiceObjects;
+	private ComponentServiceObjects<AuthorizationTokenResource>
+		_componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
@@ -268,8 +275,10 @@ public class TokenResourceFactoryImpl implements TokenResource.Factory {
 
 	private static class ResourceProxyProviderFunctionHolder {
 
-		private static final Function<InvocationHandler, TokenResource>
-			_tokenResourceProxyProviderFunction = _getProxyProviderFunction();
+		private static final Function
+			<InvocationHandler, AuthorizationTokenResource>
+				_authorizationTokenResourceProxyProviderFunction =
+					_getProxyProviderFunction();
 
 	}
 

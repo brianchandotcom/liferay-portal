@@ -33,17 +33,17 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Token")
+@GraphQLName("AuthorizationToken")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Token")
-public class Token implements Serializable {
+@XmlRootElement(name = "AuthorizationToken")
+public class AuthorizationToken implements Serializable {
 
-	public static Token toDTO(String json) {
-		return ObjectMapperUtil.readValue(Token.class, json);
+	public static AuthorizationToken toDTO(String json) {
+		return ObjectMapperUtil.readValue(AuthorizationToken.class, json);
 	}
 
-	public static Token unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Token.class, json);
+	public static AuthorizationToken unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(AuthorizationToken.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -216,13 +216,13 @@ public class Token implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Token)) {
+		if (!(object instanceof AuthorizationToken)) {
 			return false;
 		}
 
-		Token token = (Token)object;
+		AuthorizationToken authorizationToken = (AuthorizationToken)object;
 
-		return Objects.equals(toString(), token.toString());
+		return Objects.equals(toString(), authorizationToken.toString());
 	}
 
 	@Override
@@ -308,7 +308,7 @@ public class Token implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.ai.hub.cell.rest.dto.v1_0.Token",
+		defaultValue = "com.liferay.ai.hub.cell.rest.dto.v1_0.AuthorizationToken",
 		name = "x-class-name"
 	)
 	public String xClassName;

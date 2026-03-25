@@ -85,7 +85,7 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(TokenResourceImpl.class);
+			add(AuthorizationTokenResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

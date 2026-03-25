@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.cell.rest.client.serdes.v1_0;
 
-import com.liferay.ai.hub.cell.rest.client.dto.v1_0.Token;
+import com.liferay.ai.hub.cell.rest.client.dto.v1_0.AuthorizationToken;
 import com.liferay.ai.hub.cell.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,22 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class TokenSerDes {
+public class AuthorizationTokenSerDes {
 
-	public static Token toDTO(String json) {
-		TokenJSONParser tokenJSONParser = new TokenJSONParser();
+	public static AuthorizationToken toDTO(String json) {
+		AuthorizationTokenJSONParser authorizationTokenJSONParser =
+			new AuthorizationTokenJSONParser();
 
-		return tokenJSONParser.parseToDTO(json);
+		return authorizationTokenJSONParser.parseToDTO(json);
 	}
 
-	public static Token[] toDTOs(String json) {
-		TokenJSONParser tokenJSONParser = new TokenJSONParser();
+	public static AuthorizationToken[] toDTOs(String json) {
+		AuthorizationTokenJSONParser authorizationTokenJSONParser =
+			new AuthorizationTokenJSONParser();
 
-		return tokenJSONParser.parseToDTOs(json);
+		return authorizationTokenJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Token token) {
-		if (token == null) {
+	public static String toJSON(AuthorizationToken authorizationToken) {
+		if (authorizationToken == null) {
 			return "null";
 		}
 
@@ -44,7 +46,7 @@ public class TokenSerDes {
 
 		sb.append("{");
 
-		if (token.getAccessToken() != null) {
+		if (authorizationToken.getAccessToken() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -53,12 +55,12 @@ public class TokenSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(token.getAccessToken()));
+			sb.append(_escape(authorizationToken.getAccessToken()));
 
 			sb.append("\"");
 		}
 
-		if (token.getScope() != null) {
+		if (authorizationToken.getScope() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -67,12 +69,12 @@ public class TokenSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(token.getScope()));
+			sb.append(_escape(authorizationToken.getScope()));
 
 			sb.append("\"");
 		}
 
-		if (token.getServiceURL() != null) {
+		if (authorizationToken.getServiceURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -81,12 +83,12 @@ public class TokenSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(token.getServiceURL()));
+			sb.append(_escape(authorizationToken.getServiceURL()));
 
 			sb.append("\"");
 		}
 
-		if (token.getUserToken() != null) {
+		if (authorizationToken.getUserToken() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -95,7 +97,7 @@ public class TokenSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(token.getUserToken()));
+			sb.append(_escape(authorizationToken.getUserToken()));
 
 			sb.append("\"");
 		}
@@ -106,59 +108,68 @@ public class TokenSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		TokenJSONParser tokenJSONParser = new TokenJSONParser();
+		AuthorizationTokenJSONParser authorizationTokenJSONParser =
+			new AuthorizationTokenJSONParser();
 
-		return tokenJSONParser.parseToMap(json);
+		return authorizationTokenJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Token token) {
-		if (token == null) {
+	public static Map<String, String> toMap(
+		AuthorizationToken authorizationToken) {
+
+		if (authorizationToken == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (token.getAccessToken() == null) {
+		if (authorizationToken.getAccessToken() == null) {
 			map.put("accessToken", null);
 		}
 		else {
-			map.put("accessToken", String.valueOf(token.getAccessToken()));
+			map.put(
+				"accessToken",
+				String.valueOf(authorizationToken.getAccessToken()));
 		}
 
-		if (token.getScope() == null) {
+		if (authorizationToken.getScope() == null) {
 			map.put("scope", null);
 		}
 		else {
-			map.put("scope", String.valueOf(token.getScope()));
+			map.put("scope", String.valueOf(authorizationToken.getScope()));
 		}
 
-		if (token.getServiceURL() == null) {
+		if (authorizationToken.getServiceURL() == null) {
 			map.put("serviceURL", null);
 		}
 		else {
-			map.put("serviceURL", String.valueOf(token.getServiceURL()));
+			map.put(
+				"serviceURL",
+				String.valueOf(authorizationToken.getServiceURL()));
 		}
 
-		if (token.getUserToken() == null) {
+		if (authorizationToken.getUserToken() == null) {
 			map.put("userToken", null);
 		}
 		else {
-			map.put("userToken", String.valueOf(token.getUserToken()));
+			map.put(
+				"userToken", String.valueOf(authorizationToken.getUserToken()));
 		}
 
 		return map;
 	}
 
-	public static class TokenJSONParser extends BaseJSONParser<Token> {
+	public static class AuthorizationTokenJSONParser
+		extends BaseJSONParser<AuthorizationToken> {
 
 		@Override
-		protected Token createDTO() {
-			return new Token();
+		protected AuthorizationToken createDTO() {
+			return new AuthorizationToken();
 		}
 
 		@Override
-		protected Token[] createDTOArray(int size) {
-			return new Token[size];
+		protected AuthorizationToken[] createDTOArray(int size) {
+			return new AuthorizationToken[size];
 		}
 
 		@Override
@@ -181,27 +192,30 @@ public class TokenSerDes {
 
 		@Override
 		protected void setField(
-			Token token, String jsonParserFieldName,
+			AuthorizationToken authorizationToken, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "accessToken")) {
 				if (jsonParserFieldValue != null) {
-					token.setAccessToken((String)jsonParserFieldValue);
+					authorizationToken.setAccessToken(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				if (jsonParserFieldValue != null) {
-					token.setScope((String)jsonParserFieldValue);
+					authorizationToken.setScope((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "serviceURL")) {
 				if (jsonParserFieldValue != null) {
-					token.setServiceURL((String)jsonParserFieldValue);
+					authorizationToken.setServiceURL(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "userToken")) {
 				if (jsonParserFieldValue != null) {
-					token.setUserToken((String)jsonParserFieldValue);
+					authorizationToken.setUserToken(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

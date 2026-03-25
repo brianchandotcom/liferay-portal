@@ -5,8 +5,8 @@
 
 package com.liferay.ai.hub.cell.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.cell.rest.dto.v1_0.Token;
-import com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource;
+import com.liferay.ai.hub.cell.rest.dto.v1_0.AuthorizationToken;
+import com.liferay.ai.hub.cell.rest.resource.v1_0.AuthorizationTokenResource;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -65,30 +65,32 @@ import java.util.Set;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BaseTokenResourceImpl
-	implements EntityModelResource, TokenResource,
-			   VulcanBatchEngineTaskItemDelegate<Token> {
+public abstract class BaseAuthorizationTokenResourceImpl
+	implements AuthorizationTokenResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<AuthorizationToken> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-cell/v1.0/tokens'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-cell/v1.0/authorization-tokens'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Token")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AuthorizationToken")
+		}
 	)
-	@jakarta.ws.rs.Path("/tokens")
+	@jakarta.ws.rs.Path("/authorization-tokens")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Token postToken() throws Exception {
-		return new Token();
+	public AuthorizationToken postAuthorizationToken() throws Exception {
+		return new AuthorizationToken();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-cell/v1.0/tokens/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-cell/v1.0/authorization-tokens/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -99,14 +101,16 @@ public abstract class BaseTokenResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Token")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AuthorizationToken")
+		}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/tokens/batch")
+	@jakarta.ws.rs.Path("/authorization-tokens/batch")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
-	public Response postTokenBatch(
+	public Response postAuthorizationTokenBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -125,48 +129,53 @@ public abstract class BaseTokenResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
-				Token.class.getName(), callbackURL, null, object)
+				AuthorizationToken.class.getName(), callbackURL, null, object)
 		).build();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<Token> tokens, Map<String, Serializable> parameters)
+			Collection<AuthorizationToken> authorizationTokens,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<Token, Token, Exception> tokenUnsafeFunction = null;
+		UnsafeFunction<AuthorizationToken, AuthorizationToken, Exception>
+			authorizationTokenUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			tokenUnsafeFunction = token -> postToken();
+			authorizationTokenUnsafeFunction =
+				authorizationToken -> postAuthorizationToken();
 		}
 
-		if (tokenUnsafeFunction == null) {
+		if (authorizationTokenUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
-					"\" is not supported for Token");
+					"\" is not supported for AuthorizationToken");
 		}
 
 		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(tokens, tokenUnsafeFunction);
+			contextBatchUnsafeBiConsumer.accept(
+				authorizationTokens, authorizationTokenUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				tokens, tokenUnsafeFunction::apply);
+				authorizationTokens, authorizationTokenUnsafeFunction::apply);
 		}
 		else {
-			for (Token token : tokens) {
-				tokenUnsafeFunction.apply(token);
+			for (AuthorizationToken authorizationToken : authorizationTokens) {
+				authorizationTokenUnsafeFunction.apply(authorizationToken);
 			}
 		}
 	}
 
 	@Override
 	public void delete(
-			Collection<Token> tokens, Map<String, Serializable> parameters)
+			Collection<AuthorizationToken> authorizationTokens,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -190,7 +199,7 @@ public abstract class BaseTokenResourceImpl
 	}
 
 	public String getResourceName() {
-		return "Token";
+		return "AuthorizationToken";
 	}
 
 	public String getVersion() {
@@ -198,7 +207,7 @@ public abstract class BaseTokenResourceImpl
 	}
 
 	@Override
-	public Page<Token> read(
+	public Page<AuthorizationToken> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
@@ -242,7 +251,8 @@ public abstract class BaseTokenResourceImpl
 
 	@Override
 	public void update(
-			Collection<Token> tokens, Map<String, Serializable> parameters)
+			Collection<AuthorizationToken> authorizationTokens,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -262,7 +272,8 @@ public abstract class BaseTokenResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<Token>, UnsafeFunction<Token, Token, Exception>,
+			<Collection<AuthorizationToken>,
+			 UnsafeFunction<AuthorizationToken, AuthorizationToken, Exception>,
 			 Exception> contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -270,7 +281,8 @@ public abstract class BaseTokenResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<Token>, UnsafeConsumer<Token, Exception>, Exception>
+			<Collection<AuthorizationToken>,
+			 UnsafeConsumer<AuthorizationToken, Exception>, Exception>
 				contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -780,10 +792,12 @@ public abstract class BaseTokenResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<Token>, UnsafeFunction<Token, Token, Exception>, Exception>
-			contextBatchUnsafeBiConsumer;
+		<Collection<AuthorizationToken>,
+		 UnsafeFunction<AuthorizationToken, AuthorizationToken, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<Token>, UnsafeConsumer<Token, Exception>, Exception>
+		<Collection<AuthorizationToken>,
+		 UnsafeConsumer<AuthorizationToken, Exception>, Exception>
 			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -805,6 +819,6 @@ public abstract class BaseTokenResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseTokenResourceImpl.class);
+		LogFactoryUtil.getLog(BaseAuthorizationTokenResourceImpl.class);
 
 }

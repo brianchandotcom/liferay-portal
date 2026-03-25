@@ -6,7 +6,7 @@
 package com.liferay.ai.hub.cell.rest.client.dto.v1_0;
 
 import com.liferay.ai.hub.cell.rest.client.function.UnsafeSupplier;
-import com.liferay.ai.hub.cell.rest.client.serdes.v1_0.TokenSerDes;
+import com.liferay.ai.hub.cell.rest.client.serdes.v1_0.AuthorizationTokenSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class Token implements Cloneable, Serializable {
+public class AuthorizationToken implements Cloneable, Serializable {
 
-	public static Token toDTO(String json) {
-		return TokenSerDes.toDTO(json);
+	public static AuthorizationToken toDTO(String json) {
+		return AuthorizationTokenSerDes.toDTO(json);
 	}
 
 	public String getAccessToken() {
@@ -110,8 +110,8 @@ public class Token implements Cloneable, Serializable {
 	protected String userToken;
 
 	@Override
-	public Token clone() throws CloneNotSupportedException {
-		return (Token)super.clone();
+	public AuthorizationToken clone() throws CloneNotSupportedException {
+		return (AuthorizationToken)super.clone();
 	}
 
 	@Override
@@ -120,13 +120,13 @@ public class Token implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Token)) {
+		if (!(object instanceof AuthorizationToken)) {
 			return false;
 		}
 
-		Token token = (Token)object;
+		AuthorizationToken authorizationToken = (AuthorizationToken)object;
 
-		return Objects.equals(toString(), token.toString());
+		return Objects.equals(toString(), authorizationToken.toString());
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class Token implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return TokenSerDes.toJSON(this);
+		return AuthorizationTokenSerDes.toJSON(this);
 	}
 
 }

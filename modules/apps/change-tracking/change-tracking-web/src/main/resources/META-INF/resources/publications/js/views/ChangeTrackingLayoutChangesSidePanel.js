@@ -27,6 +27,7 @@ export default function ChangeTrackingLayoutChangesSidePanel({
 	const [isExpanded, setIsExpanded] = useState(true);
 	const [newPanels, setNewPanels] = useState([]);
 	const [panels, setPanels] = useState([]);
+	const [total, setTotal] = useState(0);
 
 	useEffect(() => {
 		const dataURL =
@@ -38,7 +39,11 @@ export default function ChangeTrackingLayoutChangesSidePanel({
 			encodeURIComponent(cur);
 
 		fetch(dataURL)
-			.then((response) => response.json())
+			.then((response) => {
+				if (response) {
+					return response.json();
+				}
+			})
 			.then((json) => {
 				if (json === null) {
 					return;
@@ -49,7 +54,8 @@ export default function ChangeTrackingLayoutChangesSidePanel({
 					return;
 				}
 
-				setNewPanels(json);
+				setNewPanels(json.layoutContentChanges);
+				setTotal(json.total);
 			})
 			.catch(() => {
 				setError(Liferay.Language.get('an-unexpected-error-occurred'));
@@ -91,7 +97,7 @@ export default function ChangeTrackingLayoutChangesSidePanel({
 				</ClayAlert>
 			);
 		}
-		else if (panels) {
+		else if (panels && panels.length) {
 			return (
 				<>
 					<ClayButton.Group spaced>
@@ -148,15 +154,19 @@ export default function ChangeTrackingLayoutChangesSidePanel({
 							</ClayPanel.Body>
 						</ClayPanel>
 					))}
-					<ClayButton
-						aria-label={Liferay.Language.get('view-more')}
-						className="align-items-center justify-content-center text-weight-bold"
-						displayType="secondary"
-						onClick={() => setCur(cur + DELTA)}
-						style={{margin: '24px'}}
-					>
-						{Liferay.Language.get('view-more')}
-					</ClayButton>
+					{panels.length < total ? (
+						<div className="align-items-center d-flex justify-content-center">
+							<ClayButton
+								aria-label={Liferay.Language.get('view-more')}
+								className="text-weight-bold"
+								displayType="secondary"
+								onClick={() => setCur(cur + DELTA)}
+								style={{margin: '24px'}}
+							>
+								{Liferay.Language.get('view-more')}
+							</ClayButton>
+						</div>
+					) : null}
 				</>
 			);
 		}
@@ -202,7 +212,12 @@ export default function ChangeTrackingLayoutChangesSidePanel({
 							/>
 						</span>
 
-						<span>{Liferay.Language.get('content-changes')}</span>
+						<span>
+							{Liferay.Language.get('content-changes') +
+								' (' +
+								total +
+								')'}
+						</span>
 					</SidePanel.Title>
 				</SidePanel.Header>
 

@@ -67,13 +67,19 @@ public class FragmentServiceConfigurationDisplayContext {
 	}
 
 	public boolean isPropagateChangesEnabled() throws ConfigurationException {
-		return _getFragmentServiceConfiguration().propagateChanges();
+		FragmentServiceConfiguration fragmentServiceConfiguration =
+			_getFragmentServiceConfiguration();
+
+		return fragmentServiceConfiguration.propagateChanges();
 	}
 
 	public boolean isPropagateContributedFragmentChangesEnabled()
 		throws ConfigurationException {
 
-		return _getFragmentServiceConfiguration().
+		FragmentServiceConfiguration fragmentServiceConfiguration =
+			_getFragmentServiceConfiguration();
+
+		return fragmentServiceConfiguration.
 			propagateContributedFragmentChanges();
 	}
 

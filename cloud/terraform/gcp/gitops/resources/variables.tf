@@ -1,3 +1,10 @@
+variable "argocd_domain_config" {
+	default={}
+	type=object({
+		hostname=optional(string, null)
+		tls_external_secret_name=optional(string, null)
+	})
+}
 variable "argocd_namespace" {
 	default="argocd-system"
 	type=string
@@ -19,6 +26,10 @@ variable "external_secret_store_provider_hcl" {
 }
 variable "external_secrets_namespace" {
 	default="external-secrets-system"
+	type=string
+}
+variable "gateway_namespace" {
+	default="envoy-gateway-system"
 	type=string
 }
 variable "infrastructure_git_repo_config" {
@@ -64,6 +75,32 @@ variable "infrastructure_git_repo_config" {
 		error_message="The 'infrastructure_git_repo_config.auth.method' value must be 'github_app', 'https', or 'ssh'."
 	}
 }
+variable "infrastructure_helm_chart_config" {
+	default={}
+	type=object(
+		{
+			chart_name=optional(string, "liferay-gcp-infrastructure")
+			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-gcp-infrastructure")
+			path=optional(string, null)
+			version=optional(string, null)
+		})
+}
+variable "infrastructure_helm_chart_version" {
+	type=string
+}
+variable "infrastructure_provider_helm_chart_config" {
+	default={}
+	type=object(
+		{
+			chart_name=optional(string, "liferay-gcp-infrastructure-provider")
+			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-gcp-infrastructure-provider")
+			path=optional(string, null)
+			version=optional(string, null)
+		})
+}
+variable "infrastructure_provider_helm_chart_version" {
+	type=string
+}
 variable "liferay_git_repo_config" {
 	default={
 		auth={}
@@ -105,6 +142,29 @@ variable "liferay_git_repo_config" {
 	}
 }
 variable "liferay_git_repo_url" {
+	type=string
+}
+variable "liferay_helm_chart_config" {
+	default={}
+	type=object({
+		chart_url=optional(string, null)
+		path=optional(string, null)
+	})
+}
+variable "liferay_helm_chart_name" {
+	default="liferay-gcp"
+	type=string
+	validation {
+		condition=contains(
+			[
+				"liferay-default",
+				"liferay-gcp",
+			],
+		var.liferay_helm_chart_name)
+		error_message="The 'liferay_helm_chart_name' value must be 'liferay-default' or 'liferay-gcp'."
+	}
+}
+variable "liferay_helm_chart_version" {
 	type=string
 }
 variable "project_id" {

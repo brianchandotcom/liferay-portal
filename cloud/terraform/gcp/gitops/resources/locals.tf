@@ -1,4 +1,13 @@
 locals {
+	argocd_gateway_class_name="argocd-gateway-class"
+	argocd_gateway_name="argocd-gateway"
+	argocd_tls_enabled=var.argocd_domain_config.hostname != null && var.argocd_domain_config.tls_external_secret_name != null
+	argocd_tls_external_secret_name=var.argocd_domain_config.tls_external_secret_name == null ? null : (
+		startswith(var.argocd_domain_config.tls_external_secret_name, local.secret_prefixes.certificates) ?
+		var.argocd_domain_config.tls_external_secret_name :
+		"${local.secret_prefixes.certificates}${var.argocd_domain_config.tls_external_secret_name}"
+	)
+	argocd_tls_secret_name="argocd-server-tls"
 	cloudplatform_roles=[
 		"roles/iam.serviceAccountAdmin",
 		"roles/resourcemanager.projectIamAdmin",
@@ -27,11 +36,20 @@ locals {
 			type="RuntimeDefault"
 		}
 	}
+	deploymentruntimeconfig_opentelemetry_annotations={
+		"instrumentation.opentelemetry.io/inject-dotnet"="false"
+		"instrumentation.opentelemetry.io/inject-java"="false"
+		"instrumentation.opentelemetry.io/inject-nodejs"="false"
+		"instrumentation.opentelemetry.io/inject-python"="false"
+		"sidecar.opentelemetry.io/inject"="false"
+	}
 	direct_provider_ksas={
 		compute="roles/compute.admin"
 		sql="roles/cloudsql.admin"
 		storage="roles/storage.admin"
 	}
+	gateway_class_name="liferay-gateway-class"
+	gateway_name="${var.infrastructure_git_repo_config.target.slugProjectId}-${var.infrastructure_git_repo_config.target.slugEnvironmentId}-gateway"
 	git_repo_auth_configs=merge(
 		local.git_repo_infrastructure_separate_from_liferay ? {
 			"infrastructure"=merge(
@@ -49,8 +67,27 @@ locals {
 		}
 	)
 	git_repo_infrastructure_separate_from_liferay=local.infrastructure_git_repo_url != var.liferay_git_repo_url
+	infrastructure_appproject_name="liferay-infrastructure"
 	infrastructure_git_repo_url=coalesce(var.infrastructure_git_repo_config.url, var.liferay_git_repo_url)
 	ksa_principal_base="principal://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${var.project_id}.svc.id.goog/subject/ns/${var.crossplane_namespace}/sa"
+	liferay_appproject_name="liferay-application"
+	liferay_helm_chart_config=merge(
+		var.liferay_helm_chart_config,
+		{
+			chart_name=var.liferay_helm_chart_name
+		},
+		var.liferay_helm_chart_name == "liferay-default" ? {
+			chart_url=coalesce(var.liferay_helm_chart_config.chart_url, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-default")
+			region=var.region
+			values_scope_prefix=""
+		} : {},
+		var.liferay_helm_chart_name == "liferay-gcp" ? {
+			chart_url=coalesce(var.liferay_helm_chart_config.chart_url, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-gcp")
+			region=var.region
+			values_scope_prefix="liferay-default."
+		} : {},
+	)
+	liferay_namespace_pattern="liferay-*"
 	secret_prefixes={
 		certificates="liferay-certificates-"
 		licenses="liferay-licenses-"

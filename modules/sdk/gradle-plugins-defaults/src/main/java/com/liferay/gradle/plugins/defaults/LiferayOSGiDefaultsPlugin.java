@@ -4358,8 +4358,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				"Expected 1 file, but got " + files.size());
 		}
 
-		File file = files.iterator(
-		).next();
+		Iterator<File> iterator = files.iterator();
+
+		File file = iterator.next();
 
 		if (GradleUtil.isFromMavenLocal(project, file)) {
 			throw new GradleException(

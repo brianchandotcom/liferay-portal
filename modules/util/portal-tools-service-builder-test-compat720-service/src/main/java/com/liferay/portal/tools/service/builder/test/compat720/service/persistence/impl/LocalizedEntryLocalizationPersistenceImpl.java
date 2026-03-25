@@ -1663,4 +1663,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		LocalizedEntryLocalizationPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-768302074
+// LIFERAY-SERVICE-BUILDER-HASH:-1587407018

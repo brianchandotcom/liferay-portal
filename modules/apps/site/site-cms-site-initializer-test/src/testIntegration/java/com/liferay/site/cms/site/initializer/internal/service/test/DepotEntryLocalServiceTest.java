@@ -191,8 +191,9 @@ public class DepotEntryLocalServiceTest {
 		Assert.assertArrayEquals(
 			new String[] {
 				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+				ActionKeys.DELETE_DISCUSSION, ActionKeys.DOWNLOAD,
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+				ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
 			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
@@ -200,15 +201,16 @@ public class DepotEntryLocalServiceTest {
 		Assert.assertArrayEquals(
 			new String[] {
 				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+				ActionKeys.DELETE_DISCUSSION, ActionKeys.DOWNLOAD,
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+				ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
 			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER)));
 		Assert.assertArrayEquals(
 			new String[] {
-				ActionKeys.ADD_DISCUSSION,
+				ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
 				ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW
 			},
 			JSONUtil.toStringArray(
@@ -244,8 +246,9 @@ public class DepotEntryLocalServiceTest {
 		Assert.assertArrayEquals(
 			new String[] {
 				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+				ActionKeys.DELETE_DISCUSSION, ActionKeys.DOWNLOAD,
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+				ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
 			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
@@ -253,15 +256,16 @@ public class DepotEntryLocalServiceTest {
 		Assert.assertArrayEquals(
 			new String[] {
 				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+				ActionKeys.DELETE_DISCUSSION, ActionKeys.DOWNLOAD,
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+				ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
 			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER)));
 		Assert.assertArrayEquals(
 			new String[] {
-				ActionKeys.ADD_DISCUSSION,
+				ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
 				ObjectActionKeys.OBJECT_ENTRY_HISTORY, ActionKeys.VIEW
 			},
 			JSONUtil.toStringArray(

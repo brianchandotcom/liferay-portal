@@ -16,6 +16,7 @@ import com.liferay.osb.patcher.exception.NoSuchPatcherFixRelException;
 import com.liferay.osb.patcher.exception.NoSuchPatcherProductVersionException;
 import com.liferay.osb.patcher.exception.NoSuchPatcherProjectVersionException;
 import com.liferay.osb.patcher.exception.NoSuchPatcherTicketHintException;
+import com.liferay.osb.patcher.exception.PatcherScanException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -87,6 +88,8 @@ public class PatcherPortlet extends MVCPortlet {
 			SessionErrors.contains(
 				renderRequest,
 				NoSuchPatcherTicketHintException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PatcherScanException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, PortalException.class.getName()) ||
 			SessionErrors.contains(

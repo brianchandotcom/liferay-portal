@@ -247,7 +247,7 @@ export function DatePicker({
 				time={isDateTime}
 				use12Hours={use12Hours}
 				value={formattedDate}
-				weekdaysShort={dateUtils.getWeekdaysShort()}
+				weekdaysShort={dateUtils.getWeekdaysShort() as string[]}
 				years={years}
 				yearsCheck={false}
 			/>

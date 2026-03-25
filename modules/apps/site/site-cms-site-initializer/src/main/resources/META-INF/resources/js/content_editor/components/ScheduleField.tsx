@@ -99,9 +99,13 @@ export default React.forwardRef(function ScheduleField(
 					aria-describedby={error}
 					dateFormat={dateConfig.clayFormat}
 					disabled={checked}
-					firstDayOfWeek={dateUtils.getFirstDayOfWeek(locale)}
+					firstDayOfWeek={dateUtils.getFirstDayOfWeek(
+						locale as Parameters<
+							typeof dateUtils.getFirstDayOfWeek
+						>[0]
+					)}
 					id={id}
-					months={dateUtils.getMonthsLong(locale)}
+					months={dateUtils.getMonthsLong(locale) as string[]}
 					onBlur={({target: {value}}) => onBlur(value)}
 					onChange={(value: string) => {
 						setError('');
@@ -117,7 +121,7 @@ export default React.forwardRef(function ScheduleField(
 					timezone={Liferay.ThemeDisplay.getTimeZone()}
 					use12Hours={dateConfig.use12Hours}
 					value={date}
-					weekdaysShort={dateUtils.getWeekdaysShort(locale)}
+					weekdaysShort={[...dateUtils.getWeekdaysShort(locale)]}
 					years={{
 						end: new Date().getFullYear() + 5,
 						start: new Date().getFullYear(),

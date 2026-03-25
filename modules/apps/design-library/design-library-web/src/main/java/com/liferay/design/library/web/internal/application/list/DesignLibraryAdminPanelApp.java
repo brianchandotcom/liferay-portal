@@ -27,6 +27,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DesignLibraryAdminPanelApp extends BasePanelApp {
 
 	@Override
+	public String getIcon() {
+		return "books-brush";
+	}
+
+	@Override
 	public Portlet getPortlet() {
 		return _portlet;
 	}

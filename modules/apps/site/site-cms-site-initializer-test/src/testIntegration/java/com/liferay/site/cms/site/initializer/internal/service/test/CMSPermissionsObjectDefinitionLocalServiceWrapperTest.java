@@ -15,10 +15,12 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -141,6 +143,18 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 				cmsAdministratorRole.getRoleId(),
 				ObjectActionKeys.ADD_OBJECT_ENTRY));
 
+		Portlet portlet = _portletLocalService.fetchPortletById(
+			TestPropsValues.getCompanyId(), objectDefinition.getPortletId());
+
+		if (portlet != null) {
+			Assert.assertFalse(
+				_resourcePermissionLocalService.hasResourcePermission(
+					TestPropsValues.getCompanyId(), portlet.getRootPortletId(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					cmsAdministratorRole.getRoleId(), ActionKeys.VIEW));
+		}
+
 		Assert.assertFalse(
 			_resourcePermissionLocalService.hasResourcePermission(
 				TestPropsValues.getCompanyId(), objectDefinition.getPortletId(),
@@ -194,6 +208,14 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 			ActionKeys.VIEW, objectDefinition.getPortletId(),
 			cmsAdministratorRole);
 
+		Portlet portlet = _portletLocalService.fetchPortletById(
+			TestPropsValues.getCompanyId(), objectDefinition.getPortletId());
+
+		Assert.assertNotNull(portlet);
+
+		_assertResourcePermission(
+			ActionKeys.VIEW, portlet.getRootPortletId(), cmsAdministratorRole);
+
 		_assertResourcePermission(
 			ActionKeys.VIEW, objectDefinition.getObjectDefinitionId(),
 			ObjectDefinition.class.getName(),
@@ -214,6 +236,9 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 
 	@Inject
 	private ObjectFolderLocalService _objectFolderLocalService;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

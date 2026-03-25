@@ -135,14 +135,13 @@ test(
 
 		uiElementsPage.clickNewButton();
 
-		await exportImportPage.page.getByLabel(/Pages\s+\d+\s+Items/i).check();
-		await exportImportPage.page
-			.locator('button.content-link[data-portlettitle="Pages"]')
-			.click();
-
-		expect(
-			exportImportPage.page.getByText('Master Pages (2)', {exact: true})
-		).toBeVisible();
+		await exportImportPage.expectPortletCounts(
+			/^\s*Pages\s*/,
+			{},
+			{
+				registrations: [{counts: {items: 2}, label: 'Master Pages'}],
+			}
+		);
 	}
 );
 
@@ -156,9 +155,7 @@ test('cannot see Site Pages checkbox', async ({
 		.getByRole('link', {name: 'Custom Export'})
 		.click();
 
-	await expect(
-		exportImportPage.page.getByLabel(/Site Pages\s+\d+\s+Items/)
-	).not.toBeVisible();
+	await exportImportPage.expectPortletAbsent('Site Pages');
 });
 
 test('Can see deletion counts at site level', async ({
@@ -194,9 +191,9 @@ test('Can see deletion counts at site level', async ({
 
 	await exportImportPage.deletionsLabel.check();
 
-	await expect(
-		exportImportPage.page.getByText(`${objectDefinition.name} 2 Items`)
-	).toBeVisible();
+	await exportImportPage.expectPortletCounts(objectDefinition.name, {
+		items: 2,
+	});
 
 	await apiHelpers.objectEntry.deleteObjectEntry(
 		applicationName,
@@ -205,11 +202,10 @@ test('Can see deletion counts at site level', async ({
 
 	await exportImportPage.refreshCountsLink.click();
 
-	await expect(
-		exportImportPage.page.getByText(
-			`${objectDefinition.name} 1 Items 1 Deletions`
-		)
-	).toBeVisible();
+	await exportImportPage.expectPortletCounts(objectDefinition.name, {
+		deletions: 1,
+		items: 1,
+	});
 
 	await apiHelpers.objectEntry.deleteObjectEntry(
 		applicationName,
@@ -218,15 +214,13 @@ test('Can see deletion counts at site level', async ({
 
 	await exportImportPage.refreshCountsLink.click();
 
-	await expect(
-		exportImportPage.page.getByText(`${objectDefinition.name} 2 Deletions`)
-	).toBeVisible();
+	await exportImportPage.expectPortletCounts(objectDefinition.name, {
+		deletions: 2,
+	});
 
 	await exportImportPage.deletionsLabel.uncheck();
 
-	await expect(
-		exportImportPage.page.getByText(`${objectDefinition.name} 2 Deletions`)
-	).not.toBeVisible();
+	await exportImportPage.expectPortletDeletionsHidden(objectDefinition.name);
 });
 
 test(
@@ -330,14 +324,7 @@ test(
 
 			await uiElementsPage.clickNewButton();
 
-			await expect(
-				exportImportPage.page
-					.locator('label')
-					.filter({
-						has: exportImportPage.page.locator(':text-is("Pages")'),
-					})
-					.locator('.staging-taglib-checkbox-deletions')
-			).toBeHidden();
+			await exportImportPage.expectPortletDeletionsHidden('Pages');
 
 			await exportImportPage.deletionsLabel.check();
 

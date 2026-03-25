@@ -458,15 +458,10 @@ test('can see corresponding elements at instance level', async ({
 		companyExportImportPage.page.getByText('Comments, Ratings')
 	).not.toBeVisible();
 
-	await expect(
-		companyExportImportPage.page.getByText(
-			`${objectDefinition.name} 1 Items`
-		)
-	).not.toBeVisible();
-
-	await companyExportImportPage.page
-		.getByLabel(`${objectDefinition.name}`)
-		.click();
+	await companyExportImportPage.exportImportPage.expectPortletCounts(
+		objectDefinition.name,
+		{items: 1}
+	);
 
 	await expect(
 		companyExportImportPage.page.getByText(
@@ -692,11 +687,10 @@ test('Can see deletion counts at instance level', async ({
 
 	await companyExportImportPage.exportImportPage.deletionsLabel.check();
 
-	await expect(
-		companyExportImportPage.page.getByText(
-			`${objectDefinition.name} 2 Items`
-		)
-	).toBeVisible();
+	await companyExportImportPage.exportImportPage.expectPortletCounts(
+		objectDefinition.name,
+		{items: 2}
+	);
 
 	await apiHelpers.objectEntry.deleteObjectEntry(
 		applicationName,
@@ -705,11 +699,10 @@ test('Can see deletion counts at instance level', async ({
 
 	await companyExportImportPage.exportImportPage.refreshCountsLink.click();
 
-	await expect(
-		companyExportImportPage.page.getByText(
-			`${objectDefinition.name} 1 Items 1 Deletions`
-		)
-	).toBeVisible();
+	await companyExportImportPage.exportImportPage.expectPortletCounts(
+		objectDefinition.name,
+		{deletions: 1, items: 1}
+	);
 
 	await apiHelpers.objectEntry.deleteObjectEntry(
 		applicationName,
@@ -718,17 +711,14 @@ test('Can see deletion counts at instance level', async ({
 
 	await companyExportImportPage.exportImportPage.refreshCountsLink.click();
 
-	await expect(
-		companyExportImportPage.page.getByText(
-			`${objectDefinition.name} 2 Deletions`
-		)
-	).toBeVisible();
+	await companyExportImportPage.exportImportPage.expectPortletCounts(
+		objectDefinition.name,
+		{deletions: 2}
+	);
 
 	await companyExportImportPage.exportImportPage.deletionsLabel.uncheck();
 
-	await expect(
-		companyExportImportPage.page.getByText(
-			`${objectDefinition.name} 2 Deletions`
-		)
-	).not.toBeVisible();
+	await companyExportImportPage.exportImportPage.expectPortletDeletionsHidden(
+		objectDefinition.name
+	);
 });

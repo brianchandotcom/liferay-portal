@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {TinyColorInstance, tinycolor} from '@clayui/color-picker';
+import {
+	isHexFormat,
+	parseColor,
+	toHexColorString,
+	toHexValue,
+} from '@clayui/color-picker';
 
 import {Field, Token} from '../../types/ColorPicker';
 import convertRGBtoHex from '../../utils/convertRGBtoHex';
@@ -45,13 +50,7 @@ export function parseColorValue({
 	let tokenLabel: string | undefined = undefined;
 	let pickerColor: string = '';
 
-	const isHexFormat = (color: TinyColorInstance) => {
-		const colorFormat = color.getFormat();
-
-		return colorFormat === 'hex' || colorFormat === 'hex8';
-	};
-
-	const color = tinycolor(value);
+	const color = parseColor(value);
 
 	if (token) {
 		if (token.name === field.name) {
@@ -66,7 +65,7 @@ export function parseColorValue({
 	}
 	else if (color.isValid()) {
 		if (isHexFormat(color)) {
-			validValue = internalToHex(color);
+			validValue = toHexValue(color);
 		}
 		else if (color.toString() !== value) {
 			validValue = color.toString();
@@ -105,27 +104,19 @@ export function parseColorValue({
 			value = value.substring(0, HEX_LENGTH_8);
 		}
 
-		const color = tinycolor(value);
+		const color = parseColor(value);
 
 		if (!isHexFormat(color)) {
 			return {};
 		}
 
-		validValue = internalToHex(color);
+		validValue = toHexValue(color);
 	}
 
 	return {
 		color: token?.value,
 		label: tokenLabel,
 		pickerColor,
-		value: validValue,
+		value: toHexColorString({isHex: isHexFormat(color), value: validValue}),
 	};
-}
-
-function internalToHex(color: TinyColorInstance) {
-	if (color.getAlpha() < 1) {
-		return color.toHex8().toUpperCase();
-	}
-
-	return color.toHex().toUpperCase();
 }

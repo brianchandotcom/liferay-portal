@@ -119,10 +119,7 @@ const RoomTrend = ({roomId}: {roomId: number}) => {
 				<div className="inline-item inline-item-before room-trend">
 					<div>
 						<div className="mb-1">
-							<p
-								className="font-weight-semi-bold inline-item
-                                inline-item-before mr-1"
-							>
+							<p className="font-weight-semi-bold inline-item inline-item-before mr-1">
 								{Liferay.Language.get('room-trend')}
 							</p>
 							<ClayIcon

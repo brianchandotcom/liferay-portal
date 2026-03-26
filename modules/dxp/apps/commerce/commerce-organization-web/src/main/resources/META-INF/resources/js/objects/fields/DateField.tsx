@@ -38,7 +38,7 @@ const DateField = ({
 				value = dateUtils.format(
 					new Date(value.replace(/(--)/gi, '00')),
 					specificProps && specificProps.time
-						? 'yyyy-MM-dd HH:mm'
+						? 'yyyy-MM-dd hh:mm'
 						: 'yyyy-MM-dd'
 				);
 			}
@@ -151,7 +151,7 @@ const DateField = ({
 					? dateUtils.format(
 							internalValue,
 							specificProps && specificProps.time
-								? 'yyyy-MM-dd HH:mm'
+								? 'yyyy-MM-dd hh:mm'
 								: 'yyyy-MM-dd'
 						)
 					: '-'}

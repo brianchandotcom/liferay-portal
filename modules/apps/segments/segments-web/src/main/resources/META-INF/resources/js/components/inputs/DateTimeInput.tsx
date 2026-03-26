@@ -142,7 +142,10 @@ function toDisplayDate(internalOrIsoDate: string, previousDate?: string) {
 	const resetDate = previousDate ? new Date(previousDate) : new Date();
 
 	if (!dateUtils.isValid(dateObject)) {
-		dateObject = dateUtils.parse(internalOrIsoDate, INTERNAL_DATE_FORMAT);
+		dateObject = dateUtils.parse(
+			internalOrIsoDate,
+			INTERNAL_DATE_FORMAT
+		) as Date;
 	}
 
 	if (!dateUtils.isValid(dateObject)) {
@@ -156,7 +159,10 @@ function toInternalDate(displayOrIsoDate: string) {
 	let dateObject = new Date(displayOrIsoDate);
 
 	if (!dateUtils.isValid(dateObject)) {
-		dateObject = dateUtils.parse(displayOrIsoDate, DISPLAY_DATE_FORMAT);
+		dateObject = dateUtils.parse(
+			displayOrIsoDate,
+			DISPLAY_DATE_FORMAT
+		) as Date;
 	}
 
 	if (!dateUtils.isValid(dateObject)) {

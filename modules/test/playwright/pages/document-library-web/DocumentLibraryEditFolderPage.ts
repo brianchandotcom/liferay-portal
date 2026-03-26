@@ -14,10 +14,6 @@ export class DocumentLibraryEditFolderPage {
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.title = page.getByLabel('Name Required');
 	}
-	async createNewFolder(name: string) {
-		await this.fillTitle(name);
-		await this.saveButton.click();
-	}
 	async getSelectedWorkflowDefinition() {
 		return await this.page
 			.getByTitle('Workflow Definition')
@@ -31,7 +27,15 @@ export class DocumentLibraryEditFolderPage {
 		await this.title.fill(name);
 	}
 
+	async publishNewFolder(name: string) {
+		await this.fillTitle(name);
+		await this.saveButton.click();
+	}
+
 	async setWorkflow(workflowName: string) {
+		await this.page
+			.getByRole('button', {name: 'Document Type Restrictions'})
+			.click();
 		await this.page.getByLabel('Set the default workflow for').click();
 
 		const dropdown = this.page.getByLabel('Default Workflow for all');

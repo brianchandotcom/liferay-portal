@@ -39,7 +39,8 @@ public class FeatureFlagTestHelper {
 
 		for (Bundle curBundle : bundleContext.getBundles()) {
 			if (Objects.equals(
-					curBundle.getSymbolicName(), "org.eclipse.osgi")) {
+					curBundle.getSymbolicName(),
+					"com.liferay.feature.flag.web")) {
 
 				featureFlagWebBundle = curBundle;
 			}
@@ -50,7 +51,7 @@ public class FeatureFlagTestHelper {
 		_featureFlagsBagProviderObject = bundleContext.getService(
 			bundleContext.getServiceReference(
 				featureFlagWebBundle.loadClass(
-					"com.liferay.portal.feature.flag." +
+					"com.liferay.feature.flag.web.internal.feature.flag." +
 						"FeatureFlagsBagProvider")));
 
 		Assert.assertNotNull(_featureFlagsBagProviderObject);

@@ -11,6 +11,7 @@ ext.getMVNCommand = {
 	return ["/bin/sh", "-c", "mvn ${command}"]
 }
 
+ext.mvnArgument = findProperty("mvnArgument") ?: "package"
 ext.mvnSourceDir = new File(buildDir, "${gitHubRepository}-${gitHash}")
 
 String mvnSourceURL = "https://github.com/${gitHubOwner}/${gitHubRepository}/archive/${gitHash}.zip"
@@ -34,7 +35,7 @@ jar {
 }
 
 jarMVN {
-	commandLine getMVNCommand("package")
+	commandLine getMVNCommand("${mvnArgument}")
 	dependsOn downloadSource
 
 	doLast {

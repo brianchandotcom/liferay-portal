@@ -2,6 +2,7 @@ ext {
 	gitHash = "2.3.21.LIFERAY-PATCHED-3"
 	gitHubOwner = "liferay"
 	gitHubRepository = "mojarra"
+	mvnArgument = "package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true"
 	mvnJARInclude = "jakarta.faces-2.3.21.LIFERAY-PATCHED-3.jar"
 	mvnTargetDir = "impl/target"
 }

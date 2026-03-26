@@ -4006,6 +4006,53 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testCopyObjectEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				"attachment",
+				() -> {
+					FileEntry fileEntry = _addTempFileEntry(
+						RandomTestUtil.randomString());
+
+					return fileEntry.getFileEntryId();
+				}
+			).put(
+				"emailAddressRequired", "peter@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build(),
+			serviceContext);
+
+		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
+
+		ObjectEntry copyObjectEntry = _objectEntryLocalService.copyObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(), objectEntryValues,
+			serviceContext);
+
+		Assert.assertNotEquals(
+			objectEntry.getObjectEntryId(), copyObjectEntry.getObjectEntryId());
+
+		Map<String, Serializable> copyObjectEntryValues =
+			copyObjectEntry.getValues();
+
+		Assert.assertEquals(
+			MapUtil.getLong(objectEntryValues, "attachment"),
+			MapUtil.getLong(copyObjectEntryValues, "attachment"));
+		Assert.assertEquals(
+			MapUtil.getString(objectEntryValues, "emailAddressRequired"),
+			MapUtil.getString(copyObjectEntryValues, "emailAddressRequired"));
+		Assert.assertEquals(
+			MapUtil.getString(objectEntryValues, "listTypeEntryKeyRequired"),
+			MapUtil.getString(
+				copyObjectEntryValues, "listTypeEntryKeyRequired"));
+	}
+
+	@Test
 	public void testDeleteObjectEntry() throws Exception {
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(

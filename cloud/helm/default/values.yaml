@@ -67,7 +67,21 @@ customInitContainers:
                         -   |
                             rm --force --recursive /temp/liferay/liferay.pid 2>/dev/null
 
-                            mkdir --parents /temp/liferay
+                            mkdir --parents \
+                                /temp/liferay \
+                                /temp/liferay/logs \
+                                /temp/liferay/metrics \
+                                /temp/liferay/reports \
+                                /temp/liferay/routes \
+                                /temp/liferay/work \
+                                /temp/osgi/client-extensions \
+                                /temp/osgi/configs \
+                                /temp/osgi/modules \
+                                /temp/system/tmp \
+                                /temp/osgi/state \
+                                /temp/tomcat/logs \
+                                /temp/tomcat/temp \
+                                /temp/tomcat/work
 
                             touch /temp/liferay/liferay.pid
 

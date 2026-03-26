@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * @author Preston Crary
@@ -69,7 +70,22 @@ public class CTEnclosureUtil {
 
 		Set<Map.Entry<Long, Long>> parentEntries = new HashSet<>();
 
-		Set<Map.Entry<Long, Long>> visited = new HashSet<>();
+		traverseParentEntries(
+			ctClosure, enclosureMap,
+			parentEntry -> {
+				parentEntries.add(parentEntry);
+
+				return true;
+			});
+
+		return parentEntries;
+	}
+
+	public static boolean traverseParentEntries(
+		CTClosure ctClosure, Map<Long, Set<Long>> enclosureMap,
+		Predicate<Map.Entry<Long, Long>> predicate) {
+
+		Set<Map.Entry<Long, Long>> visitedParentEntries = new HashSet<>();
 
 		Queue<Map.Entry<Long, Long>> queue = new LinkedList<>();
 
@@ -84,22 +100,22 @@ public class CTEnclosureUtil {
 		}
 
 		while (!queue.isEmpty()) {
-			Map.Entry<Long, Long> nodeEntry = queue.poll();
+			Map.Entry<Long, Long> entry = queue.poll();
 
 			Map<Long, List<Long>> parentPKsMap = ctClosure.getParentPKsMap(
-				nodeEntry.getKey(), nodeEntry.getValue());
+				entry.getKey(), entry.getValue());
 
-			for (Map.Entry<Long, List<Long>> parentEntry :
+			for (Map.Entry<Long, List<Long>> parentPKsEntry :
 					parentPKsMap.entrySet()) {
 
-				long parentClassNameId = parentEntry.getKey();
+				long parentClassNameId = parentPKsEntry.getKey();
 
-				for (long parentClassPK : parentEntry.getValue()) {
-					Map.Entry<Long, Long> parentNodeEntry =
+				for (long parentClassPK : parentPKsEntry.getValue()) {
+					Map.Entry<Long, Long> parentEntry =
 						new AbstractMap.SimpleImmutableEntry<>(
 							parentClassNameId, parentClassPK);
 
-					if (!visited.add(parentNodeEntry)) {
+					if (!visitedParentEntries.add(parentEntry)) {
 						continue;
 					}
 
@@ -109,18 +125,20 @@ public class CTEnclosureUtil {
 					if ((enclosureClassPKs != null) &&
 						enclosureClassPKs.contains(parentClassPK)) {
 
-						queue.add(parentNodeEntry);
+						queue.add(parentEntry);
 					}
 					else {
-						parentEntries.add(parentNodeEntry);
+						if (!predicate.test(parentEntry)) {
+							return false;
+						}
 
-						queue.add(parentNodeEntry);
+						queue.add(parentEntry);
 					}
 				}
 			}
 		}
 
-		return parentEntries;
+		return true;
 	}
 
 }

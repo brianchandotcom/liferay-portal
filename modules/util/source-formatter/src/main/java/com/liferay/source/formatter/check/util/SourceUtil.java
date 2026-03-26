@@ -81,8 +81,10 @@ public class SourceUtil {
 		Matcher matcher = _annotationMemberValuePairPattern.matcher(annotation);
 
 		while (matcher.find()) {
+			String annotationMemberValue = StringUtil.trim(matcher.group(2));
+
 			annotationMemberValuePair.put(
-				matcher.group(1), StringUtil.unquote(matcher.group(2)));
+				matcher.group(1), StringUtil.unquote(annotationMemberValue));
 		}
 
 		return annotationMemberValuePair;
@@ -464,7 +466,7 @@ public class SourceUtil {
 	}
 
 	private static final Pattern _annotationMemberValuePairPattern =
-		Pattern.compile("(\\w+) = (\".*?\"|.*(?=[,\\)\\s]))");
+		Pattern.compile("(\\w+) = ([\\s\\S]+?(?=(,\\s+\\w+ = )|\\)))");
 	private static final Pattern _modifierPattern = Pattern.compile(
 		"[^\n]\n(\t*)(public|protected|private)");
 

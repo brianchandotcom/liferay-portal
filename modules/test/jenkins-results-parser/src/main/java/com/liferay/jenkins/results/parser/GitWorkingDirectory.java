@@ -685,15 +685,17 @@ public class GitWorkingDirectory {
 	}
 
 	public LocalGitBranch fetch(
-		LocalGitBranch localGitBranch, boolean noTags,
-		RemoteGitRef remoteGitRef) {
+			LocalGitBranch localGitBranch, boolean noTags,
+			RemoteGitRef remoteGitRef)
+		throws IOException, TimeoutException {
 
 		return fetch(localGitBranch, noTags, remoteGitRef, 3);
 	}
 
 	public LocalGitBranch fetch(
-		LocalGitBranch localGitBranch, boolean noTags,
-		RemoteGitRef remoteGitRef, int retries) {
+			LocalGitBranch localGitBranch, boolean noTags,
+			RemoteGitRef remoteGitRef, int retries)
+		throws IOException, TimeoutException {
 
 		if (remoteGitRef == null) {
 			throw new GitWorkingDirectoryIllegalArgumentException(
@@ -786,41 +788,20 @@ public class GitWorkingDirectory {
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		long duration = 0;
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 30, true, sb.toString());
 
-		try {
-			GitUtil.ExecutionResult executionResult = executeBashCommands(
-				3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 30, sb.toString());
+		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
-			duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+		if (executionResult.getExitValue() != 0) {
+			System.out.println(gitBranchesSHAReportStringBuilder.toString());
 
-			if (executionResult.getExitValue() != 0) {
-				System.out.println(
-					gitBranchesSHAReportStringBuilder.toString());
-
-				throw new GitWorkingDirectoryRuntimeException(
-					this,
-					JenkinsResultsParserUtil.combine(
-						"Unable to fetch remote url ", remoteURL, " after ",
-						JenkinsResultsParserUtil.toDurationString(duration),
-						"\n", executionResult.getStandardError()));
-			}
-		}
-		catch (Exception exception) {
-			String exceptionMessage = exception.getMessage();
-
-			if (exceptionMessage.contains("Timeout occurred")) {
-				Matcher matcher = GitRemote.getRemoteURLMatcher(remoteURL);
-
-				if (matcher.find()) {
-					throw new RuntimeException(
-						JenkinsResultsParserUtil.combine(
-							"Unable to fetch branch history.\n",
-							"Please rebase with liferay/",
-							matcher.group("gitRepositoryName"), " ",
-							_upstreamBranchName, " and try again."));
-				}
-			}
+			throw new GitWorkingDirectoryRuntimeException(
+				this,
+				JenkinsResultsParserUtil.combine(
+					"Unable to fetch remote url ", remoteURL, " after ",
+					JenkinsResultsParserUtil.toDurationString(duration), "\n",
+					executionResult.getStandardError()));
 		}
 
 		System.out.println(
@@ -876,15 +857,30 @@ public class GitWorkingDirectory {
 	public LocalGitBranch fetch(
 		LocalGitBranch localGitBranch, RemoteGitBranch remoteGitBranch) {
 
-		return fetch(localGitBranch, true, remoteGitBranch);
+		try {
+			return fetch(localGitBranch, true, remoteGitBranch);
+		}
+		catch (IOException | TimeoutException exception) {
+			return null;
+		}
 	}
 
 	public LocalGitBranch fetch(RemoteGitRef remoteGitRef) {
-		return fetch(null, true, remoteGitRef);
+		try {
+			return fetch(null, true, remoteGitRef);
+		}
+		catch (IOException | TimeoutException exception) {
+			return null;
+		}
 	}
 
 	public LocalGitBranch fetch(RemoteGitRef remoteGitRef, int retries) {
-		return fetch(null, true, remoteGitRef, retries);
+		try {
+			return fetch(null, true, remoteGitRef, retries);
+		}
+		catch (IOException | TimeoutException exception) {
+			return null;
+		}
 	}
 
 	public void fetch(RemoteGitRepository remoteGitRepository) {
@@ -2579,7 +2575,9 @@ public class GitWorkingDirectory {
 	}
 
 	protected synchronized GitUtil.ExecutionResult executeBashCommands(
-		int maxRetries, long retryDelay, long timeout, String... commands) {
+			int maxRetries, long retryDelay, long timeout,
+			boolean throwExceptions, String... commands)
+		throws IOException, TimeoutException {
 
 		String command = String.join(" ", commands);
 
@@ -2590,11 +2588,26 @@ public class GitWorkingDirectory {
 		}
 
 		GitUtil.ExecutionResult executionResult = GitUtil.executeBashCommands(
-			maxRetries, retryDelay, timeout, _workingDirectory, commands);
+			maxRetries, retryDelay, timeout, _workingDirectory, throwExceptions,
+			commands);
 
 		_executionResults.put(command, executionResult);
 
 		return executionResult;
+	}
+
+	protected synchronized GitUtil.ExecutionResult executeBashCommands(
+		int maxRetries, long retryDelay, long timeout, String... commands) {
+
+		try {
+			return executeBashCommands(
+				maxRetries, retryDelay, timeout, false, commands);
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(
+				"Unable to execute bash commands: " + Arrays.toString(commands),
+				exception);
+		}
 	}
 
 	protected Boolean getGitConfigPropertyBoolean(

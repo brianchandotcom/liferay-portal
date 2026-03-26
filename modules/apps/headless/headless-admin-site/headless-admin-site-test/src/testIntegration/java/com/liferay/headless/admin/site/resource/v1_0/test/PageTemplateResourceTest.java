@@ -1426,11 +1426,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			pageTemplateSet -> {
 				patchPageTemplate.setPageTemplateSet(pageTemplateSet);
 
-				return _toPageTemplate(
-					_pageTemplateResource.patchSitePageTemplate(
-						testGroup.getExternalReferenceCode(),
-						pageTemplate.getExternalReferenceCode(),
-						_toPageTemplate(patchPageTemplate)));
+				return _pageTemplateResource.patchSitePageTemplate(
+					testGroup.getExternalReferenceCode(),
+					pageTemplate.getExternalReferenceCode(), patchPageTemplate);
 			});
 	}
 
@@ -1681,10 +1679,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			pageTemplateSet -> {
 				pageTemplate.setPageTemplateSet(pageTemplateSet);
 
-				return _toPageTemplate(
-					_pageTemplateResource.postSitePageTemplate(
-						testGroup.getExternalReferenceCode(),
-						_toPageTemplate(pageTemplate)));
+				return _pageTemplateResource.postSitePageTemplate(
+					testGroup.getExternalReferenceCode(), pageTemplate);
 			});
 	}
 
@@ -1926,11 +1922,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			pageTemplateSet -> {
 				pageTemplate.setPageTemplateSet(pageTemplateSet);
 
-				return _toPageTemplate(
-					_pageTemplateResource.putSitePageTemplate(
-						testGroup.getExternalReferenceCode(),
-						pageTemplate.getExternalReferenceCode(),
-						_toPageTemplate(pageTemplate)));
+				return _pageTemplateResource.putSitePageTemplate(
+					testGroup.getExternalReferenceCode(),
+					pageTemplate.getExternalReferenceCode(), pageTemplate);
 			});
 	}
 

@@ -17,7 +17,6 @@ import {Sizes} from 'shared/util/constants';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
-import {User} from 'shared/util/records';
 import {useRequest} from 'shared/hooks/useRequest';
 
 const mockItems = {
@@ -68,7 +67,7 @@ const mockItems = {
 	total: 1
 };
 
-const accountLabelMap = {
+const lifecycleStagesLabelMap = {
 	[LifecycleStages.AT_RISK]: {
 		displayType: 'danger',
 		label: Liferay.Language.get('at-risk')
@@ -95,9 +94,15 @@ const accountLabelMap = {
 	}
 };
 
+const lifecycleStageFilter = {
+	items: Object.entries(lifecycleStagesLabelMap).map(([stage]) => ({
+		label: lifecycleStagesLabelMap[stage as LifecycleStages].label,
+		value: stage
+	}))
+};
+
 interface IListProps {
 	channelId: string;
-	currentUser: User;
 	groupId: string;
 }
 
@@ -204,8 +209,10 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 								accountLifecycleStageRenderer: ({value}) =>
 									frontendDataSetColumns.cmsLabel({
 										displayType:
-											accountLabelMap[value].displayType,
-										label: accountLabelMap[value].label
+											lifecycleStagesLabelMap[value]
+												.displayType,
+										label:
+											lifecycleStagesLabelMap[value].label
 									}),
 								lastActiveRenderer: ({value}) => (
 									<div>
@@ -231,26 +238,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 							filters={[
 								{
 									id: 'lifecycleStatus',
-									items: [
-										{
-											label: Liferay.Language.get(
-												'established'
-											),
-											value: 'established'
-										},
-										{
-											label: Liferay.Language.get(
-												'pipeline'
-											),
-											value: 'pipeline'
-										},
-										{
-											label: Liferay.Language.get(
-												'at-risk'
-											),
-											value: 'at-risk'
-										}
-									],
+									items: lifecycleStageFilter.items,
 									label: Liferay.Language.get('status'),
 									name: 'status',
 									type: 'selection'

@@ -135,6 +135,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks if the property value for `Web-ContextPath` matches the module directory." />
 		</check>
+		<check name="BNDWebServiceTrackingCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds missing `Web-ServiceTracking: false`." />
+		</check>
 	</source-processor>
 	<source-processor name="CIMergeAndGitRepoSourceProcessor">
 		<check name="CIMergeAndGitRepoFileCheck">

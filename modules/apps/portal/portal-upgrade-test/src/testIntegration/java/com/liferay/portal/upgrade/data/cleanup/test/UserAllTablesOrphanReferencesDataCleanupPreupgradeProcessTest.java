@@ -84,14 +84,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			db.runSQL(
 				connection,
 				StringBundler.concat(
-					"insert into MFATimeBasedOTPEntry (mvccVersion, ",
-					"mfaTimeBasedOTPEntryId, companyId, userId) values (0, ",
-					RandomTestUtil.nextLong(), ", ", _companyId, ", ", _userId,
-					")"));
-			db.runSQL(
-				connection,
-				StringBundler.concat(
-					"insert into OAuth2Authorization (oAuth2AuthorizationId, ",
+					"insert into OAuth2Application (oAuth2ApplicationId, ",
 					"companyId, userId) values (", RandomTestUtil.nextLong(),
 					", ", _companyId, ", ", _userId, ")"));
 			db.runSQL(
@@ -104,9 +97,9 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			db.runSQL(
 				connection,
 				StringBundler.concat(
-					"insert into SamlPeerBinding (samlPeerBindingId, ",
+					"insert into SamlIdpSpConnection (samlIdpSpConnectionId, ",
 					"companyId, userId) values (", RandomTestUtil.nextLong(),
-					", ", _companyId, ", ", _userId, ")"));
+					", ", _companyId, ", 0)"));
 			db.runSQL(
 				connection,
 				StringBundler.concat(
@@ -128,18 +121,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			Assert.assertFalse(
 				message,
 				message.contains(
-					dbInspector.normalizeName("MFATimeBasedOTPEntry")));
-			Assert.assertFalse(
-				message,
-				message.contains(
-					dbInspector.normalizeName("OAuth2Authorization")));
-			Assert.assertFalse(
-				message,
-				message.contains(
-					dbInspector.normalizeName("OpenIdConnectUser")));
-			Assert.assertFalse(
-				message,
-				message.contains(dbInspector.normalizeName("SamlPeerBinding")));
+					dbInspector.normalizeName("SamlIdpSpConnection")));
 			Assert.assertTrue(
 				message, message.contains("No admin user found for company 0"));
 			Assert.assertTrue(
@@ -150,6 +132,30 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 						"row updated column ",
 						dbInspector.normalizeName("userId"), " to value ",
 						_adminUser.getUserId(), " because ",
+						dbInspector.normalizeName("userId"), StringPool.SPACE,
+						_userId, " was not found in column ",
+						dbInspector.normalizeName("userId"), " from table ",
+						dbInspector.normalizeName("User_"))));
+			Assert.assertTrue(
+				message,
+				message.contains(
+					StringBundler.concat(
+						"Table ",
+						dbInspector.normalizeName("OAuth2Application"), ", 1 ",
+						"row updated column ",
+						dbInspector.normalizeName("userId"), " to value ",
+						_adminUser.getUserId(), " because ",
+						dbInspector.normalizeName("userId"), StringPool.SPACE,
+						_userId, " was not found in column ",
+						dbInspector.normalizeName("userId"), " from table ",
+						dbInspector.normalizeName("User_"))));
+			Assert.assertTrue(
+				message,
+				message.contains(
+					StringBundler.concat(
+						"Table ",
+						dbInspector.normalizeName("OpenIdConnectUser"),
+						", 1 row deleted because ",
 						dbInspector.normalizeName("userId"), StringPool.SPACE,
 						_userId, " was not found in column ",
 						dbInspector.normalizeName("userId"), " from table ",

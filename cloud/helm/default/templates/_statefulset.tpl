@@ -185,17 +185,17 @@ metadata:
     name: {{ include "liferay.name" .root }}-hash-policy
     namespace: {{ include "liferay.namespace" .root }}
 spec:
-    hashPolicies:
-        -   cookie:
-                name: JSESSIONID
     loadBalancer:
-        ringHash:
-            minimumRingSize: 4096
-        type: RingHash
+        consistentHash:
+            cookie:
+                name:
+                    JSESSIONID
+            type: Cookie
+        type: ConsistentHash
     targetRefs:
-        -   group: ""
-            kind: Service
-            name: {{ include "liferay.name" .root }}{{ $suffix }}
+        -   group: gateway.networking.k8s.io
+            kind: HTTPRoute
+            name: {{ include "liferay.name" .root }}-httproute
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute

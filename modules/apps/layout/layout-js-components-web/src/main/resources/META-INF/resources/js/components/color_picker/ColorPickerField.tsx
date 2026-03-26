@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
-import {Color, ColorCategoryMap, Field} from '../../types/ColorPicker';
+import {Color, ColorCategoryMap} from '../../types/ColorPicker';
 import ColorPalette from './ColorPalette';
 import TokenButton from './TokenButton';
 
@@ -23,7 +23,7 @@ interface Props
 	colors: string[];
 	colorsFromStylebook: ColorCategoryMap;
 	disabled?: boolean;
-	field: Field;
+	inherited: boolean;
 	name?: string;
 	onActiveChange: InternalDispatch<boolean>;
 	onBlurInput: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -49,7 +49,7 @@ export default function ColorPickerField({
 	colors,
 	colorsFromStylebook,
 	disabled,
-	field,
+	inherited,
 	name,
 	onActiveChange,
 	onBlurInput,
@@ -107,7 +107,7 @@ export default function ColorPickerField({
 			<div className="clay-color-picker w-100" ref={triggerElementRef}>
 				{tokenLabel ? (
 					<TokenButton
-						inherited={!value && field.inherited}
+						inherited={inherited}
 						label={tokenLabel}
 						onClick={() => {
 							onSplotchClick();

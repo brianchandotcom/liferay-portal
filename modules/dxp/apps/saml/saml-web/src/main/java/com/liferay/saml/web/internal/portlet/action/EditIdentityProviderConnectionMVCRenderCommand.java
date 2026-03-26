@@ -18,6 +18,7 @@ import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.web.internal.display.context.AttributeMappingDisplayContext;
+import com.liferay.saml.web.internal.util.SamlPermissionUtil;
 
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
@@ -77,6 +78,9 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 			samlSpIdpConnection =
 				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 					samlSpIdpConnectionId);
+
+			SamlPermissionUtil.checkPermission(
+				samlSpIdpConnection.getCompanyId());
 		}
 
 		renderRequest.setAttribute(

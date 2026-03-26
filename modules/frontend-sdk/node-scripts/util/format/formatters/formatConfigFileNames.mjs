@@ -77,7 +77,7 @@ const DISALLOWED_CONFIG_FILE_NAMES = {
 export default async function formatConfigFileNames() {
 	let checksPassed = true;
 
-	print(1, false, print.subTitle('> Checking configuration file names...\n'));
+	print(1, print.subTitle('> Checking configuration file names...\n'));
 
 	const disallowedConfigs = await runGitLsFiles(
 		[
@@ -116,7 +116,6 @@ export default async function formatConfigFileNames() {
 
 		print(
 			2,
-			true,
 			print.error('ERROR:'),
 			'Invalid configuration file',
 			print.underline(file),

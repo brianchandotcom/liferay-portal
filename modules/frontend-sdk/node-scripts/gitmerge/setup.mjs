@@ -17,7 +17,6 @@ export default async function main() {
 	if (contents.includes('[merge "node-scripts"]')) {
 		print(
 			0,
-			true,
 			print.warning('\nWARNING:'),
 			'Git merge driver for node-scripts is already configured: doing nothing.\n'
 		);
@@ -42,7 +41,6 @@ export default async function main() {
 
 	print(
 		0,
-		true,
 		print.info('\nINFO:'),
 		'Added Git merge driver for node-scripts to .git/config file\n'
 	);

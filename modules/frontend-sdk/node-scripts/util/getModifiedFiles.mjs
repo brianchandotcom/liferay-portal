@@ -43,7 +43,6 @@ export default async function getModifiedFiles(currentDir) {
 		if (currentBranch || localChanges) {
 			print(
 				0,
-				true,
 				print.error('\nERROR:'),
 				'Arguments --current-branch or --local-changes are not valid when formatting a single project.\n'
 			);

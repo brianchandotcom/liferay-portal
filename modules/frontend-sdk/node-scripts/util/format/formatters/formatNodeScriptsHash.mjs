@@ -16,7 +16,6 @@ export default async function formatNodeScriptsHash(check) {
 
 	print(
 		1,
-		false,
 		print.subTitle(
 			`> ${check ? 'Checking' : 'Formatting'} '@liferay/node-scripts' hash...\n`
 		)
@@ -32,7 +31,6 @@ export default async function formatNodeScriptsHash(check) {
 		if (check) {
 			print(
 				2,
-				true,
 				print.error('ERROR:'),
 				`Incorrect value for 'com.liferay.sha256' field of`,
 				print.underline(`'@liferay/node-scripts'`),
@@ -48,7 +46,6 @@ export default async function formatNodeScriptsHash(check) {
 
 			print(
 				2,
-				false,
 				print.success('SUCCESS:'),
 				"Formatted 'com.liferay.sha256' field\n"
 			);

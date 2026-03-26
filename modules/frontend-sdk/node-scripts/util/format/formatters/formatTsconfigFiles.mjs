@@ -15,7 +15,6 @@ export default async function formatTsconfigFiles(check) {
 
 	print(
 		1,
-		false,
 		print.subTitle(
 			`> ${check ? 'Checking' : 'Formatting'} 'tsconfig.json' files...\n`
 		)
@@ -27,7 +26,6 @@ export default async function formatTsconfigFiles(check) {
 		if (check) {
 			print(
 				2,
-				true,
 				print.error('ERROR:'),
 				'Outdated file',
 				print.underline(relFilePath),
@@ -41,7 +39,6 @@ export default async function formatTsconfigFiles(check) {
 
 			print(
 				2,
-				false,
 				print.success('SUCCESS:'),
 				'Regenerated file',
 				print.underline(relFilePath),

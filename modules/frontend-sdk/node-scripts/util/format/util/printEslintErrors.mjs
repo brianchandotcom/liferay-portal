@@ -9,7 +9,6 @@ export default function printEslintErrors(filePath, messages) {
 	if (messages.length) {
 		print(
 			2,
-			true,
 			print.error('ERROR:'),
 			'File',
 			print.underline(filePath),
@@ -22,7 +21,6 @@ export default function printEslintErrors(filePath, messages) {
 
 		print(
 			3,
-			true,
 			`${line}:${column}`,
 			severity === 2 ? print.red('error') : print.yellow('warning'),
 			message,
@@ -31,6 +29,6 @@ export default function printEslintErrors(filePath, messages) {
 	});
 
 	if (messages.length) {
-		print(2, true, '');
+		print(2, '');
 	}
 }

@@ -46,7 +46,6 @@ async function doRunEsbuild(esbuildesbuildConfig, configName) {
 
 	print(
 		0,
-		true,
 		print.info('INFO:'),
 		`Esbuild for ${configName} took ${(lapse / 1000).toFixed(3)} seconds.`
 	);

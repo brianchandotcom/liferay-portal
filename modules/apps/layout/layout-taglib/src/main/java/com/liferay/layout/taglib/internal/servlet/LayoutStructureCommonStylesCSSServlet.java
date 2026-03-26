@@ -17,8 +17,10 @@ import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -125,6 +127,36 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 			}
 		}
 
+		long previewCTCollectionId = ParamUtil.getLong(
+			httpServletRequest, "previewCTCollectionId",
+			CTCollectionThreadLocal.getCTCollectionId());
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					previewCTCollectionId)) {
+
+			_generateCSS(httpServletRequest, httpServletResponse);
+		}
+	}
+
+	private JSONObject _createJSONObject(String json) {
+		try {
+			return _jsonFactory.createJSONObject(json);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return _jsonFactory.createJSONObject();
+		}
+	}
+
+	private void _generateCSS(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
 		httpServletResponse.setContentType(ContentTypes.TEXT_CSS_UTF8);
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
@@ -223,19 +255,6 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 				printWriter.print(cssSB);
 				printWriter.print(StringPool.CLOSE_CURLY_BRACE);
 			}
-		}
-	}
-
-	private JSONObject _createJSONObject(String json) {
-		try {
-			return _jsonFactory.createJSONObject(json);
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
-			return _jsonFactory.createJSONObject();
 		}
 	}
 

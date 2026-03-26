@@ -7,6 +7,7 @@ package com.liferay.layout.taglib.internal.servlet.taglib;
 
 import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -86,6 +87,13 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 				masterLayoutPlid);
 
 			_addModifiedDate(printWriter, masterLayout);
+		}
+
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
+		if (ctCollectionId != 0) {
+			printWriter.print("&previewCTCollectionId=");
+			printWriter.print(ctCollectionId);
 		}
 
 		printWriter.print(StringPool.QUOTE);

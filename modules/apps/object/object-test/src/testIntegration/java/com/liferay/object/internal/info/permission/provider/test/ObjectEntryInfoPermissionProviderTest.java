@@ -16,10 +16,16 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -30,6 +36,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.util.Collections;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,10 +54,19 @@ public class ObjectEntryInfoPermissionProviderTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		_user = UserTestUtil.addUser();
+	}
+
 	@Test
 	public void testHasViewPermission() throws Exception {
-		_testHasViewPermissionForCustomObjectDefinition(false, true);
-		_testHasViewPermissionForCustomObjectDefinition(true, true);
+		_testHasViewPermissionForCustomObjectDefinition(
+			false, false, PermissionCheckerFactoryUtil.create(_user));
+		_testHasViewPermissionForCustomObjectDefinition(
+			false, true, PermissionThreadLocal.getPermissionChecker());
+		_testHasViewPermissionForCustomObjectDefinition(
+			true, true, PermissionThreadLocal.getPermissionChecker());
 		_testHasViewPermissionForModifiableSystemObjectDefinition(false, false);
 		_testHasViewPermissionForModifiableSystemObjectDefinition(true, false);
 		_testHasViewPermissionForUnmodifiableSystemObjectDefinition(false);
@@ -59,9 +75,14 @@ public class ObjectEntryInfoPermissionProviderTest {
 
 	@FeatureFlag("LPD-17564")
 	@Test
+	@TestInfo("LPD-83634")
 	public void testHasViewPermissionWithFF() throws Exception {
-		_testHasViewPermissionForCustomObjectDefinition(false, false);
-		_testHasViewPermissionForCustomObjectDefinition(true, true);
+		_testHasViewPermissionForCustomObjectDefinition(
+			false, false, PermissionCheckerFactoryUtil.create(_user));
+		_testHasViewPermissionForCustomObjectDefinition(
+			true, true, PermissionThreadLocal.getPermissionChecker());
+		_testHasViewPermissionForCustomObjectDefinition(
+			true, true, PermissionThreadLocal.getPermissionChecker());
 		_testHasViewPermissionForModifiableSystemObjectDefinition(false, false);
 		_testHasViewPermissionForModifiableSystemObjectDefinition(true, true);
 		_testHasViewPermissionForUnmodifiableSystemObjectDefinition(false);
@@ -69,7 +90,8 @@ public class ObjectEntryInfoPermissionProviderTest {
 	}
 
 	private void _testHasViewPermissionForCustomObjectDefinition(
-			boolean enableFormContainer, boolean expectedResult)
+			boolean enableFormContainer, boolean expectedResult,
+			PermissionChecker permissionChecker)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -92,7 +114,12 @@ public class ObjectEntryInfoPermissionProviderTest {
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId());
 
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		try {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
 			InfoPermissionProvider<ObjectEntry> infoPermissionProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoPermissionProvider.class,
@@ -100,10 +127,12 @@ public class ObjectEntryInfoPermissionProviderTest {
 
 			Assert.assertEquals(
 				expectedResult,
-				infoPermissionProvider.hasViewPermission(
-					PermissionThreadLocal.getPermissionChecker()));
+				infoPermissionProvider.hasViewPermission(permissionChecker));
 		}
 		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition);
 		}
@@ -192,5 +221,8 @@ public class ObjectEntryInfoPermissionProviderTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

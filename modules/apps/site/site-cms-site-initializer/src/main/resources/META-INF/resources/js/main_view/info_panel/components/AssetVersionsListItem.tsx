@@ -94,13 +94,9 @@ const AssetVersionsListItem = ({
 							) : null
 						)}
 
-						{file ? (
+						{file?.link?.href ? (
 							<ClayDropdown.Item
-								onClick={() => {
-									if (file.link?.href) {
-										navigate(file.link.href);
-									}
-								}}
+								onClick={() => navigate(file.link.href)}
 							>
 								<ClayIcon className="mr-2" symbol="download" />
 

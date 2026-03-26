@@ -146,6 +146,20 @@
 					"name": "siteTemplateKey",
 					"required": false,
 					"system": true
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "TREND",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Trend"
+					},
+					"name": "trend",
+					"required": false,
+					"system": true
 				}
 			],
 			"objectFolderExternalReferenceCode": "L_DSR_STRUCTURES",

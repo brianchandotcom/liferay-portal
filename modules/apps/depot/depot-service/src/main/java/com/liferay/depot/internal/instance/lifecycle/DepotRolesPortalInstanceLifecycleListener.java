@@ -42,7 +42,7 @@ public class DepotRolesPortalInstanceLifecycleListener
 	public void portalInstanceRegistered(Company company)
 		throws PortalException {
 
-		Role administratorRole = _getOrCreateRole(
+		Role assetLibraryAdministratorRole = _getOrCreateRole(
 			company.getCompanyId(),
 			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
 
@@ -83,7 +83,8 @@ public class DepotRolesPortalInstanceLifecycleListener
 			_resourcePermissionLocalService.setResourcePermissions(
 				company.getCompanyId(), Role.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(role.getRoleId()), administratorRole.getRoleId(),
+				String.valueOf(role.getRoleId()),
+				assetLibraryAdministratorRole.getRoleId(),
 				new String[] {ActionKeys.VIEW});
 		}
 	}

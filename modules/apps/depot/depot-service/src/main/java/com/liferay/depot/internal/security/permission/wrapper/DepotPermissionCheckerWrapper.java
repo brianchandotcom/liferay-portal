@@ -10,6 +10,7 @@ import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -64,14 +65,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return true;
 		}
 
-		long groupId = 0;
-
-		if (group != null) {
-			group.getGroupId();
-		}
-
 		Boolean hasPermission = _hasPermission(
-			groupId, name, primKey, actionId);
+			BeanPropertiesUtil.getLong(group, "groupId"), name, primKey,
+			actionId);
 
 		if (hasPermission != null) {
 			return hasPermission;
@@ -88,14 +84,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return true;
 		}
 
-		long groupId = 0;
-
-		if (group != null) {
-			group.getGroupId();
-		}
-
 		Boolean hasPermission = _hasPermission(
-			groupId, name, GetterUtil.getLong(primKey), actionId);
+			BeanPropertiesUtil.getLong(group, "groupId"), name,
+			GetterUtil.getLong(primKey), actionId);
 
 		if (hasPermission != null) {
 			return hasPermission;

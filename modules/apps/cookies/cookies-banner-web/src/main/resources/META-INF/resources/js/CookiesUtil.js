@@ -47,8 +47,43 @@ export function declineAllCookies(
 	});
 }
 
+async function fetchStoredCookie(name) {
+	fetch(`/o/cookies/v1.0/cookies-consent-preferences/by-name/${name}`, {
+		headers: HEADERS,
+		method: 'GET',
+	})
+		.then((response) => response.json())
+		.then((jsonObject) => {
+			const {expirationDate, name, value} = jsonObject;
+
+			const expirationDateObject = new Date(expirationDate);
+
+			const expirationInSeconds = Math.floor(
+				(expirationDateObject.getTime() - Date.now()) / 1000
+			);
+
+			if (expirationInSeconds > 0) {
+				setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
+					'max-age': expirationInSeconds,
+					'path': themeDisplay.getPathContext() || '/',
+				});
+
+				return getCookieUtil(name, COOKIE_TYPES.NECESSARY);
+			}
+			else {
+				return undefined;
+			}
+		});
+}
+
 export function getCookie(name) {
-	return getCookieUtil(name, COOKIE_TYPES.NECESSARY);
+	const cookie = getCookieUtil(name, COOKIE_TYPES.NECESSARY);
+
+	if (cookie !== undefined || !Liferay.FeatureFlags['LPD-75032']) {
+		return cookie;
+	}
+
+	return fetchStoredCookie(name);
 }
 
 export function removeAllCookies(

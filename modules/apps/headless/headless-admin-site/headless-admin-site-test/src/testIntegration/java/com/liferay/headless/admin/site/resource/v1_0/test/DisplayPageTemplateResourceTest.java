@@ -1059,10 +1059,15 @@ public class DisplayPageTemplateResourceTest
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
+		catch (Problem.ProblemException problemException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(unsupportedOperationException);
+				_log.debug(problemException);
 			}
+
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(
+				"UnsupportedOperationException", problem.getType());
 		}
 
 		Assert.assertNull(

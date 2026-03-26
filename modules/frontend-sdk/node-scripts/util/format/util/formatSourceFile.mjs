@@ -42,7 +42,7 @@ export default async function formatSourceFile(filePath, skip, options) {
 		switch (path.extname(filePath)) {
 			case '.jsp':
 			case '.jspf': {
-				if (skip.prettier) {
+				if (!skip.prettier) {
 					transformedContent =
 						await formatScriptTagsWithPrettier(source);
 				}
@@ -51,14 +51,14 @@ export default async function formatSourceFile(filePath, skip, options) {
 
 			case '.css':
 			case '.scss': {
-				if (skip.prettier) {
+				if (!skip.prettier) {
 					transformedContent = await formatWithPrettier(
 						transformedContent,
 						filePath
 					);
 				}
 
-				if (skip.stylelint) {
+				if (!skip.stylelint) {
 					const {errorsPresent, output} = await formatWithStylelint(
 						transformedContent,
 						filePath
@@ -74,14 +74,14 @@ export default async function formatSourceFile(filePath, skip, options) {
 			}
 
 			default: {
-				if (skip.prettier) {
+				if (!skip.prettier) {
 					transformedContent = await formatWithPrettier(
 						transformedContent,
 						filePath
 					);
 				}
 
-				if (skip.eslint) {
+				if (!skip.eslint) {
 					const {errorsPresent, output} = await formatWithEslint(
 						transformedContent,
 						filePath,

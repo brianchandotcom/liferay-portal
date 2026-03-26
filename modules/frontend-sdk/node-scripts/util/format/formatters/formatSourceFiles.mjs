@@ -173,8 +173,8 @@ function getSkip(filePath, ignorePatterns) {
 		});
 
 	return {
-		eslint: isIncluded(ignorePatterns.eslint),
-		prettier: isIncluded(ignorePatterns.prettier),
-		stylelint: isIncluded(ignorePatterns.stylelint),
+		eslint: !isIncluded(ignorePatterns.eslint),
+		prettier: !isIncluded(ignorePatterns.prettier),
+		stylelint: !isIncluded(ignorePatterns.stylelint),
 	};
 }

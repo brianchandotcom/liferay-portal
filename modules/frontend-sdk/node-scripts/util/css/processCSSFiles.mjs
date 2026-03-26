@@ -29,7 +29,6 @@ export default async function processCSSFiles() {
 
 			print(
 				0,
-				true,
 				print.info('INFO:'),
 				`Processing of`,
 				print.underline(path.relative(PORTAL_DIR, cssFile)),

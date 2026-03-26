@@ -84,7 +84,6 @@ export default async function () {
 	else {
 		print(
 			0,
-			true,
 			print.title(
 				`\n> Testing ${totalTestableProjects} projects in ${sync ? 'series' : 'parallel'}...\n`
 			)
@@ -110,17 +109,15 @@ export default async function () {
 				if (failed) {
 					print(
 						1,
-						true,
 						print.error('FAILED:'),
 						print.underline(projectName),
 						'\n'
 					);
-					print(2, true, `${all}\n`);
+					print(2, `${all}\n`);
 				}
 				else {
 					print(
 						1,
-						true,
 						print.success('PASSED:'),
 						print.underline(projectName),
 						'\n'

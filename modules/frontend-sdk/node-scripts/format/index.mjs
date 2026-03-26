@@ -31,7 +31,6 @@ export default async function main() {
 
 	print(
 		0,
-		true,
 		print.title(
 			`\n> ${check ? 'Checking' : 'Formatting'} ${files ? files.length : 'ALL'} files...\n`
 		)
@@ -56,7 +55,6 @@ export default async function main() {
 
 		print(
 			1,
-			true,
 			print.error('ERROR:'),
 			'Directory',
 			print.underline(currentDir),
@@ -69,7 +67,6 @@ export default async function main() {
 	if (checksPassed) {
 		print(
 			0,
-			true,
 			print.success('SUCCESS:'),
 			'Everything is correctly formatted.\n'
 		);
@@ -77,7 +74,6 @@ export default async function main() {
 	else {
 		print(
 			0,
-			true,
 			print.error('ERROR:'),
 			'Some errors could not be fixed automatically.\n'
 		);

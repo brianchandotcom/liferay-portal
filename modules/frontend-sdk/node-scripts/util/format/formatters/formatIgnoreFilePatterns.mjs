@@ -14,7 +14,6 @@ export default async function formatIgnoreFilePatterns() {
 
 	print(
 		1,
-		false,
 		print.subTitle('> Checking ignored file patterns configuration...\n')
 	);
 
@@ -29,7 +28,6 @@ export default async function formatIgnoreFilePatterns() {
 		if (config.ignores || config.ignorePatterns) {
 			print(
 				2,
-				true,
 				print.error('ERROR:'),
 				'File',
 				print.underline(file),
@@ -49,7 +47,6 @@ export default async function formatIgnoreFilePatterns() {
 		if (config.ignoreFiles) {
 			print(
 				2,
-				true,
 				print.error('ERROR:'),
 				'File',
 				print.underline(file),

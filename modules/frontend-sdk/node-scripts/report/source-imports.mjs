@@ -153,5 +153,5 @@ export default async function main() {
 
 	await fs.writeFile(csvFile, lines.join('\n'));
 
-	print(0, true, print.info('\nINFO:'), `Wrote report file: ${csvFile}\n`);
+	print(0, print.info('\nINFO:'), `Wrote report file: ${csvFile}\n`);
 }

@@ -101,12 +101,11 @@ export default async function formatSourceFile(filePath, skip, options) {
 	catch (error) {
 		print(
 			2,
-			true,
 			print.error('ERROR:'),
 			'Unhandled error formatting file',
 			print.underline(portalRelativeFilePath)
 		);
-		print(3, true, error, '\n');
+		print(3, error, '\n');
 
 		checksPassed = false;
 	}
@@ -117,7 +116,6 @@ export default async function formatSourceFile(filePath, skip, options) {
 
 			print(
 				2,
-				false,
 				print.success('SUCCESS:'),
 				'Formatted file',
 				print.underline(portalRelativeFilePath),
@@ -127,7 +125,6 @@ export default async function formatSourceFile(filePath, skip, options) {
 		else {
 			print(
 				2,
-				true,
 				print.error('ERROR:'),
 				'File',
 				print.underline(portalRelativeFilePath),

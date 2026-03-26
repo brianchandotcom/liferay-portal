@@ -48,7 +48,6 @@ export default async function getYarnWorkspaceProjects() {
 	catch (error) {
 		print(
 			0,
-			true,
 			print.error('\nERROR:'),
 			`Could not retrieve the list of yarn workspace projects: ${error}.\n`
 		);

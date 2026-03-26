@@ -55,7 +55,6 @@ export default async function formatSourceFiles(check, files) {
 
 	print(
 		1,
-		false,
 		print.subTitle(
 			`> ${check ? 'Checking' : 'Formatting'} ${filePaths.length} source files with SF...\n`
 		)

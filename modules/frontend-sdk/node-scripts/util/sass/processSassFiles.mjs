@@ -50,7 +50,6 @@ export default async function processSassFiles() {
 	) {
 		print(
 			0,
-			false,
 			print.info('INFO:'),
 			'No .scss files were modified: skipping Sass compilation.'
 		);
@@ -77,7 +76,6 @@ export default async function processSassFiles() {
 
 			print(
 				0,
-				true,
 				print.info('INFO:'),
 				'Sass compilation for',
 				print.underline(path.relative(PORTAL_DIR, entryFile)),

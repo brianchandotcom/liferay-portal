@@ -207,7 +207,8 @@ Usage: node-scripts <command>
 	    and per project when invoked from a project's directory.
 
 	Some actions may receive one of the arguments {--current-branch|
-	--local-changes} to	restrict the set of files to which they must be applied.
+	--local-changes} when executed globally (at 'modules') to restrict the set
+	of files to which they must be applied.
 
 	The meaning of such flags is:
 

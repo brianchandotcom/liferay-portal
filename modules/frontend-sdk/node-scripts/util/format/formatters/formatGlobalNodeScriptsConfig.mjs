@@ -16,7 +16,6 @@ export default async function formatGlobalNodeScriptsConfig(check) {
 
 	print(
 		1,
-		false,
 		print.subTitle(
 			`> ${check ? 'Checking' : 'Formatting'} global 'node-scripts.config.js' file...\n`
 		)
@@ -33,7 +32,6 @@ export default async function formatGlobalNodeScriptsConfig(check) {
 		if (check) {
 			print(
 				2,
-				true,
 				print.error('ERROR:'),
 				'Global',
 				print.underline(`'node-scripts.config.js'`),
@@ -52,7 +50,6 @@ export default async function formatGlobalNodeScriptsConfig(check) {
 
 			print(
 				2,
-				false,
 				print.success('SUCCESS:'),
 				'Updated global',
 				print.underline(`'node-scripts.config.js'`),

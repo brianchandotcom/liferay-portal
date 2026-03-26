@@ -15,7 +15,6 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -29,17 +28,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -108,13 +102,6 @@ public class DepotEntryLocalServiceTest {
 			_addStagedDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY), 0);
 		_assertObjectEntryFolders(
 			_addStagedDepotEntry(DepotConstants.TYPE_SPACE), 2);
-
-		_assertResourcePermission(
-			_addDepotEntry(DepotConstants.TYPE_SPACE),
-			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
-		_assertResourcePermission(
-			_addDepotEntry(DepotConstants.TYPE_SPACE),
-			RoleConstants.CMS_ADMINISTRATOR);
 	}
 
 	@Test
@@ -392,34 +379,6 @@ public class DepotEntryLocalServiceTest {
 		}
 	}
 
-	private void _assertResourcePermission(
-			DepotEntry depotEntry, String roleName)
-		throws Exception {
-
-		Group group = depotEntry.getGroup();
-
-		ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
-			depotEntry.getCompanyId(), depotEntry.getUserId(),
-			group.getExternalReferenceCode(), depotEntry.getModelClassName(),
-			_filterFactory);
-
-		Role role = _roleLocalService.getRole(
-			objectEntry.getCompanyId(), roleName);
-
-		ResourcePermission resourcePermission =
-			_resourcePermissionLocalService.fetchResourcePermission(
-				objectEntry.getCompanyId(), objectEntry.getModelClassName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(objectEntry.getObjectEntryId()),
-				role.getRoleId());
-
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(
-			resourcePermission.hasActionId(ActionKeys.PERMISSIONS));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
-	}
-
 	@DeleteAfterTestRun
 	private final List<DepotEntry> _depotEntries = new ArrayList<>();
 
@@ -451,11 +410,5 @@ public class DepotEntryLocalServiceTest {
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
 
 }

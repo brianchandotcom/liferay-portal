@@ -174,10 +174,10 @@ export default function ChangeTrackingLayoutChangesSidePanel({
 			return (
 				<ClayEmptyState
 					className="align-items-center mt-n4 px-4"
-					description={Liferay.Language.get('no-changes-were-found')}
+					description=""
 					small
 					title={Liferay.Language.get(
-						'there-is-no-content-to-be-displayed'
+						'no-content-changes-found-on-this-page'
 					)}
 				/>
 			);

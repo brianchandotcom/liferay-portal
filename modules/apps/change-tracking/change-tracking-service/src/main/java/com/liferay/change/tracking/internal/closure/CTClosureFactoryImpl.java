@@ -106,69 +106,61 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				classNameId
 			).keySet();
 
-		Map<Node, Collection<Node>> ctClosureMap = new HashMap<>();
-
-		Collection<Node> nodes = new LinkedHashSet<>();
-
-		Queue<Map.Entry<Long, List<Long>>> queue = new LinkedList<>();
+		Queue<Node> queue = new LinkedList<>();
 
 		Map<Long, List<Long>> rootPKsMap = ctClosure.getRootPKsMap();
 
 		for (Map.Entry<Long, List<Long>> entry : rootPKsMap.entrySet()) {
 			if (validClassNameIds.contains(entry.getKey())) {
-				queue.add(entry);
+				for (long rootClassPK : entry.getValue()) {
+					queue.add(new Node(entry.getKey(), rootClassPK));
+				}
 			}
 		}
 
-		Set<String> visited = new HashSet<>();
+		Map<Node, Collection<Node>> ctClosureMap = new HashMap<>();
+
+		Collection<Node> nodes = new LinkedHashSet<>();
+
+		Set<Node> visitedNodes = new HashSet<>();
 
 		while (!queue.isEmpty()) {
-			Map.Entry<Long, List<Long>> entry = queue.poll();
+			Node node = queue.poll();
 
-			long entryClassNameId = entry.getKey();
+			if (!visitedNodes.add(node)) {
+				continue;
+			}
 
-			for (long classPK : entry.getValue()) {
-				String key = entryClassNameId + "_" + classPK;
+			if (rootPKsMap.containsKey(node.getClassNameId())) {
+				List<Long> rootPKs = rootPKsMap.get(node.getClassNameId());
 
-				if (!visited.add(key)) {
-					continue;
+				if (rootPKs.contains(node.getPrimaryKey())) {
+					nodes.add(node);
 				}
+			}
 
-				Node node = new Node(entryClassNameId, classPK);
+			Map<Long, List<Long>> childPKsMap = ctClosure.getChildPKsMap(
+				node.getClassNameId(), node.getPrimaryKey());
 
-				Map<Long, List<Long>> childPKsMap = ctClosure.getChildPKsMap(
-					entryClassNameId, classPK);
+			Collection<Node> childNodes = new LinkedHashSet<>();
 
-				Collection<Node> filteredChildren = new LinkedHashSet<>();
+			childPKsMap.forEach(
+				(childClassNameId, childPKs) -> {
+					if (validClassNameIds.contains(childClassNameId)) {
+						childPKs.forEach(
+							childPK -> {
+								Node childNode = new Node(
+									childClassNameId, childPK);
 
-				for (Map.Entry<Long, List<Long>> childEntry :
-						childPKsMap.entrySet()) {
+								childNodes.add(childNode);
 
-					long childClassNameId = childEntry.getKey();
-
-					if (!validClassNameIds.contains(childClassNameId)) {
-						continue;
+								queue.add(childNode);
+							});
 					}
+				});
 
-					for (long childClassPK : childEntry.getValue()) {
-						filteredChildren.add(
-							new Node(childClassNameId, childClassPK));
-					}
-
-					queue.add(childEntry);
-				}
-
-				if (!filteredChildren.isEmpty()) {
-					ctClosureMap.put(node, filteredChildren);
-				}
-
-				if (rootPKsMap.containsKey(entryClassNameId)) {
-					List<Long> rootPKs = rootPKsMap.get(entryClassNameId);
-
-					if (rootPKs.contains(classPK)) {
-						nodes.add(node);
-					}
-				}
+			if (!childNodes.isEmpty()) {
+				ctClosureMap.put(node, childNodes);
 			}
 		}
 

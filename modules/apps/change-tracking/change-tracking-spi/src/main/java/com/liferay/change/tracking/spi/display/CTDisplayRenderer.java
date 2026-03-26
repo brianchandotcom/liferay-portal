@@ -119,4 +119,10 @@ public interface CTDisplayRenderer<T> {
 		return null;
 	}
 
+	public default String renderPreviewStyles(DisplayContext<T> displayContext)
+		throws Exception {
+
+		return null;
+	}
+
 }

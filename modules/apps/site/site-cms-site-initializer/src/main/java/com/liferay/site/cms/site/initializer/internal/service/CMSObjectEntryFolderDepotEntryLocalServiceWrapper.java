@@ -28,13 +28,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.site.cms.site.initializer.internal.util.ObjectEntryFolderUtil;
@@ -138,79 +134,51 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 				ObjectEntryFolder.class.getName()),
 			ResourceAction::getActionId, String.class);
 
-		ObjectEntry objectEntry =
-			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
-				null, group.getCompanyId(), group.getCreatorUserId(),
-				group.getExternalReferenceCode(), DepotEntry.class.getName(),
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+			null, group.getCompanyId(), group.getCreatorUserId(),
+			group.getExternalReferenceCode(), DepotEntry.class.getName(),
+			JSONUtil.put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+				_getObjectEntryDefaultPermissionJSONObject(
+					group.getCompanyId(), "L_CMS_BASIC_WEB_CONTENT")
+			).put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+				_getObjectEntryDefaultPermissionJSONObject(
+					group.getCompanyId(), "L_CMS_BASIC_DOCUMENT")
+			).put(
+				"OBJECT_ENTRY_FOLDERS",
 				JSONUtil.put(
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-					_getObjectEntryDefaultPermissionJSONObject(
-						group.getCompanyId(), "L_CMS_BASIC_WEB_CONTENT")
+					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+					new String[] {
+						ActionKeys.ADD_ENTRY,
+						ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+					}
 				).put(
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
-					_getObjectEntryDefaultPermissionJSONObject(
-						group.getCompanyId(), "L_CMS_BASIC_DOCUMENT")
+					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+					new String[] {
+						ActionKeys.ADD_ENTRY,
+						ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+					}
 				).put(
-					"OBJECT_ENTRY_FOLDERS",
-					JSONUtil.put(
-						DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
-						new String[] {
-							ActionKeys.ADD_ENTRY,
-							ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
-							ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-							ActionKeys.UPDATE, ActionKeys.SUBSCRIBE,
-							ActionKeys.VIEW
-						}
-					).put(
-						DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
-						new String[] {
-							ActionKeys.ADD_ENTRY,
-							ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
-							ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-							ActionKeys.UPDATE, ActionKeys.SUBSCRIBE,
-							ActionKeys.VIEW
-						}
-					).put(
-						DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-						new String[] {
-							ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW,
-							ActionKeys.SUBSCRIBE
-						}
-					).put(
-						RoleConstants.CMS_ADMINISTRATOR,
-						JSONUtil.putAll(actionIds)
-					).put(
-						RoleConstants.OWNER, JSONUtil.putAll(actionIds)
-					).put(
-						RoleConstants.USER,
-						new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}
-					)
-				),
-				group.getGroupId(), StringPool.BLANK);
-
-		_addResourcePermission(
-			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, objectEntry);
-		_addResourcePermission(RoleConstants.CMS_ADMINISTRATOR, objectEntry);
-	}
-
-	private void _addResourcePermission(String name, ObjectEntry objectEntry)
-		throws PortalException {
-
-		Role role = _roleLocalService.fetchRole(
-			objectEntry.getCompanyId(), name);
-
-		if (role == null) {
-			return;
-		}
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			objectEntry.getCompanyId(), objectEntry.getModelClassName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(objectEntry.getObjectEntryId()), role.getRoleId(),
-			new String[] {
-				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
-				ActionKeys.VIEW
-			});
+					DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+					new String[] {
+						ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW,
+						ActionKeys.SUBSCRIBE
+					}
+				).put(
+					RoleConstants.CMS_ADMINISTRATOR, JSONUtil.putAll(actionIds)
+				).put(
+					RoleConstants.OWNER, JSONUtil.putAll(actionIds)
+				).put(
+					RoleConstants.USER,
+					new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}
+				)
+			),
+			group.getGroupId(), StringPool.BLANK);
 	}
 
 	private void _deleteCMSDefaultPermissions(Group group)
@@ -297,11 +265,5 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 }

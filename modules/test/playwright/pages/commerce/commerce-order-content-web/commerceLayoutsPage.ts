@@ -36,6 +36,7 @@ export class CommerceLayoutsPage {
 	readonly displayPageTemplateLink: (name: string) => Locator;
 	readonly displayPageTemplatesLink: Locator;
 	readonly downloadCsvTemplateButton: Locator;
+	readonly editButton: Locator;
 	readonly editMenuItem: Locator;
 	readonly firstFragment: Locator;
 	readonly fragmentsAndWidgetsTab: Locator;
@@ -179,6 +180,7 @@ export class CommerceLayoutsPage {
 			exact: true,
 			name: 'Display Page Templates',
 		});
+		this.editButton = page.getByRole('link', {exact: true, name: 'Edit'});
 		this.editMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Edit',

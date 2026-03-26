@@ -9,18 +9,24 @@ import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPag
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {templatesPageTest} from '../../../template-web/main/fixtures/templatesPageTest';
+import {classicCommerceSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
+	featureFlagsTest({
+		'LPD-20379': {enabled: true},
+		'LPS-178052': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
@@ -164,5 +170,36 @@ test(
 		await displayPageTemplatesPage.changePreviewItem(product1.name.en_US);
 
 		await expect(page.getByText(product2.name.en_US)).toBeVisible();
+	}
+);
+
+test(
+	'Product Publisher CSS should persist through removal of widgets and fragments',
+	{tag: ['@LPD-83580']},
+	async ({apiHelpers, commerceLayoutsPage, page, pageEditorPage}) => {
+		const {site} = await classicCommerceSetUp(apiHelpers);
+
+		await page.goto(`/web/${site.name}`);
+
+		await expect(
+			commerceLayoutsPage.accountSelectorButton('Select Account & Order')
+		).toBeVisible();
+
+		await commerceLayoutsPage.editButton.click();
+
+		await page.waitForLoadState('networkidle');
+
+		const fragmentEntryLinkId =
+			await pageEditorPage.getFragmentId('Price Range Facet');
+
+		await pageEditorPage.removeFragment(fragmentEntryLinkId);
+
+		await pageEditorPage.publishPage();
+
+		await page.waitForLoadState('networkidle');
+
+		const productTiles = page.locator('.product-card-tiles');
+
+		await expect(productTiles).toHaveCSS('display', 'grid');
 	}
 );

@@ -88,7 +88,11 @@ async function fetchStoredCookie(name) {
 export function getCookie(name) {
 	const cookie = getCookieUtil(name, COOKIE_TYPES.NECESSARY);
 
-	if (cookie !== undefined || !Liferay.FeatureFlags['LPD-75032']) {
+	if (
+		cookie !== undefined ||
+		!Liferay.FeatureFlags['LPD-75032'] ||
+		!Liferay.ThemeDisplay.isSignedIn()
+	) {
 		return cookie;
 	}
 
@@ -119,7 +123,10 @@ export function setCookie(consentRenewalPeriod, name, value) {
 		'path': themeDisplay.getPathContext() || '/',
 	});
 
-	if (Liferay.FeatureFlags['LPD-75032']) {
+	if (
+		Liferay.FeatureFlags['LPD-75032'] &&
+		Liferay.ThemeDisplay.isSignedIn()
+	) {
 		const expirationDate = new Date();
 		expirationDate.setSeconds(
 			expirationDate.getSeconds() + expirationInSeconds

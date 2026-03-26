@@ -1,11 +1,21 @@
+import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
+import Link from '@clayui/link';
+import Loading from 'shared/components/Loading';
+import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
+import URLConstants from 'shared/util/url-constants';
+import {isNil} from 'lodash/fp';
+import {pagination} from 'shared/util/frontend-data-set';
+import {Routes, toRoute} from 'shared/util/router';
+import {Sizes} from 'shared/util/constants';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
 import {User} from 'shared/util/records';
+import {useRequest} from 'shared/hooks/useRequest';
 
 interface IListProps {
 	channelId: string;
@@ -13,13 +23,78 @@ interface IListProps {
 	groupId: string;
 }
 
-const List: React.FC<IListProps> = ({channelId, groupId, ...otherProps}) => {
+const List: React.FC<IListProps> = ({channelId, groupId}) => {
 	const currentUser = useCurrentUser();
 	const {selectedChannel} = useChannelContext();
 
+	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
+		dataSourceFn: API.dataSource.search,
+		variables: {
+			delta: 1,
+			groupId
+		}
+	});
+
 	const authorized = currentUser.isAdmin();
 
+	const dataSourceConnected =
+		!isNil(dataSourceData?.total) && dataSourceData?.total > 0;
+
+	const NoDataSourcesConnected = () => (
+		<NoResultsDisplay
+			description={
+				<>
+					{Liferay.Language.get(
+						'connect-a-data-source-to-start-syncing-accounts'
+					)}
+
+					{authorized && (
+						<>
+							<p>
+								<Link
+									className='d-block mb-3'
+									href={URLConstants.DataSourceConnection}
+									key='DOCUMENTATION'
+									target='_blank'
+								>
+									{Liferay.Language.get(
+										'access-our-documentation-to-learn-more'
+									)}
+								</Link>
+							</p>
+							<Link
+								button
+								className='button-root'
+								displayType='primary'
+								href={toRoute(
+									Routes.SETTINGS_DATA_SOURCE_LIST,
+									{
+										groupId
+									}
+								)}
+							>
+								{Liferay.Language.get('connect-data-source')}
+							</Link>
+						</>
+					)}
+				</>
+			}
+			displayCard
+			icon={{
+				border: false,
+				size: Sizes.XXXLarge,
+				symbol: 'ac_satellite'
+			}}
+			spacer
+			title={Liferay.Language.get('no-data-sources-connected')}
+		/>
+	);
+
 	const FrontendDataSet = useFrontendDataSet();
+
+	if (dataSourceLoading) {
+		return <Loading />;
+	}
 
 	return (
 		<BasePage documentTitle={Liferay.Language.get('accounts')}>
@@ -41,10 +116,12 @@ const List: React.FC<IListProps> = ({channelId, groupId, ...otherProps}) => {
 			</BasePage.Header>
 			<BasePage.Body>
 				<Card>
-					{FrontendDataSet && (
+					{dataSourceConnected && FrontendDataSet ? (
 						<FrontendDataSet
 							// TODO => Use the correct endpoint
 							// apiURL={`o/contacts/${groupId}/account/search`}
+							// Use this to test empty states
+							// apiURL='/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked'
 							apiURL='/o/headless-admin-user/v1.0/user-accounts'
 							customDataRenderers={{
 								testRenderer: ({value}) => (
@@ -52,6 +129,13 @@ const List: React.FC<IListProps> = ({channelId, groupId, ...otherProps}) => {
 										<b>{value}</b>
 									</span>
 								)
+							}}
+							emptyState={{
+								description: Liferay.Language.get(
+									'no-accounts-were-synced-from-the-connected-data-sources'
+								),
+								image: '/states/satellite.svg',
+								title: Liferay.Language.get('no-accounts-found')
 							}}
 							filters={[
 								{
@@ -95,11 +179,8 @@ const List: React.FC<IListProps> = ({channelId, groupId, ...otherProps}) => {
 									type: 'selection'
 								}
 							]}
-							pagination={{
-								deltas: [{label: 10}, {label: 20}, {label: 50}],
-								initialDelta: 20,
-								initialPageNumber: 1
-							}}
+							loading={dataSourceLoading}
+							pagination={pagination}
 							showPagination
 							snapshotsEnabled
 							sort={[
@@ -163,6 +244,8 @@ const List: React.FC<IListProps> = ({channelId, groupId, ...otherProps}) => {
 								}
 							]}
 						/>
+					) : (
+						<NoDataSourcesConnected />
 					)}
 				</Card>
 			</BasePage.Body>

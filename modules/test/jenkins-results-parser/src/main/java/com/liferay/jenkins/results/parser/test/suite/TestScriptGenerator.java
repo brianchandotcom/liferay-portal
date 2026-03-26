@@ -73,7 +73,6 @@ public class TestScriptGenerator {
 
 		sb.append("#!/bin/bash\n\n");
 		sb.append("function main {\n");
-		sb.append("\tcd \"$(git rev-parse --show-toplevel)\" || exit 1\n\n");
 		sb.append("\techo \"\"\n");
 		sb.append("\techo \"This script was generated on branch ");
 		sb.append(_gitWorkingDirectory.getCurrentBranchName());
@@ -174,6 +173,7 @@ public class TestScriptGenerator {
 
 		sb.append("}\n\n");
 		sb.append("function _execute_commands {\n");
+		sb.append("\tcd \"$(git rev-parse --show-toplevel)\" || exit 1\n\n");
 		sb.append("\tlocal exit_code=0\n");
 		sb.append("\tlocal results_output=\"\\nResults:\\n\\n\"\n\n");
 		sb.append("\tfor command in \"${@}\"\n");

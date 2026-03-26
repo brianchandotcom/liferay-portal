@@ -7,7 +7,13 @@ import {Import} from '@liferay/layout-js-components-web';
 import React from 'react';
 
 interface Props {
+	addFragmentCollectionURL: string;
 	backURL: string;
+	fragmentCollectionId?: number;
+	fragmentCollections: {
+		fragmentCollectionId: number;
+		name: string;
+	}[];
 	importURL: string;
 	portletNamespace: string;
 }

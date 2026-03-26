@@ -10,7 +10,7 @@ import React, {useState} from 'react';
 
 export const IMPORT_OPTIONS = [
 	{
-		label: Liferay.Language.get('do-not-import-existing-items'),
+		label: Liferay.Language.get('do-not-add-existing-items'),
 		value: 'do_not_import',
 	},
 	{
@@ -23,10 +23,10 @@ export const IMPORT_OPTIONS = [
 	},
 ] as const;
 
+const DEFAULT_IMPORT_OPTION = IMPORT_OPTIONS[0].value;
+
 type ImportOption = (typeof IMPORT_OPTIONS)[number];
 export type OverwriteStrategy = ImportOption['value'];
-
-const DEFAULT_IMPORT_OPTION: ImportOption = IMPORT_OPTIONS[0];
 
 interface ImportOptionsModalProps {
 	onCloseModal: () => void;
@@ -38,7 +38,7 @@ export default function ImportOptionsModal({
 	onImport,
 }: ImportOptionsModalProps) {
 	const [selectedOption, setSelectedOption] = useState<OverwriteStrategy>(
-		DEFAULT_IMPORT_OPTION.value
+		DEFAULT_IMPORT_OPTION
 	);
 
 	const {observer, onClose} = useModal({
@@ -77,7 +77,7 @@ export function ModalContent({
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
-				{Liferay.Language.get('import-options')}
+				{Liferay.Language.get('manage-existing-items')}
 			</ClayModal.Header>
 
 			<ModalBody
@@ -94,11 +94,11 @@ export function ModalContent({
 
 						<ClayButton
 							onClick={() => {
-								onImport(selectedOption);
 								onClose();
+								onImport(selectedOption);
 							}}
 						>
-							{Liferay.Language.get('import')}
+							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>
 				}
@@ -116,17 +116,13 @@ export function ModalBody({onOptionChange, selectedOption}: ModalBodyProps) {
 	return (
 		<ClayModal.Body>
 			<p className="c-mb-4 text-secondary">
-				{Liferay.Language.get(
-					'one-or-more-items-from-the-zip-already-exist-in-this-location'
-				)}
+				{Liferay.Language.get('one-or-more-items-already-exist')}
+				&nbsp;
+				{Liferay.Language.get('what-action-do-you-want-to-take')}
 			</p>
 
 			<ClayRadioGroup
-				defaultValue={
-					!selectedOption
-						? DEFAULT_IMPORT_OPTION.value
-						: selectedOption
-				}
+				defaultValue={selectedOption ?? DEFAULT_IMPORT_OPTION}
 				onChange={(value: string | number) =>
 					onOptionChange(value as OverwriteStrategy)
 				}

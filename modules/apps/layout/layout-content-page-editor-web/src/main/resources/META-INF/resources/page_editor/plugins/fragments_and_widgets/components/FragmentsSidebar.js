@@ -292,10 +292,14 @@ export default function FragmentsSidebar() {
 
 						{permissions.VIEW_MARKETPLACE ? (
 							<MarketplaceButton
+								addFragmentCollectionURL={
+									config.addFragmentCollectionURL
+								}
 								body={Liferay.Language.get(
 									'we-are-excited-to-share-that-marketplace-is-now-part-of-page-builder'
 								)}
 								className="ml-1"
+								fragmentCollections={config.fragmentCollections}
 								fragmentPortletNamespace={
 									config.fragmentPortletNamespace
 								}

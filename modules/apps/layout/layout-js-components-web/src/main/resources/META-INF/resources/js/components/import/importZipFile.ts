@@ -10,12 +10,15 @@ import {OverwriteStrategy} from './ImportOptionsModal';
 import {Results} from './ImportResults';
 
 interface ResponseAPI {
+	error?: string;
 	hasConflicts: boolean;
-	importResults: Results;
+	importResults?: Results;
+	needsFragmentCollection?: boolean;
 }
 
 interface ImportZipFileProps {
 	file: File | null;
+	fragmentCollectionId?: number;
 	handleResponse?: (response: ResponseAPI, file: File) => void;
 	importURL: string;
 	marketplace?: boolean;
@@ -25,14 +28,13 @@ interface ImportZipFileProps {
 
 export default async function importZipFile({
 	file,
+	fragmentCollectionId,
 	handleResponse,
 	importURL,
 	marketplace = false,
 	overwriteStrategy,
 	portletNamespace,
-}: ImportZipFileProps) {
-	const formData = new FormData();
-
+}: ImportZipFileProps): Promise<ResponseAPI | void> {
 	if (!file) {
 		if (process.env.NODE_ENV === 'development') {
 			console.error('importZipFile: No file provided for import.');
@@ -41,12 +43,33 @@ export default async function importZipFile({
 		return;
 	}
 
+	const formData = new FormData();
+
 	formData.append(`${portletNamespace}file`, file);
 	formData.append(`${portletNamespace}marketplace`, String(marketplace));
+
+	if (fragmentCollectionId) {
+		formData.append(
+			`${portletNamespace}fragmentCollectionId`,
+			String(fragmentCollectionId)
+		);
+	}
 
 	if (overwriteStrategy) {
 		formData.append(`${portletNamespace}importType`, overwriteStrategy);
 	}
+
+	const openToastError = () => {
+		openToast({
+			message: sub(
+				Liferay.Language.get(
+					'something-went-wrong-and-the-x-could-not-be-imported'
+				),
+				file.name
+			) as string,
+			type: 'danger',
+		});
+	};
 
 	try {
 		const response = await fetch(importURL, {
@@ -60,21 +83,28 @@ export default async function importZipFile({
 
 		const jsonResponse: ResponseAPI = await response.json();
 
+		if (jsonResponse.error) {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(
+					'importZipFile: Import failed.',
+					new Error(jsonResponse.error)
+				);
+			}
+
+			openToastError();
+
+			return;
+		}
+
 		handleResponse?.(jsonResponse, file);
+
+		return jsonResponse;
 	}
-	catch (error: any) {
+	catch (error: unknown) {
 		if (process.env.NODE_ENV === 'development') {
 			console.error('importZipFile: Import failed.', error);
 		}
 
-		openToast({
-			message: sub(
-				Liferay.Language.get(
-					'something-went-wrong-and-the-x-could-not-be-imported'
-				),
-				file?.name || ''
-			),
-			type: 'danger',
-		});
+		openToastError();
 	}
 }

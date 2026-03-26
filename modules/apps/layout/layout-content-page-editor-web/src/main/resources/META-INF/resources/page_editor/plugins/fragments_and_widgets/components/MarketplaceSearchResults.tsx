@@ -187,6 +187,8 @@ function SearchResults({
 		<>
 			{results?.items.length ? (
 				<MarketplaceModal
+					addFragmentCollectionURL={config.addFragmentCollectionURL}
+					fragmentCollections={config.fragmentCollections}
 					fragmentPortletNamespace={config.fragmentPortletNamespace}
 					fragmentsImportURL={config.fragmentsImportURL}
 					hideBackButton={true}

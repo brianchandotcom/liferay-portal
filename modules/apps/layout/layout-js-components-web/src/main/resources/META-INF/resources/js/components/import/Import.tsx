@@ -13,6 +13,8 @@ import {openToast, useId} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import FragmentSetModal from '../modals/FragmentSetModal';
+import openModalComponent from '../modals/openModalComponent';
 import ImportOptionsModal, {OverwriteStrategy} from './ImportOptionsModal';
 import ImportResults, {Results, getResultsText} from './ImportResults';
 import importZipFile from './importZipFile';
@@ -24,17 +26,32 @@ const FILE_TEXTS = {
 	),
 };
 
+const EMPTY_RESULTS: Results = {
+	error: [],
+	success: [],
+	warning: [],
+};
+
 const ZIP_EXTENSION = '.zip';
 
 interface ImportProps {
+	addFragmentCollectionURL: string;
 	backURL: string;
+	fragmentCollectionId?: number;
+	fragmentCollections: {
+		fragmentCollectionId: number;
+		name: string;
+	}[];
 	helpLink?: {href: string; message: string};
 	importURL: string;
 	portletNamespace: string;
 }
 
 export default function Import({
+	addFragmentCollectionURL,
 	backURL,
+	fragmentCollectionId: initialFragmentCollectionId,
+	fragmentCollections,
 	helpLink,
 	importURL,
 	portletNamespace,
@@ -45,42 +62,103 @@ export default function Import({
 		FILE_TEXTS.initial
 	);
 	const [importResults, setImportResults] = useState<Results | null>(null);
-	const [importOptionsModalVisible, setImportOptionsModalVisible] =
-		useState<boolean>(false);
+	const [overwriteStrategy, setOverwriteStrategy] =
+		useState<OverwriteStrategy>();
+	const [selectedFragmentCollectionId, setSelectedFragmentCollectionId] =
+		useState<number | undefined>(initialFragmentCollectionId);
 
 	const handleImport = useCallback(
-		async (overwriteStrategy?: OverwriteStrategy) => {
+		async (
+			nextCollectionId?: number,
+			nextOverwriteStrategy?: OverwriteStrategy
+		) => {
+			if (!file) {
+				return;
+			}
+
+			const finalCollectionId =
+				nextCollectionId ?? selectedFragmentCollectionId;
+			const finalOverwriteStrategy =
+				nextOverwriteStrategy ?? overwriteStrategy;
+
 			try {
-				await importZipFile({
+				const response = await importZipFile({
 					file,
-					handleResponse: ({hasConflicts, importResults}, file) => {
-						if (hasConflicts) {
-							setImportOptionsModalVisible(true);
-
-							return;
-						}
-
-						if (!Object.keys(importResults).length) {
-							navigate(backURL);
-							openToast({
-								message: sub(
-									Liferay.Language.get(
-										'no-new-items-were-imported'
-									),
-									file.name
-								),
-								type: 'info',
-							});
-						}
-
-						setImportResults(importResults);
-						setScreenReaderText(getResultsText(importResults));
-						setFile(null);
-					},
+					fragmentCollectionId: finalCollectionId,
 					importURL,
-					overwriteStrategy,
+					overwriteStrategy: finalOverwriteStrategy,
 					portletNamespace,
 				});
+
+				if (!response) {
+					return;
+				}
+
+				if (response.needsFragmentCollection) {
+					openModalComponent({
+						ModalComponent: FragmentSetModal,
+						modalComponentProps: {
+							addFragmentCollectionURL,
+							fragmentCollections,
+							onSubmitFragmentCollection: (
+								newFragmentCollectionId: number
+							) => {
+								setSelectedFragmentCollectionId(
+									newFragmentCollectionId
+								);
+
+								void handleImport(
+									newFragmentCollectionId,
+									finalOverwriteStrategy
+								);
+							},
+							portletNamespace,
+						},
+					});
+
+					return;
+				}
+
+				if (response.hasConflicts) {
+					openModalComponent({
+						ModalComponent: ImportOptionsModal,
+						modalComponentProps: {
+							onImport: (
+								newOverwriteStrategy?: OverwriteStrategy
+							) => {
+								setOverwriteStrategy(newOverwriteStrategy);
+
+								void handleImport(
+									finalCollectionId,
+									newOverwriteStrategy
+								);
+							},
+						},
+					});
+
+					return;
+				}
+
+				const importResults = response.importResults ?? EMPTY_RESULTS;
+
+				if (!Object.keys(importResults).length) {
+					navigate(backURL);
+					openToast({
+						message: sub(
+							Liferay.Language.get('no-new-items-were-imported'),
+							file.name
+						) as string,
+						type: 'info',
+					});
+
+					return;
+				}
+
+				setFile(null);
+				setImportResults(importResults);
+				setOverwriteStrategy(undefined);
+				setScreenReaderText(getResultsText(importResults));
+				setSelectedFragmentCollectionId(initialFragmentCollectionId);
 			}
 			catch (error) {
 				if (process.env.NODE_ENV === 'development') {
@@ -88,7 +166,17 @@ export default function Import({
 				}
 			}
 		},
-		[backURL, file, importURL, portletNamespace]
+		[
+			initialFragmentCollectionId,
+			addFragmentCollectionURL,
+			backURL,
+			file,
+			fragmentCollections,
+			importURL,
+			overwriteStrategy,
+			portletNamespace,
+			selectedFragmentCollectionId,
+		]
 	);
 
 	useEffect(() => {
@@ -123,12 +211,16 @@ export default function Import({
 				error={error}
 				file={file}
 				goBack={() => navigate(backURL)}
-				importFile={handleImport}
+				importFile={() => handleImport()}
 				importResults={importResults}
 				onImportOtherFile={() => {
-					setImportResults(null);
 					setFile(null);
+					setImportResults(null);
+					setOverwriteStrategy(undefined);
 					setScreenReaderText(FILE_TEXTS.initial);
+					setSelectedFragmentCollectionId(
+						initialFragmentCollectionId
+					);
 				}}
 			/>
 
@@ -138,13 +230,6 @@ export default function Import({
 					file={file}
 					helpLink={helpLink}
 					setFile={setFile}
-				/>
-			)}
-
-			{importOptionsModalVisible && (
-				<ImportOptionsModal
-					onCloseModal={() => setImportOptionsModalVisible(false)}
-					onImport={handleImport}
 				/>
 			)}
 

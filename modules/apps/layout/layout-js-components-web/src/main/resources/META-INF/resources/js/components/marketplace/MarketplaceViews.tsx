@@ -17,8 +17,20 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback} from 'react';
 
+import ImportOptionsModal, {
+	OverwriteStrategy,
+} from '../import/ImportOptionsModal';
+import {Results} from '../import/ImportResults';
 import importZipFile from '../import/importZipFile';
+import FragmentSetModal from '../modals/FragmentSetModal';
+import openModalComponent from '../modals/openModalComponent';
 import {InstallFragmentModalBody} from './InstallFragmentModal';
+
+const EMPTY_RESULTS: Results = {
+	error: [],
+	success: [],
+	warning: [],
+};
 
 async function fetchFragmentBlob(
 	marketplaceRest: MarketplaceRest,
@@ -62,12 +74,19 @@ async function getProductVirtualEntryBlob(
 }
 
 interface MarketplaceViewsProps {
+	addFragmentCollectionURL: string;
+	fragmentCollections: {
+		fragmentCollectionId: number;
+		name: string;
+	}[];
 	fragmentPortletNamespace: string;
 	fragmentsImportURL: string;
 	hideBackButton?: boolean;
 }
 
 export default function MarketplaceViews({
+	addFragmentCollectionURL,
+	fragmentCollections,
 	fragmentPortletNamespace,
 	fragmentsImportURL,
 	hideBackButton,
@@ -83,53 +102,118 @@ export default function MarketplaceViews({
 	} = useMarketplaceContext();
 
 	const handleImportFile = useCallback(
-		async (file: File) => {
+		async (
+			file: File,
+			fragmentCollectionId?: number,
+			overwriteStrategy?: OverwriteStrategy
+		): Promise<boolean> => {
 			try {
-				await importZipFile({
+				const response = await importZipFile({
 					file,
-					handleResponse: ({importResults}, file) => {
-						if (!Object.keys(importResults).length) {
-							openToast({
-								message: sub(
-									Liferay.Language.get(
-										'no-new-items-were-imported'
-									),
-									file.name
-								),
-								type: 'info',
-							});
-						}
-						else {
-							openToast({
-								message: Liferay.Language.get(
-									'your-request-completed-successfully'
-								),
-								title: Liferay.Language.get('success'),
-								type: 'success',
-							});
-
-							window.location.reload();
-						}
-					},
+					fragmentCollectionId,
 					importURL: fragmentsImportURL,
 					marketplace: true,
-					overwriteStrategy: 'keep_both',
+					overwriteStrategy,
 					portletNamespace: fragmentPortletNamespace,
 				});
+
+				if (!response) {
+					return false;
+				}
+
+				if (response.needsFragmentCollection) {
+					onOpenChange(false);
+
+					openModalComponent({
+						ModalComponent: FragmentSetModal,
+						modalComponentProps: {
+							addFragmentCollectionURL,
+							fragmentCollections,
+							onSubmitFragmentCollection: (
+								newFragmentCollectionId: number
+							) => {
+								handleImportFile(
+									file,
+									newFragmentCollectionId,
+									overwriteStrategy
+								);
+							},
+							portletNamespace: fragmentPortletNamespace,
+						},
+					});
+
+					return true;
+				}
+
+				if (response.hasConflicts) {
+					onOpenChange(false);
+
+					openModalComponent({
+						ModalComponent: ImportOptionsModal,
+						modalComponentProps: {
+							onImport: (
+								newOverwriteStrategy?: OverwriteStrategy
+							) => {
+								handleImportFile(
+									file,
+									fragmentCollectionId,
+									newOverwriteStrategy
+								);
+							},
+						},
+					});
+
+					return true;
+				}
+
+				const importResults = response.importResults ?? EMPTY_RESULTS;
+
+				if (!Object.keys(importResults).length) {
+					openToast({
+						message: sub(
+							Liferay.Language.get('no-new-items-were-installed'),
+							file.name
+						) as string,
+						type: 'info',
+					});
+				}
+				else {
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						title: Liferay.Language.get('success'),
+						type: 'success',
+					});
+					window.location.reload();
+				}
+
+				return false;
 			}
 			catch (error) {
 				if (process.env.NODE_ENV === 'development') {
 					console.error('Import failed:', error);
 				}
+
+				return false;
 			}
 		},
-		[fragmentsImportURL, fragmentPortletNamespace]
+		[
+			addFragmentCollectionURL,
+			fragmentCollections,
+			fragmentsImportURL,
+			fragmentPortletNamespace,
+			onOpenChange,
+		]
 	);
 
 	const handleInstallProduct = useCallback(
 		async (product: Product) => {
+			let awaitingResolution = false;
+
 			setView(MarketplaceView.PURCHASE);
 			setProduct(product);
+			onOpenChange(true);
 
 			try {
 				const blob = await getProductVirtualEntryBlob(
@@ -147,7 +231,7 @@ export default function MarketplaceViews({
 					{type: 'application/zip'}
 				);
 
-				await handleImportFile(file);
+				awaitingResolution = await handleImportFile(file);
 			}
 			catch (error) {
 				if (process.env.NODE_ENV === 'development') {
@@ -162,10 +246,12 @@ export default function MarketplaceViews({
 				});
 			}
 			finally {
-				onOpenChange(false);
+				if (!awaitingResolution) {
+					onOpenChange(false);
+				}
 			}
 		},
-		[marketplaceRest, setProduct, setView, handleImportFile, onOpenChange]
+		[handleImportFile, marketplaceRest, setProduct, setView, onOpenChange]
 	);
 
 	return (

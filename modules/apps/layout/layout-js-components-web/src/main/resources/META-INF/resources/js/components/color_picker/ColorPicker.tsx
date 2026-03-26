@@ -273,7 +273,7 @@ function ColorPicker({
 					active={activeColorPicker}
 					colors={customColors}
 					colorsFromStylebook={colors}
-					field={field}
+					inherited={!value && !!field.inherited}
 					onActiveChange={setActiveColorPicker}
 					onBlurInput={onBlurInput}
 					onChange={onChangeInput}

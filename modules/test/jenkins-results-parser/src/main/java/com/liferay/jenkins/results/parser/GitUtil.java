@@ -461,8 +461,9 @@ public class GitUtil {
 	}
 
 	protected static ExecutionResult executeBashCommands(
-		int maxRetries, long retryDelay, long timeout, File workingDirectory,
-		String... commands) {
+			int maxRetries, long retryDelay, long timeout,
+			File workingDirectory, boolean throwExceptions, String... commands)
+		throws IOException, TimeoutException {
 
 		Process process = null;
 
@@ -530,6 +531,10 @@ public class GitUtil {
 			}
 			catch (IOException | TimeoutException exception) {
 				if (retries == maxRetries) {
+					if (throwExceptions) {
+						throw exception;
+					}
+
 					throw new RuntimeException(
 						"Unable to execute bash commands: " +
 							Arrays.toString(commands),
@@ -584,6 +589,22 @@ public class GitUtil {
 
 		return new ExecutionResult(
 			process.exitValue(), standardErr.trim(), standardOut.trim());
+	}
+
+	protected static ExecutionResult executeBashCommands(
+		int maxRetries, long retryDelay, long timeout, File workingDirectory,
+		String... commands) {
+
+		try {
+			return executeBashCommands(
+				maxRetries, retryDelay, timeout, workingDirectory, false,
+				commands);
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(
+				"Unable to execute bash commands: " + Arrays.toString(commands),
+				exception);
+		}
 	}
 
 	private static void _debugDNS(Process process) {

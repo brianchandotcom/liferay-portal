@@ -7,7 +7,10 @@ import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
+import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
+import {frontendDataSetColumns} from 'shared/util/table-columns';
 import {isNil} from 'lodash/fp';
+import {LifecycleStages} from './utils/constants';
 import {pagination} from 'shared/util/frontend-data-set';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
@@ -16,6 +19,81 @@ import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
 import {User} from 'shared/util/records';
 import {useRequest} from 'shared/hooks/useRequest';
+
+const mockItems = {
+	items: [
+		{
+			accountName: 'Acme Corporation',
+			id: '001xx000003DGbYAAW',
+			industry: 'Manufacturing',
+			lastActive: '2026-03-24T15:01:15Z',
+			lifecycleStage: LifecycleStages.ESTABLISHED
+		},
+		{
+			accountName: 'Globex Corporation',
+			id: '001xx000003DGbZAAW',
+			industry: 'Technology',
+			lastActive: '2026-03-20T12:45:30Z',
+			lifecycleStage: LifecycleStages.AWARE
+		},
+		{
+			accountName: 'Initech',
+			id: '001xx000003DGbXAAW',
+			industry: 'Software',
+			lastActive: '2026-03-22T09:30:00Z',
+			lifecycleStage: LifecycleStages.AT_RISK
+		},
+		{
+			accountName: 'Umbrella Corporation',
+			id: '001xx000003DGbWAAW',
+			industry: 'Pharmaceuticals',
+			lastActive: '2026-03-18T14:15:45Z',
+			lifecycleStage: LifecycleStages.PIPELINE
+		},
+		{
+			accountName: 'Hooli',
+			id: '001xx000003DGbVAAW',
+			industry: 'Technology',
+			lastActive: '2026-03-21T11:00:00Z',
+			lifecycleStage: LifecycleStages.ENGAGED
+		},
+		{
+			accountName: 'Stark Industries',
+			id: '001xx000003DGbUAAW',
+			industry: 'Defense',
+			lastActive: '2026-03-19T16:45:30Z',
+			lifecycleStage: LifecycleStages.ONBOARDING
+		}
+	],
+	total: 1
+};
+
+const accountLabelMap = {
+	[LifecycleStages.AT_RISK]: {
+		displayType: 'danger',
+		label: Liferay.Language.get('at-risk')
+	},
+	[LifecycleStages.AWARE]: {
+		displayType: 'secondary',
+		label: Liferay.Language.get('aware')
+	},
+	[LifecycleStages.ENGAGED]: {
+		displayType: 'warning',
+		label: Liferay.Language.get('engaged')
+	},
+	[LifecycleStages.ESTABLISHED]: {
+		displayType: 'success',
+		label: Liferay.Language.get('established')
+	},
+	[LifecycleStages.ONBOARDING]: {
+		displayType: 'secondary',
+		label: Liferay.Language.get('onboarding')
+	},
+	[LifecycleStages.PIPELINE]: {
+		displayType: 'info',
+		label: Liferay.Language.get('pipeline')
+	}
+};
 
 interface IListProps {
 	channelId: string;
@@ -122,8 +200,21 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 							// apiURL={`o/contacts/${groupId}/account/search`}
 							// Use this to test empty states
 							// apiURL='/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked'
-							apiURL='/o/headless-admin-user/v1.0/user-accounts'
 							customDataRenderers={{
+								accountLifecycleStageRenderer: ({value}) =>
+									frontendDataSetColumns.cmsLabel({
+										displayType:
+											accountLabelMap[value].displayType,
+										label: accountLabelMap[value].label
+									}),
+								lastActiveRenderer: ({value}) => (
+									<div>
+										{formatUTCDate(
+											value,
+											CUSTOM_DATE_FORMAT
+										)}
+									</div>
+								),
 								testRenderer: ({value}) => (
 									<span>
 										<b>{value}</b>
@@ -179,6 +270,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 									type: 'selection'
 								}
 							]}
+							items={mockItems.items}
 							loading={dataSourceLoading}
 							pagination={pagination}
 							showPagination
@@ -208,33 +300,35 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 									schema: {
 										fields: [
 											{
-												fieldName: 'alternateName',
+												fieldName: 'accountName',
 												label: Liferay.Language.get(
-													'alternate-name'
+													'account'
 												),
 												sortable: true,
 												truncate: true
 											},
 											{
-												fieldName: 'familyName',
+												fieldName: 'industry',
 												label: Liferay.Language.get(
-													'family-name'
+													'industry'
 												),
 												sortable: false
 											},
 											{
-												contentRenderer: 'testRenderer',
-												fieldName: 'id',
+												contentRenderer:
+													'accountLifecycleStageRenderer',
+												fieldName: 'lifecycleStage',
 												label: Liferay.Language.get(
-													'id'
+													'lifecycle-stage'
 												),
 												sortable: false
 											},
 											{
-												contentRenderer: 'testRenderer',
-												fieldName: 'emailAddress',
+												contentRenderer:
+													'lastActiveRenderer',
+												fieldName: 'lastActive',
 												label: Liferay.Language.get(
-													'email'
+													'last-active'
 												),
 												sortable: true
 											}

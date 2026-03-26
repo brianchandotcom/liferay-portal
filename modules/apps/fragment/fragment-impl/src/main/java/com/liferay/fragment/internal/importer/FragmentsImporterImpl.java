@@ -470,11 +470,11 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 								folderIdsMap, folderPath,
 								repository.getRepositoryId(), userId),
 							_getInputStream(
-								zipFile, zipEntryNames.get(fileName)),
+								zipFile, zipEntryNames.get(fileEntryPath)),
 							fileName, MimeTypesUtil.getContentType(fileName),
 							false);
 
-						zipEntryNames.remove(fileEntry.getFileName());
+						zipEntryNames.remove(fileEntryPath);
 					}
 					else {
 						String folderPath = StringPool.BLANK;

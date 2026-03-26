@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.exportimport.test.util.LazyReferencingTestUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
@@ -65,7 +66,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -1082,7 +1082,8 @@ public class DisplayPageTemplateResourceTest
 					testGroup.getGroupId()));
 
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
 
 			DisplayPageTemplate displayPageTemplate = unsafeFunction.apply(
 				displayPageTemplateFolder);

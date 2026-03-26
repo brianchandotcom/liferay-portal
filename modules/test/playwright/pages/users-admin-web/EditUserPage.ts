@@ -598,7 +598,7 @@ export class EditUserPage {
 			)
 			.or(
 				this.selectOrganizationRolesFrame.locator(
-					'#_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_rolesSearchContainer'
+					'#_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_rolesSearchContainerSearchContainer'
 				)
 			);
 		this.selectOrganizationRolesTableRow = async (

@@ -1440,7 +1440,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					continue;
 				}
 
-				if ((labelExpression == null) || _matchesLabels(label, labels)) {
+				if ((labelExpression == null) ||
+					_matchesLabels(label, labels)) {
+
 					recentBatchSizesTotal += entry.getValue();
 				}
 			}

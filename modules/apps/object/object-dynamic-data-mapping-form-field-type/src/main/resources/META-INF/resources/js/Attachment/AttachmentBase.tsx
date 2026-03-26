@@ -198,24 +198,52 @@ export default function AttachmentBase({
 	const resolveFolderId = async (
 		isVisible: boolean,
 		spaceERC: string,
-		folderName?: string
+		storageDLFolderPath?: string
 	): Promise<{
 		objectEntryFolderExternalReferenceCode?: string;
 		objectEntryFolderId?: number;
 	}> => {
-		if (!folderName) {
+		const folderNames = (storageDLFolderPath || '')
+			.split('/')
+			.map((folderName) => folderName.trim())
+			.filter(Boolean);
+
+		if (!folderNames.length) {
 			return {objectEntryFolderExternalReferenceCode: DEFAULT_FOLDER_ERC};
 		}
 
-		try {
+		let parentObjectEntryFolderExternalReferenceCode = isVisible
+			? 'L_FILES'
+			: DEFAULT_FOLDER_ERC;
+
+		let parentObjectEntryFolderId: number | undefined;
+
+		for (const folderName of folderNames) {
+			let folder: any = null;
+
 			const searchParams = new URLSearchParams({
+				currentURL: '/web/cms/files',
+				emptySearch: 'true',
 				nestedFields: 'embedded,scope',
 				pageSize: '30',
 				search: folderName,
 			});
 
+			if (parentObjectEntryFolderId) {
+				searchParams.set(
+					'filter',
+					`folderId eq ${parentObjectEntryFolderId}`
+				);
+			}
+			else if (isVisible) {
+				searchParams.set(
+					'filter',
+					"cmsRoot eq true and cmsSection eq 'files' and status in (0)"
+				);
+			}
+
 			const searchResponse = await fetch(
-				`/o/search/v1.0/search?${searchParams}`
+				`/o/search/v1.0/search?${searchParams.toString()}`
 			);
 
 			if (searchResponse.ok) {
@@ -230,43 +258,40 @@ export default function AttachmentBase({
 					);
 				});
 
-				const id = match?.embedded?.id ?? match?.id;
-
-				if (id) {
-					return {objectEntryFolderId: id};
-				}
+				folder = match?.embedded ?? match ?? null;
 			}
 
-			const createBody: any = {
-				title: folderName,
-			};
+			if (!folder) {
+				const createBody: any = {
+					parentObjectEntryFolderExternalReferenceCode,
+					title: folderName,
+				};
 
-			if (isVisible) {
-				createBody.parentObjectEntryFolderExternalReferenceCode =
-					'L_FILES';
+				const createResponse = await fetch(
+					`/o/headless-object/v1.0/scopes/${spaceERC}/object-entry-folders`,
+					{
+						body: JSON.stringify(createBody),
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						method: 'POST',
+					}
+				);
+
+				if (!createResponse.ok) {
+					throw new Error(`Unable to create folder ${folderName}`);
+				}
+
+				folder = await createResponse.json();
 			}
 
-			const createResponse = await fetch(
-				`/o/headless-object/v1.0/scopes/${spaceERC}/object-entry-folders`,
-				{
-					body: JSON.stringify(createBody),
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					method: 'POST',
-				}
-			);
-
-			if (createResponse.ok) {
-				const {id} = await createResponse.json();
-
-				if (id) {
-					return {objectEntryFolderId: id};
-				}
-			}
+			parentObjectEntryFolderId = folder.id;
+			parentObjectEntryFolderExternalReferenceCode =
+				folder.externalReferenceCode;
 		}
-		catch (error) {
-			console.warn('Folder resolution failed', error);
+
+		if (parentObjectEntryFolderId) {
+			return {objectEntryFolderId: parentObjectEntryFolderId};
 		}
 
 		return {objectEntryFolderExternalReferenceCode: DEFAULT_FOLDER_ERC};
@@ -284,14 +309,10 @@ export default function AttachmentBase({
 
 		const isVisible = !!storageDepotGroup;
 
-		const folderName = storageDLFolderPath
-			? storageDLFolderPath.replace(/^\//, '')
-			: 'HIDDEN_FILES';
-
 		const folder = await resolveFolderId(
 			isVisible,
 			String(spaceERC),
-			folderName
+			storageDLFolderPath || 'HIDDEN_FILES'
 		);
 
 		const body = {

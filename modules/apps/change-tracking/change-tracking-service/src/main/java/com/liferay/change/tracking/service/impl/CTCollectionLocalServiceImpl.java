@@ -894,7 +894,7 @@ public class CTCollectionLocalServiceImpl
 		Map<Long, Set<Long>> enclosureMap = CTEnclosureUtil.getEnclosureMap(
 			ctClosure, modelClassNameId, modelClassPK);
 
-		Set<Map.Entry<Long, Long>> visited = new HashSet<>();
+		Set<Map.Entry<Long, Long>> visitedEntries = new HashSet<>();
 
 		Queue<Map.Entry<Long, Long>> queue = new LinkedList<>();
 
@@ -926,7 +926,7 @@ public class CTCollectionLocalServiceImpl
 						new AbstractMap.SimpleImmutableEntry<>(
 							parentClassNameId, parentClassPK);
 
-					if (!visited.add(parentNodeEntry)) {
+					if (!visitedEntries.add(parentNodeEntry)) {
 						continue;
 					}
 

@@ -69,7 +69,7 @@ public class CTEnclosureUtil {
 
 		Set<Map.Entry<Long, Long>> parentEntries = new HashSet<>();
 
-		Set<Map.Entry<Long, Long>> visited = new HashSet<>();
+		Set<Map.Entry<Long, Long>> visitedParentEntries = new HashSet<>();
 
 		Queue<Map.Entry<Long, Long>> queue = new LinkedList<>();
 
@@ -99,7 +99,7 @@ public class CTEnclosureUtil {
 						new AbstractMap.SimpleImmutableEntry<>(
 							parentClassNameId, parentClassPK);
 
-					if (!visited.add(parentNodeEntry)) {
+					if (!visitedParentEntries.add(parentNodeEntry)) {
 						continue;
 					}
 

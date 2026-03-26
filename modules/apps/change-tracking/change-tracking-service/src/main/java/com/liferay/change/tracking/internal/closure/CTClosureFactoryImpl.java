@@ -120,7 +120,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 			}
 		}
 
-		Set<String> visited = new HashSet<>();
+		Set<String> visitedClassNameIds = new HashSet<>();
 
 		while (!queue.isEmpty()) {
 			Map.Entry<Long, List<Long>> entry = queue.poll();
@@ -130,7 +130,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 			for (long classPK : entry.getValue()) {
 				String key = entryClassNameId + "_" + classPK;
 
-				if (!visited.add(key)) {
+				if (!visitedClassNameIds.add(key)) {
 					continue;
 				}
 

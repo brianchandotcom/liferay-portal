@@ -76,10 +76,23 @@ export default function SharedWithMeFDSPropsTransformer({
 						),
 				};
 			}
+			else if (action?.data?.id === 'actionLinkFolder') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(item?.visible),
+				};
+			}
 			else if (action?.data?.id === 'download') {
 				return {
 					...action,
-					isVisible: (item: any) => Boolean(item?.file?.link?.href),
+					isVisible: (item: any) =>
+						Boolean(item?.file?.link?.href && item?.visible),
+				};
+			}
+			else if (action?.data?.id === 'download-folder') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(item?.visible),
 				};
 			}
 			else if (action?.data?.id === 'edit-folder') {
@@ -104,7 +117,9 @@ export default function SharedWithMeFDSPropsTransformer({
 					isVisible: (item: any) =>
 						Boolean(
 							item?.className !==
-								OBJECT_ENTRY_FOLDER_CLASS_NAME && !item?.file
+								OBJECT_ENTRY_FOLDER_CLASS_NAME &&
+								!item?.file &&
+								item?.visible
 						),
 				};
 			}
@@ -114,7 +129,9 @@ export default function SharedWithMeFDSPropsTransformer({
 					isVisible: (item: any) =>
 						Boolean(
 							item?.className !==
-								OBJECT_ENTRY_FOLDER_CLASS_NAME && item?.file
+								OBJECT_ENTRY_FOLDER_CLASS_NAME &&
+								item?.file &&
+								item?.visible
 						),
 				};
 			}

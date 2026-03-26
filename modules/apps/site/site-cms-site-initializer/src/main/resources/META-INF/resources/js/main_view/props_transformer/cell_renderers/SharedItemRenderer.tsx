@@ -57,15 +57,21 @@ export default function SharedItemRenderer({
 	}
 
 	const isFolder = itemData?.className === OBJECT_ENTRY_FOLDER_CLASS_NAME;
-	const isUpdate =
-		itemData?.actionIds?.includes('UPDATE') && itemData?.visible;
 
-	const shouldOpenModal = !isUpdate && !isFolder;
+	const shouldOpenModal =
+		!itemData?.actionIds?.includes('UPDATE') &&
+		!isFolder &&
+		itemData?.visible;
 
 	const linkHref = useMemo(() => {
 		const {actionId} = options;
 
-		if (shouldOpenModal || !actions.length || !actionId) {
+		if (
+			shouldOpenModal ||
+			!actions.length ||
+			!actionId ||
+			!itemData?.visible
+		) {
 			return null;
 		}
 

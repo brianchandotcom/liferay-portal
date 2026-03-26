@@ -76,6 +76,7 @@
 		"@clayui/icon": "^3.159.0",
 		"@clayui/loading-indicator": "^3.159.0",
 		"@clayui/shared": "^3.159.0",
+		"@liferay/ai-hub-cell-js-components-web": "*",
 		"@liferay/cookies-banner-web": "*",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-item-selector-web": "*",

@@ -647,6 +647,14 @@ public abstract class BaseDBProcess implements DBProcess {
 			return _fixedThreadPoolSize.get();
 		}
 
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.HYPERSONIC) {
+			_fixedThreadPoolSize.set(1);
+
+			return _fixedThreadPoolSize.get();
+		}
+
 		long[] companyIds = PortalInstancePool.getCompanyIds();
 
 		int maximumPoolSize = GetterUtil.getInteger(

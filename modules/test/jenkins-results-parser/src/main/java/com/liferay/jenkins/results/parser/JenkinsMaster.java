@@ -1423,10 +1423,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 			String label = labelBatchSizesEntry.getKey();
 
-			if ((labelExpression != null) && !_matchesLabels(label, labels)) {
-				continue;
-			}
-
 			Map<Long, Integer> batchSizes = labelBatchSizesEntry.getValue();
 
 			if (batchSizes == null) {
@@ -1444,7 +1440,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					continue;
 				}
 
-				recentBatchSizesTotal += entry.getValue();
+				if ((labelExpression == null) || _matchesLabels(label, labels)) {
+					recentBatchSizesTotal += entry.getValue();
+				}
 			}
 
 			for (Long expiredTimestamp : expiredTimestamps) {

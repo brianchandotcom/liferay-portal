@@ -22,6 +22,10 @@ jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
+			addFragmentCollectionURL: '/mockAddFragmentCollectionURL',
+			fragmentCollections: [{fragmentCollectionId: 1, name: 'Set Name'}],
+			fragmentPortletNamespace: 'FragmentPortlet',
+			fragmentsImportURL: '/mockFragmentsImportURL',
 			portletNamespace: 'FragmentSidebarPortlet',
 		},
 	})

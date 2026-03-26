@@ -10,10 +10,18 @@ import React from 'react';
 
 import FragmentSetModal from '../../../src/main/resources/META-INF/resources/js/components/modals/FragmentSetModal';
 
-const renderComponent = ({fragmentCollections = []} = {}) => {
+const renderComponent = ({
+	fragmentCollections = [],
+	onSubmitFragmentCollection,
+} = {}) => {
 	const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
 
-	render(<FragmentSetModal fragmentCollections={fragmentCollections} />);
+	render(
+		<FragmentSetModal
+			fragmentCollections={fragmentCollections}
+			onSubmitFragmentCollection={onSubmitFragmentCollection}
+		/>
+	);
 
 	return user;
 };
@@ -23,7 +31,7 @@ describe('FragmentSetModal', () => {
 		jest.useFakeTimers();
 	});
 
-	it('renders fragment collection form with message when no there is no fragment collections', () => {
+	it('renders fragment collection form when there are no fragment collections', () => {
 		renderComponent();
 
 		act(() => {
@@ -31,9 +39,7 @@ describe('FragmentSetModal', () => {
 		});
 
 		expect(
-			screen.getByText(
-				'a-fragment-set-must-first-be-created-before-you-can-copy-it'
-			)
+			screen.getByText('add-a-fragment-set-to-save-your-fragment')
 		).toBeInTheDocument();
 	});
 
@@ -49,9 +55,17 @@ describe('FragmentSetModal', () => {
 		});
 
 		expect(screen.getByLabelText('fragment-sets')).toBeInTheDocument();
+		expect(
+			screen.getByDisplayValue('-- not-selected --')
+		).toBeInTheDocument();
+		expect(
+			screen.getByText(
+				'select-an-existing-set-or-create-a-new-one-to-save-your-fragment'
+			)
+		).toBeInTheDocument();
 	});
 
-	it('renders fragment collections from without message when clicking on the save in new set button', async () => {
+	it('renders fragment collections form when clicking on the save in new set button', async () => {
 		const user = renderComponent({
 			fragmentCollections: [
 				{fragmentCollectionId: 1, name: 'fragment-collection'},
@@ -67,11 +81,8 @@ describe('FragmentSetModal', () => {
 		await user.click(button);
 
 		expect(screen.getByLabelText('name')).toBeInTheDocument();
-
 		expect(
-			screen.queryByText(
-				'a-fragment-set-must-first-be-created-before-you-can-copy-it'
-			)
+			screen.queryByText('add-a-fragment-set-to-save-your-fragment')
 		).not.toBeInTheDocument();
 	});
 
@@ -92,18 +103,40 @@ describe('FragmentSetModal', () => {
 	});
 
 	it('show required validation when no fragment collection is introduced', async () => {
-		const user = renderComponent();
+		const user = renderComponent({
+			fragmentCollections: [
+				{fragmentCollectionId: 1, name: 'fragment-collection'},
+			],
+		});
 
 		act(() => {
 			jest.runAllTimers();
 		});
 
-		fireEvent.change(screen.getByLabelText('name'), {
-			target: {value: ''},
+		await user.click(screen.getByText('save'));
+
+		expect(screen.getByText('x-field-is-required')).toBeInTheDocument();
+	});
+
+	it('submits the selected fragment collection', async () => {
+		const onSubmitFragmentCollection = jest.fn();
+		const user = renderComponent({
+			fragmentCollections: [
+				{fragmentCollectionId: 1, name: 'fragment-collection'},
+			],
+			onSubmitFragmentCollection,
+		});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		fireEvent.change(screen.getByLabelText('fragment-sets'), {
+			target: {value: '1'},
 		});
 
 		await user.click(screen.getByText('save'));
 
-		expect(screen.getByText('x-field-is-required')).toBeInTheDocument();
+		expect(onSubmitFragmentCollection).toHaveBeenCalledWith(1);
 	});
 });

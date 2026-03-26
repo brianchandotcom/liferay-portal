@@ -17,7 +17,9 @@ jest.mock(
 		__esModule: true,
 		default: jest.fn(
 			({
+				addFragmentCollectionURL,
 				children,
+				fragmentCollections,
 				fragmentPortletNamespace,
 				fragmentsImportURL,
 				trigger,
@@ -26,6 +28,10 @@ jest.mock(
 					{trigger}
 
 					{children}
+
+					{addFragmentCollectionURL}
+
+					{JSON.stringify(fragmentCollections)}
 
 					{fragmentPortletNamespace}
 
@@ -46,7 +52,9 @@ jest.mock('@liferay/marketplace-js-components-web', () => ({
 }));
 
 const mockProps = {
+	addFragmentCollectionURL: '/o/test/add_fragment_collection',
 	body: 'Test body',
+	fragmentCollections: [{fragmentCollectionId: 1, name: 'Set Name'}],
 	fragmentPortletNamespace: 'testNamespace',
 	fragmentsImportURL: '/testImportURL',
 	heading: 'Test Heading',
@@ -113,6 +121,8 @@ describe('MarketplacePresentationModal', () => {
 				.default
 		).toHaveBeenCalledWith(
 			expect.objectContaining({
+				addFragmentCollectionURL: mockProps.addFragmentCollectionURL,
+				fragmentCollections: mockProps.fragmentCollections,
 				fragmentPortletNamespace: mockProps.fragmentPortletNamespace,
 				fragmentsImportURL: mockProps.fragmentsImportURL,
 				openOnRender: true,

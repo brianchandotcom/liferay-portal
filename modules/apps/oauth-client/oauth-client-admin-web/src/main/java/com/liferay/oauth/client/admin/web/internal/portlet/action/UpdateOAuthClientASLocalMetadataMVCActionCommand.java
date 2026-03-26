@@ -103,7 +103,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 			if (oAuthClientASLocalMetadata == null) {
 				_oAuthClientASLocalMetadataService.
 					addOAuthClientASLocalMetadata(
-						authorizationEndpoint, issuer, jwksURI,
+						null, authorizationEndpoint, issuer, jwksURI,
 						localWellKnownEnabled, registrationEndpoint,
 						StringUtil.split(supportedGrantTypes, StringPool.COMMA),
 						StringUtil.split(supportedScopes, StringPool.COMMA),

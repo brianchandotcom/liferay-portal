@@ -76,7 +76,7 @@ public class UpdateOAuthClientEntryMVCActionCommand
 						WebKeys.THEME_DISPLAY);
 
 				_oAuthClientEntryService.addOAuthClientEntry(
-					themeDisplay.getUserId(), authRequestParametersJSON,
+					null, themeDisplay.getUserId(), authRequestParametersJSON,
 					authServerWellKnownURI, customClaimsJSON, infoJSON,
 					matcherField, metadataCacheTime, oidcUserInfoMapperJSON,
 					tokenRequestParametersJSON);

@@ -94,7 +94,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcessTest {
 		}
 
 		_oAuthClientEntry1 = _oAuthClientEntryLocalService.addOAuthClientEntry(
-			TestPropsValues.getUserId(), StringPool.BLANK,
+			null, TestPropsValues.getUserId(), StringPool.BLANK,
 			"https://accounts.google.com/.well-known/openid-configuration",
 			null,
 			JSONUtil.put(
@@ -113,7 +113,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcessTest {
 			"email", 0, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 			StringPool.BLANK);
 		_oAuthClientEntry2 = _oAuthClientEntryLocalService.addOAuthClientEntry(
-			TestPropsValues.getUserId(), StringPool.BLANK,
+			null, TestPropsValues.getUserId(), StringPool.BLANK,
 			"https://accounts.google.com/.well-known/openid-configuration",
 			null,
 			JSONUtil.put(

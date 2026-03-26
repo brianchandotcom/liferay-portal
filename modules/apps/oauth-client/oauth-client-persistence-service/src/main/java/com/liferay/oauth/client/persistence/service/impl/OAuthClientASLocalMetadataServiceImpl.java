@@ -91,12 +91,12 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			String localWellKnownURI)
+			long companyId, String localWellKnownURI)
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(localWellKnownURI);
+				getOAuthClientASLocalMetadata(companyId, localWellKnownURI);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientASLocalMetadata,
@@ -211,13 +211,15 @@ public class OAuthClientASLocalMetadataServiceImpl
 	}
 
 	@Override
-	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			String localWellKnownURI)
+	public OAuthClientASLocalMetadata
+			getOAuthClientASLocalMetadataByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataPersistence.findByLocalWellKnownURI(
-				localWellKnownURI);
+			oAuthClientASLocalMetadataLocalService.
+				getOAuthClientASLocalMetadataByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientASLocalMetadata,
@@ -228,14 +230,13 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata
-			getOAuthClientASLocalMetadataByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
+			getOAuthClientASLocalMetadataByLocalWellKnownURI(
+				long companyId, String localWellKnownURI)
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadataByExternalReferenceCode(
-					externalReferenceCode, companyId);
+			oAuthClientASLocalMetadataPersistence.findByC_LWKURI(
+				companyId, localWellKnownURI);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientASLocalMetadata,

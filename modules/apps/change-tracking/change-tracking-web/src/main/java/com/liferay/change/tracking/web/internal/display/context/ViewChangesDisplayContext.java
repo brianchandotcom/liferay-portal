@@ -39,6 +39,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ORMException;
@@ -129,7 +130,6 @@ public class ViewChangesDisplayContext {
 		long activeCTCollectionId,
 		BasePersistenceRegistry basePersistenceRegistry,
 		CTClosureFactory ctClosureFactory, CTCollection ctCollection,
-		CTConfiguration ctConfiguration,
 		CTCollectionLocalService ctCollectionLocalService,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
@@ -145,7 +145,6 @@ public class ViewChangesDisplayContext {
 		_basePersistenceRegistry = basePersistenceRegistry;
 		_ctClosureFactory = ctClosureFactory;
 		_ctCollection = ctCollection;
-		_ctConfiguration = ctConfiguration;
 		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
@@ -459,9 +458,7 @@ public class ViewChangesDisplayContext {
 
 		if ((_modelClassNameId != 0) && (_modelClassPK != 0) &&
 			(_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
-			((_ctConfiguration == null) ||
-			 (_ctCollection.getScore() <
-				 _ctConfiguration.contextViewScoreThreshold()))) {
+			(_ctCollection.getScore() < _getContextViewScoreThreshold())) {
 
 			try {
 				ctClosure = _ctClosureFactory.create(
@@ -1171,6 +1168,14 @@ public class ViewChangesDisplayContext {
 		return JSONUtil.put("everything", everythingJSONObject);
 	}
 
+	private int _getContextViewScoreThreshold() throws Exception {
+		CTConfiguration ctConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				CTConfiguration.class, _themeDisplay.getCompanyId());
+
+		return ctConfiguration.contextViewScoreThreshold();
+	}
+
 	private JSONArray _getDropdownItemsJSONArray(
 			PermissionChecker permissionChecker)
 		throws Exception {
@@ -1771,7 +1776,6 @@ public class ViewChangesDisplayContext {
 	private final CTClosureFactory _ctClosureFactory;
 	private final CTCollection _ctCollection;
 	private final CTCollectionLocalService _ctCollectionLocalService;
-	private final CTConfiguration _ctConfiguration;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTSchemaVersionLocalService _ctSchemaVersionLocalService;

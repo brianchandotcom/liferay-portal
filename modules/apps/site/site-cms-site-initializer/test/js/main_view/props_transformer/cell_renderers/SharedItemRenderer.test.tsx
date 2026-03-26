@@ -17,6 +17,7 @@ const testActionBase = {
 const testItemDataContent = {
 	assetType: 'Web Content',
 	siteName: 'Site Name',
+	visible: true,
 };
 
 const testItemDataDocument = {
@@ -24,6 +25,13 @@ const testItemDataDocument = {
 	fileTypeIcon: 'document-image',
 	fileTypeIconColor: 'file-icon-color-5',
 	siteName: 'Site Name',
+	visible: true,
+};
+
+const testItemDataNotVisible = {
+	assetType: 'Web Content',
+	siteName: 'Site Name',
+	visible: false,
 };
 
 const testProps = {
@@ -40,6 +48,19 @@ describe('SharedItemRenderer', () => {
 		render(<SharedItemRenderer {...testProps} />);
 
 		expect(screen.queryByRole('link')).toBeInTheDocument();
+
+		expect(screen.getByText(testProps.value)).toBeInTheDocument();
+	});
+
+	it('does not render the link', () => {
+		render(
+			<SharedItemRenderer
+				{...testProps}
+				itemData={testItemDataNotVisible}
+			/>
+		);
+
+		expect(screen.queryByRole('link')).not.toBeInTheDocument();
 
 		expect(screen.getByText(testProps.value)).toBeInTheDocument();
 	});

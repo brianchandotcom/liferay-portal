@@ -43,15 +43,13 @@ test('LPD-79951 Can view correct layout preview', async ({
 
 	await page.getByRole('menuitem', {name: ctCollection.body.name}).click();
 
-	const publicationIFrame = page.frameLocator('iframe[src*="preview"]');
+	const previewContent = page.locator('.publications-render-view-content');
 
-	await expect(publicationIFrame.getByText('Edited')).toBeVisible();
+	await expect(previewContent.getByText('Edited')).toBeVisible();
 
 	await page.locator('.btn-outline-secondary').click();
 
 	await page.getByRole('menuitem', {name: 'Production'}).click();
 
-	await expect(
-		publicationIFrame.getByText('Welcome to Liferay')
-	).toBeVisible();
+	await expect(previewContent.getByText('Welcome to Liferay')).toBeVisible();
 });

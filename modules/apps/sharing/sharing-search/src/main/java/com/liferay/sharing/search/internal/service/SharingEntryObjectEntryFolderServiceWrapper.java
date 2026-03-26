@@ -66,8 +66,8 @@ public class SharingEntryObjectEntryFolderServiceWrapper
 			return objectEntryFolder;
 		}
 
-		Indexer<Object> indexer = _indexerRegistry.getIndexer(
-			className.getValue());
+		Indexer<SharingEntry> indexer = _indexerRegistry.getIndexer(
+			SharingEntry.class.getName());
 
 		if (indexer == null) {
 			return objectEntryFolder;

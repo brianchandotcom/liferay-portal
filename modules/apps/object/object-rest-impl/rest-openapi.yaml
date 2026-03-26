@@ -43,6 +43,9 @@ components:
                 alternativeText:
                     readOnly: true
                     type: string
+                extension:
+                    readOnly: true
+                    type: string
                 externalReferenceCode:
                     type: string
                 fileBase64:
@@ -88,6 +91,9 @@ components:
                     type: string
                 scope:
                     type: scope
+                size:
+                    readOnly: true
+                    type: string
                 thumbnailURL:
                     # @review
                     description:

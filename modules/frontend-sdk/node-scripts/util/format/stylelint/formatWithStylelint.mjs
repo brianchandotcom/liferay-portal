@@ -49,7 +49,7 @@ export default async function formatWithStylelint(input, filePath) {
 		printEslintErrors(path.relative(PORTAL_DIR, filePath), errors);
 
 		return {
-			errorsPresent: true,
+			errorsPresent: !!errors.length,
 			output: output.endsWith('\n') ? output : `${output}\n`,
 		};
 	}

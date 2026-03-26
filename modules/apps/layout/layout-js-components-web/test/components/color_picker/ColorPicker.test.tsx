@@ -175,11 +175,15 @@ describe('ColorPicker', () => {
 		});
 
 		it('does not show the Value From Stylebook button when the value is inherited', async () => {
-			const {queryByText} = renderColorPicker({
-				field: {...FIELD, inherited: true, value: undefined},
+			renderColorPicker({
+				field: {...FIELD, inherited: true},
+				value: '',
 			});
 
-			expect(queryByText('select-a-color')).not.toBeInTheDocument();
+			expect(
+				screen.queryByText('select-a-color')
+			).not.toBeInTheDocument();
+			expect(screen.getByTitle('inherited-value')).toBeInTheDocument();
 		});
 
 		it('disabled the color when the token references itself', async () => {

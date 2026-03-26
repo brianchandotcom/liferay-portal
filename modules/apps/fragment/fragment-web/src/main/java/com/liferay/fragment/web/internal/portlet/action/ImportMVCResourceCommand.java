@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.web.internal.portlet.action;
 
+import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
@@ -33,8 +34,11 @@ import jakarta.portlet.ResourceResponse;
 import java.io.File;
 
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,9 +75,20 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String importType = ParamUtil.getString(resourceRequest, "importType");
 
+		jsonObject.put("needsFragmentCollection", false);
+
 		boolean validFragmentEntries = true;
 
 		if (Validator.isNull(importType)) {
+			if ((fragmentCollectionId <= 0) && _needsFragmentCollection(file)) {
+				jsonObject.put("needsFragmentCollection", true);
+
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse, jsonObject);
+
+				return;
+			}
+
 			validFragmentEntries = _fragmentsImporter.validateFragmentEntries(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				fragmentCollectionId, file);
@@ -179,6 +194,41 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		return jsonObject;
+	}
+
+	private boolean _needsFragmentCollection(File file) throws Exception {
+		boolean hasFragmentEntries = false;
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				if (zipEntry.isDirectory()) {
+					continue;
+				}
+
+				String zipEntryName = zipEntry.getName();
+
+				if (zipEntryName.endsWith(
+						FragmentExportImportConstants.FILE_NAME_FRAGMENT) ||
+					zipEntryName.endsWith(
+						FragmentExportImportConstants.
+							FILE_NAME_FRAGMENT_COMPOSITION)) {
+
+					hasFragmentEntries = true;
+				}
+
+				if (zipEntryName.endsWith(
+						FragmentExportImportConstants.FILE_NAME_COLLECTION)) {
+
+					return false;
+				}
+			}
+		}
+
+		return hasFragmentEntries;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

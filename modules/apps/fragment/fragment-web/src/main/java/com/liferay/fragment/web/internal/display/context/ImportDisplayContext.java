@@ -6,11 +6,20 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
@@ -57,8 +66,49 @@ public class ImportDisplayContext {
 	}
 
 	public Map<String, Object> getProps() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return HashMapBuilder.<String, Object>put(
+			"addFragmentCollectionURL",
+			() -> {
+				LiferayPortletURL addFragmentCollectionURL =
+					(LiferayPortletURL)_renderResponse.createResourceURL();
+
+				addFragmentCollectionURL.setCopyCurrentRenderParameters(false);
+				addFragmentCollectionURL.setResourceID(
+					"/fragment/add_fragment_collection");
+
+				return addFragmentCollectionURL.toString();
+			}
+		).put(
 			"backURL", String.valueOf(_renderResponse.createRenderURL())
+		).put(
+			"fragmentCollectionId",
+			ParamUtil.getLong(_httpServletRequest, "fragmentCollectionId")
+		).put(
+			"fragmentCollections",
+			() -> {
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				for (FragmentCollection fragmentCollection :
+						FragmentCollectionLocalServiceUtil.
+							getFragmentCollections(
+								themeDisplay.getScopeGroupId(),
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+					jsonArray.put(
+						JSONUtil.put(
+							"fragmentCollectionId",
+							fragmentCollection.getFragmentCollectionId()
+						).put(
+							"name", fragmentCollection.getName()
+						));
+				}
+
+				return jsonArray;
+			}
 		).put(
 			"importURL",
 			() -> {

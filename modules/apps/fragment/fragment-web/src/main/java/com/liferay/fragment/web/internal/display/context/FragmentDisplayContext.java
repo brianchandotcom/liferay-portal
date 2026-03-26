@@ -60,7 +60,6 @@ import jakarta.portlet.ActionRequest;
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
-import jakarta.portlet.ResourceURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -565,23 +564,28 @@ public class FragmentDisplayContext {
 	}
 
 	public Map<String, Object> getMarketplaceProps() throws PortalException {
+		Map<String, Object> additionalProps = getAdditionalProps();
+
 		return HashMapBuilder.<String, Object>put(
+			"addFragmentCollectionURL",
+			additionalProps.get("addFragmentCollectionURL")
+		).put(
 			"body",
 			LanguageUtil.get(
 				_httpServletRequest,
 				"we-are-excited-to-share-that-marketplace-is-now-part-of-" +
 					"fragments")
 		).put(
+			"fragmentCollections", additionalProps.get("fragmentCollections")
+		).put(
 			"fragmentPortletNamespace", _renderResponse.getNamespace()
 		).put(
 			"fragmentsImportURL",
 			() -> {
-				ResourceURL importURL = _renderResponse.createResourceURL();
+				LiferayPortletURL importURL =
+					(LiferayPortletURL)_renderResponse.createResourceURL();
 
-				importURL.setParameter(
-					"fragmentCollectionId",
-					ParamUtil.getString(
-						_httpServletRequest, "fragmentCollectionId"));
+				importURL.setCopyCurrentRenderParameters(false);
 				importURL.setResourceID("/fragment/import");
 
 				return importURL.toString();

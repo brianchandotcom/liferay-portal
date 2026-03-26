@@ -20,6 +20,7 @@ import com.liferay.saml.opensaml.integration.processor.SamlSpIdpConnectionProces
 import com.liferay.saml.opensaml.integration.processor.factory.SamlSpIdpConnectionProcessorFactory;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
+import com.liferay.saml.web.internal.util.SamlPermissionUtil;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -64,6 +65,9 @@ public class UpdateIdentityProviderConnectionMVCActionCommand
 			samlSpIdpConnection =
 				_samlSpIdpConnectionLocalService.fetchSamlSpIdpConnection(
 					samlSpIdpConnectionId);
+
+			SamlPermissionUtil.checkPermission(
+				samlSpIdpConnection.getCompanyId());
 		}
 
 		SamlSpIdpConnectionProcessor samlSpIdpConnectionProcessor =

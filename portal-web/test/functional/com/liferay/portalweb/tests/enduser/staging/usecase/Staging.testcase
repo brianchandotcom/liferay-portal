@@ -1255,20 +1255,6 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Infrastructure",
-			configurationName = "Staging",
-			configurationScope = "Virtual Instance Scope");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "false",
-			settingFieldName = "Publish Parent Pages by Default");
-
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");

@@ -911,6 +911,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			return;
 		}
 
+		_assignedLabels.clear();
+		_labelBatchSizes.clear();
+
 		JSONObject computerAPIJSONObject = null;
 
 		try {

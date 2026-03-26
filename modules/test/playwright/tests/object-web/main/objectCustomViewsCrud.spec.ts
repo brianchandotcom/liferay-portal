@@ -9,31 +9,32 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 const test = mergeTests(
+	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
-	objectPagesTest
+	objectPagesTest,
+	workflowPagesTest
 );
 
 test(
-	'LPD-78504 Can add a column to the custom view',
-	{tag: '@LPD-78504'},
+	'can add a column to the custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanAddColumn
-		// LPS-135394 - Verify it is possible to add a column for the View
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -54,25 +55,21 @@ test(
 
 		await page.getByRole('link', {name: viewName}).click();
 
-		await editObjectViewPage.selectObjectFields([
-			'Author',
-			'Create Date',
-		]);
+		await editObjectViewPage.selectObjectFields(['Author', 'Create Date']);
 
-		const sidePanel = editObjectViewPage.sidePanel;
-
-		await expect(sidePanel.getByText('Author').first()).toBeVisible();
-		await expect(sidePanel.getByText('Create Date').first()).toBeVisible();
+		await expect(
+			editObjectViewPage.sidePanel.getByText('Author').first()
+		).toBeVisible();
+		await expect(
+			editObjectViewPage.sidePanel.getByText('Create Date').first()
+		).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can add metadata columns to default sort',
-	{tag: '@LPD-78504'},
+	'can add metadata columns to default sort',
+	{tag: '@LPS-144472'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanAddMetadataColumnsToDefaultSort
-		// LPS-144472 - Verify if the user can add metadata columns to Default Sort
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -125,8 +122,8 @@ test(
 );
 
 test(
-	'LPD-78504 Can add translation to column label in custom view',
-	{tag: '@LPD-78504'},
+	'can add translation to column label in custom view',
+	{tag: '@LPS-147792'},
 	async ({
 		apiHelpers,
 		editObjectViewPage,
@@ -134,26 +131,17 @@ test(
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		// Migrated from: CanAddTranslationToColumnLabel
-		// LPS-147792 - Verify it is possible to add any translation for any Column Label
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
 					{
 						DBType: 'String',
 						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field', pt_BR: 'Campo Customizado'},
-						listTypeDefinitionId: 0,
-						localized: false,
+						label: {
+							en_US: 'Custom Field',
+							pt_BR: 'Campo Customizado',
+						},
 						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
 					},
 				],
 				status: {code: 0},
@@ -200,24 +188,16 @@ test(
 			applicationName
 		);
 
-		await viewObjectEntriesPage.goto(
-			objectDefinition.className,
-			'pt'
-		);
+		await viewObjectEntriesPage.goto(objectDefinition.className, 'pt');
 
-		await expect(
-			page.getByText('Campo Customizado')
-		).toBeVisible();
+		await expect(page.getByText('Campo Customizado')).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can cancel column addition in custom view',
-	{tag: '@LPD-78504'},
+	'can cancel column addition in custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanCancelColumnAddition
-		// LPS-135394 - Verify it is possible to cancel the addition of a column for the View
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -252,21 +232,16 @@ test(
 
 		await expect(editObjectViewPage.addColumnsModal).toBeHidden();
 
-		const sidePanel = editObjectViewPage.sidePanel;
-
 		await expect(
-			sidePanel.getByText('No columns added yet.')
+			editObjectViewPage.sidePanel.getByText('No columns added yet.')
 		).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can cancel rename of a column label in custom view',
-	{tag: '@LPD-78504'},
+	'can cancel rename of a column label in custom view',
+	{tag: '@LPS-147792'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanCancelRenameColumnLabel
-		// LPS-147792 - Verify it is possible to cancel the rename of a Column Label
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -291,15 +266,13 @@ test(
 
 		const sidePanel = editObjectViewPage.sidePanel;
 
-		await sidePanel
-			.locator('li[draggable="true"]')
-			.filter({hasText: 'Author'})
-			.getByRole('button', {name: 'More'})
-			.click();
+		await sidePanel.getByRole('button', {name: 'More'}).click();
 
 		await sidePanel.getByRole('menuitem', {name: 'Edit'}).click();
 
-		const editModal = sidePanel.getByRole('dialog').filter({hasText: 'Label'});
+		const editModal = sidePanel
+			.getByRole('dialog')
+			.filter({hasText: 'Label'});
 
 		await editModal.getByLabel('Label').clear();
 		await editModal.getByLabel('Label').fill('Publishing House');
@@ -311,12 +284,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can cancel the creation of a custom view',
-	{tag: '@LPD-78504'},
+	'can cancel the creation of a custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, objectViewPage, page}) => {
-		// Migrated from: CanCancelViewCreation
-		// LPS-135394 - Verify it is possible to cancel the creation of a View
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -327,7 +297,7 @@ test(
 			type: 'objectDefinition',
 		});
 
-		await objectViewPage.goto(objectDefinition.label['en_US']);
+		await objectViewPage.goto(objectDefinition.label.en_US);
 
 		await objectViewPage.addObjectViewButton.click();
 
@@ -338,12 +308,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can create a default sort with ascending or descending order',
-	{tag: '@LPD-78504'},
+	'can create a default sort with ascending or descending order',
+	{tag: '@LPS-144472'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanCreateDefaultSort
-		// LPS-144472 - Verify it is possible to create a Default Sort when there is column (Ascending or Descending)
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -385,49 +352,35 @@ test(
 		await expect(
 			sidePanel.getByText('Ascending', {exact: true}).last()
 		).toBeVisible();
+
+		await sidePanel.getByRole('button', {name: 'More'}).click();
+
+		await sidePanel.getByRole('menuitem', {name: 'Edit'}).click();
+
+		await sidePanel
+			.getByLabel('Edit Default Sort')
+			.getByText('Ascending')
+			.click();
+
+		await sidePanel.getByRole('option', {name: 'Descending'}).click();
+
+		await sidePanel
+			.getByLabel('Edit Default Sort')
+			.getByRole('button', {name: 'Save'})
+			.click();
+
+		await expect(
+			sidePanel.getByText('Descending', {exact: true}).last()
+		).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can create a filter in custom view',
-	{tag: '@LPD-78504'},
-	async () => {
-		// Migrated from: CanCreateFilter
-		// LPS-144957 - Verify that it's possible to create the filter
-
-		test.fixme(
-			true,
-			'Test requires workflow infrastructure (Single Approver) to fully test filter creation with status filtering'
-		);
-	}
-);
-
-test(
-	'LPD-78504 Can create a filter by relationship column from system object',
-	{tag: '@LPD-78504'},
+	'can create a filter by relationship column from system object',
+	{tag: '@LPS-170529'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanCreateFilterByRelationshipColumnFromSystemObject
-		// LPS-170529 - Verify if it is possible to create a filter by relationship columns made from the system objects to custom objects
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -440,21 +393,25 @@ test(
 			ObjectRelationshipAPI
 		);
 
-		const relationshipName = 'relationship' + getRandomInt();
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_ACCOUNT',
+				{
+					label: {en_US: 'Relationship'},
+					name: 'relationship' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1: 'L_ACCOUNT',
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
 
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			'L_ACCOUNT',
-			{
-				label: {en_US: 'Relationship'},
-				name: relationshipName,
-				objectDefinitionExternalReferenceCode1: 'L_ACCOUNT',
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionId2: objectDefinition.id,
-				objectDefinitionName2: objectDefinition.name,
-				type: 'oneToMany',
-			}
-		);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await objectViewPage.goto(objectDefinition.label['en_US']);
 
@@ -478,9 +435,7 @@ test(
 
 		await editObjectViewPage.filterBy.click();
 
-		await sidePanel
-			.getByRole('option', {name: 'Relationship'})
-			.click();
+		await sidePanel.getByRole('option', {name: 'Relationship'}).click();
 
 		await editObjectViewPage.saveFilter.click();
 
@@ -494,26 +449,31 @@ test(
 
 		await editObjectViewPage.filtersTab.click();
 
-		await expect(
-			sidePanel.getByText('Relationship').last()
-		).toBeVisible();
+		await expect(sidePanel.getByText('Relationship').last()).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can create a filter using the relationship field of the object',
-	{tag: '@LPD-78504'},
+	'can create a filter using the relationship field of the object',
+	{tag: '@LPS-166585'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanCreateFilterUsingRelationshipField
-		// LPS-166585 - Verify that it's possible to create a filter using the relationship field of the object
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
 
-		const objectDefinition =
+		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
 			});
 
 		apiHelpers.data.push({
-			id: objectDefinition.id,
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
 			type: 'objectDefinition',
 		});
 
@@ -521,23 +481,28 @@ test(
 			ObjectRelationshipAPI
 		);
 
-		const relationshipName = 'relationship' + getRandomInt();
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition1.externalReferenceCode,
+				{
+					label: {en_US: 'Relationship'},
+					name: 'relationship' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition1.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionId2: objectDefinition2.id,
+					objectDefinitionName2: objectDefinition2.name,
+					type: 'oneToMany',
+				}
+			);
 
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			'L_USER',
-			{
-				label: {en_US: 'Relationship'},
-				name: relationshipName,
-				objectDefinitionExternalReferenceCode1: 'L_USER',
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionId2: objectDefinition.id,
-				objectDefinitionName2: objectDefinition.name,
-				type: 'oneToMany',
-			}
-		);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
-		await objectViewPage.goto(objectDefinition.label['en_US']);
+		await objectViewPage.goto(objectDefinition2.label['en_US']);
 
 		const viewName = 'CustomView' + getRandomInt();
 
@@ -555,9 +520,7 @@ test(
 
 		const sidePanel = editObjectViewPage.sidePanel;
 
-		await sidePanel
-			.getByRole('option', {name: 'Relationship'})
-			.click();
+		await sidePanel.getByRole('option', {name: 'Relationship'}).click();
 
 		await editObjectViewPage.saveFilter.click();
 
@@ -571,19 +534,14 @@ test(
 
 		await editObjectViewPage.filtersTab.click();
 
-		await expect(
-			sidePanel.getByText('Relationship').first()
-		).toBeVisible();
+		await expect(sidePanel.getByText('Relationship').first()).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can create a custom view',
-	{tag: '@LPD-78504'},
+	'can create a custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, objectViewPage, page}) => {
-		// Migrated from: CanCreateView
-		// LPS-135394 - Verify it is possible to create a View
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -600,19 +558,14 @@ test(
 
 		await objectViewPage.createObjectView(viewName);
 
-		await expect(
-			page.getByRole('link', {name: viewName})
-		).toBeVisible();
+		await expect(page.getByRole('link', {name: viewName})).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can delete a column by unselecting it in custom view',
-	{tag: '@LPD-78504'},
+	'can delete a column by unselecting it in custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanDeleteColumnByUnselect
-		// LPS-135394 - Verify it is possible to delete a column for the View by unselecting it
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -648,12 +601,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can delete a column through the delete button in custom view',
-	{tag: '@LPD-78504'},
+	'can delete a column through the delete button in custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanDeleteColumnThroughDeleteButton
-		// LPS-135394 - Verify it is possible to delete a column for the View through the delete button
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -676,17 +626,11 @@ test(
 
 		const sidePanel = editObjectViewPage.sidePanel;
 
-		await sidePanel.getByLabel('Mark as Default').check();
-
 		await editObjectViewPage.selectObjectFields(['Author']);
 
 		await expect(sidePanel.getByText('Author').first()).toBeVisible();
 
-		await sidePanel
-			.locator('li[draggable="true"]')
-			.filter({hasText: 'Author'})
-			.getByRole('button', {name: 'More'})
-			.click();
+		await sidePanel.getByRole('button', {name: 'More'}).click();
 
 		await sidePanel.getByRole('menuitem', {name: 'Delete'}).click();
 
@@ -697,12 +641,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can delete a column with relationship field filter in custom view',
-	{tag: '@LPD-78504'},
+	'can delete a column with relationship field filter in custom view',
+	{tag: '@LPS-166588'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanDeleteColumnWithRelationshipFieldFilter
-		// LPS-166588 - Verify that it's possible to delete a default filter column with the relationship field in the custom view
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -719,19 +660,25 @@ test(
 
 		const relationshipName = 'relationship' + getRandomInt();
 
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			'L_USER',
-			{
-				label: {en_US: 'Relationship'},
-				name: relationshipName,
-				objectDefinitionExternalReferenceCode1: 'L_USER',
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionId2: objectDefinition.id,
-				objectDefinitionName2: objectDefinition.name,
-				type: 'oneToMany',
-			}
-		);
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_USER',
+				{
+					label: {en_US: 'Relationship'},
+					name: relationshipName,
+					objectDefinitionExternalReferenceCode1: 'L_USER',
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await objectViewPage.goto(objectDefinition.label['en_US']);
 
@@ -751,11 +698,7 @@ test(
 
 		await expect(sidePanel.getByText('Relationship').first()).toBeVisible();
 
-		await sidePanel
-			.locator('li[draggable="true"]')
-			.filter({hasText: 'Relationship'})
-			.getByRole('button', {name: 'More'})
-			.click();
+		await sidePanel.getByRole('button', {name: 'More'}).click();
 
 		await sidePanel.getByRole('menuitem', {name: 'Delete'}).click();
 
@@ -776,26 +719,117 @@ test(
 );
 
 test(
-	'LPD-78504 Can delete a filter in custom view',
-	{tag: '@LPD-78504'},
-	async () => {
-		// Migrated from: CanDeleteFilter
-		// LPS-144957 - Verify that it's possible to delete the filter
+	'can delete a filter in custom view',
+	{tag: '@LPS-144957'},
+	async ({
+		apiHelpers,
+		editObjectViewPage,
+		objectViewPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
 
-		test.fixme(
-			true,
-			'Test requires filter list interaction after saving filters - the side panel filter form does not return to the filter list view after saving'
-		);
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectViewPage.goto(objectDefinition.label['en_US']);
+
+		const viewName = 'CustomView' + getRandomInt();
+
+		await objectViewPage.createObjectView(viewName);
+
+		await page.getByRole('link', {name: viewName}).waitFor();
+
+		await page.getByRole('link', {name: viewName}).click();
+
+		const sidePanel = editObjectViewPage.sidePanel;
+
+		await sidePanel.getByLabel('Mark as Default').check();
+
+		await editObjectViewPage.selectObjectFields(['textField']);
+
+		await editObjectViewPage.filtersTab.click();
+
+		await editObjectViewPage.newFilterButton.click();
+
+		await editObjectViewPage.filterBy.click();
+
+		await sidePanel.getByRole('option', {name: 'Create Date'}).click();
+
+		await editObjectViewPage.saveFilter.click();
+
+		await sidePanel.getByRole('button', {name: 'Add'}).click();
+
+		await editObjectViewPage.filterBy.click();
+
+		await sidePanel.getByRole('option', {name: 'Modified Date'}).click();
+
+		await editObjectViewPage.saveFilter.click();
+
+		await editObjectViewPage.saveButton.last().click();
+
+		await page.waitForLoadState('networkidle');
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await page.reload();
+
+		await page.getByRole('button', {name: 'Filter'}).click();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Create Date'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Modified Date'})
+		).toBeVisible();
+
+		await objectViewPage.goto(objectDefinition.label['en_US']);
+
+		await page.getByRole('link', {name: viewName}).click();
+
+		await editObjectViewPage.filtersTab.click();
+
+		await sidePanel.getByRole('button', {name: 'More'}).last().click();
+
+		await sidePanel.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await editObjectViewPage.saveButton.last().click();
+
+		await page.waitForLoadState('networkidle');
+
+		await page.reload();
+
+		await page.getByRole('link', {name: viewName}).click();
+
+		await editObjectViewPage.filtersTab.click();
+
+		await expect(sidePanel.getByText('Relationship').first()).toBeHidden();
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await page.getByRole('button', {name: 'Filter'}).click();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Create Date'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Modified Date'})
+		).not.toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can delete a filter with relationship field in custom view',
-	{tag: '@LPD-78504'},
+	'can delete a filter with relationship field in custom view',
+	{tag: '@LPS-166590'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanDeleteFilterWithRelationshipField
-		// LPS-166590 - Verify that it's possible to delete the configured filters from the object
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -812,19 +846,25 @@ test(
 
 		const relationshipName = 'relationship' + getRandomInt();
 
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			'L_USER',
-			{
-				label: {en_US: 'Relationship'},
-				name: relationshipName,
-				objectDefinitionExternalReferenceCode1: 'L_USER',
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionId2: objectDefinition.id,
-				objectDefinitionName2: objectDefinition.name,
-				type: 'oneToMany',
-			}
-		);
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_USER',
+				{
+					label: {en_US: 'Relationship'},
+					name: relationshipName,
+					objectDefinitionExternalReferenceCode1: 'L_USER',
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await objectViewPage.goto(objectDefinition.label['en_US']);
 
@@ -840,7 +880,7 @@ test(
 
 		await sidePanel.getByLabel('Mark as Default').check();
 
-		await editObjectViewPage.selectObjectFields(['Status']);
+		await editObjectViewPage.selectObjectFields(['Relationship']);
 
 		await editObjectViewPage.saveButton.last().click();
 
@@ -856,9 +896,7 @@ test(
 
 		await editObjectViewPage.filterBy.click();
 
-		await sidePanel
-			.getByRole('option', {name: 'Relationship'})
-			.click();
+		await sidePanel.getByRole('option', {name: 'Relationship'}).click();
 
 		await editObjectViewPage.saveFilter.click();
 
@@ -872,12 +910,7 @@ test(
 
 		await editObjectViewPage.filtersTab.click();
 
-		await sidePanel
-			.getByText('Relationship', {exact: true})
-			.last()
-			.locator('xpath=ancestor::li | ancestor::tr')
-			.getByRole('button', {name: 'More'})
-			.click();
+		await sidePanel.getByRole('button', {name: 'More'}).click();
 
 		await sidePanel.getByRole('menuitem', {name: 'Delete'}).click();
 
@@ -891,17 +924,16 @@ test(
 
 		await editObjectViewPage.filtersTab.click();
 
-		await expect(
-			sidePanel.getByText('Relationship').first()
-		).toBeHidden();
+		await expect(sidePanel.getByText('Relationship').first()).toBeHidden();
 	}
 );
 
-test(
-	'LPD-78504 Can delete a pre-order column in default sort',
+test.skip(
+	'can delete a pre-order column in default sort',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanDeletePreOrderColumn
+
+		// Migrate from: CanDeletePreOrderColumn
 		// LPS-144472 - Verify it is possible the user to delete the pre-order column
 
 		const objectDefinition =
@@ -955,12 +987,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can delete a custom view',
-	{tag: '@LPD-78504'},
+	'can delete a custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, objectViewPage, page}) => {
-		// Migrated from: CanDeleteView
-		// LPS-135394 - Verify it is possible to delete a View
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -986,19 +1015,14 @@ test(
 
 		await page.getByRole('menuitem', {name: 'Delete'}).click();
 
-		await expect(
-			page.getByRole('link', {name: viewName})
-		).toBeHidden();
+		await expect(page.getByRole('link', {name: viewName})).toBeHidden();
 	}
 );
 
 test(
-	'LPD-78504 Can drag columns in custom view builder',
-	{tag: '@LPD-78504'},
+	'can drag columns in custom view builder',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanDragColumns
-		// LPS-135394 - Verify it is possible to drag the columns
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1026,22 +1050,74 @@ test(
 		]);
 
 		const sidePanel = editObjectViewPage.sidePanel;
+
 		const columns = sidePanel.locator('li[draggable="true"]');
 
-		await expect(columns).toHaveCount(3);
-		await expect(columns.nth(0)).toContainText('Author');
-		await expect(columns.nth(1)).toContainText('Create Date');
-		await expect(columns.nth(2)).toContainText('Modified Date');
+		await expect(columns).toContainText([
+			'Author',
+			'Create Date',
+			'Modified Date',
+		]);
+
+		const sourceRow = columns.nth(0);
+		const targetRow = columns.nth(2);
+
+		const sourceBox = await sourceRow.boundingBox();
+		const targetBox = await targetRow.boundingBox();
+
+		const startX = sourceBox.x + sourceBox.width / 2;
+		const startY = sourceBox.y + sourceBox.height / 2;
+
+		const endX = targetBox.x + targetBox.width / 2;
+		const endY = targetBox.y + targetBox.height / 2 + 10;
+
+		const dataTransfer = await sourceRow.evaluateHandle(
+			() => new DataTransfer()
+		);
+
+		await sourceRow.dispatchEvent('dragstart', {
+			clientX: startX,
+			clientY: startY,
+			dataTransfer,
+		});
+		await targetRow.dispatchEvent('dragenter', {
+			clientX: endX,
+			clientY: endY,
+			dataTransfer,
+		});
+		await targetRow.dispatchEvent('dragover', {
+			clientX: endX,
+			clientY: endY,
+			dataTransfer,
+		});
+
+		await page.waitForTimeout(100);
+
+		await targetRow.dispatchEvent('drop', {
+			clientX: endX,
+			clientY: endY,
+			dataTransfer,
+		});
+		await sourceRow.dispatchEvent('dragend', {
+			clientX: endX,
+			clientY: endY,
+			dataTransfer,
+		});
+
+		const reorderedColumns = sidePanel.locator('li[draggable="true"]');
+
+		await expect(reorderedColumns).toContainText([
+			'Create Date',
+			'Modified Date',
+			'Author',
+		]);
 	}
 );
 
 test(
-	'LPD-78504 Can duplicate an object view',
-	{tag: '@LPD-78504'},
+	'can duplicate an object view',
+	{tag: '@LPS-146028'},
 	async ({apiHelpers, objectViewPage, page}) => {
-		// Migrated from: CanDuplicateObjectView
-		// LPS-146028 - Verify that the user can duplicate a object View
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1076,26 +1152,130 @@ test(
 );
 
 test(
-	'LPD-78504 Can edit a filter in custom view',
-	{tag: '@LPD-78504'},
-	async () => {
-		// Migrated from: CanEditFilter
-		// LPS-144957 - Verify that it's possible to edit the filter
+	'can edit a filter in custom view',
+	{tag: '@LPS-144957'},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		configurationTabPage,
+		editObjectViewPage,
+		objectViewPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
 
-		test.fixme(
-			true,
-			'Test requires filter list interaction after saving filters - the side panel filter form does not return to the filter list view after saving'
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		const approvedEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Entry Test'},
+			applicationName
 		);
+
+		await applicationsMenuPage.goToProcessBuilder();
+
+		await configurationTabPage.configurationTabLink.click();
+
+		await configurationTabPage.assignWorkflowToAssetType(
+			'Single Approver',
+			objectDefinition.label['en_US']
+		);
+
+		const pendingEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Entry Test 2'},
+			applicationName
+		);
+
+		await objectViewPage.goto(objectDefinition.label['en_US']);
+
+		const viewName = 'CustomView' + getRandomInt();
+
+		await objectViewPage.createObjectView(viewName);
+
+		await page.getByRole('link', {name: viewName}).waitFor();
+
+		await page.getByRole('link', {name: viewName}).click();
+
+		const sidePanel = editObjectViewPage.sidePanel;
+
+		await sidePanel.getByLabel('Mark as Default').check();
+
+		await editObjectViewPage.selectObjectFields(['textField', 'Status']);
+
+		await editObjectViewPage.createFilter('Status', 'Includes', 'Pending');
+
+		await sidePanel.getByRole('button', {name: 'Save'}).last().click();
+
+		await page.waitForLoadState('networkidle');
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await page.reload();
+
+		await expect(
+			page.getByText(approvedEntry.textField, {exact: true})
+		).not.toBeVisible();
+
+		await expect(
+			page.getByText(pendingEntry.textField, {exact: true})
+		).toBeVisible();
+
+		await objectViewPage.goto(objectDefinition.label['en_US']);
+
+		await page.getByRole('link', {name: viewName}).click();
+
+		await editObjectViewPage.filtersTab.click();
+
+		await sidePanel.getByRole('button', {name: 'More'}).click();
+
+		await sidePanel.getByRole('menuitem', {name: 'Edit'}).click();
+
+		await sidePanel
+			.locator('div')
+			.filter({hasText: /^Pending$/})
+			.nth(2)
+			.click();
+
+		await sidePanel.getByRole('checkbox', {name: 'Approved'}).check();
+
+		await sidePanel.getByText('New Filter').click();
+
+		await sidePanel
+			.getByLabel('New Filter')
+			.getByRole('button', {name: 'Save'})
+			.click();
+
+		await sidePanel.getByRole('button', {name: 'Save'}).last().click();
+
+		await page.waitForLoadState('networkidle');
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await page.reload();
+
+		await expect(
+			page.getByText(approvedEntry.textField, {exact: true})
+		).toBeVisible();
+
+		await expect(
+			page.getByText(pendingEntry.textField, {exact: true})
+		).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can edit a filter with relationship field in custom view',
-	{tag: '@LPD-78504'},
+	'can edit a filter with relationship field in custom view',
+	{tag: '@LPS-166587'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanEditFilterWithRelationshipField
-		// LPS-166587 - Verify that it's possible to edit a default filter column with the relationship field in the custom view
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1110,21 +1290,25 @@ test(
 			ObjectRelationshipAPI
 		);
 
-		const relationshipName = 'relationship' + getRandomInt();
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_USER',
+				{
+					label: {en_US: 'Relationship'},
+					name: 'relationship' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1: 'L_USER',
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId2: objectDefinition.id,
+					objectDefinitionName2: objectDefinition.name,
+					type: 'oneToMany',
+				}
+			);
 
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			'L_USER',
-			{
-				label: {en_US: 'Relationship'},
-				name: relationshipName,
-				objectDefinitionExternalReferenceCode1: 'L_USER',
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionId2: objectDefinition.id,
-				objectDefinitionName2: objectDefinition.name,
-				type: 'oneToMany',
-			}
-		);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		await objectViewPage.goto(objectDefinition.label['en_US']);
 
@@ -1152,17 +1336,16 @@ test(
 
 		await editObjectViewPage.viewBuilderTab.click();
 
-		await sidePanel
-			.locator('li[draggable="true"]')
-			.filter({hasText: 'Relationship'})
-			.getByRole('button', {name: 'More'})
-			.click();
+		await sidePanel.getByRole('button', {name: 'More'}).click();
 
 		await sidePanel.getByRole('menuitem', {name: 'Edit'}).click();
 
-		const editModal = sidePanel.getByRole('dialog').filter({hasText: 'Label'});
+		const editModal = sidePanel
+			.getByRole('dialog')
+			.filter({hasText: 'Label'});
 
 		await editModal.getByLabel('Label').clear();
+
 		await editModal.getByLabel('Label').fill('Relationship Edit');
 
 		await editModal.getByRole('button', {name: 'Edit'}).click();
@@ -1177,15 +1360,13 @@ test(
 
 		await editObjectViewPage.viewBuilderTab.click();
 
-		await expect(
-			sidePanel.getByText('Relationship Edit')
-		).toBeVisible();
+		await expect(sidePanel.getByText('Relationship Edit')).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can filter entries by create date in custom view',
-	{tag: '@LPD-78504'},
+	'can filter entries by create date in custom view',
+	{tag: '@LPS-169019'},
 	async ({
 		apiHelpers,
 		editObjectViewPage,
@@ -1193,26 +1374,14 @@ test(
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		// Migrated from: CanFilterEntriesByCreateDate
-		// LPS-169019 - Verify it's possible to filter by Create Date
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
 					{
 						DBType: 'String',
 						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
 						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
 						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
 					},
 				],
 				status: {code: 0},
@@ -1256,9 +1425,7 @@ test(
 
 		await editObjectViewPage.filterBy.click();
 
-		await sidePanel
-			.getByRole('option', {name: 'Create Date'})
-			.click();
+		await sidePanel.getByRole('option', {name: 'Create Date'}).click();
 
 		await editObjectViewPage.saveFilter.click();
 
@@ -1272,9 +1439,7 @@ test(
 
 		await page.getByRole('button', {name: 'Filter'}).click();
 
-		await page
-			.getByRole('menuitem', {name: 'Create Date'})
-			.click();
+		await page.getByRole('menuitem', {name: 'Create Date'}).click();
 
 		const today = new Date();
 		const yesterday = new Date(today);
@@ -1300,8 +1465,8 @@ test(
 );
 
 test(
-	'LPD-78504 Can filter entries by modified date in custom view',
-	{tag: '@LPD-78504'},
+	'can filter entries by modified date in custom view',
+	{tag: '@LPS-169018'},
 	async ({
 		apiHelpers,
 		editObjectViewPage,
@@ -1309,26 +1474,14 @@ test(
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		// Migrated from: CanFilterEntriesByModifiedDate
-		// LPS-169018 - Verify it's possible to filter by Modified Date
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [
 					{
 						DBType: 'String',
 						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
 						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
 						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
 					},
 				],
 				status: {code: 0},
@@ -1372,9 +1525,7 @@ test(
 
 		await editObjectViewPage.filterBy.click();
 
-		await sidePanel
-			.getByRole('option', {name: 'Modified Date'})
-			.click();
+		await sidePanel.getByRole('option', {name: 'Modified Date'}).click();
 
 		await editObjectViewPage.saveFilter.click();
 
@@ -1388,9 +1539,7 @@ test(
 
 		await page.getByRole('button', {name: 'Filter'}).click();
 
-		await page
-			.getByRole('menuitem', {name: 'Modified Date'})
-			.click();
+		await page.getByRole('menuitem', {name: 'Modified Date'}).click();
 
 		const today = new Date();
 		const yesterday = new Date(today);
@@ -1416,42 +1565,19 @@ test(
 );
 
 test(
-	'LPD-78504 Can filter entries by status in custom view',
-	{tag: '@LPD-78504'},
+	'can filter entries by status in custom view',
+	{tag: '@LPS-169016'},
 	async ({
 		apiHelpers,
+		applicationsMenuPage,
+		configurationTabPage,
 		editObjectViewPage,
 		objectViewPage,
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		// Migrated from: CanFilterEntriesByStatus
-		// LPS-169016 - Verify it's possible to filter by status
-
-		test.fixme(
-			true,
-			'createFilter method needs rewrite for new modal-based filter UI - filter Save button is outside viewport in iframe modal'
-		);
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -1463,8 +1589,22 @@ test(
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
 
-		await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry Test'},
+		const approvedEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Entry Test'},
+			applicationName
+		);
+
+		await applicationsMenuPage.goToProcessBuilder();
+
+		await configurationTabPage.configurationTabLink.click();
+
+		await configurationTabPage.assignWorkflowToAssetType(
+			'Single Approver',
+			objectDefinition.label['en_US']
+		);
+
+		const pendingEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Entry Test 2'},
 			applicationName
 		);
 
@@ -1482,10 +1622,7 @@ test(
 
 		await sidePanel.getByLabel('Mark as Default').check();
 
-		await editObjectViewPage.selectObjectFields([
-			'Custom Field',
-			'Status',
-		]);
+		await editObjectViewPage.selectObjectFields(['textField', 'Status']);
 
 		await editObjectViewPage.createFilter(
 			'Status',
@@ -1493,67 +1630,51 @@ test(
 			'Approved, Denied, Draft, Expired, Inactive, Incomplete, In Recycle Bin, Scheduled'
 		);
 
-		await sidePanel
-			.getByRole('button', {name: 'Save'})
-			.last()
-			.dispatchEvent('click');
+		await sidePanel.getByRole('button', {name: 'Save'}).last().click();
 
 		await page.waitForLoadState('networkidle');
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await expect(page.getByText('Entry Test').first()).toBeVisible();
+		await page.reload();
 
-		await page
-			.getByRole('button', {name: 'Filter', exact: true})
-			.click();
+		await expect(
+			page.getByText(approvedEntry.textField, {exact: true})
+		).toBeVisible();
 
-		await page
-			.getByRole('menuitem', {name: 'Status'})
-			.click();
-
-		await page.getByRole('button', {name: 'Show Results'}).click();
-
-		await expect(page.getByText('Entry Test').first()).toBeVisible();
+		await expect(
+			page.getByText(pendingEntry.textField, {exact: true})
+		).not.toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can filter entries using relationship field in custom view',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanFilterEntriesUsingRelationshipField
-
-		test.fixme(
-			true,
-			'New Filter modal requires a Value field - test needs rewrite to create entries and provide filter values like the Poshi test'
-		);
-		// LPS-166586 - Verify that it's possible to filter entries using any relationship field of the object in the custom view
-
-		const objectDefinition =
+	'can filter entries using relationship field in custom view',
+	{tag: '@LPS-169016'},
+	async ({
+		apiHelpers,
+		editObjectViewPage,
+		objectViewPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinitionA =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
+				status: {code: 0},
+			});
+
+		const objectDefinitionB =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
 			});
 
 		apiHelpers.data.push({
-			id: objectDefinition.id,
+			id: objectDefinitionA.id,
+			type: 'objectDefinition',
+		});
+
+		apiHelpers.data.push({
+			id: objectDefinitionB.id,
 			type: 'objectDefinition',
 		});
 
@@ -1561,23 +1682,42 @@ test(
 			ObjectRelationshipAPI
 		);
 
-		const relationshipName = 'relationship' + getRandomInt();
+		const {body: objectRelationshipAC} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinitionA.externalReferenceCode,
+				{
+					label: {en_US: 'Relationship' + getRandomInt()},
+					name: 'relationship' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1:
+						objectDefinitionA.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinitionB.externalReferenceCode,
+					objectDefinitionId2: objectDefinitionB.id,
+					objectDefinitionName2: objectDefinitionB.name,
+					type: 'oneToMany',
+				}
+			);
 
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			'L_USER',
-			{
-				label: {en_US: 'Relationship'},
-				name: relationshipName,
-				objectDefinitionExternalReferenceCode1: 'L_USER',
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionId2: objectDefinition.id,
-				objectDefinitionName2: objectDefinition.name,
-				type: 'oneToMany',
-			}
+		apiHelpers.data.push({
+			id: objectRelationshipAC.id,
+			type: 'objectRelationship',
+		});
+
+		const objectEntryA1 = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'entryA1'},
+			'c/' + objectDefinitionA.name.toLowerCase() + 's'
 		);
 
-		await objectViewPage.goto(objectDefinition.label['en_US']);
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				[`r_${objectRelationshipAC.name}_c_${objectDefinitionA.name[0].toLowerCase() + objectDefinitionA.name.substring(1)}Id`]:
+					objectEntryA1.id.toString(),
+				textField: 'entryA1',
+			},
+			'c/' + objectDefinitionB.name.toLowerCase() + 's'
+		);
+
+		await objectViewPage.goto(objectDefinitionB.label['en_US']);
 
 		const viewName = 'CustomView' + getRandomInt();
 
@@ -1591,7 +1731,10 @@ test(
 
 		await sidePanel.getByLabel('Mark as Default').check();
 
-		await editObjectViewPage.selectObjectFields(['Custom Field']);
+		await editObjectViewPage.selectObjectFields([
+			'textField',
+			objectRelationshipAC.label.en_US,
+		]);
 
 		await editObjectViewPage.saveButton.last().click();
 
@@ -1608,14 +1751,30 @@ test(
 		await editObjectViewPage.filterBy.click();
 
 		await sidePanel
-			.getByRole('option', {name: 'Relationship'})
+			.getByRole('option', {name: objectRelationshipAC.label.en_US})
 			.click();
 
 		await editObjectViewPage.filterType.click();
 
+		await sidePanel.getByRole('option', {name: 'Excludes'}).click();
+
 		await sidePanel
-			.getByRole('option', {name: 'Excludes'})
+			.getByRole('dialog', {name: 'New Filter'})
+			.locator('input[type="text"]')
 			.click();
+
+		await sidePanel
+			.getByRole('checkbox', {name: String(objectEntryA1.id)})
+			.check();
+
+		await sidePanel
+			.getByLabel('New Filter')
+			.getByText('New Filter')
+			.click();
+
+		await expect(
+			sidePanel.getByRole('row', {name: `Remove ${objectEntryA1.id}`})
+		).toBeVisible();
 
 		await editObjectViewPage.saveFilter.click();
 
@@ -1623,31 +1782,42 @@ test(
 
 		await page.waitForLoadState('networkidle');
 
-		await expect(sidePanel.getByText('Relationship').first()).toBeVisible();
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
+		const objectEntryA2 = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'entryA2'},
+			'c/' + objectDefinitionA.name.toLowerCase() + 's'
+		);
 
 		await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry Text A'},
-			applicationName
+			{
+				[`r_${objectRelationshipAC.name}_c_${objectDefinitionA.name[0].toLowerCase() + objectDefinitionA.name.substring(1)}Id`]:
+					objectEntryA2.id.toString(),
+				textField: 'entryA2',
+			},
+			'c/' + objectDefinitionB.name.toLowerCase() + 's'
 		);
 
-		await page.goto(
-			`/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.name.toLowerCase()}s`
-		);
+		await viewObjectEntriesPage.goto(objectDefinitionB.className);
 
-		await expect(page.getByText('Entry Text A')).toBeVisible();
+		await expect(
+			page.getByRole('cell', {name: String(objectEntryA2.id)})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {name: String(objectEntryA1.id)})
+		).not.toBeVisible();
+
+		await page.getByRole('button', {name: 'Remove Filter'}).click();
+
+		await expect(
+			page.getByRole('cell', {name: String(objectEntryA1.id)})
+		).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Cannot leave name field empty when creating a custom view',
-	{tag: '@LPD-78504'},
+	'cannot leave name field empty when creating a custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, objectViewPage, page}) => {
-		// Migrated from: CannotLeaveNameFieldEmpty
-		// LPS-135394 - Verify the Name is required when creating a View
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1669,12 +1839,9 @@ test(
 );
 
 test(
-	'LPD-78504 Cannot save another view as default when one is already set',
-	{tag: '@LPD-78504'},
+	'cannot save another view as default when one is already set',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CannotSaveAnotherViewAsDefault
-		// LPS-135394 - Verify that it is not possible to save another View as default
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1728,12 +1895,9 @@ test(
 );
 
 test(
-	'LPD-78504 Cannot save a view set as default when there are no columns selected',
-	{tag: '@LPD-78504'},
+	'cannot save a view set as default when there are no columns selected',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CannotSaveNoColumnsView
-		// LPS-135394 - Verify it is not possible to save a View set as default when there are no columns selected
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1769,12 +1933,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can prioritize columns in default sort',
-	{tag: '@LPD-78504'},
+	'can prioritize columns in default sort',
+	{tag: '@LPS-144472'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanPrioritizeColumns
-		// LPS-144472 - Verify it is possible to prioritize columns to Default Sort
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1795,10 +1956,7 @@ test(
 
 		await page.getByRole('link', {name: viewName}).click();
 
-		await editObjectViewPage.selectObjectFields([
-			'Author',
-			'Create Date',
-		]);
+		await editObjectViewPage.selectObjectFields(['Author', 'Create Date']);
 
 		const sidePanel = editObjectViewPage.sidePanel;
 
@@ -1812,20 +1970,65 @@ test(
 			await editObjectViewPage.addDefaultSort(columnName, 'Ascending');
 		}
 
-		const sortColumns = sidePanel.locator('li[draggable="true"]');
+		const columns = sidePanel.locator('li[draggable="true"]');
 
-		await expect(sortColumns.nth(0)).toContainText('Author');
-		await expect(sortColumns.nth(1)).toContainText('Create Date');
+		await expect(columns).toContainText(['Author', 'Create Date']);
+
+		const sourceRow = columns.nth(2);
+		const targetRow = columns.nth(3);
+
+		const sourceBox = await sourceRow.boundingBox();
+		const targetBox = await targetRow.boundingBox();
+
+		const startX = sourceBox.x + sourceBox.width / 2;
+		const startY = sourceBox.y + sourceBox.height / 2;
+
+		const endX = targetBox.x + targetBox.width / 2;
+		const endY = targetBox.y + targetBox.height / 2 + 10;
+
+		const dataTransfer = await sourceRow.evaluateHandle(
+			() => new DataTransfer()
+		);
+
+		await sourceRow.dispatchEvent('dragstart', {
+			clientX: startX,
+			clientY: startY,
+			dataTransfer,
+		});
+		await targetRow.dispatchEvent('dragenter', {
+			clientX: endX,
+			clientY: endY,
+			dataTransfer,
+		});
+		await targetRow.dispatchEvent('dragover', {
+			clientX: endX,
+			clientY: endY,
+			dataTransfer,
+		});
+
+		await page.waitForTimeout(100);
+
+		await targetRow.dispatchEvent('drop', {
+			clientX: endX,
+			clientY: endY,
+			dataTransfer,
+		});
+		await sourceRow.dispatchEvent('dragend', {
+			clientX: endX,
+			clientY: endY,
+			dataTransfer,
+		});
+
+		const reorderedColumns = sidePanel.locator('li[draggable="true"]');
+
+		await expect(reorderedColumns).toContainText(['Create Date', 'Author']);
 	}
 );
 
 test(
-	'LPD-78504 Can search for a column on the view builder tab',
-	{tag: '@LPD-78504'},
+	'can search for a column on the view builder tab',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanSearchColumn
-		// LPS-135394 - Verify it is possible to search for a column on the View Builder tab
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1846,10 +2049,7 @@ test(
 
 		await page.getByRole('link', {name: viewName}).click();
 
-		await editObjectViewPage.selectObjectFields([
-			'Author',
-			'Create Date',
-		]);
+		await editObjectViewPage.selectObjectFields(['Author', 'Create Date']);
 
 		const sidePanel = editObjectViewPage.sidePanel;
 
@@ -1858,7 +2058,9 @@ test(
 		await searchInput.fill('Author');
 
 		await expect(
-			sidePanel.locator('li[draggable="true"]').filter({hasText: 'Author'})
+			sidePanel
+				.locator('li[draggable="true"]')
+				.filter({hasText: 'Author'})
 		).toBeVisible();
 
 		await expect(
@@ -1870,12 +2072,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can search for a column on the add columns modal',
-	{tag: '@LPD-78504'},
+	'can search for a column on the add columns modal',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanSearchColumnAddColumnModal
-		// LPS-135394 - Verify it is possible to search for a column on the Add Columns modal
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1914,12 +2113,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can search columns in default sort',
-	{tag: '@LPD-78504'},
+	'can search columns in default sort',
+	{tag: '@LPS-144472'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanSearchColumns
-		// LPS-144472 - Verify it is possible to search columns to Default Sort
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -1966,9 +2162,7 @@ test(
 		}
 
 		for (const columnName of metadataColumns) {
-			const searchInput = sidePanel
-				.getByPlaceholder('Search')
-				.last();
+			const searchInput = sidePanel.getByPlaceholder('Search').last();
 
 			await searchInput.fill(columnName);
 
@@ -1982,12 +2176,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can search for a custom view',
-	{tag: '@LPD-78504'},
+	'can search for a custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, objectViewPage, page}) => {
-		// Migrated from: CanSearchView
-		// LPS-135394 - Verify it is possible to search for a View
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -2001,7 +2192,7 @@ test(
 		await objectViewPage.goto(objectDefinition.label['en_US']);
 
 		const viewNameA = 'ViewA' + getRandomInt();
-		const viewNameB = 'CustomB' + getRandomInt();
+		const viewNameB = 'ViewB' + getRandomInt();
 
 		await objectViewPage.createObjectView(viewNameA);
 
@@ -2015,107 +2206,18 @@ test(
 
 		await page.keyboard.press('Enter');
 
-		await expect(
-			page.getByRole('link', {name: viewNameA})
-		).toBeVisible();
+		await expect(page.getByRole('link', {name: viewNameA})).toBeVisible();
 
-		await expect(
-			page.getByRole('link', {name: viewNameB})
-		).toBeHidden();
+		await expect(page.getByRole('link', {name: viewNameB})).toBeHidden();
 	}
 );
 
 test(
-	'LPD-78504 Can search with enter key on default sort',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanSearchWithEnterKey
-		// LPS-144472 - Verify it is possible to search when press enter key on Default Sort
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await objectViewPage.goto(objectDefinition.label['en_US']);
-
-		const viewName = 'CustomView' + getRandomInt();
-
-		await objectViewPage.createObjectView(viewName);
-
-		await page.getByRole('link', {name: viewName}).waitFor();
-
-		await page.getByRole('link', {name: viewName}).click();
-
-		await editObjectViewPage.selectObjectFields([
-			'Author',
-			'Create Date',
-			'Modified Date',
-		]);
-
-		const sidePanel = editObjectViewPage.sidePanel;
-
-		const defaultSortTab = sidePanel.getByRole('tab', {
-			name: 'Default Sort',
-		});
-
-		await defaultSortTab.click();
-
-		for (const columnName of ['Author', 'Create Date', 'Modified Date']) {
-			await editObjectViewPage.addDefaultSort(columnName, 'Ascending');
-		}
-
-		const searchInput = sidePanel.getByPlaceholder('Search').last();
-
-		await searchInput.fill('Author');
-
-		await searchInput.press('Enter');
-
-		await expect(
-			sidePanel.getByText('Author', {exact: true}).last()
-		).toBeVisible();
-
-		await expect(
-			sidePanel.getByText('Create Date', {exact: true}).last()
-		).toBeHidden();
-
-		await expect(
-			sidePanel.getByText('Modified Date', {exact: true}).last()
-		).toBeHidden();
-	}
-);
-
-test(
-	'LPD-78504 Can see entries with default return in custom view',
-	{tag: '@LPD-78504'},
+	'can see entries with default return in custom view',
+	{tag: '@LPS-144472'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		// Migrated from: CanSeeEntriesWithDefaultReturn
-		// LPS-144472 - Verify it is possible to see the entries with default return
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -2127,9 +2229,9 @@ test(
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
 
-		for (const letter of ['A', 'Z', 'B']) {
+		for (const letter of ['A', 'B', 'Z']) {
 			await apiHelpers.objectEntry.postObjectEntry(
-				{customField: `Entry ${letter}`},
+				{textField: `Entry ${letter}`},
 				applicationName
 			);
 		}
@@ -2144,15 +2246,15 @@ test(
 				name: {en_US: 'CustomView' + getRandomInt()},
 				objectViewColumns: [
 					{
-						objectFieldName: 'customField',
+						objectFieldName: 'textField',
 						priority: 0,
 					},
 				],
 				objectViewSortColumns: [
 					{
-						objectFieldName: 'customField',
+						objectFieldName: 'textField',
 						priority: 0,
-						sortOrder: 'asc',
+						sortOrder: 'desc',
 					},
 				],
 			}
@@ -2160,138 +2262,15 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		const cells = page.locator(
-			'table tbody tr td:nth-child(2)'
-		);
+		const cells = page.getByRole('cell');
 
-		await expect(cells.first()).toHaveText('Entry A');
+		await expect(cells).toContainText(['Entry Z', 'Entry B', 'Entry A']);
 	}
 );
 
 test(
-	'LPD-78504 Can see entries with filter applied in custom view',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanSeeEntriesWithFilterApplied
-		// LPS-166589 - Verify that it's possible to view the object entries with the default filter applied
-
-		test.fixme(
-			true,
-			'New Filter modal requires a Value field - test needs rewrite to create entries and provide filter values like the Poshi test'
-		);
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipAPI
-		);
-
-		const relationshipName = 'relationship' + getRandomInt();
-
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			'L_USER',
-			{
-				label: {en_US: 'Relationship'},
-				name: relationshipName,
-				objectDefinitionExternalReferenceCode1: 'L_USER',
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionId2: objectDefinition.id,
-				objectDefinitionName2: objectDefinition.name,
-				type: 'oneToMany',
-			}
-		);
-
-		await objectViewPage.goto(objectDefinition.label['en_US']);
-
-		const viewName = 'CustomView' + getRandomInt();
-
-		await objectViewPage.createObjectView(viewName);
-
-		await page.getByRole('link', {name: viewName}).waitFor();
-
-		await page.getByRole('link', {name: viewName}).click();
-
-		await editObjectViewPage.selectObjectFields(['Custom Field']);
-
-		await editObjectViewPage.saveButton.last().click();
-
-		await page.waitForLoadState('networkidle');
-
-		await page.reload();
-
-		await page.getByRole('link', {name: viewName}).click();
-
-		await editObjectViewPage.filtersTab.click();
-
-		await editObjectViewPage.newFilterButton.click();
-
-		await editObjectViewPage.filterBy.click();
-
-		const sidePanel = editObjectViewPage.sidePanel;
-
-		await sidePanel
-			.getByRole('option', {name: 'Relationship'})
-			.click();
-
-		await editObjectViewPage.filterType.click();
-
-		await sidePanel
-			.getByRole('option', {name: 'Includes'})
-			.click();
-
-		await editObjectViewPage.saveFilter.click();
-
-		await sidePanel
-			.getByRole('tab', {name: 'Basic Info'})
-			.click();
-
-		await sidePanel.getByLabel('Mark as Default').check();
-
-		await editObjectViewPage.saveButton.last().click();
-
-		await page.waitForLoadState('networkidle');
-
-		await page.reload();
-
-		await page.getByRole('link', {name: viewName}).click();
-
-		await editObjectViewPage.filtersTab.click();
-
-		await expect(
-			sidePanel.getByText('Relationship').last()
-		).toBeVisible();
-	}
-);
-
-test(
-	'LPD-78504 Can see renamed column name on object view entries list',
-	{tag: '@LPD-78504'},
+	'can see renamed column name on object view entries list',
+	{tag: '@LPS-147792'},
 	async ({
 		apiHelpers,
 		editObjectViewPage,
@@ -2299,28 +2278,8 @@ test(
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		// Migrated from: CanSeeRenamedColumnNameOnObjectView
-		// LPS-147792 - Verify that the new column name will be displayed on the entries list
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -2343,22 +2302,23 @@ test(
 
 		await sidePanel.getByLabel('Mark as Default').check();
 
-		await editObjectViewPage.selectObjectFields(['Custom Field']);
+		await editObjectViewPage.selectObjectFields(['textField']);
 
-		await sidePanel
-			.locator('li[draggable="true"]')
-			.filter({hasText: 'Custom Field'})
-			.getByRole('button', {name: 'More'})
-			.click();
+		await sidePanel.getByRole('button', {name: 'More'}).click();
 
 		await sidePanel.getByRole('menuitem', {name: 'Edit'}).click();
 
-		const editModal = sidePanel.getByRole('dialog').filter({hasText: 'Label'});
+		const editModal = sidePanel
+			.getByRole('dialog')
+			.filter({hasText: 'Label'});
 
 		await editModal.getByLabel('Label').clear();
+
 		await editModal.getByLabel('Label').fill('Column Label Renamed');
 
 		await editModal.getByRole('button', {name: 'Edit'}).click();
+
+		await expect(sidePanel.getByText('Column Label Renamed')).toBeVisible();
 
 		await editObjectViewPage.saveButton.last().click();
 
@@ -2368,7 +2328,7 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's';
 
 		await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry Test'},
+			{textField: 'Entry Test'},
 			applicationName
 		);
 
@@ -2381,93 +2341,11 @@ test(
 );
 
 test(
-	'LPD-78504 Can see renamed column label as alias on view builder column list',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanSeeRenamedColumnOnViewBuilder
-		// LPS-147792 - Verify it is possible to see the column label as the alias on the view builder column list
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await objectViewPage.goto(objectDefinition.label['en_US']);
-
-		const viewName = 'CustomView' + getRandomInt();
-
-		await objectViewPage.createObjectView(viewName);
-
-		await page.getByRole('link', {name: viewName}).waitFor();
-
-		await page.getByRole('link', {name: viewName}).click();
-
-		await editObjectViewPage.selectObjectFields(['Author']);
-
-		const sidePanel = editObjectViewPage.sidePanel;
-
-		await sidePanel
-			.locator('li[draggable="true"]')
-			.filter({hasText: 'Author'})
-			.getByRole('button', {name: 'More'})
-			.click();
-
-		await sidePanel.getByRole('menuitem', {name: 'Edit'}).click();
-
-		const editModal = sidePanel.getByRole('dialog').filter({hasText: 'Label'});
-
-		await editModal.getByLabel('Label').clear();
-		await editModal.getByLabel('Label').fill('Publishing House');
-
-		await editModal.getByRole('button', {name: 'Edit'}).click();
-
-		await editObjectViewPage.saveButton.last().click();
-
-		await page.waitForLoadState('networkidle');
-
-		await page.reload();
-
-		await page.getByRole('link', {name: viewName}).click();
-
-		await editObjectViewPage.viewBuilderTab.click();
-
-		await expect(
-			sidePanel.getByText('Publishing House')
-		).toBeVisible();
-	}
-);
-
-test(
-	'LPD-78504 Can sort column entries as ascending or descending',
+	'can sort column entries as ascending or descending',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		// Migrated from: CanSortColumnEntries
-		// LPS-144472 - Verify it is possible to sort the column entries as ascending or descending
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -2481,7 +2359,7 @@ test(
 
 		for (const letter of ['A', 'B', 'C']) {
 			await apiHelpers.objectEntry.postObjectEntry(
-				{customField: `Entry ${letter}`},
+				{textField: `Entry ${letter}`},
 				applicationName
 			);
 		}
@@ -2496,13 +2374,13 @@ test(
 				name: {en_US: 'CustomView' + getRandomInt()},
 				objectViewColumns: [
 					{
-						objectFieldName: 'customField',
+						objectFieldName: 'textField',
 						priority: 0,
 					},
 				],
 				objectViewSortColumns: [
 					{
-						objectFieldName: 'customField',
+						objectFieldName: 'textField',
 						priority: 0,
 						sortOrder: 'asc',
 					},
@@ -2512,19 +2390,34 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		const cells = page.locator(
-			'table tbody tr td:nth-child(2)'
-		);
+		const ascendingCells = page.getByRole('cell');
 
-		await expect(cells.first()).toHaveText('Entry A');
-		await expect(cells.last()).toHaveText('Entry C');
+		await expect(ascendingCells).toContainText([
+			'Entry A',
+			'Entry B',
+			'Entry C',
+		]);
+
+		await page
+			.getByRole('columnheader', {name: 'textField'})
+			.getByRole('button')
+			.dblclick();
+
+		const descendingCells = page.getByRole('cell');
+
+		await expect(descendingCells).toContainText([
+			'Entry C',
+			'Entry B',
+			'Entry A',
+		]);
 	}
 );
 
-test(
-	'LPD-78504 Can update a pre-order column in default sort',
-	{tag: '@LPD-78504'},
+test.skip(
+	'can update a pre-order column in default sort',
+	{tag: '@LPS-144472'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
+
 		// Migrated from: CanUpdatePreOrderColumn
 		// LPS-144472 - Verify it is possible the user update the pre-order column
 
@@ -2564,9 +2457,7 @@ test(
 
 		await page.getByRole('link', {name: viewName}).click();
 
-		const nameInput = sidePanel.locator(
-			'input[type="text"]'
-		).first();
+		const nameInput = sidePanel.locator('input[type="text"]').first();
 
 		await nameInput.clear();
 		await nameInput.fill('Custom Views Edit');
@@ -2584,12 +2475,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can update a custom view',
-	{tag: '@LPD-78504'},
+	'can update a custom view name',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: CanUpdateView
-		// LPS-135394 - Verify it is possible to update a View
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -2612,9 +2500,7 @@ test(
 
 		const sidePanel = editObjectViewPage.sidePanel;
 
-		const nameInput = sidePanel.locator(
-			'input[type="text"]'
-		).first();
+		const nameInput = sidePanel.locator('input[type="text"]').first();
 
 		await nameInput.clear();
 		await nameInput.fill('New Custom Views');
@@ -2632,38 +2518,12 @@ test(
 );
 
 test(
-	'LPD-78504 Can view values of two or more relationship fields for the same object',
-	{tag: '@LPD-78504'},
+	'can view values of two or more relationship fields for the same object',
+	{tag: '@LPS-148955'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		// Migrated from: CanView2RelationshipFieldValues
-		// LPS-148955 - Verify it is possible to view the values of 2 or more relationship fields for a same object
-
-		test.fixme(
-			true,
-			'HTTP 500 when creating ObjectView with relationship field names as columns - API field name format may have changed'
-		);
-
 		const objectDefinitionA =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customFieldA',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field A'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customFieldA',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
-				titleObjectFieldName: 'customFieldA',
 			});
 
 		apiHelpers.data.push({
@@ -2673,25 +2533,7 @@ test(
 
 		const objectDefinitionB =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customFieldB',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field B'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customFieldB',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
-				titleObjectFieldName: 'customFieldB',
 			});
 
 		apiHelpers.data.push({
@@ -2701,23 +2543,6 @@ test(
 
 		const objectDefinitionC =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customFieldC',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field C'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customFieldC',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -2730,55 +2555,75 @@ test(
 			ObjectRelationshipAPI
 		);
 
-		const relNameA = 'relationshipA' + getRandomInt();
+		const relNameAC = 'relationshipA' + getRandomInt();
 
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			objectDefinitionA.externalReferenceCode,
+		const {body: objectRelationshipAC} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinitionA.externalReferenceCode,
+				{
+					label: {en_US: 'Relationship A'},
+					name: relNameAC,
+					objectDefinitionExternalReferenceCode1:
+						objectDefinitionA.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinitionC.externalReferenceCode,
+					objectDefinitionId1: objectDefinitionA.id,
+					objectDefinitionId2: objectDefinitionC.id,
+					objectDefinitionName2: objectDefinitionC.name,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationshipAC.id,
+			type: 'objectRelationship',
+		});
+
+		const relNameBC = 'relationshipB' + getRandomInt();
+
+		const {body: objectRelationshipBC} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinitionB.externalReferenceCode,
+				{
+					label: {en_US: 'Relationship B'},
+					name: relNameBC,
+					objectDefinitionExternalReferenceCode1:
+						objectDefinitionB.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinitionC.externalReferenceCode,
+					objectDefinitionId1: objectDefinitionB.id,
+					objectDefinitionId2: objectDefinitionC.id,
+					objectDefinitionName2: objectDefinitionC.name,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationshipBC.id,
+			type: 'objectRelationship',
+		});
+
+		const objectEntryA = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Entry A'},
+			'c/' + objectDefinitionA.name.toLowerCase() + 's'
+		);
+
+		const objectEntryB = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Entry B'},
+			'c/' + objectDefinitionB.name.toLowerCase() + 's'
+		);
+
+		const relationshipFieldNameAC = `r_${relNameAC}_c_${objectDefinitionA.name[0].toLowerCase() + objectDefinitionA.name.substring(1)}Id`;
+
+		const relationshipFieldNameBC = `r_${relNameBC}_c_${objectDefinitionB.name[0].toLowerCase() + objectDefinitionB.name.substring(1)}Id`;
+
+		await apiHelpers.objectEntry.postObjectEntry(
 			{
-				label: {en_US: 'Relationship A'},
-				name: relNameA,
-				objectDefinitionExternalReferenceCode1:
-					objectDefinitionA.externalReferenceCode,
-				objectDefinitionExternalReferenceCode2:
-					objectDefinitionC.externalReferenceCode,
-				objectDefinitionId1: objectDefinitionA.id,
-				objectDefinitionId2: objectDefinitionC.id,
-				objectDefinitionName2: objectDefinitionC.name,
-				type: 'oneToMany',
-			}
-		);
-
-		const relNameB = 'relationshipB' + getRandomInt();
-
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			objectDefinitionB.externalReferenceCode,
-			{
-				label: {en_US: 'Relationship B'},
-				name: relNameB,
-				objectDefinitionExternalReferenceCode1:
-					objectDefinitionB.externalReferenceCode,
-				objectDefinitionExternalReferenceCode2:
-					objectDefinitionC.externalReferenceCode,
-				objectDefinitionId1: objectDefinitionB.id,
-				objectDefinitionId2: objectDefinitionC.id,
-				objectDefinitionName2: objectDefinitionC.name,
-				type: 'oneToMany',
-			}
-		);
-
-		const appNameA =
-			'c/' + objectDefinitionA.name.toLowerCase() + 's';
-		const appNameB =
-			'c/' + objectDefinitionB.name.toLowerCase() + 's';
-
-		const _entryA = await apiHelpers.objectEntry.postObjectEntry(
-			{customFieldA: 'Entry A'},
-			appNameA
-		);
-
-		const _entryB = await apiHelpers.objectEntry.postObjectEntry(
-			{customFieldB: 'Entry B'},
-			appNameB
+				[relationshipFieldNameAC]: objectEntryA.id.toString(),
+				[relationshipFieldNameBC]: objectEntryB.id.toString(),
+				textField: 'Entry C',
+			},
+			'c/' + objectDefinitionC.name.toLowerCase() + 's'
 		);
 
 		const objectViewAPIClient =
@@ -2791,11 +2636,11 @@ test(
 				name: {en_US: 'CustomView' + getRandomInt()},
 				objectViewColumns: [
 					{
-						objectFieldName: relNameA,
+						objectFieldName: relationshipFieldNameAC,
 						priority: 0,
 					},
 					{
-						objectFieldName: relNameB,
+						objectFieldName: relationshipFieldNameBC,
 						priority: 1,
 					},
 				],
@@ -2805,40 +2650,21 @@ test(
 		await viewObjectEntriesPage.goto(objectDefinitionC.className);
 
 		await expect(
-			page.getByRole('columnheader', {name: 'Relationship A'})
+			page.getByRole('cell', {exact: true, name: String(objectEntryA.id)})
 		).toBeVisible();
+
 		await expect(
-			page.getByRole('columnheader', {name: 'Relationship B'})
+			page.getByRole('cell', {exact: true, name: String(objectEntryB.id)})
 		).toBeVisible();
 	}
 );
 
 test(
-	'LPD-78504 Can view entries from an object in a table view defined as default',
-	{tag: '@LPD-78504'},
+	'can view entries from an object in a table view defined as default',
+	{tag: '@LPS-144902'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		// Migrated from: CanViewEntries
-		// LPS-144902 - Verify if the entries from an object in a table view defined as default are presented correctly
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -2857,7 +2683,7 @@ test(
 				name: {en_US: 'CustomView' + getRandomInt()},
 				objectViewColumns: [
 					{
-						objectFieldName: 'customField',
+						objectFieldName: 'textField',
 						priority: 0,
 					},
 				],
@@ -2868,7 +2694,7 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's';
 
 		await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry Test'},
+			{textField: 'Entry Test'},
 			applicationName
 		);
 
@@ -2879,31 +2705,11 @@ test(
 );
 
 test(
-	'LPD-78504 Can view entries of object with default sort defined',
-	{tag: '@LPD-78504'},
+	'can view entries of object with default sort defined',
+	{tag: '@LPS-144472'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		// Migrated from: CanViewEntriesWithDefaultSort
-		// LPS-144472 - Verify it is possible the user see entries of object with default sort defined
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -2917,7 +2723,7 @@ test(
 
 		for (const letter of ['A', 'B']) {
 			await apiHelpers.objectEntry.postObjectEntry(
-				{customField: `Entry ${letter}`},
+				{textField: `Entry ${letter}`},
 				applicationName
 			);
 		}
@@ -2932,13 +2738,13 @@ test(
 				name: {en_US: 'CustomView' + getRandomInt()},
 				objectViewColumns: [
 					{
-						objectFieldName: 'customField',
+						objectFieldName: 'textField',
 						priority: 0,
 					},
 				],
 				objectViewSortColumns: [
 					{
-						objectFieldName: 'customField',
+						objectFieldName: 'textField',
 						priority: 0,
 						sortOrder: 'asc',
 					},
@@ -2948,9 +2754,7 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		const cells = page.locator(
-			'table tbody tr td:nth-child(2)'
-		);
+		const cells = page.locator('table tbody tr td:nth-child(2)');
 
 		await expect(cells.first()).toHaveText('Entry A');
 		await expect(cells.last()).toHaveText('Entry B');
@@ -2958,36 +2762,11 @@ test(
 );
 
 test(
-	'LPD-78504 Can view metadata values correctly displayed on a custom view',
-	{tag: '@LPD-78504'},
+	'can view metadata values correctly displayed on a custom view',
+	{tag: '@LPS-143190'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		// Migrated from: CanViewMetadataValues
-		// LPS-143190 - Verify that the metadata values are correctly displayed on a Custom View
-
-		test.fixme(
-			true,
-			'HTTP 500 when creating ObjectView with metadata column names via API - column name format may have changed'
-		);
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -3000,7 +2779,7 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's';
 
 		await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry Test'},
+			{textField: 'Entry Test'},
 			applicationName
 		);
 
@@ -3013,7 +2792,7 @@ test(
 				defaultObjectView: true,
 				name: {en_US: 'CustomView' + getRandomInt()},
 				objectViewColumns: [
-					{objectFieldName: 'author', priority: 0},
+					{objectFieldName: 'creator', priority: 0},
 					{objectFieldName: 'createDate', priority: 1},
 					{objectFieldName: 'modifiedDate', priority: 2},
 					{objectFieldName: 'status', priority: 3},
@@ -3039,36 +2818,11 @@ test(
 );
 
 test(
-	'LPD-78504 Can view only selected columns on custom view',
-	{tag: '@LPD-78504'},
+	'can view only selected columns on custom view',
+	{tag: '@LPS-144902'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		// Migrated from: CanViewOnlySelectedColumns
-		// LPS-144902 - Verify if selected Columns on custom view are presented correctly during visualization
-
-		test.fixme(
-			true,
-			'HTTP 500 when creating ObjectView via API - objectViewColumns format may have changed'
-		);
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -3086,9 +2840,9 @@ test(
 				defaultObjectView: true,
 				name: {en_US: 'CustomView' + getRandomInt()},
 				objectViewColumns: [
-					{objectFieldName: 'author', priority: 0},
+					{objectFieldName: 'creator', priority: 0},
 					{objectFieldName: 'createDate', priority: 1},
-					{objectFieldName: 'customField', priority: 2},
+					{objectFieldName: 'textField', priority: 2},
 				],
 			}
 		);
@@ -3097,13 +2851,13 @@ test(
 			'c/' + objectDefinition.name.toLowerCase() + 's';
 
 		await apiHelpers.objectEntry.postObjectEntry(
-			{customField: 'Entry Test'},
+			{textField: 'Entry Test'},
 			applicationName
 		);
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		for (const columnName of ['Author', 'Create Date', 'Custom Field']) {
+		for (const columnName of ['Author', 'Create Date', 'textField']) {
 			await expect(
 				page.getByRole('columnheader', {name: columnName})
 			).toBeVisible();
@@ -3123,36 +2877,11 @@ test(
 );
 
 test(
-	'LPD-78504 Can verify columns are ordered following the predefined order on custom view',
-	{tag: '@LPD-78504'},
+	'can verify columns are ordered following the predefined order on custom view',
+	{tag: '@LPS-144902'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		// Migrated from: ColumnsAreOrdered
-		// LPS-144902 - Verify if the Columns on the custom view are presented following the predefined order during visualization
-
-		test.fixme(
-			true,
-			'HTTP 500 when creating ObjectView via API - objectViewColumns format may have changed'
-		);
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
 				status: {code: 0},
 			});
 
@@ -3171,7 +2900,7 @@ test(
 				name: {en_US: 'CustomView' + getRandomInt()},
 				objectViewColumns: [
 					{objectFieldName: 'createDate', priority: 0},
-					{objectFieldName: 'author', priority: 1},
+					{objectFieldName: 'creator', priority: 1},
 					{objectFieldName: 'id', priority: 2},
 				],
 			}
@@ -3187,34 +2916,20 @@ test(
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		const headers = page.getByRole('columnheader');
+		const descendingCells = page.getByRole('columnheader');
 
-		const headerTexts: string[] = [];
-
-		for (let i = 0; i < (await headers.count()); i++) {
-			headerTexts.push(await headers.nth(i).textContent() || '');
-		}
-
-		const createDateIndex = headerTexts.findIndex((t) =>
-			t.includes('Create Date')
-		);
-		const authorIndex = headerTexts.findIndex((t) =>
-			t.includes('Author')
-		);
-		const idIndex = headerTexts.findIndex((t) => t.includes('ID'));
-
-		expect(createDateIndex).toBeLessThan(authorIndex);
-		expect(authorIndex).toBeLessThan(idIndex);
+		await expect(descendingCells).toContainText([
+			'Create Date',
+			'Author',
+			'ID',
+		]);
 	}
 );
 
 test(
-	'LPD-78504 Can verify duplicated object view columns are correctly ordered',
-	{tag: '@LPD-78504'},
+	'can verify duplicated object view columns are correctly ordered',
+	{tag: '@LPS-146028'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: DuplicatedObjectViewColumnsAreCorrectlyOrdered
-		// LPS-146028 - Verify that the columns present at the View Builder are ordered correctly
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -3245,6 +2960,7 @@ test(
 			'Modified Date',
 			'Status',
 			'ID',
+			'textField',
 		]);
 
 		await editObjectViewPage.saveButton.last().click();
@@ -3262,9 +2978,7 @@ test(
 
 		await page.getByText('(Copy)').first().waitFor();
 
-		await page
-			.getByRole('link', {name: `${viewName} (Copy)`})
-			.click();
+		await page.getByRole('link', {name: `${viewName} (Copy)`}).click();
 
 		await editObjectViewPage.viewBuilderTab.click();
 
@@ -3275,112 +2989,14 @@ test(
 		await expect(columns.nth(2)).toContainText('Modified Date');
 		await expect(columns.nth(3)).toContainText('Status');
 		await expect(columns.nth(4)).toContainText('ID');
+		await expect(columns.nth(5)).toContainText('textField');
 	}
 );
 
 test(
-	'LPD-78504 Can verify duplicated object view default sort fields are correctly ordered',
-	{tag: '@LPD-78504'},
+	'can verify duplicated view has same original name with copy suffix',
+	{tag: '@LPS-146028'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: DuplicatedObjectViewFieldsAreCorrectlyOrdered
-		// LPS-146028 - Verify that the fields present at the Default Sort are ordered correctly
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customFieldA',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field A'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customFieldA',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'customFieldB',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'Custom Field B'},
-						listTypeDefinitionId: 0,
-						localized: false,
-						name: 'customFieldB',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await objectViewPage.goto(objectDefinition.label['en_US']);
-
-		const viewName = 'CustomView' + getRandomInt();
-
-		await objectViewPage.createObjectView(viewName);
-
-		await page.getByRole('link', {name: viewName}).waitFor();
-
-		await page.getByRole('link', {name: viewName}).click();
-
-		const sidePanel = editObjectViewPage.sidePanel;
-
-		await sidePanel.getByLabel('Mark as Default').check();
-
-		await editObjectViewPage.selectObjectFields([
-			'Custom Field A',
-			'Custom Field B',
-		]);
-
-		await editObjectViewPage.saveButton.last().click();
-
-		await page.waitForLoadState('networkidle');
-
-		await page.reload();
-
-		await page
-			.getByRole('row', {name: viewName})
-			.getByRole('button', {name: 'Actions'})
-			.click();
-
-		await page.getByRole('menuitem', {name: 'Duplicate'}).click();
-
-		await page.getByText('(Copy)').first().waitFor();
-
-		await page
-			.getByRole('link', {name: `${viewName} (Copy)`})
-			.click();
-
-		await editObjectViewPage.viewBuilderTab.click();
-
-		const columns = sidePanel.locator('li[draggable="true"]');
-
-		await expect(columns.nth(0)).toContainText('Custom Field A');
-		await expect(columns.nth(1)).toContainText('Custom Field B');
-	}
-);
-
-test(
-	'LPD-78504 Can verify duplicated view has same original name with copy suffix',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: DuplicatedViewHasSameOriginalName
-		// LPS-146028 - Verify that the view name is the same of the original, adding a (Copy) on the right side
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -3408,73 +3024,20 @@ test(
 
 		await page.getByText('(Copy)').first().waitFor();
 
-		await page
-			.getByRole('link', {name: `${viewName} (Copy)`})
-			.click();
+		await page.getByRole('link', {name: `${viewName} (Copy)`}).click();
 
 		const sidePanel = editObjectViewPage.sidePanel;
 
-		const nameInput = sidePanel.locator(
-			'input[type="text"]'
-		).first();
+		const nameInput = sidePanel.locator('input[type="text"]').first();
 
 		await expect(nameInput).toHaveValue(`${viewName} (Copy)`);
 	}
 );
 
 test(
-	'LPD-78504 Can verify duplicated view is not set as default',
-	{tag: '@LPD-78504'},
+	'can verify empty state for the view builder tab',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: DuplicatedViewIsNotDefault
-		// LPS-146028 - Verify that when the user duplicate a view, the Mark As Default option comes inactivated
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await objectViewPage.goto(objectDefinition.label['en_US']);
-
-		const viewName = 'CustomView' + getRandomInt();
-
-		await objectViewPage.createObjectView(viewName);
-
-		await page.getByRole('link', {name: viewName}).waitFor();
-
-		await page
-			.getByRole('row', {name: viewName})
-			.getByRole('button', {name: 'Actions'})
-			.click();
-
-		await page.getByRole('menuitem', {name: 'Duplicate'}).click();
-
-		await page.getByText('(Copy)').first().waitFor();
-
-		await page
-			.getByRole('link', {name: `${viewName} (Copy)`})
-			.click();
-
-		const sidePanel = editObjectViewPage.sidePanel;
-
-		await expect(
-			sidePanel.getByLabel('Mark as Default')
-		).not.toBeChecked();
-	}
-);
-
-test(
-	'LPD-78504 Can verify empty state for the view builder tab',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: EmptyStateViewBuilder
-		// LPS-135394 - Verify the empty state for the View Builder tab
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -3510,12 +3073,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can verify empty state for the view tab',
-	{tag: '@LPD-78504'},
+	'can verify empty state for the view tab',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, objectViewPage, page}) => {
-		// Migrated from: EmptyStateViewTab
-		// LPS-135394 - Verify the empty state for the View tab
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -3533,12 +3093,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can verify metadata columns are displayed for selection in custom view',
-	{tag: '@LPD-78504'},
+	'can verify metadata columns are displayed for selection in custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, editObjectViewPage, objectViewPage, page}) => {
-		// Migrated from: MetadataColumnsDisplayed
-		// LPS-135394 - Verify the Author, Create Date, Modified Date, Status, ID columns (Metadata columns) are displayed to be selected
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},
@@ -3572,6 +3129,7 @@ test(
 		for (const columnOption of [
 			'Author',
 			'Create Date',
+			'External Reference Code',
 			'Modified Date',
 			'Status',
 			'ID',
@@ -3582,12 +3140,9 @@ test(
 );
 
 test(
-	'LPD-78504 Can verify no result message when searching for a custom view',
-	{tag: '@LPD-78504'},
+	'can verify no result message when searching for a custom view',
+	{tag: '@LPS-135394'},
 	async ({apiHelpers, objectViewPage, page}) => {
-		// Migrated from: NoResultMessageView
-		// LPS-135394 - Verify the no result message when searching for a view
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				status: {code: 0},

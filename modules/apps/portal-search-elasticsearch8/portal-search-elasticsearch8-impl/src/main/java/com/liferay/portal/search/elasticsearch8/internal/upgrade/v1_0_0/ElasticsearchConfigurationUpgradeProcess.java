@@ -60,6 +60,10 @@ public class ElasticsearchConfigurationUpgradeProcess extends UpgradeProcess {
 			properties.remove("operationMode"));
 
 		if (StringUtil.equals(operationMode, "REMOTE")) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("The operationMode property is no longer supported");
+			}
+
 			properties.put("productionModeEnabled", Boolean.TRUE);
 		}
 
@@ -91,8 +95,8 @@ public class ElasticsearchConfigurationUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
+		if (_log.isWarnEnabled()) {
+			_log.warn(
 				"Elasticsearch 7 configuration detected. Attempting to " +
 					"migrate properties to Elasticsearch 8. Manual updates " +
 						"to the configuration may be required.");

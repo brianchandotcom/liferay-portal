@@ -6,8 +6,13 @@
 package com.liferay.portal.kernel.feature.flag;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Dictionary;
 import java.util.function.Function;
@@ -38,11 +43,41 @@ public class FeatureFlagManagerUtil {
 	}
 
 	public static String getJSON(long companyId) {
-		return _featureFlagManager.getJSON(companyId);
+		if (_featureFlagManager != null) {
+			return _featureFlagManager.getJSON(companyId);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"No feature flag manager service found. Returning the " +
+					"default value.");
+		}
+
+		String json = _json;
+
+		if (json == null) {
+			json = String.valueOf(
+				JSONFactoryUtil.createJSONObject(
+					PropsUtil.getProperties("feature.flag.", true)));
+
+			_json = json;
+		}
+
+		return json;
 	}
 
 	public static boolean isEnabled(long companyId, String key) {
-		return _featureFlagManager.isEnabled(companyId, key);
+		if (_featureFlagManager != null) {
+			return _featureFlagManager.isEnabled(companyId, key);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"No feature flag manager service found. Returning the " +
+					"default value.");
+		}
+
+		return GetterUtil.getBoolean(PropsUtil.get("feature.flag." + key));
 	}
 
 	/**
@@ -68,7 +103,11 @@ public class FeatureFlagManagerUtil {
 		_featureFlagManager = featureFlagManager;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FeatureFlagManagerUtil.class);
+
 	private static FeatureFlagManager _featureFlagManager;
+	private static volatile String _json;
 
 	private static class FeatureFlaggedServiceRegistration<T>
 		implements ServiceRegistration<T> {

@@ -46,13 +46,13 @@ public class ViewAllSectionFDSItemsActions implements FDSItemsActions {
 				httpServletRequest);
 
 		fdsActionDropdownItems.add(
-			1,
+			6,
 			new FDSActionDropdownItem(
 				"{embedded.file.link.href}", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), "get", null,
 				"link"));
 		fdsActionDropdownItems.add(
-			2,
+			8,
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "info-circle-open", "show-details",
 				LanguageUtil.get(httpServletRequest, "show-details"), null,

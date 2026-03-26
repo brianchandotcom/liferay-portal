@@ -73,13 +73,7 @@ public class TestScriptGenerator {
 
 		sb.append("#!/bin/bash\n\n");
 		sb.append("function main {\n");
-		sb.append("\tlocal base_dir=$(git rev-parse --show-toplevel)\n\n");
-		sb.append("\tif [ -z \"${base_dir}\" ]\n");
-		sb.append("\tthen\n");
-		sb.append("\t\techo \"Unable to find base directory.\"\n\n");
-		sb.append("\t\texit 1\n");
-		sb.append("\tfi\n\n");
-		sb.append("\tcd \"${base_dir}\" || exit 1\n\n");
+		sb.append("\tcd \"$(git rev-parse --show-toplevel)\" || exit 1\n\n");
 		sb.append("\techo \"\"\n");
 		sb.append("\techo \"This script was generated on branch ");
 		sb.append(_gitWorkingDirectory.getCurrentBranchName());

@@ -126,6 +126,38 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 		}
 		%>
 
+		<c:if test="<%= cookiesBannerConfigurationDisplayContext.isStoreConsent() %>">
+			<clay:content-row
+				noGutters="true"
+				verticalAlign="center"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h2>
+						<liferay-ui:message key="cookie-store-consent" />
+					</h2>
+				</clay:content-col>
+
+				<clay:content-col>
+					<label class="toggle-switch">
+						<span class="toggle-switch-check-bar">
+							<input class="toggle-switch-check" id="<portlet:namespace />storeConsent" name="<portlet:namespace />storeConsent" type="checkbox" />
+
+							<span aria-hidden="true" class="toggle-switch-bar">
+								<span class="toggle-switch-handle"></span>
+							</span>
+						</span>
+					</label>
+				</clay:content-col>
+			</clay:content-row>
+
+			<clay:content-row
+				cssClass="mb-3"
+			>
+				<p><liferay-ui:message key="cookie-store-consent-help" /></p>
+			</clay:content-row>
+		</c:if>
 	</clay:col>
 </clay:row>
 

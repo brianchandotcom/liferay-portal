@@ -10,9 +10,11 @@ import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelec
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
@@ -72,6 +74,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -86,6 +89,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -240,6 +244,21 @@ public class ContentPageEditorDisplayContext {
 				"actionableInfoItemSelectorURL",
 				_getActionableInfoItemSelectorURL()
 			).put(
+				"addFragmentCollectionURL",
+				() -> {
+					LiferayPortletURL addFragmentCollectionURL =
+						PortletURLFactoryUtil.create(
+							httpServletRequest, FragmentPortletKeys.FRAGMENT,
+							PortletRequest.RESOURCE_PHASE);
+
+					addFragmentCollectionURL.setCopyCurrentRenderParameters(
+						false);
+					addFragmentCollectionURL.setResourceID(
+						"/fragment/add_fragment_collection");
+
+					return addFragmentCollectionURL.toString();
+				}
+			).put(
 				"addFragmentCompositionURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/add_fragment_composition")
@@ -359,6 +378,28 @@ public class ContentPageEditorDisplayContext {
 				MappingTypesUtil.getMappingTypesJSONArray(
 					infoItemServiceRegistry, EditPageInfoItemCapability.KEY,
 					themeDisplay)
+			).put(
+				"fragmentCollections",
+				() -> {
+					JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+					for (FragmentCollection fragmentCollection :
+							FragmentCollectionLocalServiceUtil.
+								getFragmentCollections(
+									themeDisplay.getScopeGroupId(),
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+						jsonArray.put(
+							JSONUtil.put(
+								"fragmentCollectionId",
+								fragmentCollection.getFragmentCollectionId()
+							).put(
+								"name", fragmentCollection.getName()
+							));
+					}
+
+					return jsonArray;
+				}
 			).put(
 				"fragmentCompositionDescriptionMaxLength",
 				() -> ModelHintsUtil.getMaxLength(

@@ -8,6 +8,8 @@ import {FieldBase} from 'frontend-js-components-web';
 import {dateUtils} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import type {FirstDayOfWeekLocale} from 'frontend-js-web';
+
 export type FieldDatePickerProps = {
 	disabled?: boolean;
 	errorMessage?: string;
@@ -26,7 +28,9 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 	const {
 		disabled,
 		errorMessage: externalErrorMessage,
-		firstDayOfWeek = dateUtils.getFirstDayOfWeek(locale),
+		firstDayOfWeek = dateUtils.getFirstDayOfWeek(
+			locale as FirstDayOfWeekLocale
+		),
 		formGroupProps,
 		helpMessage,
 		id,

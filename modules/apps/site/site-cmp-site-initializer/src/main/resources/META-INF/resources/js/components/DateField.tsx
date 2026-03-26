@@ -8,6 +8,8 @@ import {datetimeUtils} from '@liferay/object-js-components-web';
 import {dateUtils} from 'frontend-js-web';
 import React, {useCallback, useState} from 'react';
 
+import type {FirstDayOfWeekLocale} from 'frontend-js-web';
+
 interface IDateField {
 	id: string;
 	onChange: (value: string) => Promise<void>;
@@ -45,7 +47,9 @@ export default function DateField({id, onChange}: IDateField) {
 		<ClayDatePicker
 			aria-describedby={error}
 			dateFormat={dateConfig.clayFormat}
-			firstDayOfWeek={dateUtils.getFirstDayOfWeek(locale)}
+			firstDayOfWeek={dateUtils.getFirstDayOfWeek(
+				locale as FirstDayOfWeekLocale
+			)}
 			id={id}
 			months={dateUtils.getMonthsLong(locale)}
 			onBlur={({target: {value}}) => handleError(value)}

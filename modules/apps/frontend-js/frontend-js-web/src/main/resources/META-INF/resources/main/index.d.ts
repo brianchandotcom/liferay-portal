@@ -874,6 +874,7 @@ export {loadModule} from './utils/client_extensions/loadModule';
 /**
  * Utils
  */
+export type {FirstDayOfWeekLocale} from './utils/date_time';
 export {default as dateUtils} from './utils/date_time';
 export {default as mimeTypeUtils} from './utils/mime_type';
 export {getObjectValueFromPath} from './utils/object/getObjectValueFromPath';

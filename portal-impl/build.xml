@@ -183,16 +183,16 @@
 			classname="com.liferay.portal.tools.service.builder.ServiceBuilder"
 			classpathref="service.builder.classpath"
 			failonerror="true"
-			fork="true"
+			fork="${fork.mode}"
 			logError="true"
-			newenvironment="true"
+			newenvironment="${fork.mode}"
 		>
 			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
-			<jvmarg value="-Dfile.encoding=UTF-8" />
-			<jvmarg value="-XX:MaxMetaspaceSize=512m" />
-			<jvmarg value="-Xms512m" />
-			<jvmarg value="-Xmx1024m" />
-			<jvmarg value="-Xss2048k" />
+			<jvmarg if:true="${jvm.debug}" value="-Dfile.encoding=UTF-8" />
+			<jvmarg if:true="${jvm.debug}" value="-XX:MaxMetaspaceSize=512m" />
+			<jvmarg if:true="${jvm.debug}" value="-Xms512m" />
+			<jvmarg if:true="${jvm.debug}" value="-Xmx1024m" />
+			<jvmarg if:true="${jvm.debug}" value="-Xss2048k" />
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
 			<arg value="service.api.dir=${basedir}/../portal-kernel/src" />
@@ -308,17 +308,17 @@
 			classname="com.liferay.portal.tools.service.builder.ServiceBuilder"
 			classpathref="service.builder.classpath"
 			failonerror="true"
-			fork="true"
+			fork="${fork.mode}"
 			logError="true"
-			newenvironment="true"
+			newenvironment="${fork.mode}"
 			outputproperty="service.builder.batch.output"
 		>
 			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
-			<jvmarg value="-Dfile.encoding=UTF-8" />
-			<jvmarg value="-XX:MaxMetaspaceSize=768m" />
-			<jvmarg value="-Xms512m" />
-			<jvmarg value="-Xmx2048m" />
-			<jvmarg value="-Xss2048k" />
+			<jvmarg if:true="${jvm.debug}" value="-Dfile.encoding=UTF-8" />
+			<jvmarg if:true="${jvm.debug}" value="-XX:MaxMetaspaceSize=768m" />
+			<jvmarg if:true="${jvm.debug}" value="-Xms512m" />
+			<jvmarg if:true="${jvm.debug}" value="-Xmx2048m" />
+			<jvmarg if:true="${jvm.debug}" value="-Xss2048k" />
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
 			<arg value="service.incubation.features=${service.builder.incubation.features}" />

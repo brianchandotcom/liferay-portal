@@ -647,27 +647,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			pageTemplateSet.getExternalReferenceCode(), pageTemplate);
 	}
 
-	private static com.liferay.headless.admin.site.dto.v1_0.PageTemplate
-		_toPageTemplate(PageTemplate pageTemplate) {
-
-		if (pageTemplate == null) {
-			return null;
-		}
-
-		return com.liferay.headless.admin.site.dto.v1_0.PageTemplate.toDTO(
-			pageTemplate.toString());
-	}
-
-	private static PageTemplate _toPageTemplate(
-		com.liferay.headless.admin.site.dto.v1_0.PageTemplate pageTemplate) {
-
-		if (pageTemplate == null) {
-			return null;
-		}
-
-		return PageTemplate.toDTO(pageTemplate.toString());
-	}
-
 	private FileEntry _addPortletFileEntry(long folderId) throws Exception {
 		Class<?> clazz = getClass();
 

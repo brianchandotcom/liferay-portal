@@ -4,7 +4,7 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
-import {CopyFragmentModal} from '@liferay/layout-js-components-web';
+import {FragmentSetModal} from '@liferay/layout-js-components-web';
 
 const ACTIONS = {
 	copyContributedEntryToFragmentCollection(
@@ -13,7 +13,7 @@ const ACTIONS = {
 		fragmentCollections
 	) {
 		render(
-			CopyFragmentModal,
+			FragmentSetModal,
 			{
 				addFragmentCollectionURL: itemData.addFragmentCollectionURL,
 				contributedEntryKeys: [itemData.contributedEntryKey],

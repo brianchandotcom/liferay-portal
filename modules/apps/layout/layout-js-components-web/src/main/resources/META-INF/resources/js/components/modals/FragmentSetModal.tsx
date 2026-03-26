@@ -21,7 +21,7 @@ type Errors = {
 	name?: string | null;
 };
 
-export default function CopyFragmentModal({
+export default function FragmentSetModal({
 	addFragmentCollectionURL,
 	contributedEntryKeys,
 	copyFragmentEntriesURL,

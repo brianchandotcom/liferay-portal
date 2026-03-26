@@ -607,7 +607,9 @@ public class ViewChangesDisplayContext {
 		).put(
 			"layoutContentChangesURL",
 			() -> {
-				if (!Objects.equals(
+				if (!FeatureFlagManagerUtil.isEnabled(
+						_themeDisplay.getCompanyId(), "LPD-75671") ||
+					!Objects.equals(
 						_portal.getClassNameId(Layout.class),
 						_modelClassNameId)) {
 

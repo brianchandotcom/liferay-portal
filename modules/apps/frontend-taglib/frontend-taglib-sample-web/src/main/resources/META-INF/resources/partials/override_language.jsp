@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <span>
-	<liferay-ui:message key="non-existent-foo" /><br />
-	<liferay-ui:message key="non-existent-bar" /><br />
 	<liferay-ui:message key="success" /><br />
+	<liferay-ui:message key="taglib-provided-bar" /><br />
+	<liferay-ui:message key="taglib-provided-foo" /><br />
 </span>

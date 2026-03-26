@@ -28,11 +28,11 @@ test(
 				name: 'Search for:',
 			});
 
-			await searchBar.fill('non-existent-bar');
+			await searchBar.fill('taglib-provided-bar');
 
 			await page.keyboard.press('Enter');
 
-			await languageOverridePage.editLanguageKey('non-existent-bar');
+			await languageOverridePage.editLanguageKey('taglib-provided-bar');
 
 			await languageOverridePage.updateTranslation(
 				'en-US',
@@ -47,11 +47,11 @@ test(
 
 			await page.getByText('Override Language').click();
 
-			await expect(page.getByText('foo')).toBeVisible();
+			await expect(page.getByText('Success')).toBeVisible();
 
 			await expect(page.getByText('bar override')).toBeVisible();
 
-			await expect(page.getByText('Success')).toBeVisible();
+			await expect(page.getByText('foo')).toBeVisible();
 		});
 	}
 );

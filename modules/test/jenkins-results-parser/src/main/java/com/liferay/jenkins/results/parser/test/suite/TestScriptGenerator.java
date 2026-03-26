@@ -201,12 +201,11 @@ public class TestScriptGenerator {
 		sb.append("\t\tfi\n\n");
 		sb.append("\t\tlocal command_start_time=${SECONDS}\n\n");
 		sb.append("\t\t_execute_command \"${command}\"\n\n");
-		sb.append("\t\tlocal command_exit_code=${?}\n\n");
+		sb.append("\t\texit_code=${?}\n\n");
 		sb.append("\t\tlocal command_duration=$(_format_duration ");
 		sb.append("$((${SECONDS} - ${command_start_time})))\n\n");
-		sb.append("\t\tif [ \"${command_exit_code}\" -ne 0 ]\n");
+		sb.append("\t\tif [ \"${exit_code}\" -ne 0 ]\n");
 		sb.append("\t\tthen\n");
-		sb.append("\t\t\texit_code=${command_exit_code}\n");
 		sb.append("\t\t\tfailed_command=\"${command}\"\n");
 		sb.append("\t\t\tresults_output+=\"[FAILED in ${command_duration}] ");
 		sb.append("${command}\\n\"\n");

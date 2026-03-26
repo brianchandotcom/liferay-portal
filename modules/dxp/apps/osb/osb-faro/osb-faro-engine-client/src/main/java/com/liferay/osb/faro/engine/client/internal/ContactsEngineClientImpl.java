@@ -975,13 +975,14 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<AssetSummary> getAssetSummaries(
-		FaroProject faroProject, long channelId, String keywords, int rangeKey,
-		int cur, int delta, String sort) {
+		FaroProject faroProject, long channelId, String filter, String keywords,
+		int rangeKey, int cur, int delta, String sort) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, null);
 
 		uriVariables.put("channelId", channelId);
+		uriVariables.put("filter", filter);
 		uriVariables.put("keywords", keywords);
 		uriVariables.put("rangeKey", rangeKey);
 		uriVariables.put(

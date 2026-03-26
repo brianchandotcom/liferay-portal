@@ -10,6 +10,7 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.exportimport.test.util.LazyReferencingTestUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplateSettings;
@@ -45,7 +46,6 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -1057,7 +1057,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					testGroup.getGroupId()));
 
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
 
 			PageTemplate pageTemplate = unsafeFunction.apply(pageTemplateSet);
 

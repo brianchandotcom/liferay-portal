@@ -162,14 +162,14 @@ public abstract class BaseFilesSectionDisplayContext
 			super.getFDSActionDropdownItems();
 
 		fdsActionDropdownItems.add(
-			1,
+			6,
 			new FDSActionDropdownItem(
 				"{embedded.file.link.href}", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), "get", null,
 				"link"));
 
 		fdsActionDropdownItems.add(
-			2,
+			7,
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					"/o", GroupConstants.CMS_FRIENDLY_URL, "/download-folder/",

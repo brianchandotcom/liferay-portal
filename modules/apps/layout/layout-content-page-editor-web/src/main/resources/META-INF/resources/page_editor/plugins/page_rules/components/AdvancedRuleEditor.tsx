@@ -38,6 +38,8 @@ type Props = {
 	value?: string;
 };
 
+type CodeEditorSidebarPanel = (typeof config.codeEditorSidebarPanels)[number];
+
 export default function AdvancedRuleEditor({onChange, value}: Props) {
 	const id = useId();
 
@@ -49,9 +51,9 @@ export default function AdvancedRuleEditor({onChange, value}: Props) {
 
 	const editorRef = React.useRef<CodeMirror.Editor>(null);
 
-	const [codeEditorSidebarPanels, setCodeEditorSidebarPanels] = useState(
-		() => config.codeEditorSidebarPanels
-	);
+	const [codeEditorSidebarPanels, setCodeEditorSidebarPanels] = useState<
+		typeof config.codeEditorSidebarPanels
+	>(() => config.codeEditorSidebarPanels);
 
 	const roles = useCache({
 		fetcher: () => RulesService.getRoles(),
@@ -75,6 +77,7 @@ export default function AdvancedRuleEditor({onChange, value}: Props) {
 					label: segmentEntry.name,
 				})
 			),
+			key: 'segments',
 			label: Liferay.Language.get('segments'),
 		}),
 		[]
@@ -125,6 +128,7 @@ function getRolesSection(
 
 	return {
 		items: roles.map((role) => ({content: role.roleId, label: role.name})),
+		key: 'roles',
 		label: Liferay.Language.get('roles'),
 	};
 }
@@ -141,12 +145,13 @@ function getUsersSection(
 			content: user.userId,
 			label: user.screenName,
 		})),
+		key: 'users',
 		label: Liferay.Language.get('users'),
 	};
 }
 
 async function getFormFieldsSections(state: State) {
-	const sections = [];
+	const sections: CodeEditorSidebarPanel[] = [];
 
 	if (config.selectedMappingTypes) {
 		const {subtype, type} = config.selectedMappingTypes;
@@ -164,6 +169,7 @@ async function getFormFieldsSections(state: State) {
 					label: field.label,
 				};
 			}),
+			key: 'mappingFields',
 			label: sub(
 				Liferay.Language.get('x-default'),
 				config.selectedMappingTypes.subtype
@@ -251,6 +257,7 @@ async function getFormFieldsSections(state: State) {
 
 		sections.push({
 			items,
+			key: `form_${formItem.itemId}`,
 			label: `${selectedType.label} (${selectLayoutDataItemLabel(state, formItem)})`,
 		});
 	}

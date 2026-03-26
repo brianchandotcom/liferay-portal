@@ -59,6 +59,7 @@ export interface Config {
 			label: string;
 			tooltip?: string;
 		}>;
+		key: string;
 		label: string;
 	}>;
 	collectionSelectorURL: string;

@@ -54,6 +54,15 @@ public class CookiesConsentPreferenceLocalServiceUtil {
 			cookiesConsentPreference);
 	}
 
+	public static CookiesConsentPreference addCookiesConsentPreference(
+			long userId, String domain, java.util.Date expirationDate,
+			String name, String value)
+		throws PortalException {
+
+		return getService().addCookiesConsentPreference(
+			userId, domain, expirationDate, name, value);
+	}
+
 	/**
 	 * Creates a new cookies consent preference with the primary key. Does not add the cookies consent preference to the database.
 	 *
@@ -111,6 +120,23 @@ public class CookiesConsentPreferenceLocalServiceUtil {
 
 		return getService().deleteCookiesConsentPreference(
 			cookiesConsentPreferenceId);
+	}
+
+	public static void deleteCookiesConsentPreference(
+			long userId, String domain, String name)
+		throws PortalException {
+
+		getService().deleteCookiesConsentPreference(userId, domain, name);
+	}
+
+	public static void deleteCookiesConsentPreferences(long userId) {
+		getService().deleteCookiesConsentPreferences(userId);
+	}
+
+	public static void deleteCookiesConsentPreferences(
+		long userId, String domain) {
+
+		getService().deleteCookiesConsentPreferences(userId, domain);
 	}
 
 	/**
@@ -236,6 +262,12 @@ public class CookiesConsentPreferenceLocalServiceUtil {
 			cookiesConsentPreferenceId);
 	}
 
+	public static CookiesConsentPreference getCookiesConsentPreference(
+		long userId, String domain, String name) {
+
+		return getService().getCookiesConsentPreference(userId, domain, name);
+	}
+
 	/**
 	 * Returns a range of all the cookies consent preferences.
 	 *
@@ -251,6 +283,12 @@ public class CookiesConsentPreferenceLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getCookiesConsentPreferences(start, end);
+	}
+
+	public static List<CookiesConsentPreference> getCookiesConsentPreferences(
+		long userId, String domain) {
+
+		return getService().getCookiesConsentPreferences(userId, domain);
 	}
 
 	/**
@@ -314,4 +352,4 @@ public class CookiesConsentPreferenceLocalServiceUtil {
 			CookiesConsentPreferenceLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:843851433
+// LIFERAY-SERVICE-BUILDER-HASH:-1672528352

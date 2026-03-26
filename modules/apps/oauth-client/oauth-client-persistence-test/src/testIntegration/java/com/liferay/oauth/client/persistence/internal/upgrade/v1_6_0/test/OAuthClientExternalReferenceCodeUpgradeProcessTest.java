@@ -43,8 +43,8 @@ public class OAuthClientExternalReferenceCodeUpgradeProcessTest
 			return new ExternalReferenceCodeModel[] {
 				_oAuthClientASLocalMetadataLocalService.
 					addOAuthClientASLocalMetadata(
-						TestPropsValues.getUserId(), url, url, url, false, url,
-						new String[] {RandomTestUtil.randomString()},
+						null, TestPropsValues.getUserId(), url, url, url, false,
+						url, new String[] {RandomTestUtil.randomString()},
 						new String[] {RandomTestUtil.randomString()},
 						new String[] {"public"}, url, url)
 			};
@@ -55,7 +55,7 @@ public class OAuthClientExternalReferenceCodeUpgradeProcessTest
 
 		return new ExternalReferenceCodeModel[] {
 			_oAuthClientEntryLocalService.addOAuthClientEntry(
-				TestPropsValues.getUserId(), jsonObject.toString(),
+				null, TestPropsValues.getUserId(), jsonObject.toString(),
 				"https://accounts.google.com/.well-known/openid-configuration",
 				null, jsonObject.toString(), null,
 				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,

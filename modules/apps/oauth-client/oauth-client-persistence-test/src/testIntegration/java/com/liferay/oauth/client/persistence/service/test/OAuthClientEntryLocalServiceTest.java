@@ -74,7 +74,7 @@ public class OAuthClientEntryLocalServiceTest {
 	public void testAddOAuthClientEntry() throws Exception {
 		OAuthClientEntry oAuthClientEntry =
 			_oAuthClientEntryLocalService.addOAuthClientEntry(
-				TestPropsValues.getUserId(), _authRequestParametersJSON,
+				null, TestPropsValues.getUserId(), _authRequestParametersJSON,
 				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
 				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
@@ -100,7 +100,7 @@ public class OAuthClientEntryLocalServiceTest {
 		AssertUtils.assertFailure(
 			DuplicateOAuthClientEntryException.class, "Client ID " + _CLIENT_ID,
 			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
-				TestPropsValues.getUserId(), _authRequestParametersJSON,
+				null, TestPropsValues.getUserId(), _authRequestParametersJSON,
 				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
 				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
@@ -113,7 +113,7 @@ public class OAuthClientEntryLocalServiceTest {
 			OAuthClientEntryAuthRequestParametersJSONException.class,
 			"Null or empty response type string",
 			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				JSONUtil.put(
 					"response_type", ""
 				).put(
@@ -126,7 +126,7 @@ public class OAuthClientEntryLocalServiceTest {
 		Assert.assertThrows(
 			OAuthClientEntryAuthServerWellKnownURIException.class,
 			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
-				TestPropsValues.getUserId(), _authRequestParametersJSON,
+				null, TestPropsValues.getUserId(), _authRequestParametersJSON,
 				"http://172.17.0.3:18080/auth/realms/master/." +
 					"well-known/openid-configuration",
 				_CUSTOM_CLAIMS_JSON, _infoJSON, "email",
@@ -137,7 +137,7 @@ public class OAuthClientEntryLocalServiceTest {
 			OAuthClientEntryOIDCUserInfoMapperJSONException.class,
 			"emailAddress is required for user",
 			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
-				TestPropsValues.getUserId(), _authRequestParametersJSON,
+				null, TestPropsValues.getUserId(), _authRequestParametersJSON,
 				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
 				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				JSONUtil.put(

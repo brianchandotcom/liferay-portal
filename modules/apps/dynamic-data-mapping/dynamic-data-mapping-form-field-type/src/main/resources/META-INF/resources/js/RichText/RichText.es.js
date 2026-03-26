@@ -283,39 +283,6 @@ const RichText = ({
 		}
 	};
 
-	const onReady = (editor) => {
-		const sourceEditingPlugin = editor.plugins.get('SourceEditing');
-
-		if (!sourceEditingPlugin) {
-			return;
-		}
-
-		sourceEditingPlugin.on('change:isSourceEditingMode', () => {
-			if (!sourceEditingPlugin.isSourceEditingMode) {
-				return;
-			}
-
-			for (const [rootName] of editor.editing.view.domRoots) {
-				const replacedRoot =
-					sourceEditingPlugin._replacedRoots?.get(rootName);
-
-				if (!replacedRoot) {
-					continue;
-				}
-
-				const textarea = replacedRoot.querySelector('textarea');
-
-				if (!textarea) {
-					continue;
-				}
-
-				textarea.addEventListener('input', () => {
-					handleContentChange(editor.getData());
-				});
-			}
-		});
-	};
-
 	const resetTranslation = useCallback(() => {
 		const data = currentValue[defaultLocale.localeId];
 
@@ -381,7 +348,6 @@ const RichText = ({
 							onChange={(event, editor) =>
 								handleContentChange(editor.getData())
 							}
-							onReady={onReady}
 						/>
 					) : (
 						<ClassicEditor

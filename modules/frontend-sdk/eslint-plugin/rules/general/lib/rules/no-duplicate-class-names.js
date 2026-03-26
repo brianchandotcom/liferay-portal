@@ -10,12 +10,8 @@ const DESCRIPTION = 'classes in className attribute must be unique';
 module.exports = {
 	create(context) {
 		const check = (node, value, delimiter) => {
-			const [
-				,
-				leadingWhitespace,
-				classes,
-				trailingWhitespace,
-			] = value.match(/^(\s*)(.*?)(\s*)$/);
+			const [, leadingWhitespace, classes, trailingWhitespace] =
+				value.match(/^(\s*)(.*?)(\s*)$/);
 
 			const set = new Set();
 

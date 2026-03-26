@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useCallback, useState} from 'react';
-import ClayIcon from '@clayui/icon';
-import DropDown from '@clayui/drop-down';
 import ClayButton from '@clayui/button';
+import DropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import React, {useCallback, useState} from 'react';
 
 import '../../../../css/components/RoomTrend.scss';
 import RoomService from '../../../common/services/RoomService';
@@ -30,13 +30,6 @@ function getImage(filename: string) {
 }
 
 const OPTIONS: Record<string, TTrendOptions> = {
-	COLD: {
-		color: '#4B9FFF',
-		icon: 'snow',
-		label: Liferay.Language.get('cold'),
-		percentage: 5,
-		useSpritemap: true,
-	},
 	CLOSED_LOST: {
 		color: '#DA1414',
 		icon: 'times-circle-full',
@@ -48,6 +41,13 @@ const OPTIONS: Record<string, TTrendOptions> = {
 		icon: 'champion-cup',
 		label: Liferay.Language.get('closed-won'),
 		percentage: 70,
+		useSpritemap: true,
+	},
+	COLD: {
+		color: '#4B9FFF',
+		icon: 'snow',
+		label: Liferay.Language.get('cold'),
+		percentage: 5,
 		useSpritemap: true,
 	},
 	ENGAGED: {
@@ -70,17 +70,17 @@ const OPTIONS: Record<string, TTrendOptions> = {
 		percentage: 95,
 		useSpritemap: true,
 	},
-	READY_TO_CLOSE: {
-		color: '#5ACA75',
-		icon: 'shield-check',
-		label: Liferay.Language.get('ready-to-close'),
-		percentage: 80,
-	},
 	RE_IGNITED: {
 		icon: 'reload',
 		label: Liferay.Language.get('reignited'),
 		percentage: 25,
 		useSpritemap: true,
+	},
+	READY_TO_CLOSE: {
+		color: '#5ACA75',
+		icon: 'shield-check',
+		label: Liferay.Language.get('ready-to-close'),
+		percentage: 80,
 	},
 	WARMING_UP: {
 		color: '#FFBB00',
@@ -109,7 +109,7 @@ const RoomTrend = ({roomId}: {roomId: number}) => {
 
 	const updateRoomTrend = useCallback((roomId: number, trend: number) => {
 		return RoomService.updateRoom(roomId, {
-			trend: trend,
+			trend,
 		});
 	}, []);
 
@@ -122,11 +122,13 @@ const RoomTrend = ({roomId}: {roomId: number}) => {
 							<p className="font-weight-semi-bold inline-item inline-item-before mr-1">
 								{Liferay.Language.get('room-trend')}
 							</p>
+
 							<ClayIcon
 								className="text-secondary"
 								symbol="question-circle-full"
 							/>
 						</div>
+
 						<DropDown
 							closeOnClick
 							trigger={
@@ -139,7 +141,6 @@ const RoomTrend = ({roomId}: {roomId: number}) => {
 											className="flex-shrink-0 mr-2"
 											color={color}
 											fontSize={16}
-											symbol={icon}
 											spritemap={
 												useSpritemap
 													? getImage(
@@ -147,11 +148,14 @@ const RoomTrend = ({roomId}: {roomId: number}) => {
 														)
 													: undefined
 											}
+											symbol={icon}
 										/>
+
 										<span className="room-trend-button-text text-left text-truncate">
 											{label}
 										</span>
 									</span>
+
 									<ClayIcon
 										className="flex-shrink-0 ml-2"
 										symbol="caret-double"
@@ -185,7 +189,6 @@ const RoomTrend = ({roomId}: {roomId: number}) => {
 											<ClayIcon
 												color={option.color}
 												fontSize={16}
-												symbol={option.icon}
 												spritemap={
 													option.useSpritemap
 														? getImage(
@@ -193,14 +196,17 @@ const RoomTrend = ({roomId}: {roomId: number}) => {
 															)
 														: undefined
 												}
+												symbol={option.icon}
 											/>
 										</span>
+
 										{option.label}
 									</DropDown.Item>
 								))}
 							</DropDown.ItemList>
 						</DropDown>
 					</div>
+
 					<div className="gauge-container inline-item-after ml-4">
 						<img
 							alt={Liferay.Language.get('room-trend-semicircle')}

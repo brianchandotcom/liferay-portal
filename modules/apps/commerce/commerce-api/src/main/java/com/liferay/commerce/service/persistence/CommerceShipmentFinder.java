@@ -13,14 +13,4 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceShipmentFinder {
-
-	public int countByCommerceOrderId(long commerceOrderId);
-
-	public java.util.List<com.liferay.commerce.model.CommerceShipment>
-		findByCommerceOrderId(long commerceOrderId, int start, int end);
-
-	public int[] findCommerceShipmentStatusesByCommerceOrderId(
-		long commerceOrderId);
-
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-86082515

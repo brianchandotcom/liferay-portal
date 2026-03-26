@@ -59,8 +59,16 @@ async function fetchStoredCookie(name) {
 		headers: HEADERS,
 		method: 'GET',
 	})
-		.then((response) => response.json())
+		.then((response) => {
+			if (response.status === 200) {
+				return response.json();
+			}
+		})
 		.then((jsonObject) => {
+			if (jsonObject === undefined) {
+				return undefined;
+			}
+
 			const {expirationDate, name, value} = jsonObject;
 
 			const expirationDateObject = new Date(expirationDate);

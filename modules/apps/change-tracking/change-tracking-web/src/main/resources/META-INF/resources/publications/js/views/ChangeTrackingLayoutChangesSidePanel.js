@@ -40,7 +40,7 @@ export default function ChangeTrackingLayoutChangesSidePanel({
 
 		fetch(dataURL)
 			.then((response) => {
-				if (response) {
+				if (response.ok) {
 					return response.json();
 				}
 			})

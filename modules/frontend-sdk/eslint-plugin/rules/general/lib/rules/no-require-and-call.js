@@ -42,8 +42,7 @@ module.exports = {
 			category: 'Best Practices',
 			description: DESCRIPTION,
 			recommended: false,
-			url:
-				'https://github.com/liferay/liferay-frontend-guidelines/blob/master/general/imports.md',
+			url: 'https://github.com/liferay/liferay-frontend-guidelines/blob/master/general/imports.md',
 		},
 		fixable: null,
 		schema: [],

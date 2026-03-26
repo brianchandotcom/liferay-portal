@@ -193,8 +193,7 @@ module.exports = {
 			category: 'Best Practices',
 			description: DESCRIPTION,
 			recommended: false,
-			url:
-				'https://github.com/liferay/liferay-frontend-guidelines/issues/60',
+			url: 'https://github.com/liferay/liferay-frontend-guidelines/issues/60',
 		},
 		fixable: 'code',
 		schema: [],

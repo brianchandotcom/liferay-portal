@@ -35,8 +35,7 @@ module.exports = {
 			category: 'Test style',
 			description: DESCRIPTION,
 			recommended: false,
-			url:
-				'https://github.com/liferay/liferay-frontend-guidelines/blob/master/general/testing/anatomy.md',
+			url: 'https://github.com/liferay/liferay-frontend-guidelines/blob/master/general/testing/anatomy.md',
 		},
 		fixable: null, // or "code" or "whitespace"
 		schema: [],
